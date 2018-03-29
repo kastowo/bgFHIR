@@ -8524,7 +8524,7 @@ var controller = {
 
 			var code = req.body.code.trim().toLowerCase();
 			var display = req.body.display;
-			var definition = req.body.definition.replace(/[^\w\s , ( ) / .] / gi, '');
+			var definition = req.body.definition.replace(/[^\w\s , ( ) / .]/gi, '');
 
 			var err_code = 0;
 			var err_msg = '';
@@ -8690,7 +8690,7 @@ var controller = {
 
 			var code = req.body.code.trim().toLowerCase();
 			var display = req.body.display.replace(/[^\w\s , ( ) / .] / gi, '');
-			var definition = req.body.definition.replace(/[^\w\s , ( ) / .] / gi, '');
+			var definition = req.body.definition.replace(/[^\w\s , ( ) / .]/gi, '');
 
 			var err_code = 0;
 			var err_msg = '';
@@ -8774,7 +8774,7 @@ var controller = {
 
 			var code = req.body.code.trim().toLowerCase();
 			var display = req.body.display.replace(/[^\w\s , ( ) / .] / gi, '');
-			var definition = req.body.definition.replace(/[^\w\s , ( ) / .] / gi, '');
+			var definition = req.body.definition.replace(/[^\w\s , ( ) / .]/gi, '');
 
 			var err_code = 0;
 			var err_msg = '';
@@ -8858,7 +8858,7 @@ var controller = {
 
 			var code = req.body.code.trim().toLowerCase();
 			var display = req.body.display.replace(/[^\w\s , ( ) / .] / gi, '');
-			var definition = req.body.definition.replace(/[^\w\s , ( ) / .] / gi, '');
+			var definition = req.body.definition.replace(/[^\w\s , ( ) / .]/gi, '');
 
 			var err_code = 0;
 			var err_msg = '';
@@ -8942,7 +8942,7 @@ var controller = {
 
 			var code = req.body.code.trim().toLowerCase();
 			var display = req.body.display.replace(/[^\w\s , ( ) / .] / gi, '');
-			var definition = req.body.definition.replace(/[^\w\s , ( ) / .] / gi, '');
+			var definition = req.body.definition.replace(/[^\w\s , ( ) / .]/gi, '');
 
 			var err_code = 0;
 			var err_msg = '';
@@ -9026,7 +9026,7 @@ var controller = {
 
 			var code = req.body.code.trim().toUpperCase();
 			var display = req.body.display;
-			var definition = req.body.definition.replace(/[^\w\s , ( ) / .] / gi, '');
+			var definition = req.body.definition.replace(/[^\w\s , ( ) / .]/gi, '');
 
 			var err_code = 0;
 			var err_msg = '';
@@ -9115,7 +9115,7 @@ var controller = {
 
 			var code = req.body.code.trim().toUpperCase();
 			var display = req.body.display;
-			var definition = req.body.definition.replace(/[^\w\s , ( ) / .] / gi, '');
+			var definition = req.body.definition.replace(/[^\w\s , ( ) / .]/gi, '');
 
 			var err_code = 0;
 			var err_msg = '';
@@ -9204,7 +9204,7 @@ var controller = {
 
 			var code = req.body.code.trim().toLowerCase();
 			var display = req.body.display;
-			var definition = req.body.definition.replace(/[^\w\s , ( ) / .] / gi, '');
+			var definition = req.body.definition.replace(/[^\w\s , ( ) / .]/gi, '');
 
 			var err_code = 0;
 			var err_msg = '';
@@ -9293,7 +9293,7 @@ var controller = {
 
 			var code = req.body.code.trim().toLowerCase();
 			var display = req.body.display;
-			var definition = req.body.definition.replace(/[^\w\s , ( ) / .] / gi, '');
+			var definition = req.body.definition.replace(/[^\w\s , ( ) / .]/gi, '');
 
 			var err_code = 0;
 			var err_msg = '';
@@ -9382,7 +9382,7 @@ var controller = {
 
 			var code = req.body.code.trim().toLowerCase();
 			var display = req.body.display;
-			var definition = req.body.definition.replace(/[^\w\s , ( ) / .] / gi, '');
+			var definition = req.body.definition.replace(/[^\w\s , ( ) / .]/gi, '');
 
 			var err_code = 0;
 			var err_msg = '';
@@ -9471,7 +9471,7 @@ var controller = {
 
 			var code = req.body.code.trim().toLowerCase();
 			var display = req.body.display;
-			var definition = req.body.definition.replace(/[^\w\s , ( ) / .] / gi, '');
+			var definition = req.body.definition.replace(/[^\w\s , ( ) / .]/gi, '');
 
 			var err_code = 0;
 			var err_msg = '';
@@ -9560,7 +9560,7 @@ var controller = {
 
 			var code = req.body.code.trim().toLowerCase();
 			var display = req.body.display;
-			var definition = req.body.definition.replace(/[^\w\s , ( ) / .] / gi, '');
+			var definition = req.body.definition.replace(/[^\w\s , ( ) / .]/gi, '');
 
 			var err_code = 0;
 			var err_msg = '';
@@ -9649,7 +9649,7 @@ var controller = {
 
 			var code = req.body.code.trim().toLowerCase();
 			var display = req.body.display;
-			var definition = req.body.definition.replace(/[^\w\s , ( ) / .] / gi, '');
+			var definition = req.body.definition.replace(/[^\w\s , ( ) / .]/gi, '');
 
 			var err_code = 0;
 			var err_msg = '';
@@ -9738,7 +9738,7 @@ var controller = {
 
 			var code = req.body.code.trim().toLowerCase();
 			var display = req.body.display;
-			var definition = req.body.definition.replace(/[^\w\s , ( ) / .] / gi, '');
+			var definition = req.body.definition.replace(/[^\w\s , ( ) / .]/gi, '');
 
 			var err_code = 0;
 			var err_msg = '';
@@ -9827,7 +9827,7 @@ var controller = {
 
 			var code = req.body.code.trim().toLowerCase();
 			var display = req.body.display;
-			var definition = req.body.definition.replace(/[^\w\s , ( ) / .] / gi, '');
+			var definition = req.body.definition.replace(/[^\w\s , ( ) / .]/gi, '');
 			var system = req.body.system;
 
 			var err_code = 0;
@@ -9918,7 +9918,7 @@ var controller = {
 
 			var code = req.body.code.trim().toLowerCase();
 			var display = req.body.display;
-			var definition = req.body.definition.replace(/[^\w\s , ( ) / .] / gi, '');
+			var definition = req.body.definition.replace(/[^\w\s , ( ) / .]/gi, '');
 
 			var err_code = 0;
 			var err_msg = '';
@@ -10007,7 +10007,7 @@ var controller = {
 
 			var code = req.body.code.trim().toUpperCase();
 			var display = req.body.display;
-			var definition = req.body.definition.replace(/[^\w\s , ( ) / .] / gi, '');
+			var definition = req.body.definition.replace(/[^\w\s , ( ) / .]/gi, '');
 
 			var err_code = 0;
 			var err_msg = '';
@@ -10096,7 +10096,7 @@ var controller = {
 
 			var code = req.body.code.trim().toLowerCase();
 			var display = req.body.display;
-			var definition = req.body.definition.replace(/[^\w\s , ( ) / .] / gi, '');
+			var definition = req.body.definition.replace(/[^\w\s , ( ) / .]/gi, '');
 
 			var err_code = 0;
 			var err_msg = '';
@@ -10185,7 +10185,7 @@ var controller = {
 
 			var code = req.body.code.trim().toLowerCase();
 			var display = req.body.display;
-			var definition = req.body.definition.replace(/[^\w\s , ( ) / .] / gi, '');
+			var definition = req.body.definition.replace(/[^\w\s , ( ) / .]/gi, '');
 
 			var err_code = 0;
 			var err_msg = '';
@@ -10363,7 +10363,7 @@ var controller = {
 
 			var code = req.body.code.trim().toLowerCase();
 			var display = req.body.display;
-			var definition = req.body.definition.replace(/[^\w\s , ( ) / .] / gi, '');
+			var definition = req.body.definition.replace(/[^\w\s , ( ) / .]/gi, '');
 
 			var err_code = 0;
 			var err_msg = '';
@@ -10452,7 +10452,7 @@ var controller = {
 
 			var code = req.body.code.trim().toLowerCase();
 			var display = req.body.display;
-			var definition = req.body.definition.replace(/[^\w\s , ( ) / .] / gi, '');
+			var definition = req.body.definition.replace(/[^\w\s , ( ) / .]/gi, '');
 
 			var err_code = 0;
 			var err_msg = '';
@@ -10541,7 +10541,7 @@ var controller = {
 
 			var code = req.body.code.trim().toLowerCase();
 			var display = req.body.display;
-			var definition = req.body.definition.replace(/[^\w\s , ( ) / .] / gi, '');
+			var definition = req.body.definition.replace(/[^\w\s , ( ) / .]/gi, '');
 
 			var err_code = 0;
 			var err_msg = '';
@@ -10630,7 +10630,7 @@ var controller = {
 
 			var code = req.body.code.trim().toLowerCase();
 			var display = req.body.display;
-			var definition = req.body.definition.replace(/[^\w\s , ( ) / .] / gi, '');
+			var definition = req.body.definition.replace(/[^\w\s , ( ) / .]/gi, '');
 
 			var err_code = 0;
 			var err_msg = '';
@@ -10808,7 +10808,7 @@ var controller = {
 
 			var code = req.body.code.trim().toLowerCase();
 			var display = req.body.display;
-			var definition = req.body.definition.replace(/[^\w\s , ( ) / .] / gi, '');
+			var definition = req.body.definition.replace(/[^\w\s , ( ) / .]/gi, '');
 
 			var err_code = 0;
 			var err_msg = '';
@@ -12992,7 +12992,7 @@ var controller = {
 			}
 
 			if (typeof req.body.definition !== 'undefined') {
-				var definition = req.body.definition.replace(/[^\w\s , ( ) / .] / gi, '');
+				var definition = req.body.definition.replace(/[^\w\s , ( ) / .]/gi, '');
 				dataAddressUse.definition = definition;
 			}
 
@@ -13123,7 +13123,7 @@ var controller = {
 			}
 
 			if (typeof req.body.definition !== 'undefined') {
-				var definition = req.body.definition.replace(/[^\w\s , ( ) / .] / gi, '');
+				var definition = req.body.definition.replace(/[^\w\s , ( ) / .]/gi, '');
 				dataAddressType.definition = definition;
 			}
 
@@ -13370,7 +13370,7 @@ var controller = {
 			}
 
 			if (typeof req.body.definition !== 'undefined') {
-				var definition = req.body.definition.replace(/[^\w\s , ( ) / .] / gi, '');
+				var definition = req.body.definition.replace(/[^\w\s , ( ) / .]/gi, '');
 				dataSlotStatus.definition = definition;
 			}
 
@@ -13489,7 +13489,7 @@ var controller = {
 			}
 
 			if (typeof req.body.definition !== 'undefined') {
-				var definition = req.body.definition.replace(/[^\w\s , ( ) / .] / gi, '');
+				var definition = req.body.definition.replace(/[^\w\s , ( ) / .]/gi, '');
 				dataAppointmentStatus.definition = definition;
 			}
 
@@ -13608,7 +13608,7 @@ var controller = {
 			}
 
 			if (typeof req.body.definition !== 'undefined') {
-				var definition = req.body.definition.replace(/[^\w\s , ( ) / .] / gi, '');
+				var definition = req.body.definition.replace(/[^\w\s , ( ) / .]/gi, '');
 				dataParticipantRequired.definition = definition;
 			}
 
@@ -13727,7 +13727,7 @@ var controller = {
 			}
 
 			if (typeof req.body.definition !== 'undefined') {
-				var definition = req.body.definition.replace(/[^\w\s , ( ) / .] / gi, '');
+				var definition = req.body.definition.replace(/[^\w\s , ( ) / .]/gi, '');
 				dataparticipationStatus.definition = definition;
 			}
 
@@ -13846,7 +13846,7 @@ var controller = {
 			}
 
 			if (typeof req.body.definition !== 'undefined') {
-				var definition = req.body.definition.replace(/[^\w\s , ( ) / .] / gi, '');
+				var definition = req.body.definition.replace(/[^\w\s , ( ) / .]/gi, '');
 				dataActEncounterCode.definition = definition;
 			}
 
@@ -13977,7 +13977,7 @@ var controller = {
 			}
 
 			if (typeof req.body.definition !== 'undefined') {
-				var definition = req.body.definition.replace(/[^\w\s , ( ) / .] / gi, '');
+				var definition = req.body.definition.replace(/[^\w\s , ( ) / .]/gi, '');
 				dataActPriority.definition = definition;
 			}
 
@@ -14108,7 +14108,7 @@ var controller = {
 			}
 
 			if (typeof req.body.definition !== 'undefined') {
-				var definition = req.body.definition.replace(/[^\w\s , ( ) / .] / gi, '');
+				var definition = req.body.definition.replace(/[^\w\s , ( ) / .]/gi, '');
 				dataAccountStatus.definition = definition;
 			}
 
@@ -14239,7 +14239,7 @@ var controller = {
 			}
 
 			if (typeof req.body.definition !== 'undefined') {
-				var definition = req.body.definition.replace(/[^\w\s , ( ) / .] / gi, '');
+				var definition = req.body.definition.replace(/[^\w\s , ( ) / .]/gi, '');
 				dataAccountType.definition = definition;
 			}
 
@@ -14370,7 +14370,7 @@ var controller = {
 			}
 
 			if (typeof req.body.definition !== 'undefined') {
-				var definition = req.body.definition.replace(/[^\w\s , ( ) / .] / gi, '');
+				var definition = req.body.definition.replace(/[^\w\s , ( ) / .]/gi, '');
 				dataDiagnosisRole.definition = definition;
 			}
 
@@ -14501,7 +14501,7 @@ var controller = {
 			}
 
 			if (typeof req.body.definition !== 'undefined') {
-				var definition = req.body.definition.replace(/[^\w\s , ( ) / .] / gi, '');
+				var definition = req.body.definition.replace(/[^\w\s , ( ) / .]/gi, '');
 				dataEncounterAdmitSource.definition = definition;
 			}
 
@@ -14632,7 +14632,7 @@ var controller = {
 			}
 
 			if (typeof req.body.definition !== 'undefined') {
-				var definition = req.body.definition.replace(/[^\w\s , ( ) / .] / gi, '');
+				var definition = req.body.definition.replace(/[^\w\s , ( ) / .]/gi, '');
 				dataEncounterDiet.definition = definition;
 			}
 
@@ -14763,7 +14763,7 @@ var controller = {
 			}
 
 			if (typeof req.body.definition !== 'undefined') {
-				var definition = req.body.definition.replace(/[^\w\s , ( ) / .] / gi, '');
+				var definition = req.body.definition.replace(/[^\w\s , ( ) / .]/gi, '');
 				dataEncounterDischargeDisposition.definition = definition;
 			}
 
@@ -14894,7 +14894,7 @@ var controller = {
 			}
 
 			if (typeof req.body.definition !== 'undefined') {
-				var definition = req.body.definition.replace(/[^\w\s , ( ) / .] / gi, '');
+				var definition = req.body.definition.replace(/[^\w\s , ( ) / .]/gi, '');
 				dataEncounterLocationStatus.definition = definition;
 			}
 
@@ -15025,7 +15025,7 @@ var controller = {
 			}
 
 			if (typeof req.body.definition !== 'undefined') {
-				var definition = req.body.definition.replace(/[^\w\s , ( ) / .] / gi, '');
+				var definition = req.body.definition.replace(/[^\w\s , ( ) / .]/gi, '');
 				dataEncounterParticipantType.definition = definition;
 			}
 
@@ -15156,7 +15156,7 @@ var controller = {
 			}
 
 			if (typeof req.body.definition !== 'undefined') {
-				var definition = req.body.definition.replace(/[^\w\s , ( ) / .] / gi, '');
+				var definition = req.body.definition.replace(/[^\w\s , ( ) / .]/gi, '');
 				dataEncounterReason.definition = definition;
 			}
 
@@ -15287,7 +15287,7 @@ var controller = {
 			}
 
 			if (typeof req.body.definition !== 'undefined') {
-				var definition = req.body.definition.replace(/[^\w\s , ( ) / .] / gi, '');
+				var definition = req.body.definition.replace(/[^\w\s , ( ) / .]/gi, '');
 				dataEncounterSpecialCourtesy.definition = definition;
 			}
 
@@ -15418,7 +15418,7 @@ var controller = {
 			}
 
 			if (typeof req.body.definition !== 'undefined') {
-				var definition = req.body.definition.replace(/[^\w\s , ( ) / .] / gi, '');
+				var definition = req.body.definition.replace(/[^\w\s , ( ) / .]/gi, '');
 				dataEncounterSpecialArrangements.definition = definition;
 			}
 
@@ -15549,7 +15549,7 @@ var controller = {
 			}
 
 			if (typeof req.body.definition !== 'undefined') {
-				var definition = req.body.definition.replace(/[^\w\s , ( ) / .] / gi, '');
+				var definition = req.body.definition.replace(/[^\w\s , ( ) / .]/gi, '');
 				dataEncounterStatus.definition = definition;
 			}
 
@@ -15680,7 +15680,7 @@ var controller = {
 			}
 
 			if (typeof req.body.definition !== 'undefined') {
-				var definition = req.body.definition.replace(/[^\w\s , ( ) / .] / gi, '');
+				var definition = req.body.definition.replace(/[^\w\s , ( ) / .]/gi, '');
 				dataEncounterType.definition = definition;
 			}
 
@@ -15811,7 +15811,7 @@ var controller = {
 			}
 
 			if (typeof req.body.definition !== 'undefined') {
-				var definition = req.body.definition.replace(/[^\w\s , ( ) / .] / gi, '');
+				var definition = req.body.definition.replace(/[^\w\s , ( ) / .]/gi, '');
 				dataEpisodeOfCareStatus.definition = definition;
 			}
 
@@ -15942,7 +15942,7 @@ var controller = {
 			}
 
 			if (typeof req.body.definition !== 'undefined') {
-				var definition = req.body.definition.replace(/[^\w\s , ( ) / .] / gi, '');
+				var definition = req.body.definition.replace(/[^\w\s , ( ) / .]/gi, '');
 				dataEpisodeOfCareType.definition = definition;
 			}
 
@@ -16073,7 +16073,7 @@ var controller = {
 			}
 
 			if (typeof req.body.definition !== 'undefined') {
-				var definition = req.body.definition.replace(/[^\w\s , ( ) / .] / gi, '');
+				var definition = req.body.definition.replace(/[^\w\s , ( ) / .]/gi, '');
 				dataFlagStatus.definition = definition;
 			}
 
@@ -16204,7 +16204,7 @@ var controller = {
 			}
 
 			if (typeof req.body.definition !== 'undefined') {
-				var definition = req.body.definition.replace(/[^\w\s , ( ) / .] / gi, '');
+				var definition = req.body.definition.replace(/[^\w\s , ( ) / .]/gi, '');
 				dataFlagCategory.definition = definition;
 			}
 
@@ -16335,7 +16335,7 @@ var controller = {
 			}
 
 			if (typeof req.body.definition !== 'undefined') {
-				var definition = req.body.definition.replace(/[^\w\s , ( ) / .] / gi, '');
+				var definition = req.body.definition.replace(/[^\w\s , ( ) / .]/gi, '');
 				dataFlagCode.definition = definition;
 			}
 
