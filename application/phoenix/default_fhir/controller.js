@@ -1553,7 +1553,7 @@ var controller = {
 					"function": "getparticipationStatusCode"
 				});
 			});
-		}
+		},
 		actEncounterCode: function getActEncounterCode(req, res) {
 			_id = req.params._id;
 
@@ -3885,7 +3885,7 @@ var controller = {
 					"function": "addparticipationStatus"
 				});
 			});
-		}
+		},
 		actEncounterCode: function addActEncounterCode(req, res) {
 			var code = req.body.code;
 			var display = req.body.display;
@@ -6377,7 +6377,7 @@ var controller = {
 					"function": "updateparticipationStatus"
 				});
 			});
-		}
+		},
 		actEncounterCode: function updateActEncounterCode(req, res) {
 			var _id = req.params._id;
 			var code = req.body.code;

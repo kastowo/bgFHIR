@@ -3694,7 +3694,7 @@ var controller = {
 					}
 				});
 			}
-		}
+		},
 		actEncounterCode: function getActEncounterCode(req, res) {
 			var ipAddres = req.connection.remoteAddress;
 			var apikey = req.params.apikey;
@@ -9019,7 +9019,7 @@ var controller = {
 					"err_msg": err_msg
 				});
 			}
-		}
+		},
 		actEncounterCode: function addActEncounterCode(req, res) {
 			var ipAddres = req.connection.remoteAddress;
 			var apikey = req.params.apikey;
@@ -13827,7 +13827,7 @@ var controller = {
 					});
 				}
 			}
-		}
+		},
 		actEncounterCode: function updateActEncounterCode(req, res) {
 			var ipAddres = req.connection.remoteAddress;
 			var apikey = req.params.apikey;
