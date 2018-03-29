@@ -8435,7 +8435,7 @@ var controller = {
 
 			var code = req.body.code.trim().toLowerCase();
 			var display = req.body.display;
-			var definition = req.body.definition.replace(/[^\w\s , ( ) / .]/ gi, '');
+			var definition = req.body.definition.replace(/[^\w\s , ( ) / .]/gi, '');
 
 			var err_code = 0;
 			var err_msg = '';
