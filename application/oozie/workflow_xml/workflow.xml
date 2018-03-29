@@ -1,0 +1,29 @@
+<workflow-app xmlns="uri:oozie:workflow:0.5" name="filterKastowo30Januari2017">
+    <start to="hgrid"/>
+    <action name="hgrid">
+        <java>
+            <job-tracker>${jobTracker}</job-tracker>
+            <name-node>${nameNode}</name-node>
+            <prepare>
+                <delete path="${nameNode}/user/hdfs/baciro/jar/DanangKastowoProject/output"/>
+            </prepare>
+            <configuration>
+                <property>
+                    <name>mapred.job.queue.name</name>
+                    <value>level1</value>
+                </property>
+            </configuration>
+            <main-class>DanangKastowoProject.DanangKastowoProject</main-class>
+            <arg>${nameNode}/user/yava/sample.txt</arg>
+            <arg>${nameNode}/user/hdfs/baciro/jar/DanangKastowoProject/output</arg>
+            <file>${nameNode}/user/hdfs/baciro/jar/DanangKastowoProject/DanangKastowoProject.jar</file>
+            <capture-output/>
+        </java>
+        <ok to="end"/>
+        <error to="fail"/>
+    </action>
+    <kill name="fail">
+        <message>Workflow failed, error message[${wf:errorMessage(wf:lastErrorNode())}]</message>
+    </kill>
+    <end name="end"/>
+</workflow-app>

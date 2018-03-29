@@ -1,0 +1,50 @@
+default:
+  user_management:
+    host: 192.168.1.231
+    port: 3001
+  hive:
+    host: 192.168.1.231
+    port: 3002
+  phoenix:
+    host: 192.168.1.231
+    port: 3003
+  project:
+    host: 192.168.1.231
+    port: 3004
+  generate_jar:
+    host: 192.168.1.231
+    port: 3005
+  cluster:
+    host: 192.168.1.231
+    port: 3006
+  baciro_oozie:
+    host: 192.168.1.231
+    port: 3007
+  fhir:
+    host: 192.168.218.128
+    port: 3008
+development:
+  user_management:
+    host: 192.168.218.128
+    port: 2001
+  hive:
+    host: 192.168.1.192
+    port: 2002
+  phoenix:
+    host: 192.168.218.128
+    port: 2003
+  project:
+    host: 192.168.1.231
+    port: 2004
+  generate_jar:
+    host: 192.168.1.231
+    port: 2005
+  cluster:
+    host: 192.168.1.231
+    port: 2006
+  baciro_oozie:
+    host: 192.168.1.231
+    port: 2007
+  fhir:
+    host: 192.168.218.128
+    port: 2008

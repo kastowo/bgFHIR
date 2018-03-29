@@ -1,0 +1,72 @@
+<?xml version="1.0"?>
+
+<hgrid247>
+    <transform>
+	    <group id="grop1">
+	      <function>
+             <name></name>
+             <description></description>
+		  </function>
+		  <function>
+             <name></name>
+             <description></description>
+		  </function>
+		</group>
+		<group id="group2">
+	      <function>
+             <name></name>
+             <description></description>
+		  </function>
+		  <function>
+             <name></name>
+             <description></description>
+		  </function>
+		</group>
+    </transform>
+	<similarity>
+	   <similarity-group id="custom-similarity">
+	      <similarity-function>
+             <name></name>
+             <description></description>
+		  </similarity-function>
+		  <similarity-function>
+             <name></name>
+             <description></description>
+		  </similarity-function>
+	    </similarity-group>
+	</similarity>
+	<buffer>
+	   <buffer-class>
+	      <class-name></class-name>
+		  <description></description>
+	   </buffer-class>
+	   <buffer-class>
+	      <class-name></class-name>
+		  <description></description>
+	   </buffer-class>
+	</buffer>
+	<function>
+	   <function-class>
+	      <class-name>project.function.MyFunction</class-name>
+		  <description></description>
+	   </function-class>
+	</function>
+	<assembly>
+	   <node>
+	      <class-name></class-name>
+		  <sequence-id></sequence-id>
+		  <id></id>
+		  <description></description>
+		  <csdTag></csdTag>
+	   </node>
+	</assembly>
+	<source-sink>
+	   <node>
+	      <class-name></class-name>
+		  <sequence-id></sequence-id>
+		  <id></id>
+		  <description></description>
+		  <csdTag></csdTag>
+	   </node>
+	</source-sink>
+</hgrid247>
