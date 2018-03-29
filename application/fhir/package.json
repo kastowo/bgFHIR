@@ -1,0 +1,29 @@
+{
+  "name": "fhir",
+  "version": "1.1.0",
+  "description": "Modul ini digunakan untuk pertukaran data-data medis, misalnya pasien, obat, riwayat penyakit dll.",
+  "main": "app.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@192.168.1.248:kulicoding/BaciroGateway_HBASE.git"
+  },
+  "keywords": [
+    "baciro",
+    "gateway",
+    "fhir"
+  ],
+  "author": "danang kastowo",
+  "license": "ISC",
+  "dependencies": {
+    "apiclient": "^0.2.5",
+    "express": "^4.16.2",
+    "md5": "^2.2.1",
+    "sha1": "^1.1.1",
+    "uniqid": "^4.1.1",
+    "validator": "^9.4.0",
+    "yaml-config": "^0.3.0"
+  }
+}

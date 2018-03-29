@@ -1,0 +1,548 @@
+{
+   "base": {
+      "protocol": "http",
+      "pathname": "/"
+   },
+   "path": {
+      "GET": {
+         "checkId":{
+            "location": "%(apikey)s/check-id/%(id)d/%(name)s"
+         },
+         "checkCode":{
+            "location": "%(apikey)s/check-code/%(code)s/%(name)s"
+         },
+         "checkUniqeValue":{
+            "location": "%(apikey)s/check-uniqevalue/%(fdvalue)s/%(tbname)s"
+         },
+         "checkGroupQouta":{
+            "location": "%(apikey)s/check-groupqouta/%(group_id)s"
+         },
+         "checkMemberEntityGroup":{
+            "location": "%(apikey)s/check-memberentitygroup/%(entity_id)s/%(group_id)s"
+         },
+         "identityAssuranceLevel":{
+            "location": "%(apikey)s/identity-AssuranceLevel/%(_id)d"
+         },
+         "identityAssuranceLevelCode":{
+            "location": "%(apikey)s/identity-AssuranceLevel/code/%(code)s"
+         },
+         "administrativeGender":{
+            "location": "%(apikey)s/administrative-gender/%(_id)d"
+         },
+         "administrativeGenderCode":{
+            "location": "%(apikey)s/administrative-gender/code/%(code)s"
+         },
+         "maritalStatus":{
+            "location": "%(apikey)s/marital-status/%(_id)d"
+         },
+         "maritalStatusCode":{
+            "location": "%(apikey)s/marital-status/code/%(code)s"
+         },
+         "contactRole":{
+            "location": "%(apikey)s/contact-role/%(_id)d"
+         },
+         "contactRoleCode":{
+            "location": "%(apikey)s/contact-role/code/%(code)s"
+         },
+         "animalSpecies":{
+            "location": "%(apikey)s/animal-species/%(_id)d"
+         },
+         "animalSpeciesCode":{
+            "location": "%(apikey)s/animal-species/code/%(code)s"
+         },
+         "animalBreeds":{
+            "location": "%(apikey)s/animal-breeds/%(_id)d"
+         },
+         "animalBreedsCode":{
+            "location": "%(apikey)s/animal-breeds/code/%(code)s"
+         },
+         "animalGenderStatus":{
+            "location": "%(apikey)s/animal-genderstatus/%(_id)d"
+         },
+         "animalGenderStatusCode":{
+            "location": "%(apikey)s/animal-genderstatus/code/%(code)s"
+         },
+         "languages":{
+            "location": "%(apikey)s/languages/%(_id)d"
+         },
+         "languagesCode":{
+            "location": "%(apikey)s/languages/code/%(code)s"
+         },
+         "linkType":{
+            "location": "%(apikey)s/link-type/%(_id)d"
+         },
+         "linkTypeCode":{
+            "location": "%(apikey)s/link-type/code/%(code)s"
+         },
+         "relatedPersonRelationshipType":{
+            "location": "%(apikey)s/relatedperson-relationshiptype/%(_id)d"
+         },
+         "relatedPersonRelationshipTypeCode":{
+            "location": "%(apikey)s/relatedperson-relationshiptype/code/%(code)s"
+         },
+         "groupType":{
+            "location": "%(apikey)s/group-type/%(_id)d"
+         },
+         "groupTypeCode":{
+            "location": "%(apikey)s/group-type/code/%(code)s"
+         },
+         "identifierUse":{
+            "location": "%(apikey)s/identifier-use/%(_id)d"
+         },
+         "identifierUseCode":{
+            "location": "%(apikey)s/identifier-use/code/%(code)s"
+         },
+         "identifierType":{
+            "location": "%(apikey)s/identifier-type/%(_id)d"
+         },
+         "identifierTypeCode":{
+            "location": "%(apikey)s/identifier-type/code/%(code)s"
+         },
+         "nameUse":{
+            "location": "%(apikey)s/name-use/%(_id)d"
+         },
+         "nameUseCode":{
+            "location": "%(apikey)s/name-use/code/%(code)s"
+         },
+         "contactPointSystem":{
+            "location": "%(apikey)s/contact-point-system/%(_id)d"
+         },
+         "contactPointSystemCode":{
+            "location": "%(apikey)s/contact-point-system/code/%(code)s"
+         },
+         "contactPointUse":{
+            "location": "%(apikey)s/contact-point-use/%(_id)d"
+         },
+         "contactPointUseCode":{
+            "location": "%(apikey)s/contact-point-use/code/%(code)s"
+         },
+         "addressUse":{
+            "location": "%(apikey)s/address-use/%(_id)d"
+         },
+         "addressUseCode":{
+            "location": "%(apikey)s/address-use/code/%(code)s"
+         },
+         "addressType":{
+            "location": "%(apikey)s/address-type/%(_id)d"
+         },
+         "addressTypeCode":{
+            "location": "%(apikey)s/address-type/code/%(code)s"
+         },
+		 "actEncounterCode":{
+            "location": "%(apikey)s/act-encounter-code/%(_id)d"
+         },
+         "actEncounterCodeCode":{
+            "location": "%(apikey)s/act-encounter-code/code/%(code)s"
+         },
+		 "actPriority":{
+            "location": "%(apikey)s/act-priority/%(_id)d"
+         },
+         "actPriorityCode":{
+            "location": "%(apikey)s/act-priority/code/%(code)s"
+         },
+		 "accountStatus":{
+            "location": "%(apikey)s/account-status/%(_id)d"
+         },
+         "accountStatusCode":{
+            "location": "%(apikey)s/account-status/code/%(code)s"
+         },
+		 "accountType":{
+            "location": "%(apikey)s/account-type/%(_id)d"
+         },
+         "accountTypeCode":{
+            "location": "%(apikey)s/account-type/code/%(code)s"
+         },
+		 "diagnosisRole":{
+            "location": "%(apikey)s/diagnosis-role/%(_id)d"
+         },
+         "diagnosisRoleCode":{
+            "location": "%(apikey)s/diagnosis-role/code/%(code)s"
+         },
+		 "encounterAdmitSource":{
+            "location": "%(apikey)s/encounter-admit-source/%(_id)d"
+         },
+         "encounterAdmitSourceCode":{
+            "location": "%(apikey)s/encounter-admit-source/code/%(code)s"
+         },
+		 "encounterDiet":{
+            "location": "%(apikey)s/encounter-diet/%(_id)d"
+         },
+         "encounterDietCode":{
+            "location": "%(apikey)s/encounter-diet/code/%(code)s"
+         },
+		 "encounterDischargeDisposition":{
+            "location": "%(apikey)s/encounter-discharge-disposition/%(_id)d"
+         },
+         "encounterDischargeDispositionCode":{
+            "location": "%(apikey)s/encounter-discharge-disposition/code/%(code)s"
+         },
+		 "encounterLocationStatus":{
+            "location": "%(apikey)s/encounter-location-status/%(_id)d"
+         },
+         "encounterLocationStatusCode":{
+            "location": "%(apikey)s/encounter-location-status/code/%(code)s"
+         },
+		 "encounterParticipantType":{
+            "location": "%(apikey)s/encounter-participant-type/%(_id)d"
+         },
+         "encounterParticipantTypeCode":{
+            "location": "%(apikey)s/encounter-participant-type/code/%(code)s"
+         },
+		 "encounterReason":{
+            "location": "%(apikey)s/encounter-reason/%(_id)d"
+         },
+         "encounterReasonCode":{
+            "location": "%(apikey)s/encounter-reason/code/%(code)s"
+         },
+		 "encounterSpecialCourtesy":{
+            "location": "%(apikey)s/encounter-special-courtesy/%(_id)d"
+         },
+         "encounterSpecialCourtesyCode":{
+            "location": "%(apikey)s/encounter-special-courtesy/code/%(code)s"
+         },
+		 "encounterSpecialArrangements":{
+            "location": "%(apikey)s/encounter-special-arrangements/%(_id)d"
+         },
+         "encounterSpecialArrangementsCode":{
+            "location": "%(apikey)s/encounter-special-arrangements/code/%(code)s"
+         },
+		 "encounterStatus":{
+            "location": "%(apikey)s/encounter-status/%(_id)d"
+         },
+         "encounterStatusCode":{
+            "location": "%(apikey)s/encounter-status/code/%(code)s"
+         },
+		 "encounterType":{
+            "location": "%(apikey)s/encounter-type/%(_id)d"
+         },
+         "encounterTypeCode":{
+            "location": "%(apikey)s/encounter-type/code/%(code)s"
+         },
+		 "episodeOfCareStatus":{
+            "location": "%(apikey)s/episode-of-care-status/%(_id)d"
+         },
+         "episodeOfCareStatusCode":{
+            "location": "%(apikey)s/episode-of-care-status/code/%(code)s"
+         },
+		 "episodeOfCareType":{
+            "location": "%(apikey)s/episode-of-care-type/%(_id)d"
+         },
+         "episodeOfCareTypeCode":{
+            "location": "%(apikey)s/episode-of-care-type/code/%(code)s"
+         },
+		 "flagStatus":{
+            "location": "%(apikey)s/flag-status/%(_id)d"
+         },
+         "flagStatusCode":{
+            "location": "%(apikey)s/flag-status/code/%(code)s"
+         },
+		 "flagCategory":{
+            "location": "%(apikey)s/flag-category/%(_id)d"
+         },
+         "flagCategoryCode":{
+            "location": "%(apikey)s/flag-category/code/%(code)s"
+         },
+		 "flagCode":{
+            "location": "%(apikey)s/flag-code/%(_id)d"
+         },
+         "flagCodeCode":{
+            "location": "%(apikey)s/flag-code/code/%(code)s"
+         },
+		 "reAdmissionIndicator":{
+            "location": "%(apikey)s/re-admission-indicator/%(_id)d"
+         },
+         "reAdmissionIndicatorCode":{
+            "location": "%(apikey)s/re-admission-indicator/code/%(code)s"
+         }
+      },
+      "POST": {
+         "identityAssuranceLevel": {
+            "location": "%(apikey)s/identity-AssuranceLevel"
+         },
+         "administrativeGender": {
+            "location": "%(apikey)s/administrative-gender"
+         },
+         "maritalStatus": {
+            "location": "%(apikey)s/marital-status"
+         },
+         "contactRole": {
+            "location": "%(apikey)s/contact-role"
+         },
+         "animalSpecies": {
+            "location": "%(apikey)s/animal-species"
+         },
+         "animalBreeds": {
+            "location": "%(apikey)s/animal-breeds"
+         },
+         "animalGenderStatus": {
+            "location": "%(apikey)s/animal-genderstatus"
+         },
+         "languages": {
+            "location": "%(apikey)s/languages"
+         },
+         "linkType": {
+            "location": "%(apikey)s/link-type"
+         },
+         "relatedPersonRelationshipType": {
+            "location": "%(apikey)s/relatedperson-relationshiptype"
+         },
+         "groupType": {
+            "location": "%(apikey)s/group-type"
+         },
+         "identifierUse": {
+            "location": "%(apikey)s/identifier-use"
+         },
+         "identifierType": {
+            "location": "%(apikey)s/identifier-type"
+         },
+         "nameUse": {
+            "location": "%(apikey)s/name-use"
+         },
+         "contactPointSystem": {
+            "location": "%(apikey)s/contact-point-system"
+         },
+         "contactPointUse": {
+            "location": "%(apikey)s/contact-point-use"
+         },
+         "addressUse": {
+            "location": "%(apikey)s/address-use"
+         },
+         "addressType": {
+            "location": "%(apikey)s/address-type"
+         },
+		 "actEncounterCode": {
+            "location": "%(apikey)s/act-encounter-code"
+         },
+		 "actPriority": {
+            "location": "%(apikey)s/act-priority"
+         },
+		 "accountStatus": {
+            "location": "%(apikey)s/account-status"
+         },
+		 "accountType": {
+            "location": "%(apikey)s/account-type"
+         },
+		 "diagnosisRole": {
+            "location": "%(apikey)s/diagnosis-role"
+         },
+		 "encounterAdmitSource": {
+            "location": "%(apikey)s/encounter-admit-source"
+         },
+		 "encounterDiet": {
+            "location": "%(apikey)s/encounter-diet"
+         },
+		 "encounterDischargeDisposition": {
+            "location": "%(apikey)s/encounter-discharge-disposition"
+         },
+		 "encounterLocationStatus": {
+            "location": "%(apikey)s/encounter-location-status"
+         },
+		 "encounterParticipantType": {
+            "location": "%(apikey)s/encounter-participant-type"
+         },
+		 "encounterReason": {
+            "location": "%(apikey)s/encounter-reason"
+         },
+		 "encounterSpecialCourtesy": {
+            "location": "%(apikey)s/encounter-special-courtesy"
+         },
+		 "encounterSpecialArrangements": {
+            "location": "%(apikey)s/encounter-special-arrangements"
+         },
+		 "encounterStatus": {
+            "location": "%(apikey)s/encounter-status"
+         },
+		 "encounterType": {
+            "location": "%(apikey)s/encounter-type"
+         },
+		 "episodeOfCareStatus": {
+            "location": "%(apikey)s/episode-of-care-status"
+         },
+		 "episodeOfCareType": {
+            "location": "%(apikey)s/episode-of-care-type"
+         },
+		 "flagStatus": {
+            "location": "%(apikey)s/flag-status"
+         },
+		 "flagCategory": {
+            "location": "%(apikey)s/flag-category"
+         },
+		 "flagCode": {
+            "location": "%(apikey)s/flag-code"
+         },
+		 "reAdmissionIndicator": {
+            "location": "%(apikey)s/re-admission-indicator"
+         },
+		 "attachment": {
+            "location": "%(apikey)s/attachment"
+         },
+         "identifier": {
+            "location": "%(apikey)s/identifier"
+         },
+         "humanName": {
+            "location": "%(apikey)s/human-name"
+         },
+         "contactPoint": {
+            "location": "%(apikey)s/contact-point"
+         },
+         "address": {
+            "location": "%(apikey)s/address"
+         },
+         "person": {
+            "location": "%(apikey)s/person"
+         },
+         "personLink": {
+            "location": "%(apikey)s/person-link"
+         },
+         "patientAnimal": {
+            "location": "%(apikey)s/patient-animal"
+         },
+         "patient": {
+            "location": "%(apikey)s/patient"
+         },
+         "patientLink": {
+            "location": "%(apikey)s/patient-link"
+         },
+         "patientCommunication": {
+            "location": "%(apikey)s/patient-communication"
+         },
+         "patientContact": {
+            "location": "%(apikey)s/patient-contact"
+         },
+         "relatedPerson": {
+            "location": "%(apikey)s/related-person"
+         },
+         "group": {
+            "location": "%(apikey)s/group"
+         },
+         "groupCharacteristic": {
+            "location": "%(apikey)s/group-characteristic"
+         },
+         "groupMember": {
+            "location": "%(apikey)s/group/%(group_id)s/member"
+         }
+      },
+      "PUT": {
+         "identityAssuranceLevel":{
+            "location": "%(apikey)s/identity-AssuranceLevel/%(_id)d"
+         },
+         "administrativeGender":{
+            "location": "%(apikey)s/administrative-gender/%(_id)d"
+         },
+         "maritalStatus":{
+            "location": "%(apikey)s/marital-status/%(_id)d"
+         },
+         "contactRole":{
+            "location": "%(apikey)s/contact-role/%(_id)d"
+         },
+         "animalSpecies":{
+            "location": "%(apikey)s/animal-species/%(_id)d"
+         },
+         "animalBreeds":{
+            "location": "%(apikey)s/animal-breeds/%(_id)d"
+         },
+         "animalGenderStatus":{
+            "location": "%(apikey)s/animal-genderstatus/%(_id)d"
+         },
+         "languages":{
+            "location": "%(apikey)s/languages/%(_id)d"
+         },
+         "linkType":{
+            "location": "%(apikey)s/link-type/%(_id)d"
+         },
+         "relatedPersonRelationshipType":{
+            "location": "%(apikey)s/relatedperson-relationshiptype/%(_id)d"
+         },
+         "groupType":{
+            "location": "%(apikey)s/group-type/%(_id)d"
+         },
+         "identifierUse":{
+            "location": "%(apikey)s/identifier-use/%(_id)d"
+         },
+         "identifierType":{
+            "location": "%(apikey)s/identifier-type/%(_id)d"
+         },
+         "nameUse":{
+            "location": "%(apikey)s/name-use/%(_id)d"
+         },
+         "contactPointSystem":{
+            "location": "%(apikey)s/contact-point-system/%(_id)d"
+         },
+         "contactPointUse":{
+            "location": "%(apikey)s/contact-point-use/%(_id)d"
+         },
+         "addressUse":{
+            "location": "%(apikey)s/address-use/%(_id)d"
+         },
+         "addressType":{
+            "location": "%(apikey)s/address-type/%(_id)d"
+         },
+		 "actEncounterCode":{
+            "location": "%(apikey)s/act-encounter-code/%(_id)d"
+         },
+		 "actPriority": {
+            "location": "%(apikey)s/act-priority/%(_id)d"
+         },
+		 "accountStatus": {
+            "location": "%(apikey)s/account-status/%(_id)d"
+         },
+		 "accountType": {
+            "location": "%(apikey)s/account-type/%(_id)d"
+         },
+		 "diagnosisRole": {
+            "location": "%(apikey)s/diagnosis-role/%(_id)d"
+         },
+		 "encounterAdmitSource": {
+            "location": "%(apikey)s/encounter-admit-source/%(_id)d"
+         },
+		 "encounterDiet": {
+            "location": "%(apikey)s/encounter-diet/%(_id)d"
+         },
+		 "encounterDischargeDisposition": {
+            "location": "%(apikey)s/encounter-discharge-disposition/%(_id)d"
+         },
+		 "encounterLocationStatus": {
+            "location": "%(apikey)s/encounter-location-status/%(_id)d"
+         },
+		 "encounterParticipantType": {
+            "location": "%(apikey)s/encounter-participant-type/%(_id)d"
+         },
+		 "encounterReason": {
+            "location": "%(apikey)s/encounter-reason/%(_id)d"
+         },
+		 "encounterSpecialCourtesy": {
+            "location": "%(apikey)s/encounter-special-courtesy/%(_id)d"
+         },
+		 "encounterSpecialArrangements": {
+            "location": "%(apikey)s/encounter-special-arrangements/%(_id)d"
+         },
+		 "encounterStatus": {
+            "location": "%(apikey)s/encounter-status/%(_id)d"
+         },
+		 "encounterType": {
+            "location": "%(apikey)s/encounter-type/%(_id)d"
+         },
+		 "episodeOfCareStatus": {
+            "location": "%(apikey)s/episode-of-care-status/%(_id)d"
+         },
+		 "episodeOfCareType": {
+            "location": "%(apikey)s/episode-of-care-type/%(_id)d"
+         },
+		 "flagStatus": {
+            "location": "%(apikey)s/flag-status/%(_id)d"
+         },
+		 "flagCategory": {
+            "location": "%(apikey)s/flag-category/%(_id)d"
+         },
+		 "flagCode": {
+            "location": "%(apikey)s/flag-code/%(_id)d"
+         },
+		 "reAdmissionIndicator": {
+            "location": "%(apikey)s/reAdmissionIndicator/%(_id)d"
+         },
+		 "attachment":{
+            "location": "%(apikey)s/attachment/%(_id)d"
+         }
+      }
+    }
+}
