@@ -29,6 +29,8 @@ app.use(bodyParser.json({limit: '50mb'}))
 
 //import default fhir module
 var DefaultFHIR = require("./default_fhir/controller");
+//import clinical categorization resources
+var ClinicalCategorizationResources = require("./clinical_categorization_resources/controller");
 
 //import patient_registers module
 var Person = require("./patient_registers/person/controller");
@@ -38,6 +40,8 @@ var Group = require("./patient_registers/group/controller");
 
 //import routes
 var routesDefaultFHIR	= require('./default_fhir/routes');
+
+var routesClinicalCategorizationResources = require('./clinical_categorization_resources/routes');
 var routesPerson		= require('./patient_registers/person/routes');
 var routesPatient		= require('./patient_registers/patient/routes');
 var routesRelatedPerson	= require('./patient_registers/related_person/routes');
@@ -45,6 +49,7 @@ var routesGroup			= require('./patient_registers/group/routes');
 
 //setrouting
 routesDefaultFHIR(app, DefaultFHIR);
+routesClinicalCategorizationResources(app, ClinicalCategorizationResources);
 routesPerson(app, Person);
 routesPatient(app, Patient);
 routesRelatedPerson(app, RelatedPerson);

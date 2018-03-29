@@ -28,8 +28,6 @@ app.use(bodyParser.urlencoded({ limit: '50mb', extended: false }))
 // parse application/json
 app.use(bodyParser.json({limit: '50mb'}))
 
-
-
 var Phoenix = {
 			get: {
 				check_apikey: function checkApikey(req, res){
@@ -690,7 +688,6 @@ var Phoenix = {
           },function(e){
             res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "viewJar"});
           });
-        }
 			},
       post:{
         user: function addUser(req, res){
@@ -1583,7 +1580,6 @@ app.delete('/:apikey/cluster/:cluster_id?', Phoenix.delete.cluster);
 app.delete('/:apikey/cluster/:cluster_id?/config/:config_id?', Phoenix.delete.cluster_config);
 
 
-//fhir247
 //import patient_registers module
 var DefaultFHIR = require("./default_fhir/controller");
 var Person = require("./patient_registers/person/controller");
@@ -1604,7 +1600,6 @@ routesPerson(app, Person);
 routesPatient(app, Patient);
 routesRelatedPerson(app, RelatedPerson);
 routesGroup(app, Group);
-//end fhir247
 
 var server = app.listen(port, host, function () {
   console.log("Server running at http://%s:%s", host, port);

@@ -127,6 +127,132 @@
          },
          "addressTypeCode":{
             "location": "%(apikey)s/address-type/code/%(code)s"
+         },
+		    "actEncounterCode":{
+            "location": "%(apikey)s/act-encounter-code/%(_id)d"
+         },
+         "actEncounterCodeCode":{
+            "location": "%(apikey)s/act-encounter-code/code/%(code)s"
+         },
+		    "actPriority":{
+            "location": "%(apikey)s/act-priority/%(_id)d"
+         },
+         "actPriorityCode":{
+            "location": "%(apikey)s/act-priority/code/%(code)s"
+         },
+		    "accountStatus":{
+            "location": "%(apikey)s/account-status/%(_id)d"
+         },
+         "accountStatusCode":{
+            "location": "%(apikey)s/account-status/code/%(code)s"
+         },
+		    "accountType":{
+            "location": "%(apikey)s/account-type/%(_id)d"
+         },
+         "accountTypeCode":{
+            "location": "%(apikey)s/account-type/code/%(code)s"
+         },
+		    "diagnosisRole":{
+            "location": "%(apikey)s/diagnosis-role/%(_id)d"
+         },
+         "diagnosisRoleCode":{
+            "location": "%(apikey)s/diagnosis-role/code/%(code)s"
+         },
+		    "encounterAdmitSource":{
+            "location": "%(apikey)s/encounter-admit-source/%(_id)d"
+         },
+         "encounterAdmitSourceCode":{
+            "location": "%(apikey)s/encounter-admit-source/code/%(code)s"
+         },
+		    "encounterDiet":{
+            "location": "%(apikey)s/encounter-diet/%(_id)d"
+         },
+         "encounterDietCode":{
+            "location": "%(apikey)s/encounter-diet/code/%(code)s"
+         },
+		    "encounterDischargeDisposition":{
+            "location": "%(apikey)s/encounter-discharge-disposition/%(_id)d"
+         },
+         "encounterDischargeDispositionCode":{
+            "location": "%(apikey)s/encounter-discharge-disposition/code/%(code)s"
+         },
+		    "encounterLocationStatus":{
+            "location": "%(apikey)s/encounter-location-status/%(_id)d"
+         },
+         "encounterLocationStatusCode":{
+            "location": "%(apikey)s/encounter-location-status/code/%(code)s"
+         },
+		    "encounterParticipantType":{
+            "location": "%(apikey)s/encounter-participant-type/%(_id)d"
+         },
+         "encounterParticipantTypeCode":{
+            "location": "%(apikey)s/encounter-participant-type/code/%(code)s"
+         },
+		 "encounterReason":{
+            "location": "%(apikey)s/encounter-reason/%(_id)d"
+         },
+         "encounterReasonCode":{
+            "location": "%(apikey)s/encounter-reason/code/%(code)s"
+         },
+		 "encounterSpecialCourtesy":{
+            "location": "%(apikey)s/encounter-special-courtesy/%(_id)d"
+         },
+         "encounterSpecialCourtesyCode":{
+            "location": "%(apikey)s/encounter-special-courtesy/code/%(code)s"
+         },
+		 "encounterSpecialArrangements":{
+            "location": "%(apikey)s/encounter-special-arrangements/%(_id)d"
+         },
+         "encounterSpecialArrangementsCode":{
+            "location": "%(apikey)s/encounter-special-arrangements/code/%(code)s"
+         },
+		 "encounterStatus":{
+            "location": "%(apikey)s/encounter-status/%(_id)d"
+         },
+         "encounterStatusCode":{
+            "location": "%(apikey)s/encounter-status/code/%(code)s"
+         },
+		   "encounterType":{
+            "location": "%(apikey)s/encounter-type/%(_id)d"
+         },
+         "encounterTypeCode":{
+            "location": "%(apikey)s/encounter-type/code/%(code)s"
+         },
+		  "episodeOfCareStatus":{
+            "location": "%(apikey)s/episode-of-care-status/%(_id)d"
+         },
+         "episodeOfCareStatusCode":{
+            "location": "%(apikey)s/episode-of-care-status/code/%(code)s"
+         },
+		    "episodeOfCareType":{
+            "location": "%(apikey)s/episode-of-care-type/%(_id)d"
+         },
+         "episodeOfCareTypeCode":{
+            "location": "%(apikey)s/episode-of-care-type/code/%(code)s"
+         },
+		    "flagStatus":{
+            "location": "%(apikey)s/flag-status/%(_id)d"
+         },
+         "flagStatusCode":{
+            "location": "%(apikey)s/flag-status/code/%(code)s"
+         },
+		    "flagCategory":{
+            "location": "%(apikey)s/flag-category/%(_id)d"
+         },
+         "flagCategoryCode":{
+            "location": "%(apikey)s/flag-category/code/%(code)s"
+         },
+		    "flagCode":{
+            "location": "%(apikey)s/flag-code/%(_id)d"
+         },
+         "flagCodeCode":{
+            "location": "%(apikey)s/flag-code/code/%(code)s"
+         },
+		    "reAdmissionIndicator":{
+            "location": "%(apikey)s/re-admission-indicator/%(_id)d"
+         },
+         "reAdmissionIndicatorCode":{
+            "location": "%(apikey)s/re-admission-indicator/code/%(code)s"
          }
       },
       "POST": {
@@ -184,7 +310,74 @@
          "addressType": {
             "location": "%(apikey)s/address-type"
          },
+<<<<<<< HEAD
          "attachment": {
+=======
+		 "actEncounterCode": {
+            "location": "%(apikey)s/act-encounter-code"
+         },
+		 "actPriority": {
+            "location": "%(apikey)s/act-priority"
+         },
+		 "accountStatus": {
+            "location": "%(apikey)s/account-status"
+         },
+		 "accountType": {
+            "location": "%(apikey)s/account-type"
+         },
+		 "diagnosisRole": {
+            "location": "%(apikey)s/diagnosis-role"
+         },
+		 "encounterAdmitSource": {
+            "location": "%(apikey)s/encounter-admit-source"
+         },
+		 "encounterDiet": {
+            "location": "%(apikey)s/encounter-diet"
+         },
+		 "encounterDischargeDisposition": {
+            "location": "%(apikey)s/encounter-discharge-disposition"
+         },
+		 "encounterLocationStatus": {
+            "location": "%(apikey)s/encounter-location-status"
+         },
+		 "encounterParticipantType": {
+            "location": "%(apikey)s/encounter-participant-type"
+         },
+		 "encounterReason": {
+            "location": "%(apikey)s/encounter-reason"
+         },
+		 "encounterSpecialCourtesy": {
+            "location": "%(apikey)s/encounter-special-courtesy"
+         },
+		 "encounterSpecialArrangements": {
+            "location": "%(apikey)s/encounter-special-arrangements"
+         },
+		 "encounterStatus": {
+            "location": "%(apikey)s/encounter-status"
+         },
+		 "encounterType": {
+            "location": "%(apikey)s/encounter-type"
+         },
+		 "episodeOfCareStatus": {
+            "location": "%(apikey)s/episode-of-care-status"
+         },
+		 "episodeOfCareType": {
+            "location": "%(apikey)s/episode-of-care-type"
+         },
+		 "flagStatus": {
+            "location": "%(apikey)s/flag-status"
+         },
+		 "flagCategory": {
+            "location": "%(apikey)s/flag-category"
+         },
+		 "flagCode": {
+            "location": "%(apikey)s/flag-code"
+         },
+		 "reAdmissionIndicator": {
+            "location": "%(apikey)s/re-admission-indicator"
+         },
+		 "attachment": {
+>>>>>>> bit
             "location": "%(apikey)s/attachment"
          },
          "identifier": {
@@ -220,14 +413,21 @@
          "patientContact": {
             "location": "%(apikey)s/patient-contact"
          },
+<<<<<<< HEAD
          "generalPractitioner": {
             "location": "%(apikey)s/general-practitioner"
          },
+=======
+>>>>>>> bit
          "relatedPerson": {
             "location": "%(apikey)s/related-person"
          },
          "group": {
+<<<<<<< HEAD
             "location": "%(apikey)s/group_"
+=======
+            "location": "%(apikey)s/group"
+>>>>>>> bit
          },
          "groupCharacteristic": {
             "location": "%(apikey)s/group-characteristic"
@@ -291,6 +491,7 @@
          "addressType":{
             "location": "%(apikey)s/address-type/%(_id)d"
          },
+<<<<<<< HEAD
          "attachment":{
             "location": "%(apikey)s/attachment/%(_id)d"
          },
@@ -336,3 +537,74 @@
       }
    }
 }
+=======
+		 "actEncounterCode":{
+            "location": "%(apikey)s/act-encounter-code/%(_id)d"
+         },
+		 "actPriority": {
+            "location": "%(apikey)s/act-priority/%(_id)d"
+         },
+		 "accountStatus": {
+            "location": "%(apikey)s/account-status/%(_id)d"
+         },
+		 "accountType": {
+            "location": "%(apikey)s/account-type/%(_id)d"
+         },
+		 "diagnosisRole": {
+            "location": "%(apikey)s/diagnosis-role/%(_id)d"
+         },
+		 "encounterAdmitSource": {
+            "location": "%(apikey)s/encounter-admit-source/%(_id)d"
+         },
+		 "encounterDiet": {
+            "location": "%(apikey)s/encounter-diet/%(_id)d"
+         },
+		 "encounterDischargeDisposition": {
+            "location": "%(apikey)s/encounter-discharge-disposition/%(_id)d"
+         },
+		 "encounterLocationStatus": {
+            "location": "%(apikey)s/encounter-location-status/%(_id)d"
+         },
+		 "encounterParticipantType": {
+            "location": "%(apikey)s/encounter-participant-type/%(_id)d"
+         },
+		 "encounterReason": {
+            "location": "%(apikey)s/encounter-reason/%(_id)d"
+         },
+		 "encounterSpecialCourtesy": {
+            "location": "%(apikey)s/encounter-special-courtesy/%(_id)d"
+         },
+		 "encounterSpecialArrangements": {
+            "location": "%(apikey)s/encounter-special-arrangements/%(_id)d"
+         },
+		 "encounterStatus": {
+            "location": "%(apikey)s/encounter-status/%(_id)d"
+         },
+		 "encounterType": {
+            "location": "%(apikey)s/encounter-type/%(_id)d"
+         },
+		 "episodeOfCareStatus": {
+            "location": "%(apikey)s/episode-of-care-status/%(_id)d"
+         },
+		 "episodeOfCareType": {
+            "location": "%(apikey)s/episode-of-care-type/%(_id)d"
+         },
+		 "flagStatus": {
+            "location": "%(apikey)s/flag-status/%(_id)d"
+         },
+		 "flagCategory": {
+            "location": "%(apikey)s/flag-category/%(_id)d"
+         },
+		 "flagCode": {
+            "location": "%(apikey)s/flag-code/%(_id)d"
+         },
+		 "reAdmissionIndicator": {
+            "location": "%(apikey)s/reAdmissionIndicator/%(_id)d"
+         },
+		 "attachment":{
+            "location": "%(apikey)s/attachment/%(_id)d"
+         }
+      }
+    }
+}
+>>>>>>> bit
