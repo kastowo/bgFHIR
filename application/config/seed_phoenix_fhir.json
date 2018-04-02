@@ -283,6 +283,114 @@
 			},
 			"reAdmissionIndicatorCode": {
 				"location": "%(apikey)s/re-admission-indicator/code/%(code)s"
+			},
+			"organizationType":{
+				"location": "%(apikey)s/organization-type/%(_id)d"
+			},
+			"organizationTypeCode":{
+			  "location": "%(apikey)s/organization-type/code/%(code)s"
+			},
+			"contactentityType":{
+				"location": "%(apikey)s/contactentity-type/%(_id)d"
+			},
+			"contactentityTypeCode":{
+				"location": "%(apikey)s/contactentity-type/code/%(code)s"
+			},
+			"locationStatus":{
+				"location": "%(apikey)s/location-status/%(_id)d"
+			},
+			"locationStatusCode":{
+				"location": "%(apikey)s/location-status/code/%(code)s"
+			},
+			"bedStatus":{
+				"location": "%(apikey)s/bed-status/%(_id)d"
+			},
+			"bedStatusCode":{
+				"location": "%(apikey)s/bed-status/code/%(code)s"
+			},
+			"locationMode":{
+				"location": "%(apikey)s/location-mode/%(_id)d"
+			},
+			"locationModeCode":{
+				"location": "%(apikey)s/location-mode/code/%(code)s"
+			},
+			"serviceDeliveryLocationRoleType":{
+				"location": "%(apikey)s/service-delivery-location-role-type/%(_id)d"
+			},
+			"serviceDeliveryLocationRoleTypeCode":{
+				"location": "%(apikey)s/service-delivery-location-role-type/code/%(code)s"
+			},
+			"locationPhysicalType":{
+				"location": "%(apikey)s/location-physical-type/%(_id)d"
+			},
+			"locationPhysicalTypeCode":{
+				"location": "%(apikey)s/location-physical-type/code/%(code)s"
+			},
+			"qualificationCode":{
+				"location": "%(apikey)s/qualification-code/%(_id)d"
+			},
+			"qualificationCodeCode":{
+				"location": "%(apikey)s/qualification-code/code/%(code)s"
+			},
+			"practitionerRoleCode":{
+				"location": "%(apikey)s/practitioner-role-code/%(_id)d"
+			},
+			"practitionerRoleCodeCode":{
+				"location": "%(apikey)s/practitioner-role-code/code/%(code)s"
+			},
+			"practiceCode":{
+				"location": "%(apikey)s/practice-code/%(_id)d"
+			},
+			"practiceCodeCode":{
+				"location": "%(apikey)s/practice-code/code/%(code)s"
+			},
+			"daysOfWeek":{
+				"location": "%(apikey)s/days-of-week/%(_id)d"
+			},
+			"daysOfWeekCode":{
+				"location": "%(apikey)s/days-of-week/code/%(code)s"
+			},
+			"serviceCategory":{
+				"location": "%(apikey)s/service-category/%(_id)d"
+			},
+			"serviceCategoryCode":{
+				"location": "%(apikey)s/service-category/code/%(code)s"
+			},
+			"serviceType":{
+				"location": "%(apikey)s/service-type/%(_id)d"
+			},
+			"serviceTypeCode":{
+				"location": "%(apikey)s/service-type/code/%(code)s"
+			},
+			"serviceProvisionConditions":{
+				"location": "%(apikey)s/service-provision-conditions/%(_id)d"
+			},
+			"serviceProvisionConditionsCode":{
+				"location": "%(apikey)s/service-provision-conditions/code/%(code)s"
+			},
+			"serviceReferralMethod":{
+				"location": "%(apikey)s/service-referral-method/%(_id)d"
+			},
+			"serviceReferralMethodCode":{
+				"location": "%(apikey)s/service-referral-method/code/%(code)s"
+			},
+			"endpointStatus":{
+				"location": "%(apikey)s/endpoint-status/%(_id)d"
+			},
+			"endpointStatusCode":{
+				"location": "%(apikey)s/endpoint-status/code/%(code)s"
+			},
+			"endpointConnectionType":{
+				"location": "%(apikey)s/endpoint-connection-type/%(_id)d"
+			},
+			"endpointConnectionTypeCode":{
+				"location": "%(apikey)s/endpoint-connection-type/code/%(code)s"
+			},
+			"endpointPayloadType":{
+				"location": "%(apikey)s/endpoint-payload-type/%(_id)d"
+			},
+			"endpointPayloadTypeCode":{
+				"location": "%(apikey)s/endpoint-payload-type/code/%(code)s"
 			}
 		},
 		"POST": {
@@ -474,6 +582,96 @@
 			},
 			"reAdmissionIndicator": {
 				"location": "%(apikey)s/re-admission-indicator"
+			},
+			"organizationType":{
+				"location": "%(apikey)s/organization-type"
+			},
+			"contactentityType":{
+				"location": "%(apikey)s/contactentity-type"
+			},
+			"locationStatus":{
+				"location": "%(apikey)s/location-status"
+			},
+			"bedStatus":{
+				"location": "%(apikey)s/bed-status"
+			},
+			"locationMode":{
+				"location": "%(apikey)s/location-mode"
+			},
+			"serviceDeliveryLocationRoleType":{
+				"location": "%(apikey)s/service-delivery-location-role-type"
+			},
+			"locationPhysicalType":{
+				"location": "%(apikey)s/location-physical-type"
+			},
+			"qualificationCode":{
+				"location": "%(apikey)s/qualification-code"
+			},
+			"practitionerRoleCode":{
+				"location": "%(apikey)s/practitioner-role-code"
+			},
+			"practiceCode":{
+				"location": "%(apikey)s/practice-code"
+			},
+			"daysOfWeek":{
+				"location": "%(apikey)s/days-of-week"
+			},
+			"serviceCategory":{
+				"location": "%(apikey)s/service-category"
+			},
+			"serviceType":{
+				"location": "%(apikey)s/service-type"
+			},
+			"serviceProvisionConditions":{
+				"location": "%(apikey)s/service-provision-conditions"
+			},
+			"serviceReferralMethod":{
+				"location": "%(apikey)s/service-referral-method"
+			},
+			"endpointStatus":{
+				"location": "%(apikey)s/endpoint-status"
+			},
+			"endpointConnectionType":{
+				"location": "%(apikey)s/endpoint-connection-type"
+			},
+			"endpointPayloadType":{
+				"location": "%(apikey)s/endpoint-payload-type"
+			},
+			"organization":{
+				"location": "%(apikey)s/Organization"
+			},
+			"organizationContact":{
+				"location": "%(apikey)s/organizationContact"
+			},
+			"endpoint":{
+				"location": "%(apikey)s/Endpoint"
+			},
+			"location":{
+				"location": "%(apikey)s/Location"
+			},
+			"locationPosition":{
+				"location": "%(apikey)s/LocationPosition"
+			},
+			"practitioner":{
+				"location": "%(apikey)s/Practitioner"
+			},
+			"qualification":{
+				"location": "%(apikey)s/Qualification"
+			},
+			"practitionerCommunication":{
+				"location": "%(apikey)s/PractitionerCommunication"
+			},
+			"practitionerRole":{
+				"location": "%(apikey)s/PractitionerRole"
+			},
+			"availableTime":{
+				"location": "%(apikey)s/AvailableTime"
+			},
+			"notAvailable":{
+				"location": "%(apikey)s/NotAvailable"
+			},
+			"healthcareService":{
+				"location": "%(apikey)s/HealthcareService"
 			}
 		},
 		"PUT": {
@@ -650,6 +848,63 @@
 			},
 			"reAdmissionIndicator": {
 				"location": "%(apikey)s/reAdmissionIndicator/%(_id)d"
+			},
+			"organizationType":{
+				"location": "%(apikey)s/organization-type/%(_id)d"
+			},
+			"contactentityType":{
+				"location": "%(apikey)s/contactentity-type/%(_id)d"
+			},
+			"locationStatus":{
+				"location": "%(apikey)s/location-status/%(_id)d"
+			},
+			"bedStatus":{
+				"location": "%(apikey)s/bed-status/%(_id)d"
+			},
+			"locationMode":{
+				"location": "%(apikey)s/location-mode/%(_id)d"
+			},
+			"locationMode":{
+				"location": "%(apikey)s/location-mode/%(_id)d"
+			},
+			"serviceDeliveryLocationRoleType":{
+				"location": "%(apikey)s/service-delivery-location-role-type/%(_id)d"
+			},
+			"locationPhysicalType":{
+				"location": "%(apikey)s/location-physical-type/%(_id)d"
+			},
+			"qualificationCode":{
+				"location": "%(apikey)s/qualification-code/%(_id)d"
+			},
+			"practitionerRoleCode":{
+				"location": "%(apikey)s/practitioner-role-code/%(_id)d"
+			},
+			"practiceCode":{
+				"location": "%(apikey)s/practice-code/%(_id)d"
+			},
+			"daysOfWeek":{
+				"location": "%(apikey)s/days-of-week/%(_id)d"
+			},
+			"serviceType":{
+				"location": "%(apikey)s/service-type/%(_id)d"
+			},
+			"serviceCategory":{
+				"location": "%(apikey)s/service-category/%(_id)d"
+			},
+			"serviceProvisionConditions":{
+				"location": "%(apikey)s/service-provision-conditions/%(_id)d"
+			},
+			"serviceReferralMethod":{
+				"location": "%(apikey)s/service-referral-method/%(_id)d"
+			},
+			"endpointStatus":{
+				"location": "%(apikey)s/endpoint-status/%(_id)d"
+			},
+			"endpointConnectionType":{
+				"location": "%(apikey)s/endpoint-connection-type/%(_id)d"
+			},
+			"endpointPayloadType":{
+				"location": "%(apikey)s/endpoint-payload-type/%(_id)d"
 			}
 		}
 	}

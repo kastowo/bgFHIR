@@ -1587,6 +1587,14 @@ var Person = require("./patient_registers/person/controller");
 var Patient = require("./patient_registers/patient/controller");
 var RelatedPerson = require("./patient_registers/related_person/controller");
 var Group = require("./patient_registers/group/controller");
+// hardika add controller service provider directory resources
+var Organization = require("./service_provider_directory_resources/organization/controller");
+var Endpoint = require("./service_provider_directory_resources/endpoint/controller");
+var Location = require("./service_provider_directory_resources/location/controller");
+var Practitioner = require("./service_provider_directory_resources/practitioner/controller");
+var PractitionerRole = require("./service_provider_directory_resources/practitionerRole/controller");
+var HealthcareService = require("./service_provider_directory_resources/healthcareService/controller");
+// hardika end
 
 //import routes
 var routesDefaultFHIR    = require('./default_fhir/routes');  
@@ -1594,6 +1602,15 @@ var routesPerson    = require('./patient_registers/person/routes');
 var routesPatient    = require('./patient_registers/patient/routes');  
 var routesRelatedPerson    = require('./patient_registers/related_person/routes');  
 var routesGroup    = require('./patient_registers/group/routes');  
+//hardika add routes service provider directory resources
+var routesOrganization = require('./service_provider_directory_resources/organization/routes');
+var routesEndpoint = require('./service_provider_directory_resources/endpoint/routes');
+var routesLocation = require('./service_provider_directory_resources/location/routes');
+var routesPractitioner = require('./service_provider_directory_resources/practitioner/routes');
+var routesPractitionerRole = require('./service_provider_directory_resources/practitionerRole/routes');
+var routesHealthcareService = require('./service_provider_directory_resources/healthcareService/routes');
+//hardika end routes
+
 
 //setrouting
 routesDefaultFHIR(app, DefaultFHIR);
@@ -1601,6 +1618,14 @@ routesPerson(app, Person);
 routesPatient(app, Patient);
 routesRelatedPerson(app, RelatedPerson);
 routesGroup(app, Group);
+//setrouting add hcs service provider directory resources
+routesOrganization(app, Organization);
+routesEndpoint(app, Endpoint);
+routesLocation(app, Location);
+routesPractitioner(app, Practitioner);
+routesPractitionerRole(app, PractitionerRole);
+routesHealthcareService(app, HealthcareService);
+//setrouting end hcs
 
 var server = app.listen(port, host, function () {
   console.log("Server running at http://%s:%s", host, port);

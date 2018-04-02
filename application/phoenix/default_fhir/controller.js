@@ -143,6 +143,13 @@ var controller = {
 			var personId = req.query.person_id;
 			var patientId = req.query.patient_id;
 			var relatedPersonId = req.query.related_person_id;
+			var organizationId = req.query.organization_id;
+			var endpointId = req.query.endpoint_id;
+			var practitionerId = req.query.practitioner_id;
+			var qualificationId = req.query.qualification_id;
+			var qualificationId = req.query.qualification_id;
+			var practitionerRoleId = req.query.practitioner_role_id;
+			var healthcareServiceId = req.query.healthcare_service_id;
 
 			//susun query
 			var condition = "";
@@ -166,6 +173,31 @@ var controller = {
 				condition += "i.related_person_id = '" + relatedPersonId + "' AND ";
 				systemURI = hostFHIR + ':' + portFHIR + '/' + apikey + '/RelatedPerson/' + relatedPersonId + '/Identifier/';
 			}
+
+			if(typeof organizationId !== 'undefined' && organizationId !== ""){
+        condition += "org.organization_id = '" + organizationId + "' AND,";  
+      }
+			
+			if(typeof endpointId !== 'undefined' && endpointId !== ""){
+        condition += "i.endpoint_id = '" + endpointId + "' AND,";  
+      }
+			
+			if(typeof practitionerId !== 'undefined' && practitionerId !== ""){
+        condition += "practitioner_id = '" + practitionerId + "' AND,";  
+      }
+			
+			if(typeof qualificationId !== 'undefined' && qualificationId !== ""){
+        condition += "qualification_id = '" + qualificationId + "' AND,";  
+      }
+			
+			if(typeof practitionerRoleId !== 'undefined' && practitionerRoleId !== ""){
+        condition += "practitioner_role_id = '" + practitionerRoleId + "' AND,";  
+      }
+			
+			if(typeof healthcareServiceId !== 'undefined' && healthcareServiceId !== ""){
+        condition += "healthcare_service_id = '" + healthcareServiceId + "' AND,";  
+      }
+
 
 			if (condition == "") {
 				fixCondition = "";
@@ -208,6 +240,7 @@ var controller = {
 			var personId = req.query.person_id;
 			var patientId = req.query.patient_id;
 			var relatedPersonId = req.query.related_person_id;
+			var practitionerId = req.query.practitioner_id;
 
 			//susun query
 			var condition = "";
@@ -227,6 +260,10 @@ var controller = {
 			if (typeof relatedPersonId !== 'undefined' && relatedPersonId !== "") {
 				condition += "related_person_id = '" + relatedPersonId + "' AND ";
 			}
+
+			if(typeof practitionerId !== 'undefined' && practitionerId !== ""){
+        condition += "practitioner_id = '" + practitionerId + "' AND,";  
+      }
 
 			if (condition == "") {
 				fixCondition = "";
@@ -282,6 +319,12 @@ var controller = {
 			var patientId = req.query.patient_id;
 			var patientContactId = req.query.patient_contact_id;
 			var relatedPersonId = req.query.related_person_id;
+			var organizationId = req.query.organization_id;
+			var endpointId  = req.query.endpoint_id;
+			var locationId = req.query.location_id;
+			var practitionerId = req.query.practitioner_id;
+			var practitionerRoleId = req.query.practitioner_role_id;
+			var healthcareServiceId = req.query.healthcare_service_id;
 
 			//susun query
 			var condition = "";
@@ -305,6 +348,30 @@ var controller = {
 			if (typeof relatedPersonId !== 'undefined' && relatedPersonId !== "") {
 				condition += "related_person_id = '" + relatedPersonId + "' AND ";
 			}
+
+			if(typeof organizationId !== 'undefined' && organizationId !== ""){
+        condition += "organization_id = '" + organizationId + "' AND,";  
+      }
+			
+			if(typeof endpointId !== 'undefined' && endpointId !== ""){
+        condition += "endpoint_id = '" + endpointId + "' AND,";  
+      }
+			
+			if(typeof locationId !== 'undefined' && locationId !== ""){
+        condition += "location_id = '" + locationId + "' AND,";  
+      }
+			
+			if(typeof practitionerId !== 'undefined' && practitionerId !== ""){
+        condition += "practitioner_id = '" + practitionerId + "' AND,";  
+      }			
+			
+			if(typeof practitionerRoleId !== 'undefined' && practitionerRoleId !== ""){
+        condition += "practitioner_role_id = '" + practitionerRoleId + "' AND,";  
+      }
+			
+			if(typeof healthcareServiceId !== 'undefined' && healthcareServiceId !== ""){
+        condition += "healthcare_service_id = '" + healthcareServiceId + "' AND,";  
+      }
 
 			if (condition == "") {
 				fixCondition = "";
@@ -357,6 +424,9 @@ var controller = {
 			var personId = req.query.person_id;
 			var patientId = req.query.patient_id;
 			var relatedPersonId = req.query.related_person_id;
+			var organizationId = req.query.organization_id;
+			var addressId = req.query.address_id;
+			var practitionerId = req.query.practitioner_id;
 
 			//susun query
 			var condition = "";
@@ -376,6 +446,18 @@ var controller = {
 			if (typeof relatedPersonId !== 'undefined' && relatedPersonId !== "") {
 				condition += "related_person_id = '" + relatedPersonId + "' AND ";
 			}
+
+			if(typeof organizationId !== 'undefined' && organizationId !== ""){
+        condition += "organization_id = '" + organizationId + "' AND,";  
+      }
+			
+			if(typeof addressId !== 'undefined' && addressId !== ""){
+        condition += "address_id = '" + addressId + "' AND,";  
+      }
+			
+			if(typeof practitionerId !== 'undefined' && practitionerId !== ""){
+        condition += "practitioner_id = '" + practitionerId + "' AND,";  
+      }
 
 			if (condition == "") {
 				fixCondition = "";
@@ -434,6 +516,7 @@ var controller = {
 			var patientId = req.query.patient_id;
 			var relatedPersonId = req.query.related_person_id;
 			var personId = req.query.person_id;
+			var practitionerId = req.query.practitioner_id;
 
 			//susun query
 			var condition = "";
@@ -456,6 +539,10 @@ var controller = {
 			if (typeof personId !== 'undefined' && personId !== "") {
 				systemURI = hostFHIR + ':' + portFHIR + '/' + apikey + '/Person/' + personId + '/Photo/';
 			}
+
+			if(typeof practitionerId !== 'undefined' && practitionerId !== ""){
+        condition += "practitioner_id = '" + practitionerId + "' AND,";  
+      }
 
 			if (condition == "") {
 				fixCondition = "";
@@ -2520,6 +2607,629 @@ var controller = {
 				});
 			});
 		},
+		//hardika add service provider directory resources
+		organizationType: function getOrganizationType(req, res){
+      _id = req.params._id;
+
+      if(_id == 0){
+        condition = "";
+      }else{
+        condition = "WHERE id = "+ _id;
+      }
+
+      var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.ORGANIZATION_TYPE " + condition;
+      
+      db.query(query,function(dataJson){
+        rez = lowercaseObject(dataJson);
+        res.json({"err_code":0,"data":rez});
+      },function(e){
+        res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "getOrganizationType"});
+      });
+    },
+		organizationTypeCode: function getOrganizationTypeCode(req, res){
+      code = req.params.code;
+
+      var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.ORGANIZATION_TYPE WHERE code = '" + code + "' ";
+      
+      db.query(query,function(dataJson){
+        rez = lowercaseObject(dataJson);
+        res.json({"err_code":0,"data":rez});
+      },function(e){
+        res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "getOrganizationTypeCode"});
+      });
+    },
+		contactentityType: function getContactentityType(req, res){
+      _id = req.params._id;
+
+      if(_id == 0){
+        condition = "";
+      }else{
+        condition = "WHERE id = "+ _id;
+      }
+
+      var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.CONTACT_ENTITY_TYPE " + condition;
+      
+      db.query(query,function(dataJson){
+        rez = lowercaseObject(dataJson);
+        res.json({"err_code":0,"data":rez});
+      },function(e){
+        res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "getContactentityType"});
+      });
+    },
+		contactentityTypeCode: function getContactentityTypeCode(req, res){
+      code = req.params.code;
+
+      var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.CONTACT_ENTITY_TYPE WHERE code = '" + code + "' ";
+      
+      db.query(query,function(dataJson){
+        rez = lowercaseObject(dataJson);
+        res.json({"err_code":0,"data":rez});
+      },function(e){
+        res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "getContactentityTypeCode"});
+      });
+    },
+		locationStatus	: function getLocationStatus(req, res){
+      _id = req.params._id;
+
+      if(_id == 0){
+        condition = "";
+      }else{
+        condition = "WHERE id = "+ _id;
+      }
+
+      var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.LOCATION_STATUS " + condition;
+      
+      db.query(query,function(dataJson){
+        rez = lowercaseObject(dataJson);
+        res.json({"err_code":0,"data":rez});
+      },function(e){
+        res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "getLocationStatus"});
+      });
+    },
+		locationStatusCode: function getLocationStatusCode(req, res){
+      code = req.params.code;
+
+      var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.LOCATION_STATUS WHERE code = '" + code + "' ";
+      
+      db.query(query,function(dataJson){
+        rez = lowercaseObject(dataJson);
+        res.json({"err_code":0,"data":rez});
+      },function(e){
+        res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "getLocationStatusCode"});
+      });
+    },
+		bedStatus	: function getBedStatus(req, res){
+      _id = req.params._id;
+
+      if(_id == 0){
+        condition = "";
+      }else{
+        condition = "WHERE id = "+ _id;
+      }
+
+      var query = "SELECT id, code, description FROM BACIRO_FHIR.BED_STATUS " + condition;
+      
+      db.query(query,function(dataJson){
+        rez = lowercaseObject(dataJson);
+        res.json({"err_code":0,"data":rez});
+      },function(e){
+        res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "getBedStatus"});
+      });
+    },
+		bedStatusCode: function getBedStatusCode(req, res){
+      code = req.params.code;
+
+      var query = "SELECT id, code, description FROM BACIRO_FHIR.BED_STATUS WHERE code = '" + code + "' ";
+      
+      db.query(query,function(dataJson){
+        rez = lowercaseObject(dataJson);
+        res.json({"err_code":0,"data":rez});
+      },function(e){
+        res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "getBedStatusCode"});
+      });
+    },
+		locationMode	: function getLocationMode(req, res){
+      _id = req.params._id;
+
+      if(_id == 0){
+        condition = "";
+      }else{
+        condition = "WHERE id = "+ _id;
+      }
+
+      var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.LOCATION_MODE " + condition;
+      
+      db.query(query,function(dataJson){
+        rez = lowercaseObject(dataJson);
+        res.json({"err_code":0,"data":rez});
+      },function(e){
+        res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "getLocationMode"});
+      });
+    },
+		locationModeCode: function getLocationModeCode(req, res){
+      code = req.params.code;
+
+      var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.LOCATION_MODE WHERE code = '" + code + "' ";
+      
+      db.query(query,function(dataJson){
+        rez = lowercaseObject(dataJson);
+        res.json({"err_code":0,"data":rez});
+      },function(e){
+        res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "getLocationModeCode"});
+      });
+    },
+		serviceDeliveryLocationRoleType	: function getServiceDeliveryLocationRoleType(req, res){
+      _id = req.params._id;
+
+      if(_id == 0){
+        condition = "";
+      }else{
+        condition = "WHERE id = "+ _id;
+      }
+
+      var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.SERVICE_DELIVERY_LOCATION_ROLE_TYPE " + condition;
+      
+      db.query(query,function(dataJson){
+        rez = lowercaseObject(dataJson);
+        res.json({"err_code":0,"data":rez});
+      },function(e){
+        res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "getServiceDeliveryLocationRoleType"});
+      });
+    },
+		serviceDeliveryLocationRoleTypeCode: function getServiceDeliveryLocationRoleTypeCode(req, res){
+      code = req.params.code;
+
+      var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.SERVICE_DELIVERY_LOCATION_ROLE_TYPE WHERE code = '" + code + "' ";
+      
+      db.query(query,function(dataJson){
+        rez = lowercaseObject(dataJson);
+        res.json({"err_code":0,"data":rez});
+      },function(e){
+        res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "getServiceDeliveryLocationRoleTypeCode"});
+      });
+    },
+		locationPhysicalType	: function getLocationPhysicalType(req, res){
+      _id = req.params._id;
+
+      if(_id == 0){
+        condition = "";
+      }else{
+        condition = "WHERE id = "+ _id;
+      }
+
+      var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.LOCATION_PHYSICAL_TYPE " + condition;
+      
+      db.query(query,function(dataJson){
+        rez = lowercaseObject(dataJson);
+        res.json({"err_code":0,"data":rez});
+      },function(e){
+        res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "getLocationPhysicalType"});
+      });
+    },
+		locationPhysicalTypeCode: function getLocationPhysicalTypeCode(req, res){
+      code = req.params.code;
+
+      var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.LOCATION_PHYSICAL_TYPE WHERE code = '" + code + "' ";
+      
+      db.query(query,function(dataJson){
+        rez = lowercaseObject(dataJson);
+        res.json({"err_code":0,"data":rez});
+      },function(e){
+        res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "getLocationPhysicalTypeCode"});
+      });
+    },
+		qualificationCode	: function getQualificationCode(req, res){
+      _id = req.params._id;
+
+      if(_id == 0){
+        condition = "";
+      }else{
+        condition = "WHERE id = "+ _id;
+      }
+
+      var query = "SELECT id, code, description FROM BACIRO_FHIR.QUALIFICATION_CODE " + condition;
+      
+      db.query(query,function(dataJson){
+        rez = lowercaseObject(dataJson);
+        res.json({"err_code":0,"data":rez});
+      },function(e){
+        res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "getQualificationCode"});
+      });
+    },
+		qualificationCodeCode: function getQualificationCodeCode(req, res){
+      code = req.params.code;
+
+      var query = "SELECT id, code, description FROM BACIRO_FHIR.QUALIFICATION_CODE WHERE code = '" + code + "' ";
+      
+      db.query(query,function(dataJson){
+        rez = lowercaseObject(dataJson);
+        res.json({"err_code":0,"data":rez});
+      },function(e){
+        res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "getQualificationCodeCode"});
+      });
+    },
+		practitionerRoleCode	: function getPractitionerRoleCode(req, res){
+      _id = req.params._id;
+
+      if(_id == 0){
+        condition = "";
+      }else{
+        condition = "WHERE id = "+ _id;
+      }
+
+      /*var query = "SELECT practitioner_role_id, practitioner_role_active, practitioner_role_period_start, practitioner_role_period_end, practitioner_id, organization_id,practitioner_role_code, practitioner_role_speciality, practitioner_role_availability_exceptions FROM BACIRO_FHIR.PRACTITIONER_ROLE " + condition;*/
+      var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.PRACTITIONER_ROLE_CODE " + condition;
+      db.query(query,function(dataJson){
+        rez = lowercaseObject(dataJson);
+        res.json({"err_code":0,"data":rez});
+      },function(e){
+        res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "getPractitionerRoleCode"});
+      });
+    },
+		practitionerRoleCodeCode: function getPractitionerRoleCodeCode(req, res){
+      code = req.params.code;
+
+      /*var query = "SELECT practitioner_role_id, practitioner_role_active, practitioner_role_period_start, practitioner_role_period_end, practitioner_id, organization_id,practitioner_role_code, practitioner_role_speciality, practitioner_role_availability_exceptions FROM BACIRO_FHIR.PRACTITIONER_ROLE WHERE code = '" + code + "' ";*/
+			var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.PRACTITIONER_ROLE_CODE WHERE code = '" + code + "' ";
+      
+      db.query(query,function(dataJson){
+        rez = lowercaseObject(dataJson);
+        res.json({"err_code":0,"data":rez});
+      },function(e){
+        res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "getPractitionerRoleCodeCode"});
+      });
+    },
+		practiceCode	: function getPracticeCode(req, res){
+      _id = req.params._id;
+
+      if(_id == 0){
+        condition = "";
+      }else{
+        condition = "WHERE id = "+ _id;
+      }
+
+      var query = "SELECT id, code, display FROM BACIRO_FHIR.PRACTICE_CODE " + condition;
+      
+      db.query(query,function(dataJson){
+        rez = lowercaseObject(dataJson);
+        res.json({"err_code":0,"data":rez});
+      },function(e){
+        res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "getPracticeCode"});
+      });
+    },
+		practiceCodeCode: function getPracticeCodeCode(req, res){
+      code = req.params.code;
+
+      var query = "SELECT id, code, display FROM BACIRO_FHIR.PRACTICE_CODE WHERE code = '" + code + "' ";
+      
+      db.query(query,function(dataJson){
+        rez = lowercaseObject(dataJson);
+        res.json({"err_code":0,"data":rez});
+      },function(e){
+        res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "getPracticeCodeCode"});
+      });
+    },
+		daysOfWeek	: function getDaysOfWeek(req, res){
+      _id = req.params._id;
+
+      if(_id == 0){
+        condition = "";
+      }else{
+        condition = "WHERE id = "+ _id;
+      }
+
+      var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.DAYS_OF_WEEK " + condition;
+      
+      db.query(query,function(dataJson){
+        rez = lowercaseObject(dataJson);
+        res.json({"err_code":0,"data":rez});
+      },function(e){
+        res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "getDaysOfWeek"});
+      });
+    },
+		daysOfWeekCode: function getDaysOfWeekCode(req, res){
+      code = req.params.code;
+
+      var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.DAYS_OF_WEEK WHERE code = '" + code + "' ";
+      
+      db.query(query,function(dataJson){
+        rez = lowercaseObject(dataJson);
+        res.json({"err_code":0,"data":rez});
+      },function(e){
+        res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "getDaysOfWeekCode"});
+      });
+    },
+		serviceCategory	: function getServiceCategory(req, res){
+      _id = req.params._id;
+
+      if(_id == 0){
+        condition = "";
+      }else{
+        condition = "WHERE id = "+ _id;
+      }
+
+      var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.SERVICE_CATEGORY " + condition;
+      
+      db.query(query,function(dataJson){
+        rez = lowercaseObject(dataJson);
+        res.json({"err_code":0,"data":rez});
+      },function(e){
+        res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "getServiceCategory"});
+      });
+    },
+		serviceCategoryCode: function getServiceCategoryCode(req, res){
+      code = req.params.code;
+
+      var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.SERVICE_CATEGORY WHERE code = '" + code + "' ";
+      
+      db.query(query,function(dataJson){
+        rez = lowercaseObject(dataJson);
+        res.json({"err_code":0,"data":rez});
+      },function(e){
+        res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "getServiceCategoryCode"});
+      });
+    },
+		serviceType	: function getServiceType(req, res){
+      _id = req.params._id;
+
+      if(_id == 0){
+        condition = "";
+      }else{
+        condition = "WHERE id = "+ _id;
+      }
+
+      var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.SERVICE_TYPE " + condition;
+      
+      db.query(query,function(dataJson){
+        rez = lowercaseObject(dataJson);
+        res.json({"err_code":0,"data":rez});
+      },function(e){
+        res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "getServiceType"});
+      });
+    },
+		serviceTypeCode: function getServiceTypeCode(req, res){
+      code = req.params.code;
+
+      var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.SERVICE_TYPE WHERE code = '" + code + "' ";
+      
+      db.query(query,function(dataJson){
+        rez = lowercaseObject(dataJson);
+        res.json({"err_code":0,"data":rez});
+      },function(e){
+        res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "getServiceTypeCode"});
+      });
+    },
+		serviceProvisionConditions	: function getServiceProvisionConditions(req, res){
+      _id = req.params._id;
+
+      if(_id == 0){
+        condition = "";
+      }else{
+        condition = "WHERE id = "+ _id;
+      }
+
+      var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.SERVICE_PROVISION_CONDITIONS " + condition;
+      
+      db.query(query,function(dataJson){
+        rez = lowercaseObject(dataJson);
+        res.json({"err_code":0,"data":rez});
+      },function(e){
+        res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "getServiceProvisionConditions"});
+      });
+    },
+		serviceProvisionConditionsCode: function getServiceProvisionConditionsCode(req, res){
+      code = req.params.code;
+
+      var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.SERVICE_PROVISION_CONDITIONS WHERE code = '" + code + "' ";
+      
+      db.query(query,function(dataJson){
+        rez = lowercaseObject(dataJson);
+        res.json({"err_code":0,"data":rez});
+      },function(e){
+        res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "getServiceProvisionConditionsCode"});
+      });
+    },
+		serviceReferralMethod	: function getServiceReferralMethod(req, res){
+      _id = req.params._id;
+
+      if(_id == 0){
+        condition = "";
+      }else{
+        condition = "WHERE id = "+ _id;
+      }
+
+      var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.SERVICE_REFERRAL_METHOD " + condition;
+      
+      db.query(query,function(dataJson){
+        rez = lowercaseObject(dataJson);
+        res.json({"err_code":0,"data":rez});
+      },function(e){
+        res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "getServiceReferralMethod"});
+      });
+    },
+		serviceReferralMethodCode: function getServiceReferralMethodCode(req, res){
+      code = req.params.code;
+
+      var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.SERVICE_REFERRAL_METHOD WHERE code = '" + code + "' ";
+      
+      db.query(query,function(dataJson){
+        rez = lowercaseObject(dataJson);
+        res.json({"err_code":0,"data":rez});
+      },function(e){
+        res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "getServiceReferralMethodCode"});
+      });
+    },
+		endpointStatus	: function getEndpointStatus(req, res){
+      _id = req.params._id;
+
+      if(_id == 0){
+        condition = "";
+      }else{
+        condition = "WHERE id = "+ _id;
+      }
+
+      var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.ENDPOINT_STATUS " + condition;
+      
+      db.query(query,function(dataJson){
+        rez = lowercaseObject(dataJson);
+        res.json({"err_code":0,"data":rez});
+      },function(e){
+        res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "getEndpointStatus"});
+      });
+    },
+		endpointStatusCode: function getEndpointStatusCode(req, res){
+      code = req.params.code;
+
+      var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.ENDPOINT_STATUS WHERE code = '" + code + "' ";
+      
+      db.query(query,function(dataJson){
+        rez = lowercaseObject(dataJson);
+        res.json({"err_code":0,"data":rez});
+      },function(e){
+        res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "getEndpointStatusCode"});
+      });
+    },
+		endpointConnectionType	: function getEndpointConnectionType(req, res){
+      _id = req.params._id;
+
+      if(_id == 0){
+        condition = "";
+      }else{
+        condition = "WHERE id = "+ _id;
+      }
+
+      var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.ENDPOINT_CONNECTION_TYPE " + condition;
+      
+      db.query(query,function(dataJson){
+        rez = lowercaseObject(dataJson);
+        res.json({"err_code":0,"data":rez});
+      },function(e){
+        res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "getEndpointConnectionType"});
+      });
+    },
+		endpointConnectionTypeCode: function getEndpointConnectionTypeCode(req, res){
+      code = req.params.code;
+
+      var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.ENDPOINT_CONNECTION_TYPE WHERE code = '" + code + "' ";
+      
+      db.query(query,function(dataJson){
+        rez = lowercaseObject(dataJson);
+        res.json({"err_code":0,"data":rez});
+      },function(e){
+        res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "getEndpointConnectionTypeCode"});
+      });
+    },
+		endpointPayloadType	: function getEndpointPayloadType(req, res){
+      _id = req.params._id;
+
+      if(_id == 0){
+        condition = "";
+      }else{
+        condition = "WHERE id = "+ _id;
+      }
+
+      var query = "SELECT id, code, display FROM BACIRO_FHIR.ENDPOINT_PAYLOAD_TYPE " + condition;
+      
+      db.query(query,function(dataJson){
+        rez = lowercaseObject(dataJson);
+        res.json({"err_code":0,"data":rez});
+      },function(e){
+        res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "getEndpointPayloadType"});
+      });
+    },
+		endpointPayloadTypeCode: function getEndpointPayloadTypeCode(req, res){
+      code = req.params.code;
+
+      var query = "SELECT id, code, display FROM BACIRO_FHIR.ENDPOINT_PAYLOAD_TYPE WHERE code = '" + code + "' ";
+      
+      db.query(query,function(dataJson){
+        rez = lowercaseObject(dataJson);
+        res.json({"err_code":0,"data":rez});
+      },function(e){
+        res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "getEndpointPayloadTypeCode"});
+      });
+    },
+		availableTime: function getAvailableTime(req, res){
+			var practitionerRoleId = req.query.practitioner_role_id;
+			var healthcareServiceId = req.query.healthcare_service_id;
+			
+			var condition = "";
+			var join = "";
+			
+			if(typeof practitionerRoleId !== 'undefined' && practitionerRoleId !== ""){
+        condition += "practitioner_role_id = '" + practitionerRoleId + "' AND ";  
+      }
+			
+			if(typeof healthcareServiceId !== 'undefined' && healthcareServiceId !== ""){
+        condition += "healthcare_service_id = '" + healthcareServiceId + "' AND ";  
+      }
+			
+			if(condition == ""){
+        fixCondition = "";
+      }else{
+        fixCondition = " WHERE  " + condition.slice(0, -4);
+      }
+      
+			var query = "select available_time_id, available_time_day_of_week, available_time_all_day, available_time_start, available_time_end from baciro_fhir.AVAILABLE_TIME " + fixCondition;
+			
+      //console.log(query);
+			var arrAvailableTime = [];
+      db.query(query,function(dataJson){
+        rez = lowercaseObject(dataJson);
+        for(i = 0; i < rez.length; i++){
+          var AvailableTime = {};
+					AvailableTime.id = rez[i].available_time_id;
+          AvailableTime.daysOfWeek = rez[i].available_time_day_of_week;
+					AvailableTime.allDay = rez[i].available_time_all_day;
+					AvailableTime.availableTimeStart = rez[i].available_time_start;
+					AvailableTime.availableTimeEnd = rez[i].available_time_end;
+					
+          arrAvailableTime[i] = AvailableTime;
+        }
+        res.json({"err_code":0,"data": arrAvailableTime});
+      },function(e){
+        res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "getAvailableTime"});
+      });
+    },
+		notAvailable: function getNotAvailable(req, res){
+			var practitionerRoleId = req.query.practitioner_role_id;			      
+      var healthcareServiceId = req.query.healthcare_service_id;
+			var condition = "";
+			var join = "";
+			
+			if(typeof practitionerRoleId !== 'undefined' && practitionerRoleId !== ""){
+        condition += "practitioner_role_id = '" + practitionerRoleId + "' AND ";  
+      }
+			
+			if(typeof healthcareServiceId !== 'undefined' && healthcareServiceId !== ""){
+        condition += "healthcare_service_id = '" + healthcareServiceId + "' AND ";  
+      }
+			
+			if(condition == ""){
+        fixCondition = "";
+      }else{
+        fixCondition = " WHERE  " + condition.slice(0, -4);
+      }
+			
+			var query = "select not_available_id, not_available_description, not_available_during from baciro_fhir.NOT_AVAILABLE " + fixCondition;
+			
+      //console.log(query);
+			var arrAvailableTime = [];
+      db.query(query,function(dataJson){
+        rez = lowercaseObject(dataJson);
+        for(i = 0; i < rez.length; i++){
+          var AvailableTime = {};
+					AvailableTime.id = rez[i].not_available_id;
+          AvailableTime.description = rez[i].not_available_description;
+					AvailableTime.during = rez[i].not_available_during;
+					
+          arrAvailableTime[i] = AvailableTime;
+        }
+        res.json({"err_code":0,"data": arrAvailableTime});
+      },function(e){
+        res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "getNotAvailable"});
+      });
+    }
 	},
 	post: {
 		identityAssuranceLevel: function addIdentityAssuranceLevel(req, res) {
@@ -3125,6 +3835,7 @@ var controller = {
 			var attachment_creation = req.body.creation;
 			var patient_id = req.body.patient_id;
 			var related_person_id = req.body.related_person_id;
+			var practitioner_id = req.body.practitioner_id;
 
 			//susun query update
 			var column = "";
@@ -3180,6 +3891,11 @@ var controller = {
 				values += "'" + related_person_id + "',";
 			}
 
+			if(typeof practitioner_id !== 'undefined'){
+        column += 'practitioner_id,';
+        values += "'"+ practitioner_id + "',";
+      }
+
 			var query = "UPSERT INTO BACIRO_FHIR.ATTACHMENT(attachment_id, " + column.slice(0, -1) + ")" +
 				" VALUES ('" + attachment_id + "', " + values.slice(0, -1) + ")";
 
@@ -3234,6 +3950,12 @@ var controller = {
 			var person_id = req.body.person_id;
 			var patient_id = req.body.patient_id;
 			var related_person_id = req.body.related_person_id;
+			var organization_id = req.body.organization_id;
+			var endpoint_id = req.body.endpoint_id;
+			var practitionerId = req.body.practitioner_id;
+			var qualificationId = req.body.qualification_id;
+			var practitionerRoleId = req.body.practitioner_role_id;
+			var healthcareServiceId = req.body.healthcare_service_id;
 
 			//susun query
 			var column = "";
@@ -3283,6 +4005,36 @@ var controller = {
 				column += 'related_person_id,';
 				values += "'" + related_person_id + "',";
 			}
+
+			if(typeof organization_id !== 'undefined'){
+        column += 'organization_id,';
+        values += "'"+ organization_id + "',";
+      }
+			
+			if(typeof endpoint_id !== 'undefined'){
+        column += 'endpoint_id,';
+        values += "'"+ endpoint_id + "',";
+      }
+			
+			if(typeof practitionerId !== 'undefined'){
+        column += 'practitioner_id,';
+        values += "'"+ practitionerId + "',";
+      }
+			
+			if(typeof qualificationId !== 'undefined' ){
+        column += 'qualification_id,';
+        values += "'"+ qualificationId + "',";
+      }
+			
+			if(typeof practitionerRoleId !== 'undefined'){
+        column += 'practitioner_role_id,';
+        values += "'"+ practitionerRoleId + "',";
+      }
+			
+			if(typeof healthcareServiceId !== 'undefined'){
+        column += 'healthcare_service_id,';
+        values += "'"+ healthcareServiceId + "',";
+      }
 
 			var query = "UPSERT INTO BACIRO_FHIR.IDENTIFIER(identifier_id, " + column.slice(0, -1) + ")" +
 				" VALUES ('" + identifier_id + "', " + values.slice(0, -1) + ")";
@@ -3334,6 +4086,7 @@ var controller = {
 			var person_id = req.body.person_id;
 			var patient_id = req.body.patient_id;
 			var related_person_id = req.body.related_person_id;
+			var practitioner_id = req.body.practitioner_id;
 
 			//susun query
 			var column = "";
@@ -3406,6 +4159,11 @@ var controller = {
 				values += "'" + related_person_id + "',";
 			}
 
+			if(typeof practitioner_id !== 'undefined'){
+        column += 'practitioner_id,';
+        values += "'"+ practitioner_id + "',";
+      }
+
 			var query = "UPSERT INTO BACIRO_FHIR.HUMAN_NAME(human_name_id, " + column.slice(0, -1) + ")" +
 				" VALUES ('" + human_name_id + "', " + values.slice(0, -1) + ")";
 
@@ -3461,6 +4219,13 @@ var controller = {
 			var patient_id = req.body.patient_id;
 			var patient_contact_id = req.body.patient_contact_id;
 			var related_person_id = req.body.related_person_id;
+			var organization_id = req.body.organization_id;
+			var organization_contact_id = req.body.organization_contact_id;
+			var endpoint_id = req.body.endpoint_id;
+			var location_id = req.body.location_id;
+			var practitioner_id = req.body.practitioner_id;
+			var practitioner_role_id = req.body.practitioner_role_id;
+			var healthcareServiceId = req.body.healthcare_service_id;
 
 			//susun query
 			var column = "";
@@ -3528,6 +4293,41 @@ var controller = {
 				values += "'" + related_person_id + "',";
 			}
 
+			if(typeof organization_id !== 'undefined'){
+        column += 'organization_id,';
+        values += "'"+ organization_id + "',";
+      }
+			
+			if(typeof organization_contact_id !== 'undefined'){
+        column += 'organization_contact_id,';
+        values += "'"+ organization_contact_id + "',";
+      }
+			
+			if(typeof endpoint_id !== 'undefined'){
+        column += 'endpoint_id,';
+        values += "'"+ endpoint_id + "',";
+      }
+			
+			if(typeof location_id !== 'undefined'){
+        column += 'location_id,';
+        values += "'"+ location_id + "',";
+      }
+			
+			if(typeof practitioner_id !== 'undefined'){
+        column += 'practitioner_id,';
+        values += "'"+ practitioner_id + "',";
+      }
+			
+			if(typeof practitioner_role_id !== 'undefined'){
+        column += 'practitioner_role_id,';
+        values += "'"+ practitioner_role_id + "',";
+      }
+			
+			if(typeof healthcareServiceId !== 'undefined'){
+        column += 'healthcare_service_id,';
+        values += "'"+ healthcareServiceId + "',";
+      }
+
 			var query = "UPSERT INTO BACIRO_FHIR.CONTACT_POINT(contact_point_id, " + column.slice(0, -1) + ")" +
 				" VALUES ('" + contact_point_id + "', " + values.slice(0, -1) + ")";
 
@@ -3586,6 +4386,8 @@ var controller = {
 			var person_id = req.body.person_id;
 			var patient_id = req.body.patient_id;
 			var related_person_id = req.body.related_person_id;
+			var organization_id = req.body.organization_id;
+			var practitioner_id = req.body.practitioner_id;
 
 			//susun query
 			var column = "";
@@ -3672,6 +4474,16 @@ var controller = {
 				column += 'related_person_id,';
 				values += "'" + related_person_id + "',";
 			}
+
+			if(typeof organization_id !== 'undefined'){
+        column += 'organization_id,';
+        values += "'"+ organization_id + "',";
+      }
+			
+			if(typeof practitioner_id !== 'undefined'){
+        column += 'practitioner_id,';
+        values += "'"+ practitioner_id + "',";
+      }
 
 			var query = "UPSERT INTO BACIRO_FHIR.ADDRESS(address_id, " + column.slice(0, -1) + ")" +
 				" VALUES ('" + address_id + "', " + values.slice(0, -1) + ")";
@@ -4581,7 +5393,456 @@ var controller = {
 					"function": "addReAdmissionIndicator"
 				});
 			});
-		}
+		},
+		//hardika add service provider directory resources
+		organizationType: function addOrganizationType(req, res){			
+      var code = req.body.code;
+      var display = req.body.display;
+      var definition = req.body.definition;
+     
+      var query = "UPSERT INTO BACIRO_FHIR.ORGANIZATION_TYPE(id, code, display, definition)"+
+        " VALUES (NEXT VALUE FOR BACIRO_FHIR.ORGANIZATION_TYPE,'"+code+"','"+display+"','"+definition+"')";
+        
+      db.upsert(query,function(succes){
+        var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.ORGANIZATION_TYPE WHERE code = '" + code + "' ";
+        db.query(query,function(dataJson){
+          rez = lowercaseObject(dataJson);
+          res.json({"err_code":0,"data":rez});
+        },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "addOrganizationType"});
+        });
+      },function(e){
+          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "addOrganizationType"});
+      });
+    },
+    contactentityType: function addContactentityType(req, res){			
+      var code = req.body.code;
+      var display = req.body.display;
+      var definition = req.body.definition;
+     
+      var query = "UPSERT INTO BACIRO_FHIR.CONTACT_ENTITY_TYPE(id, code, display, definition)"+
+        " VALUES (NEXT VALUE FOR BACIRO_FHIR.CONTACT_ENTITY_TYPE,'"+code+"','"+display+"','"+definition+"')";
+      db.upsert(query,function(succes){
+        var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.CONTACT_ENTITY_TYPE WHERE code = '" + code + "' ";
+        db.query(query,function(dataJson){
+          rez = lowercaseObject(dataJson);
+          res.json({"err_code":0,"data":rez});
+        },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "addContactentityType"});
+        });
+      },function(e){
+          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "addContactentityType"});
+      });
+    },
+    locationStatus	: function addLocationStatus(req, res){			
+      var code = req.body.code;
+      var display = req.body.display;
+      var definition = req.body.definition;
+     
+      var query = "UPSERT INTO BACIRO_FHIR.LOCATION_STATUS(id, code, display, definition)"+
+        " VALUES (NEXT VALUE FOR BACIRO_FHIR.LOCATION_STATUS,'"+code+"','"+display+"','"+definition+"')";
+      db.upsert(query,function(succes){
+        var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.LOCATION_STATUS WHERE code = '" + code + "' ";
+        db.query(query,function(dataJson){
+          rez = lowercaseObject(dataJson);
+          res.json({"err_code":0,"data":rez});
+        },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "addLocationStatus"});
+        });
+      },function(e){
+          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "addLocationStatus"});
+      });
+    },
+    bedStatus	: function addBedStatus(req, res){			
+      var code = req.body.code;
+      var description = req.body.description;
+     
+      var query = "UPSERT INTO BACIRO_FHIR.BED_STATUS(id, code, description)"+
+        " VALUES (NEXT VALUE FOR BACIRO_FHIR.BED_STATUS,'"+code+"','"+description+"')";
+      db.upsert(query,function(succes){
+        var query = "SELECT id, code, description FROM BACIRO_FHIR.BED_STATUS WHERE code = '" + code + "' ";
+        db.query(query,function(dataJson){
+          rez = lowercaseObject(dataJson);
+          res.json({"err_code":0,"data":rez});
+        },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "addBedStatus"});
+        });
+      },function(e){
+          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "addBedStatus"});
+      });
+    },
+    locationMode	: function addLocationMode(req, res){			
+      var code = req.body.code;
+      var display = req.body.display;
+      var definition = req.body.definition;
+     
+      var query = "UPSERT INTO BACIRO_FHIR.LOCATION_MODE(id, code, display, definition)"+
+        " VALUES (NEXT VALUE FOR BACIRO_FHIR.LOCATION_MODE,'"+code+"','"+display+"','"+definition+"')";
+      db.upsert(query,function(succes){
+        var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.LOCATION_MODE WHERE code = '" + code + "' ";
+        db.query(query,function(dataJson){
+          rez = lowercaseObject(dataJson);
+          res.json({"err_code":0,"data":rez});
+        },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "addLocationMode"});
+        });
+      },function(e){
+          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "addLocationMode"});
+      });
+    },
+    serviceDeliveryLocationRoleType	: function addServiceDeliveryLocationRoleType(req, res){			
+      var code = req.body.code;
+      var display = req.body.display;
+      var definition = req.body.definition;
+     
+      var query = "UPSERT INTO BACIRO_FHIR.SERVICE_DELIVERY_LOCATION_ROLE_TYPE(id, code, display, definition)"+
+        " VALUES (NEXT VALUE FOR BACIRO_FHIR.SERVICE_DELIVERY_LOCATION_ROLE_TYPE,'"+code+"','"+display+"','"+definition+"')";
+      db.upsert(query,function(succes){
+        var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.SERVICE_DELIVERY_LOCATION_ROLE_TYPE WHERE code = '" + code + "' ";
+        db.query(query,function(dataJson){
+          rez = lowercaseObject(dataJson);
+          res.json({"err_code":0,"data":rez});
+        },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "addServiceDeliveryLocationRoleType"});
+        });
+      },function(e){
+          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "addServiceDeliveryLocationRoleType"});
+      });
+    },
+    locationPhysicalType	: function addLocationPhysicalType(req, res){			
+      var code = req.body.code;
+      var display = req.body.display;
+      var definition = req.body.definition;
+     
+      var query = "UPSERT INTO BACIRO_FHIR.LOCATION_PHYSICAL_TYPE(id, code, display, definition)"+
+        " VALUES (NEXT VALUE FOR BACIRO_FHIR.LOCATION_PHYSICAL_TYPE,'"+code+"','"+display+"','"+definition+"')";
+      db.upsert(query,function(succes){
+        var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.LOCATION_PHYSICAL_TYPE WHERE code = '" + code + "' ";
+        db.query(query,function(dataJson){
+          rez = lowercaseObject(dataJson);
+          res.json({"err_code":0,"data":rez});
+        },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "addLocationPhysicalType"});
+        });
+      },function(e){
+          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "addLocationPhysicalType"});
+      });
+    },
+    qualificationCode	: function addQualificationCode(req, res){			
+      var code = req.body.code;
+      var description = req.body.description;
+     
+      var query = "UPSERT INTO BACIRO_FHIR.QUALIFICATION_CODE(id, code, description)"+
+        " VALUES (NEXT VALUE FOR BACIRO_FHIR.QUALIFICATION_CODE,'"+code+"','"+description+"')";
+      db.upsert(query,function(succes){
+        var query = "SELECT id, code, description FROM BACIRO_FHIR.QUALIFICATION_CODE WHERE code = '" + code + "' ";
+        db.query(query,function(dataJson){
+          rez = lowercaseObject(dataJson);
+          res.json({"err_code":0,"data":rez});
+        },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "addQualificationCode"});
+        });
+      },function(e){
+          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "addQualificationCode"});
+      });
+    },
+    practiceCode	: function addPracticeCode(req, res){			
+      var code = req.body.code;
+      var display = req.body.display;
+     
+      var query = "UPSERT INTO BACIRO_FHIR.PRACTICE_CODE(id, code, display)"+
+        " VALUES (NEXT VALUE FOR BACIRO_FHIR.PRACTICE_CODE,'"+code+"','"+display+"')";
+      db.upsert(query,function(succes){
+        var query = "SELECT id, code, display FROM BACIRO_FHIR.PRACTICE_CODE WHERE code = '" + code + "' ";
+        db.query(query,function(dataJson){
+          rez = lowercaseObject(dataJson);
+          res.json({"err_code":0,"data":rez});
+        },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "addPracticeCode"});
+        });
+      },function(e){
+          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "addPracticeCode"});
+      });
+    },
+    practitionerRoleCode	: function addPractitionerRoleCode(req, res){			
+      var code = req.body.code;
+      var display = req.body.display;
+      var definition = req.body.definition;
+     
+      var query = "UPSERT INTO BACIRO_FHIR.PRACTITIONER_ROLE_CODE(id, code, display, definition)"+
+        " VALUES (NEXT VALUE FOR BACIRO_FHIR.PRACTITIONER_ROLE_CODE,'"+code+"','"+display+"','"+definition+"')";
+      db.upsert(query,function(succes){
+        var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.PRACTITIONER_ROLE_CODE WHERE code = '" + code + "' ";
+        db.query(query,function(dataJson){
+          rez = lowercaseObject(dataJson);
+          res.json({"err_code":0,"data":rez});
+        },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "addPractitionerRoleCode"});
+        });
+      },function(e){
+          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "addPractitionerRoleCode"});
+      });
+    },
+		daysOfWeek	: function addDaysOfWeek(req, res){			
+      var code = req.body.code;
+      var display = req.body.display;
+      var definition = req.body.definition;
+     
+      var query = "UPSERT INTO BACIRO_FHIR.DAYS_OF_WEEK(id, code, display, definition)"+
+        " VALUES (NEXT VALUE FOR BACIRO_FHIR.DAYS_OF_WEEK,'"+code+"','"+display+"','"+definition+"')";
+      db.upsert(query,function(succes){
+        var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.DAYS_OF_WEEK WHERE code = '" + code + "' ";
+        db.query(query,function(dataJson){
+          rez = lowercaseObject(dataJson);
+          res.json({"err_code":0,"data":rez});
+        },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "addDaysOfWeek"});
+        });
+      },function(e){
+          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "addDaysOfWeek"});
+      });
+    },
+		serviceCategory	: function addServiceCategory(req, res){			
+      var code = req.body.code;
+      var display = req.body.display;
+      var definition = req.body.definition;
+     
+      var query = "UPSERT INTO BACIRO_FHIR.SERVICE_CATEGORY(id, code, display, definition)"+
+        " VALUES (NEXT VALUE FOR BACIRO_FHIR.SERVICE_CATEGORY,'"+code+"','"+display+"','"+definition+"')";
+      db.upsert(query,function(succes){
+        var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.SERVICE_CATEGORY WHERE code = '" + code + "' ";
+        db.query(query,function(dataJson){
+          rez = lowercaseObject(dataJson);
+          res.json({"err_code":0,"data":rez});
+        },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "addServiceCategory"});
+        });
+      },function(e){
+          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "addServiceCategory"});
+      });
+    },
+		serviceType	: function addServiceType(req, res){			
+      var code = req.body.code;
+      var display = req.body.display;
+      var definition = req.body.definition;
+     
+      var query = "UPSERT INTO BACIRO_FHIR.SERVICE_TYPE(id, code, display, definition)"+
+        " VALUES (NEXT VALUE FOR BACIRO_FHIR.SERVICE_TYPE,'"+code+"','"+display+"','"+definition+"')";
+      db.upsert(query,function(succes){
+        var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.SERVICE_TYPE WHERE code = '" + code + "' ";
+        db.query(query,function(dataJson){
+          rez = lowercaseObject(dataJson);
+          res.json({"err_code":0,"data":rez});
+        },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "addServiceType"});
+        });
+      },function(e){
+          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "addServiceType"});
+      });
+    },
+		serviceProvisionConditions	: function addServiceProvisionConditions(req, res){			
+      var code = req.body.code;
+      var display = req.body.display;
+      var definition = req.body.definition;
+     
+      var query = "UPSERT INTO BACIRO_FHIR.SERVICE_PROVISION_CONDITIONS(id, code, display, definition)"+
+        " VALUES (NEXT VALUE FOR BACIRO_FHIR.SERVICE_PROVISION_CONDITIONS,'"+code+"','"+display+"','"+definition+"')";
+      db.upsert(query,function(succes){
+        var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.SERVICE_PROVISION_CONDITIONS WHERE code = '" + code + "' ";
+        db.query(query,function(dataJson){
+          rez = lowercaseObject(dataJson);
+          res.json({"err_code":0,"data":rez});
+        },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "addServiceProvisionConditions"});
+        });
+      },function(e){
+          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "addServiceProvisionConditions"});
+      });
+    },
+		serviceReferralMethod	: function addServiceReferralMethod(req, res){			
+      var code = req.body.code;
+      var display = req.body.display;
+      var definition = req.body.definition;
+     
+      var query = "UPSERT INTO BACIRO_FHIR.SERVICE_REFERRAL_METHOD(id, code, display, definition)"+
+        " VALUES (NEXT VALUE FOR BACIRO_FHIR.SERVICE_REFERRAL_METHOD,'"+code+"','"+display+"','"+definition+"')";
+      db.upsert(query,function(succes){
+        var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.SERVICE_REFERRAL_METHOD WHERE code = '" + code + "' ";
+        db.query(query,function(dataJson){
+          rez = lowercaseObject(dataJson);
+          res.json({"err_code":0,"data":rez});
+        },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "addServiceReferralMethod"});
+        });
+      },function(e){
+          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "addServiceReferralMethod"});
+      });
+    },
+		endpointStatus	: function addEndpointStatus(req, res){			
+      var code = req.body.code;
+      var display = req.body.display;
+      var definition = req.body.definition;
+     
+      var query = "UPSERT INTO BACIRO_FHIR.ENDPOINT_STATUS(id, code, display, definition)"+
+        " VALUES (NEXT VALUE FOR BACIRO_FHIR.ENDPOINT_STATUS,'"+code+"','"+display+"','"+definition+"')";
+      db.upsert(query,function(succes){
+        var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.ENDPOINT_STATUS WHERE code = '" + code + "' ";
+        db.query(query,function(dataJson){
+          rez = lowercaseObject(dataJson);
+          res.json({"err_code":0,"data":rez});
+        },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "addEndpointStatus"});
+        });
+      },function(e){
+          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "addEndpointStatus"});
+      });
+    },
+		endpointConnectionType	: function addEndpointConnectionType(req, res){			
+      var code = req.body.code;
+      var display = req.body.display;
+      var definition = req.body.definition;
+     
+      var query = "UPSERT INTO BACIRO_FHIR.ENDPOINT_CONNECTION_TYPE(id, code, display, definition)"+
+        " VALUES (NEXT VALUE FOR BACIRO_FHIR.ENDPOINT_CONNECTION_TYPE,'"+code+"','"+display+"','"+definition+"')";
+      db.upsert(query,function(succes){
+        var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.ENDPOINT_CONNECTION_TYPE WHERE code = '" + code + "' ";
+        db.query(query,function(dataJson){
+          rez = lowercaseObject(dataJson);
+          res.json({"err_code":0,"data":rez});
+        },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "addEndpointConnectionType"});
+        });
+      },function(e){
+          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "addEndpointConnectionType"});
+      });
+    },
+		endpointPayloadType	: function addEndpointPayloadType(req, res){			
+      var code = req.body.code;
+      var display = req.body.display;
+      var definition = req.body.definition;
+     
+      var query = "UPSERT INTO BACIRO_FHIR.ENDPOINT_PAYLOAD_TYPE(id, code, display)"+
+        " VALUES (NEXT VALUE FOR BACIRO_FHIR.ENDPOINT_PAYLOAD_TYPE,'"+code+"','"+display+"')";
+      db.upsert(query,function(succes){
+        var query = "SELECT id, code, display FROM BACIRO_FHIR.ENDPOINT_PAYLOAD_TYPE WHERE code = '" + code + "' ";
+        db.query(query,function(dataJson){
+          rez = lowercaseObject(dataJson);
+          res.json({"err_code":0,"data":rez});
+        },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "addEndpointPayloadType"});
+        });
+      },function(e){
+          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "addEndpointPayloadType"});
+      });
+    },
+		availableTime: function addAvailableTime(req, res){
+			//console.log(req);
+			
+			var available_time_id = req.body.id;
+			var available_time_day_of_week = req.body.daysOfWeek;
+			var available_time_all_day = req.body.allDay;
+			var available_time_start = req.body.availableEndTime;
+			var available_time_end = req.body.availableEndTime;
+			var practitioner_role_id = req.body.practitionerRoleid;
+			var healthcare_service_id = req.body.healthcareServiceId;
+			
+			var column = "";
+      var values = "";
+			
+			if(typeof available_time_day_of_week !== 'undefined'){
+        column += 'available_time_day_of_week,';
+        values += " '" + available_time_day_of_week +"',";
+      }
+			
+			if(typeof available_time_all_day !== 'undefined'){
+        column += 'available_time_all_day,';
+        values += " " + available_time_all_day +",";
+      }
+			
+			if(typeof practitioner_role_id !== 'undefined'){
+        column += 'practitioner_role_id,';
+        values += "'" + practitioner_role_id +"',";
+      }
+			
+			if(typeof healthcare_service_id !== 'undefined'){
+        column += 'healthcare_service_id,';
+        values += "'" + healthcare_service_id +"',";
+      }
+			
+			if(typeof available_time_start !== 'undefined'){
+        column += 'available_time_start,';
+        values += "to_date('"+ available_time_start + "', 'yyyy-MM-dd'),";
+      }
+			
+			if(typeof available_time_end !== 'undefined'){
+        column += 'available_time_end,';
+        values += "to_date('"+ available_time_end + "', 'yyyy-MM-dd'),";
+      }
+			
+			
+
+      var query = "UPSERT INTO BACIRO_FHIR.AVAILABLE_TIME(available_time_id, " + column.slice(0, -1) + ")"+
+        " VALUES ('"+available_time_id+"', " + values.slice(0, -1) + ")";
+			console.log(query);
+      db.upsert(query,function(succes){
+        var query = "SELECT available_time_id, available_time_day_of_week, available_time_all_day, available_time_start, available_time_end, practitioner_role_id FROM BACIRO_FHIR.AVAILABLE_TIME  WHERE practitioner_role_id = '" + practitioner_role_id + "' ";
+        db.query(query,function(dataJson){
+          rez = lowercaseObject(dataJson);
+          res.json({"err_code":0,"data":rez});
+        },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "addAvailableTime"});
+        });
+      },function(e){
+          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "addAvailableTime"});
+      });
+    },
+		notAvailable: function addNotAvailable(req, res){
+			//console.log(req);
+			var practitioner_role_id = req.body.practitionerRoleid;
+			var not_available_id = req.body.id;
+			var not_available_description = req.body.description;
+			var not_available_during = req.body.during;
+			var healthcare_service_id = req.body.healthcareServiceId;
+			
+			var column = "";
+      var values = "";
+			
+			if(typeof not_available_description !== 'undefined'){
+        column += 'not_available_description,';
+        values += "'" + not_available_description +"',";
+      }
+			
+			if(typeof practitioner_role_id !== 'undefined'){
+        column += 'practitioner_role_id,';
+        values += "'" + practitioner_role_id +"',";
+      }
+			
+			if(typeof healthcare_service_id !== 'undefined'){
+        column += 'healthcare_service_id,';
+        values += "'" + healthcare_service_id +"',";
+      }
+			
+			if(typeof not_available_during !== 'undefined'){
+        column += 'not_available_during,';
+        values += "to_date('"+ not_available_during + "', 'yyyy-MM-dd'),";
+      }
+
+      var query = "UPSERT INTO BACIRO_FHIR.NOT_AVAILABLE(not_available_id, " + column.slice(0, -1) + ")"+
+        " VALUES ('"+not_available_id+"', " + values.slice(0, -1) + ")";
+			console.log(query);
+      db.upsert(query,function(succes){
+        var query = "SELECT not_available_id, not_available_description, not_available_during, not_available_during FROM BACIRO_FHIR.NOT_AVAILABLE  WHERE practitioner_role_id = '" + practitioner_role_id + "' ";
+        db.query(query,function(dataJson){
+          rez = lowercaseObject(dataJson);
+          res.json({"err_code":0,"data":rez});
+        },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "addNotAvailable"});
+        });
+      },function(e){
+          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "addNotAvailable"});
+      });
+    }
+		//hardika end add service provider directory resources
 	},
 	put: {
 		identityAssuranceLevel: function updateIdentityAssuranceLevel(req, res) {
@@ -7491,6 +8752,724 @@ var controller = {
 				});
 			});
 		},
+		//hardika add service provider directory resources
+		organizationType: function updateOrganizationType(req, res){
+      var _id = req.params._id;
+      var code = req.body.code;
+      var display = req.body.display;
+      var definition = req.body.definition;
+      
+      //susun query update
+      var column = "";
+      var values = "";
+
+      if(typeof code !== 'undefined'){
+        column += 'code,';
+        values += "'" +code +"',";
+      }
+
+      if(typeof display !== 'undefined'){
+        column += 'display,';
+        values += "'" +display +"',";
+      }
+
+      if(typeof definition !== 'undefined'){
+        column += 'definition,';
+        values += "'" +definition +"',";
+      }
+
+
+      var query = "UPSERT INTO BACIRO_FHIR.ORGANIZATION_TYPE(id," + column.slice(0, -1) + ") SELECT id, " + values.slice(0, -1) + " FROM BACIRO_FHIR.ORGANIZATION_TYPE WHERE id = " + _id;
+      
+      db.upsert(query,function(succes){
+        var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.ORGANIZATION_TYPE WHERE id = "+ _id;
+
+        db.query(query,function(dataJson){
+          rez = lowercaseObject(dataJson);
+          res.json({"err_code":0,"data":rez});
+        },function(e){
+          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "updateOrganizationType"});
+        });
+      },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "updateOrganizationType"});
+      });
+    },
+		contactentityType: function updateContactentityType(req, res){
+      var _id = req.params._id;
+      var code = req.body.code;
+      var display = req.body.display;
+      var definition = req.body.definition;
+      
+      //susun query update
+      var column = "";
+      var values = "";
+
+      if(typeof code !== 'undefined'){
+        column += 'code,';
+        values += "'" +code +"',";
+      }
+
+      if(typeof display !== 'undefined'){
+        column += 'display,';
+        values += "'" +display +"',";
+      }
+
+      if(typeof definition !== 'undefined'){
+        column += 'definition,';
+        values += "'" +definition +"',";
+      }
+
+
+      var query = "UPSERT INTO BACIRO_FHIR.CONTACT_ENTITY_TYPE(id," + column.slice(0, -1) + ") SELECT id, " + values.slice(0, -1) + " FROM BACIRO_FHIR.CONTACT_ENTITY_TYPE WHERE id = " + _id;
+      
+      db.upsert(query,function(succes){
+        var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.CONTACT_ENTITY_TYPE WHERE id = "+ _id;
+
+        db.query(query,function(dataJson){
+          rez = lowercaseObject(dataJson);
+          res.json({"err_code":0,"data":rez});
+        },function(e){
+          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "updateContactentityType"});
+        });
+      },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "updateContactentityType"});
+      });
+    },
+		locationStatus: function updateLocationStatus(req, res){
+      var _id = req.params._id;
+      var code = req.body.code;
+      var display = req.body.display;
+      var definition = req.body.definition;
+      
+      //susun query update
+      var column = "";
+      var values = "";
+
+      if(typeof code !== 'undefined'){
+        column += 'code,';
+        values += "'" +code +"',";
+      }
+
+      if(typeof display !== 'undefined'){
+        column += 'display,';
+        values += "'" +display +"',";
+      }
+
+      if(typeof definition !== 'undefined'){
+        column += 'definition,';
+        values += "'" +definition +"',";
+      }
+
+
+      var query = "UPSERT INTO BACIRO_FHIR.LOCATION_STATUS(id," + column.slice(0, -1) + ") SELECT id, " + values.slice(0, -1) + " FROM BACIRO_FHIR.LOCATION_STATUS WHERE id = " + _id;
+      
+      db.upsert(query,function(succes){
+        var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.LOCATION_STATUS WHERE id = "+ _id;
+
+        db.query(query,function(dataJson){
+          rez = lowercaseObject(dataJson);
+          res.json({"err_code":0,"data":rez});
+        },function(e){
+          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "updateLocationStatus"});
+        });
+      },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "updateLocationStatus"});
+      });
+    },
+		bedStatus: function updateBedStatus(req, res){
+      var _id = req.params._id;
+      var code = req.body.code;
+      var description = req.body.description;
+      
+      //susun query update
+      var column = "";
+      var values = "";
+
+      if(typeof code !== 'undefined'){
+        column += 'code,';
+        values += "'" +code +"',";
+      }
+
+      if(typeof description !== 'undefined'){
+        column += 'description,';
+        values += "'" +description +"',";
+      }
+
+
+      var query = "UPSERT INTO BACIRO_FHIR.BED_STATUS(id," + column.slice(0, -1) + ") SELECT id, " + values.slice(0, -1) + " FROM BACIRO_FHIR.BED_STATUS WHERE id = " + _id;
+      
+      db.upsert(query,function(succes){
+        var query = "SELECT id, code, description FROM BACIRO_FHIR.BED_STATUS WHERE id = "+ _id;
+
+        db.query(query,function(dataJson){
+          rez = lowercaseObject(dataJson);
+          res.json({"err_code":0,"data":rez});
+        },function(e){
+          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "updateBbedStatus"});
+        });
+      },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "updateBbedStatus"});
+      });
+    },
+		locationMode: function updatelocationMode(req, res){
+      var _id = req.params._id;
+      var code = req.body.code;
+      var display = req.body.display;
+      var definition = req.body.definition;
+      
+      //susun query update
+      var column = "";
+      var values = "";
+
+      if(typeof code !== 'undefined'){
+        column += 'code,';
+        values += "'" +code +"',";
+      }
+
+      if(typeof display !== 'undefined'){
+        column += 'display,';
+        values += "'" +display +"',";
+      }
+
+      if(typeof definition !== 'undefined'){
+        column += 'definition,';
+        values += "'" +definition +"',";
+      }
+
+
+      var query = "UPSERT INTO BACIRO_FHIR.LOCATION_MODE(id," + column.slice(0, -1) + ") SELECT id, " + values.slice(0, -1) + " FROM BACIRO_FHIR.LOCATION_MODE WHERE id = " + _id;
+      
+      db.upsert(query,function(succes){
+        var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.LOCATION_MODE WHERE id = "+ _id;
+
+        db.query(query,function(dataJson){
+          rez = lowercaseObject(dataJson);
+          res.json({"err_code":0,"data":rez});
+        },function(e){
+          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "updatelocationMode"});
+        });
+      },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "updatelocationMode"});
+      });
+    },
+		serviceDeliveryLocationRoleType: function updateServiceDeliveryLocationRoleType(req, res){
+      var _id = req.params._id;
+      var code = req.body.code;
+      var display = req.body.display;
+      var definition = req.body.definition;
+      
+      //susun query update
+      var column = "";
+      var values = "";
+
+      if(typeof code !== 'undefined'){
+        column += 'code,';
+        values += "'" +code +"',";
+      }
+
+      if(typeof display !== 'undefined'){
+        column += 'display,';
+        values += "'" +display +"',";
+      }
+
+      if(typeof definition !== 'undefined'){
+        column += 'definition,';
+        values += "'" +definition +"',";
+      }
+
+
+      var query = "UPSERT INTO BACIRO_FHIR.SERVICE_DELIVERY_LOCATION_ROLE_TYPE(id," + column.slice(0, -1) + ") SELECT id, " + values.slice(0, -1) + " FROM BACIRO_FHIR.SERVICE_DELIVERY_LOCATION_ROLE_TYPE WHERE id = " + _id;
+      
+      db.upsert(query,function(succes){
+        var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.SERVICE_DELIVERY_LOCATION_ROLE_TYPE WHERE id = "+ _id;
+
+        db.query(query,function(dataJson){
+          rez = lowercaseObject(dataJson);
+          res.json({"err_code":0,"data":rez});
+        },function(e){
+          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "updateServiceDeliveryLocationRoleType"});
+        });
+      },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "updateServiceDeliveryLocationRoleType"});
+      });
+    },
+		locationPhysicalType: function updateLocationPhysicalType(req, res){
+      var _id = req.params._id;
+      var code = req.body.code;
+      var display = req.body.display;
+      var definition = req.body.definition;
+      
+      //susun query update
+      var column = "";
+      var values = "";
+
+      if(typeof code !== 'undefined'){
+        column += 'code,';
+        values += "'" +code +"',";
+      }
+
+      if(typeof display !== 'undefined'){
+        column += 'display,';
+        values += "'" +display +"',";
+      }
+
+      if(typeof definition !== 'undefined'){
+        column += 'definition,';
+        values += "'" +definition +"',";
+      }
+
+
+      var query = "UPSERT INTO BACIRO_FHIR.LOCATION_PHYSICAL_TYPE(id," + column.slice(0, -1) + ") SELECT id, " + values.slice(0, -1) + " FROM BACIRO_FHIR.LOCATION_PHYSICAL_TYPE WHERE id = " + _id;
+      
+      db.upsert(query,function(succes){
+        var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.LOCATION_PHYSICAL_TYPE WHERE id = "+ _id;
+
+        db.query(query,function(dataJson){
+          rez = lowercaseObject(dataJson);
+          res.json({"err_code":0,"data":rez});
+        },function(e){
+          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "updateLocationPhysicalType"});
+        });
+      },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "updateLocationPhysicalType"});
+      });
+    },
+		qualificationCode: function updateQualificationCode(req, res){
+      var _id = req.params._id;
+      var code = req.body.code;
+      var description = req.body.description;
+      
+      //susun query update
+      var column = "";
+      var values = "";
+
+      if(typeof code !== 'undefined'){
+        column += 'code,';
+        values += "'" +code +"',";
+      }
+
+      if(typeof description !== 'undefined'){
+        column += 'description,';
+        values += "'" +description +"',";
+      }
+
+
+      var query = "UPSERT INTO BACIRO_FHIR.QUALIFICATION_CODE(id," + column.slice(0, -1) + ") SELECT id, " + values.slice(0, -1) + " FROM BACIRO_FHIR.QUALIFICATION_CODE WHERE id = " + _id;
+      
+      db.upsert(query,function(succes){
+        var query = "SELECT id, code, description FROM BACIRO_FHIR.QUALIFICATION_CODE WHERE id = "+ _id;
+
+        db.query(query,function(dataJson){
+          rez = lowercaseObject(dataJson);
+          res.json({"err_code":0,"data":rez});
+        },function(e){
+          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "updateQualificationCode"});
+        });
+      },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "updateQualificationCode"});
+      });
+    },
+		practitionerRoleCode: function updatePractitionerRoleCode(req, res){
+      var _id = req.params._id;
+      var code = req.body.code;
+      var display = req.body.display;
+      var definition = req.body.definition;
+      
+      //susun query update
+      var column = "";
+      var values = "";
+
+      if(typeof code !== 'undefined'){
+        column += 'code,';
+        values += "'" +code +"',";
+      }
+
+      if(typeof display !== 'undefined'){
+        column += 'display,';
+        values += "'" +display +"',";
+      }
+
+      if(typeof definition !== 'undefined'){
+        column += 'definition,';
+        values += "'" +definition +"',";
+      }
+
+
+      var query = "UPSERT INTO BACIRO_FHIR.PRACTITIONER_ROLE_CODE(id," + column.slice(0, -1) + ") SELECT id, " + values.slice(0, -1) + " FROM BACIRO_FHIR.PRACTITIONER_ROLE_CODE WHERE id = " + _id;
+      
+      db.upsert(query,function(succes){
+        var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.PRACTITIONER_ROLE_CODE WHERE id = "+ _id;
+
+        db.query(query,function(dataJson){
+          rez = lowercaseObject(dataJson);
+          res.json({"err_code":0,"data":rez});
+        },function(e){
+          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "updatePractitionerRoleCode"});
+        });
+      },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "updatePractitionerRoleCode"});
+      });
+    },
+		practiceCode: function updatePracticeCode(req, res){
+      var _id = req.params._id;
+      var code = req.body.code;
+      var display = req.body.display;
+      var definition = req.body.definition;
+      
+      //susun query update
+      var column = "";
+      var values = "";
+
+      if(typeof code !== 'undefined'){
+        column += 'code,';
+        values += "'" +code +"',";
+      }
+
+      if(typeof display !== 'undefined'){
+        column += 'display,';
+        values += "'" +display +"',";
+      }
+
+
+      var query = "UPSERT INTO BACIRO_FHIR.PRACTICE_CODE(id," + column.slice(0, -1) + ") SELECT id, " + values.slice(0, -1) + " FROM BACIRO_FHIR.PRACTICE_CODE WHERE id = " + _id;
+      
+      db.upsert(query,function(succes){
+        var query = "SELECT id, code, display FROM BACIRO_FHIR.PRACTICE_CODE WHERE id = "+ _id;
+
+        db.query(query,function(dataJson){
+          rez = lowercaseObject(dataJson);
+          res.json({"err_code":0,"data":rez});
+        },function(e){
+          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "updatePracticeCode"});
+        });
+      },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "updatePracticeCode"});
+      });
+    },
+		daysOfWeek: function updateDaysOfWeek(req, res){
+      var _id = req.params._id;
+      var code = req.body.code;
+      var display = req.body.display;
+      var definition = req.body.definition;
+      
+      //susun query update
+      var column = "";
+      var values = "";
+
+      if(typeof code !== 'undefined'){
+        column += 'code,';
+        values += "'" +code +"',";
+      }
+
+      if(typeof display !== 'undefined'){
+        column += 'display,';
+        values += "'" +display +"',";
+      }
+
+      if(typeof definition !== 'undefined'){
+        column += 'definition,';
+        values += "'" +definition +"',";
+      }
+
+
+      var query = "UPSERT INTO BACIRO_FHIR.DAYS_OF_WEEK(id," + column.slice(0, -1) + ") SELECT id, " + values.slice(0, -1) + " FROM BACIRO_FHIR.DAYS_OF_WEEK WHERE id = " + _id;
+      
+      db.upsert(query,function(succes){
+        var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.DAYS_OF_WEEK WHERE id = "+ _id;
+
+        db.query(query,function(dataJson){
+          rez = lowercaseObject(dataJson);
+          res.json({"err_code":0,"data":rez});
+        },function(e){
+          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "updateDaysOfWeek"});
+        });
+      },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "updateDaysOfWeek"});
+      });
+    },
+		serviceCategory: function updateServiceCategory(req, res){
+      var _id = req.params._id;
+      var code = req.body.code;
+      var display = req.body.display;
+      var definition = req.body.definition;
+      
+      //susun query update
+      var column = "";
+      var values = "";
+
+      if(typeof code !== 'undefined'){
+        column += 'code,';
+        values += "'" +code +"',";
+      }
+
+      if(typeof display !== 'undefined'){
+        column += 'display,';
+        values += "'" +display +"',";
+      }
+
+      if(typeof definition !== 'undefined'){
+        column += 'definition,';
+        values += "'" +definition +"',";
+      }
+
+
+      var query = "UPSERT INTO BACIRO_FHIR.SERVICE_CATEGORY(id," + column.slice(0, -1) + ") SELECT id, " + values.slice(0, -1) + " FROM BACIRO_FHIR.SERVICE_CATEGORY WHERE id = " + _id;
+      
+      db.upsert(query,function(succes){
+        var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.SERVICE_CATEGORY WHERE id = "+ _id;
+
+        db.query(query,function(dataJson){
+          rez = lowercaseObject(dataJson);
+          res.json({"err_code":0,"data":rez});
+        },function(e){
+          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "updateServiceCategory"});
+        });
+      },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "updateServiceCategory"});
+      });
+    },
+		serviceType: function updateServiceType(req, res){
+      var _id = req.params._id;
+      var code = req.body.code;
+      var display = req.body.display;
+      var definition = req.body.definition;
+      
+      //susun query update
+      var column = "";
+      var values = "";
+
+      if(typeof code !== 'undefined'){
+        column += 'code,';
+        values += "'" +code +"',";
+      }
+
+      if(typeof display !== 'undefined'){
+        column += 'display,';
+        values += "'" +display +"',";
+      }
+
+      if(typeof definition !== 'undefined'){
+        column += 'definition,';
+        values += "'" +definition +"',";
+      }
+
+
+      var query = "UPSERT INTO BACIRO_FHIR.SERVICE_TYPE(id," + column.slice(0, -1) + ") SELECT id, " + values.slice(0, -1) + " FROM BACIRO_FHIR.SERVICE_TYPE WHERE id = " + _id;
+      
+      db.upsert(query,function(succes){
+        var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.SERVICE_TYPE WHERE id = "+ _id;
+
+        db.query(query,function(dataJson){
+          rez = lowercaseObject(dataJson);
+          res.json({"err_code":0,"data":rez});
+        },function(e){
+          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "updateServiceType"});
+        });
+      },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "updateServiceType"});
+      });
+    },
+		serviceProvisionConditions: function updateServiceProvisionConditions(req, res){
+      var _id = req.params._id;
+      var code = req.body.code;
+      var display = req.body.display;
+      var definition = req.body.definition;
+      
+      //susun query update
+      var column = "";
+      var values = "";
+
+      if(typeof code !== 'undefined'){
+        column += 'code,';
+        values += "'" +code +"',";
+      }
+
+      if(typeof display !== 'undefined'){
+        column += 'display,';
+        values += "'" +display +"',";
+      }
+
+      if(typeof definition !== 'undefined'){
+        column += 'definition,';
+        values += "'" +definition +"',";
+      }
+
+
+      var query = "UPSERT INTO BACIRO_FHIR.SERVICE_PROVISION_CONDITIONS(id," + column.slice(0, -1) + ") SELECT id, " + values.slice(0, -1) + " FROM BACIRO_FHIR.SERVICE_PROVISION_CONDITIONS WHERE id = " + _id;
+      
+      db.upsert(query,function(succes){
+        var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.SERVICE_PROVISION_CONDITIONS WHERE id = "+ _id;
+
+        db.query(query,function(dataJson){
+          rez = lowercaseObject(dataJson);
+          res.json({"err_code":0,"data":rez});
+        },function(e){
+          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "updateServiceProvisionConditions"});
+        });
+      },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "updateServiceProvisionConditions"});
+      });
+    },
+		serviceReferralMethod: function updateServiceReferralMethod(req, res){
+      var _id = req.params._id;
+      var code = req.body.code;
+      var display = req.body.display;
+      var definition = req.body.definition;
+      
+      //susun query update
+      var column = "";
+      var values = "";
+
+      if(typeof code !== 'undefined'){
+        column += 'code,';
+        values += "'" +code +"',";
+      }
+
+      if(typeof display !== 'undefined'){
+        column += 'display,';
+        values += "'" +display +"',";
+      }
+
+      if(typeof definition !== 'undefined'){
+        column += 'definition,';
+        values += "'" +definition +"',";
+      }
+
+
+      var query = "UPSERT INTO BACIRO_FHIR.SERVICE_REFERRAL_METHOD(id," + column.slice(0, -1) + ") SELECT id, " + values.slice(0, -1) + " FROM BACIRO_FHIR.SERVICE_REFERRAL_METHOD WHERE id = " + _id;
+      
+      db.upsert(query,function(succes){
+        var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.SERVICE_REFERRAL_METHOD WHERE id = "+ _id;
+
+        db.query(query,function(dataJson){
+          rez = lowercaseObject(dataJson);
+          res.json({"err_code":0,"data":rez});
+        },function(e){
+          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "updateServiceReferralMethod"});
+        });
+      },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "updateServiceReferralMethod"});
+      });
+    },
+		endpointStatus: function updateEndpointStatus(req, res){
+      var _id = req.params._id;
+      var code = req.body.code;
+      var display = req.body.display;
+      var definition = req.body.definition;
+      
+      //susun query update
+      var column = "";
+      var values = "";
+
+      if(typeof code !== 'undefined'){
+        column += 'code,';
+        values += "'" +code +"',";
+      }
+
+      if(typeof display !== 'undefined'){
+        column += 'display,';
+        values += "'" +display +"',";
+      }
+
+      if(typeof definition !== 'undefined'){
+        column += 'definition,';
+        values += "'" +definition +"',";
+      }
+
+
+      var query = "UPSERT INTO BACIRO_FHIR.ENDPOINT_STATUS(id," + column.slice(0, -1) + ") SELECT id, " + values.slice(0, -1) + " FROM BACIRO_FHIR.ENDPOINT_STATUS WHERE id = " + _id;
+      
+      db.upsert(query,function(succes){
+        var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.ENDPOINT_STATUS WHERE id = "+ _id;
+
+        db.query(query,function(dataJson){
+          rez = lowercaseObject(dataJson);
+          res.json({"err_code":0,"data":rez});
+        },function(e){
+          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "updateEndpointStatus"});
+        });
+      },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "updateEndpointStatus"});
+      });
+    },
+		endpointConnectionType: function updateEndpointConnectionType(req, res){
+      var _id = req.params._id;
+      var code = req.body.code;
+      var display = req.body.display;
+      var definition = req.body.definition;
+      
+      //susun query update
+      var column = "";
+      var values = "";
+
+      if(typeof code !== 'undefined'){
+        column += 'code,';
+        values += "'" +code +"',";
+      }
+
+      if(typeof display !== 'undefined'){
+        column += 'display,';
+        values += "'" +display +"',";
+      }
+
+      if(typeof definition !== 'undefined'){
+        column += 'definition,';
+        values += "'" +definition +"',";
+      }
+
+
+      var query = "UPSERT INTO BACIRO_FHIR.ENDPOINT_CONNECTION_TYPE(id," + column.slice(0, -1) + ") SELECT id, " + values.slice(0, -1) + " FROM BACIRO_FHIR.ENDPOINT_CONNECTION_TYPE WHERE id = " + _id;
+      
+      db.upsert(query,function(succes){
+        var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.ENDPOINT_CONNECTION_TYPE WHERE id = "+ _id;
+
+        db.query(query,function(dataJson){
+          rez = lowercaseObject(dataJson);
+          res.json({"err_code":0,"data":rez});
+        },function(e){
+          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "updateEndpointConnectionType"});
+        });
+      },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "updateEndpointConnectionType"});
+      });
+    },
+		endpointPayloadType: function updateEndpointPayloadType(req, res){
+      var _id = req.params._id;
+      var code = req.body.code;
+      var display = req.body.display;
+      var definition = req.body.definition;
+      
+      //susun query update
+      var column = "";
+      var values = "";
+
+      if(typeof code !== 'undefined'){
+        column += 'code,';
+        values += "'" +code +"',";
+      }
+
+      if(typeof display !== 'undefined'){
+        column += 'display,';
+        values += "'" +display +"',";
+      }
+
+
+      var query = "UPSERT INTO BACIRO_FHIR.ENDPOINT_PAYLOAD_TYPE(id," + column.slice(0, -1) + ") SELECT id, " + values.slice(0, -1) + " FROM BACIRO_FHIR.ENDPOINT_PAYLOAD_TYPE WHERE id = " + _id;
+      
+      db.upsert(query,function(succes){
+        var query = "SELECT id, code, display FROM BACIRO_FHIR.ENDPOINT_PAYLOAD_TYPE WHERE id = "+ _id;
+
+        db.query(query,function(dataJson){
+          rez = lowercaseObject(dataJson);
+          res.json({"err_code":0,"data":rez});
+        },function(e){
+          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "updateEndpointPayloadType"});
+        });
+      },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "updateEndpointPayloadType"});
+      });
+    }
+		//hardika end add service provider directory resources
 	}
 }
 
