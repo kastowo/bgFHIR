@@ -8612,7 +8612,7 @@ var controller = {
 			var apikey = req.params.apikey;
 
 			var code = req.body.code.trim().toUpperCase();
-			var description = req.body.description.replace(/[^\w\s , ( ) / .] / gi, '');
+			var description = req.body.description.replace(/[^\w\s ,]/gi, '');
 
 			var err_code = 0;
 			var err_msg = '';
@@ -10719,7 +10719,7 @@ var controller = {
 
 			var code = req.body.code.trim().toLowerCase();
 			var display = req.body.display;
-			var description = req.body.description.replace(/[^\w\s , ( ) / .] / gi, '');
+			var description = req.body.description.replace(/[^\w\s ,]/gi, '');
 
 			var err_code = 0;
 			var err_msg = '';
@@ -13249,7 +13249,7 @@ var controller = {
 			}
 
 			if (typeof req.body.description !== 'undefined') {
-				var description = req.body.description.replace(/[^\w\s , ( ) / .] / gi, '');
+				var description = req.body.description.replace(/[^\w\s ,]/gi, '');
 				dataAppointmentReasonCode.description = description;
 			}
 
@@ -16466,7 +16466,7 @@ var controller = {
 			}
 
 			if (typeof req.body.description !== 'undefined') {
-				var description = req.body.description.replace(/[^\w\s , ( ) / .] / gi, '');
+				var description = req.body.description.replace(/[^\w\s ,]/gi, '');
 				dataReAdmissionIndicator.description = description;
 			}
 
