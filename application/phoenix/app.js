@@ -1492,114 +1492,114 @@ function formatDate(date) {
   return [year, month, day].join('-');
 }
 
-//get method
-app.get('/:apikey/check_apikey', Phoenix.get.check_apikey);
-app.get('/:apikey/check_email/:user_email', Phoenix.get.check_email);
-app.get('/:apikey/check_group_name', Phoenix.get.check_group_name);
-app.get('/:apikey/check_role_name', Phoenix.get.check_role_name);
-app.get('/:apikey/check_privilege_menu', Phoenix.get.check_privilege_menu);
-app.get('/:apikey/check_project_name/:user_id', Phoenix.get.check_project_name);
-app.get('/:apikey/check_inventory_name/:project_id', Phoenix.get.check_inventory_name);
-app.get('/:apikey/check_cluster_name', Phoenix.get.check_cluster_name);
-app.get('/:apikey/check_config_key/:cluster_id', Phoenix.get.check_config_key);
-app.get('/:apikey/check_user_id/:user_id', Phoenix.get.check_user_id);
-app.get('/:apikey/check_group_id/:group_id', Phoenix.get.check_group_id);
-app.get('/:apikey/check_member_id/:member_id', Phoenix.get.check_member_id);
-app.get('/:apikey/check_role_id/:role_id', Phoenix.get.check_role_id);
-app.get('/:apikey/check_project_id/:project_id', Phoenix.get.check_project_id);
-app.get('/:apikey/check_inventory_id/:inventory_id', Phoenix.get.check_inventory_id);
-app.get('/:apikey/check_cluster_id/:cluster_id', Phoenix.get.check_cluster_id);
-app.get('/:apikey/check_owner_group/:user_id/:group_id', Phoenix.get.check_owner_group);
-app.get('/:apikey/check_member_group/:user_id/:group_id', Phoenix.get.check_member_group);
-app.get('/:apikey/check_project_share/:project_id/:user_id', Phoenix.get.check_project_share);
-app.get('/:apikey/get_user_id', Phoenix.get.get_user_id);
-app.get('/:apikey/get_group_id', Phoenix.get.get_group_id);
-app.get('/:apikey/get_role_id', Phoenix.get.get_role_id);
-app.get('/:apikey/get_privilage_id', Phoenix.get.get_privilage_id);
-app.get('/:apikey/get_member_id', Phoenix.get.get_member_id);
-app.get('/:apikey/get_project_id', Phoenix.get.get_project_id);
-app.get('/:apikey/get_inventory_id', Phoenix.get.get_inventory_id);
-app.get('/:apikey/get_cluster_id', Phoenix.get.get_cluster_id);
-app.get('/:apikey/get_config_id', Phoenix.get.get_config_id);
-app.get('/:apikey/get_compile_id', Phoenix.get.get_compile_id);
-app.get('/:apikey/get_user_by_apikey', Phoenix.get.get_user_by_apikey);
-app.get('/:apikey/user/:user_id?', Phoenix.get.user);
-app.get('/:apikey/group/:group_id?', Phoenix.get.group);
-app.get('/:apikey/group/:group_id?/user/:user_id', Phoenix.get.groupByUser);
-app.get('/:apikey/member/:group_id', Phoenix.get.member);
-app.get('/:apikey/role/:role_id?', Phoenix.get.role);
-app.get('/:apikey/project/:project_id?/user/:user_id', Phoenix.get.projectByUser);
-app.get('/:apikey/project/:project_id?/group/:group_id', Phoenix.get.projectByGroup);
-app.get('/:apikey/project/:project_id?/inventory/:inventory_id?', Phoenix.get.inventory);
-app.get('/:apikey/cluster/:cluster_id?', Phoenix.get.cluster);
-app.get('/:apikey/cluster/:cluster_id?/config/:config_id?', Phoenix.get.cluster_config);
-app.get('/:apikey/compile/:compile_id?', Phoenix.get.compile);
-app.get('/:apikey/default_config', Phoenix.get.default_config);
-app.get('/:apikey/view_jar/:compile_id?/project/:project_id?', Phoenix.get.view_jar);
-app.get('/:apikey/project_inventory_by_user/:user_id?', Phoenix.get.project_inventory_by_user);
+// //get method
+// app.get('/:apikey/check_apikey', Phoenix.get.check_apikey);
+// app.get('/:apikey/check_email/:user_email', Phoenix.get.check_email);
+// app.get('/:apikey/check_group_name', Phoenix.get.check_group_name);
+// app.get('/:apikey/check_role_name', Phoenix.get.check_role_name);
+// app.get('/:apikey/check_privilege_menu', Phoenix.get.check_privilege_menu);
+// app.get('/:apikey/check_project_name/:user_id', Phoenix.get.check_project_name);
+// app.get('/:apikey/check_inventory_name/:project_id', Phoenix.get.check_inventory_name);
+// app.get('/:apikey/check_cluster_name', Phoenix.get.check_cluster_name);
+// app.get('/:apikey/check_config_key/:cluster_id', Phoenix.get.check_config_key);
+// app.get('/:apikey/check_user_id/:user_id', Phoenix.get.check_user_id);
+// app.get('/:apikey/check_group_id/:group_id', Phoenix.get.check_group_id);
+// app.get('/:apikey/check_member_id/:member_id', Phoenix.get.check_member_id);
+// app.get('/:apikey/check_role_id/:role_id', Phoenix.get.check_role_id);
+// app.get('/:apikey/check_project_id/:project_id', Phoenix.get.check_project_id);
+// app.get('/:apikey/check_inventory_id/:inventory_id', Phoenix.get.check_inventory_id);
+// app.get('/:apikey/check_cluster_id/:cluster_id', Phoenix.get.check_cluster_id);
+// app.get('/:apikey/check_owner_group/:user_id/:group_id', Phoenix.get.check_owner_group);
+// app.get('/:apikey/check_member_group/:user_id/:group_id', Phoenix.get.check_member_group);
+// app.get('/:apikey/check_project_share/:project_id/:user_id', Phoenix.get.check_project_share);
+// app.get('/:apikey/get_user_id', Phoenix.get.get_user_id);
+// app.get('/:apikey/get_group_id', Phoenix.get.get_group_id);
+// app.get('/:apikey/get_role_id', Phoenix.get.get_role_id);
+// app.get('/:apikey/get_privilage_id', Phoenix.get.get_privilage_id);
+// app.get('/:apikey/get_member_id', Phoenix.get.get_member_id);
+// app.get('/:apikey/get_project_id', Phoenix.get.get_project_id);
+// app.get('/:apikey/get_inventory_id', Phoenix.get.get_inventory_id);
+// app.get('/:apikey/get_cluster_id', Phoenix.get.get_cluster_id);
+// app.get('/:apikey/get_config_id', Phoenix.get.get_config_id);
+// app.get('/:apikey/get_compile_id', Phoenix.get.get_compile_id);
+// app.get('/:apikey/get_user_by_apikey', Phoenix.get.get_user_by_apikey);
+// app.get('/:apikey/user/:user_id?', Phoenix.get.user);
+// app.get('/:apikey/group/:group_id?', Phoenix.get.group);
+// app.get('/:apikey/group/:group_id?/user/:user_id', Phoenix.get.groupByUser);
+// app.get('/:apikey/member/:group_id', Phoenix.get.member);
+// app.get('/:apikey/role/:role_id?', Phoenix.get.role);
+// app.get('/:apikey/project/:project_id?/user/:user_id', Phoenix.get.projectByUser);
+// app.get('/:apikey/project/:project_id?/group/:group_id', Phoenix.get.projectByGroup);
+// app.get('/:apikey/project/:project_id?/inventory/:inventory_id?', Phoenix.get.inventory);
+// app.get('/:apikey/cluster/:cluster_id?', Phoenix.get.cluster);
+// app.get('/:apikey/cluster/:cluster_id?/config/:config_id?', Phoenix.get.cluster_config);
+// app.get('/:apikey/compile/:compile_id?', Phoenix.get.compile);
+// app.get('/:apikey/default_config', Phoenix.get.default_config);
+// app.get('/:apikey/view_jar/:compile_id?/project/:project_id?', Phoenix.get.view_jar);
+// app.get('/:apikey/project_inventory_by_user/:user_id?', Phoenix.get.project_inventory_by_user);
 
-//for job http request
-app.get('/:apikey/get_job_id_from_db/:user_id', Phoenix.get.get_job_id_from_db);
-app.get('/:apikey/get_project_job_history/project/:project_id', Phoenix.get.get_project_job_history);
+// //for job http request
+// app.get('/:apikey/get_job_id_from_db/:user_id', Phoenix.get.get_job_id_from_db);
+// app.get('/:apikey/get_project_job_history/project/:project_id', Phoenix.get.get_project_job_history);
 
-//post method
-app.post('/:apikey/user', Phoenix.post.user);
-app.post('/:apikey/group', Phoenix.post.group);
-app.post('/:apikey/member', Phoenix.post.member);
-app.post('/:apikey/role', Phoenix.post.role);
-app.post('/:apikey/privilege/:role_id', Phoenix.post.privilege);
-app.post('/:apikey/project/user/:user_id', Phoenix.post.project);
-app.post('/:apikey/project/:project_id/inventory', Phoenix.post.inventory);
-app.post('/:apikey/cluster', Phoenix.post.cluster);
-app.post('/:apikey/cluster/:cluster_id/config', Phoenix.post.cluster_config);
-app.post('/:apikey/login', Phoenix.post.login);
-app.post('/:apikey/compile', Phoenix.post.compile);
-app.post('/:apikey/job', Phoenix.post.job);
+// //post method
+// app.post('/:apikey/user', Phoenix.post.user);
+// app.post('/:apikey/group', Phoenix.post.group);
+// app.post('/:apikey/member', Phoenix.post.member);
+// app.post('/:apikey/role', Phoenix.post.role);
+// app.post('/:apikey/privilege/:role_id', Phoenix.post.privilege);
+// app.post('/:apikey/project/user/:user_id', Phoenix.post.project);
+// app.post('/:apikey/project/:project_id/inventory', Phoenix.post.inventory);
+// app.post('/:apikey/cluster', Phoenix.post.cluster);
+// app.post('/:apikey/cluster/:cluster_id/config', Phoenix.post.cluster_config);
+// app.post('/:apikey/login', Phoenix.post.login);
+// app.post('/:apikey/compile', Phoenix.post.compile);
+// app.post('/:apikey/job', Phoenix.post.job);
 
-//put method
-app.put('/:apikey/user/:user_id?', Phoenix.put.user);
-app.put('/:apikey/group/:group_id?', Phoenix.put.group);
-app.put('/:apikey/member/:member_id?', Phoenix.put.member);
-app.put('/:apikey/role/:role_id?', Phoenix.put.role);
-app.put('/:apikey/privilege/:privilege_id?', Phoenix.put.privilege);
-app.put('/:apikey/project/:project_id?/user/:user_id', Phoenix.put.projectByUser);
-app.put('/:apikey/project/:project_id?/share/:group_id', Phoenix.put.projectShareGroup);
-app.put('/:apikey/cluster/:cluster_id?', Phoenix.put.cluster);
-app.put('/:apikey/cluster/:cluster_id?/config/:config_id', Phoenix.put.cluster_config);
-app.put('/:apikey/job/:oozie_job_id', Phoenix.put.job);
-app.put('/:apikey/default_config', Phoenix.put.default_config);
+// //put method
+// app.put('/:apikey/user/:user_id?', Phoenix.put.user);
+// app.put('/:apikey/group/:group_id?', Phoenix.put.group);
+// app.put('/:apikey/member/:member_id?', Phoenix.put.member);
+// app.put('/:apikey/role/:role_id?', Phoenix.put.role);
+// app.put('/:apikey/privilege/:privilege_id?', Phoenix.put.privilege);
+// app.put('/:apikey/project/:project_id?/user/:user_id', Phoenix.put.projectByUser);
+// app.put('/:apikey/project/:project_id?/share/:group_id', Phoenix.put.projectShareGroup);
+// app.put('/:apikey/cluster/:cluster_id?', Phoenix.put.cluster);
+// app.put('/:apikey/cluster/:cluster_id?/config/:config_id', Phoenix.put.cluster_config);
+// app.put('/:apikey/job/:oozie_job_id', Phoenix.put.job);
+// app.put('/:apikey/default_config', Phoenix.put.default_config);
 
-//delete method
-app.delete('/:apikey/user/:user_id?', Phoenix.delete.user);
-app.delete('/:apikey/group/:group_id?', Phoenix.delete.group);
-app.delete('/:apikey/member/:member_id?', Phoenix.delete.member);
-app.delete('/:apikey/role/:role_id?', Phoenix.delete.role);
-app.delete('/:apikey/project/:project_id?', Phoenix.delete.project);
-app.delete('/:apikey/inventory/:inventory_id?', Phoenix.delete.inventory);
-app.delete('/:apikey/cluster/:cluster_id?', Phoenix.delete.cluster);
-app.delete('/:apikey/cluster/:cluster_id?/config/:config_id?', Phoenix.delete.cluster_config);
+// //delete method
+// app.delete('/:apikey/user/:user_id?', Phoenix.delete.user);
+// app.delete('/:apikey/group/:group_id?', Phoenix.delete.group);
+// app.delete('/:apikey/member/:member_id?', Phoenix.delete.member);
+// app.delete('/:apikey/role/:role_id?', Phoenix.delete.role);
+// app.delete('/:apikey/project/:project_id?', Phoenix.delete.project);
+// app.delete('/:apikey/inventory/:inventory_id?', Phoenix.delete.inventory);
+// app.delete('/:apikey/cluster/:cluster_id?', Phoenix.delete.cluster);
+// app.delete('/:apikey/cluster/:cluster_id?/config/:config_id?', Phoenix.delete.cluster_config);
 
 
-//import patient_registers module
-var DefaultFHIR = require("./default_fhir/controller");
-var Person = require("./patient_registers/person/controller");
-var Patient = require("./patient_registers/patient/controller");
-var RelatedPerson = require("./patient_registers/related_person/controller");
-var Group = require("./patient_registers/group/controller");
+// //import patient_registers module
+// var DefaultFHIR = require("./default_fhir/controller");
+// var Person = require("./patient_registers/person/controller");
+// var Patient = require("./patient_registers/patient/controller");
+// var RelatedPerson = require("./patient_registers/related_person/controller");
+// var Group = require("./patient_registers/group/controller");
 
-//import routes
-var routesDefaultFHIR    = require('./default_fhir/routes');  
-var routesPerson    = require('./patient_registers/person/routes');  
-var routesPatient    = require('./patient_registers/patient/routes');  
-var routesRelatedPerson    = require('./patient_registers/related_person/routes');  
-var routesGroup    = require('./patient_registers/group/routes');  
+// //import routes
+// var routesDefaultFHIR    = require('./default_fhir/routes');  
+// var routesPerson    = require('./patient_registers/person/routes');  
+// var routesPatient    = require('./patient_registers/patient/routes');  
+// var routesRelatedPerson    = require('./patient_registers/related_person/routes');  
+// var routesGroup    = require('./patient_registers/group/routes');  
 
-//setrouting
-routesDefaultFHIR(app, DefaultFHIR);
-routesPerson(app, Person);
-routesPatient(app, Patient);
-routesRelatedPerson(app, RelatedPerson);
-routesGroup(app, Group);
+// //setrouting
+// routesDefaultFHIR(app, DefaultFHIR);
+// routesPerson(app, Person);
+// routesPatient(app, Patient);
+// routesRelatedPerson(app, RelatedPerson);
+// routesGroup(app, Group);
 
 var server = app.listen(port, host, function () {
   console.log("Server running at http://%s:%s", host, port);
