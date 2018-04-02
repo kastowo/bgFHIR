@@ -8689,7 +8689,7 @@ var controller = {
 			var apikey = req.params.apikey;
 
 			var code = req.body.code.trim().toLowerCase();
-			var display = var display = req.body.display.replace(/[^\w\s ,]/gi, '');
+			var display = req.body.display.replace(/[^\w\s ,]/gi, '');
 			var definition = req.body.definition.replace(/[^\w\s , ( ) / .]/gi, '');
 
 			var err_code = 0;
@@ -8773,7 +8773,7 @@ var controller = {
 			var apikey = req.params.apikey;
 
 			var code = req.body.code.trim().toLowerCase();
-			var display = var display = req.body.display.replace(/[^\w\s ,]/gi, '');
+			var display = req.body.display.replace(/[^\w\s ,]/gi, '');
 			var definition = req.body.definition.replace(/[^\w\s , ( ) / .]/gi, '');
 
 			var err_code = 0;
@@ -8857,7 +8857,7 @@ var controller = {
 			var apikey = req.params.apikey;
 
 			var code = req.body.code.trim().toLowerCase();
-			var display = var display = req.body.display.replace(/[^\w\s ,]/gi, '');
+			var display = req.body.display.replace(/[^\w\s ,]/gi, '');
 			var definition = req.body.definition.replace(/[^\w\s , ( ) / .]/gi, '');
 
 			var err_code = 0;
@@ -8941,7 +8941,7 @@ var controller = {
 			var apikey = req.params.apikey;
 
 			var code = req.body.code.trim().toLowerCase();
-			var display = var display = req.body.display.replace(/[^\w\s ,]/gi, '');
+			var display = req.body.display.replace(/[^\w\s ,]/gi, '');
 			var definition = req.body.definition.replace(/[^\w\s , ( ) / .]/gi, '');
 
 			var err_code = 0;
