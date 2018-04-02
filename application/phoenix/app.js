@@ -29,8 +29,8 @@ app.use(bodyParser.urlencoded({ limit: '50mb', extended: false }));
 app.use(bodyParser.json({limit: '50mb'}));
 
 var Phoenix = {
-			get: {
-				check_apikey: function checkApikey(req, res){
+      get: {
+        check_apikey: function checkApikey(req, res){
           var apikey = req.params.apikey;
           //query phoenix
           var query = "SELECT user_id, user_apikey, user_mac_address, user_is_active, user_ip_address, user_role_id FROM baciro.user WHERE user_apikey = '"+ apikey + "' ";
@@ -381,7 +381,7 @@ var Phoenix = {
         },
         user: function getUser(req, res){
           var apikey = req.params.apikey;
-					var user_id = req.params.user_id;
+          var user_id = req.params.user_id;
 
           if(typeof user_id !== 'undefined'){
             var query = "SELECT user_id, user_firstname, user_lastname, user_email, user_apikey, user_ip_address, user_create_date, user_update_date, user_is_active, user_cluster_id FROM baciro.user WHERE user_id = "+ user_id +" ";
@@ -402,7 +402,7 @@ var Phoenix = {
                 res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "getUser"});
             });
           }
-				},
+        },
         group: function getGroup(req, res){
           var apikey = req.params.apikey;
           var group_id = req.params.group_id;
@@ -688,7 +688,8 @@ var Phoenix = {
           },function(e){
             res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "viewJar"});
           });
-			},
+        }
+      },
       post:{
         user: function addUser(req, res){
           var user_id = req.body.user_id;
@@ -1459,15 +1460,15 @@ var Phoenix = {
       }
 }
 
-// function lowercaseObject(jsonData){
-//   var rez = [];
-//   for(i=0; i < jsonData.length; i++){
-//     json = JSON.stringify(jsonData[i]);
-//     json2 = json.replace(/"([^"]+)":/g,function($0,$1){return ('"'+$1.toLowerCase()+'":');});
-//     rez[i] = JSON.parse(json2);
-//   }
-//   return rez;
-// }
+function lowercaseObject(jsonData){
+  var rez = [];
+  for(i=0; i < jsonData.length; i++){
+    json = JSON.stringify(jsonData[i]);
+    json2 = json.replace(/"([^"]+)":/g,function($0,$1){return ('"'+$1.toLowerCase()+'":');});
+    rez[i] = JSON.parse(json2);
+  }
+  return rez;
+}
 
 function checkApikey(apikey){
   var query = "SELECT user_id FROM baciro.user WHERE user_apikey = '"+ apikey +"' ";
