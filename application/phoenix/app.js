@@ -1459,38 +1459,38 @@ var Phoenix = {
       }
 }
 
-function lowercaseObject(jsonData){
-  var rez = [];
-  for(i=0; i < jsonData.length; i++){
-    json = JSON.stringify(jsonData[i]);
-    json2 = json.replace(/"([^"]+)":/g,function($0,$1){return ('"'+$1.toLowerCase()+'":');});
-    rez[i] = JSON.parse(json2);
-  }
-  return rez;
-}
+// function lowercaseObject(jsonData){
+//   var rez = [];
+//   for(i=0; i < jsonData.length; i++){
+//     json = JSON.stringify(jsonData[i]);
+//     json2 = json.replace(/"([^"]+)":/g,function($0,$1){return ('"'+$1.toLowerCase()+'":');});
+//     rez[i] = JSON.parse(json2);
+//   }
+//   return rez;
+// }
 
-function checkApikey(apikey){
-  var query = "SELECT user_id FROM baciro.user WHERE user_apikey = '"+ apikey +"' ";
+// function checkApikey(apikey){
+//   var query = "SELECT user_id FROM baciro.user WHERE user_apikey = '"+ apikey +"' ";
 
-  db.query(query,function(dataJson){
-    rez = lowercaseObject(dataJson);
-    return rez;
-  },function(e){
-    return {"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "checkApikey"};
-  });
-}
+//   db.query(query,function(dataJson){
+//     rez = lowercaseObject(dataJson);
+//     return rez;
+//   },function(e){
+//     return {"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "checkApikey"};
+//   });
+// }
 
-function formatDate(date) {
-  var d = new Date(date),
-      month = '' + (d.getMonth() + 1),
-      day = '' + d.getDate(),
-      year = d.getFullYear();
+// function formatDate(date) {
+//   var d = new Date(date),
+//       month = '' + (d.getMonth() + 1),
+//       day = '' + d.getDate(),
+//       year = d.getFullYear();
 
-  if (month.length < 2) month = '0' + month;
-  if (day.length < 2) day = '0' + day;
+//   if (month.length < 2) month = '0' + month;
+//   if (day.length < 2) day = '0' + day;
 
-  return [year, month, day].join('-');
-}
+//   return [year, month, day].join('-');
+// }
 
 //get method
 app.get('/:apikey/check_apikey', Phoenix.get.check_apikey);
