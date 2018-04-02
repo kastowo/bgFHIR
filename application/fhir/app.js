@@ -41,7 +41,7 @@ var Group = require("./patient_registers/group/controller");
 //import routes
 var routesDefaultFHIR	= require('./default_fhir/routes');
 
-var routesClinicalCategorizationResources = require('./clinical_categorization_resources/routes');
+// var routesClinicalCategorizationResources = require('./clinical_categorization_resources/routes');
 var routesPerson		= require('./patient_registers/person/routes');
 var routesPatient		= require('./patient_registers/patient/routes');
 var routesRelatedPerson	= require('./patient_registers/related_person/routes');
@@ -49,7 +49,7 @@ var routesGroup			= require('./patient_registers/group/routes');
 
 //setrouting
 routesDefaultFHIR(app, DefaultFHIR);
-routesClinicalCategorizationResources(app, ClinicalCategorizationResources);
+// routesClinicalCategorizationResources(app, ClinicalCategorizationResources);
 routesPerson(app, Person);
 routesPatient(app, Patient);
 routesRelatedPerson(app, RelatedPerson);
