@@ -10,8 +10,6 @@ var configYaml = yamlconfig.readConfig('../config/config.yml');
 var host = configYaml.fhir.host;
 var port = configYaml.fhir.port;
 
-
-
 //setting midleware
 app.use (function(req,res,next){
   res.header("Access-Control-Allow-Origin", "*");
@@ -38,10 +36,10 @@ var Group = require("./patient_registers/group/controller");
 
 //import scheduling_and_appointments module
 var Schedule = require("./scheduling_and_appointments/schedule/controller");
+var Slot = require("./scheduling_and_appointments/slot/controller");
 
 //import clinical categorization resources
 var ClinicalCategorizationResources = require("./clinical_categorization_resources/controller");
-
 
 //import routes
 var routesDefaultFHIR	= require('./default_fhir/routes');
@@ -52,6 +50,7 @@ var routesPatient		= require('./patient_registers/patient/routes');
 var routesRelatedPerson	= require('./patient_registers/related_person/routes');
 var routesGroup			= require('./patient_registers/group/routes');
 var routesSchedule		= require('./scheduling_and_appointments/schedule/routes');
+var routesSlot		= require('./scheduling_and_appointments/slot/routes');
 
 //setrouting
 routesDefaultFHIR(app, DefaultFHIR);
@@ -61,6 +60,7 @@ routesPatient(app, Patient);
 routesRelatedPerson(app, RelatedPerson);
 routesGroup(app, Group);
 routesSchedule(app, Schedule);
+routesSlot(app, Slot);
 
 
 var server = app.listen(port, host, function () {

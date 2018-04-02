@@ -474,7 +474,10 @@
 			},
 			"reAdmissionIndicator": {
 				"location": "%(apikey)s/re-admission-indicator"
-			}
+			},
+	    "slot": {
+	    	"location": "%(apikey)s/slot"
+	    }
 		},
 		"PUT": {
 			"identityAssuranceLevel": {
@@ -650,7 +653,13 @@
 			},
 			"reAdmissionIndicator": {
 				"location": "%(apikey)s/reAdmissionIndicator/%(_id)d"
-			}
+			},
+      "schedule": {
+          "location": "%(apikey)s/schedule/%(_id)s"
+      },
+     	"slot": {
+        "location": "%(apikey)s/slot/%(_id)s"
+     	}
 		}
 	}
 }

@@ -71,31 +71,31 @@ var controller = {
           Schedule.specialty = rez[i].schedule_specialty;
 
           if(rez[i].schedule_actor_patient_id !== 'null'){
-            Schedule.actor.push(hostFHIR + ':' + portFHIR + '/Patient?_id=' + rez[i].schedule_actor_patient_id);  
+            Schedule.actor.push(hostFHIR + ':' + portFHIR + '/' + apikey + '/Patient?_id=' + rez[i].schedule_actor_patient_id);  
           }
 
           if(rez[i].schedule_actor_practitioner_id !== 'null'){
-            Schedule.actor.push(hostFHIR + ':' + portFHIR + '/Practitioner?_id=' + rez[i].schedule_actor_practitioner_id);  
+            Schedule.actor.push(hostFHIR + ':' + portFHIR + '/' + apikey + '/Practitioner?_id=' + rez[i].schedule_actor_practitioner_id);  
           }
           
           if(rez[i].schedule_actor_practitioner_role_id !== 'null'){
-            Schedule.actor.push(hostFHIR + ':' + portFHIR + '/PractitionerRole?_id=' + rez[i].schedule_actor_practitioner_role_id);  
+            Schedule.actor.push(hostFHIR + ':' + portFHIR + '/' + apikey + '/PractitionerRole?_id=' + rez[i].schedule_actor_practitioner_role_id);  
           }
           
           if(rez[i].schedule_actor_related_person_id !== 'null'){
-            Schedule.actor.push(hostFHIR + ':' + portFHIR + '/RelatedPerson?_id=' + rez[i].schedule_actor_related_person_id);  
+            Schedule.actor.push(hostFHIR + ':' + portFHIR + '/' + apikey + '/RelatedPerson?_id=' + rez[i].schedule_actor_related_person_id);  
           }
 
           if(rez[i].schedule_actor_device_id !== 'null'){
-            Schedule.actor.push(hostFHIR + ':' + portFHIR + '/Device?_id=' + rez[i].schedule_actor_device_id);  
+            Schedule.actor.push(hostFHIR + ':' + portFHIR + '/' + apikey + '/Device?_id=' + rez[i].schedule_actor_device_id);  
           }
          
           if(rez[i].schedule_actor_healthcare_service_id !== 'null'){
-            Schedule.actor.push(hostFHIR + ':' + portFHIR + '/HealthcareService?_id=' + rez[i].schedule_actor_healthcare_service_id);  
+            Schedule.actor.push(hostFHIR + ':' + portFHIR + '/' + apikey + '/HealthcareService?_id=' + rez[i].schedule_actor_healthcare_service_id);  
           }
           
           if(rez[i].schedule_actor_location_id !== 'null'){
-            Schedule.actor.push(hostFHIR + ':' + portFHIR + '/Location?_id=' + rez[i].schedule_actor_location_id);  
+            Schedule.actor.push(hostFHIR + ':' + portFHIR + '/' + apikey + '/Location?_id=' + rez[i].schedule_actor_location_id);  
           }
           
           Schedule.period = rez[i].schedule_period_start + ' to ' + rez[i].schedule_period_end;  
@@ -225,31 +225,31 @@ var controller = {
             Schedule.specialty = rez[i].schedule_specialty;
 
             if(rez[i].schedule_actor_patient_id !== 'null'){
-              Schedule.actor.push(hostFHIR + ':' + portFHIR + '/Patient?_id=' + rez[i].schedule_actor_patient_id);  
+              Schedule.actor.push(hostFHIR + ':' + portFHIR + '/' + apikey + '/Patient?_id=' + rez[i].schedule_actor_patient_id);  
             }
 
             if(rez[i].schedule_actor_practitioner_id !== 'null'){
-              Schedule.actor.push(hostFHIR + ':' + portFHIR + '/Practitioner?_id=' + rez[i].schedule_actor_practitioner_id);  
+              Schedule.actor.push(hostFHIR + ':' + portFHIR + '/' + apikey + '/Practitioner?_id=' + rez[i].schedule_actor_practitioner_id);  
             }
             
             if(rez[i].schedule_actor_practitioner_role_id !== 'null'){
-              Schedule.actor.push(hostFHIR + ':' + portFHIR + '/PractitionerRole?_id=' + rez[i].schedule_actor_practitioner_role_id);  
+              Schedule.actor.push(hostFHIR + ':' + portFHIR + '/' + apikey + '/PractitionerRole?_id=' + rez[i].schedule_actor_practitioner_role_id);  
             }
             
             if(rez[i].schedule_actor_related_person_id !== 'null'){
-              Schedule.actor.push(hostFHIR + ':' + portFHIR + '/RelatedPerson?_id=' + rez[i].schedule_actor_related_person_id);  
+              Schedule.actor.push(hostFHIR + ':' + portFHIR + '/' + apikey + '/RelatedPerson?_id=' + rez[i].schedule_actor_related_person_id);  
             }
 
             if(rez[i].schedule_actor_device_id !== 'null'){
-              Schedule.actor.push(hostFHIR + ':' + portFHIR + '/Device?_id=' + rez[i].schedule_actor_device_id);  
+              Schedule.actor.push(hostFHIR + ':' + portFHIR + '/' + apikey + '/Device?_id=' + rez[i].schedule_actor_device_id);  
             }
            
             if(rez[i].schedule_actor_healthcare_service_id !== 'null'){
-              Schedule.actor.push(hostFHIR + ':' + portFHIR + '/HealthcareService?_id=' + rez[i].schedule_actor_healthcare_service_id);  
+              Schedule.actor.push(hostFHIR + ':' + portFHIR + '/' + apikey + '/HealthcareService?_id=' + rez[i].schedule_actor_healthcare_service_id);  
             }
             
             if(rez[i].schedule_actor_location_id !== 'null'){
-              Schedule.actor.push(hostFHIR + ':' + portFHIR + '/Location?_id=' + rez[i].schedule_actor_location_id);  
+              Schedule.actor.push(hostFHIR + ':' + portFHIR + '/' + apikey + '/Location?_id=' + rez[i].schedule_actor_location_id);  
             }
             
             Schedule.period = rez[i].schedule_period_start + ' to ' + rez[i].schedule_period_end;  
@@ -382,31 +382,31 @@ var controller = {
             Schedule.specialty = rez[i].schedule_specialty;
 
             if(rez[i].schedule_actor_patient_id !== 'null'){
-              Schedule.actor.push(hostFHIR + ':' + portFHIR + '/Patient?_id=' + rez[i].schedule_actor_patient_id);  
+              Schedule.actor.push(hostFHIR + ':' + portFHIR + '/' + apikey + '/Patient?_id=' + rez[i].schedule_actor_patient_id);  
             }
 
             if(rez[i].schedule_actor_practitioner_id !== 'null'){
-              Schedule.actor.push(hostFHIR + ':' + portFHIR + '/Practitioner?_id=' + rez[i].schedule_actor_practitioner_id);  
+              Schedule.actor.push(hostFHIR + ':' + portFHIR + '/' + apikey + '/Practitioner?_id=' + rez[i].schedule_actor_practitioner_id);  
             }
             
             if(rez[i].schedule_actor_practitioner_role_id !== 'null'){
-              Schedule.actor.push(hostFHIR + ':' + portFHIR + '/PractitionerRole?_id=' + rez[i].schedule_actor_practitioner_role_id);  
+              Schedule.actor.push(hostFHIR + ':' + portFHIR + '/' + apikey + '/PractitionerRole?_id=' + rez[i].schedule_actor_practitioner_role_id);  
             }
             
             if(rez[i].schedule_actor_related_person_id !== 'null'){
-              Schedule.actor.push(hostFHIR + ':' + portFHIR + '/RelatedPerson?_id=' + rez[i].schedule_actor_related_person_id);  
+              Schedule.actor.push(hostFHIR + ':' + portFHIR + '/' + apikey + '/RelatedPerson?_id=' + rez[i].schedule_actor_related_person_id);  
             }
 
             if(rez[i].schedule_actor_device_id !== 'null'){
-              Schedule.actor.push(hostFHIR + ':' + portFHIR + '/Device?_id=' + rez[i].schedule_actor_device_id);  
+              Schedule.actor.push(hostFHIR + ':' + portFHIR + '/' + apikey + '/Device?_id=' + rez[i].schedule_actor_device_id);  
             }
            
             if(rez[i].schedule_actor_healthcare_service_id !== 'null'){
-              Schedule.actor.push(hostFHIR + ':' + portFHIR + '/HealthcareService?_id=' + rez[i].schedule_actor_healthcare_service_id);  
+              Schedule.actor.push(hostFHIR + ':' + portFHIR + '/' + apikey + '/HealthcareService?_id=' + rez[i].schedule_actor_healthcare_service_id);  
             }
             
             if(rez[i].schedule_actor_location_id !== 'null'){
-              Schedule.actor.push(hostFHIR + ':' + portFHIR + '/Location?_id=' + rez[i].schedule_actor_location_id);  
+              Schedule.actor.push(hostFHIR + ':' + portFHIR + '/' + apikey + '/Location?_id=' + rez[i].schedule_actor_location_id);  
             }
             
             Schedule.period = rez[i].schedule_period_start + ' to ' + rez[i].schedule_period_end;  
