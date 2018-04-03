@@ -1590,6 +1590,8 @@ var Group = require("./patient_registers/group/controller");
 
 //import scheduling_and_appointments module
 var Schedule = require("./scheduling_and_appointments/schedule/controller");
+var Slot = require("./scheduling_and_appointments/slot/controller");
+var AppointmentResponse = require("./scheduling_and_appointments/appointment_response/controller");
 
 //import routes
 var routesDefaultFHIR    = require('./default_fhir/routes');  
@@ -1598,6 +1600,8 @@ var routesPatient    = require('./patient_registers/patient/routes');
 var routesRelatedPerson    = require('./patient_registers/related_person/routes');  
 var routesGroup    = require('./patient_registers/group/routes');  
 var routesSchedule       = require('./scheduling_and_appointments/schedule/routes');  
+var routesSlot           = require('./scheduling_and_appointments/slot/routes');  
+var routesAppointmentResponse           = require('./scheduling_and_appointments/appointment_response/routes');  
 
 //setrouting
 routesDefaultFHIR(app, DefaultFHIR);
@@ -1606,6 +1610,9 @@ routesPatient(app, Patient);
 routesRelatedPerson(app, RelatedPerson);
 routesGroup(app, Group);
 routesSchedule(app, Schedule);
+routesSlot(app, Slot);
+routesAppointmentResponse(app, AppointmentResponse);
+
 
 var server = app.listen(port, host, function () {
   console.log("Server running at http://%s:%s", host, port);

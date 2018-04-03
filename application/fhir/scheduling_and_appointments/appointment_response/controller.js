@@ -33,58 +33,80 @@ var ApiFHIR  = new Apiclient(seedPhoenixFHIR);
 
 var controller = {
 			get: {
-				schedule: function getSchedule(req, res){
+				appointmentResponse: function getAppointmentResponse(req, res){
 					var ipAddres = req.connection.remoteAddress;
 					var apikey = req.params.apikey;
 					var regex = new RegExp("([0-9]{4}[-](0[1-9]|1[0-2])[-]([0-2]{1}[0-9]{1}|3[0-1]{1})|([0-2]{1}[0-9]{1}|3[0-1]{1})[-](0[1-9]|1[0-2])[-][0-9]{4})");
 
 					//params from query string
-					var scheduleId = req.query._id;
-					var scheduleActive = req.query.active;
-					var scheduleActor = req.query.actor;
-					var scheduleDate = req.query.date;
-					var scheduleType = req.query.type;
+					var appointmentResponseId = req.query._id;
+					var appointmentResponseActor = req.query.actor;
+					var appointmentId = req.query.appointment;
+					var appointmentResponseActorLocation = req.query.location;
+					var appointmentResponseActorParticipantStatus = req.query.part_status;
+					var appointmentResponseActorPatient = req.query.patient;
+					var appointmentResponseActorPractitioner = req.query.practitioner;
 					
 					var qString = {};
-					if(typeof scheduleId !== 'undefined'){
-						if(!validator.isEmpty(scheduleId)){
-							qString._id = scheduleId; 
+					if(typeof appointmentResponseId !== 'undefined'){
+						if(!validator.isEmpty(appointmentResponseId)){
+							qString._id = appointmentResponseId; 
 						}else{
-							res.json({"err_code": 1, "err_msg": "Schedule ID is required."})
+							res.json({"err_code": 1, "err_msg": "Appointment Response ID is required."})
 						}
 					}
 
-					if(typeof scheduleActive !== 'undefined'){
-						if(validator.isBoolean(scheduleActive)){
-							qString.active = scheduleActive; 
-						}else{
-							res.json({"err_code": 1, "err_msg": "Active is boolean."});
-						}
-					}
-
-					if(typeof scheduleActor !== 'undefined'){
-						if(!validator.isEmpty(scheduleActor)){
-							qString.actor = scheduleActor; 
+					if(typeof appointmentResponseActor !== 'undefined'){
+						if(!validator.isEmpty(appointmentResponseActor)){
+							qString.actor = appointmentResponseActor; 
 						}else{
 							res.json({"err_code": 1, "err_msg": "Actor is empty."});
 						}
 					}
 
-					if(typeof scheduleDate !== 'undefined'){
-						if(!validator.isEmpty(scheduleDate)){
-							if(!regex.test(scheduleDate)){
-								res.json({"err_code": 1, "err_msg": "Schedule date invalid format."});
-							}else{
-								qString.date = scheduleDate; 
-							}	
+					if(typeof appointmentId !== 'undefined'){
+						if(!validator.isEmpty(appointmentId)){
+							qString.appointment_id = appointmentId; 
 						}else{
-							res.json({"err_code": 1, "err_msg": "Schedule date is empty."});
+							res.json({"err_code": 1, "err_msg": "Actor is empty."});
+						}
+					}
+
+					if(typeof appointmentResponseActorLocation !== 'undefined'){
+						if(!validator.isEmpty(appointmentResponseActorLocation)){
+							qString.location = appointmentResponseActorLocation; 
+						}else{
+							res.json({"err_code": 1, "err_msg": "Location is empty."});
+						}
+					}
+
+					if(typeof appointmentResponseActorPatient !== 'undefined'){
+						if(!validator.isEmpty(appointmentResponseActorPatient)){
+							qString.patient = appointmentResponseActorPatient; 
+						}else{
+							res.json({"err_code": 1, "err_msg": "Patient is empty."});
+						}
+					}
+
+					if(typeof appointmentResponseActorPractitioner !== 'undefined'){
+						if(!validator.isEmpty(appointmentResponseActorPractitioner)){
+							qString.practitioner = appointmentResponseActorPractitioner; 
+						}else{
+							res.json({"err_code": 1, "err_msg": "Practitioner is empty."});
+						}
+					}
+
+					if(typeof appointmentResponseActorParticipantStatus !== 'undefined'){
+						if(!validator.isEmpty(appointmentResponseActorParticipantStatus)){
+							qString.part_status = appointmentResponseActorParticipantStatus; 
+						}else{
+							res.json({"err_code": 1, "err_msg": "Participant Status is empty."});
 						}
 					}
 					
 					seedPhoenixFHIR.path.GET = {
-						"Schedule" : {
-							"location": "%(apikey)s/schedule",
+						"AppointmentResponse" : {
+							"location": "%(apikey)s/appointment-response",
 							"query": qString
 						}
 					}
@@ -92,21 +114,21 @@ var controller = {
 
 					checkApikey(apikey, ipAddres, function(result){
 						if(result.err_code == 0){
-							ApiFHIR.get('Schedule', {"apikey": apikey}, {}, function (error, response, body) {
+							ApiFHIR.get('AppointmentResponse', {"apikey": apikey}, {}, function (error, response, body) {
 							  if(error){
 							  	res.json(error);
 							  }else{
-							  	var schedule = JSON.parse(body); //object
+							  	var appointmentResponse = JSON.parse(body); //object
 							  	//cek apakah ada error atau tidak
-							  	if(schedule.err_code == 0){
+							  	if(appointmentResponse.err_code == 0){
 								  	//cek jumdata dulu
-								  	if(schedule.data.length > 0){
-								  		res.json({"err_code": 0, "data":schedule.data});
+								  	if(appointmentResponse.data.length > 0){
+								  		res.json({"err_code": 0, "data":appointmentResponse.data});
 								  	}else{
-							  			res.json({"err_code": 2, "err_msg": "Schedule is empty."});	
+							  			res.json({"err_code": 2, "err_msg": "Appointment Response is empty."});	
 								  	}
 							  	}else{
-							  		res.json(schedule);
+							  		res.json(appointmentResponse);
 							  	}
 							  }
 							});
@@ -118,7 +140,7 @@ var controller = {
 				}
 			},
 			post: {
-				schedule: function addSchedule(req, res){
+				appointmentResponse: function addAppointmentResponse(req, res){
 					var ipAddres = req.connection.remoteAddress;
 					var apikey = req.params.apikey;
 					var regex = new RegExp("([0-9]{4}[-](0[1-9]|1[0-2])[-]([0-2]{1}[0-9]{1}|3[0-1]{1})|([0-2]{1}[0-9]{1}|3[0-1]{1})[-](0[1-9]|1[0-2])[-][0-9]{4})");
@@ -127,38 +149,49 @@ var controller = {
 					var err_msg = "";
 
 					//input check 
-					if(typeof req.body.service_category !== 'undefined'){
-						serviceCategory =  req.body.service_category;
-						if(!validator.isInt(serviceCategory)){
+					if(typeof req.body.appointment_id !== 'undefined'){
+						appointmentId =  req.body.appointment_id;
+						if(validator.isEmpty(appointmentId)){
 							err_code = 2;
-							err_msg = "Service category is number";
+							err_msg = "Appointment ID is required.";
 						}
 					}else{
 						err_code = 1;
-						err_msg = "Please add key 'service_category' in json request.";
+						err_msg = "Please add key 'appointment_id' in json request.";
 					}
 
-					if(typeof req.body.service_type !== 'undefined'){
-						serviceType =  req.body.service_type;
-						if(!validator.isInt(serviceType)){
+					if(typeof req.body.start !== 'undefined'){
+						appointmentResponseStart = req.body.start;
+						if(!regex.test(appointmentResponseStart)){
 							err_code = 2;
-							err_msg = "Service type is number";
+							err_msg = "Start invalid date time format.";
 						}
 					}else{
 						err_code = 1;
-						err_msg = "Please add key 'service_type' in json request.";
+						err_msg = "Please add key 'start' in json request.";
 					}
 
-					if(typeof req.body.specialty !== 'undefined'){
-						specialty =  req.body.specialty;
-						if(validator.isEmpty(specialty)){
+					if(typeof req.body.end !== 'undefined'){
+						appointmentResponseEnd = req.body.end;
+						if(!regex.test(appointmentResponseEnd)){
 							err_code = 2;
-							err_msg = "Specialty is required";
+							err_msg = "End invalid date time format.";
 						}
 					}else{
 						err_code = 1;
-						err_msg = "Please add key 'specialty' in json request.";
-					} 
+						err_msg = "Please add key 'end' in json request.";
+					}
+
+					if(typeof req.body.participant_type !== 'undefined'){
+						participantType = req.body.participant_type;
+						if(validator.isEmpty(participantType)){
+							err_code = 2;
+							err_msg = "Participant Type is required.";	
+						}
+					}else{
+						err_code = 1;
+						err_msg = "Please add key 'participant_type' in json request.";
+					}
 
 					if(typeof req.body.actor.patient_id !== 'undefined'){
 						actorPatientId =  req.body.actor.patient_id;
@@ -178,16 +211,6 @@ var controller = {
 					}else{
 						err_code = 1;
 						err_msg = "Please add sub-key 'practitioner_id' in json actor request.";
-					}
-
-					if(typeof req.body.actor.practitioner_role_id !== 'undefined'){
-						actorPractitionerRoleId =  req.body.actor.practitioner_role_id;
-						if(validator.isEmpty(actorPractitionerRoleId)){
-							actorPractitionerRoleId = "";
-						}
-					}else{
-						err_code = 1;
-						err_msg = "Please add sub-key 'practitioner_role_id' in json actor request.";
 					}
 
 					if(typeof req.body.actor.related_person_id !== 'undefined'){
@@ -230,27 +253,22 @@ var controller = {
 						err_msg = "Please add sub-key 'location_id' in json actor request.";
 					}
 
-					if(typeof req.body.period !== 'undefined'){
-						period = req.body.period;
-						if(period.indexOf("to") > 0){
-							arrPeriod = period.split("to");
-							periodStart = arrPeriod[0];
-							periodEnd = arrPeriod[1];
-							
-							if(!regex.test(periodStart) && !regex.test(periodEnd)){
-								err_code = 2;
-								err_msg = "Period invalid date format.";
-							}	
+					if(typeof req.body.participant_status !== 'undefined'){
+						participantStatus = req.body.participant_status;
+						if(validator.isEmpty(participantStatus)){
+							err_code = 2;
+							err_msg = "Participant Status is required.";	
 						}
 					}else{
 						err_code = 1;
-						err_msg = "Please add key 'period' in json request.";
+						err_msg = "Please add key 'participant_status' in json request.";
 					}
 
 					if(typeof req.body.comment !== 'undefined'){
 						comment = req.body.comment;
 						if(validator.isEmpty(comment)){
-							comment = "";
+							err_code = 2;
+							err_msg = "Comment is required.";	
 						}
 					}else{
 						err_code = 1;
@@ -260,43 +278,41 @@ var controller = {
 					if(err_code == 0){
 						//check apikey
 						checkApikey(apikey, ipAddres, function(result){
-							if(result.err_code == 0){	
-								checkCode(apikey, serviceCategory, 'SERVICE_CATEGORY', function(resServiceCategoryCode){
-									if(resServiceCategoryCode.err_code > 0){ //code harus lebih besar dari nol, ini menunjukan datanya valid
-										checkCode(apikey, serviceType, 'SERVICE_TYPE', function(resServiceTypeCode){
-											if(resServiceTypeCode.err_code > 0){ //code harus lebih besar dari nol, ini menunjukan datanya valid
-												checkCode(apikey, specialty, 'PRACTICE_CODE', function(resPracticeCode){
-													if(resPracticeCode.err_code > 0){ //code harus lebih besar dari nol, ini menunjukan datanya valid
-														//add schedule
-														myEmitter.prependOnceListener('addSchedule', function(){
-															var scheduleId = 'sch' + uniqid.time();
+							if(result.err_code == 0){
+								checkUniqeValue(apikey, "APPOINTMENT_ID|" + appointmentId, 'APPOINTMENT', function(resAppointmentID){
+									if(resAppointmentID.err_code > 0){
+										checkCode(apikey, participantType, 'ENCOUNTER_PARTICIPANT_TYPE', function(resParticipantTypeCode){
+											if(resParticipantTypeCode.err_code > 0){
+												checkCode(apikey, participantStatus, 'PARTICIPATION_STATUS', function(resParticipationStatusCode){
+													if(resParticipationStatusCode.err_code > 0){
+														//add AppointmentResponse
+														myEmitter.prependOnceListener('addAppointmentResponse', function(){
+															var appointmentResponseId = 'ar' + uniqid.time();
 
-															var dataSchedule = {
-																										"id": scheduleId,
-																										"active": "true",
-																										"service_category": serviceCategory,
-																										"service_type": serviceType,
-																										"specialty": specialty,
-																										"actor_patient_id": actorPatientId,  
-																										"actor_practitioner_id": actorPractitionerId,  
-																										"actor_practitioner_role_id": actorPractitionerRoleId,  
-																										"actor_related_person_id": actorRelatedPersonId,  
-																										"actor_device_id": actorDeviceId,  
-																										"actor_healthcare_service_id": actorHealthcareServiceId,  
-																										"actor_location_id": actorLocationId,  
-																										"period_start" : periodStart,
-																										"period_end" : periodEnd,
-																										"comment" : comment
-																									}
+															var dataAppointmentResponse = {
+																															"id": appointmentResponseId,
+																															"appointment_id": appointmentId,
+																															"start": appointmentResponseStart,
+																															"end": appointmentResponseEnd,
+																															"participant_type": participantType,  
+																															"actor_patient_id": actorPatientId,  
+																															"actor_practitioner_id": actorPractitionerId,
+																															"actor_related_person_id": actorRelatedPersonId,  
+																															"actor_device_id": actorDeviceId,  
+																															"actor_healthcare_service_id": actorHealthcareServiceId,  
+																															"actor_location_id": actorLocationId,  
+																															"participant_status": participantStatus,
+																															"comment" : comment
+																														}
 															
 															//method, endpoint, params, options, callback
-															ApiFHIR.post('schedule', {"apikey": apikey}, {body: dataSchedule, json:true}, function(error, response, body){	
-														  	var schedule = body; //object
+															ApiFHIR.post('appointmentResponse', {"apikey": apikey}, {body: dataAppointmentResponse, json:true}, function(error, response, body){	
+														  	var appointmentResponse = body; //object
 														  	//cek apakah ada error atau tidak
-														  	if(schedule.err_code == 0){
-														  		res.json({"err_code": 0, "err_msg": "Schedule has been add.", "data": schedule.data});
+														  	if(appointmentResponse.err_code == 0){
+														  		res.json({"err_code": 0, "err_msg": "Appointment Response has been add.", "data": appointmentResponse.data});
 														  	}else{
-														  		res.json(schedule);
+														  		res.json(appointmentResponse);
 														  	}
 															})
 														})
@@ -305,11 +321,11 @@ var controller = {
 														//actor location
 														myEmitter.prependOnceListener('checkActorLocationId', function(){
 															if(validator.isEmpty(actorLocationId)){
-																myEmitter.emit('addSchedule');
+																myEmitter.emit('addAppointmentResponse');
 															}else{
 																checkUniqeValue(apikey, "LOCATION_ID|" + actorLocationId, 'LOCATION', function(resLocationID){
 																	if(resLocationID.err_code > 0){
-																		myEmitter.emit('addSchedule');
+																		myEmitter.emit('addAppointmentResponse');
 																	}else{
 																		res.json({"err_code": 504, "err_msg": "Location Id not found"});		
 																	}
@@ -362,29 +378,14 @@ var controller = {
 															}
 														})
 
-														//actor practitioner role
-														myEmitter.prependOnceListener('checkActorPractitionerRoleId', function(){
-															if(validator.isEmpty(actorPractitionerRoleId)){
-																myEmitter.emit('checkActorRelatedPersonId');
-															}else{
-																checkUniqeValue(apikey, "PRACTITIONER_ROLE_ID|" + actorPractitionerRoleId, 'PRACTITIONER_ROLE', function(resPractitionerRoleID){
-																	if(resPractitionerRoleID.err_code > 0){
-																		myEmitter.emit('checkActorRelatedPersonId');
-																	}else{
-																		res.json({"err_code": 504, "err_msg": "Practitioner Role Id not found"});		
-																	}
-																})
-															}
-														})
-
 														//actor practitioner
 														myEmitter.prependOnceListener('checkActorPractitionerId', function(){
 															if(validator.isEmpty(actorPractitionerId)){
-																myEmitter.emit('checkActorPractitionerRoleId');
+																myEmitter.emit('checkActorRelatedPersonId');
 															}else{
 																checkUniqeValue(apikey, "PRACTITIONER_ID|" + actorPractitionerId, 'PRACTITIONER', function(resPractitionerID){
 																	if(resPractitionerID.err_code > 0){
-																		myEmitter.emit('checkActorPractitionerRoleId');
+																		myEmitter.emit('checkActorRelatedPersonId');
 																	}else{
 																		res.json({"err_code": 504, "err_msg": "Practitioner Id not found"});		
 																	}
@@ -407,16 +408,17 @@ var controller = {
 															}
 														})
 														myEmitter.emit('checkActorPatientId');
+
 													}else{
-														res.json({"err_code": 503, "err_msg": "Specialty code not found"});		
+														res.json({"err_code": 503, "err_msg": "Participation Status Code not found"});				
 													}
-												})
+												})	
 											}else{
-												res.json({"err_code": 502, "err_msg": "Service type code not found"});		
+												res.json({"err_code": 502, "err_msg": "Participant Type Code not found"});		
 											}
-										})
+										})										
 									}else{
-										res.json({"err_code": 501, "err_msg": "Service category code not found"});
+										res.json({"err_code": 501, "err_msg": "Appointment ID not found"});
 									}
 								})
 							}else{
@@ -430,78 +432,69 @@ var controller = {
 				}
 			},
 			put: {
-				schedule: function updateSchedule(req, res){
+				appointmentResponse: function updateAppointmentResponse(req, res){
 					var ipAddres = req.connection.remoteAddress;
 					var apikey = req.params.apikey;
 					var regex = new RegExp("([0-9]{4}[-](0[1-9]|1[0-2])[-]([0-2]{1}[0-9]{1}|3[0-1]{1})|([0-2]{1}[0-9]{1}|3[0-1]{1})[-](0[1-9]|1[0-2])[-][0-9]{4})");
-					var scheduleId = req.params.schedule_id;
+					var appointmentResponseId = req.params.appointment_response_id;
 
 					var err_code = 0;
 					var err_msg = "";
-					var dataSchedule = {};
+					var dataAppointmentResponse = {};
 
-					if(typeof scheduleId !== 'undefined'){
-						if(validator.isEmpty(scheduleId)){
+					if(typeof appointmentResponseId !== 'undefined'){
+						if(validator.isEmpty(appointmentResponseId)){
 							err_code = 1;
-							err_msg = "Schedule Id is required.";
+							err_msg = "Appointment Response Id is required.";
 						}
 					}else{
 						err_code = 1;
-						err_msg = "Schedule Id is required.";
+						err_msg = "Appointment Response Id is required.";
 					}
 
-					//input check 
-					if(typeof req.body.active !== 'undefined'){
-						active =  req.body.active;
-						if(!validator.isBoolean(active)){
-							err_code = 2;
-							err_msg = "Active is boolean";
-						}else{
-							dataSchedule.active = active;
-						}
-					}
-
-					if(typeof req.body.service_category !== 'undefined'){
-						serviceCategory =  req.body.service_category;
-						if(!validator.isInt(serviceCategory)){
-							err_code = 2;
-							err_msg = "Service category is number";
-						}else{
-							dataSchedule.service_category = serviceCategory;
+					if(typeof req.body.appointment_id !== 'undefined'){
+						appointmentId =  req.body.appointment_id;
+						if(!validator.isEmpty(appointmentId)){
+							dataAppointmentResponse.appointment_id = appointmentId;
 						}
 					}else{
-						serviceCategory = "";
+						appointmentId = "";
 					}
 
-					if(typeof req.body.service_type !== 'undefined'){
-						serviceType =  req.body.service_type;
-						if(!validator.isInt(serviceType)){
+					if(typeof req.body.start !== 'undefined'){
+						appointmentResponseStart = req.body.start;
+						if(!regex.test(appointmentResponseStart)){
 							err_code = 2;
-							err_msg = "Service type is number";
+							err_msg = "Start invalid date time format.";
 						}else{
-							dataSchedule.service_type = serviceType;
+							dataAppointmentResponse.start = appointmentResponseStart;
 						}
-					}else{
-						serviceType = "";
 					}
 
-					if(typeof req.body.specialty !== 'undefined'){
-						specialty =  req.body.specialty;
-						if(validator.isEmpty(specialty)){
+					if(typeof req.body.end !== 'undefined'){
+						appointmentResponseEnd = req.body.end;
+						if(!regex.test(appointmentResponseEnd)){
 							err_code = 2;
-							err_msg = "Specialty is required";
+							err_msg = "End invalid date time format.";
 						}else{
-							dataSchedule.specialty = specialty;
+							dataAppointmentResponse.end = appointmentResponseEnd;
+						}
+					}
+
+					if(typeof req.body.participant_type !== 'undefined'){
+						participantType = req.body.participant_type;
+						if(!validator.isEmpty(participantType)){
+							dataAppointmentResponse.participant_type = participantType;
 						}
 					}else{
-						specialty = "";
-					} 
+						participantType = "";
+					}
 
 					if(typeof req.body.actor !== 'undefined'){
 						if(typeof req.body.actor.patient_id !== 'undefined'){
 							actorPatientId =  req.body.actor.patient_id;
 							if(!validator.isEmpty(actorPatientId)){
-								dataSchedule.actor_patient_id = actorPatientId;	
+								dataAppointmentResponse.actor_patient_id = actorPatientId;	
 							}
 						}else{
 							actorPatientId = "";
@@ -510,26 +503,16 @@ var controller = {
 						if(typeof req.body.actor.practitioner_id !== 'undefined'){
 							actorPractitionerId =  req.body.actor.practitioner_id;
 							if(!validator.isEmpty(actorPractitionerId)){
-								dataSchedule.actor_practitioner_id = actorPractitionerId;
+								dataAppointmentResponse.actor_practitioner_id = actorPractitionerId;
 							}
 						}else{
 							actorPractitionerId = "";
 						}
 
-						if(typeof req.body.actor.practitioner_role_id !== 'undefined'){
-							actorPractitionerRoleId =  req.body.actor.practitioner_role_id;
-							if(!validator.isEmpty(actorPractitionerRoleId)){
-								dataSchedule.actor_practitioner_role_id = actorPractitionerRoleId;
-								
-							}
-						}else{
-							actorPractitionerRoleId = "";
-						}
-
 						if(typeof req.body.actor.related_person_id !== 'undefined'){
 							actorRelatedPersonId =  req.body.actor.related_person_id;
 							if(!validator.isEmpty(actorRelatedPersonId)){
-								dataSchedule.actor_related_person_id = actorRelatedPersonId;
+								dataAppointmentResponse.actor_related_person_id = actorRelatedPersonId;
 							}
 						}else{
 							actorRelatedPersonId = "";
@@ -538,7 +521,7 @@ var controller = {
 						if(typeof req.body.actor.device_id !== 'undefined'){
 							actorDeviceId =  req.body.actor.device_id;
 							if(!validator.isEmpty(actorDeviceId)){
-								dataSchedule.actor_device_id = actorDeviceId;
+								dataAppointmentResponse.actor_device_id = actorDeviceId;
 							}
 						}else{
 							actorDeviceId = "";
@@ -547,7 +530,7 @@ var controller = {
 						if(typeof req.body.actor.healthcare_service_id !== 'undefined'){
 							actorHealthcareServiceId =  req.body.actor.healthcare_service_id;
 							if(!validator.isEmpty(actorHealthcareServiceId)){
-								dataSchedule.actor_healthcare_service_id = actorHealthcareServiceId;
+								dataAppointmentResponse.actor_healthcare_service_id = actorHealthcareServiceId;
 							}
 						}else{
 							actorHealthcareServiceId = "";
@@ -556,7 +539,7 @@ var controller = {
 						if(typeof req.body.actor.location_id !== 'undefined'){
 							actorLocationId =  req.body.actor.location_id;
 							if(!validator.isEmpty(actorLocationId)){
-								dataSchedule.actor_location_id = actorLocationId;
+								dataAppointmentResponse.actor_location_id = actorLocationId;
 							}
 						}else{
 							actorLocationId = "";
@@ -564,34 +547,29 @@ var controller = {
 					}else{
 						actorPatientId = "";
 						actorPractitionerId = "";
-						actorPractitionerRoleId = "";
 						actorRelatedPersonId = "";
 						actorDeviceId = "";
 						actorHealthcareServiceId = "";
 						actorLocationId = "";
 					}
 
-					if(typeof req.body.period !== 'undefined'){
-						period = req.body.period;
-						if(period.indexOf("to") > 0){
-							arrPeriod = period.split("to");
-							periodStart = arrPeriod[0];
-							periodEnd = arrPeriod[1];
-							
-							if(!regex.test(periodStart) && !regex.test(periodEnd)){
-								err_code = 2;
-								err_msg = "Period invalid date format.";
-							}else{
-								dataSchedule.period_start = periodStart;
-								dataSchedule.period_end = periodEnd;
-							}	
+					if(typeof req.body.participant_status !== 'undefined'){
+						participantStatus = req.body.participant_status;
+						if(validator.isEmpty(participantStatus)){
+							err_code = 2;
+							err_msg = "Participant Status is required.";	
+						}else{
+							dataAppointmentResponse.participant_status = participantStatus;
 						}
+					}else{
+						participantStatus = "";
 					}
+
 
 					if(typeof req.body.comment !== 'undefined'){
 						comment = req.body.comment;
 						if(!validator.isEmpty(comment)){
-							dataSchedule.comment = comment;		
+							dataAppointmentResponse.comment = comment;		
 						}
 					}
 
@@ -599,31 +577,46 @@ var controller = {
 						//check apikey
 						checkApikey(apikey, ipAddres, function(result){
 							if(result.err_code == 0){
-								myEmitter.prependListener('updateSchedule', function(){
-									checkUniqeValue(apikey, "SCHEDULE_ID|" + scheduleId, 'SCHEDULE', function(resScheduleID){
-										if(resScheduleID.err_code > 0){
-												ApiFHIR.put('schedule', {"apikey": apikey, "_id": scheduleId}, {body: dataSchedule, json: true}, function(error, response, body){
-							  					schedule = body;
-							  					if(schedule.err_code > 0){
-							  						res.json(schedule);	
+								myEmitter.prependListener('updateAppointmentResponse', function(){
+									checkUniqeValue(apikey, "APPOINTMENT_RESPONSE_ID|" + appointmentResponseId, 'APPOINTMENT_RESPONSE', function(resAppointmentResponseID){
+										if(resAppointmentResponseID.err_code > 0){
+												ApiFHIR.put('appointmentResponse', {"apikey": apikey, "_id": appointmentResponseId}, {body: dataAppointmentResponse, json: true}, function(error, response, body){
+							  					appointmentResponse = body;
+							  					if(appointmentResponse.err_code > 0){
+							  						res.json(appointmentResponse);	
 							  					}else{
-							  						res.json({"err_code": 0, "err_msg": "Schedule has been update.", "data": schedule.data});
+							  						res.json({"err_code": 0, "err_msg": "Appointment Response has been update.", "data": appointmentResponse.data});
 							  					}
 							  				})
 										}else{
-											res.json({"err_code": 504, "err_msg": "Schedule Id not found"});		
+											res.json({"err_code": 504, "err_msg": "Appointment Response Id not found"});		
 										}
 									})
+								})
+
+								//participant status
+								myEmitter.prependOnceListener('checkParticipantStatusCode', function(){
+									if(validator.isEmpty(participantType)){
+										myEmitter.emit('updateAppointmentResponse');
+									}else{
+										checkCode(apikey, participantStatus, 'PARTICIPATION_STATUS', function(resParticipationStatusCode){
+											if(resParticipationStatusCode.err_code > 0){ //code harus lebih besar dari nol, ini menunjukan datanya valid
+												myEmitter.emit('updateAppointmentResponse');
+											}else{
+												res.json({"err_code": 502, "err_msg": "Participation Status code not found"});
+											}	
+										})
+									}	
 								})
 
 								//actor location
 								myEmitter.prependOnceListener('checkActorLocationId', function(){
 									if(validator.isEmpty(actorLocationId)){
-										myEmitter.emit('updateSchedule');
+										myEmitter.emit('checkParticipantStatusCode');
 									}else{
 										checkUniqeValue(apikey, "LOCATION_ID|" + actorLocationId, 'LOCATION', function(resLocationID){
 											if(resLocationID.err_code > 0){
-												myEmitter.emit('updateSchedule');
+												myEmitter.emit('checkParticipantStatusCode');
 											}else{
 												res.json({"err_code": 504, "err_msg": "Location Id not found"});		
 											}
@@ -676,29 +669,14 @@ var controller = {
 									}
 								})
 
-								//actor practitioner role
-								myEmitter.prependOnceListener('checkActorPractitionerRoleId', function(){
-									if(validator.isEmpty(actorPractitionerRoleId)){
-										myEmitter.emit('checkActorRelatedPersonId');
-									}else{
-										checkUniqeValue(apikey, "PRACTITIONER_ROLE_ID|" + actorPractitionerRoleId, 'PRACTITIONER_ROLE', function(resPractitionerRoleID){
-											if(resPractitionerRoleID.err_code > 0){
-												myEmitter.emit('checkActorRelatedPersonId');
-											}else{
-												res.json({"err_code": 504, "err_msg": "Practitioner Role Id not found"});		
-											}
-										})
-									}
-								})
-
 								//actor practitioner
 								myEmitter.prependOnceListener('checkActorPractitionerId', function(){
 									if(validator.isEmpty(actorPractitionerId)){
-										myEmitter.emit('checkActorPractitionerRoleId');
+										myEmitter.emit('checkActorRelatedPersonId');
 									}else{
 										checkUniqeValue(apikey, "PRACTITIONER_ID|" + actorPractitionerId, 'PRACTITIONER', function(resPractitionerID){
 											if(resPractitionerID.err_code > 0){
-												myEmitter.emit('checkActorPractitionerRoleId');
+												myEmitter.emit('checkActorRelatedPersonId');
 											}else{
 												res.json({"err_code": 504, "err_msg": "Practitioner Id not found"});		
 											}
@@ -721,45 +699,30 @@ var controller = {
 									}
 								})
 
-								//specialty
-								myEmitter.prependOnceListener('checkSpecialtyCode', function(){
-									if(validator.isEmpty(specialty)){
+								//participant type
+								myEmitter.prependOnceListener('checkParticipantTypeCode', function(){
+									if(validator.isEmpty(participantType)){
 										myEmitter.emit('checkActorPatientId');
 									}else{
-										checkCode(apikey, specialty, 'PRACTICE_CODE', function(resPracticeCode){
-											if(resPracticeCode.err_code > 0){ //code harus lebih besar dari nol, ini menunjukan datanya valid
+										checkCode(apikey, participantType, 'ENCOUNTER_PARTICIPANT_TYPE', function(resParticipantTypeCode){
+											if(resParticipantTypeCode.err_code > 0){ //code harus lebih besar dari nol, ini menunjukan datanya valid
 												myEmitter.emit('checkActorPatientId');
 											}else{
-												res.json({"err_code": 501, "err_msg": "Specialty code not found"});
-											}	
-										})
-									}
-								})
-
-								//serviceType
-								myEmitter.prependOnceListener('checkServiceTypeCode', function(){
-									if(validator.isEmpty(serviceType)){
-										myEmitter.emit('checkSpecialtyCode');
-									}else{
-										checkCode(apikey, serviceType, 'SERVICE_TYPE', function(resServiceTypeCode){
-											if(resServiceTypeCode.err_code > 0){ //code harus lebih besar dari nol, ini menunjukan datanya valid
-												myEmitter.emit('checkSpecialtyCode');
-											}else{
-												res.json({"err_code": 501, "err_msg": "Service type code not found"});
+												res.json({"err_code": 502, "err_msg": "Participant Type code not found"});
 											}	
 										})
 									}	
 								})
 																
-								//serviceCategory
-								if(validator.isEmpty(serviceCategory)){
-									myEmitter.emit('checkServiceTypeCode');
+								//appointment
+								if(validator.isEmpty(appointmentId)){
+									myEmitter.emit('checkParticipantTypeCode');
 								}else{
-									checkCode(apikey, serviceCategory, 'SERVICE_CATEGORY', function(resServiceCategoryCode){
-										if(resServiceCategoryCode.err_code > 0){ //code harus lebih besar dari nol, ini menunjukan datanya valid
-											myEmitter.emit('checkServiceTypeCode');
+									checkUniqeValue(apikey, "APPOINTMENT_ID|" + appointmentId, 'APPOINTMENT', function(resAppointmentID){
+									if(resAppointmentID.err_code > 0){
+											myEmitter.emit('checkParticipantTypeCode');
 										}else{
-											res.json({"err_code": 501, "err_msg": "Service category code not found"});
+											res.json({"err_code": 501, "err_msg": "Appointment ID not found"});
 										}	
 									})
 								}

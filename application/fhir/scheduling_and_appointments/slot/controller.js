@@ -90,7 +90,7 @@ var controller = {
 					
 					seedPhoenixFHIR.path.GET = {
 						"Slot" : {
-							"location": "%(apikey)s/Slot",
+							"location": "%(apikey)s/slot",
 							"query": qString
 						}
 					}

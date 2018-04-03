@@ -477,7 +477,10 @@
 			},
 	    "slot": {
 	    	"location": "%(apikey)s/slot"
-	    }
+	    },
+     	"appointmentResponse": {
+        "location": "%(apikey)s/appointment-response"
+     	}
 		},
 		"PUT": {
 			"identityAssuranceLevel": {
@@ -659,6 +662,9 @@
       },
      	"slot": {
         "location": "%(apikey)s/slot/%(_id)s"
+     	},
+     	"appointmentResponse": {
+        "location": "%(apikey)s/appointment-response/%(_id)s"
      	}
 		}
 	}
