@@ -25,13 +25,13 @@ default:
     port: 3008
 development:
   user_management:
-    host: 192.168.218.128
+    host: 192.168.1.90
     port: 2001
   hive:
     host: 192.168.1.192
     port: 2002
   phoenix:
-    host: 192.168.218.128
+    host: 192.168.1.90
     port: 2003
   project:
     host: 192.168.1.231
@@ -46,5 +46,5 @@ development:
     host: 192.168.1.231
     port: 2007
   fhir:
-    host: 192.168.218.128
+    host: 192.168.1.90
     port: 2008

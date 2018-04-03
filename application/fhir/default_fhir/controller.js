@@ -12738,7 +12738,7 @@ var controller = {
 			var ipAddres = req.connection.remoteAddress;
 			var apikey = req.params.apikey;
 			
-			var code = req.body.code.trim().toLowerCase();
+			var code = req.body.code.trim().toUpperCase();
 			var display = req.body.display;
 			var definition = req.body.definition.replace(/[^\w\s , ( ) / .]/gi, '');
 			
@@ -12873,7 +12873,7 @@ var controller = {
 			var ipAddres = req.connection.remoteAddress;
 			var apikey = req.params.apikey;
 			
-			var code = req.body.code.trim().toLowerCase();
+			var code = req.body.code.trim().toUpperCase();
 			var description = req.body.description;
 			
 			var err_code = 0;
@@ -13000,7 +13000,7 @@ var controller = {
 			var ipAddres = req.connection.remoteAddress;
 			var apikey = req.params.apikey;
 			
-			var code = req.body.code.trim().toLowerCase();
+			var code = req.body.code.trim().toUpperCase();
 			var display = req.body.display;
 			var definition = req.body.definition.replace(/[^\w\s , ( ) / .]/gi, '');
 			
@@ -13134,7 +13134,7 @@ var controller = {
 			var ipAddres = req.connection.remoteAddress;
 			var apikey = req.params.apikey;
 			
-			var code = req.body.code.trim().toLowerCase();
+			var code = req.body.code.trim().toUpperCase();
 			var description = req.body.description;
 			
 			var err_code = 0;
@@ -13261,7 +13261,7 @@ var controller = {
 			var ipAddres = req.connection.remoteAddress;
 			var apikey = req.params.apikey;
 			
-			var code = req.body.code.trim().toLowerCase();
+			var code = req.body.code.trim();
 			var display = req.body.display;
 			
 			var err_code = 0;
@@ -13276,6 +13276,11 @@ var controller = {
 			if(validator.isEmpty(display)){
 				err_code = 2;
 				err_msg = "Display is required";
+			}
+			
+			if (typeof code != "number") {
+				err_code = 3;
+				err_msg = "Code is not number";
 			}
 
 			if(err_code == 0){
@@ -13410,6 +13415,11 @@ var controller = {
 				err_code = 2;
 				err_msg = "Definition is required";
 			}
+			
+			if (typeof code != "number") {
+				err_code = 4;
+				err_msg = "Code is not number";
+			}
 
 			if(err_code == 0){
 				checkApikey(apikey, ipAddres, function(result){
@@ -13474,8 +13484,13 @@ var controller = {
 			}
 
 			if(validator.isEmpty(definition)){
-				err_code = 2;
+				err_code = 3;
 				err_msg = "Definition is required";
+			}
+			
+			if (typeof code != "number") {
+				err_code = 4;
+				err_msg = "Code is not number";
 			}
 
 			if(err_code == 0){
@@ -19629,7 +19644,7 @@ var controller = {
 			var dataContactentityType = {};
 
 			if(typeof req.body.code !== 'undefined'){
-				var code = req.body.code.trim().toLowerCase();
+				var code = req.body.code.trim().toUpperCase();
 				dataContactentityType.code = code;
 			}
 			if(typeof req.body.display !== 'undefined'){
@@ -19959,7 +19974,7 @@ var controller = {
 			var data = {};
 
 			if(typeof req.body.code !== 'undefined'){
-				var code = req.body.code.trim().toLowerCase();
+				var code = req.body.code.trim().toUpperCase();
 				data.code = code;
 			}
 			if(typeof req.body.display !== 'undefined'){
@@ -20287,78 +20302,83 @@ var controller = {
 			var _id = req.params._id;
 
 			var data = {};
-
+			
 			if(typeof req.body.code !== 'undefined'){
-				var code = req.body.code.trim().toLowerCase();
+				var code = req.body.code.trim();
 				data.code = code;
 			}
 			if(typeof req.body.display !== 'undefined'){
 				var display = req.body.display;
 				data.display = display;
 			}
-
-			if(_id == "" || typeof _id == 'undefined'){
-				res.json({"err_code": 5, "err_msg": "Id is required."});	
+			
+			if(typeof req.body.code != "number"){
+				res.json({"err_code": 6, "err_msg": "Code is not number"});
 			}else{
-				if(validator.isInt(_id)){
-					checkApikey(apikey, ipAddres, function(result){
-						if(result.err_code == 0){
-							checkId(apikey, _id, 'PRACTICE_CODE', function(resultCheckId){
-								if(resultCheckId.err_code == 0){
-									if(typeof req.body.code !== 'undefined'){
-										checkCode(apikey, code, 'PRACTICE_CODE', function(resultCode){
-											if(resultCode.err_code == 0){
-												//method, endpoint, params, options, callback
-												ApiFHIR.put('practiceCode', {"apikey": apikey, "_id": _id}, {body: data, json: true}, function(error, response, body){
-													if(error){
-													  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "updatePracticeCode"});
-													  }else{
-													  	//cek apakah ada error atau tidak
-													  	var practiceCode = body; 
-													  	
-													  	//cek apakah ada error atau tidak
-													  	if(practiceCode.err_code == 0){
-														  	res.json({"err_code": 0, "err_msg": "Practice Code has been update.","data":practiceCode.data});
-													  	}else{
-													  		res.json({"err_code": 3, "err_msg": practiceCode.error, "application": "Api FHIR", "function": "updatePracticeCode"});
-													  	}
-													  }
-												})
-											}else{
-												res.json(resultCode);
-											}
-										})
-									}else{
-										//method, endpoint, params, options, callback
-										ApiFHIR.put('practiceCode', {"apikey": apikey, "_id": _id}, {body: data, json: true}, function(error, response, body){
-											if(error){
-											  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "updatePracticeCode"});
-											  }else{
-											  	//cek apakah ada error atau tidak
-											  	var practiceCode = body; 
-											  	
-											  	//cek apakah ada error atau tidak
-											  	if(practiceCode.err_code == 0){
-												  	res.json({"err_code": 0, "err_msg": "Practice Code has been update.","data":practiceCode.data});
-											  	}else{
-											  		res.json({"err_code": 3, "err_msg": practiceCode.error, "application": "Api FHIR", "function": "updatePracticeCode"});
-											  	}
-											  }
-										})
-									}
-								}else{
-									res.json(resultCheckId);
-								}
-							})
-						}else{
-							result.err_code = 500;
-							res.json(result);
-						}	
-					});
+				if(_id == "" || typeof _id == 'undefined'){
+					res.json({"err_code": 5, "err_msg": "Id is required."});	
 				}else{
-					res.json({"err_code": 4, "err_msg": "Id must be a number."});	
+					if(validator.isInt(_id)){
+						checkApikey(apikey, ipAddres, function(result){
+							if(result.err_code == 0){
+								checkId(apikey, _id, 'PRACTICE_CODE', function(resultCheckId){
+									if(resultCheckId.err_code == 0){
+										if(typeof req.body.code !== 'undefined'){
+											checkCode(apikey, code, 'PRACTICE_CODE', function(resultCode){
+												if(resultCode.err_code == 0){
+													//method, endpoint, params, options, callback
+													ApiFHIR.put('practiceCode', {"apikey": apikey, "_id": _id}, {body: data, json: true}, function(error, response, body){
+														if(error){
+																res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "updatePracticeCode"});
+															}else{
+																//cek apakah ada error atau tidak
+																var practiceCode = body; 
+
+																//cek apakah ada error atau tidak
+																if(practiceCode.err_code == 0){
+																	res.json({"err_code": 0, "err_msg": "Practice Code has been update.","data":practiceCode.data});
+																}else{
+																	res.json({"err_code": 3, "err_msg": practiceCode.error, "application": "Api FHIR", "function": "updatePracticeCode"});
+																}
+															}
+													})
+												}else{
+													res.json(resultCode);
+												}
+											})
+										}else{
+											//method, endpoint, params, options, callback
+											ApiFHIR.put('practiceCode', {"apikey": apikey, "_id": _id}, {body: data, json: true}, function(error, response, body){
+												if(error){
+														res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "updatePracticeCode"});
+													}else{
+														//cek apakah ada error atau tidak
+														var practiceCode = body; 
+
+														//cek apakah ada error atau tidak
+														if(practiceCode.err_code == 0){
+															res.json({"err_code": 0, "err_msg": "Practice Code has been update.","data":practiceCode.data});
+														}else{
+															res.json({"err_code": 3, "err_msg": practiceCode.error, "application": "Api FHIR", "function": "updatePracticeCode"});
+														}
+													}
+											})
+										}
+									}else{
+										res.json(resultCheckId);
+									}
+								})
+							}else{
+								result.err_code = 500;
+								res.json(result);
+							}	
+						});
+					}else{
+						res.json({"err_code": 4, "err_msg": "Id must be a number."});	
+					}
 				}
 			}
+			
 		},
 		daysOfWeek: function updateDaysOfWeek(req, res){
 			var ipAddres = req.connection.remoteAddress;
@@ -20463,66 +20483,70 @@ var controller = {
 				data.definition = definition;
 			}
 
-			if(_id == "" || typeof _id == 'undefined'){
-				res.json({"err_code": 5, "err_msg": "Id is required."});	
+			if(typeof req.body.code != "number"){
+				res.json({"err_code": 6, "err_msg": "Code is not number"});
 			}else{
-				if(validator.isInt(_id)){
-					checkApikey(apikey, ipAddres, function(result){
-						if(result.err_code == 0){
-							checkId(apikey, _id, 'SERVICE_CATEGORY', function(resultCheckId){
-								if(resultCheckId.err_code == 0){
-									if(typeof req.body.code !== 'undefined'){
-										checkCode(apikey, code, 'SERVICE_CATEGORY', function(resultCode){
-											if(resultCode.err_code == 0){
-												//method, endpoint, params, options, callback
-												ApiFHIR.put('serviceCategory', {"apikey": apikey, "_id": _id}, {body: data, json: true}, function(error, response, body){
-													if(error){
-													  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "updateServiceCategory"});
-													  }else{
-													  	//cek apakah ada error atau tidak
-													  	var serviceCategory = body; 
-													  	
-													  	//cek apakah ada error atau tidak
-													  	if(serviceCategory.err_code == 0){
-														  	res.json({"err_code": 0, "err_msg": "Service Category has been update.","data":serviceCategory.data});
-													  	}else{
-													  		res.json({"err_code": 3, "err_msg": serviceCategory.error, "application": "Api FHIR", "function": "updateServiceCategory"});
-													  	}
-													  }
-												})
-											}else{
-												res.json(resultCode);
-											}
-										})
-									}else{
-										//method, endpoint, params, options, callback
-										ApiFHIR.put('serviceCategory', {"apikey": apikey, "_id": _id}, {body: data, json: true}, function(error, response, body){
-											if(error){
-											  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "updateServiceCategory"});
-											  }else{
-											  	//cek apakah ada error atau tidak
-											  	var serviceCategory = body; 
-											  	
-											  	//cek apakah ada error atau tidak
-											  	if(serviceCategory.err_code == 0){
-												  	res.json({"err_code": 0, "err_msg": "Service Category has been update.","data":serviceCategory.data});
-											  	}else{
-											  		res.json({"err_code": 3, "err_msg": serviceCategory.error, "application": "Api FHIR", "function": "updateServiceCategory"});
-											  	}
-											  }
-										})
-									}
-								}else{
-									res.json(resultCheckId);
-								}
-							})
-						}else{
-							result.err_code = 500;
-							res.json(result);
-						}	
-					});
+				if(_id == "" || typeof _id == 'undefined'){
+					res.json({"err_code": 5, "err_msg": "Id is required."});	
 				}else{
-					res.json({"err_code": 4, "err_msg": "Id must be a number."});	
+					if(validator.isInt(_id)){
+						checkApikey(apikey, ipAddres, function(result){
+							if(result.err_code == 0){
+								checkId(apikey, _id, 'SERVICE_CATEGORY', function(resultCheckId){
+									if(resultCheckId.err_code == 0){
+										if(typeof req.body.code !== 'undefined'){
+											checkCode(apikey, code, 'SERVICE_CATEGORY', function(resultCode){
+												if(resultCode.err_code == 0){
+													//method, endpoint, params, options, callback
+													ApiFHIR.put('serviceCategory', {"apikey": apikey, "_id": _id}, {body: data, json: true}, function(error, response, body){
+														if(error){
+																res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "updateServiceCategory"});
+															}else{
+																//cek apakah ada error atau tidak
+																var serviceCategory = body; 
+
+																//cek apakah ada error atau tidak
+																if(serviceCategory.err_code == 0){
+																	res.json({"err_code": 0, "err_msg": "Service Category has been update.","data":serviceCategory.data});
+																}else{
+																	res.json({"err_code": 3, "err_msg": serviceCategory.error, "application": "Api FHIR", "function": "updateServiceCategory"});
+																}
+															}
+													})
+												}else{
+													res.json(resultCode);
+												}
+											})
+										}else{
+											//method, endpoint, params, options, callback
+											ApiFHIR.put('serviceCategory', {"apikey": apikey, "_id": _id}, {body: data, json: true}, function(error, response, body){
+												if(error){
+														res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "updateServiceCategory"});
+													}else{
+														//cek apakah ada error atau tidak
+														var serviceCategory = body; 
+
+														//cek apakah ada error atau tidak
+														if(serviceCategory.err_code == 0){
+															res.json({"err_code": 0, "err_msg": "Service Category has been update.","data":serviceCategory.data});
+														}else{
+															res.json({"err_code": 3, "err_msg": serviceCategory.error, "application": "Api FHIR", "function": "updateServiceCategory"});
+														}
+													}
+											})
+										}
+									}else{
+										res.json(resultCheckId);
+									}
+								})
+							}else{
+								result.err_code = 500;
+								res.json(result);
+							}	
+						});
+					}else{
+						res.json({"err_code": 4, "err_msg": "Id must be a number."});	
+					}
 				}
 			}
 		},
@@ -20545,67 +20569,71 @@ var controller = {
 				var definition = req.body.definition.replace(/[^\w\s ,]/gi, '');
 				data.definition = definition;
 			}
-
-			if(_id == "" || typeof _id == 'undefined'){
-				res.json({"err_code": 5, "err_msg": "Id is required."});	
+			
+			if(typeof req.body.code != "number"){
+				res.json({"err_code": 6, "err_msg": "Code is not number"});
 			}else{
-				if(validator.isInt(_id)){
-					checkApikey(apikey, ipAddres, function(result){
-						if(result.err_code == 0){
-							checkId(apikey, _id, 'SERVICE_TYPE', function(resultCheckId){
-								if(resultCheckId.err_code == 0){
-									if(typeof req.body.code !== 'undefined'){
-										checkCode(apikey, code, 'SERVICE_TYPE', function(resultCode){
-											if(resultCode.err_code == 0){
-												//method, endpoint, params, options, callback
-												ApiFHIR.put('serviceType', {"apikey": apikey, "_id": _id}, {body: data, json: true}, function(error, response, body){
-													if(error){
-													  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "updateServiceType"});
-													  }else{
-													  	//cek apakah ada error atau tidak
-													  	var serviceType = body; 
-													  	
-													  	//cek apakah ada error atau tidak
-													  	if(serviceType.err_code == 0){
-														  	res.json({"err_code": 0, "err_msg": "Service Type has been update.","data":serviceType.data});
-													  	}else{
-													  		res.json({"err_code": 3, "err_msg": serviceType.error, "application": "Api FHIR", "function": "updateServiceType"});
-													  	}
-													  }
-												})
-											}else{
-												res.json(resultCode);
-											}
-										})
-									}else{
-										//method, endpoint, params, options, callback
-										ApiFHIR.put('serviceType', {"apikey": apikey, "_id": _id}, {body: data, json: true}, function(error, response, body){
-											if(error){
-											  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "updateServiceType"});
-											  }else{
-											  	//cek apakah ada error atau tidak
-											  	var serviceType = body; 
-											  	
-											  	//cek apakah ada error atau tidak
-											  	if(serviceType.err_code == 0){
-												  	res.json({"err_code": 0, "err_msg": "Service Type has been update.","data":serviceType.data});
-											  	}else{
-											  		res.json({"err_code": 3, "err_msg": serviceType.error, "application": "Api FHIR", "function": "updateServiceType"});
-											  	}
-											  }
-										})
-									}
-								}else{
-									res.json(resultCheckId);
-								}
-							})
-						}else{
-							result.err_code = 500;
-							res.json(result);
-						}	
-					});
+				if(_id == "" || typeof _id == 'undefined'){
+					res.json({"err_code": 5, "err_msg": "Id is required."});	
 				}else{
-					res.json({"err_code": 4, "err_msg": "Id must be a number."});	
+					if(validator.isInt(_id)){
+						checkApikey(apikey, ipAddres, function(result){
+							if(result.err_code == 0){
+								checkId(apikey, _id, 'SERVICE_TYPE', function(resultCheckId){
+									if(resultCheckId.err_code == 0){
+										if(typeof req.body.code !== 'undefined'){
+											checkCode(apikey, code, 'SERVICE_TYPE', function(resultCode){
+												if(resultCode.err_code == 0){
+													//method, endpoint, params, options, callback
+													ApiFHIR.put('serviceType', {"apikey": apikey, "_id": _id}, {body: data, json: true}, function(error, response, body){
+														if(error){
+																res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "updateServiceType"});
+															}else{
+																//cek apakah ada error atau tidak
+																var serviceType = body; 
+
+																//cek apakah ada error atau tidak
+																if(serviceType.err_code == 0){
+																	res.json({"err_code": 0, "err_msg": "Service Type has been update.","data":serviceType.data});
+																}else{
+																	res.json({"err_code": 3, "err_msg": serviceType.error, "application": "Api FHIR", "function": "updateServiceType"});
+																}
+															}
+													})
+												}else{
+													res.json(resultCode);
+												}
+											})
+										}else{
+											//method, endpoint, params, options, callback
+											ApiFHIR.put('serviceType', {"apikey": apikey, "_id": _id}, {body: data, json: true}, function(error, response, body){
+												if(error){
+														res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "updateServiceType"});
+													}else{
+														//cek apakah ada error atau tidak
+														var serviceType = body; 
+
+														//cek apakah ada error atau tidak
+														if(serviceType.err_code == 0){
+															res.json({"err_code": 0, "err_msg": "Service Type has been update.","data":serviceType.data});
+														}else{
+															res.json({"err_code": 3, "err_msg": serviceType.error, "application": "Api FHIR", "function": "updateServiceType"});
+														}
+													}
+											})
+										}
+									}else{
+										res.json(resultCheckId);
+									}
+								})
+							}else{
+								result.err_code = 500;
+								res.json(result);
+							}	
+						});
+					}else{
+						res.json({"err_code": 4, "err_msg": "Id must be a number."});	
+					}
 				}
 			}
 		},

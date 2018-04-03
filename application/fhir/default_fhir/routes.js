@@ -93,8 +93,8 @@ var routesDefaultFHIR = function(app, DefaultFHIR){
 	// Service Provider Directory Resources, by : hardika cs(start)
 	app.get('/:apikey/organization-type/:_id?', DefaultFHIR.get.organizationType);
 	app.get('/:apikey/organization-type/code/:code?', DefaultFHIR.get.organizationTypeCode);
-	app.get('/:apikey/contact-entity-type/:_id?', DefaultFHIR.get.contactentityType);
-	app.get('/:apikey/contact-entity-type/code/:code?', DefaultFHIR.get.contactentityTypeCode);
+	app.get('/:apikey/contactentity-type/:_id?', DefaultFHIR.get.contactentityType);
+	app.get('/:apikey/contactentity-type/code/:code?', DefaultFHIR.get.contactentityTypeCode);
 	app.get('/:apikey/location-status/:_id?', DefaultFHIR.get.locationStatus);
 	app.get('/:apikey/location-status/code/:code?', DefaultFHIR.get.locationStatusCode);
 	app.get('/:apikey/bed-status/:_id?', DefaultFHIR.get.bedStatus);
