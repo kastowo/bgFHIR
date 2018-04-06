@@ -62,7 +62,7 @@ var controller = {
       db.query(query,function(dataJson){
         rez = lowercaseObject(dataJson);
         for(i = 0; i < rez.length; i++){
-          var Schedule = {resourceType: "", id: "", active: "", serviceCategory: "", serviceType: "", specialty: "", period: "",  actor: [], comment: ""};
+          var Schedule = {resourceType: "", id: "", active: "", serviceCategory: "", serviceType: "", specialty: "", planingHorizon: "",  actor: [], comment: ""};
           Schedule.resourceType = "Schedule";
           Schedule.id = rez[i].schedule_id;
           Schedule.active = rez[i].schedule_active;
@@ -98,7 +98,7 @@ var controller = {
             Schedule.actor.push(hostFHIR + ':' + portFHIR + '/' + apikey + '/Location?_id=' + rez[i].schedule_actor_location_id);  
           }
           
-          Schedule.period = rez[i].schedule_period_start + ' to ' + rez[i].schedule_period_end;  
+          Schedule.planingHorizon = rez[i].schedule_period_start + ' to ' + rez[i].schedule_period_end;  
           Schedule.comment = rez[i].schedule_comment;  
          
           arrSchedule[i] = Schedule;
@@ -216,7 +216,7 @@ var controller = {
         db.query(query,function(dataJson){
           rez = lowercaseObject(dataJson);
           for(i = 0; i < rez.length; i++){
-            var Schedule = {resourceType: "", id: "", active: "", serviceCategory: "", serviceType: "", specialty: "", period: "",  actor: [], comment: ""};
+            var Schedule = {resourceType: "", id: "", active: "", serviceCategory: "", serviceType: "", specialty: "", planingHorizon: "",  actor: [], comment: ""};
             Schedule.resourceType = "Schedule";
             Schedule.id = rez[i].schedule_id;
             Schedule.active = rez[i].schedule_active;
@@ -252,7 +252,7 @@ var controller = {
               Schedule.actor.push(hostFHIR + ':' + portFHIR + '/' + apikey + '/Location?_id=' + rez[i].schedule_actor_location_id);  
             }
             
-            Schedule.period = rez[i].schedule_period_start + ' to ' + rez[i].schedule_period_end;  
+            Schedule.planingHorizon = rez[i].schedule_period_start + ' to ' + rez[i].schedule_period_end;  
             Schedule.comment = rez[i].schedule_comment;  
            
             arrSchedule[i] = Schedule;
@@ -373,7 +373,7 @@ var controller = {
         db.query(query,function(dataJson){
           rez = lowercaseObject(dataJson);
           for(i = 0; i < rez.length; i++){
-            var Schedule = {resourceType: "", id: "", active: "", serviceCategory: "", serviceType: "", specialty: "", period: "",  actor: [], comment: ""};
+            var Schedule = {resourceType: "", id: "", active: "", serviceCategory: "", serviceType: "", specialty: "", planingHorizon: "",  actor: [], comment: ""};
             Schedule.resourceType = "Schedule";
             Schedule.id = rez[i].schedule_id;
             Schedule.active = rez[i].schedule_active;
@@ -409,7 +409,7 @@ var controller = {
               Schedule.actor.push(hostFHIR + ':' + portFHIR + '/' + apikey + '/Location?_id=' + rez[i].schedule_actor_location_id);  
             }
             
-            Schedule.period = rez[i].schedule_period_start + ' to ' + rez[i].schedule_period_end;  
+            Schedule.planingHorizon = rez[i].schedule_period_start + ' to ' + rez[i].schedule_period_end;  
             Schedule.comment = rez[i].schedule_comment;  
            
             arrSchedule[i] = Schedule;
