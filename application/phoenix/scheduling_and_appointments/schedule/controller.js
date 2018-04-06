@@ -111,6 +111,8 @@ var controller = {
   },
   post: {
     schedule: function addSchedule(req, res){
+      var apikey = req.params.apikey;
+
       var schedule_id = req.body.id;
       var schedule_active = req.body.active;
       var schedule_service_category = req.body.service_category;
@@ -268,7 +270,9 @@ var controller = {
   },
   put: {
     schedule: function updateSchedule(req, res){
+      var apikey = req.params.apikey;
       var schedule_id = req.params.schedule_id;
+      
       var schedule_active = req.body.active;
       var schedule_service_category = req.body.service_category;
       var schedule_service_type = req.body.service_type;
