@@ -478,9 +478,15 @@
 	    "slot": {
 	    	"location": "%(apikey)s/slot"
 	    },
-     	"appointmentResponse": {
+     "appointment": {
+        "location": "%(apikey)s/appointment"
+     },
+     "appointmentParticipant": {
+        "location": "%(apikey)s/appointment-participant"
+     },
+     "appointmentResponse": {
         "location": "%(apikey)s/appointment-response"
-     	}
+     }
 		},
 		"PUT": {
 			"identityAssuranceLevel": {
@@ -663,9 +669,15 @@
      	"slot": {
         "location": "%(apikey)s/slot/%(_id)s"
      	},
-     	"appointmentResponse": {
+     "appointment": {
+        "location": "%(apikey)s/appointment/%(_id)s"
+     },
+     "appointmentParticipant": {
+        "location": "%(apikey)s/appointment-participant/%(_id)s/%(dr)s"
+     },
+     "appointmentResponse": {
         "location": "%(apikey)s/appointment-response/%(_id)s"
-     	}
+     }
 		}
 	}
 }
