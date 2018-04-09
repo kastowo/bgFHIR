@@ -31,7 +31,8 @@ seedPhoenixFHIR.base.port 	  = configYaml.phoenix.port;
 var ApiFHIR  = new Apiclient(seedPhoenixFHIR);
 
 var controller = {
-	get: function getEndpoint(req, res){
+	get: {
+		endpoint : function getEndpoint(req, res){
 		var ipAddres = req.connection.remoteAddress;
 		var apikey = req.params.apikey;
 		var regex = new RegExp("([0-9]{4}[-](0[1-9]|1[0-2])[-]([0-2]{1}[0-9]{1}|3[0-1]{1})|([0-2]{1}[0-9]{1}|3[0-1]{1})[-](0[1-9]|1[0-2])[-][0-9]{4})");
@@ -228,7 +229,146 @@ var controller = {
 			}
 		});	
 	},
-	post: function postEndpoint(req, res){
+		identifier: function getIdentifier(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var regex = new RegExp("([0-9]{4}[-](0[1-9]|1[0-2])[-]([0-2]{1}[0-9]{1}|3[0-1]{1})|([0-2]{1}[0-9]{1}|3[0-1]{1})[-](0[1-9]|1[0-2])[-][0-9]{4})");
+			var endpointId = req.params.endpoint_id;
+			var identifierId = req.params.identifier_id;
+
+			checkApikey(apikey, ipAddres, function(result){
+				if(result.err_code == 0){	
+					checkUniqeValue(apikey, "ENDPOINT_ID|" + endpointId, 'ENDPOINT', function(resEndpointID){
+						if(resEndpointID.err_code > 0){
+							if(typeof identifierId !== 'undefined' && !validator.isEmpty(identifierId)){
+								checkUniqeValue(apikey, "IDENTIFIER_ID|" + identifierId, 'IDENTIFIER', function(resIdentifierID){
+									if(resIdentifierID.err_code > 0){
+										//get identifier
+										qString = {};
+										qString.endpoint_id = endpointId;
+										qString._id = identifierId;
+										seedPhoenixFHIR.path.GET = {
+											"Identifier" : {
+												"location": "%(apikey)s/Identifier",
+												"query": qString
+											}
+										}
+										var ApiFHIR = new Apiclient(seedPhoenixFHIR);
+
+										ApiFHIR.get('Identifier', {"apikey": apikey}, {}, function(error, response, body){
+											identifier = JSON.parse(body);
+											if(identifier.err_code == 0){
+												res.json({"err_code": 0, "data":identifier.data});	
+											}else{
+												res.json(identifier);
+											}
+										})
+									}else{
+										res.json({"err_code": 502, "err_msg": "Identifier Id not found"});		
+									}
+								})
+							}else{
+								//get identifier
+								qString = {};
+								qString.endpoint_id = endpointId;
+								seedPhoenixFHIR.path.GET = {
+									"Identifier" : {
+										"location": "%(apikey)s/Identifier",
+										"query": qString
+									}
+								}
+								var ApiFHIR = new Apiclient(seedPhoenixFHIR);
+
+								ApiFHIR.get('Identifier', {"apikey": apikey}, {}, function(error, response, body){
+									identifier = JSON.parse(body);
+									if(identifier.err_code == 0){
+										res.json({"err_code": 0, "data":identifier.data});	
+									}else{
+										res.json(identifier);
+									}
+								})
+							}
+						}else{
+							res.json({"err_code": 501, "err_msg": "Endpoint Id not found"});		
+						}
+					})
+				}else{
+					result.err_code = 500;
+					res.json(result);
+				}	
+			});
+		},
+		telecom: function getTelecom(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var regex = new RegExp("([0-9]{4}[-](0[1-9]|1[0-2])[-]([0-2]{1}[0-9]{1}|3[0-1]{1})|([0-2]{1}[0-9]{1}|3[0-1]{1})[-](0[1-9]|1[0-2])[-][0-9]{4})");
+			var endpointId = req.params.endpoint_id;
+			var contactPointId = req.params.contact_point_id;
+
+			checkApikey(apikey, ipAddres, function(result){
+				if(result.err_code == 0){	
+					checkUniqeValue(apikey, "ENDPOINT_ID|" + endpointId, 'ENDPOINT', function(resEndpointID){
+						if(resEndpointID.err_code > 0){
+							if(typeof contactPointId !== 'undefined' && !validator.isEmpty(contactPointId)){
+								checkUniqeValue(apikey, "CONTACT_POINT_ID|" + contactPointId, 'CONTACT_POINT', function(resTelecomID){
+									if(resTelecomID.err_code > 0){
+										qString = {};
+										qString.endpoint_id = endpointId;
+										qString._id = contactPointId;
+										seedPhoenixFHIR.path.GET = {
+											"ContactPoint" : {
+												"location": "%(apikey)s/ContactPoint",
+												"query": qString
+											}
+										}
+										var ApiFHIR = new Apiclient(seedPhoenixFHIR);
+
+										ApiFHIR.get('ContactPoint', {"apikey": apikey}, {}, function(error, response, body){
+											contactPoint = JSON.parse(body);
+											if(contactPoint.err_code == 0){
+												res.json({"err_code": 0, "data":contactPoint.data});	
+											}else{
+												res.json(contactPoint);
+											}
+										})
+									}else{
+										res.json({"err_code": 502, "err_msg": "Telecom Id not found"});		
+									}
+								})
+							}else{
+								qString = {};
+								qString.endpoint_id = endpointId;
+
+								seedPhoenixFHIR.path.GET = {
+									"ContactPoint" : {
+										"location": "%(apikey)s/ContactPoint",
+										"query": qString
+									}
+								}
+								var ApiFHIR = new Apiclient(seedPhoenixFHIR);
+
+								ApiFHIR.get('ContactPoint', {"apikey": apikey}, {}, function(error, response, body){
+									contactPoint = JSON.parse(body);
+									if(contactPoint.err_code == 0){
+										res.json({"err_code": 0, "data":contactPoint.data});	
+									}else{
+										res.json(contactPoint);
+									}
+								})
+							}
+						}else{
+							res.json({"err_code": 501, "err_msg": "Endpoint Id not found"});		
+						}
+					})
+				}else{
+					result.err_code = 500;
+					res.json(result);
+				}	
+			});
+		}
+	},
+	post: {
+		endpoint :function postEndpoint(req, res){
 		var ipAddres = req.connection.remoteAddress;
 		var apikey = req.params.apikey;
 		var regex = new RegExp("([0-9]{4}[-](0[1-9]|1[0-2])[-]([0-2]{1}[0-9]{1}|3[0-1]{1})|([0-2]{1}[0-9]{1}|3[0-1]{1})[-](0[1-9]|1[0-2])[-][0-9]{4})");
@@ -325,17 +465,18 @@ var controller = {
 			err_code = 1;
 			err_msg = "Please add sub-key 'name' in json Enpoint request.";
 		}
-		//Endpoint alias
+		//Endpoint alias	
 		if(typeof req.body.managingOrganization !== 'undefined'){
 			managingOrganizationCode =  req.body.managingOrganization.trim().toLowerCase();
 			if(validator.isEmpty(managingOrganizationCode)){
-				err_code = 2;
-				err_msg = "Endpoint Managing Organization is required";
-			}
+				/*err_code = 2;
+				err_msg = "Managing Organization is required.";*/
+				managingOrganizationCode = "";
+			} 
 		}else{
-			err_code = 1;
-			err_msg = "Please add sub-key 'managing organization' in json Enpoint request.";
+			managingOrganizationCode = "";
 		}
+			
 		//endpoint payloadType
 		if(typeof req.body.payloadType !== 'undefined'){
 			endpointPayloadTypeCode =  req.body.payloadType.trim().toLowerCase();
@@ -496,86 +637,77 @@ var controller = {
 																						if(resUniqeValue.err_code == 0){ //untuk ini nilai code harus sama dengan 0, menunjukan value tersebut belum ada
 																							checkUniqeValue(apikey, "CONTACT_POINT_VALUE|" + contactPointValue, 'CONTACT_POINT', function(resContactPointValue){
 																								if(resContactPointValue.err_code == 0){
-																									checkUniqeValue(apikey, "ORGANIZATION_ID|" + managingOrganizationCode, 'ORGANIZATION', function(resPartOfValue){
-																										if(managingOrganizationCode == 'null') {
-																											resPartOfValue.err_code = 2;
+																									//proses insert
+
+																									//set uniqe id
+																									var unicId = uniqid.time();
+																									//var organizationId = 'org' + unicId;
+																									var identifierId = 'ide' + unicId;
+																									var contactPointId = 'cop' + unicId;
+																									var endpointId = 'enp' + unicId;
+
+																									dataEnpoint = {
+																										"id" : endpointId,
+																										"status" : endpointStatusCode,
+																										"connectionType" : EndpointConnectionTypeCode,
+																										"name" : endpointNameCode,
+																										"managingOrganization" : managingOrganizationCode,
+																										"period_start": endpointPeriodStart,
+																										"period_end": endpointPeriodEnd,
+																										"payloadType": endpointPayloadTypeCode,
+																										"payloadMimeType": endpointPayloadMimeTypeCode,
+																										"address": endpointAddressCode,
+																										"header": endpointHeaderCode
+																									}
+																									//console.log(dataEnpoint);
+																									ApiFHIR.post('endpoint', {"apikey": apikey}, {body: dataEnpoint, json: true}, function(error, response, body){
+																										endpoint = body;
+																										if(endpoint.err_code > 0){
+																											res.json(endpoint);	
 																										}
-																										if(resPartOfValue.err_code == 2){
-																											//proses insert
+																									})
 
-																											//set uniqe id
-																											var unicId = uniqid.time();
-																											//var organizationId = 'org' + unicId;
-																											var identifierId = 'ide' + unicId;
-																											var contactPointId = 'cop' + unicId;
-																											var endpointId = 'enp' + unicId;
+																									//identifier
+																									var identifierSystem = identifierId;
+																									dataIdentifier = {
+																																		"id": identifierId,
+																																		"use": identifierUseCode,
+																																		"type": identifierTypeCode,
+																																		"system": identifierSystem,
+																																		"value": identifierValue,
+																																		"period_start": identifierPeriodStart,
+																																		"period_end": identifierPeriodEnd,
+																																		"endpoint_id": endpointId
+																																	}
 
-																											dataEnpoint = {
-																												"id" : endpointId,
-																												"status" : endpointStatusCode,
-																												"connectionType" : EndpointConnectionTypeCode,
-																												"name" : endpointNameCode,
-																												"managingOrganization" : managingOrganizationCode,
-																												"period_start": endpointPeriodStart,
-																												"period_end": endpointPeriodEnd,
-																												"payloadType": endpointPayloadTypeCode,
-																												"payloadMimeType": endpointPayloadMimeTypeCode,
-																												"address": endpointAddressCode,
-																												"header": endpointHeaderCode
-																											}
-																											console.log(dataEnpoint);
-																											ApiFHIR.post('endpoint', {"apikey": apikey}, {body: dataEnpoint, json: true}, function(error, response, body){
-																												endpoint = body;
-																												if(endpoint.err_code > 0){
-																													res.json(endpoint);	
-																												}
-																											})
-
-																											//identifier
-																											dataIdentifier = {
-																																				"id": identifierId,
-																																				"use": identifierUseCode,
-																																				"type": identifierTypeCode,
-																																				//"system": identifierSystem,
-																																				"value": identifierValue,
-																																				"period_start": identifierPeriodStart,
-																																				"period_end": identifierPeriodEnd,
-																																				"endpoint_id": endpointId
-																																			}
-
-																											ApiFHIR.post('identifier', {"apikey": apikey}, {body: dataIdentifier, json: true}, function(error, response, body){
-																												identifier = body;
-																												if(identifier.err_code > 0){
-																													res.json(identifier);	
-																												}
-																											})
-
-																											//contact_point
-																											dataContactPoint = {
-																																					"id": contactPointId,
-																																					"system": contactPointSystemCode,
-																																					"value": contactPointValue,
-																																					"use": contactPointUseCode,
-																																					"rank": contactPointRank,
-																																					"period_start": contactPointPeriodStart,
-																																					"period_end": contactPointPeriodEnd,
-																																					"endpoint_id": endpointId
-																																				}
-
-																											//post to contact point
-																											ApiFHIR.post('contactPoint', {"apikey": apikey}, {body: dataContactPoint, json: true}, function(error, response, body){
-																												contactPoint = body;
-																												if(contactPoint.err_code > 0){
-																													res.json(contactPoint);	
-																												}
-																											})
-
-																											res.json({"err_code": 0, "err_msg": "Endpoint has been add.", "data": [{"_id": endpointId}]});
-
-																										}else{
-																											res.json({"err_code": 510, "err_msg": "Organization is not exist."});			
+																									ApiFHIR.post('identifier', {"apikey": apikey}, {body: dataIdentifier, json: true}, function(error, response, body){
+																										identifier = body;
+																										if(identifier.err_code > 0){
+																											res.json(identifier);	
 																										}
-																									})																			
+																									})
+
+																									//contact_point
+																									dataContactPoint = {
+																																			"id": contactPointId,
+																																			"system": contactPointSystemCode,
+																																			"value": contactPointValue,
+																																			"use": contactPointUseCode,
+																																			"rank": contactPointRank,
+																																			"period_start": contactPointPeriodStart,
+																																			"period_end": contactPointPeriodEnd,
+																																			"endpoint_id": endpointId
+																																		}
+
+																									//post to contact point
+																									ApiFHIR.post('contactPoint', {"apikey": apikey}, {body: dataContactPoint, json: true}, function(error, response, body){
+																										contactPoint = body;
+																										if(contactPoint.err_code > 0){
+																											res.json(contactPoint);	
+																										}
+																									})
+
+																									res.json({"err_code": 0, "err_msg": "Endpoint has been add.", "data": [{"_id": endpointId}]});											
 																								}else{
 																									res.json({"err_code": 509, "err_msg": "Telecom value already exist."});			
 																								}
@@ -585,7 +717,18 @@ var controller = {
 																						}
 																					})
 																			});
-																			myEmitter.emit('checkEndpointId');
+																			
+																			if(validator.isEmpty(managingOrganizationCode)){
+																				myEmitter.emit('checkEndpointId');
+																			}else{
+																				checkUniqeValue(apikey, "ORGANIZATION_ID|" + managingOrganizationCode, 'ORGANIZATION', function(resPartOfValue){
+																					if(resPartOfValue.err_code > 0){ //code harus lebih besar dari nol, ini menunjukan datanya valid
+																						myEmitter.emit('checkEndpointId');
+																					}else{
+																						res.json({"err_code": 501, "err_msg": "Organization id is not exist."});
+																					}
+																				})
+																			}
 									
 														
 																		}else{
@@ -625,374 +768,525 @@ var controller = {
 			res.json({"err_code": err_code, "err_msg": err_msg});
 		}	
 	},
+		identifier: function addIdentifier(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var regex = new RegExp("([0-9]{4}[-](0[1-9]|1[0-2])[-]([0-2]{1}[0-9]{1}|3[0-1]{1})|([0-2]{1}[0-9]{1}|3[0-1]{1})[-](0[1-9]|1[0-2])[-][0-9]{4})");
+			var endpointId = req.params.endpoint_id;
+
+			var err_code = 0;
+			var err_msg = "";
+
+			//input check 
+			if(typeof endpointId !== 'undefined'){
+				if(validator.isEmpty(endpointId)){
+					err_code = 2;
+					err_msg = "Endpoint id is required";
+				}
+			}else{
+				err_code = 2;
+				err_msg = "Endpoint id is required";
+			}
+
+			//identifier
+			if(typeof req.body.use !== 'undefined'){
+				identifierUseCode =  req.body.use.trim().toLowerCase();
+				if(validator.isEmpty(identifierUseCode)){
+					err_code = 2;
+					err_msg = "Identifier Use is required";
+				}
+			}else{
+				err_code = 1;
+				err_msg = "Please add key 'use' in json request.";
+			} 
+
+			//type code
+			if(typeof req.body.type !== 'undefined'){
+				identifierTypeCode =  req.body.type.trim().toUpperCase();
+				if(validator.isEmpty(identifierTypeCode)){
+					err_code = 2;
+					err_msg = "Identifier Type is required";
+				}
+			}else{
+				err_code = 1;
+				err_msg = "Please add key 'type' in json request.";
+			} 
+
+			//identifier uniqe value
+			if(typeof req.body.value !== 'undefined'){
+				identifierValue =  req.body.value.trim();
+				if(validator.isEmpty(identifierValue)){
+					err_code = 2;
+					err_msg = "Identifier Value is required";
+				}
+			}else{
+				err_code = 1;
+				err_msg = "Please add key 'value' in json request.";
+			}
+
+			//identifier period start
+			if(typeof req.body.period !== 'undefined'){
+				period = req.body.period;
+				if(period.indexOf("to") > 0){
+					arrPeriod = period.split("to");
+					identifierPeriodStart = arrPeriod[0];
+					identifierPeriodEnd = arrPeriod[1];
+
+					if(!regex.test(identifierPeriodStart) && !regex.test(identifierPeriodEnd)){
+						err_code = 2;
+						err_msg = "Identifier Period invalid date format.";
+					}	
+				}else{
+					err_code = 1;
+					err_msg = "Identifier Period format is wrong, `ex: start to end` ";
+				}
+			}else{
+				err_code = 1;
+				err_msg = "Please add key 'period' in json identifier request.";
+			}  
+
+			if(err_code == 0){
+				//check apikey
+				checkApikey(apikey, ipAddres, function(result){
+					if(result.err_code == 0){	
+						checkCode(apikey, identifierUseCode, 'IDENTIFIER_USE', function(resUseCode){
+							if(resUseCode.err_code > 0){ //code harus lebih besar dari nol, ini menunjukan datanya valid
+								checkCode(apikey, identifierTypeCode, 'IDENTIFIER_TYPE', function(resUseTypeCode){
+									if(resUseTypeCode.err_code > 0){ //code harus lebih besar dari nol, ini menunjukan datanya valid
+										checkUniqeValue(apikey, "IDENTIFIER_VALUE|" + identifierValue, 'IDENTIFIER', function(resUniqeValue){
+											if(resUniqeValue.err_code == 0){
+												checkUniqeValue(apikey, "ENDPOINT_ID|" + endpointId, 'ENDPOINT', function(resEndpointId){
+													if(resEndpointId.err_code > 0){
+														var identifierId = 'ide' + uniqid.time();
+														//set by sistem
+														var identifierSystem = identifierId;
+
+														dataIdentifier = {
+																							"id": identifierId,
+																							"use": identifierUseCode,
+																							"type": identifierTypeCode,
+																							"system": identifierSystem,
+																							"value": identifierValue,
+																							"period_start": identifierPeriodStart,
+																							"period_end": identifierPeriodEnd,
+																							"endpoint_id": endpointId
+																						}
+
+														ApiFHIR.post('identifier', {"apikey": apikey}, {body: dataIdentifier, json: true}, function(error, response, body){
+															identifier = body;
+															if(identifier.err_code == 0){
+																res.json({"err_code": 0, "err_msg": "Identifier has been add in this endpoint.", "data": identifier.data});
+															}else{
+																res.json(identifier);	
+															}
+														})
+													}else{
+														res.json({"err_code": 503, "err_msg": "Endpoint Id not found"});		
+													}
+												})
+											}else{
+												res.json({"err_code": 504, "err_msg": "Identifier value already exist."});	
+											}
+										})
+
+									}else{
+										res.json({"err_code": 502, "err_msg": "Identifier type code not found"});		
+									}
+								})
+							}else{
+								res.json({"err_code": 501, "err_msg": "Identifier use code not found"});
+							}
+						})
+					}else{
+						result.err_code = 500;
+						res.json(result);
+					}	
+				});
+			}else{
+				res.json({"err_code": err_code, "err_msg": err_msg});
+			}
+		},
+		telecom: function addTelecom(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var regex = new RegExp("([0-9]{4}[-](0[1-9]|1[0-2])[-]([0-2]{1}[0-9]{1}|3[0-1]{1})|([0-2]{1}[0-9]{1}|3[0-1]{1})[-](0[1-9]|1[0-2])[-][0-9]{4})");
+			var endpointId = req.params.endpoint_id;
+
+			var err_code = 0;
+			var err_msg = "";
+
+			//input check 
+			if(typeof endpointId !== 'undefined'){
+				if(validator.isEmpty(endpointId)){
+					err_code = 2;
+					err_msg = "Endpoint id is required";
+				}
+			}else{
+				err_code = 2;
+				err_msg = "Endpoint id is required";
+			}
+
+			//telecom
+			if(typeof req.body.system !== 'undefined'){
+				contactPointSystemCode =  req.body.system.trim().toLowerCase();
+				if(validator.isEmpty(contactPointSystemCode)){
+					err_code = 2;
+					err_msg = "Contact Point System is required";
+				}
+			}else{
+				err_code = 1;
+				err_msg = "Please add key 'system' in json request.";
+			}
+
+			//telecom value
+			if(typeof req.body.value !== 'undefined'){
+				contactPointValue =  req.body.value;
+				if(contactPointSystemCode == 'email'){
+					if(!validator.isEmail(contactPointValue)){
+						err_code = 2;
+						err_msg = "Contact Point Value is invalid email format";
+					}
+				}else{
+					if(validator.isEmpty(contactPointValue)){
+						err_code = 2;
+						err_msg = "Contact Point Value is required";
+					}
+				}
+			}else{
+				err_code = 1;
+				err_msg = "Please add key 'value' in json request.";
+			}
+
+			//telecom use code
+			if(typeof req.body.use !== 'undefined'){
+				contactPointUseCode =  req.body.use.trim().toLowerCase();
+				if(validator.isEmpty(contactPointUseCode)){
+					err_code = 2;
+					err_msg = "Telecom Use Code is required";
+				}
+			}else{
+				err_code = 1;
+				err_msg = "Please add key 'use' in json request.";
+			} 
+
+			//contact poin rank
+			if(typeof req.body.rank !== 'undefined'){
+				contactPointRank =  req.body.rank;
+				if(!validator.isInt(contactPointRank)){
+					err_code = 2;
+					err_msg = "Telecom Rank must be number";
+				}
+			}else{
+				err_code = 1;
+				err_msg = "Please add key 'rank' in json request.";
+			} 
+
+			//contact point period
+			if(typeof req.body.period !== 'undefined'){
+				var period = req.body.period;
+				if(period.indexOf("to") > 0){
+					arrPeriod = period.split("to");
+					contactPointPeriodStart = arrPeriod[0];
+					contactPointPeriodEnd = arrPeriod[1];
+
+					if(!regex.test(contactPointPeriodStart) && !regex.test(contactPointPeriodEnd)){
+						err_code = 2;
+						err_msg = "Telecom Period invalid date format.";
+					}	
+				}else{
+					err_code = 1;
+					err_msg = "Telecom Period request format is wrong, `ex: start to end` ";
+				}
+			}else{
+				contactPointPeriodStart = "";
+				contactPointPeriodEnd = "";
+			}
+
+			if(err_code == 0){
+				//check apikey
+				checkApikey(apikey, ipAddres, function(result){
+					if(result.err_code == 0){
+						checkUniqeValue(apikey, "ENDPOINT_ID|" + endpointId, 'ENDPOINT', function(resEndpointId){
+							if(resEndpointId.err_code > 0){
+								checkCode(apikey, contactPointSystemCode, 'CONTACT_POINT_SYSTEM', function(resContactPointSystem){
+									if(resContactPointSystem.err_code > 0){ //code harus lebih besar dari nol, ini menunjukan datanya valid
+										checkCode(apikey, contactPointUseCode, 'CONTACT_POINT_USE', function(resContactPointUse){
+											if(resContactPointUse.err_code > 0){ //code harus lebih besar dari nol, ini menunjukan datanya valid
+												checkUniqeValue(apikey, "CONTACT_POINT_VALUE|" + contactPointValue, 'CONTACT_POINT', function(resContactPointValue){
+													if(resContactPointValue.err_code == 0){
+														//contact_point
+														var contactPointId = 'cp' + uniqid.time();
+														dataContactPoint = {
+																								"id": contactPointId,
+																								"system": contactPointSystemCode,
+																								"value": contactPointValue,
+																								"use": contactPointUseCode,
+																								"rank": contactPointRank,
+																								"period_start": contactPointPeriodStart,
+																								"period_end": contactPointPeriodEnd,
+																								"endpoint_id": endpointId
+																							}
+
+														ApiFHIR.post('contactPoint', {"apikey": apikey}, {body: dataContactPoint, json: true}, function(error, response, body){
+															contactPoint = body;
+															if(contactPoint.err_code == 0){
+																res.json({"err_code": 0, "err_msg": "Telecom has been add in this endpoint.", "data": contactPoint.data});
+															}else{
+																res.json(contactPoint);	
+															}
+														})
+													}else{
+														res.json({"err_code": 501, "err_msg": "Telecom value already exist."});			
+													}
+												})	
+											}else{
+												res.json({"err_code": 504, "err_msg": "Contact Point Use Code not found"});
+											}
+										})
+									}else{
+										res.json({"err_code": 504, "err_msg": "Contact Point System Code not found"});		
+									}
+								})
+							}else{
+								res.json({"err_code": 503, "err_msg": "Endpoint Id not found"});	
+							}
+						})	
+
+					}else{
+						result.err_code = 500;
+						res.json(result);
+					}	
+				});
+			}else{
+				res.json({"err_code": err_code, "err_msg": err_msg});
+			}
+		}
+	},
 	put: {
 		endpoint: function putEndpoint(req, res){
 			var ipAddres = req.connection.remoteAddress;
 			var apikey = req.params.apikey;
 			var regex = new RegExp("([0-9]{4}[-](0[1-9]|1[0-2])[-]([0-2]{1}[0-9]{1}|3[0-1]{1})|([0-2]{1}[0-9]{1}|3[0-1]{1})[-](0[1-9]|1[0-2])[-][0-9]{4})");
 
-			var _id = req.params._id;
-
+			
+			var endpointId = req.params.endpoint_id;
 			var err_code = 0;
 			var err_msg = "";
 
 			var dataEndpoint = {};
-			var dataIdentifier = {};
-			var dataContactPoint = {};
-
-					//input check 
-			//identifier
-			if(typeof req.body.identifier.use !== 'undefined'){
-				identifierUseCode =  req.body.identifier.use.trim().toLowerCase();
-				checkCode(apikey, identifierUseCode, 'IDENTIFIER_USE', function(resUseCode){
-					if(resUseCode.err_code > 0){ //code harus lebih besar dari nol, ini menunjukan datanya valid
-						dataIdentifier.use = identifierUseCode;
-						}else{
-						res.json({"err_code": 501, "err_msg": "Identifier use code not found"});
-					}
-				})			
-			} 
-
-			//type code
-			if(typeof req.body.identifier.type !== 'undefined'){
-				identifierTypeCode =  req.body.identifier.type.trim().toUpperCase();
-				checkCode(apikey, identifierTypeCode, 'IDENTIFIER_TYPE', function(resUseTypeCode){
-					if(resUseTypeCode.err_code > 0){
-						dataIdentifier.type = identifierTypeCode;
-						}else{
-						res.json({"err_code": 502, "err_msg": "Identifier type code not found"});		
-					}
-				})			
-			} 
-
-			//identifier uniqe value
-			if(typeof req.body.identifier.value !== 'undefined'){
-				identifierValue =  req.body.identifier.value.trim();
-				checkUniqeValue(apikey, "IDENTIFIER_VALUE|" + identifierValue, 'IDENTIFIER', function(resUniqeValue){
-				if(resUniqeValue.err_code == 0){
-						dataIdentifier.value = identifierValue;
-					}else{
-						res.json({"err_code": 508, "err_msg": "Identifier value already exist."});		
-					}
-				})
-
-			}
-
-			//identifier period start
-			if(typeof req.body.identifier.period !== 'undefined'){
-				period = req.body.identifier.period;
-				if(period.indexOf("to") > 0){
-					arrPeriod = period.split("to");
-					identifierPeriodStart = arrPeriod[0];
-					identifierPeriodEnd = arrPeriod[1];
-					if(!regex.test(identifierPeriodStart) && !regex.test(identifierPeriodEnd)){
-						err_code = 2;
-						err_msg = "Identifier Period invalid date format.";
-					}
-					dataIdentifier.period_start = identifierPeriodStart;
-					dataIdentifier.period_end = identifierPeriodEnd;	
+			
+			//input check 
+			if(typeof endpointId !== 'undefined'){
+				if(validator.isEmpty(endpointId)){
+					err_code = 1;
+					err_msg = "Endpoint id is required";
 				}
-			}  
-
-			//Endpoint active
+			}else{
+				err_code = 2;
+				err_msg = "Endpoint id is required";
+			}
+			
 			if(typeof req.body.status !== 'undefined'){
-				endpointStatusCode =  req.body.status.trim().toLowerCase();
-				checkCode(apikey, endpointStatusCode, 'ENDPOINT_STATUS', function(resEndpointStatusCode){
-					if(resEndpointStatusCode.err_code > 0){
-						dataEndpoint.status =  endpointStatusCode;
-						}else{
-						res.json({"err_code": 503, "err_msg": "Endpoint status code not found"});		
-					}
-				})
-
+				status =  req.body.status.trim().toLowerCase();
+				if(validator.isEmpty(status)){
+					err_code = 2;
+					err_msg = "Status is required.";
+				}else{
+					dataEndpoint.status = status;
+				}
+			}else{
+				status = "";
 			}
-
-			//Endpoint type
+			
 			if(typeof req.body.connectionType !== 'undefined'){
-				EndpointConnectionTypeCode =  req.body.connectionType.trim().toLowerCase();
-				checkCode(apikey, EndpointConnectionTypeCode, 'ENDPOINT_CONNECTION_TYPE', function(resEndpointConnectionTypeCode){
-					if(resEndpointConnectionTypeCode.err_code > 0){
-						dataEndpoint.connectionType = EndpointConnectionTypeCode;
-						}else{
-						res.json({"err_code": 504, "err_msg": "Endpoint connection type code not found"});		
-					}
-				})													
+				connectionType =  req.body.connectionType.trim().toLowerCase();
+				if(validator.isEmpty(connectionType)){
+					err_code = 2;
+					err_msg = "Connection Type is required.";
+				}else{
+					dataEndpoint.connectionType = connectionType;
+				}
+			}else{
+				connectionType = "";
 			}
-			//Endpoint name
+			
 			if(typeof req.body.name !== 'undefined'){
-				endpointNameCode =  req.body.name.trim().toLowerCase();
-				dataEndpoint.name = endpointNameCode;
+				name =  req.body.name.trim().toLowerCase();
+				if(validator.isEmpty(name)){
+					err_code = 2;
+					err_msg = "Name is required.";
+				}else{
+					dataEndpoint.name = name;
+				}
+			}else{
+				name = "";
 			}
-			//Endpoint alias
+			
+			
+			//Endpoint managingOrganization
 			if(typeof req.body.managingOrganization !== 'undefined'){
-				managingOrganizationCode =  req.body.managingOrganization.trim().toLowerCase();
-				checkUniqeValue(apikey, "ORGANIZATION_ID|" + managingOrganizationCode, 'ORGANIZATION', function(resPartOfValue){
-					if(managingOrganizationCode == 'null') {
-						resPartOfValue.err_code = 2;
-					}
-					if(resPartOfValue.err_code == 2){
-							dataEndpoint.managingOrganization = managingOrganizationCode;
-						}else{
-						res.json({"err_code": 510, "err_msg": "Organization is not exist."});			
-					}
-				})																			
+				managingOrganization =  req.body.managingOrganization.trim().toLowerCase();
+				if(validator.isEmpty(managingOrganization)){
+					err_code = 2;
+					err_msg = "Managing Organization is required.";
+				}else{
+					dataEndpoint.managingOrganization = managingOrganization;
+				}
+			}else{
+				managingOrganization = "";
 			}
+			
 			//endpoint payloadType
 			if(typeof req.body.payloadType !== 'undefined'){
-				endpointPayloadTypeCode =  req.body.payloadType.trim().toLowerCase();
-				checkCode(apikey, endpointPayloadTypeCode , 'ENDPOINT_PAYLOAD_TYPE', function(resEndpointPayloadTypeCode){
-					if(resEndpointPayloadTypeCode.err_code > 0){
-							dataEndpoint.payloadType = endpointPayloadTypeCode;
-						}else{
-						res.json({"err_code": 505, "err_msg": "Endpoint payload type code not found"});		
-					}
-				})
-
+				payloadType =  req.body.payloadType.trim().toLowerCase();
+				if(validator.isEmpty(payloadType)){
+					err_code = 2;
+					err_msg = "Payload Type is required.";
+				}else{
+					dataEndpoint.payloadType = payloadType;
+				}
+			}else{
+				payloadType = "";
 			}
 
 			//endpoint payloadMimeType
 			if(typeof req.body.payloadMimeType !== 'undefined'){
-				endpointPayloadMimeTypeCode =  req.body.payloadMimeType.trim().toLowerCase();
-				dataEndpoint.payloadType = endpointPayloadMimeTypeCode;
+				payloadMimeType =  req.body.payloadMimeType.trim().toLowerCase();
+				if(validator.isEmpty(payloadMimeType)){
+					err_code = 2;
+					err_msg = "Payload Mime Type is required.";
+				}else{
+					dataEndpoint.payloadMimeType = payloadMimeType;
+				}
+			}else{
+				payloadMimeType = "";
 			}
 
 			//endpoint period
 			if(typeof req.body.period !== 'undefined'){
-				var period = req.body.period;
+				period = req.body.period;
 				if(period.indexOf("to") > 0){
 					arrPeriod = period.split("to");
-					periodStart = arrPeriod[0];
-					periodEnd = arrPeriod[1];
-					if(!regex.test(periodStart) && !regex.test(periodEnd)){
+					PeriodStart = arrPeriod[0];
+					PeriodEnd = arrPeriod[1];
+
+					if(!regex.test(PeriodStart) && !regex.test(PeriodEnd)){
 						err_code = 2;
-						err_msg = "Endpoint Period invalid date format.";
-					}
-					dataEndpoint.period_start = periodStart;
-					dataEndpoint.period_end = periodEnd;	
+						err_msg = "Period invalid date format.";
+					}else{
+						dataEndpoint.period_start = PeriodStart;
+						dataEndpoint.period_end = PeriodEnd;
+					}	
+				}else{
+					err_code = 1;
+					err_msg = "Period request format is wrong, `ex: start to end` ";
 				}
+			}else{
+				PeriodStart = "";
+				PeriodEnd = "";
 			}
 
 			//endpoint address
 			if(typeof req.body.address !== 'undefined'){
-				endpointAddressCode =  req.body.address.trim().toLowerCase();
-				dataEndpoint.address = endpointAddressCode;
-			}
+				address =  req.body.address.trim().toLowerCase();
+				if(validator.isEmpty(address)){
+					err_code = 2;
+					err_msg = "Address is required.";
+				}else{
+					dataEndpoint.address = address;
+				}
+			}else{
+				address = "";
+			}			
 
 			//endpoint header
 			if(typeof req.body.header !== 'undefined'){
-				endpointHeaderCode =  req.body.header.trim().toLowerCase();
-				dataEndpoint.header = endpointHeaderCode;
-			}
-
-			//contact point system
-			if(typeof req.body.contact.system !== 'undefined'){
-				contactPointSystemCode =  req.body.contact.system.trim().toLowerCase();
-				checkCode(apikey, contactPointSystemCode, 'CONTACT_POINT_SYSTEM', function(resContactPointSystem){
-					if(resContactPointSystem.err_code > 0){
-							dataContactPoint.system = contactPointSystemCode;
-						}else{
-						res.json({"err_code": 506, "err_msg": "Contact Point System Code not found"});		
-					}
-				})																	
-			}
-
-			//contact point value
-			if(typeof req.body.contact.value !== 'undefined'){
-				contactPointValue =  req.body.contact.value;
-				checkUniqeValue(apikey, "CONTACT_POINT_VALUE|" + contactPointValue, 'CONTACT_POINT', function(resContactPointValue){
-					if(resContactPointValue.err_code == 0){
-							dataContactPoint.value = contactPointValue;
-						}else{
-						res.json({"err_code": 509, "err_msg": "Telecom value already exist."});			
-					}
-				})
-			}
-
-			//contact poin use
-			if(typeof req.body.contact.use !== 'undefined'){
-				contactPointUseCode =  req.body.contact.use.trim().toLowerCase();
-				checkCode(apikey, contactPointUseCode, 'CONTACT_POINT_USE', function(resContactPointUse){
-					if(resContactPointUse.err_code > 0){
-							dataContactPoint.use = contactPointUseCode;
-						}else{
-						res.json({"err_code": 507, "err_msg": "Contact Point Use Code not found"});
-					}
-				})																			
-			} 
-
-			//contact poin rank
-			if(typeof req.body.contact.rank !== 'undefined'){
-				contactPointRank =  req.body.contact.rank;
-				dataContactPoint.rank = contactPointRank;
-			} 
-
-			//contact point period
-			if(typeof req.body.contact.period !== 'undefined'){
-				var period = req.body.contact.period;
-				if(period.indexOf("to") > 0){
-					arrPeriod = period.split("to");
-					contactPointPeriodStart = arrPeriod[0];
-					contactPointPeriodEnd = arrPeriod[1];
-					if(!regex.test(contactPointPeriodStart) && !regex.test(contactPointPeriodEnd)){
-						err_code = 2;
-						err_msg = "Contact Point Period invalid date format.";
-					}
-					dataEndpoint.period_start = contactPointPeriodStart;
-					dataEndpoint.period_end = contactPointPeriodEnd;	
+				header =  req.body.header.trim().toLowerCase();
+				if(validator.isEmpty(header)){
+					err_code = 2;
+					err_msg = "Header is required.";
+				}else{
+					dataEndpoint.header = header;
 				}
+			}else{
+				header = "";
 			}
 
 			if(err_code == 0){
 				//check apikey
 				checkApikey(apikey, ipAddres, function(result){
 					if(result.err_code == 0){
-						if(_id == "" || typeof _id == 'undefined'){
-							res.json({"err_code": 5, "err_msg": "Endpoint Id is required."});	
-						}else{
-
-						checkCode(apikey, identifierUseCode, 'IDENTIFIER_USE', function(resUseCode){
-							if(resUseCode.err_code > 0){ //code harus lebih besar dari nol, ini menunjukan datanya valid
-								checkCode(apikey, identifierTypeCode, 'IDENTIFIER_TYPE', function(resUseTypeCode){
-									if(resUseTypeCode.err_code > 0){ //code harus lebih besar dari nol, ini menunjukan datanya valid
-										checkCode(apikey, endpointStatusCode, 'ENDPOINT_STATUS', function(resEndpointStatusCode){
-											if(resEndpointStatusCode.err_code > 0){ //code harus lebih besar dari nol, ini menunjukan datanya valid
-												checkCode(apikey, EndpointConnectionTypeCode, 'ENDPOINT_CONNECTION_TYPE', function(resEndpointConnectionTypeCode){
-													if(resEndpointConnectionTypeCode.err_code > 0){ //code harus lebih besar dari nol, ini menunjukan datanya valid
-														checkCode(apikey, endpointPayloadTypeCode , 'ENDPOINT_PAYLOAD_TYPE', function(resEndpointPayloadTypeCode){
-															if(resEndpointPayloadTypeCode.err_code > 0){ //code harus lebih besar dari nol, ini menunjukan datanya valid
-																checkCode(apikey, contactPointSystemCode, 'CONTACT_POINT_SYSTEM', function(resContactPointSystem){
-																	if(resContactPointSystem.err_code > 0){ //code harus lebih besar dari nol, ini menunjukan datanya valid
-																		checkCode(apikey, contactPointUseCode, 'CONTACT_POINT_USE', function(resContactPointUse){
-																			if(resContactPointUse.err_code > 0){ //code harus lebih besar dari nol, ini menunjukan datanya valid
-
-																				//event emiter
-																				myEmitter.prependOnceListener('checkEndpointId', function() {
-																						checkUniqeValue(apikey, "IDENTIFIER_VALUE|" + identifierValue, 'IDENTIFIER', function(resUniqeValue){
-																							if(resUniqeValue.err_code == 0){ //untuk ini nilai code harus sama dengan 0, menunjukan value tersebut belum ada
-																								checkUniqeValue(apikey, "CONTACT_POINT_VALUE|" + contactPointValue, 'CONTACT_POINT', function(resContactPointValue){
-																									if(resContactPointValue.err_code == 0){
-																										checkUniqeValue(apikey, "ORGANIZATION_ID|" + managingOrganizationCode, 'ORGANIZATION', function(resPartOfValue){
-																											if(managingOrganizationCode == 'null') {
-																												resPartOfValue.err_code = 2;
-																											}
-																											if(resPartOfValue.err_code == 2){
-																												//proses insert
-
-																												//set uniqe id
-																												var unicId = uniqid.time();
-																												//var organizationId = 'org' + unicId;
-																												var identifierId = 'ide' + unicId;
-																												var contactPointId = 'cop' + unicId;
-																												var endpointId = 'enp' + unicId;
-
-																												dataEnpoint = {
-																													"id" : endpointId,
-																													"status" : endpointStatusCode,
-																													"connectionType" : EndpointConnectionTypeCode,
-																													"name" : endpointNameCode,
-																													"managingOrganization" : managingOrganizationCode,
-																													"period_start": endpointPeriodStart,
-																													"period_end": endpointPeriodEnd,
-																													"payloadType": endpointPayloadTypeCode,
-																													"payloadMimeType": endpointPayloadMimeTypeCode,
-																													"address": endpointAddressCode,
-																													"header": endpointHeaderCode
-																												}
-																												console.log(dataEnpoint);
-																												ApiFHIR.post('endpoint', {"apikey": apikey}, {body: dataEnpoint, json: true}, function(error, response, body){
-																													endpoint = body;
-																													if(endpoint.err_code > 0){
-																														res.json(endpoint);	
-																													}
-																												})
-
-																												//identifier
-																												dataIdentifier = {
-																																					"id": identifierId,
-																																					"use": identifierUseCode,
-																																					"type": identifierTypeCode,
-																																					//"system": identifierSystem,
-																																					"value": identifierValue,
-																																					"period_start": identifierPeriodStart,
-																																					"period_end": identifierPeriodEnd,
-																																					"endpoint_id": endpointId
-																																				}
-
-																												ApiFHIR.post('identifier', {"apikey": apikey}, {body: dataIdentifier, json: true}, function(error, response, body){
-																													identifier = body;
-																													if(identifier.err_code > 0){
-																														res.json(identifier);	
-																													}
-																												})
-
-																												//contact_point
-																												dataContactPoint = {
-																																						"id": contactPointId,
-																																						"system": contactPointSystemCode,
-																																						"value": contactPointValue,
-																																						"use": contactPointUseCode,
-																																						"rank": contactPointRank,
-																																						"period_start": contactPointPeriodStart,
-																																						"period_end": contactPointPeriodEnd,
-																																						"endpoint_id": endpointId
-																																					}
-
-																												//post to contact point
-																												ApiFHIR.post('contactPoint', {"apikey": apikey}, {body: dataContactPoint, json: true}, function(error, response, body){
-																													contactPoint = body;
-																													if(contactPoint.err_code > 0){
-																														res.json(contactPoint);	
-																													}
-																												})
-
-																												res.json({"err_code": 0, "err_msg": "Endpoint has been add.", "data": [{"_id": endpointId}]});
-
-																											}else{
-																												res.json({"err_code": 510, "err_msg": "Organization is not exist."});			
-																											}
-																										})																			
-																									}else{
-																										res.json({"err_code": 509, "err_msg": "Telecom value already exist."});			
-																									}
-																								})
-																							}else{
-																								res.json({"err_code": 508, "err_msg": "Identifier value already exist."});		
-																							}
-																						})
-																				});
-																				myEmitter.emit('checkEndpointId');
-
-
-																			}else{
-																				res.json({"err_code": 507, "err_msg": "Contact Point Use Code not found"});
-																			}
-																		})
-																	}else{
-																		res.json({"err_code": 506, "err_msg": "Contact Point System Code not found"});		
-																	}
-																})
-															}else{
-																res.json({"err_code": 505, "err_msg": "Endpoint payload type code not found"});		
-															}
-														})
-													}else{
-														res.json({"err_code": 504, "err_msg": "Endpoint connection type code not found"});		
-													}
-												})
+						myEmitter.prependOnceListener('checkEndpointID', function(){
+							checkUniqeValue(apikey, "ENDPOINT_ID|" + endpointId, 'ENDPOINT', function(resEndpointID){
+								if(resEndpointID.err_code > 0){
+									//console.log(dataEndpoint);
+										ApiFHIR.put('endpoint', {"apikey": apikey, "_id": endpointId}, {body: dataEndpoint, json: true}, function(error, response, body){
+											endpoint = body;
+											if(endpoint.err_code > 0){
+												res.json(endpoint);	
 											}else{
-												res.json({"err_code": 503, "err_msg": "Endpoint status code not found"});		
+												res.json({"err_code": 0, "err_msg": "Endpoint has been update.", "data": [{"_id": endpointId}]});
 											}
 										})
+								}else{
+									res.json({"err_code": 504, "err_msg": "Endpoint Id not found"});		
+								}
+							})
+						})
+
+						myEmitter.prependOnceListener('checkStatus', function(){
+							if(validator.isEmpty(status)){
+								myEmitter.emit('checkEndpointID');
+							}else{
+								checkCode(apikey, status, 'ENDPOINT_STATUS', function(resStatusCode){
+									if(resStatusCode.err_code > 0){
+										myEmitter.emit('checkEndpointID');				
 									}else{
-										res.json({"err_code": 502, "err_msg": "Identifier type code not found"});		
+										res.json({"err_code": 503, "err_msg": "Status Code not found."});	
 									}
 								})
-							}else{
-								res.json({"err_code": 501, "err_msg": "Identifier use code not found"});
 							}
 						})
 
-						}					
+						myEmitter.prependOnceListener('checkConnectionType', function(){
+							if(validator.isEmpty(connectionType)){
+								myEmitter.emit('checkStatus');
+							}else{
+								checkCode(apikey, connectionType, 'ENDPOINT_CONNECTION_TYPE', function(resConnectionType){
+									if(resConnectionType.err_code > 0){
+										myEmitter.emit('checkStatus');				
+									}else{
+										res.json({"err_code": 503, "err_msg": "Connection Type Code not found."});	
+									}
+								})
+							}
+						})
+
+						myEmitter.prependOnceListener('checkManagingOrganization', function(){
+							if(validator.isEmpty(managingOrganization)){
+								myEmitter.emit('checkConnectionType');
+							}else{
+								checkUniqeValue(apikey, "ORGANIZATION_ID|" + managingOrganization, 'ORGANIZATION', function(resOrganizationID){
+									if(resOrganizationID.err_code > 0){
+										myEmitter.emit('checkConnectionType');				
+									}else{
+										res.json({"err_code": 503, "err_msg": "Managing Organization, organization id not found."});	
+									}
+								})
+							}
+						})
+
+						if(validator.isEmpty(payloadType)){
+							myEmitter.emit('checkManagingOrganization');	
+						}else{
+							checkCode(apikey, payloadType, 'ENDPOINT_PAYLOAD_TYPE', function(resPayloadType){
+								if(resPayloadType.err_code > 0){ //code harus lebih besar dari nol, ini menunjukan datanya valid
+									myEmitter.emit('checkManagingOrganization');
+								}else{
+									res.json({"err_code": 501, "err_msg": "Payload Type not found"});
+								}
+							})
+						}
 					}else{
 						result.err_code = 500;
 						res.json(result);
@@ -1002,758 +1296,362 @@ var controller = {
 				res.json({"err_code": err_code, "err_msg": err_msg});
 			}	
 		},
-		endpointIdentifier: function putEndpointIdentifier(req, res){
-			var ipAddres = req.connection.remoteAddress;
-			var apikey = req.params.apikey;
-			var regex = new RegExp("([0-9]{4}[-](0[1-9]|1[0-2])[-]([0-2]{1}[0-9]{1}|3[0-1]{1})|([0-2]{1}[0-9]{1}|3[0-1]{1})[-](0[1-9]|1[0-2])[-][0-9]{4})");
+		identifier: function updateIdentifier(req, res){
+					var ipAddres = req.connection.remoteAddress;
+					var apikey = req.params.apikey;
+					var regex = new RegExp("([0-9]{4}[-](0[1-9]|1[0-2])[-]([0-2]{1}[0-9]{1}|3[0-1]{1})|([0-2]{1}[0-9]{1}|3[0-1]{1})[-](0[1-9]|1[0-2])[-][0-9]{4})");
+					var endpointId = req.params.endpoint_id;
+					var identifierId = req.params.identifier_id;
 
-			var _id = req.params._id;
-
-			var err_code = 0;
-			var err_msg = "";
-
-			var dataEndpoint = {};
-			var dataIdentifier = {};
-			var dataContactPoint = {};
-
+					var err_code = 0;
+					var err_msg = "";
+					var dataIdentifier = {};
 					//input check 
-			//identifier
-			if(typeof req.body.identifier.use !== 'undefined'){
-				identifierUseCode =  req.body.identifier.use.trim().toLowerCase();
-				checkCode(apikey, identifierUseCode, 'IDENTIFIER_USE', function(resUseCode){
-					if(resUseCode.err_code > 0){ //code harus lebih besar dari nol, ini menunjukan datanya valid
-						dataIdentifier.use = identifierUseCode;
-						}else{
-						res.json({"err_code": 501, "err_msg": "Identifier use code not found"});
-					}
-				})			
-			} 
-
-			//type code
-			if(typeof req.body.identifier.type !== 'undefined'){
-				identifierTypeCode =  req.body.identifier.type.trim().toUpperCase();
-				checkCode(apikey, identifierTypeCode, 'IDENTIFIER_TYPE', function(resUseTypeCode){
-					if(resUseTypeCode.err_code > 0){
-						dataIdentifier.type = identifierTypeCode;
-						}else{
-						res.json({"err_code": 502, "err_msg": "Identifier type code not found"});		
-					}
-				})			
-			} 
-
-			//identifier uniqe value
-			if(typeof req.body.identifier.value !== 'undefined'){
-				identifierValue =  req.body.identifier.value.trim();
-				checkUniqeValue(apikey, "IDENTIFIER_VALUE|" + identifierValue, 'IDENTIFIER', function(resUniqeValue){
-				if(resUniqeValue.err_code == 0){
-						dataIdentifier.value = identifierValue;
+					if(typeof endpointId !== 'undefined'){
+						if(validator.isEmpty(endpointId)){
+							err_code = 2;
+							err_msg = "Endpoint id is required";
+						}
 					}else{
-						res.json({"err_code": 508, "err_msg": "Identifier value already exist."});		
-					}
-				})
-
-			}
-
-			//identifier period start
-			if(typeof req.body.identifier.period !== 'undefined'){
-				period = req.body.identifier.period;
-				if(period.indexOf("to") > 0){
-					arrPeriod = period.split("to");
-					identifierPeriodStart = arrPeriod[0];
-					identifierPeriodEnd = arrPeriod[1];
-					if(!regex.test(identifierPeriodStart) && !regex.test(identifierPeriodEnd)){
 						err_code = 2;
-						err_msg = "Identifier Period invalid date format.";
+						err_msg = "Endpoint id is required";
 					}
-					dataIdentifier.period_start = identifierPeriodStart;
-					dataIdentifier.period_end = identifierPeriodEnd;	
-				}
-			}  
 
-			//Endpoint active
-			if(typeof req.body.status !== 'undefined'){
-				endpointStatusCode =  req.body.status.trim().toLowerCase();
-				checkCode(apikey, endpointStatusCode, 'ENDPOINT_STATUS', function(resEndpointStatusCode){
-					if(resEndpointStatusCode.err_code > 0){
-						dataEndpoint.status =  endpointStatusCode;
-						}else{
-						res.json({"err_code": 503, "err_msg": "Endpoint status code not found"});		
-					}
-				})
-
-			}
-
-			//Endpoint type
-			if(typeof req.body.connectionType !== 'undefined'){
-				EndpointConnectionTypeCode =  req.body.connectionType.trim().toLowerCase();
-				checkCode(apikey, EndpointConnectionTypeCode, 'ENDPOINT_CONNECTION_TYPE', function(resEndpointConnectionTypeCode){
-					if(resEndpointConnectionTypeCode.err_code > 0){
-						dataEndpoint.connectionType = EndpointConnectionTypeCode;
-						}else{
-						res.json({"err_code": 504, "err_msg": "Endpoint connection type code not found"});		
-					}
-				})													
-			}
-			//Endpoint name
-			if(typeof req.body.name !== 'undefined'){
-				endpointNameCode =  req.body.name.trim().toLowerCase();
-				dataEndpoint.name = endpointNameCode;
-			}
-			//Endpoint alias
-			if(typeof req.body.managingOrganization !== 'undefined'){
-				managingOrganizationCode =  req.body.managingOrganization.trim().toLowerCase();
-				checkUniqeValue(apikey, "ORGANIZATION_ID|" + managingOrganizationCode, 'ORGANIZATION', function(resPartOfValue){
-					if(managingOrganizationCode == 'null') {
-						resPartOfValue.err_code = 2;
-					}
-					if(resPartOfValue.err_code == 2){
-							dataEndpoint.managingOrganization = managingOrganizationCode;
-						}else{
-						res.json({"err_code": 510, "err_msg": "Organization is not exist."});			
-					}
-				})																			
-			}
-			//endpoint payloadType
-			if(typeof req.body.payloadType !== 'undefined'){
-				endpointPayloadTypeCode =  req.body.payloadType.trim().toLowerCase();
-				checkCode(apikey, endpointPayloadTypeCode , 'ENDPOINT_PAYLOAD_TYPE', function(resEndpointPayloadTypeCode){
-					if(resEndpointPayloadTypeCode.err_code > 0){
-							dataEndpoint.payloadType = endpointPayloadTypeCode;
-						}else{
-						res.json({"err_code": 505, "err_msg": "Endpoint payload type code not found"});		
-					}
-				})
-
-			}
-
-			//endpoint payloadMimeType
-			if(typeof req.body.payloadMimeType !== 'undefined'){
-				endpointPayloadMimeTypeCode =  req.body.payloadMimeType.trim().toLowerCase();
-				dataEndpoint.payloadType = endpointPayloadMimeTypeCode;
-			}
-
-			//endpoint period
-			if(typeof req.body.period !== 'undefined'){
-				var period = req.body.period;
-				if(period.indexOf("to") > 0){
-					arrPeriod = period.split("to");
-					periodStart = arrPeriod[0];
-					periodEnd = arrPeriod[1];
-					if(!regex.test(periodStart) && !regex.test(periodEnd)){
+					if(typeof identifierId !== 'undefined'){
+						if(validator.isEmpty(identifierId)){
+							err_code = 2;
+							err_msg = "Identifier id is required";
+						}
+					}else{
 						err_code = 2;
-						err_msg = "Endpoint Period invalid date format.";
+						err_msg = "Identifier id is required";
 					}
-					dataEndpoint.period_start = periodStart;
-					dataEndpoint.period_end = periodEnd;	
-				}
-			}
 
-			//endpoint address
-			if(typeof req.body.address !== 'undefined'){
-				endpointAddressCode =  req.body.address.trim().toLowerCase();
-				dataEndpoint.address = endpointAddressCode;
-			}
-
-			//endpoint header
-			if(typeof req.body.header !== 'undefined'){
-				endpointHeaderCode =  req.body.header.trim().toLowerCase();
-				dataEndpoint.header = endpointHeaderCode;
-			}
-
-			//contact point system
-			if(typeof req.body.contact.system !== 'undefined'){
-				contactPointSystemCode =  req.body.contact.system.trim().toLowerCase();
-				checkCode(apikey, contactPointSystemCode, 'CONTACT_POINT_SYSTEM', function(resContactPointSystem){
-					if(resContactPointSystem.err_code > 0){
-							dataContactPoint.system = contactPointSystemCode;
+					//identifier
+					if(typeof req.body.use !== 'undefined'){
+						identifierUseCode =  req.body.use.trim().toLowerCase();
+						if(validator.isEmpty(identifierUseCode)){
+							err_code = 2;
+							err_msg = "Identifier Use is empty";
 						}else{
-						res.json({"err_code": 506, "err_msg": "Contact Point System Code not found"});		
-					}
-				})																	
-			}
+							dataIdentifier.use = identifierUseCode;
+						}
+					}else{
+						identifierUseCode = "";
+					} 
 
-			//contact point value
-			if(typeof req.body.contact.value !== 'undefined'){
-				contactPointValue =  req.body.contact.value;
-				checkUniqeValue(apikey, "CONTACT_POINT_VALUE|" + contactPointValue, 'CONTACT_POINT', function(resContactPointValue){
-					if(resContactPointValue.err_code == 0){
-							dataContactPoint.value = contactPointValue;
+					//type code
+					if(typeof req.body.type !== 'undefined'){
+						identifierTypeCode =  req.body.type.trim().toUpperCase();
+						if(validator.isEmpty(identifierTypeCode)){
+							err_code = 2;
+							err_msg = "Identifier Type is empty";
 						}else{
-						res.json({"err_code": 509, "err_msg": "Telecom value already exist."});			
-					}
-				})
-			}
+							dataIdentifier.type = identifierTypeCode;
+						}
+					}else{
+						identifierTypeCode = "";
+					} 
 
-			//contact poin use
-			if(typeof req.body.contact.use !== 'undefined'){
-				contactPointUseCode =  req.body.contact.use.trim().toLowerCase();
-				checkCode(apikey, contactPointUseCode, 'CONTACT_POINT_USE', function(resContactPointUse){
-					if(resContactPointUse.err_code > 0){
-							dataContactPoint.use = contactPointUseCode;
+					//identifier uniqe value
+					if(typeof req.body.value !== 'undefined'){
+						identifierValue =  req.body.value.trim();
+						if(validator.isEmpty(identifierValue)){
+							err_code = 2;
+							err_msg = "Identifier Value is empty";
 						}else{
-						res.json({"err_code": 507, "err_msg": "Contact Point Use Code not found"});
+							dataIdentifier.value = identifierValue;
+						}
+					}else{
+						identifierValue = "";
 					}
-				})																			
-			} 
 
-			//contact poin rank
-			if(typeof req.body.contact.rank !== 'undefined'){
-				contactPointRank =  req.body.contact.rank;
-				dataContactPoint.rank = contactPointRank;
-			} 
-
-			//contact point period
-			if(typeof req.body.contact.period !== 'undefined'){
-				var period = req.body.contact.period;
-				if(period.indexOf("to") > 0){
-					arrPeriod = period.split("to");
-					contactPointPeriodStart = arrPeriod[0];
-					contactPointPeriodEnd = arrPeriod[1];
-					if(!regex.test(contactPointPeriodStart) && !regex.test(contactPointPeriodEnd)){
-						err_code = 2;
-						err_msg = "Contact Point Period invalid date format.";
-					}
-					dataEndpoint.period_start = contactPointPeriodStart;
-					dataEndpoint.period_end = contactPointPeriodEnd;	
-				}
-			}
-
-			if(err_code == 0){
-				//check apikey
-				checkApikey(apikey, ipAddres, function(result){
-					if(result.err_code == 0){
-						if(_id == "" || typeof _id == 'undefined'){
-							res.json({"err_code": 5, "err_msg": "Endpoint Id is required."});	
+					//identifier period start
+					if(typeof req.body.period !== 'undefined'){
+						period = req.body.period;
+						if(period.indexOf("to") > 0){
+							arrPeriod = period.split("to");
+							identifierPeriodStart = arrPeriod[0];
+							identifierPeriodEnd = arrPeriod[1];
+							
+							if(!regex.test(identifierPeriodStart) && !regex.test(identifierPeriodEnd)){
+								err_code = 2;
+								err_msg = "Identifier Period invalid date format.";
+							}else{
+								dataIdentifier.period_start = identifierPeriodStart;
+								dataIdentifier.period_end = identifierPeriodEnd;
+							}	
 						}else{
+							err_code = 1;
+							err_msg = "Period request format is wrong, `ex: start to end` ";
+						}
+					}else{
+						identifierPeriodStart = "";
+						identifierPeriodEnd = "";
+					}  
 
-						checkCode(apikey, identifierUseCode, 'IDENTIFIER_USE', function(resUseCode){
-							if(resUseCode.err_code > 0){ //code harus lebih besar dari nol, ini menunjukan datanya valid
-								checkCode(apikey, identifierTypeCode, 'IDENTIFIER_TYPE', function(resUseTypeCode){
-									if(resUseTypeCode.err_code > 0){ //code harus lebih besar dari nol, ini menunjukan datanya valid
-										checkCode(apikey, endpointStatusCode, 'ENDPOINT_STATUS', function(resEndpointStatusCode){
-											if(resEndpointStatusCode.err_code > 0){ //code harus lebih besar dari nol, ini menunjukan datanya valid
-												checkCode(apikey, EndpointConnectionTypeCode, 'ENDPOINT_CONNECTION_TYPE', function(resEndpointConnectionTypeCode){
-													if(resEndpointConnectionTypeCode.err_code > 0){ //code harus lebih besar dari nol, ini menunjukan datanya valid
-														checkCode(apikey, endpointPayloadTypeCode , 'ENDPOINT_PAYLOAD_TYPE', function(resEndpointPayloadTypeCode){
-															if(resEndpointPayloadTypeCode.err_code > 0){ //code harus lebih besar dari nol, ini menunjukan datanya valid
-																checkCode(apikey, contactPointSystemCode, 'CONTACT_POINT_SYSTEM', function(resContactPointSystem){
-																	if(resContactPointSystem.err_code > 0){ //code harus lebih besar dari nol, ini menunjukan datanya valid
-																		checkCode(apikey, contactPointUseCode, 'CONTACT_POINT_USE', function(resContactPointUse){
-																			if(resContactPointUse.err_code > 0){ //code harus lebih besar dari nol, ini menunjukan datanya valid
+					if(err_code == 0){
+						//check apikey
+						checkApikey(apikey, ipAddres, function(result){
+							if(result.err_code == 0){
+								myEmitter.prependOnceListener('checkEndpointID', function(){
+									checkUniqeValue(apikey, "ENDPOINT_ID|" + endpointId, 'ENDPOINT', function(resEndpointId){
+										if(resEndpointId.err_code > 0){
+											checkUniqeValue(apikey, "IDENTIFIER_ID|" + identifierId, 'IDENTIFIER', function(resIdentifierID){
+												if(resIdentifierID.err_code > 0){
+													ApiFHIR.put('identifier', {"apikey": apikey, "_id": identifierId, "dr": "ENDPOINT_ID|"+endpointId}, {body: dataIdentifier, json: true}, function(error, response, body){
+								  					identifier = body;
+								  					if(identifier.err_code > 0){
+								  						res.json(identifier);	
+								  					}else{
+								  						res.json({"err_code": 0, "err_msg": "Identifier has been update in this endpoint.", "data": identifier.data});
+								  					}
+								  				})
+												}else{
+													res.json({"err_code": 505, "err_msg": "Identifier Id not found"});		
+												}
+											})
+										}else{
+											res.json({"err_code": 504, "err_msg": "Endpoint Id not found"});		
+										}
+									})
+								})
 
-																				//event emiter
-																				myEmitter.prependOnceListener('checkEndpointId', function() {
-																						checkUniqeValue(apikey, "IDENTIFIER_VALUE|" + identifierValue, 'IDENTIFIER', function(resUniqeValue){
-																							if(resUniqeValue.err_code == 0){ //untuk ini nilai code harus sama dengan 0, menunjukan value tersebut belum ada
-																								checkUniqeValue(apikey, "CONTACT_POINT_VALUE|" + contactPointValue, 'CONTACT_POINT', function(resContactPointValue){
-																									if(resContactPointValue.err_code == 0){
-																										checkUniqeValue(apikey, "ORGANIZATION_ID|" + managingOrganizationCode, 'ORGANIZATION', function(resPartOfValue){
-																											if(managingOrganizationCode == 'null') {
-																												resPartOfValue.err_code = 2;
-																											}
-																											if(resPartOfValue.err_code == 2){
-																												//proses insert
-
-																												//set uniqe id
-																												var unicId = uniqid.time();
-																												//var organizationId = 'org' + unicId;
-																												var identifierId = 'ide' + unicId;
-																												var contactPointId = 'cop' + unicId;
-																												var endpointId = 'enp' + unicId;
-
-																												dataEnpoint = {
-																													"id" : endpointId,
-																													"status" : endpointStatusCode,
-																													"connectionType" : EndpointConnectionTypeCode,
-																													"name" : endpointNameCode,
-																													"managingOrganization" : managingOrganizationCode,
-																													"period_start": endpointPeriodStart,
-																													"period_end": endpointPeriodEnd,
-																													"payloadType": endpointPayloadTypeCode,
-																													"payloadMimeType": endpointPayloadMimeTypeCode,
-																													"address": endpointAddressCode,
-																													"header": endpointHeaderCode
-																												}
-																												console.log(dataEnpoint);
-																												ApiFHIR.post('endpoint', {"apikey": apikey}, {body: dataEnpoint, json: true}, function(error, response, body){
-																													endpoint = body;
-																													if(endpoint.err_code > 0){
-																														res.json(endpoint);	
-																													}
-																												})
-
-																												//identifier
-																												dataIdentifier = {
-																																					"id": identifierId,
-																																					"use": identifierUseCode,
-																																					"type": identifierTypeCode,
-																																					//"system": identifierSystem,
-																																					"value": identifierValue,
-																																					"period_start": identifierPeriodStart,
-																																					"period_end": identifierPeriodEnd,
-																																					"endpoint_id": endpointId
-																																				}
-
-																												ApiFHIR.post('identifier', {"apikey": apikey}, {body: dataIdentifier, json: true}, function(error, response, body){
-																													identifier = body;
-																													if(identifier.err_code > 0){
-																														res.json(identifier);	
-																													}
-																												})
-
-																												//contact_point
-																												dataContactPoint = {
-																																						"id": contactPointId,
-																																						"system": contactPointSystemCode,
-																																						"value": contactPointValue,
-																																						"use": contactPointUseCode,
-																																						"rank": contactPointRank,
-																																						"period_start": contactPointPeriodStart,
-																																						"period_end": contactPointPeriodEnd,
-																																						"endpoint_id": endpointId
-																																					}
-
-																												//post to contact point
-																												ApiFHIR.post('contactPoint', {"apikey": apikey}, {body: dataContactPoint, json: true}, function(error, response, body){
-																													contactPoint = body;
-																													if(contactPoint.err_code > 0){
-																														res.json(contactPoint);	
-																													}
-																												})
-
-																												res.json({"err_code": 0, "err_msg": "Endpoint has been add.", "data": [{"_id": endpointId}]});
-
-																											}else{
-																												res.json({"err_code": 510, "err_msg": "Organization is not exist."});			
-																											}
-																										})																			
-																									}else{
-																										res.json({"err_code": 509, "err_msg": "Telecom value already exist."});			
-																									}
-																								})
-																							}else{
-																								res.json({"err_code": 508, "err_msg": "Identifier value already exist."});		
-																							}
-																						})
-																				});
-																				myEmitter.emit('checkEndpointId');
-
-
-																			}else{
-																				res.json({"err_code": 507, "err_msg": "Contact Point Use Code not found"});
-																			}
-																		})
-																	}else{
-																		res.json({"err_code": 506, "err_msg": "Contact Point System Code not found"});		
-																	}
-																})
-															}else{
-																res.json({"err_code": 505, "err_msg": "Endpoint payload type code not found"});		
-															}
-														})
-													}else{
-														res.json({"err_code": 504, "err_msg": "Endpoint connection type code not found"});		
-													}
-												})
+								myEmitter.prependOnceListener('checkIdentifierValue', function(){
+									if(validator.isEmpty(identifierValue)){
+										myEmitter.emit('checkEndpointID');
+									}else{
+										checkUniqeValue(apikey, "IDENTIFIER_VALUE|" + identifierValue, 'IDENTIFIER', function(resIdentifierValue){
+											if(resIdentifierValue.err_code == 0){
+												myEmitter.emit('checkEndpointID');				
 											}else{
-												res.json({"err_code": 503, "err_msg": "Endpoint status code not found"});		
+												res.json({"err_code": 503, "err_msg": "Identifier value already exist."});	
 											}
 										})
-									}else{
-										res.json({"err_code": 502, "err_msg": "Identifier type code not found"});		
 									}
 								})
-							}else{
-								res.json({"err_code": 501, "err_msg": "Identifier use code not found"});
-							}
-						})
 
-						}					
-					}else{
-						result.err_code = 500;
-						res.json(result);
-					}	
-				});
-			}else{
-				res.json({"err_code": err_code, "err_msg": err_msg});
-			}	
-		},
-		endpointContactPoint: function putEndpointContactPoint(req, res){
-			var ipAddres = req.connection.remoteAddress;
-			var apikey = req.params.apikey;
-			var regex = new RegExp("([0-9]{4}[-](0[1-9]|1[0-2])[-]([0-2]{1}[0-9]{1}|3[0-1]{1})|([0-2]{1}[0-9]{1}|3[0-1]{1})[-](0[1-9]|1[0-2])[-][0-9]{4})");
-
-			var _id = req.params._id;
-
-			var err_code = 0;
-			var err_msg = "";
-
-			var dataEndpoint = {};
-			var dataIdentifier = {};
-			var dataContactPoint = {};
-
-					//input check 
-			//identifier
-			if(typeof req.body.identifier.use !== 'undefined'){
-				identifierUseCode =  req.body.identifier.use.trim().toLowerCase();
-				checkCode(apikey, identifierUseCode, 'IDENTIFIER_USE', function(resUseCode){
-					if(resUseCode.err_code > 0){ //code harus lebih besar dari nol, ini menunjukan datanya valid
-						dataIdentifier.use = identifierUseCode;
-						}else{
-						res.json({"err_code": 501, "err_msg": "Identifier use code not found"});
-					}
-				})			
-			} 
-
-			//type code
-			if(typeof req.body.identifier.type !== 'undefined'){
-				identifierTypeCode =  req.body.identifier.type.trim().toUpperCase();
-				checkCode(apikey, identifierTypeCode, 'IDENTIFIER_TYPE', function(resUseTypeCode){
-					if(resUseTypeCode.err_code > 0){
-						dataIdentifier.type = identifierTypeCode;
-						}else{
-						res.json({"err_code": 502, "err_msg": "Identifier type code not found"});		
-					}
-				})			
-			} 
-
-			//identifier uniqe value
-			if(typeof req.body.identifier.value !== 'undefined'){
-				identifierValue =  req.body.identifier.value.trim();
-				checkUniqeValue(apikey, "IDENTIFIER_VALUE|" + identifierValue, 'IDENTIFIER', function(resUniqeValue){
-				if(resUniqeValue.err_code == 0){
-						dataIdentifier.value = identifierValue;
-					}else{
-						res.json({"err_code": 508, "err_msg": "Identifier value already exist."});		
-					}
-				})
-
-			}
-
-			//identifier period start
-			if(typeof req.body.identifier.period !== 'undefined'){
-				period = req.body.identifier.period;
-				if(period.indexOf("to") > 0){
-					arrPeriod = period.split("to");
-					identifierPeriodStart = arrPeriod[0];
-					identifierPeriodEnd = arrPeriod[1];
-					if(!regex.test(identifierPeriodStart) && !regex.test(identifierPeriodEnd)){
-						err_code = 2;
-						err_msg = "Identifier Period invalid date format.";
-					}
-					dataIdentifier.period_start = identifierPeriodStart;
-					dataIdentifier.period_end = identifierPeriodEnd;	
-				}
-			}  
-
-			//Endpoint active
-			if(typeof req.body.status !== 'undefined'){
-				endpointStatusCode =  req.body.status.trim().toLowerCase();
-				checkCode(apikey, endpointStatusCode, 'ENDPOINT_STATUS', function(resEndpointStatusCode){
-					if(resEndpointStatusCode.err_code > 0){
-						dataEndpoint.status =  endpointStatusCode;
-						}else{
-						res.json({"err_code": 503, "err_msg": "Endpoint status code not found"});		
-					}
-				})
-
-			}
-
-			//Endpoint type
-			if(typeof req.body.connectionType !== 'undefined'){
-				EndpointConnectionTypeCode =  req.body.connectionType.trim().toLowerCase();
-				checkCode(apikey, EndpointConnectionTypeCode, 'ENDPOINT_CONNECTION_TYPE', function(resEndpointConnectionTypeCode){
-					if(resEndpointConnectionTypeCode.err_code > 0){
-						dataEndpoint.connectionType = EndpointConnectionTypeCode;
-						}else{
-						res.json({"err_code": 504, "err_msg": "Endpoint connection type code not found"});		
-					}
-				})													
-			}
-			//Endpoint name
-			if(typeof req.body.name !== 'undefined'){
-				endpointNameCode =  req.body.name.trim().toLowerCase();
-				dataEndpoint.name = endpointNameCode;
-			}
-			//Endpoint alias
-			if(typeof req.body.managingOrganization !== 'undefined'){
-				managingOrganizationCode =  req.body.managingOrganization.trim().toLowerCase();
-				checkUniqeValue(apikey, "ORGANIZATION_ID|" + managingOrganizationCode, 'ORGANIZATION', function(resPartOfValue){
-					if(managingOrganizationCode == 'null') {
-						resPartOfValue.err_code = 2;
-					}
-					if(resPartOfValue.err_code == 2){
-							dataEndpoint.managingOrganization = managingOrganizationCode;
-						}else{
-						res.json({"err_code": 510, "err_msg": "Organization is not exist."});			
-					}
-				})																			
-			}
-			//endpoint payloadType
-			if(typeof req.body.payloadType !== 'undefined'){
-				endpointPayloadTypeCode =  req.body.payloadType.trim().toLowerCase();
-				checkCode(apikey, endpointPayloadTypeCode , 'ENDPOINT_PAYLOAD_TYPE', function(resEndpointPayloadTypeCode){
-					if(resEndpointPayloadTypeCode.err_code > 0){
-							dataEndpoint.payloadType = endpointPayloadTypeCode;
-						}else{
-						res.json({"err_code": 505, "err_msg": "Endpoint payload type code not found"});		
-					}
-				})
-
-			}
-
-			//endpoint payloadMimeType
-			if(typeof req.body.payloadMimeType !== 'undefined'){
-				endpointPayloadMimeTypeCode =  req.body.payloadMimeType.trim().toLowerCase();
-				dataEndpoint.payloadType = endpointPayloadMimeTypeCode;
-			}
-
-			//endpoint period
-			if(typeof req.body.period !== 'undefined'){
-				var period = req.body.period;
-				if(period.indexOf("to") > 0){
-					arrPeriod = period.split("to");
-					periodStart = arrPeriod[0];
-					periodEnd = arrPeriod[1];
-					if(!regex.test(periodStart) && !regex.test(periodEnd)){
-						err_code = 2;
-						err_msg = "Endpoint Period invalid date format.";
-					}
-					dataEndpoint.period_start = periodStart;
-					dataEndpoint.period_end = periodEnd;	
-				}
-			}
-
-			//endpoint address
-			if(typeof req.body.address !== 'undefined'){
-				endpointAddressCode =  req.body.address.trim().toLowerCase();
-				dataEndpoint.address = endpointAddressCode;
-			}
-
-			//endpoint header
-			if(typeof req.body.header !== 'undefined'){
-				endpointHeaderCode =  req.body.header.trim().toLowerCase();
-				dataEndpoint.header = endpointHeaderCode;
-			}
-
-			//contact point system
-			if(typeof req.body.contact.system !== 'undefined'){
-				contactPointSystemCode =  req.body.contact.system.trim().toLowerCase();
-				checkCode(apikey, contactPointSystemCode, 'CONTACT_POINT_SYSTEM', function(resContactPointSystem){
-					if(resContactPointSystem.err_code > 0){
-							dataContactPoint.system = contactPointSystemCode;
-						}else{
-						res.json({"err_code": 506, "err_msg": "Contact Point System Code not found"});		
-					}
-				})																	
-			}
-
-			//contact point value
-			if(typeof req.body.contact.value !== 'undefined'){
-				contactPointValue =  req.body.contact.value;
-				checkUniqeValue(apikey, "CONTACT_POINT_VALUE|" + contactPointValue, 'CONTACT_POINT', function(resContactPointValue){
-					if(resContactPointValue.err_code == 0){
-							dataContactPoint.value = contactPointValue;
-						}else{
-						res.json({"err_code": 509, "err_msg": "Telecom value already exist."});			
-					}
-				})
-			}
-
-			//contact poin use
-			if(typeof req.body.contact.use !== 'undefined'){
-				contactPointUseCode =  req.body.contact.use.trim().toLowerCase();
-				checkCode(apikey, contactPointUseCode, 'CONTACT_POINT_USE', function(resContactPointUse){
-					if(resContactPointUse.err_code > 0){
-							dataContactPoint.use = contactPointUseCode;
-						}else{
-						res.json({"err_code": 507, "err_msg": "Contact Point Use Code not found"});
-					}
-				})																			
-			} 
-
-			//contact poin rank
-			if(typeof req.body.contact.rank !== 'undefined'){
-				contactPointRank =  req.body.contact.rank;
-				dataContactPoint.rank = contactPointRank;
-			} 
-
-			//contact point period
-			if(typeof req.body.contact.period !== 'undefined'){
-				var period = req.body.contact.period;
-				if(period.indexOf("to") > 0){
-					arrPeriod = period.split("to");
-					contactPointPeriodStart = arrPeriod[0];
-					contactPointPeriodEnd = arrPeriod[1];
-					if(!regex.test(contactPointPeriodStart) && !regex.test(contactPointPeriodEnd)){
-						err_code = 2;
-						err_msg = "Contact Point Period invalid date format.";
-					}
-					dataEndpoint.period_start = contactPointPeriodStart;
-					dataEndpoint.period_end = contactPointPeriodEnd;	
-				}
-			}
-
-			if(err_code == 0){
-				//check apikey
-				checkApikey(apikey, ipAddres, function(result){
-					if(result.err_code == 0){
-						if(_id == "" || typeof _id == 'undefined'){
-							res.json({"err_code": 5, "err_msg": "Endpoint Id is required."});	
-						}else{
-
-						checkCode(apikey, identifierUseCode, 'IDENTIFIER_USE', function(resUseCode){
-							if(resUseCode.err_code > 0){ //code harus lebih besar dari nol, ini menunjukan datanya valid
-								checkCode(apikey, identifierTypeCode, 'IDENTIFIER_TYPE', function(resUseTypeCode){
-									if(resUseTypeCode.err_code > 0){ //code harus lebih besar dari nol, ini menunjukan datanya valid
-										checkCode(apikey, endpointStatusCode, 'ENDPOINT_STATUS', function(resEndpointStatusCode){
-											if(resEndpointStatusCode.err_code > 0){ //code harus lebih besar dari nol, ini menunjukan datanya valid
-												checkCode(apikey, EndpointConnectionTypeCode, 'ENDPOINT_CONNECTION_TYPE', function(resEndpointConnectionTypeCode){
-													if(resEndpointConnectionTypeCode.err_code > 0){ //code harus lebih besar dari nol, ini menunjukan datanya valid
-														checkCode(apikey, endpointPayloadTypeCode , 'ENDPOINT_PAYLOAD_TYPE', function(resEndpointPayloadTypeCode){
-															if(resEndpointPayloadTypeCode.err_code > 0){ //code harus lebih besar dari nol, ini menunjukan datanya valid
-																checkCode(apikey, contactPointSystemCode, 'CONTACT_POINT_SYSTEM', function(resContactPointSystem){
-																	if(resContactPointSystem.err_code > 0){ //code harus lebih besar dari nol, ini menunjukan datanya valid
-																		checkCode(apikey, contactPointUseCode, 'CONTACT_POINT_USE', function(resContactPointUse){
-																			if(resContactPointUse.err_code > 0){ //code harus lebih besar dari nol, ini menunjukan datanya valid
-
-																				//event emiter
-																				myEmitter.prependOnceListener('checkEndpointId', function() {
-																						checkUniqeValue(apikey, "IDENTIFIER_VALUE|" + identifierValue, 'IDENTIFIER', function(resUniqeValue){
-																							if(resUniqeValue.err_code == 0){ //untuk ini nilai code harus sama dengan 0, menunjukan value tersebut belum ada
-																								checkUniqeValue(apikey, "CONTACT_POINT_VALUE|" + contactPointValue, 'CONTACT_POINT', function(resContactPointValue){
-																									if(resContactPointValue.err_code == 0){
-																										checkUniqeValue(apikey, "ORGANIZATION_ID|" + managingOrganizationCode, 'ORGANIZATION', function(resPartOfValue){
-																											if(managingOrganizationCode == 'null') {
-																												resPartOfValue.err_code = 2;
-																											}
-																											if(resPartOfValue.err_code == 2){
-																												//proses insert
-
-																												//set uniqe id
-																												var unicId = uniqid.time();
-																												//var organizationId = 'org' + unicId;
-																												var identifierId = 'ide' + unicId;
-																												var contactPointId = 'cop' + unicId;
-																												var endpointId = 'enp' + unicId;
-
-																												dataEnpoint = {
-																													"id" : endpointId,
-																													"status" : endpointStatusCode,
-																													"connectionType" : EndpointConnectionTypeCode,
-																													"name" : endpointNameCode,
-																													"managingOrganization" : managingOrganizationCode,
-																													"period_start": endpointPeriodStart,
-																													"period_end": endpointPeriodEnd,
-																													"payloadType": endpointPayloadTypeCode,
-																													"payloadMimeType": endpointPayloadMimeTypeCode,
-																													"address": endpointAddressCode,
-																													"header": endpointHeaderCode
-																												}
-																												console.log(dataEnpoint);
-																												ApiFHIR.post('endpoint', {"apikey": apikey}, {body: dataEnpoint, json: true}, function(error, response, body){
-																													endpoint = body;
-																													if(endpoint.err_code > 0){
-																														res.json(endpoint);	
-																													}
-																												})
-
-																												//identifier
-																												dataIdentifier = {
-																																					"id": identifierId,
-																																					"use": identifierUseCode,
-																																					"type": identifierTypeCode,
-																																					//"system": identifierSystem,
-																																					"value": identifierValue,
-																																					"period_start": identifierPeriodStart,
-																																					"period_end": identifierPeriodEnd,
-																																					"endpoint_id": endpointId
-																																				}
-
-																												ApiFHIR.post('identifier', {"apikey": apikey}, {body: dataIdentifier, json: true}, function(error, response, body){
-																													identifier = body;
-																													if(identifier.err_code > 0){
-																														res.json(identifier);	
-																													}
-																												})
-
-																												//contact_point
-																												dataContactPoint = {
-																																						"id": contactPointId,
-																																						"system": contactPointSystemCode,
-																																						"value": contactPointValue,
-																																						"use": contactPointUseCode,
-																																						"rank": contactPointRank,
-																																						"period_start": contactPointPeriodStart,
-																																						"period_end": contactPointPeriodEnd,
-																																						"endpoint_id": endpointId
-																																					}
-
-																												//post to contact point
-																												ApiFHIR.post('contactPoint', {"apikey": apikey}, {body: dataContactPoint, json: true}, function(error, response, body){
-																													contactPoint = body;
-																													if(contactPoint.err_code > 0){
-																														res.json(contactPoint);	
-																													}
-																												})
-
-																												res.json({"err_code": 0, "err_msg": "Endpoint has been add.", "data": [{"_id": endpointId}]});
-
-																											}else{
-																												res.json({"err_code": 510, "err_msg": "Organization is not exist."});			
-																											}
-																										})																			
-																									}else{
-																										res.json({"err_code": 509, "err_msg": "Telecom value already exist."});			
-																									}
-																								})
-																							}else{
-																								res.json({"err_code": 508, "err_msg": "Identifier value already exist."});		
-																							}
-																						})
-																				});
-																				myEmitter.emit('checkEndpointId');
-
-
-																			}else{
-																				res.json({"err_code": 507, "err_msg": "Contact Point Use Code not found"});
-																			}
-																		})
-																	}else{
-																		res.json({"err_code": 506, "err_msg": "Contact Point System Code not found"});		
-																	}
-																})
-															}else{
-																res.json({"err_code": 505, "err_msg": "Endpoint payload type code not found"});		
-															}
-														})
-													}else{
-														res.json({"err_code": 504, "err_msg": "Endpoint connection type code not found"});		
-													}
-												})
+								myEmitter.prependOnceListener('checkIdentifierType', function(){
+									if(validator.isEmpty(identifierTypeCode)){
+										myEmitter.emit('checkIdentifierValue');
+									}else{
+										checkCode(apikey, identifierTypeCode, 'IDENTIFIER_TYPE', function(resUseTypeCode){
+											if(resUseTypeCode.err_code > 0){ //code harus lebih besar dari nol, ini menunjukan datanya valid
+												myEmitter.emit('checkIdentifierValue');
 											}else{
-												res.json({"err_code": 503, "err_msg": "Endpoint status code not found"});		
+												res.json({"err_code": 502, "err_msg": "Identifier type code not found"});		
 											}
 										})
-									}else{
-										res.json({"err_code": 502, "err_msg": "Identifier type code not found"});		
 									}
 								})
-							}else{
-								res.json({"err_code": 501, "err_msg": "Identifier use code not found"});
-							}
-						})
 
-						}					
+								if(validator.isEmpty(identifierUseCode)){
+									myEmitter.emit('checkIdentifierType');	
+								}else{
+									checkCode(apikey, identifierUseCode, 'IDENTIFIER_USE', function(resUseCode){
+										if(resUseCode.err_code > 0){ //code harus lebih besar dari nol, ini menunjukan datanya valid
+											myEmitter.emit('checkIdentifierType');
+										}else{
+											res.json({"err_code": 501, "err_msg": "Identifier use code not found"});
+										}
+									})
+								}
+							}else{
+								result.err_code = 500;
+								res.json(result);
+							}	
+						});
 					}else{
-						result.err_code = 500;
-						res.json(result);
-					}	
-				});
-			}else{
-				res.json({"err_code": err_code, "err_msg": err_msg});
-			}	
-		} 
+						res.json({"err_code": err_code, "err_msg": err_msg});
+					}
+				},
+		telecom: function updateTelecom(req, res){
+					var ipAddres = req.connection.remoteAddress;
+					var apikey = req.params.apikey;
+					var regex = new RegExp("([0-9]{4}[-](0[1-9]|1[0-2])[-]([0-2]{1}[0-9]{1}|3[0-1]{1})|([0-2]{1}[0-9]{1}|3[0-1]{1})[-](0[1-9]|1[0-2])[-][0-9]{4})");
+					var endpointId = req.params.endpoint_id;
+					var contactPointId = req.params.contact_point_id;
+
+					var err_code = 0;
+					var err_msg = "";
+					var dataContactPoint = {};
+
+					//input check 
+					if(typeof endpointId !== 'undefined'){
+						if(validator.isEmpty(endpointId)){
+							err_code = 2;
+							err_msg = "Endpoint id is required";
+						}
+					}else{
+						err_code = 2;
+						err_msg = "Endpoint id is required";
+					}
+
+					if(typeof contactPointId !== 'undefined'){
+						if(validator.isEmpty(contactPointId)){
+							err_code = 2;
+							err_msg = "Telecom id is required";
+						}
+					}else{
+						err_code = 2;
+						err_msg = "Telecom id is required";
+					}
+
+					//telecom
+					if(typeof req.body.system !== 'undefined'){
+						contactPointSystemCode =  req.body.system.trim().toLowerCase();
+						if(validator.isEmpty(contactPointSystemCode)){
+							err_code = 2;
+							err_msg = "Contact Point System is required";
+						}else{
+							dataContactPoint.system = contactPointSystemCode;
+						}
+					}else{
+						contactPointSystemCode = "";
+					}
+
+					//telecom value
+					if(typeof req.body.value !== 'undefined'){
+						contactPointValue =  req.body.value;
+						if(contactPointSystemCode == 'email'){
+							if(!validator.isEmail(contactPointValue)){
+								err_code = 2;
+								err_msg = "Contact Point Value is invalid email format";
+							}else{
+								dataContactPoint.value = contactPointValue;
+							}
+						}else{
+							if(validator.isEmpty(contactPointValue)){
+								err_code = 2;
+								err_msg = "Contact Point Value is required";
+							}else{
+								dataContactPoint.value = contactPointValue;
+							}
+						}
+					}else{
+						contactPointValue = "";
+					}
+
+					//telecom use code
+					if(typeof req.body.use !== 'undefined'){
+						contactPointUseCode =  req.body.use.trim().toLowerCase();
+						if(validator.isEmpty(contactPointUseCode)){
+							err_code = 2;
+							err_msg = "Telecom Use Code is required";
+						}else{
+							dataContactPoint.use = contactPointUseCode;
+						}
+					}else{
+						contactPointUseCode = "";
+					} 
+
+					//contact poin rank
+					if(typeof req.body.rank !== 'undefined'){
+						contactPointRank =  req.body.rank;
+						if(!validator.isInt(contactPointRank)){
+							err_code = 2;
+							err_msg = "Telecom Rank must be number";
+						}else{
+							dataContactPoint.rank = contactPointRank;
+						}
+					}
+
+					//contact point period
+					if(typeof req.body.period !== 'undefined'){
+						var period = req.body.period;
+						if(period.indexOf("to") > 0){
+							arrPeriod = period.split("to");
+							contactPointPeriodStart = arrPeriod[0];
+							contactPointPeriodEnd = arrPeriod[1];
+							
+							if(!regex.test(contactPointPeriodStart) && !regex.test(contactPointPeriodEnd)){
+								err_code = 2;
+								err_msg = "Telecom Period invalid date format.";
+							}else{
+								dataContactPoint.period_start = contactPointPeriodStart;
+								dataContactPoint.period_end = contactPointPeriodEnd;
+							}	
+						}else{
+							contactPointPeriodStart = "";
+							contactPointPeriodEnd = "";
+						}
+					} 
+
+					if(err_code == 0){
+						//check apikey
+						checkApikey(apikey, ipAddres, function(result){
+							if(result.err_code == 0){
+								myEmitter.prependOnceListener('checkEndpointId', function(){
+									checkUniqeValue(apikey, "ENDPOINT_ID|" + endpointId, 'ENDPOINT', function(resEndpointId){
+										if(resEndpointId.err_code > 0){
+											checkUniqeValue(apikey, "CONTACT_POINT_ID|" + contactPointId, 'CONTACT_POINT', function(resContactPointID){
+												if(resContactPointID.err_code > 0){
+													ApiFHIR.put('contactPoint', {"apikey": apikey, "_id": contactPointId, "dr": "ENDPOINT_ID|"+endpointId}, {body: dataContactPoint, json: true}, function(error, response, body){
+								  					contactPoint = body;
+								  					if(contactPoint.err_code > 0){
+								  						res.json(contactPoint);	
+								  					}else{
+								  						res.json({"err_code": 0, "err_msg": "Telecom has been update in this endpoint.", "data": contactPoint.data});
+								  					}
+								  				})
+												}else{
+													res.json({"err_code": 505, "err_msg": "Telecom Id not found"});		
+												}
+											})
+										}else{
+											res.json({"err_code": 504, "err_msg": "Endpoint Id not found"});		
+										}
+									})
+								})
+
+								myEmitter.prependOnceListener('checkContactPointValue', function(){
+									if(validator.isEmpty(contactPointValue)){
+										myEmitter.emit('checkEndpointId');
+									}else{
+										checkUniqeValue(apikey, "CONTACT_POINT_VALUE|" + contactPointValue, 'CONTACT_POINT', function(resContactPointValue){
+											if(resContactPointValue.err_code == 0){
+												myEmitter.emit('checkEndpointId');				
+											}else{
+												res.json({"err_code": 503, "err_msg": "Identifier value already exist."});	
+											}
+										})
+									}
+								})
+
+								myEmitter.prependOnceListener('checkContactPointUse', function(){
+									if(validator.isEmpty(contactPointUseCode)){
+										myEmitter.emit('checkContactPointValue');
+									}else{
+										checkCode(apikey, contactPointUseCode, 'CONTACT_POINT_USE', function(resContactPointUse){
+											if(resContactPointUse.err_code > 0){ //code harus lebih besar dari nol, ini menunjukan datanya valid
+												myEmitter.emit('checkContactPointValue');
+											}else{
+												res.json({"err_code": 502, "err_msg": "Contact Point Use Code not found"});		
+											}
+										})
+									}
+								})
+
+								if(validator.isEmpty(contactPointSystemCode)){
+									myEmitter.emit('checkContactPointUse');	
+								}else{
+									checkCode(apikey, contactPointSystemCode, 'CONTACT_POINT_SYSTEM', function(resContactPointSystem){
+										if(resContactPointSystem.err_code > 0){ //code harus lebih besar dari nol, ini menunjukan datanya valid
+											myEmitter.emit('checkContactPointUse');
+										}else{
+											res.json({"err_code": 501, "err_msg": "Contact Point System Code not found"});
+										}
+									})
+								}
+							}else{
+								result.err_code = 500;
+								res.json(result);
+							}	
+						});
+					}else{
+						res.json({"err_code": err_code, "err_msg": err_msg});
+					}
+				}
 	}
 }
 

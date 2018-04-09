@@ -100,7 +100,7 @@ var controller = {
   },
   post: {
     endpoint: function addEndpoint(req, res){
-			console.log(req);
+			//console.log(req);
 			var endpoint_id = req.body.id;
 			var endpoint_status = req.body.status;
 			var endpoint_connection_type = req.body.connectionType;
@@ -199,6 +199,109 @@ var controller = {
       });
     }
   
+},
+	put: {
+    endpoint: function addEndpoint(req, res){
+			//console.log(req.params);
+			//console.log(req.body);
+			var endpoint_id = req.params.endpoint_id;
+			var endpoint_status = req.body.status;
+			var endpoint_connection_type = req.body.connectionType;
+			var endpoint_name = req.body.name;
+			var endpoint_managing_organization = req.body.managingOrganization;
+			var endpoint_period_start = req.body.period_start;
+			var endpoint_period_end = req.body.period_end;
+			var endpoint_payload_type = req.body.payloadType;
+			var endpoint_payload_mime_type = req.body.payloadMimeType;
+			var endpoint_address = req.body.address;
+			var endpoint_header = req.body.header;
+			var organization_id = req.body.managingOrganization;
+			var column = "";
+      var values = "";
+			
+			if(typeof endpoint_status !== 'undefined'){
+        column += 'endpoint_status,';
+        values += "'" + endpoint_status +"',";
+      }
+			
+			if(typeof endpoint_connection_type !== 'undefined'){
+        column += 'endpoint_connection_type,';
+        values += "'" + endpoint_connection_type +"',";
+      }
+			
+			if(typeof endpoint_name !== 'undefined'){
+        column += 'endpoint_name,';
+        values += "'" + endpoint_name +"',";
+      }
+			
+			if(typeof endpoint_managing_organization !== 'undefined'){
+        column += 'endpoint_managing_organization,';
+        values += "'" + endpoint_managing_organization +"',";
+      }
+     
+      if(typeof endpoint_period_start !== 'undefined'){
+        if(endpoint_period_start == ""){
+          endpoint_period_start = null;
+        }else{
+          endpoint_period_start = "to_date('"+endpoint_period_start+ "', 'yyyy-MM-dd')";
+        }
+
+        column += 'endpoint_period_start,';
+        values += endpoint_period_start + ",";
+      }
+
+      if(typeof endpoint_period_end !== 'undefined'){
+        if(endpoint_period_end == ""){
+          endpoint_period_end = null;
+        }else{
+          endpoint_period_end = "to_date('"+endpoint_period_end+ "', 'yyyy-MM-dd')";
+        }
+
+        column += 'endpoint_period_end,';
+        values += endpoint_period_end + ",";
+      }
+			
+			if(typeof endpoint_payload_type !== 'undefined'){
+        column += 'endpoint_payload_type,';
+        values += "'" + endpoint_payload_type +"',";
+      }
+			
+			if(typeof endpoint_payload_mime_type !== 'undefined'){
+        column += 'endpoint_payload_mime_type,';
+        values += "'" + endpoint_payload_mime_type +"',";
+      }
+			
+			if(typeof endpoint_address !== 'undefined'){
+        column += 'endpoint_address,';
+        values += "'" + endpoint_address +"',";
+      }
+			
+			if(typeof endpoint_header !== 'undefined'){
+        column += 'endpoint_header,';
+        values += "'" + endpoint_header +"',";
+      }
+			
+			if(typeof organization_id !== 'undefined'){
+        column += 'organization_id,';
+        values += "'" + organization_id +"',";
+      }
+			
+			var condition = "ENDPOINT_ID = '" + endpoint_id + "'";
+
+			var query = "UPSERT INTO BACIRO_FHIR.ENDPOINT(ENDPOINT_ID," + column.slice(0, -1) + ") SELECT ENDPOINT_ID, " + values.slice(0, -1) + " FROM BACIRO_FHIR.ENDPOINT WHERE " + condition;
+			console.log(query);
+      db.upsert(query,function(succes){
+        var query = "SELECT ep.endpoint_id as endpoint_id, endpoint_status, endpoint_connection_type, endpoint_name, endpoint_managing_organization, endpoint_period_start, endpoint_period_end, endpoint_payload_type, endpoint_payload_mime_type, endpoint_address, endpoint_header, ep.organization_id as organization_id, ep.location_id as location_id, ep.practitioner_role_id as practitioner_role_id, ep.healthcare_service_id as healthcare_service_id FROM BACIRO_FHIR.ENDPOINT ep WHERE endpoint_id = '" + endpoint_id + "' ";
+        db.query(query,function(dataJson){
+          rez = lowercaseObject(dataJson);
+          res.json({"err_code":0,"data":rez});
+        },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "updateEndpoint"});
+        });
+      },function(e){
+          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "updateEndpoint"});
+      });
+    }
 }
 }
 function lowercaseObject(jsonData){

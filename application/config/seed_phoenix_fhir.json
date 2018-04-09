@@ -905,6 +905,27 @@
 			},
 			"endpointPayloadType":{
 				"location": "%(apikey)s/endpoint-payload-type/%(_id)d"
+			},
+			"endpoint":{
+				"location": "%(apikey)s/Endpoint/%(_id)s"
+			},
+			"location":{
+				"location": "%(apikey)s/Location/%(_id)s"
+			},
+			"locationPosition":{
+				"location": "%(apikey)s/LocationPosition/%(_id)s"
+			},
+			"location":{
+				"location": "%(apikey)s/Location/%(_id)s"
+			},
+			"locationPosition":{
+				"location": "%(apikey)s/LocationPosition/%(_id)s"
+			},
+			"organization":{
+				"location": "%(apikey)s/Organization/%(_id)s"
+			},
+			"organizationContact":{
+				"location": "%(apikey)s/organizationContact/%(_id)s"
 			}
 		}
 	}

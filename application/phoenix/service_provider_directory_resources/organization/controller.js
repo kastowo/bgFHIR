@@ -157,7 +157,7 @@ var controller = {
       
       var arrOrganization = [];
       var query = "select organization_id, organization_active, organization_type, organization_name, organization_alias, parent_id, endpoint_id from baciro_fhir.organization o " + fixCondition;
-			console.log(query);
+			//console.log(query);
       db.query(query,function(dataJson){
         rez = lowercaseObject(dataJson);
         for(i = 0; i < rez.length; i++){
@@ -178,13 +178,18 @@ var controller = {
       });
     },
 		organizationContact: function getOrganizationContact(req, res){
-      var organizationId = req.query.organization_id;
+			var organizationId = req.query.organization_id;
+			var organizationContactId = req.query._id;
 			
       //susun query
       var condition = "";
 			
 			if(typeof organizationId !== 'undefined' && organizationId !== ""){
-        condition += "oc.organization_id = '" + organizationId + "' AND,";  
+        condition += "oc.organization_id = '" + organizationId + "' AND ";  
+      }
+			
+			if(typeof organizationContactId !== 'undefined' && organizationContactId !== ""){
+        condition += "oc.organization_contact_id = '" + organizationContactId + "' AND ";  
       }
 
       if(condition == ""){
@@ -196,7 +201,6 @@ var controller = {
       var arrOrganizationContact = [];
       
 			var query = "SELECT oc.organization_contact_id as organization_contact_id, organization_contact_purpose, hn.human_name_id as human_name_id, human_name_use, human_name_text, human_name_family, human_name_given, human_name_prefix, human_name_suffix, human_name_period_start, human_name_period_end, addr.address_id as address_id, address_use, address_type, address_text, address_line, address_city, address_district, address_state, address_postal_code, address_country, address_period_start, address_period_end, cp.contact_point_id as contact_point_id, contact_point_system, contact_point_value, contact_point_use, contact_point_rank, contact_point_period_start, contact_point_period_end FROM BACIRO_FHIR.ORGANIZATION_CONTACT oc LEFT JOIN BACIRO_FHIR.HUMAN_NAME hn ON hn.human_name_id = oc.human_name_id LEFT JOIN BACIRO_FHIR.ADDRESS addr ON oc.address_id = addr.address_id LEFT JOIN BACIRO_FHIR.CONTACT_POINT cp ON oc.organization_contact_id = cp.organization_contact_id " + fixCondition;
-      
       db.query(query,function(dataJson){
         rez = lowercaseObject(dataJson);
 				var arrOrganizationContact = [];
@@ -397,7 +401,7 @@ var controller = {
       });
     },
 		organizationContact: function addOrganizationContact(req, res){
-			console.log(req.body);
+			//console.log(req.body);
       var organization_contact_id = req.body.id;
       var purpose = req.body.purpose;
       var humanNameId = req.body.humanNameId;
@@ -427,13 +431,13 @@ var controller = {
       }
 
       var query = "UPSERT INTO BACIRO_FHIR.ORGANIZATION_CONTACT(ORGANIZATION_CONTACT_ID, " + column.slice(0, -1) + ")"+ " VALUES ('"+organization_contact_id+"', " + values.slice(0, -1) + ")";
-			console.log(query);
+			//console.log(query);
       db.upsert(query,function(succes){
         var query2 = "SELECT ORGANIZATION_CONTACT_ID,ORGANIZATION_CONTACT_PURPOSE,HUMAN_NAME_ID,ADDRESS_ID,ORGANIZATION_ID FROM BACIRO_FHIR.ORGANIZATION_CONTACT WHERE ORGANIZATION_ID = '" + OrganizationId + "' ";
 				
 				db.query(query2,function(dataJson){
           rez = lowercaseObject(dataJson);
-					console.log(rez);
+					//console.log(rez);
           res.json({"err_code":0,"data":rez});
         },function(e){
           res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "addOrganizationContact"});
@@ -444,7 +448,117 @@ var controller = {
 			
 			
     }
-  }
+  },
+	put: {
+		organization: function addOrganization(req, res){
+			var organization_id = req.params.organization_id;
+      var organization_active = req.body.active;
+      var organization_type = req.body.type;
+      var organization_name = req.body.name;
+      var organization_alias = req.body.alias;
+      var organization_parentId = req.body.parentId;
+			var organization_endpointId = req.body.endpointId;
+			
+			var column= "";
+			var values= "";
+			
+			if(typeof organization_active !== 'undefined'){
+        column += 'ORGANIZATION_ACTIVE,';
+        values += "" + organization_active +",";
+      }
+			
+			if(typeof organization_type !== 'undefined'){
+        column += 'ORGANIZATION_TYPE,';
+        values += "'" + organization_type +"',";
+      }
+			
+			if(typeof organization_name !== 'undefined'){
+        column += 'ORGANIZATION_NAME,';
+        values += "'" + organization_name +"',";
+      }
+			
+			if(typeof organization_alias !== 'undefined'){
+        column += 'ORGANIZATION_ALIAS,';
+        values += "'" + organization_alias +"',";
+      }
+			
+			if(typeof organization_parentId !== 'undefined'){
+        column += 'PARENT_ID,';
+        values += "'" + organization_parentId +"',";
+      }
+			
+			if(typeof organization_endpointId !== 'undefined'){
+        column += 'ENDPOINT_ID,';
+        values += "'" + organization_endpointId +"',";
+      }
+
+			var condition = "ORGANIZATION_ID = '" + organization_id + "'";
+
+			var query = "UPSERT INTO BACIRO_FHIR.ORGANIZATION(ORGANIZATION_ID," + column.slice(0, -1) + ") SELECT ORGANIZATION_ID, " + values.slice(0, -1) + " FROM BACIRO_FHIR.ORGANIZATION WHERE " + condition;
+			//console.log(query);
+			
+      db.upsert(query,function(succes){
+        var query = "SELECT organization_id, organization_active, organization_type, organization_name, organization_alias, parent_id, endpoint_id FROM BACIRO_FHIR.ORGANIZATION WHERE organization_id = '" + organization_id + "' ";
+        db.query(query,function(dataJson){
+          rez = lowercaseObject(dataJson);
+          res.json({"err_code":0,"data":rez});
+        },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "updateOrganization"});
+        });
+      },function(e){
+          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "updateOrganization"});
+      });
+    },
+		organizationContact: function addOrganizationContact(req, res){
+			//console.log(req.body);
+      var organization_contact_id = req.params.id;
+      var purpose = req.body.purpose;
+      var humanNameId = req.body.humanNameId;
+      var addressId = req.body.addressId;
+      var OrganizationId = req.body.OrganizationId;
+			var column= "";
+			var values= "";
+						
+			if(typeof purpose !== 'undefined'){
+        column += 'ORGANIZATION_CONTACT_PURPOSE,';
+        values += "'" + purpose +"',";
+      }
+			
+			if(typeof humanNameId !== 'undefined'){
+        column += 'HUMAN_NAME_ID,';
+        values += "'" + humanNameId +"',";
+      }
+			
+			if(typeof addressId !== 'undefined'){
+        column += 'ADDRESS_ID,';
+        values += "'" + addressId +"',";
+      }
+			
+			if(typeof OrganizationId !== 'undefined'){
+        column += 'ORGANIZATION_ID,';
+        values += "'" + OrganizationId +"',";
+      }			
+			var condition = "ORGANIZATION_CONTACT_ID = '" + organization_contact_id + "'";
+
+			var query = "UPSERT INTO BACIRO_FHIR.ORGANIZATION_CONTACT(ORGANIZATION_CONTACT_ID," + column.slice(0, -1) + ") SELECT ORGANIZATION_CONTACT_ID, " + values.slice(0, -1) + " FROM BACIRO_FHIR.ORGANIZATION_CONTACT WHERE " + condition;
+			//console.log(query);
+      db.upsert(query,function(succes){
+        var query2 = "SELECT ORGANIZATION_CONTACT_ID,ORGANIZATION_CONTACT_PURPOSE,HUMAN_NAME_ID,ADDRESS_ID,ORGANIZATION_ID FROM BACIRO_FHIR.ORGANIZATION_CONTACT WHERE ORGANIZATION_ID = '" + OrganizationId + "' ";
+				
+				db.query(query2,function(dataJson){
+          rez = lowercaseObject(dataJson);
+					//console.log(rez);
+          res.json({"err_code":0,"data":rez});
+        },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "addOrganizationContact"});
+        });
+      },function(e){
+          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "addOrganizationContact"});
+      });
+			
+			
+    }
+	}
 }
 
 function lowercaseObject(jsonData){

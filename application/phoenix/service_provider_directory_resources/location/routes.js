@@ -5,5 +5,8 @@ var routesLocation = function(app, Location){
 	app.post('/:apikey/Location', Location.post.location);
 	app.post('/:apikey/LocationPosition', Location.post.locationPosition);
 	
+	app.put('/:apikey/Location/:location_id', Location.put.location);
+	app.put('/:apikey/LocationPosition/:location_position_id', Location.put.locationPosition);
+	
 }
 module.exports = routesLocation;

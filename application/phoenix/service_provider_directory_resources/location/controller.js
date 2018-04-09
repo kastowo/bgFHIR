@@ -137,7 +137,7 @@ var controller = {
       
       var arrOrganization = [];
 			
-      var query = "select l.location_id as location_id, location_status, location_operational_status, location_name, location_alias, location_description, location_mode, location_type, address_id, location_physical_type, l.organization_id as organization_id, parent_id, location_position_id, i.identifier_id as identifier_id, ep.endpoint_id as endpoint_id from baciro_fhir.location l LEFT JOIN BACIRO_FHIR.IDENTIFIER i ON i.organization_id = l.organization_id LEFT JOIN BACIRO_FHIR.ENDPOINT ep ON ep.location_id = l.location_id " + fixCondition;
+      var query = "select l.location_id as location_id, location_status, location_operational_status, location_name, location_alias, location_description, location_mode, location_type, address_id, location_physical_type, l.organization_id as organization_id, parent_id, location_position_id, ep.endpoint_id as endpoint_id from baciro_fhir.location l LEFT JOIN BACIRO_FHIR.ENDPOINT ep ON ep.location_id = l.location_id " + fixCondition;
 			console.log(query);
 			var arrLocation = [];
       db.query(query,function(dataJson){
@@ -159,7 +159,6 @@ var controller = {
 					Location.managingOrganization = rez[i].organization_id;
 					Location.parent_id = rez[i].parent_id;
 					Location.locationPosition = rez[i].location_position_id;
-					Location.identifierId = rez[i].identifier_id;
 					Location.endpointId = rez[i].endpoint_id;
 					//Location.endpoint_id = rez[i].endpoint_id;
 					
@@ -341,10 +340,153 @@ var controller = {
       },function(e){
           res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "addLocationPosition"});
       });
-			
-			
     }
-  }
+  },
+	put: {
+		location: function updateLocation(req, res){
+			console.log(req.body);
+			var location_id = req.params.location_id;
+			var location_status = req.body.status;
+			var location_operational_status = req.body.operationalStatus;
+      var location_name = req.body.name;
+      var location_alias = req.body.alias;
+			var location_description = req.body.description;
+			var location_mode = req.body.mode;
+      var location_type = req.body.type;
+      var location_physicalType = req.body.physicalType;
+			var location_organizationId = req.body.managingOrganization;
+      var location_parentId = req.body.	parent_id;
+			var addressId = req.body.address;
+			//var locationPositionId = req.body.locationPositionId;
+			var locationEndpointId = req.body.endpoint;
+			
+     
+      var column= "";
+			var values= "";
+						
+			if(typeof location_status !== 'undefined'){
+        column += 'location_status,';
+        values += "'" + location_status +"',";
+      }
+			
+			if(typeof location_operational_status !== 'undefined'){
+        column += 'location_operational_status,';
+        values += "'" + location_operational_status +"',";
+      }
+			
+			if(typeof location_name !== 'undefined'){
+        column += 'location_name,';
+        values += "'" + location_name +"',";
+      }
+			
+			if(typeof location_alias !== 'undefined'){
+        column += 'location_alias,';
+        values += "'" + location_alias +"',";
+      }
+			
+			if(typeof location_description !== 'undefined'){
+        column += 'location_description,';
+        values += "'" + location_description +"',";
+      }
+			
+			if(typeof location_mode !== 'undefined'){
+        column += 'location_mode,';
+        values += "'" + location_mode +"',";
+      }
+			
+			if(typeof location_type !== 'undefined'){
+        column += 'location_type,';
+        values += "'" + location_type +"',";
+      }
+			
+			if(typeof location_physicalType !== 'undefined'){
+        column += 'location_physical_type,';
+        values += "'" + location_physicalType +"',";
+      }
+			
+			if(typeof location_organizationId !== 'undefined'){
+        column += 'ORGANIZATION_ID,';
+        values += "'" + location_organizationId +"',";
+      }
+			
+			if(typeof location_parentId !== 'undefined'){
+        column += 'PARENT_ID,';
+        values += "'" + location_parentId +"',";
+      }
+			
+			if(typeof addressId !== 'undefined'){
+        column += 'ADDRESS_ID,';
+        values += "'" + addressId +"',";
+      }
+			
+			/*if(typeof locationPositionId !== 'undefined'){
+        column += 'LOCATION_POSITION_ID,';
+        values += "'" + locationPositionId +"',";
+      }*/
+			
+			var condition = "LOCATION_ID = '" + location_id + "'";
+
+			var query = "UPSERT INTO BACIRO_FHIR.LOCATION(LOCATION_ID," + column.slice(0, -1) + ") SELECT LOCATION_ID, " + values.slice(0, -1) + " FROM BACIRO_FHIR.LOCATION WHERE " + condition;
+			console.log(query);
+			
+			db.upsert(query,function(succes){
+        var query2 = "UPSERT INTO BACIRO_FHIR.ENDPOINT(ENDPOINT_ID, LOCATION_ID) SELECT ENDPOINT_ID, '" + location_id + "' FROM BACIRO_FHIR.ENDPOINT WHERE ENDPOINT_ID = '" + locationEndpointId + "'";
+        db.upsert(query2,function(dataJson){
+					var query3 = "SELECT LOCATION_ID,LOCATION_STATUS,LOCATION_OPERATIONAL_STATUS,LOCATION_NAME,LOCATION_ALIAS,LOCATION_DESCRIPTION,LOCATION_MODE,LOCATION_TYPE,ADDRESS_ID,LOCATION_PHYSICAL_TYPE,ORGANIZATION_ID,PARENT_ID,LOCATION_POSITION_ID FROM BACIRO_FHIR.LOCATION WHERE LOCATION_ID = '" + location_id + "' ";
+					db.query(query3,function(dataJson){
+						rez = lowercaseObject(dataJson);
+						res.json({"err_code":0,"data":rez});
+					},function(e){
+						res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "updateLocation"});
+					});
+        },function(e){
+          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "updateLocation"});
+        });
+      },function(e){
+          res.json({"err_code": 3, "err_msg":e, "application": "Api Phoenix", "function": "updateLocation"});
+      });
+		},
+		locationPosition: function updateLocationPosition(req, res){
+			var locationPositionId = req.params.location_position_id;
+      var longitude = req.body.longitude;
+      var latitude = req.body.latitude;
+      var altitude = req.body.altitude;
+      var column= "";
+			var values= "";
+						
+			if(typeof longitude !== 'undefined'){
+        column += 'LOCATION_POSITION_LONGITUDE,';
+        values += "" + longitude +",";
+      }
+			
+			if(typeof latitude !== 'undefined'){
+        column += 'LOCATION_POSITION_LATITUDE,';
+        values += "" + latitude +",";
+      }
+			
+			if(typeof altitude !== 'undefined'){
+        column += 'LOCATION_POSITION_ALTITUDE,';
+        values += "" + altitude +",";
+      }
+			
+      var condition = "LOCATION_POSITION_ID = '" + locationPositionId + "'";
+
+			var query = "UPSERT INTO BACIRO_FHIR.LOCATION_POSITION(LOCATION_POSITION_ID," + column.slice(0, -1) + ") SELECT LOCATION_POSITION_ID, " + values.slice(0, -1) + " FROM BACIRO_FHIR.LOCATION_POSITION WHERE " + condition;
+			console.log(query);
+			
+			db.upsert(query,function(succes){
+        var query2 = "SELECT LOCATION_POSITION_ID,LOCATION_POSITION_LONGITUDE,LOCATION_POSITION_LATITUDE,LOCATION_POSITION_ALTITUDE FROM BACIRO_FHIR.LOCATION_POSITION WHERE LOCATION_POSITION_ID = '" + locationPositionId + "' ";
+        db.query(query2,function(dataJson){
+          rez = lowercaseObject(dataJson);
+					res.json({"err_code":0,"data":rez});
+        },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "updateLocationPosition"});
+        });
+      },function(e){
+          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "updateLocationPosition"});
+      });
+		}
+	}
 }
 
 function lowercaseObject(jsonData){

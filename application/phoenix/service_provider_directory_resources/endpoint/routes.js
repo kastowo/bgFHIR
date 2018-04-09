@@ -3,5 +3,7 @@ var routesEndpoint = function(app, Endpoint){
 	
 	app.post('/:apikey/Endpoint', Endpoint.post.endpoint);
 	
+	app.put('/:apikey/Endpoint/:endpoint_id', Endpoint.put.endpoint);
+	
 }
 module.exports = routesEndpoint;

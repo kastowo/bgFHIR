@@ -146,6 +146,7 @@ var controller = {
 			var relatedPersonId = req.query.related_person_id;
 			var organizationId = req.query.organization_id;
 			var endpointId = req.query.endpoint_id;
+			var locationId = req.query.location_id;
 			var practitionerId = req.query.practitioner_id;
 			var qualificationId = req.query.qualification_id;
 			var qualificationId = req.query.qualification_id;
@@ -181,6 +182,10 @@ var controller = {
 			
 			if(typeof endpointId !== 'undefined' && endpointId !== ""){
         condition += "i.endpoint_id = '" + endpointId + "' AND,";  
+      }
+			
+			if(typeof locationId !== 'undefined' && locationId !== ""){
+        condition += "i.location_id = '" + locationId + "' AND,";  
       }
 			
 			if(typeof practitionerId !== 'undefined' && practitionerId !== ""){
@@ -421,19 +426,18 @@ var controller = {
 			});
 		},
 		Address: function getAddress(req, res) {
-			var addressId = req.query._id;
+			var address_id = req.query._id;
 			var personId = req.query.person_id;
 			var patientId = req.query.patient_id;
 			var relatedPersonId = req.query.related_person_id;
 			var organizationId = req.query.organization_id;
 			var addressId = req.query.address_id;
 			var practitionerId = req.query.practitioner_id;
-
 			//susun query
 			var condition = "";
 
-			if (typeof addressId !== 'undefined' && addressId !== "") {
-				condition += "address_id = '" + addressId + "' AND ";
+			if (typeof address_id !== 'undefined' && address_id !== "") {
+				condition += "address_id = '" + address_id + "' AND ";
 			}
 
 			if (typeof personId !== 'undefined' && personId !== "") {
@@ -449,15 +453,15 @@ var controller = {
 			}
 
 			if(typeof organizationId !== 'undefined' && organizationId !== ""){
-        condition += "organization_id = '" + organizationId + "' AND,";  
+        condition += "organization_id = '" + organizationId + "' AND ";  
       }
 			
 			if(typeof addressId !== 'undefined' && addressId !== ""){
-        condition += "address_id = '" + addressId + "' AND,";  
+        condition += "address_id = '" + addressId + "' AND ";  
       }
 			
 			if(typeof practitionerId !== 'undefined' && practitionerId !== ""){
-        condition += "practitioner_id = '" + practitionerId + "' AND,";  
+        condition += "practitioner_id = '" + practitionerId + "' AND ";  
       }
 
 			if (condition == "") {
@@ -3173,7 +3177,7 @@ var controller = {
       
 			var query = "select available_time_id, available_time_day_of_week, available_time_all_day, available_time_start, available_time_end from baciro_fhir.AVAILABLE_TIME " + fixCondition;
 			
-      //console.log(query);
+      
 			var arrAvailableTime = [];
       db.query(query,function(dataJson){
         rez = lowercaseObject(dataJson);
@@ -3214,7 +3218,7 @@ var controller = {
 			
 			var query = "select not_available_id, not_available_description, not_available_during from baciro_fhir.NOT_AVAILABLE " + fixCondition;
 			
-      //console.log(query);
+      
 			var arrAvailableTime = [];
       db.query(query,function(dataJson){
         rez = lowercaseObject(dataJson);
@@ -3953,6 +3957,7 @@ var controller = {
 			var related_person_id = req.body.related_person_id;
 			var organization_id = req.body.organization_id;
 			var endpoint_id = req.body.endpoint_id;
+			var location_id = req.body.location_id;
 			var practitionerId = req.body.practitioner_id;
 			var qualificationId = req.body.qualification_id;
 			var practitionerRoleId = req.body.practitioner_role_id;
@@ -4015,6 +4020,11 @@ var controller = {
 			if(typeof endpoint_id !== 'undefined'){
         column += 'endpoint_id,';
         values += "'"+ endpoint_id + "',";
+      }
+			
+			if(typeof location_id !== 'undefined'){
+        column += 'location_id,';
+        values += "'"+ location_id + "',";
       }
 			
 			if(typeof practitionerId !== 'undefined'){
@@ -5165,7 +5175,7 @@ var controller = {
 		},
 		encounterType: function addEncounterType(req, res) {
 			var code = req.body.code.replace("<or>", "/");
-			console.log(code);
+			
 			var display = req.body.display;
 			var definition = req.body.definition;
 
@@ -5737,7 +5747,7 @@ var controller = {
       });
     },
 		availableTime: function addAvailableTime(req, res){
-			//console.log(req);
+			
 			
 			var available_time_id = req.body.id;
 			var available_time_day_of_week = req.body.daysOfWeek;
@@ -6833,7 +6843,7 @@ var controller = {
 			var condition = "identifier_id = '" + _id + "' AND " + fieldResource + " = '" + valueResource + "'";
 
 			var query = "UPSERT INTO BACIRO_FHIR.IDENTIFIER(identifier_id," + column.slice(0, -1) + ") SELECT identifier_id, " + values.slice(0, -1) + " FROM BACIRO_FHIR.IDENTIFIER WHERE " + condition;
-
+//console.log(query);
 			db.upsert(query, function (succes) {
 				var arrIdentifier = [];
 				var query = "SELECT identifier_id, identifier_use, identifier_type, identifier_system, identifier_value, identifier_period_start, identifier_period_end FROM BACIRO_FHIR.IDENTIFIER WHERE " + condition;
@@ -7227,6 +7237,7 @@ var controller = {
 			}
 
 			var query = "UPSERT INTO BACIRO_FHIR.ADDRESS(address_id," + column.slice(0, -1) + ") SELECT address_id, " + values.slice(0, -1) + " FROM BACIRO_FHIR.ADDRESS WHERE " + condition;
+			console.log(query);
 
 			db.upsert(query, function (succes) {
 				var arrAddress = [];

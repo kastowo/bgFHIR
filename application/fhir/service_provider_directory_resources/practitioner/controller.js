@@ -31,7 +31,8 @@ seedPhoenixFHIR.base.port 	  = configYaml.phoenix.port;
 var ApiFHIR  = new Apiclient(seedPhoenixFHIR);
 
 var controller = {
-	get: function getPractitioner(req, res){
+	get: { 
+		practitioner : function getPractitioner(req, res){
 		var ipAddres = req.connection.remoteAddress;
 		var apikey = req.params.apikey;
 		var regex = new RegExp("([0-9]{4}[-](0[1-9]|1[0-2])[-]([0-2]{1}[0-9]{1}|3[0-1]{1})|([0-2]{1}[0-9]{1}|3[0-1]{1})[-](0[1-9]|1[0-2])[-][0-9]{4})");
@@ -382,7 +383,7 @@ var controller = {
 																														
 																														myEmitter.once('getCommunication', function(practitioner, index, newPractitioner, countPractitioner){
 																															qString = {};
-																															qString._id = practitioner.id;
+																															qString.practitioner_id = practitioner.id;
 																															seedPhoenixFHIR.path.GET = {
 																																"practitionerCommunication" : {
 																																	"location": "%(apikey)s/practitionerCommunication",
@@ -410,7 +411,7 @@ var controller = {
 																																	newPractitioner[index] = objectPractitioner;				
 																																	myEmitter.once('getQualification', function(practitioner, index, newPractitioner, countPractitioner){
 																																		qString = {};
-																																		qString._id = practitioner.id;
+																																		qString.practitioner_id = practitioner.id;
 																																		seedPhoenixFHIR.path.GET = {
 																																			"qualification" : {
 																																				"location": "%(apikey)s/Qualification",
@@ -503,6 +504,486 @@ var controller = {
 				res.json(result);
 			}
 		});	
+	},
+		qualification : function getQualification(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var regex = new RegExp("([0-9]{4}[-](0[1-9]|1[0-2])[-]([0-2]{1}[0-9]{1}|3[0-1]{1})|([0-2]{1}[0-9]{1}|3[0-1]{1})[-](0[1-9]|1[0-2])[-][0-9]{4})");
+
+			var practitionerId = req.params.practitioner_id;
+			var qualificationId = req.params.qualification_id;
+
+			checkApikey(apikey, ipAddres, function(result){
+				if(result.err_code == 0){	
+					checkUniqeValue(apikey, "PRACTITIONER_ID|" + practitionerId, 'PRACTITIONER', function(resPractitionerID){
+						if(resPractitionerID.err_code > 0){
+							if(typeof qualificationId !== 'undefined' && !validator.isEmpty(qualificationId)){
+								checkUniqeValue(apikey, "QUALIFICATION_ID|" + qualificationId, 'QUALIFICATION', function(resQualificationID){
+									if(resQualificationID.err_code > 0){
+										//get identifier
+										qString = {};
+										qString.practitioner_id = practitionerId;
+										qString._id = qualificationId;
+										seedPhoenixFHIR.path.GET = {
+											"qualification" : {
+												"location": "%(apikey)s/Qualification",
+												"query": qString
+											}
+										}
+										var ApiFHIR = new Apiclient(seedPhoenixFHIR);
+
+										ApiFHIR.get('qualification', {"apikey": apikey}, {}, function(error, response, body){
+											qualification = JSON.parse(body);
+											if(qualification.err_code == 0){
+												res.json({"err_code": 0, "data":qualification.data});	
+											}else{
+												res.json(qualification);
+											}
+										})
+									}else{
+										res.json({"err_code": 502, "err_msg": "Qualification Id not found"});		
+									}
+								})
+							}else{
+								//get identifier
+								qString = {};
+								qString.practitioner_id = practitionerId;
+								seedPhoenixFHIR.path.GET = {
+									"qualification" : {
+										"location": "%(apikey)s/Qualification",
+										"query": qString
+									}
+								}
+								var ApiFHIR = new Apiclient(seedPhoenixFHIR);
+
+								ApiFHIR.get('qualification', {"apikey": apikey}, {}, function(error, response, body){
+									qualification = JSON.parse(body);
+									if(qualification.err_code == 0){
+										res.json({"err_code": 0, "data":qualification.data});	
+									}else{
+										res.json(qualification);
+									}
+								})
+							}
+						}else{
+							res.json({"err_code": 501, "err_msg": "Practitioner Id not found"});		
+						}
+					})
+				}else{
+					result.err_code = 500;
+					res.json(result);
+				}	
+			});
+		},
+		communication : function getCommunication(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var regex = new RegExp("([0-9]{4}[-](0[1-9]|1[0-2])[-]([0-2]{1}[0-9]{1}|3[0-1]{1})|([0-2]{1}[0-9]{1}|3[0-1]{1})[-](0[1-9]|1[0-2])[-][0-9]{4})");
+
+			var practitionerId = req.params.practitioner_id;
+			var communicationId = req.params.communication_id;
+
+			checkApikey(apikey, ipAddres, function(result){
+				if(result.err_code == 0){	
+					checkUniqeValue(apikey, "PRACTITIONER_ID|" + practitionerId, 'PRACTITIONER', function(resPractitionerID){
+						if(resPractitionerID.err_code > 0){
+							if(typeof communicationId !== 'undefined' && !validator.isEmpty(communicationId)){
+								checkUniqeValue(apikey, "PRACTITIONER_COMMUNICATION_ID|" + communicationId, 'PRACTITIONER_COMMUNICATION', function(resQualificationID){
+									if(resQualificationID.err_code > 0){
+										//get identifier
+										qString = {};
+										qString.practitioner_id = practitionerId;
+										qString._id = communicationId;
+										seedPhoenixFHIR.path.GET = {
+											"practitionerCommunication" : {
+												"location": "%(apikey)s/practitionerCommunication",
+												"query": qString
+											}
+										}
+										var ApiFHIR = new Apiclient(seedPhoenixFHIR);
+
+										ApiFHIR.get('practitionerCommunication', {"apikey": apikey}, {}, function(error, response, body){
+											practitionerCommunication = JSON.parse(body);
+											if(practitionerCommunication.err_code == 0){
+												res.json({"err_code": 0, "data":practitionerCommunication.data});	
+											}else{
+												res.json(practitionerCommunication);
+											}
+										})
+									}else{
+										res.json({"err_code": 502, "err_msg": "Practitioner Communication Id not found"});		
+									}
+								})
+							}else{
+								//get identifier
+								qString = {};
+								qString.practitioner_id = practitionerId;
+								seedPhoenixFHIR.path.GET = {
+									"practitionerCommunication" : {
+										"location": "%(apikey)s/practitionerCommunication",
+										"query": qString
+									}
+								}
+								var ApiFHIR = new Apiclient(seedPhoenixFHIR);
+
+								ApiFHIR.get('practitionerCommunication', {"apikey": apikey}, {}, function(error, response, body){
+									practitionerCommunication = JSON.parse(body);
+									if(practitionerCommunication.err_code == 0){
+										res.json({"err_code": 0, "data":practitionerCommunication.data});	
+									}else{
+										res.json(practitionerCommunication);
+									}
+								})
+							}
+						}else{
+							res.json({"err_code": 501, "err_msg": "Practitioner Id not found"});		
+						}
+					})
+				}else{
+					result.err_code = 500;
+					res.json(result);
+				}	
+			});
+		},
+		identifier: function getIdentifier(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var regex = new RegExp("([0-9]{4}[-](0[1-9]|1[0-2])[-]([0-2]{1}[0-9]{1}|3[0-1]{1})|([0-2]{1}[0-9]{1}|3[0-1]{1})[-](0[1-9]|1[0-2])[-][0-9]{4})");
+			var practitionerId = req.params.practitioner_id;
+			var identifierId = req.params.identifier_id;
+
+			checkApikey(apikey, ipAddres, function(result){
+				if(result.err_code == 0){	
+					checkUniqeValue(apikey, "PRACTITIONER_ID|" + practitionerId, 'PRACTITIONER', function(resPractitionerID){
+						if(resPractitionerID.err_code > 0){
+							if(typeof identifierId !== 'undefined' && !validator.isEmpty(identifierId)){
+								checkUniqeValue(apikey, "IDENTIFIER_ID|" + identifierId, 'IDENTIFIER', function(resIdentifierID){
+									if(resIdentifierID.err_code > 0){
+										//get identifier
+										qString = {};
+										qString.practitioner_id = practitionerId;
+										qString._id = identifierId;
+										seedPhoenixFHIR.path.GET = {
+											"Identifier" : {
+												"location": "%(apikey)s/Identifier",
+												"query": qString
+											}
+										}
+										var ApiFHIR = new Apiclient(seedPhoenixFHIR);
+
+										ApiFHIR.get('Identifier', {"apikey": apikey}, {}, function(error, response, body){
+											identifier = JSON.parse(body);
+											if(identifier.err_code == 0){
+												res.json({"err_code": 0, "data":identifier.data});	
+											}else{
+												res.json(identifier);
+											}
+										})
+									}else{
+										res.json({"err_code": 502, "err_msg": "Identifier Id not found"});		
+									}
+								})
+							}else{
+								//get identifier
+								qString = {};
+								qString.practitioner_id = practitionerId;
+								seedPhoenixFHIR.path.GET = {
+									"Identifier" : {
+										"location": "%(apikey)s/Identifier",
+										"query": qString
+									}
+								}
+								var ApiFHIR = new Apiclient(seedPhoenixFHIR);
+
+								ApiFHIR.get('Identifier', {"apikey": apikey}, {}, function(error, response, body){
+									identifier = JSON.parse(body);
+									if(identifier.err_code == 0){
+										res.json({"err_code": 0, "data":identifier.data});	
+									}else{
+										res.json(identifier);
+									}
+								})
+							}
+						}else{
+							res.json({"err_code": 501, "err_msg": "Practioner Id not found"});		
+						}
+					})
+				}else{
+					result.err_code = 500;
+					res.json(result);
+				}	
+			});
+		},
+		humanName: function getHumanName(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var regex = new RegExp("([0-9]{4}[-](0[1-9]|1[0-2])[-]([0-2]{1}[0-9]{1}|3[0-1]{1})|([0-2]{1}[0-9]{1}|3[0-1]{1})[-](0[1-9]|1[0-2])[-][0-9]{4})");
+			var practitionerId = req.params.practitioner_id;
+			var humanNameId = req.params.human_name_id;
+
+			checkApikey(apikey, ipAddres, function(result){
+				if(result.err_code == 0){	
+					checkUniqeValue(apikey, "PRACTITIONER_ID|" + practitionerId, 'PRACTITIONER', function(resPractitionerID){
+						if(resPractitionerID.err_code > 0){
+							if(typeof humanNameId !== 'undefined' && !validator.isEmpty(humanNameId)){
+								checkUniqeValue(apikey, "HUMAN_NAME_ID|" + humanNameId, 'HUMAN_NAME', function(resHumanNameID){
+									if(resHumanNameID.err_code > 0){
+										//get identifier
+										qString = {};
+										qString.practitioner_id = practitionerId;
+										qString._id = humanNameId;
+										seedPhoenixFHIR.path.GET = {
+											"HumanName" : {
+												"location": "%(apikey)s/HumanName",
+												"query": qString
+											}
+										}
+										var ApiFHIR = new Apiclient(seedPhoenixFHIR);
+
+										ApiFHIR.get('HumanName', {"apikey": apikey}, {}, function(error, response, body){
+											humanName = JSON.parse(body);
+											if(humanName.err_code == 0){
+												res.json({"err_code": 0, "data":humanName.data});	
+											}else{
+												res.json(humanName);
+											}
+										})
+									}else{
+										res.json({"err_code": 502, "err_msg": "Human Name Id not found"});		
+									}
+								})
+							}else{
+								qString = {};
+								qString.practitioner_id = practitionerId;
+								seedPhoenixFHIR.path.GET = {
+									"HumanName" : {
+										"location": "%(apikey)s/HumanName",
+										"query": qString
+									}
+								}
+								var ApiFHIR = new Apiclient(seedPhoenixFHIR);
+
+								ApiFHIR.get('HumanName', {"apikey": apikey}, {}, function(error, response, body){
+									humanName = JSON.parse(body);
+									if(humanName.err_code == 0){
+										res.json({"err_code": 0, "data":humanName.data});	
+									}else{
+										res.json(humanName);
+									}
+								})
+							}
+						}else{
+							res.json({"err_code": 501, "err_msg": "Practitioner Id not found"});		
+						}
+					})
+				}else{
+					result.err_code = 500;
+					res.json(result);
+				}	
+			});
+		},
+		telecom: function getTelecom(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var regex = new RegExp("([0-9]{4}[-](0[1-9]|1[0-2])[-]([0-2]{1}[0-9]{1}|3[0-1]{1})|([0-2]{1}[0-9]{1}|3[0-1]{1})[-](0[1-9]|1[0-2])[-][0-9]{4})");
+			var practitionerId = req.params.practitioner_id;
+			var contactPointId = req.params.contact_point_id;
+
+			checkApikey(apikey, ipAddres, function(result){
+				if(result.err_code == 0){	
+					checkUniqeValue(apikey, "PRACTITIONER_ID|" + practitionerId, 'PRACTITIONER', function(resPractitionerID){
+						if(resPractitionerID.err_code > 0){
+							if(typeof contactPointId !== 'undefined' && !validator.isEmpty(contactPointId)){
+								checkUniqeValue(apikey, "CONTACT_POINT_ID|" + contactPointId, 'CONTACT_POINT', function(resTelecomID){
+									if(resTelecomID.err_code > 0){
+										qString = {};
+										qString.practitioner_id = practitionerId;
+										qString._id = contactPointId;
+										seedPhoenixFHIR.path.GET = {
+											"ContactPoint" : {
+												"location": "%(apikey)s/ContactPoint",
+												"query": qString
+											}
+										}
+										var ApiFHIR = new Apiclient(seedPhoenixFHIR);
+
+										ApiFHIR.get('ContactPoint', {"apikey": apikey}, {}, function(error, response, body){
+											contactPoint = JSON.parse(body);
+											if(contactPoint.err_code == 0){
+												res.json({"err_code": 0, "data":contactPoint.data});	
+											}else{
+												res.json(contactPoint);
+											}
+										})
+									}else{
+										res.json({"err_code": 502, "err_msg": "Telecom Id not found"});		
+									}
+								})
+							}else{
+								qString = {};
+								qString.practitioner_id = practitionerId;
+								seedPhoenixFHIR.path.GET = {
+									"ContactPoint" : {
+										"location": "%(apikey)s/ContactPoint",
+										"query": qString
+									}
+								}
+								var ApiFHIR = new Apiclient(seedPhoenixFHIR);
+
+								ApiFHIR.get('ContactPoint', {"apikey": apikey}, {}, function(error, response, body){
+									contactPoint = JSON.parse(body);
+									if(contactPoint.err_code == 0){
+										res.json({"err_code": 0, "data":contactPoint.data});	
+									}else{
+										res.json(contactPoint);
+									}
+								})
+							}
+						}else{
+							res.json({"err_code": 501, "err_msg": "Practitioner Id not found"});		
+						}
+					})
+				}else{
+					result.err_code = 500;
+					res.json(result);
+				}	
+			});
+		},
+		address: function getAddress(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var regex = new RegExp("([0-9]{4}[-](0[1-9]|1[0-2])[-]([0-2]{1}[0-9]{1}|3[0-1]{1})|([0-2]{1}[0-9]{1}|3[0-1]{1})[-](0[1-9]|1[0-2])[-][0-9]{4})");
+			var practitionerId = req.params.practitioner_id;
+			var addressId = req.params.address_id;
+
+			checkApikey(apikey, ipAddres, function(result){
+				if(result.err_code == 0){	
+					checkUniqeValue(apikey, "PRACTITIONER_ID|" + practitionerId, 'PRACTITIONER', function(resPractitionerID){
+						if(resPractitionerID.err_code > 0){
+							if(typeof addressId !== 'undefined' && !validator.isEmpty(addressId)){
+								checkUniqeValue(apikey, "ADDRESS_ID|" + addressId, 'ADDRESS', function(resAddressID){
+									if(resAddressID.err_code > 0){
+										qString = {};
+										qString.practitioner_id = practitionerId;
+										qString._id = addressId;
+										seedPhoenixFHIR.path.GET = {
+											"Address" : {
+												"location": "%(apikey)s/Address",
+												"query": qString
+											}
+										}
+										var ApiFHIR = new Apiclient(seedPhoenixFHIR);
+
+										ApiFHIR.get('Address', {"apikey": apikey}, {}, function(error, response, body){
+											address = JSON.parse(body);
+											if(address.err_code == 0){
+												res.json({"err_code": 0, "data":address.data});	
+											}else{
+												res.json(address);
+											}
+										})
+									}else{
+										res.json({"err_code": 502, "err_msg": "Address Id not found"});		
+									}
+								})
+							}else{
+								qString = {};
+								qString.practitioner_id = practitionerId;
+								seedPhoenixFHIR.path.GET = {
+									"Address" : {
+										"location": "%(apikey)s/Address",
+										"query": qString
+									}
+								}
+								var ApiFHIR = new Apiclient(seedPhoenixFHIR);
+
+								ApiFHIR.get('Address', {"apikey": apikey}, {}, function(error, response, body){
+									address = JSON.parse(body);
+									if(address.err_code == 0){
+										res.json({"err_code": 0, "data":address.data});	
+									}else{
+										res.json(address);
+									}
+								})
+							}
+						}else{
+							res.json({"err_code": 501, "err_msg": "Practitioner Id not found"});		
+						}
+					})
+				}else{
+					result.err_code = 500;
+					res.json(result);
+				}	
+			});
+		},
+		attachment: function getAttachment(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var regex = new RegExp("([0-9]{4}[-](0[1-9]|1[0-2])[-]([0-2]{1}[0-9]{1}|3[0-1]{1})|([0-2]{1}[0-9]{1}|3[0-1]{1})[-](0[1-9]|1[0-2])[-][0-9]{4})");
+			var practitionerId = req.params.practitioner_id;
+			var attachmentId = req.params.attachment_id;
+
+			checkApikey(apikey, ipAddres, function(result){
+				if(result.err_code == 0){	
+					checkUniqeValue(apikey, "PRACTITIONER_ID|" + practitionerId, 'PRACTITIONER', function(resPractitionerID){
+						if(resPractitionerID.err_code > 0){
+							if(typeof attachmentId !== 'undefined' && !validator.isEmpty(attachmentId)){
+								checkUniqeValue(apikey, "ATTACHMENT_ID|" + attachmentId, 'ATTACHMENT', function(resAttachmentID){
+									if(resAttachmentID.err_code > 0){
+										qString = {};
+										qString.practitioner_id = practitionerId;
+										qString._id = attachmentId;
+										seedPhoenixFHIR.path.GET = {
+											"Attachment" : {
+												"location": "%(apikey)s/Attachment",
+												"query": qString
+											}
+										}
+										var ApiFHIR = new Apiclient(seedPhoenixFHIR);
+
+										ApiFHIR.get('Attachment', {"apikey": apikey}, {}, function(error, response, body){
+											attachment = JSON.parse(body);
+											if(attachment.err_code == 0){
+												res.json({"err_code": 0, "data":attachment.data});	
+											}else{
+												res.json(address);
+											}
+										})
+									}else{
+										res.json({"err_code": 502, "err_msg": "Attachment Id not found"});		
+									}
+								})
+							}else{
+								qString = {};
+								qString.practitioner_id = practitionerId;
+
+								seedPhoenixFHIR.path.GET = {
+									"Attachment" : {
+										"location": "%(apikey)s/Attachment",
+										"query": qString
+									}
+								}
+								var ApiFHIR = new Apiclient(seedPhoenixFHIR);
+
+								ApiFHIR.get('Attachment', {"apikey": apikey}, {}, function(error, response, body){
+									attachment = JSON.parse(body);
+									if(attachment.err_code == 0){
+										res.json({"err_code": 0, "data":attachment.data});	
+									}else{
+										res.json(attachment);
+									}
+								})
+							}
+						}else{
+							res.json({"err_code": 501, "err_msg": "Patient Id not found"});		
+						}
+					})
+				}else{
+					result.err_code = 500;
+					res.json(result);
+				}	
+			});
+		}
 	},
 	post: function postPractitioner(req, res){
 		var ipAddres = req.connection.remoteAddress;

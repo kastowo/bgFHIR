@@ -149,11 +149,28 @@ var controller = {
       });
     },
 		practitionerCommunication: function getPractitionerCommunication(req, res){
-			var practitionerId = req.query._id;
+			var practitionerId = req.query.practitioner_id;
+			var communicationId = req.query._id;
 			var arrPractitionerCommunication = [];
-			var query = "SELECT practitioner_communication_id, practitioner_communication_language, practitioner_communication_preferred FROM BACIRO_FHIR.practitioner_communication where practitioner_id = '" + practitionerId + "'";
+			var fixCondition = "";
+			var condition = "";
+			if(typeof practitionerId !== 'undefined' && practitionerId !== ""){
+        condition += "practitioner_id = '" + practitionerId + "' AND ";  
+      }
 			
-      //console.log(query);
+			if(typeof communicationId !== 'undefined' && communicationId !== ""){
+        condition += "practitioner_communication_id = '" + communicationId + "' AND ";  
+      }
+
+      if(condition == ""){
+        fixCondition = "";
+      }else{
+        fixCondition = " WHERE " + condition.slice(0, -4);
+      }
+			
+			var query = "SELECT practitioner_communication_id, practitioner_communication_language, practitioner_communication_preferred FROM BACIRO_FHIR.practitioner_communication "  + fixCondition ;
+			
+      console.log(query);
       db.query(query,function(dataJson){
         rez = lowercaseObject(dataJson);
         for(i = 0; i < rez.length; i++){
@@ -165,18 +182,23 @@ var controller = {
         }
         res.json({"err_code":0,"data": arrPractitionerCommunication});
       },function(e){
-        res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "getPractitioner"});
+        res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "getPractitionerCommunication"});
       });
 		},
 		qualification: function getQualification(req, res){
 			var apikey = req.params.apikey;
-      var practitionerId = req.query._id;
+      var practitionerId = req.query.practitioner_id;
+			var qualificationId = req.query._id;
 			
       //susun query
       var condition = "";
 			
 			if(typeof practitionerId !== 'undefined' && practitionerId !== ""){
-        condition += "q.practitioner_id = '" + practitionerId + "' AND,";  
+        condition += "q.practitioner_id = '" + practitionerId + "' AND ";  
+      }
+			
+			if(typeof qualificationId !== 'undefined' && qualificationId !== ""){
+        condition += "q.qualification_id = '" + qualificationId + "' AND ";  
       }
 
       if(condition == ""){
