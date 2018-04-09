@@ -404,6 +404,66 @@ var controller = {
 							res.json(result);
 						}
 					});	
+				},
+				appointmentParticipant: function getAppointmentParticipant(req, res){
+					var ipAddres = req.connection.remoteAddress;
+					var apikey = req.params.apikey;
+					var regex = new RegExp("([0-9]{4}[-](0[1-9]|1[0-2])[-]([0-2]{1}[0-9]{1}|3[0-1]{1})|([0-2]{1}[0-9]{1}|3[0-1]{1})[-](0[1-9]|1[0-2])[-][0-9]{4})");
+
+					//params from query string
+					var appointmentId = req.params.appointment_id;
+					var participantId = req.params.participant_id;
+					
+					var qString = {};
+					if(typeof appointmentId !== 'undefined'){
+						if(!validator.isEmpty(appointmentId)){
+							qString.appointment_id = appointmentId; 
+						}else{
+							res.json({"err_code": 1, "err_msg": "Appointment ID is required."})
+						}
+					}
+
+					if(typeof participantId !== 'undefined'){
+						if(!validator.isEmpty(participantId)){
+							qString._id = participantId; 
+						}else{
+							res.json({"err_code": 1, "err_msg": "Appointment ID is required."})
+						}
+					}
+					
+					seedPhoenixFHIR.path.GET = {
+						"AppointmentParticipant" : {
+							"location": "%(apikey)s/AppointmentParticipant",
+							"query": qString
+						}
+					}
+					var ApiFHIR = new Apiclient(seedPhoenixFHIR);
+
+					checkApikey(apikey, ipAddres, function(result){
+						if(result.err_code == 0){
+							ApiFHIR.get('AppointmentParticipant', {"apikey": apikey}, {}, function (error, response, body) {
+							  if(error){
+							  	res.json(error);
+							  }else{
+							  	var appointmentParticipant = JSON.parse(body); //object
+							  	//cek apakah ada error atau tidak
+							  	if(appointmentParticipant.err_code == 0){
+								  	//cek jumdata dulu
+								  	if(appointmentParticipant.data.length > 0){
+								  		res.json({"err_code": 0, "data": appointmentParticipant.data});	
+								  	}else{
+							  			res.json({"err_code": 2, "err_msg": "Participant is empty."});	
+								  	}
+							  	}else{
+							  		res.json(appointmentParticipant);
+							  	}
+							  }
+							});
+						}else{
+							result.err_code = 500;
+							res.json(result);
+						}
+					});	
 				}
 			},
 			post: {

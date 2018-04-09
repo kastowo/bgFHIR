@@ -291,36 +291,117 @@ var controller = {
       if(typeof appointment_response_actor_patient_id !== 'undefined' && appointment_response_actor_patient_id !== ""){
         column += 'appointment_response_actor_patient_id,';
         values += "'" + appointment_response_actor_patient_id +"',";
-      }
 
-      if(typeof appointment_response_actor_practitioner_id !== 'undefined' && appointment_response_actor_practitioner_id !== ""){
+        //kosongkan yang lainnya
+        column += 'appointment_response_actor_practitioner_id,';
+        values += "null,";
+
+        column += 'appointment_response_actor_related_person_id,';
+        values += "null,";
+
+        column += 'appointment_response_actor_device_id,';
+        values += "null,";
+
+        column += 'appointment_response_actor_healthcare_service_id,';
+        values += "null,";
+
+        column += 'appointment_response_actor_location_id,';
+        values += "null,";
+      }else if(typeof appointment_response_actor_practitioner_id !== 'undefined' && appointment_response_actor_practitioner_id !== ""){
         column += 'appointment_response_actor_practitioner_id,';
         values += "'" + appointment_response_actor_practitioner_id +"',";
-      }
 
-      if(typeof appointment_response_actor_related_person_id !== 'undefined' && appointment_response_actor_related_person_id !== ""){
+        //kosongkan yang lainnya
+        column += 'appointment_response_actor_patient_id,';
+        values += "null,";
+
+        column += 'appointment_response_actor_related_person_id,';
+        values += "null,";
+
+        column += 'appointment_response_actor_device_id,';
+        values += "null,";
+
+        column += 'appointment_response_actor_healthcare_service_id,';
+        values += "null,";
+
+        column += 'appointment_response_actor_location_id,';
+        values += "null,";
+      }else if(typeof appointment_response_actor_related_person_id !== 'undefined' && appointment_response_actor_related_person_id !== ""){
         column += 'appointment_response_actor_related_person_id,';
         values += "'" + appointment_response_actor_related_person_id +"',";
-      }
 
-      if(typeof appointment_response_actor_device_id !== 'undefined' && appointment_response_actor_device_id !== ""){
+        //kosongkan yang lainnya
+        column += 'appointment_response_actor_patient_id,';
+        values += "null,";
+
+        column += 'appointment_response_actor_practitioner_id,';
+        values += "null,";
+
+        column += 'appointment_response_actor_device_id,';
+        values += "null,";
+
+        column += 'appointment_response_actor_healthcare_service_id,';
+        values += "null,";
+
+        column += 'appointment_response_actor_location_id,';
+        values += "null,";
+      }else if(typeof appointment_response_actor_device_id !== 'undefined' && appointment_response_actor_device_id !== ""){
         column += 'appointment_response_actor_device_id,';
         values += "'" + appointment_response_actor_device_id +"',";
-      }
 
-      if(typeof appointment_response_actor_healthcare_service_id !== 'undefined' && appointment_response_actor_healthcare_service_id !== ""){
+        //kosongkan yang lainnya
+        column += 'appointment_response_actor_patient_id,';
+        values += "null,";
+
+        column += 'appointment_response_actor_practitioner_id,';
+        values += "null,";
+
+        column += 'appointment_response_actor_related_person_id,';
+        values += "null,";
+
+        column += 'appointment_response_actor_healthcare_service_id,';
+        values += "null,";
+
+        column += 'appointment_response_actor_location_id,';
+        values += "null,";
+      }else if(typeof appointment_response_actor_healthcare_service_id !== 'undefined' && appointment_response_actor_healthcare_service_id !== ""){
         column += 'appointment_response_actor_healthcare_service_id,';
         values += "'" + appointment_response_actor_healthcare_service_id +"',";
-      }
 
-      if(typeof appointment_response_actor_location_id !== 'undefined' && appointment_response_actor_location_id !== ""){
+         //kosongkan yang lainnya
+        column += 'appointment_response_actor_patient_id,';
+        values += "null,";
+
+        column += 'appointment_response_actor_practitioner_id,';
+        values += "null,";
+
+        column += 'appointment_response_actor_related_person_id,';
+        values += "null,";
+
+        column += 'appointment_response_actor_device_id,';
+        values += "null,";
+
+        column += 'appointment_response_actor_location_id,';
+        values += "null,";
+      }else if(typeof appointment_response_actor_location_id !== 'undefined' && appointment_response_actor_location_id !== ""){
         column += 'appointment_response_actor_location_id,';
         values += "'" + appointment_response_actor_location_id +"',";
-      }
 
-      if(typeof appointment_response_participant_status !== 'undefined' && appointment_response_participant_status !== ""){
-        column += 'appointment_response_participant_status,';
-        values += "'" + appointment_response_participant_status +"',";
+        //kosongkan yang lainnya
+        column += 'appointment_response_actor_patient_id,';
+        values += "null,";
+
+        column += 'appointment_response_actor_practitioner_id,';
+        values += "null,";
+
+        column += 'appointment_response_actor_related_person_id,';
+        values += "null,";
+
+        column += 'appointment_response_actor_device_id,';
+        values += "null,";
+
+        column += 'appointment_response_actor_healthcare_service_id,';
+        values += "null,";
       }
 
       if(typeof appointment_response_comment !== 'undefined' && appointment_response_comment !== ""){

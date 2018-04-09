@@ -95,7 +95,7 @@ var controller = {
 						}
 					}
 					var ApiFHIR = new Apiclient(seedPhoenixFHIR);
-
+					
 					checkApikey(apikey, ipAddres, function(result){
 						if(result.err_code == 0){
 							ApiFHIR.get('Slot', {"apikey": apikey}, {}, function (error, response, body) {
@@ -112,7 +112,7 @@ var controller = {
 							  			res.json({"err_code": 2, "err_msg": "Slot is empty."});	
 								  	}
 							  	}else{
-							  		res.json(schedule);
+							  		res.json(slot);
 							  	}
 							  }
 							});

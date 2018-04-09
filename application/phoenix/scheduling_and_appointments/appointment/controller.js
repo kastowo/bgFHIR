@@ -551,7 +551,6 @@ var controller = {
 
         column += 'appointment_participant_actor_location_id,';
         values += "null,";
-
       }else if(typeof appointment_participant_actor_practitioner_id !== 'undefined' && appointment_participant_actor_practitioner_id !== ""){
         column += 'appointment_participant_actor_practitioner_id,';
         values += "'" + appointment_participant_actor_practitioner_id +"',";
@@ -571,7 +570,6 @@ var controller = {
 
         column += 'appointment_participant_actor_location_id,';
         values += "null,";
-
       }else if(typeof appointment_participant_actor_related_person_id !== 'undefined' && appointment_participant_actor_related_person_id !== ""){
         column += 'appointment_participant_actor_related_person_id,';
         values += "'" + appointment_participant_actor_related_person_id +"',";
