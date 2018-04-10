@@ -11056,7 +11056,7 @@ var controller = {
 					checkApikey(apikey, ipAddres, function (result) {
 						if (result.err_code == 0) {
 							checkId(apikey, _id, 'ADMINISTRATIVE_GENDER', function (resultCheckId) {
-								if (resultCheckId == 0) {
+								if (resultCheckId.err_code == 0) {
 									if (typeof req.body.code !== 'undefined') {
 										checkCode(apikey, code, 'ADMINISTRATIVE_GENDER', function (resultCode) {
 											if (resultCode.err_code == 0) {
