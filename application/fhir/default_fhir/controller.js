@@ -3525,7 +3525,7 @@ var controller = {
 								//cek apakah ada error atau tidak
 								if (participantRequired.err_code == 0) {
 									//cek jumdata dulu
-									if (appointmentStatus.data.length > 0) {
+									if (participantRequired.data.length > 0) {
 										res.json({
 											"err_code": 0,
 											"data": participantRequired.data
