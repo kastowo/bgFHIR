@@ -3494,43 +3494,60 @@ var controller = {
 				}
 			});
 		},
-		participantRequiredCode: function getParticipantRequiredCode(req, res){
-				var ipAddres = req.connection.remoteAddress;
-				var apikey = req.params.apikey;
-				var code = req.params.code.replace(/[^\w\s ,]/gi, '').trim().toLowerCase();
+		participantRequiredCode: function getParticipantRequiredCode(req, res) {
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var code = req.params.code.replace(/[^\w\s ,]/gi, '').trim().toLowerCase();
 
-				if(code == "" || typeof code == 'undefined'){
-					res.json({"err_code": 4, "err_msg": "Code is required."});
-				}else{
-					checkApikey(apikey, ipAddres, function(result){
-						if(result.err_code == 0){	
-							ApiFHIR.get('participantRequiredCode', {"apikey": apikey, "code": code}, {}, function(error, response, body){
-								if(error){
-								  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "getParticipantRequiredCode"});
-								  }else{
-								  	//cek apakah ada error atau tidak
-								  	var participantRequired = JSON.parse(body); 
-								  	
-								  	//cek apakah ada error atau tidak
-								  	if(participantRequired.err_code == 0){
-									  	//cek jumdata dulu
-									  	if(participantRequired.data.length > 0){
-									  		res.json({"err_code": 0, "data":participantRequired.data});
-									  	}else{
-								  			res.json({"err_code": 2, "err_msg": "Participant Required Code is not found"});	
-									  	}
-								  	}else{
-								  		res.json(participantRequired);
-								  	}
-								  }
-							})
-						}else{
-							result.err_code = 500;
-							res.json(result);
-						}	
-					});
-				}
-			},
+			if (code == "" || typeof code == 'undefined') {
+				res.json({
+					"err_code": 4,
+					"err_msg": "Code is required."
+				});
+			} else {
+				checkApikey(apikey, ipAddres, function (result) {
+					if (result.err_code == 0) {
+						ApiFHIR.get('participantRequiredCode', {
+							"apikey": apikey,
+							"code": code
+						}, {}, function (error, response, body) {
+							if (error) {
+								res.json({
+									"err_code": 1,
+									"err_msg": error,
+									"application": "Api FHIR",
+									"function": "getParticipantRequiredCode"
+								});
+							} else {
+								//cek apakah ada error atau tidak
+								var participantRequired = JSON.parse(body);
+
+								//cek apakah ada error atau tidak
+								if (participantRequired.err_code == 0) {
+									//cek jumdata dulu
+									if (appointmentStatus.data.length > 0) {
+										res.json({
+											"err_code": 0,
+											"data": participantRequired.data
+										});
+									} else {
+										res.json({
+											"err_code": 2,
+											"err_msg": "Participant Required Code is not found"
+										});
+									}
+								} else {
+									res.json(participantRequired);
+								}
+							}
+						})
+					} else {
+						result.err_code = 500;
+						res.json(result);
+					}
+				});
+			}
+		},
 		participationStatus: function getParticipationStatus(req, res) {
 			var ipAddres = req.connection.remoteAddress;
 			var apikey = req.params.apikey;
