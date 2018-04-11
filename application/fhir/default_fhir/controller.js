@@ -12468,7 +12468,7 @@ var controller = {
 			}
 
 			if (typeof req.body.display !== 'undefined') {
-				var display = req.body.definition.replace(/[^\w\s , ( ) /]/gi, '');
+				var display = req.body.display.replace(/[^\w\s , ( ) /]/gi, '');
 				dataIdentifierType.display = display;
 			}
 
