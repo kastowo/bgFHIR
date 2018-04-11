@@ -13803,7 +13803,7 @@ var controller = {
 													res.json({
 														"err_code": 0,
 														"err_msg": "Participant Status has been update.",
-														"data": dataparticipationStatus.data
+														"data": participationStatus.data
 													});
 												} else {
 													res.json(participationStatus);
