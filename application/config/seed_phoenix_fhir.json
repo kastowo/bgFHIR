@@ -301,6 +301,18 @@
      },
      "deviceKindCode":{
         "location": "%(apikey)s/device-kind/code/%(code)s"
+     },
+     "deviceSafety":{
+        "location": "%(apikey)s/device-safety/%(_id)d"
+     },
+     "deviceSafetyCode":{
+        "location": "%(apikey)s/device-safety/code/%(code)s"
+     },
+     "operationalStatus":{
+        "location": "%(apikey)s/operational-status/%(_id)d"
+     },
+     "operationalStatusCode":{
+        "location": "%(apikey)s/operational-status/code/%(code)s"
      }
 		},
 		"POST": {
@@ -513,6 +525,12 @@
      },
      "deviceKind": {
         "location": "%(apikey)s/device-kind"
+     },
+     "deviceSafety": {
+        "location": "%(apikey)s/device-safety"
+     },
+     "operationalStatus": {
+        "location": "%(apikey)s/operational-status"
      }
 		},
 		"PUT": {
@@ -713,6 +731,12 @@
      },         
      "deviceKind":{
         "location": "%(apikey)s/device-kind/%(_id)d"
+     },         
+     "deviceSafety":{
+        "location": "%(apikey)s/device-safety/%(_id)d"
+     },         
+     "operationalStatus":{
+        "location": "%(apikey)s/operational-status/%(_id)d"
      }
 		}
 	}

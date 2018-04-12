@@ -7329,6 +7329,206 @@ var controller = {
 					}	
 				});
 			}
+		},
+		deviceSafety: function getDeviceSafety(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var _id = req.params._id;
+
+			
+			checkApikey(apikey, ipAddres, function(result){
+				if(result.err_code == 0){
+					if(_id == "" || typeof _id == 'undefined'){
+						//method, endpoint, params, options, callback
+						ApiFHIR.get('deviceSafety', {"apikey": apikey, "_id": 0}, {}, function(error, response, body){
+							if(error){
+							  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "getDeviceSafety"});
+							  }else{
+							  	//cek apakah ada error atau tidak
+							  	var deviceSafety = JSON.parse(body); 
+							  	
+							  	//cek apakah ada error atau tidak
+							  	if(deviceSafety.err_code == 0){
+								  	//cek jumdata dulu
+								  	if(deviceSafety.data.length > 0){
+								  		res.json({"err_code": 0, "data":deviceSafety.data});
+								  	}else{
+							  			res.json({"err_code": 2, "err_msg": "Device Safety is not found"});	
+								  	}
+							  	}else{
+							  		res.json(deviceSafety);
+							  	}
+							  }
+						})	
+					}else{
+						if(validator.isInt(_id)){
+							ApiFHIR.get('deviceSafety', {"apikey": apikey, "_id": _id}, {}, function(error, response, body){
+								if(error){
+								  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "getDeviceSafety"});
+								  }else{
+								  	//cek apakah ada error atau tidak
+								  	var deviceSafety = JSON.parse(body); 
+								  	
+								  	//cek apakah ada error atau tidak
+								  	if(deviceSafety.err_code == 0){
+									  	//cek jumdata dulu
+									  	if(deviceSafety.data.length > 0){
+									  		res.json({"err_code": 0, "data":deviceSafety.data});
+									  	}else{
+								  			res.json({"err_code": 2, "err_msg": "Device Safety is not found"});	
+									  	}
+								  	}else{
+								  		res.json(deviceSafety);
+								  	}
+								  }
+							})
+						}else{
+							res.json({"err_code": 4, "err_msg": "Id must be a number."});
+						}
+						
+					}
+				}else{
+					result.err_code = 500;
+					res.json(result);
+				}	
+			});
+		},
+		deviceSafetyCode: function getDeviceSafetyCode(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var code = req.params.code.replace(/[^\w\s ,]/gi, '').trim().toUpperCase();
+
+			if(code == "" || typeof code == 'undefined'){
+				res.json({"err_code": 4, "err_msg": "Code is required."});
+			}else{
+				checkApikey(apikey, ipAddres, function(result){
+					if(result.err_code == 0){	
+						ApiFHIR.get('deviceSafetyCode', {"apikey": apikey, "code": code}, {}, function(error, response, body){
+							if(error){
+							  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "getDeviceSafetyCode"});
+							  }else{
+							  	//cek apakah ada error atau tidak
+							  	var deviceSafety = JSON.parse(body); 
+							  	
+							  	//cek apakah ada error atau tidak
+							  	if(deviceSafety.err_code == 0){
+								  	//cek jumdata dulu
+								  	if(deviceSafety.data.length > 0){
+								  		res.json({"err_code": 0, "data":deviceSafety.data});
+								  	}else{
+							  			res.json({"err_code": 2, "err_msg": "Device Safety Code is not found"});	
+								  	}
+							  	}else{
+							  		res.json(deviceSafety);
+							  	}
+							  }
+						})
+					}else{
+						result.err_code = 500;
+						res.json(result);
+					}	
+				});
+			}
+		},
+		operationalStatus: function getOperationalStatus(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var _id = req.params._id;
+
+			
+			checkApikey(apikey, ipAddres, function(result){
+				if(result.err_code == 0){
+					if(_id == "" || typeof _id == 'undefined'){
+						//method, endpoint, params, options, callback
+						ApiFHIR.get('operationalStatus', {"apikey": apikey, "_id": 0}, {}, function(error, response, body){
+							if(error){
+							  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "getOperationalStatus"});
+							  }else{
+							  	//cek apakah ada error atau tidak
+							  	var operationalStatus = JSON.parse(body); 
+							  	
+							  	//cek apakah ada error atau tidak
+							  	if(operationalStatus.err_code == 0){
+								  	//cek jumdata dulu
+								  	if(operationalStatus.data.length > 0){
+								  		res.json({"err_code": 0, "data":operationalStatus.data});
+								  	}else{
+							  			res.json({"err_code": 2, "err_msg": "Operational Status is not found"});	
+								  	}
+							  	}else{
+							  		res.json(operationalStatus);
+							  	}
+							  }
+						})	
+					}else{
+						if(validator.isInt(_id)){
+							ApiFHIR.get('operationalStatus', {"apikey": apikey, "_id": _id}, {}, function(error, response, body){
+								if(error){
+								  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "getOperationalStatus"});
+								  }else{
+								  	//cek apakah ada error atau tidak
+								  	var operationalStatus = JSON.parse(body); 
+								  	
+								  	//cek apakah ada error atau tidak
+								  	if(operationalStatus.err_code == 0){
+									  	//cek jumdata dulu
+									  	if(operationalStatus.data.length > 0){
+									  		res.json({"err_code": 0, "data":operationalStatus.data});
+									  	}else{
+								  			res.json({"err_code": 2, "err_msg": "Operational Status is not found"});	
+									  	}
+								  	}else{
+								  		res.json(operationalStatus);
+								  	}
+								  }
+							})
+						}else{
+							res.json({"err_code": 4, "err_msg": "Id must be a number."});
+						}
+						
+					}
+				}else{
+					result.err_code = 500;
+					res.json(result);
+				}	
+			});
+		},
+		operationalStatusCode: function getOperationalStatusCode(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var code = req.params.code.replace(/[^\w\s ,-]/gi, '').trim().toLowerCase();
+
+			if(code == "" || typeof code == 'undefined'){
+				res.json({"err_code": 4, "err_msg": "Code is required."});
+			}else{
+				checkApikey(apikey, ipAddres, function(result){
+					if(result.err_code == 0){	
+						ApiFHIR.get('operationalStatusCode', {"apikey": apikey, "code": code}, {}, function(error, response, body){
+							if(error){
+							  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "getOperationalStatusCode"});
+							  }else{
+							  	//cek apakah ada error atau tidak
+							  	var operationalStatus = JSON.parse(body); 
+							  	
+							  	//cek apakah ada error atau tidak
+							  	if(operationalStatus.err_code == 0){
+								  	//cek jumdata dulu
+								  	if(operationalStatus.data.length > 0){
+								  		res.json({"err_code": 0, "data":operationalStatus.data});
+								  	}else{
+							  			res.json({"err_code": 2, "err_msg": "Operational Status Code is not found"});	
+								  	}
+							  	}else{
+							  		res.json(operationalStatus);
+							  	}
+							  }
+						})
+					}else{
+						result.err_code = 500;
+						res.json(result);
+					}	
+				});
+			}
 		}
 	},
 	post: {
@@ -11375,6 +11575,138 @@ var controller = {
 									  	res.json({"err_code": 0, "err_msg": "Device Kind has been add.", "data":deviceKind.data});
 								  	}else{
 								  		res.json(deviceKind);
+								  	}
+								  }
+								})
+							}else{
+								res.json(resultCode);
+							}
+						})
+					}else{
+						result.err_code = 500;
+						res.json(result);
+					}	
+				});
+			}else{
+				res.json({"err_code": err_code, "err_msg": err_msg});
+			}
+		},
+		deviceSafety: function addDeviceSafety(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			
+			var code = req.body.code.trim().toUpperCase();
+			var display = req.body.display.replace(/[^\w\s , ( ) / .]/gi, '');
+			var definition = req.body.definition.replace(/[^\w\s , ( ) / .]/gi, '');
+			
+			var err_code = 0;
+			var err_msg = '';
+			
+			//input checking
+			if(validator.isEmpty(code)){
+				err_code = 1;
+				err_msg = "Code is required";
+			}
+
+			if(validator.isEmpty(display)){
+				err_code = 2;
+				err_msg = "Display is required";
+			}
+
+			if(validator.isEmpty(definition)){
+				definition = "";
+			}
+
+			if(err_code == 0){
+				checkApikey(apikey, ipAddres, function(result){
+					if(result.err_code == 0){
+						checkCode(apikey, code, 'DEVICE_SAFETY', function(resultCode){
+							if(resultCode.err_code == 0){
+								//susun body
+								var dataDeviceSafety = {
+													"code": code,
+													"display": display,
+													"definition": definition
+												};
+							
+								//method, endpoint, params, options, callback
+								ApiFHIR.post('deviceSafety', {"apikey": apikey}, {body: dataDeviceSafety, json:true}, function(error, response, body){
+									if(error){
+								  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "addDeviceSafety"});
+								  }else{
+								  	//cek apakah ada error atau tidak
+								  	var deviceSafety = body; //object
+								  	//cek apakah ada error atau tidak
+								  	if(deviceSafety.err_code == 0){
+									  	res.json({"err_code": 0, "err_msg": "Device Safety has been add.", "data":deviceSafety.data});
+								  	}else{
+								  		res.json(deviceSafety);
+								  	}
+								  }
+								})
+							}else{
+								res.json(resultCode);
+							}
+						})
+					}else{
+						result.err_code = 500;
+						res.json(result);
+					}	
+				});
+			}else{
+				res.json({"err_code": err_code, "err_msg": err_msg});
+			}
+		},
+		operationalStatus: function addOperationalStatus(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			
+			var code = req.body.code.trim().toLowerCase();
+			var display = req.body.display.replace(/[^\w\s , ( ) / .]/gi, '');
+			var definition = req.body.definition.replace(/[^\w\s , ( ) / .]/gi, '');
+			
+			var err_code = 0;
+			var err_msg = '';
+			
+			//input checking
+			if(validator.isEmpty(code)){
+				err_code = 1;
+				err_msg = "Code is required";
+			}
+
+			if(validator.isEmpty(display)){
+				err_code = 2;
+				err_msg = "Display is required";
+			}
+
+			if(validator.isEmpty(definition)){
+				definition = "";
+			}
+
+			if(err_code == 0){
+				checkApikey(apikey, ipAddres, function(result){
+					if(result.err_code == 0){
+						checkCode(apikey, code, 'OPERATIONAL_STATUS', function(resultCode){
+							if(resultCode.err_code == 0){
+								//susun body
+								var dataOperationalStatus = {
+													"code": code,
+													"display": display,
+													"definition": definition
+												};
+							
+								//method, endpoint, params, options, callback
+								ApiFHIR.post('operationalStatus', {"apikey": apikey}, {body: dataOperationalStatus, json:true}, function(error, response, body){
+									if(error){
+								  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "addOperationalStatus"});
+								  }else{
+								  	//cek apakah ada error atau tidak
+								  	var operationalStatus = body; //object
+								  	//cek apakah ada error atau tidak
+								  	if(operationalStatus.err_code == 0){
+									  	res.json({"err_code": 0, "err_msg": "Operational Status has been add.", "data":operationalStatus.data});
+								  	}else{
+								  		res.json(operationalStatus);
 								  	}
 								  }
 								})
@@ -17310,6 +17642,172 @@ var controller = {
 											  	res.json({"err_code": 0, "err_msg": "Device Kind has been update.","data":deviceKind.data});
 										  	}else{
 										  		res.json(deviceKind);
+										  	}
+										  }
+										})
+									}
+								}else{
+									res.json(resultCheckId);
+								}
+							})
+						}else{
+							result.err_code = 500;
+							res.json(result);
+						}	
+					});
+				}else{
+					res.json({"err_code": 4, "err_msg": "Id must be a number."});	
+				}
+			}
+		},
+		deviceSafety: function updateDeviceSafety(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var _id = req.params._id;
+
+			var dataDeviceSafety = {};
+
+			if(typeof req.body.code !== 'undefined'){
+				var code = req.body.code.trim().toUpperCase();
+				dataDeviceSafety.code = code;
+			}
+
+			if(typeof req.body.display !== 'undefined'){
+				display = req.body.display;
+				dataDeviceSafety.display = display;
+			}
+
+			if(typeof req.body.definition !== 'undefined'){
+				var definition = req.body.definition.replace(/[^\w\s , ( ) / .]/gi, '');
+				dataDeviceSafety.definition = definition;
+			}
+
+			if(_id == "" || typeof _id == 'undefined'){
+				res.json({"err_code": 5, "err_msg": "Id is required."});	
+			}else{
+				if(validator.isInt(_id)){
+					checkApikey(apikey, ipAddres, function(result){
+						if(result.err_code == 0){
+							checkId(apikey, _id, 'DEVICE_SAFETY', function(resultCheckId){
+								if(resultCheckId.err_code == 0){
+									if(typeof req.body.code !== 'undefined'){
+										checkCode(apikey, code, 'DEVICE_SAFETY', function(resultCode){
+											if(resultCode.err_code == 0){
+												//method, endpoint, params, options, callback
+												ApiFHIR.put('deviceSafety', {"apikey": apikey, "_id": _id}, {body: dataDeviceSafety, json: true}, function(error, response, body){
+													if(error){
+												  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "updateDeviceSafety"});
+												  }else{
+												  	//cek apakah ada error atau tidak
+												  	var deviceSafety = body; 
+												  	//cek apakah ada error atau tidak
+												  	if(deviceSafety.err_code == 0){
+													  	res.json({"err_code": 0, "err_msg": "Device Safety has been update.","data":deviceSafety.data});
+												  	}else{
+												  		res.json(deviceSafety);
+												  	}
+												  }
+												})
+											}else{
+												res.json(resultCode);
+											}
+										})
+									}else{
+										//method, endpoint, params, options, callback
+										ApiFHIR.put('deviceSafety', {"apikey": apikey, "_id": _id}, {body: dataDeviceSafety, json: true}, function(error, response, body){
+											if(error){
+										  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "updateDeviceSafety"});
+										  }else{
+										  	//cek apakah ada error atau tidak
+										  	var deviceSafety = body; 
+										  	//cek apakah ada error atau tidak
+										  	if(deviceSafety.err_code == 0){
+											  	res.json({"err_code": 0, "err_msg": "Device Safety has been update.","data":deviceSafety.data});
+										  	}else{
+										  		res.json(deviceSafety);
+										  	}
+										  }
+										})
+									}
+								}else{
+									res.json(resultCheckId);
+								}
+							})
+						}else{
+							result.err_code = 500;
+							res.json(result);
+						}	
+					});
+				}else{
+					res.json({"err_code": 4, "err_msg": "Id must be a number."});	
+				}
+			}
+		},
+		operationalStatus: function updateOperationalStatus(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var _id = req.params._id;
+
+			var dataOperationalStatus = {};
+
+			if(typeof req.body.code !== 'undefined'){
+				var code = req.body.code.trim().toLowerCase();
+				dataOperationalStatus.code = code;
+			}
+
+			if(typeof req.body.display !== 'undefined'){
+				display = req.body.display;
+				dataOperationalStatus.display = display;
+			}
+
+			if(typeof req.body.definition !== 'undefined'){
+				var definition = req.body.definition.replace(/[^\w\s , ( ) / .]/gi, '');
+				dataOperationalStatus.definition = definition;
+			}
+
+			if(_id == "" || typeof _id == 'undefined'){
+				res.json({"err_code": 5, "err_msg": "Id is required."});	
+			}else{
+				if(validator.isInt(_id)){
+					checkApikey(apikey, ipAddres, function(result){
+						if(result.err_code == 0){
+							checkId(apikey, _id, 'OPERATIONAL_STATUS', function(resultCheckId){
+								if(resultCheckId.err_code == 0){
+									if(typeof req.body.code !== 'undefined'){
+										checkCode(apikey, code, 'OPERATIONAL_STATUS', function(resultCode){
+											if(resultCode.err_code == 0){
+												//method, endpoint, params, options, callback
+												ApiFHIR.put('operationalStatus', {"apikey": apikey, "_id": _id}, {body: dataOperationalStatus, json: true}, function(error, response, body){
+													if(error){
+												  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "updateOperationalStatus"});
+												  }else{
+												  	//cek apakah ada error atau tidak
+												  	var operationalStatus = body; 
+												  	//cek apakah ada error atau tidak
+												  	if(operationalStatus.err_code == 0){
+													  	res.json({"err_code": 0, "err_msg": "Operational Status has been update.","data":operationalStatus.data});
+												  	}else{
+												  		res.json(operationalStatus);
+												  	}
+												  }
+												})
+											}else{
+												res.json(resultCode);
+											}
+										})
+									}else{
+										//method, endpoint, params, options, callback
+										ApiFHIR.put('operationalStatus', {"apikey": apikey, "_id": _id}, {body: dataOperationalStatus, json: true}, function(error, response, body){
+											if(error){
+										  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "updateOperationalStatus"});
+										  }else{
+										  	//cek apakah ada error atau tidak
+										  	var operationalStatus = body; 
+										  	//cek apakah ada error atau tidak
+										  	if(operationalStatus.err_code == 0){
+											  	res.json({"err_code": 0, "err_msg": "Operational Status has been update.","data":operationalStatus.data});
+										  	}else{
+										  		res.json(operationalStatus);
 										  	}
 										  }
 										})

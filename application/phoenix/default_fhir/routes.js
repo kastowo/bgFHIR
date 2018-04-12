@@ -104,6 +104,10 @@ var routesDefaultFHIR = function(app, DefaultFHIR){
 	app.get('/:apikey/device-status/code/:code', DefaultFHIR.get.deviceStatusCode);
 	app.get('/:apikey/device-kind/:_id', DefaultFHIR.get.deviceKind);
 	app.get('/:apikey/device-kind/code/:code', DefaultFHIR.get.deviceKindCode);
+	app.get('/:apikey/device-safety/:_id', DefaultFHIR.get.deviceSafety);
+	app.get('/:apikey/device-safety/code/:code', DefaultFHIR.get.deviceSafetyCode);
+	app.get('/:apikey/operational-status/:_id', DefaultFHIR.get.operationalStatus);
+	app.get('/:apikey/operational-status/code/:code', DefaultFHIR.get.operationalStatusCode);
 
 	//post
 	app.post('/:apikey/identity-AssuranceLevel', DefaultFHIR.post.identityAssuranceLevel);
@@ -158,6 +162,8 @@ var routesDefaultFHIR = function(app, DefaultFHIR){
 	app.post('/:apikey/udi-entry-type', DefaultFHIR.post.udiEntryType);
 	app.post('/:apikey/device-status', DefaultFHIR.post.deviceStatus);
 	app.post('/:apikey/device-kind', DefaultFHIR.post.deviceKind);
+	app.post('/:apikey/device-safety', DefaultFHIR.post.deviceSafety);
+	app.post('/:apikey/operational-status', DefaultFHIR.post.operationalStatus);
 
 	//put
 	app.put('/:apikey/identity-AssuranceLevel/:_id', DefaultFHIR.put.identityAssuranceLevel);
@@ -213,6 +219,8 @@ var routesDefaultFHIR = function(app, DefaultFHIR){
 	app.put('/:apikey/udi-entry-type/:_id', DefaultFHIR.put.udiEntryType);
 	app.put('/:apikey/device-status/:_id', DefaultFHIR.put.deviceStatus);
 	app.put('/:apikey/device-kind/:_id', DefaultFHIR.put.deviceKind);
+	app.put('/:apikey/device-safety/:_id', DefaultFHIR.put.deviceSafety);
+	app.put('/:apikey/operational-status/:_id', DefaultFHIR.put.operationalStatus);
 	
 
 }
