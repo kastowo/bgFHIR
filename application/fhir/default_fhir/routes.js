@@ -92,6 +92,10 @@ var routesDefaultFHIR = function(app, DefaultFHIR){
 	app.get('/:apikey/re-admission-indicator/code/:code?', DefaultFHIR.get.reAdmissionIndicatorCode);
 	app.get('/:apikey/udi-entry-type/:_id?', DefaultFHIR.get.udiEntryType);
 	app.get('/:apikey/udi-entry-type/code/:code?', DefaultFHIR.get.udiEntryTypeCode);
+	app.get('/:apikey/device-status/:_id?', DefaultFHIR.get.deviceStatus);
+	app.get('/:apikey/device-status/code/:code?', DefaultFHIR.get.deviceStatusCode);
+	app.get('/:apikey/device-kind/:_id?', DefaultFHIR.get.deviceKind);
+	app.get('/:apikey/device-kind/code/:code?', DefaultFHIR.get.deviceKindCode);
 
 	//post method
 	app.post('/:apikey/identity-assuranceLevel', DefaultFHIR.post.identityAssuranceLevel);
@@ -139,6 +143,8 @@ var routesDefaultFHIR = function(app, DefaultFHIR){
 	app.post('/:apikey/flag-code', DefaultFHIR.post.flagCode);	
 	app.post('/:apikey/re-admission-indicator', DefaultFHIR.post.reAdmissionIndicator);	
 	app.post('/:apikey/udi-entry-type', DefaultFHIR.post.udiEntryType);
+	app.post('/:apikey/device-status', DefaultFHIR.post.deviceStatus);
+	app.post('/:apikey/device-kind', DefaultFHIR.post.deviceKind);
 
 
 	//put method
@@ -187,5 +193,7 @@ var routesDefaultFHIR = function(app, DefaultFHIR){
 	app.put('/:apikey/flag-code/:_id?', DefaultFHIR.put.flagCode);
 	app.put('/:apikey/re-admission-indicator/:_id?', DefaultFHIR.put.reAdmissionIndicator);
 	app.put('/:apikey/udi-entry-type/:_id?', DefaultFHIR.put.udiEntryType);
+	app.put('/:apikey/device-status/:_id?', DefaultFHIR.put.deviceStatus);
+	app.put('/:apikey/device-kind/:_id?', DefaultFHIR.put.deviceKind);
 }
 module.exports = routesDefaultFHIR;

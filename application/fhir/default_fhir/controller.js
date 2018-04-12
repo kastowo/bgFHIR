@@ -1277,7 +1277,7 @@ var controller = {
 		languagesCode: function getLanguagesCode(req, res) {
 			var ipAddres = req.connection.remoteAddress;
 			var apikey = req.params.apikey;
-			var code = req.params.code.replace(/[^\w\s ,]/gi, '').trim();
+			var code = req.params.code.replace(/[^\w\s ,-]/gi, '').trim();
 
 			if (code == "" || typeof code == 'undefined') {
 				res.json({
@@ -1439,7 +1439,7 @@ var controller = {
 		linkTypeCode: function getLinkTypeCode(req, res) {
 			var ipAddres = req.connection.remoteAddress;
 			var apikey = req.params.apikey;
-			var code = req.params.code.replace(/[^\w\s ,]/gi, '').trim().toLowerCase();
+			var code = req.params.code.replace(/[^\w\s ,-]/gi, '').trim().toLowerCase();
 
 			if (code == "" || typeof code == 'undefined') {
 				res.json({
@@ -3056,7 +3056,7 @@ var controller = {
 		appointmentReasonCodeCode: function getAppointmentReasonCodeCode(req, res) {
 			var ipAddres = req.connection.remoteAddress;
 			var apikey = req.params.apikey;
-			var code = req.params.code.replace(/[^\w\s ,]/gi, '').trim().toUpperCase();
+			var code = req.params.code.replace(/[^\w\s ,-]/gi, '').trim().toUpperCase();
 
 			if (code == "" || typeof code == 'undefined') {
 				res.json({
@@ -3203,7 +3203,7 @@ var controller = {
 		slotStatusCode: function getSlotStatusCode(req, res) {
 			var ipAddres = req.connection.remoteAddress;
 			var apikey = req.params.apikey;
-			var code = req.params.code.replace(/[^\w\s ,]/gi, '').trim().toLowerCase();
+			var code = req.params.code.replace(/[^\w\s ,-]/gi, '').trim().toLowerCase();
 
 			if (code == "" || typeof code == 'undefined') {
 				res.json({
@@ -3350,7 +3350,7 @@ var controller = {
 		appointmentStatusCode: function getAppointmentStatusCode(req, res) {
 			var ipAddres = req.connection.remoteAddress;
 			var apikey = req.params.apikey;
-			var code = req.params.code.replace(/[^\w\s ,]/gi, '').trim().toLowerCase();
+			var code = req.params.code.replace(/[^\w\s ,-]/gi, '').trim().toLowerCase();
 
 			if (code == "" || typeof code == 'undefined') {
 				res.json({
@@ -3644,7 +3644,7 @@ var controller = {
 		participationStatusCode: function getparticipationStatusCode(req, res) {
 			var ipAddres = req.connection.remoteAddress;
 			var apikey = req.params.apikey;
-			var code = req.params.code.replace(/[^\w\s ,]/gi, '').trim().toLowerCase();
+			var code = req.params.code.replace(/[^\w\s ,-]/gi, '').trim().toLowerCase();
 
 			if (code == "" || typeof code == 'undefined') {
 				res.json({
@@ -7120,6 +7120,206 @@ var controller = {
 								  	}
 							  	}else{
 							  		res.json(udiEntryType);
+							  	}
+							  }
+						})
+					}else{
+						result.err_code = 500;
+						res.json(result);
+					}	
+				});
+			}
+		},
+		deviceStatus: function getDeviceStatus(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var _id = req.params._id;
+
+			
+			checkApikey(apikey, ipAddres, function(result){
+				if(result.err_code == 0){
+					if(_id == "" || typeof _id == 'undefined'){
+						//method, endpoint, params, options, callback
+						ApiFHIR.get('deviceStatus', {"apikey": apikey, "_id": 0}, {}, function(error, response, body){
+							if(error){
+							  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "getDeviceStatus"});
+							  }else{
+							  	//cek apakah ada error atau tidak
+							  	var deviceStatus = JSON.parse(body); 
+							  	
+							  	//cek apakah ada error atau tidak
+							  	if(deviceStatus.err_code == 0){
+								  	//cek jumdata dulu
+								  	if(deviceStatus.data.length > 0){
+								  		res.json({"err_code": 0, "data":deviceStatus.data});
+								  	}else{
+							  			res.json({"err_code": 2, "err_msg": "Device Status is not found"});	
+								  	}
+							  	}else{
+							  		res.json(deviceStatus);
+							  	}
+							  }
+						})	
+					}else{
+						if(validator.isInt(_id)){
+							ApiFHIR.get('deviceStatus', {"apikey": apikey, "_id": _id}, {}, function(error, response, body){
+								if(error){
+								  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "getDeviceStatus"});
+								  }else{
+								  	//cek apakah ada error atau tidak
+								  	var deviceStatus = JSON.parse(body); 
+								  	
+								  	//cek apakah ada error atau tidak
+								  	if(deviceStatus.err_code == 0){
+									  	//cek jumdata dulu
+									  	if(deviceStatus.data.length > 0){
+									  		res.json({"err_code": 0, "data":deviceStatus.data});
+									  	}else{
+								  			res.json({"err_code": 2, "err_msg": "Device Status is not found"});	
+									  	}
+								  	}else{
+								  		res.json(deviceStatus);
+								  	}
+								  }
+							})
+						}else{
+							res.json({"err_code": 4, "err_msg": "Id must be a number."});
+						}
+						
+					}
+				}else{
+					result.err_code = 500;
+					res.json(result);
+				}	
+			});
+		},
+		deviceStatusCode: function getDeviceStatusCode(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var code = req.params.code.replace(/[^\w\s ,]/gi, '').trim().toLowerCase();
+
+			if(code == "" || typeof code == 'undefined'){
+				res.json({"err_code": 4, "err_msg": "Code is required."});
+			}else{
+				checkApikey(apikey, ipAddres, function(result){
+					if(result.err_code == 0){	
+						ApiFHIR.get('udiEntryTypeCode', {"apikey": apikey, "code": code}, {}, function(error, response, body){
+							if(error){
+							  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "getUdiEntryTypeCode"});
+							  }else{
+							  	//cek apakah ada error atau tidak
+							  	var udiEntryType = JSON.parse(body); 
+							  	
+							  	//cek apakah ada error atau tidak
+							  	if(udiEntryType.err_code == 0){
+								  	//cek jumdata dulu
+								  	if(udiEntryType.data.length > 0){
+								  		res.json({"err_code": 0, "data":udiEntryType.data});
+								  	}else{
+							  			res.json({"err_code": 2, "err_msg": "Udi Entry Type Code is not found"});	
+								  	}
+							  	}else{
+							  		res.json(udiEntryType);
+							  	}
+							  }
+						})
+					}else{
+						result.err_code = 500;
+						res.json(result);
+					}	
+				});
+			}
+		},
+		deviceKind: function getdeviceKind(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var _id = req.params._id;
+
+			
+			checkApikey(apikey, ipAddres, function(result){
+				if(result.err_code == 0){
+					if(_id == "" || typeof _id == 'undefined'){
+						//method, endpoint, params, options, callback
+						ApiFHIR.get('deviceKind', {"apikey": apikey, "_id": 0}, {}, function(error, response, body){
+							if(error){
+							  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "getdeviceKind"});
+							  }else{
+							  	//cek apakah ada error atau tidak
+							  	var deviceKind = JSON.parse(body); 
+							  	
+							  	//cek apakah ada error atau tidak
+							  	if(deviceKind.err_code == 0){
+								  	//cek jumdata dulu
+								  	if(deviceKind.data.length > 0){
+								  		res.json({"err_code": 0, "data":deviceKind.data});
+								  	}else{
+							  			res.json({"err_code": 2, "err_msg": "Device Kind is not found"});	
+								  	}
+							  	}else{
+							  		res.json(deviceKind);
+							  	}
+							  }
+						})	
+					}else{
+						if(validator.isInt(_id)){
+							ApiFHIR.get('deviceKind', {"apikey": apikey, "_id": _id}, {}, function(error, response, body){
+								if(error){
+								  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "getdeviceKind"});
+								  }else{
+								  	//cek apakah ada error atau tidak
+								  	var deviceKind = JSON.parse(body); 
+								  	
+								  	//cek apakah ada error atau tidak
+								  	if(deviceKind.err_code == 0){
+									  	//cek jumdata dulu
+									  	if(deviceKind.data.length > 0){
+									  		res.json({"err_code": 0, "data":deviceKind.data});
+									  	}else{
+								  			res.json({"err_code": 2, "err_msg": "Device Kind is not found"});	
+									  	}
+								  	}else{
+								  		res.json(deviceKind);
+								  	}
+								  }
+							})
+						}else{
+							res.json({"err_code": 4, "err_msg": "Id must be a number."});
+						}
+						
+					}
+				}else{
+					result.err_code = 500;
+					res.json(result);
+				}	
+			});
+		},
+		deviceKindCode: function getdeviceKindCode(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var code = req.params.code.replace(/[^\w\s ,]/gi, '').trim().toLowerCase();
+
+			if(code == "" || typeof code == 'undefined'){
+				res.json({"err_code": 4, "err_msg": "Code is required."});
+			}else{
+				checkApikey(apikey, ipAddres, function(result){
+					if(result.err_code == 0){	
+						ApiFHIR.get('deviceKindCode', {"apikey": apikey, "code": code}, {}, function(error, response, body){
+							if(error){
+							  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "getdeviceKindCode"});
+							  }else{
+							  	//cek apakah ada error atau tidak
+							  	var deviceKind = JSON.parse(body); 
+							  	
+							  	//cek apakah ada error atau tidak
+							  	if(deviceKind.err_code == 0){
+								  	//cek jumdata dulu
+								  	if(deviceKind.data.length > 0){
+								  		res.json({"err_code": 0, "data":deviceKind.data});
+								  	}else{
+							  			res.json({"err_code": 2, "err_msg": "Device Kind Code is not found"});	
+								  	}
+							  	}else{
+							  		res.json(deviceKind);
 							  	}
 							  }
 						})
@@ -11042,6 +11242,139 @@ var controller = {
 									  	res.json({"err_code": 0, "err_msg": "Udi Entry Type has been add.", "data":udiEntryType.data});
 								  	}else{
 								  		res.json(udiEntryType);
+								  	}
+								  }
+								})
+							}else{
+								res.json(resultCode);
+							}
+						})
+					}else{
+						result.err_code = 500;
+						res.json(result);
+					}	
+				});
+			}else{
+				res.json({"err_code": err_code, "err_msg": err_msg});
+			}
+		},
+		deviceStatus: function addDeviceStatus(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			
+			var code = req.body.code.trim().toLowerCase();
+			var display = req.body.display.replace(/[^\w\s , ( ) / .]/gi, '');
+			var definition = req.body.definition.replace(/[^\w\s , ( ) / .]/gi, '');
+			
+			var err_code = 0;
+			var err_msg = '';
+			
+			//input checking
+			if(validator.isEmpty(code)){
+				err_code = 1;
+				err_msg = "Code is required";
+			}
+
+			if(validator.isEmpty(display)){
+				err_code = 2;
+				err_msg = "Display is required";
+			}
+
+			if(validator.isEmpty(definition)){
+				err_code = 2;
+				err_msg = "Definition is required";
+			}
+
+			if(err_code == 0){
+				checkApikey(apikey, ipAddres, function(result){
+					if(result.err_code == 0){
+						checkCode(apikey, code, 'DEVICE_STATUS', function(resultCode){
+							if(resultCode.err_code == 0){
+								//susun body
+								var dataDeviceStatus = {
+													"code": code,
+													"display": display,
+													"definition": definition
+												};
+							
+								//method, endpoint, params, options, callback
+								ApiFHIR.post('deviceStatus', {"apikey": apikey}, {body: dataDeviceStatus, json:true}, function(error, response, body){
+									if(error){
+								  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "addDeviceStatus"});
+								  }else{
+								  	//cek apakah ada error atau tidak
+								  	var deviceStatus = body; //object
+								  	//cek apakah ada error atau tidak
+								  	if(deviceStatus.err_code == 0){
+									  	res.json({"err_code": 0, "err_msg": "Device Status has been add.", "data":deviceStatus.data});
+								  	}else{
+								  		res.json(deviceStatus);
+								  	}
+								  }
+								})
+							}else{
+								res.json(resultCode);
+							}
+						})
+					}else{
+						result.err_code = 500;
+						res.json(result);
+					}	
+				});
+			}else{
+				res.json({"err_code": err_code, "err_msg": err_msg});
+			}
+		},
+		deviceKind: function addDeviceKind(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			
+			var code = req.body.code.trim();
+			var display = req.body.display.replace(/[^\w\s , ( ) / .]/gi, '');
+			var definition = req.body.definition.replace(/[^\w\s , ( ) / .]/gi, '');
+			
+			var err_code = 0;
+			var err_msg = '';
+			
+			//input checking
+			if(!validator.isInt(code)){
+				err_code = 1;
+				err_msg = "Code is number";
+			}
+
+			if(validator.isEmpty(display)){
+				err_code = 2;
+				err_msg = "Display is required";
+			}
+
+			if(validator.isEmpty(definition)){
+				definition = "";
+			}
+
+			if(err_code == 0){
+				checkApikey(apikey, ipAddres, function(result){
+					if(result.err_code == 0){
+						checkCode(apikey, code, 'DEVICE_KIND', function(resultCode){
+							if(resultCode.err_code == 0){
+								//susun body
+								var datadeviceKind = {
+													"code": code,
+													"display": display,
+													"definition": definition
+												};
+							
+								//method, endpoint, params, options, callback
+								ApiFHIR.post('deviceKind', {"apikey": apikey}, {body: datadeviceKind, json:true}, function(error, response, body){
+									if(error){
+								  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "addDeviceKind"});
+								  }else{
+								  	//cek apakah ada error atau tidak
+								  	var deviceKind = body; //object
+								  	//cek apakah ada error atau tidak
+								  	if(deviceKind.err_code == 0){
+									  	res.json({"err_code": 0, "err_msg": "Device Kind has been add.", "data":deviceKind.data});
+								  	}else{
+								  		res.json(deviceKind);
 								  	}
 								  }
 								})
@@ -16751,21 +17084,21 @@ var controller = {
 			var apikey = req.params.apikey;
 			var _id = req.params._id;
 
-			var dataparticipationStatus = {};
+			var dataUdiEntryType = {};
 
 			if(typeof req.body.code !== 'undefined'){
 				var code = req.body.code.trim().toLowerCase();
-				dataparticipationStatus.code = code;
+				dataUdiEntryType.code = code;
 			}
 
 			if(typeof req.body.display !== 'undefined'){
 				display = req.body.display;
-				dataparticipationStatus.display = display;
+				dataUdiEntryType.display = display;
 			}
 
 			if(typeof req.body.definition !== 'undefined'){
 				var definition = req.body.definition.replace(/[^\w\s , ( ) / .]/gi, '');
-				dataparticipationStatus.definition = definition;
+				dataUdiEntryType.definition = definition;
 			}
 
 			if(_id == "" || typeof _id == 'undefined'){
@@ -16774,23 +17107,23 @@ var controller = {
 				if(validator.isInt(_id)){
 					checkApikey(apikey, ipAddres, function(result){
 						if(result.err_code == 0){
-							checkId(apikey, _id, 'PARTICIPATION_STATUS', function(resultCheckId){
+							checkId(apikey, _id, 'UDI_ENTRY_TYPE', function(resultCheckId){
 								if(resultCheckId.err_code == 0){
 									if(typeof req.body.code !== 'undefined'){
-										checkCode(apikey, code, 'PARTICIPATION_STATUS', function(resultCode){
+										checkCode(apikey, code, 'UDI_ENTRY_TYPE', function(resultCode){
 											if(resultCode.err_code == 0){
 												//method, endpoint, params, options, callback
-												ApiFHIR.put('participationStatus', {"apikey": apikey, "_id": _id}, {body: dataparticipationStatus, json: true}, function(error, response, body){
+												ApiFHIR.put('udiEntryType', {"apikey": apikey, "_id": _id}, {body: dataUdiEntryType, json: true}, function(error, response, body){
 													if(error){
-												  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "updateparticipationStatus"});
+												  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "updateUdiEntryType"});
 												  }else{
 												  	//cek apakah ada error atau tidak
-												  	var participationStatus = body; 
+												  	var udiEntryType = body; 
 												  	//cek apakah ada error atau tidak
-												  	if(participationStatus.err_code == 0){
-													  	res.json({"err_code": 0, "err_msg": "Participant Status has been update.","data":participationStatus.data});
+												  	if(udiEntryType.err_code == 0){
+													  	res.json({"err_code": 0, "err_msg": "Udi Entry Type has been update.","data":udiEntryType.data});
 												  	}else{
-												  		res.json(participationStatus);
+												  		res.json(udiEntryType);
 												  	}
 												  }
 												})
@@ -16800,17 +17133,183 @@ var controller = {
 										})
 									}else{
 										//method, endpoint, params, options, callback
-										ApiFHIR.put('participationStatus', {"apikey": apikey, "_id": _id}, {body: dataparticipationStatus, json: true}, function(error, response, body){
+										ApiFHIR.put('udiEntryType', {"apikey": apikey, "_id": _id}, {body: dataUdiEntryType, json: true}, function(error, response, body){
 											if(error){
-										  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "updateparticipationStatus"});
+										  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "updateUdiEntryType"});
 										  }else{
 										  	//cek apakah ada error atau tidak
-										  	var participationStatus = body; 
+										  	var udiEntryType = body; 
 										  	//cek apakah ada error atau tidak
-										  	if(participationStatus.err_code == 0){
-											  	res.json({"err_code": 0, "err_msg": "Participant Status has been update.","data":participationStatus.data});
+										  	if(udiEntryType.err_code == 0){
+											  	res.json({"err_code": 0, "err_msg": "Udi Entry Type has been update.","data":udiEntryType.data});
 										  	}else{
-										  		res.json(participationStatus);
+										  		res.json(udiEntryType);
+										  	}
+										  }
+										})
+									}
+								}else{
+									res.json(resultCheckId);
+								}
+							})
+						}else{
+							result.err_code = 500;
+							res.json(result);
+						}	
+					});
+				}else{
+					res.json({"err_code": 4, "err_msg": "Id must be a number."});	
+				}
+			}
+		},
+		deviceStatus: function updateDeviceStatus(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var _id = req.params._id;
+
+			var dataDeviceStatus = {};
+
+			if(typeof req.body.code !== 'undefined'){
+				var code = req.body.code.trim().toLowerCase();
+				dataDeviceStatus.code = code;
+			}
+
+			if(typeof req.body.display !== 'undefined'){
+				display = req.body.display;
+				dataDeviceStatus.display = display;
+			}
+
+			if(typeof req.body.definition !== 'undefined'){
+				var definition = req.body.definition.replace(/[^\w\s , ( ) / .]/gi, '');
+				dataDeviceStatus.definition = definition;
+			}
+
+			if(_id == "" || typeof _id == 'undefined'){
+				res.json({"err_code": 5, "err_msg": "Id is required."});	
+			}else{
+				if(validator.isInt(_id)){
+					checkApikey(apikey, ipAddres, function(result){
+						if(result.err_code == 0){
+							checkId(apikey, _id, 'DEVICE_STATUS', function(resultCheckId){
+								if(resultCheckId.err_code == 0){
+									if(typeof req.body.code !== 'undefined'){
+										checkCode(apikey, code, 'DEVICE_STATUS', function(resultCode){
+											if(resultCode.err_code == 0){
+												//method, endpoint, params, options, callback
+												ApiFHIR.put('deviceStatus', {"apikey": apikey, "_id": _id}, {body: dataDeviceStatus, json: true}, function(error, response, body){
+													if(error){
+												  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "updateDeviceStatus"});
+												  }else{
+												  	//cek apakah ada error atau tidak
+												  	var deviceStatus = body; 
+												  	//cek apakah ada error atau tidak
+												  	if(deviceStatus.err_code == 0){
+													  	res.json({"err_code": 0, "err_msg": "Device Status has been update.","data":deviceStatus.data});
+												  	}else{
+												  		res.json(deviceStatus);
+												  	}
+												  }
+												})
+											}else{
+												res.json(resultCode);
+											}
+										})
+									}else{
+										//method, endpoint, params, options, callback
+										ApiFHIR.put('deviceStatus', {"apikey": apikey, "_id": _id}, {body: dataDeviceStatus, json: true}, function(error, response, body){
+											if(error){
+										  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "updateDeviceStatus"});
+										  }else{
+										  	//cek apakah ada error atau tidak
+										  	var deviceStatus = body; 
+										  	//cek apakah ada error atau tidak
+										  	if(deviceStatus.err_code == 0){
+											  	res.json({"err_code": 0, "err_msg": "Device Status has been update.","data":deviceStatus.data});
+										  	}else{
+										  		res.json(deviceStatus);
+										  	}
+										  }
+										})
+									}
+								}else{
+									res.json(resultCheckId);
+								}
+							})
+						}else{
+							result.err_code = 500;
+							res.json(result);
+						}	
+					});
+				}else{
+					res.json({"err_code": 4, "err_msg": "Id must be a number."});	
+				}
+			}
+		},
+		deviceKind: function updateDeviceKind(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var _id = req.params._id;
+
+			var datadeviceKind = {};
+
+			if(typeof req.body.code !== 'undefined'){
+				var code = req.body.code.trim();
+				datadeviceKind.code = code;
+			}
+
+			if(typeof req.body.display !== 'undefined'){
+				display = req.body.display;
+				datadeviceKind.display = display;
+			}
+
+			if(typeof req.body.definition !== 'undefined'){
+				var definition = req.body.definition.replace(/[^\w\s , ( ) / .]/gi, '');
+				datadeviceKind.definition = definition;
+			}
+
+			if(_id == "" || typeof _id == 'undefined'){
+				res.json({"err_code": 5, "err_msg": "Id is required."});	
+			}else{
+				if(validator.isInt(_id)){
+					checkApikey(apikey, ipAddres, function(result){
+						if(result.err_code == 0){
+							checkId(apikey, _id, 'DEVICE_KIND', function(resultCheckId){
+								if(resultCheckId.err_code == 0){
+									if(typeof req.body.code !== 'undefined'){
+										checkCode(apikey, code, 'DEVICE_KIND', function(resultCode){
+											if(resultCode.err_code == 0){
+												//method, endpoint, params, options, callback
+												ApiFHIR.put('deviceKind', {"apikey": apikey, "_id": _id}, {body: datadeviceKind, json: true}, function(error, response, body){
+													if(error){
+												  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "updateDeviceKind"});
+												  }else{
+												  	//cek apakah ada error atau tidak
+												  	var deviceKind = body; 
+												  	//cek apakah ada error atau tidak
+												  	if(deviceKind.err_code == 0){
+													  	res.json({"err_code": 0, "err_msg": "Device Kind has been update.","data":deviceKind.data});
+												  	}else{
+												  		res.json(deviceKind);
+												  	}
+												  }
+												})
+											}else{
+												res.json(resultCode);
+											}
+										})
+									}else{
+										//method, endpoint, params, options, callback
+										ApiFHIR.put('deviceKind', {"apikey": apikey, "_id": _id}, {body: datadeviceKind, json: true}, function(error, response, body){
+											if(error){
+										  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "updateDeviceKind"});
+										  }else{
+										  	//cek apakah ada error atau tidak
+										  	var deviceKind = body; 
+										  	//cek apakah ada error atau tidak
+										  	if(deviceKind.err_code == 0){
+											  	res.json({"err_code": 0, "err_msg": "Device Kind has been update.","data":deviceKind.data});
+										  	}else{
+										  		res.json(deviceKind);
 										  	}
 										  }
 										})
