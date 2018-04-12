@@ -289,7 +289,19 @@
 	    },
 	    "udiEntryTypeCode":{
 	      "location": "%(apikey)s/udi-entry-type/code/%(code)s"
-      }
+      },
+     "deviceStatus":{
+        "location": "%(apikey)s/device-status/%(_id)d"
+     },
+     "deviceStatusCode":{
+        "location": "%(apikey)s/device-status/code/%(code)s"
+     },
+     "deviceKind":{
+        "location": "%(apikey)s/device-kind/%(_id)d"
+     },
+     "deviceKindCode":{
+        "location": "%(apikey)s/device-kind/code/%(code)s"
+     }
 		},
 		"POST": {
 			"identityAssuranceLevel": {
@@ -495,6 +507,12 @@
      },
      "udiEntryType": {
         "location": "%(apikey)s/udi-entry-type"
+     },
+     "deviceStatus": {
+        "location": "%(apikey)s/device-status"
+     },
+     "deviceKind": {
+        "location": "%(apikey)s/device-kind"
      }
 		},
 		"PUT": {
@@ -689,6 +707,12 @@
      },         
      "udiEntryType":{
         "location": "%(apikey)s/udi-entry-type/%(_id)d"
+     },         
+     "deviceStatus":{
+        "location": "%(apikey)s/device-status/%(_id)d"
+     },         
+     "deviceKind":{
+        "location": "%(apikey)s/device-kind/%(_id)d"
      }
 		}
 	}
