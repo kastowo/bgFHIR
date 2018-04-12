@@ -90,6 +90,8 @@ var routesDefaultFHIR = function(app, DefaultFHIR){
 	app.get('/:apikey/flag-code/code/:code?', DefaultFHIR.get.flagCodeCode);
 	app.get('/:apikey/re-admission-indicator/:_id?', DefaultFHIR.get.reAdmissionIndicator);
 	app.get('/:apikey/re-admission-indicator/code/:code?', DefaultFHIR.get.reAdmissionIndicatorCode);
+	app.get('/:apikey/udi-entry-type/:_id?', DefaultFHIR.get.udiEntryType);
+	app.get('/:apikey/udi-entry-type/code/:code?', DefaultFHIR.get.udiEntryTypeCode);
 
 	//post method
 	app.post('/:apikey/identity-assuranceLevel', DefaultFHIR.post.identityAssuranceLevel);
@@ -136,6 +138,8 @@ var routesDefaultFHIR = function(app, DefaultFHIR){
 	app.post('/:apikey/flag-category', DefaultFHIR.post.flagCategory);
 	app.post('/:apikey/flag-code', DefaultFHIR.post.flagCode);	
 	app.post('/:apikey/re-admission-indicator', DefaultFHIR.post.reAdmissionIndicator);	
+	app.post('/:apikey/udi-entry-type', DefaultFHIR.post.udiEntryType);
+
 
 	//put method
 	app.put('/:apikey/identity-assuranceLevel/:_id?', DefaultFHIR.put.identityAssuranceLevel);
@@ -182,5 +186,6 @@ var routesDefaultFHIR = function(app, DefaultFHIR){
 	app.put('/:apikey/flag-category/:_id?', DefaultFHIR.put.flagCategory);	
 	app.put('/:apikey/flag-code/:_id?', DefaultFHIR.put.flagCode);
 	app.put('/:apikey/re-admission-indicator/:_id?', DefaultFHIR.put.reAdmissionIndicator);
+	app.put('/:apikey/udi-entry-type/:_id?', DefaultFHIR.put.udiEntryType);
 }
 module.exports = routesDefaultFHIR;

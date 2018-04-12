@@ -2520,6 +2520,36 @@ var controller = {
 				});
 			});
 		},
+		udiEntryType: function getUdiEntryType(req, res){
+      _id = req.params._id;
+
+      if(_id == 0){
+        condition = "";
+      }else{
+        condition = "WHERE id = "+ _id;
+      }
+
+      var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.UDI_ENTRY_TYPE " + condition;
+      
+      db.query(query,function(dataJson){
+        rez = lowercaseObject(dataJson);
+        res.json({"err_code":0,"data":rez});
+      },function(e){
+        res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "getUdiEntryType"});
+      });
+    },
+    udiEntryTypeCode: function getUdiEntryTypeCode(req, res){
+      code = req.params.code;
+
+      var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.UDI_ENTRY_TYPE WHERE code = '" + code + "' ";
+      
+      db.query(query,function(dataJson){
+        rez = lowercaseObject(dataJson);
+        res.json({"err_code":0,"data":rez});
+      },function(e){
+        res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "getUdiEntryTypeCode"});
+      });
+    }
 	},
 	post: {
 		identityAssuranceLevel: function addIdentityAssuranceLevel(req, res) {
@@ -4581,7 +4611,27 @@ var controller = {
 					"function": "addReAdmissionIndicator"
 				});
 			});
-		}
+		},
+		udiEntryType: function addUdiEntryType(req, res){
+      var code = req.body.code;
+      var display = req.body.display;
+      var definition = req.body.definition;
+     
+      var query = "UPSERT INTO BACIRO_FHIR.UDI_ENTRY_TYPE(id, code, display, definition)"+
+        " VALUES (NEXT VALUE FOR BACIRO_FHIR.UDI_ENTRY_TYPE_AUTO_ID,'"+code+"','"+display+"','"+definition+"')";
+        
+      db.upsert(query,function(succes){
+        var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.UDI_ENTRY_TYPE WHERE code = '" + code + "' ";
+        db.query(query,function(dataJson){
+          rez = lowercaseObject(dataJson);
+          res.json({"err_code":0,"data":rez});
+        },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "addUdiEntryType"});
+        });
+      },function(e){
+          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "addUdiEntryType"});
+      });
+    }
 	},
 	put: {
 		identityAssuranceLevel: function updateIdentityAssuranceLevel(req, res) {
@@ -7491,6 +7541,47 @@ var controller = {
 				});
 			});
 		},
+		udiEntryType: function updateUdiEntryType(req, res){
+      var _id = req.params._id;
+      var code = req.body.code;
+      var display = req.body.display;
+      var definition = req.body.definition;
+      
+      //susun query update
+      var column = "";
+      var values = "";
+
+      if(typeof code !== 'undefined'){
+        column += 'code,';
+        values += "'" +code +"',";
+      }
+
+      if(typeof display !== 'undefined'){
+        column += 'display,';
+        values += "'" +display +"',";
+      }
+
+      if(typeof definition !== 'undefined'){
+        column += 'definition,';
+        values += "'" +definition +"',";
+      }
+
+      var query = "UPSERT INTO BACIRO_FHIR.UDI_ENTRY_TYPE(id," + column.slice(0, -1) + ") SELECT id, " + values.slice(0, -1) + " FROM BACIRO_FHIR.UDI_ENTRY_TYPE WHERE id = " + _id;
+      
+      db.upsert(query,function(succes){
+        var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.UDI_ENTRY_TYPE WHERE id = "+ _id;
+
+        db.query(query,function(dataJson){
+          rez = lowercaseObject(dataJson);
+          console.log(rez)
+          res.json({"err_code":0,"data":rez});
+        },function(e){
+          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "udpateUdiEntryType"});
+        });
+      },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "udpateUdiEntryType"});
+      });
+    }
 	}
 }
 

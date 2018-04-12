@@ -3497,7 +3497,7 @@ var controller = {
 		participantRequiredCode: function getParticipantRequiredCode(req, res) {
 			var ipAddres = req.connection.remoteAddress;
 			var apikey = req.params.apikey;
-			var code = req.params.code.replace(/[^\w\s ,]/gi, '').trim().toLowerCase();
+			var code = req.params.code.replace(/[^\w\s ,-]/gi, '').trim().toLowerCase();
 
 			if (code == "" || typeof code == 'undefined') {
 				res.json({
@@ -7027,6 +7027,106 @@ var controller = {
 						result.err_code = 500;
 						res.json(result);
 					}
+				});
+			}
+		},
+		udiEntryType: function getUdiEntryType(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var _id = req.params._id;
+
+			
+			checkApikey(apikey, ipAddres, function(result){
+				if(result.err_code == 0){
+					if(_id == "" || typeof _id == 'undefined'){
+						//method, endpoint, params, options, callback
+						ApiFHIR.get('udiEntryType', {"apikey": apikey, "_id": 0}, {}, function(error, response, body){
+							if(error){
+							  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "getUdiEntryType"});
+							  }else{
+							  	//cek apakah ada error atau tidak
+							  	var udiEntryType = JSON.parse(body); 
+							  	
+							  	//cek apakah ada error atau tidak
+							  	if(udiEntryType.err_code == 0){
+								  	//cek jumdata dulu
+								  	if(udiEntryType.data.length > 0){
+								  		res.json({"err_code": 0, "data":udiEntryType.data});
+								  	}else{
+							  			res.json({"err_code": 2, "err_msg": "Udi Entry Type is not found"});	
+								  	}
+							  	}else{
+							  		res.json(udiEntryType);
+							  	}
+							  }
+						})	
+					}else{
+						if(validator.isInt(_id)){
+							ApiFHIR.get('udiEntryType', {"apikey": apikey, "_id": _id}, {}, function(error, response, body){
+								if(error){
+								  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "getUdiEntryType"});
+								  }else{
+								  	//cek apakah ada error atau tidak
+								  	var udiEntryType = JSON.parse(body); 
+								  	
+								  	//cek apakah ada error atau tidak
+								  	if(udiEntryType.err_code == 0){
+									  	//cek jumdata dulu
+									  	if(udiEntryType.data.length > 0){
+									  		res.json({"err_code": 0, "data":udiEntryType.data});
+									  	}else{
+								  			res.json({"err_code": 2, "err_msg": "Udi Entry Type is not found"});	
+									  	}
+								  	}else{
+								  		res.json(udiEntryType);
+								  	}
+								  }
+							})
+						}else{
+							res.json({"err_code": 4, "err_msg": "Id must be a number."});
+						}
+						
+					}
+				}else{
+					result.err_code = 500;
+					res.json(result);
+				}	
+			});
+		},
+		udiEntryTypeCode: function getUdiEntryTypeCode(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var code = req.params.code.replace(/[^\w\s ,]/gi, '').trim().toLowerCase();
+
+			if(code == "" || typeof code == 'undefined'){
+				res.json({"err_code": 4, "err_msg": "Code is required."});
+			}else{
+				checkApikey(apikey, ipAddres, function(result){
+					if(result.err_code == 0){	
+						ApiFHIR.get('udiEntryTypeCode', {"apikey": apikey, "code": code}, {}, function(error, response, body){
+							if(error){
+							  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "getUdiEntryTypeCode"});
+							  }else{
+							  	//cek apakah ada error atau tidak
+							  	var udiEntryType = JSON.parse(body); 
+							  	
+							  	//cek apakah ada error atau tidak
+							  	if(udiEntryType.err_code == 0){
+								  	//cek jumdata dulu
+								  	if(udiEntryType.data.length > 0){
+								  		res.json({"err_code": 0, "data":udiEntryType.data});
+								  	}else{
+							  			res.json({"err_code": 2, "err_msg": "Udi Entry Type Code is not found"});	
+								  	}
+							  	}else{
+							  		res.json(udiEntryType);
+							  	}
+							  }
+						})
+					}else{
+						result.err_code = 500;
+						res.json(result);
+					}	
 				});
 			}
 		}
@@ -10889,6 +10989,73 @@ var controller = {
 					"err_code": err_code,
 					"err_msg": err_msg
 				});
+			}
+		},
+		udiEntryType: function addUdiEntryType(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			
+			var code = req.body.code.trim().toLowerCase();
+			var display = req.body.display.replace(/[^\w\s , ( ) / .]/gi, '');
+			var definition = req.body.definition.replace(/[^\w\s , ( ) / .]/gi, '');
+			
+			var err_code = 0;
+			var err_msg = '';
+			
+			//input checking
+			if(validator.isEmpty(code)){
+				err_code = 1;
+				err_msg = "Code is required";
+			}
+
+			if(validator.isEmpty(display)){
+				err_code = 2;
+				err_msg = "Display is required";
+			}
+
+			if(validator.isEmpty(definition)){
+				err_code = 2;
+				err_msg = "Definition is required";
+			}
+
+			if(err_code == 0){
+				checkApikey(apikey, ipAddres, function(result){
+					if(result.err_code == 0){
+						checkCode(apikey, code, 'UDI_ENTRY_TYPE', function(resultCode){
+							if(resultCode.err_code == 0){
+								//susun body
+								var dataUdiEntryType = {
+													"code": code,
+													"display": display,
+													"definition": definition
+												};
+							
+								//method, endpoint, params, options, callback
+								ApiFHIR.post('udiEntryType', {"apikey": apikey}, {body: dataUdiEntryType, json:true}, function(error, response, body){
+									if(error){
+								  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "addUdiEntryType"});
+								  }else{
+								  	//cek apakah ada error atau tidak
+								  	var udiEntryType = body; //object
+								  	//cek apakah ada error atau tidak
+								  	if(udiEntryType.err_code == 0){
+									  	res.json({"err_code": 0, "err_msg": "Udi Entry Type has been add.", "data":udiEntryType.data});
+								  	}else{
+								  		res.json(udiEntryType);
+								  	}
+								  }
+								})
+							}else{
+								res.json(resultCode);
+							}
+						})
+					}else{
+						result.err_code = 500;
+						res.json(result);
+					}	
+				});
+			}else{
+				res.json({"err_code": err_code, "err_msg": err_msg});
 			}
 		}
 	},
@@ -16576,6 +16743,89 @@ var controller = {
 						"err_code": 4,
 						"err_msg": "Id must be a number."
 					});
+				}
+			}
+		},
+		udiEntryType: function updateUdiEntryType(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var _id = req.params._id;
+
+			var dataparticipationStatus = {};
+
+			if(typeof req.body.code !== 'undefined'){
+				var code = req.body.code.trim().toLowerCase();
+				dataparticipationStatus.code = code;
+			}
+
+			if(typeof req.body.display !== 'undefined'){
+				display = req.body.display;
+				dataparticipationStatus.display = display;
+			}
+
+			if(typeof req.body.definition !== 'undefined'){
+				var definition = req.body.definition.replace(/[^\w\s , ( ) / .]/gi, '');
+				dataparticipationStatus.definition = definition;
+			}
+
+			if(_id == "" || typeof _id == 'undefined'){
+				res.json({"err_code": 5, "err_msg": "Id is required."});	
+			}else{
+				if(validator.isInt(_id)){
+					checkApikey(apikey, ipAddres, function(result){
+						if(result.err_code == 0){
+							checkId(apikey, _id, 'PARTICIPATION_STATUS', function(resultCheckId){
+								if(resultCheckId.err_code == 0){
+									if(typeof req.body.code !== 'undefined'){
+										checkCode(apikey, code, 'PARTICIPATION_STATUS', function(resultCode){
+											if(resultCode.err_code == 0){
+												//method, endpoint, params, options, callback
+												ApiFHIR.put('participationStatus', {"apikey": apikey, "_id": _id}, {body: dataparticipationStatus, json: true}, function(error, response, body){
+													if(error){
+												  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "updateparticipationStatus"});
+												  }else{
+												  	//cek apakah ada error atau tidak
+												  	var participationStatus = body; 
+												  	//cek apakah ada error atau tidak
+												  	if(participationStatus.err_code == 0){
+													  	res.json({"err_code": 0, "err_msg": "Participant Status has been update.","data":participationStatus.data});
+												  	}else{
+												  		res.json(participationStatus);
+												  	}
+												  }
+												})
+											}else{
+												res.json(resultCode);
+											}
+										})
+									}else{
+										//method, endpoint, params, options, callback
+										ApiFHIR.put('participationStatus', {"apikey": apikey, "_id": _id}, {body: dataparticipationStatus, json: true}, function(error, response, body){
+											if(error){
+										  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "updateparticipationStatus"});
+										  }else{
+										  	//cek apakah ada error atau tidak
+										  	var participationStatus = body; 
+										  	//cek apakah ada error atau tidak
+										  	if(participationStatus.err_code == 0){
+											  	res.json({"err_code": 0, "err_msg": "Participant Status has been update.","data":participationStatus.data});
+										  	}else{
+										  		res.json(participationStatus);
+										  	}
+										  }
+										})
+									}
+								}else{
+									res.json(resultCheckId);
+								}
+							})
+						}else{
+							result.err_code = 500;
+							res.json(result);
+						}	
+					});
+				}else{
+					res.json({"err_code": 4, "err_msg": "Id must be a number."});	
 				}
 			}
 		}

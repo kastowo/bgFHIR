@@ -283,7 +283,13 @@
 			},
 			"reAdmissionIndicatorCode": {
 				"location": "%(apikey)s/re-admission-indicator/code/%(code)s"
-			}
+			},
+	    "udiEntryType":{
+	      "location": "%(apikey)s/udi-entry-type/%(_id)d"
+	    },
+	    "udiEntryTypeCode":{
+	      "location": "%(apikey)s/udi-entry-type/code/%(code)s"
+      }
 		},
 		"POST": {
 			"identityAssuranceLevel": {
@@ -486,6 +492,9 @@
      },
      "appointmentResponse": {
         "location": "%(apikey)s/appointment-response"
+     },
+     "udiEntryType": {
+        "location": "%(apikey)s/udi-entry-type"
      }
 		},
 		"PUT": {
@@ -677,6 +686,9 @@
      },
      "appointmentResponse": {
         "location": "%(apikey)s/appointment-response/%(_id)s"
+     },         
+     "udiEntryType":{
+        "location": "%(apikey)s/udi-entry-type/%(_id)d"
      }
 		}
 	}
