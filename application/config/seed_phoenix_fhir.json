@@ -313,6 +313,78 @@
      },
      "operationalStatusCode":{
         "location": "%(apikey)s/operational-status/code/%(code)s"
+     },
+     "parameterGroup":{
+        "location": "%(apikey)s/parameter-group/%(_id)d"
+     },
+     "parameterGroupCode":{
+        "location": "%(apikey)s/parameter-group/code/%(code)s"
+     },
+     "measurementPrinciple":{
+        "location": "%(apikey)s/measurement-principle/%(_id)d"
+     },
+     "measurementPrincipleCode":{
+        "location": "%(apikey)s/measurement-principle/code/%(code)s"
+     },
+     "specificationType":{
+        "location": "%(apikey)s/specification-type/%(_id)d"
+     },
+     "specificationTypeCode":{
+        "location": "%(apikey)s/specification-type/code/%(code)s"
+     },
+     "metricOperationalStatus":{
+        "location": "%(apikey)s/metric-operational-status/%(_id)d"
+     },
+     "metricOperationalStatusCode":{
+        "location": "%(apikey)s/metric-operational-status/code/%(code)s"
+     },
+     "deviceMetricType":{
+        "location": "%(apikey)s/device-metric-type/%(_id)d"
+     },
+     "deviceMetricTypeCode":{
+        "location": "%(apikey)s/device-metric-type/code/%(code)s"
+     },
+     "metricColor":{
+        "location": "%(apikey)s/metric-color/%(_id)d"
+     },
+     "metricColorCode":{
+        "location": "%(apikey)s/metric-color/code/%(code)s"
+     },
+     "metricCategory":{
+        "location": "%(apikey)s/metric-category/%(_id)d"
+     },
+     "metricColorCode":{
+        "location": "%(apikey)s/metric-category/code/%(code)s"
+     },
+     "metricCalibrationType":{
+        "location": "%(apikey)s/metric-calibration-type/%(_id)d"
+     },
+     "metricCalibrationTypeCode":{
+        "location": "%(apikey)s/metric-calibration-type/code/%(code)s"
+     },
+     "metricCalibrationState":{
+        "location": "%(apikey)s/metric-calibration-state/%(_id)d"
+     },
+     "metricCalibrationStateCode":{
+        "location": "%(apikey)s/metric-calibration-state/code/%(code)s"
+     },
+     "substanceStatus":{
+        "location": "%(apikey)s/substance-status/%(_id)d"
+     },
+     "substanceStatusCode":{
+        "location": "%(apikey)s/substance-status/code/%(code)s"
+     },
+     "substanceCategory":{
+        "location": "%(apikey)s/substance-category/%(_id)d"
+     },
+     "substanceCategoryCode":{
+        "location": "%(apikey)s/substance-category/code/%(code)s"
+     },
+     "substanceCode":{
+        "location": "%(apikey)s/substance-code/%(_id)d"
+     },
+     "substanceCodeCode":{
+        "location": "%(apikey)s/substance-code/code/%(code)s"
      }
 		},
 		"POST": {
@@ -531,6 +603,42 @@
      },
      "operationalStatus": {
         "location": "%(apikey)s/operational-status"
+     },
+     "parameterGroup": {
+        "location": "%(apikey)s/parameter-group"
+     },
+     "measurementPrinciple": {
+        "location": "%(apikey)s/measurement-principle"
+     },
+     "specificationType": {
+        "location": "%(apikey)s/specification-type"
+     },
+     "metricOperationalStatus": {
+        "location": "%(apikey)s/metric-operational-status"
+     },
+     "deviceMetricType": {
+        "location": "%(apikey)s/device-metric-type"
+     },
+     "metricColor": {
+        "location": "%(apikey)s/metric-color"
+     },
+     "metricCategory": {
+        "location": "%(apikey)s/metric-category"
+     },
+     "metricCalibrationType": {
+        "location": "%(apikey)s/metric-calibration-type"
+     },
+     "metricCalibrationState": {
+        "location": "%(apikey)s/metric-calibration-state"
+     },
+     "substanceStatus": {
+        "location": "%(apikey)s/substance-status"
+     },
+     "substanceCategory": {
+        "location": "%(apikey)s/substance-category"
+     },
+     "substanceCode": {
+        "location": "%(apikey)s/substance-code"
      }
 		},
 		"PUT": {
@@ -737,6 +845,42 @@
      },         
      "operationalStatus":{
         "location": "%(apikey)s/operational-status/%(_id)d"
+     },         
+     "parameterGroup":{
+        "location": "%(apikey)s/parameter-group/%(_id)d"
+     },         
+     "measurementPrinciple":{
+        "location": "%(apikey)s/measurement-principle/%(_id)d"
+     },         
+     "specificationType":{
+        "location": "%(apikey)s/specification-type/%(_id)d"
+     },         
+     "metricOperationalStatus":{
+        "location": "%(apikey)s/metric-operational-status/%(_id)d"
+     },         
+     "deviceMetricType":{
+        "location": "%(apikey)s/device-metric-type/%(_id)d"
+     },         
+     "metricColor":{
+        "location": "%(apikey)s/metric-color/%(_id)d"
+     },         
+     "metricCategory":{
+        "location": "%(apikey)s/metric-category/%(_id)d"
+     },         
+     "metricCalibrationType":{
+        "location": "%(apikey)s/metric-calibration-type/%(_id)d"
+     },         
+     "metricCalibrationState":{
+        "location": "%(apikey)s/metric-calibration-state/%(_id)d"
+     },         
+     "substanceStatus":{
+        "location": "%(apikey)s/substance-status/%(_id)d"
+     },         
+     "substanceCategory":{
+        "location": "%(apikey)s/substance-category/%(_id)d"
+     },         
+     "substanceCode":{
+        "location": "%(apikey)s/substance-code/%(_id)d"
      }
 		}
 	}

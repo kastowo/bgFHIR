@@ -108,6 +108,30 @@ var routesDefaultFHIR = function(app, DefaultFHIR){
 	app.get('/:apikey/device-safety/code/:code', DefaultFHIR.get.deviceSafetyCode);
 	app.get('/:apikey/operational-status/:_id', DefaultFHIR.get.operationalStatus);
 	app.get('/:apikey/operational-status/code/:code', DefaultFHIR.get.operationalStatusCode);
+	app.get('/:apikey/parameter-group/:_id', DefaultFHIR.get.parameterGroup);
+	app.get('/:apikey/parameter-group/code/:code', DefaultFHIR.get.parameterGroupCode);
+	app.get('/:apikey/measurement-principle/:_id', DefaultFHIR.get.measurementPrinciple);
+	app.get('/:apikey/measurement-principle/code/:code', DefaultFHIR.get.measurementPrincipleCode);
+	app.get('/:apikey/specification-type/:_id', DefaultFHIR.get.specificationType);
+	app.get('/:apikey/specification-type/code/:code', DefaultFHIR.get.specificationTypeCode);
+	app.get('/:apikey/metric-operational-status/:_id', DefaultFHIR.get.metricOperationalStatus);
+	app.get('/:apikey/metric-operational-status/code/:code', DefaultFHIR.get.metricOperationalStatusCode);
+	app.get('/:apikey/device-metric-type/:_id?', DefaultFHIR.get.deviceMetricType);
+	app.get('/:apikey/device-metric-type/code/:code?', DefaultFHIR.get.deviceMetricTypeCode);
+	app.get('/:apikey/metric-color/:_id', DefaultFHIR.get.metricColor);
+	app.get('/:apikey/metric-color/code/:code', DefaultFHIR.get.metricColorCode);
+	app.get('/:apikey/metric-category/:_id', DefaultFHIR.get.metricCategory);
+	app.get('/:apikey/metric-category/code/:code', DefaultFHIR.get.metricCategoryCode);
+	app.get('/:apikey/metric-calibration-type/:_id', DefaultFHIR.get.metricCalibrationType);
+	app.get('/:apikey/metric-calibration-type/code/:code', DefaultFHIR.get.metricCalibrationTypeCode);
+	app.get('/:apikey/metric-calibration-state/:_id', DefaultFHIR.get.metricCalibrationState);
+	app.get('/:apikey/metric-calibration-state/code/:code', DefaultFHIR.get.metricCalibrationStateCode);
+	app.get('/:apikey/substance-status/:_id', DefaultFHIR.get.substanceStatus);
+	app.get('/:apikey/substance-status/code/:code', DefaultFHIR.get.substanceStatusCode);
+	app.get('/:apikey/substance-category/:_id', DefaultFHIR.get.substanceCategory);
+	app.get('/:apikey/substance-category/code/:code', DefaultFHIR.get.substanceCategoryCode);
+	app.get('/:apikey/substance-code/:_id', DefaultFHIR.get.substanceCode);
+	app.get('/:apikey/substance-code/code/:code', DefaultFHIR.get.substanceCodeCode);
 
 	//post
 	app.post('/:apikey/identity-AssuranceLevel', DefaultFHIR.post.identityAssuranceLevel);
@@ -164,6 +188,17 @@ var routesDefaultFHIR = function(app, DefaultFHIR){
 	app.post('/:apikey/device-kind', DefaultFHIR.post.deviceKind);
 	app.post('/:apikey/device-safety', DefaultFHIR.post.deviceSafety);
 	app.post('/:apikey/operational-status', DefaultFHIR.post.operationalStatus);
+	app.post('/:apikey/parameter-group', DefaultFHIR.post.parameterGroup);
+	app.post('/:apikey/measurement-principle', DefaultFHIR.post.measurementPrinciple);
+	app.post('/:apikey/specification-type', DefaultFHIR.post.specificationType);
+	app.post('/:apikey/metric-operational-status', DefaultFHIR.post.metricOperationalStatus);
+	app.post('/:apikey/device-metric-type', DefaultFHIR.post.deviceMetricType);
+	app.post('/:apikey/metric-color', DefaultFHIR.post.metricColor);
+	app.post('/:apikey/metric-category', DefaultFHIR.post.metricCategory);
+	app.post('/:apikey/metric-calibration-type', DefaultFHIR.post.metricCalibrationType);
+	app.post('/:apikey/metric-calibration-state', DefaultFHIR.post.metricCalibrationState);
+	app.post('/:apikey/substance-category', DefaultFHIR.post.substanceCategory);
+	app.post('/:apikey/substance-code', DefaultFHIR.post.substanceCode);
 
 	//put
 	app.put('/:apikey/identity-AssuranceLevel/:_id', DefaultFHIR.put.identityAssuranceLevel);
@@ -221,6 +256,18 @@ var routesDefaultFHIR = function(app, DefaultFHIR){
 	app.put('/:apikey/device-kind/:_id', DefaultFHIR.put.deviceKind);
 	app.put('/:apikey/device-safety/:_id', DefaultFHIR.put.deviceSafety);
 	app.put('/:apikey/operational-status/:_id', DefaultFHIR.put.operationalStatus);
+	app.put('/:apikey/parameter-group/:_id', DefaultFHIR.put.parameterGroup);
+	app.put('/:apikey/measurement-principle/:_id', DefaultFHIR.put.measurementPrinciple);
+	app.put('/:apikey/specification-type/:_id', DefaultFHIR.put.specificationType);
+	app.put('/:apikey/metric-operational-status/:_id', DefaultFHIR.put.metricOperationalStatus);
+	app.put('/:apikey/device-metric-type/:_id', DefaultFHIR.put.deviceMetricType);
+	app.put('/:apikey/metric-color/:_id', DefaultFHIR.put.metricColor);
+	app.put('/:apikey/metric-category/:_id', DefaultFHIR.put.metricCategory);
+	app.put('/:apikey/metric-calibration-type/:_id', DefaultFHIR.put.metricCalibrationType);
+	app.put('/:apikey/metric-calibration-state/:_id', DefaultFHIR.put.metricCalibrationState);
+	app.put('/:apikey/substance-status/:_id', DefaultFHIR.put.substanceStatus);
+	app.put('/:apikey/substance-category/:_id', DefaultFHIR.put.substanceCategory);
+	app.put('/:apikey/substance-code/:_id', DefaultFHIR.put.substanceCode);
 	
 
 }
