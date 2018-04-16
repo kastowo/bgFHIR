@@ -139,7 +139,8 @@ var controller = {
       },function(e){
         res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "getPractitionerRole"});
       });
-    }/*,
+    }
+		/*,
 		availableTime: function getAvailableTime(req, res){
 			console.log(req.query);
 			var practitionerRoleId = req.query.practitioner_role_id;			    
@@ -319,7 +320,8 @@ var controller = {
       },function(e){
           res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "addPractitionerRole"});
       });
-    }/*,
+    }
+		/*,
 		availableTime: function addAvailableTime(req, res){
 			//console.log(req);
 			
@@ -415,7 +417,121 @@ var controller = {
           res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "addNotAvailable"});
       });
     }*/
-  
+	},
+	put:{
+		practitionerRole: function addPractitionerRole(req, res){
+			//console.log(req.body);
+			var practitioner_role_id = req.params.practitioner_role_id;
+			var practitioner_role_active = req.body.active;
+			var practitioner_role_period_start = req.body.period_start;
+			var practitioner_role_period_end = req.body.period_end;
+			var practitioner_role_code = req.body.code;
+			var practitioner_role_specialty = req.body.specialty;
+			var practitioner_role_availability_exceptions = req.body.availabilityExceptions;
+			var practitioner_id = req.body.practitioner;
+			var organization_id = req.body.organization;
+			var location_id = req.body.location;
+			var healthcare_service_id = req.body.healthcareService;
+			var endpoint_id = req.body.endpoint;
+			
+			var column = "";
+      var values = "";
+			
+			if(typeof practitioner_role_active !== 'undefined'){
+        column += 'practitioner_role_active,';
+        values += " " + practitioner_role_active +",";
+      }
+			
+			if(typeof practitioner_role_code !== 'undefined'){
+        column += 'practitioner_role_code,';
+        values += "'" + practitioner_role_code +"',";
+      }
+			
+			if(typeof practitioner_role_specialty !== 'undefined'){
+        column += 'practitioner_role_specialty,';
+        values += "'" + practitioner_role_specialty +"',";
+      }
+			
+			if(typeof practitioner_role_availability_exceptions !== 'undefined'){
+        column += 'practitioner_role_availability_exceptions,';
+        values += "'" + practitioner_role_availability_exceptions +"',";
+      }
+			
+			if(typeof practitioner_role_period_start !== 'undefined'){
+        column += 'practitioner_role_period_start,';
+        values += "to_date('"+ practitioner_role_period_start + "', 'yyyy-MM-dd'),";
+      }
+			
+			if(typeof practitioner_role_period_end !== 'undefined'){
+        column += 'practitioner_role_period_end,';
+        values += "to_date('"+ practitioner_role_period_end + "', 'yyyy-MM-dd'),";
+      }			
+			
+			if(typeof practitioner_id !== 'undefined'){
+        column += 'practitioner_id,';
+        values += "'" + practitioner_id +"',";
+      }
+			
+			if(typeof organization_id !== 'undefined'){
+        column += 'organization_id,';
+        values += "'" + organization_id +"',";
+      }
+			
+			/*if(typeof location_id !== 'undefined'){
+        column += 'location_id,';
+        values += "'" + location_id +"',";
+      }
+			
+			if(typeof healthcare_service_id !== 'undefined'){
+        column += 'healthcare_service_id,';
+        values += "'" + healthcare_service_id +"',";
+      }
+			
+			if(typeof endpoint_id !== 'undefined'){
+        column += 'endpoint_id,';
+        values += "'" + endpoint_id +"',";
+      }*/
+			
+			var condition = "practitioner_role_id = '" + practitioner_role_id + "'";
+			
+			var query = "UPSERT INTO BACIRO_FHIR.PRACTITIONER_ROLE(practitioner_role_id," + column.slice(0, -1) + ") SELECT practitioner_role_id, " + values.slice(0, -1) + " FROM BACIRO_FHIR.PRACTITIONER_ROLE WHERE " + condition;
+			console.log(query);
+			
+      db.upsert(query,function(succes){
+				var query5 = "SELECT practitioner_id, practitioner_role_active, practitioner_role_code, practitioner_role_specialty, practitioner_role_availability_exceptions, practitioner_role_period_start, practitioner_role_period_end, practitioner_id, organization_id FROM BACIRO_FHIR.PRACTITIONER_ROLE  WHERE practitioner_role_id = '" + practitioner_role_id + "' ";
+				db.query(query5,function(dataJson){
+					rez = lowercaseObject(dataJson);
+					res.json({"err_code":0,"data":rez});
+				},function(e){
+					res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "addPractitionerRole"});
+				});	
+				/*var query2 = "UPSERT INTO BACIRO_FHIR.ENDPOINT(ENDPOINT_ID, PRACTITIONER_ROLE_ID) SELECT ENDPOINT_ID, '" + practitioner_role_id + "' FROM BACIRO_FHIR.ENDPOINT WHERE ENDPOINT_ID = '" + endpoint_id + "'";
+        db.upsert(query2,function(dataJson){
+					var query3 = "UPSERT INTO BACIRO_FHIR.HEALTHCARE_SERVICE(HEALTHCARE_SERVICE_ID, PRACTITIONER_ROLE_ID) SELECT HEALTHCARE_SERVICE_ID, '" + practitioner_role_id + "' FROM BACIRO_FHIR.HEALTHCARE_SERVICE WHERE HEALTHCARE_SERVICE_ID = '" + healthcare_service_id + "'";
+        	db.upsert(query3,function(dataJson){
+						var query4 = "UPSERT INTO BACIRO_FHIR.LOCATION(LOCATION_ID, PRACTITIONER_ROLE_ID) SELECT LOCATION_ID, '" + practitioner_role_id + "' FROM BACIRO_FHIR.LOCATION WHERE LOCATION_ID = '" + location_id + "'";
+        		db.upsert(query4,function(dataJson){
+				
+							var query5 = "SELECT practitioner_id, practitioner_role_active, practitioner_role_code, practitioner_role_specialty, practitioner_role_availability_exceptions, practitioner_role_period_start, practitioner_role_period_end, practitioner_id, organization_id FROM BACIRO_FHIR.PRACTITIONER_ROLE  WHERE practitioner_role_id = '" + practitioner_role_id + "' ";
+							db.query(query5,function(dataJson){
+								rez = lowercaseObject(dataJson);
+								res.json({"err_code":0,"data":rez});
+							},function(e){
+								res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "addPractitionerRole"});
+							});							
+						},function(e){
+							res.json({"err_code": 4, "err_msg":e, "application": "Api Phoenix", "function": "addPractitionerRoleLocationReference"});
+						});		
+					},function(e){
+						res.json({"err_code": 3, "err_msg":e, "application": "Api Phoenix", "function": "addPractitionerRoleHealthcareServiceReference"});
+					});	
+				},function(e){
+          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "addPractitionerRoleEndpointRefence"});
+        });	*/			
+      },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "updatePractitionerRole"});
+      });
+    }
 	}
 }
 function lowercaseObject(jsonData){

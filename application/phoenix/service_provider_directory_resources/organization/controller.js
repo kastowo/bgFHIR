@@ -510,8 +510,8 @@ var controller = {
       });
     },
 		organizationContact: function addOrganizationContact(req, res){
-			//console.log(req.body);
-      var organization_contact_id = req.params.id;
+			console.log(req.body);
+      var organization_contact_id = req.params.organization_contact_id;
       var purpose = req.body.purpose;
       var humanNameId = req.body.humanNameId;
       var addressId = req.body.addressId;
@@ -537,11 +537,16 @@ var controller = {
 			if(typeof OrganizationId !== 'undefined'){
         column += 'ORGANIZATION_ID,';
         values += "'" + OrganizationId +"',";
-      }			
-			var condition = "ORGANIZATION_CONTACT_ID = '" + organization_contact_id + "'";
-
+      }
+			
+			var domainResource = req.params.dr;
+			var arrResource = domainResource.split('|');
+			var fieldResource = arrResource[0];
+			var valueResource = arrResource[1];
+			var condition = "ORGANIZATION_CONTACT_ID = '" + organization_contact_id + "' AND " + fieldResource + " = '" + valueResource + "'";
+			
 			var query = "UPSERT INTO BACIRO_FHIR.ORGANIZATION_CONTACT(ORGANIZATION_CONTACT_ID," + column.slice(0, -1) + ") SELECT ORGANIZATION_CONTACT_ID, " + values.slice(0, -1) + " FROM BACIRO_FHIR.ORGANIZATION_CONTACT WHERE " + condition;
-			//console.log(query);
+			console.log(query);
       db.upsert(query,function(succes){
         var query2 = "SELECT ORGANIZATION_CONTACT_ID,ORGANIZATION_CONTACT_PURPOSE,HUMAN_NAME_ID,ADDRESS_ID,ORGANIZATION_ID FROM BACIRO_FHIR.ORGANIZATION_CONTACT WHERE ORGANIZATION_ID = '" + OrganizationId + "' ";
 				

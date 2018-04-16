@@ -13278,7 +13278,8 @@ var controller = {
 				err_msg = "Display is required";
 			}
 			
-			if (typeof code != "number") {
+			//if (typeof code != "number") {
+			if (isNaN(code)) {	
 				err_code = 3;
 				err_msg = "Code is not number";
 			}
@@ -13393,7 +13394,8 @@ var controller = {
 			var ipAddres = req.connection.remoteAddress;
 			var apikey = req.params.apikey;
 			
-			var code = req.body.code.trim().toLowerCase();
+			//var code = req.body.code.trim().toLowerCase();
+			var code = req.body.code;
 			var display = req.body.display;
 			var definition = req.body.definition.replace(/[^\w\s , ( ) / .]/gi, '');
 			
@@ -13412,11 +13414,12 @@ var controller = {
 			}
 
 			if(validator.isEmpty(definition)){
-				err_code = 2;
+				err_code = 3;
 				err_msg = "Definition is required";
 			}
 			
-			if (typeof code != "number") {
+			//if (typeof code != "number") {
+			if (isNaN(code)) {	
 				err_code = 4;
 				err_msg = "Code is not number";
 			}
@@ -13488,7 +13491,8 @@ var controller = {
 				err_msg = "Definition is required";
 			}
 			
-			if (typeof code != "number") {
+			//if (typeof code != "number") {
+			if (isNaN(code)) {	
 				err_code = 4;
 				err_msg = "Code is not number";
 			}
@@ -20304,7 +20308,8 @@ var controller = {
 			var data = {};
 			
 			if(typeof req.body.code !== 'undefined'){
-				var code = req.body.code.trim();
+				//var code = req.body.code.trim();
+				var code = req.body.code;
 				data.code = code;
 			}
 			if(typeof req.body.display !== 'undefined'){
@@ -20312,7 +20317,9 @@ var controller = {
 				data.display = display;
 			}
 			
-			if(typeof req.body.code != "number"){
+			//console.log(req.body.code);
+			/*if(typeof req.body.code != "number"){*/
+			if(isNaN(code) && typeof code !== 'undefined'){
 				res.json({"err_code": 6, "err_msg": "Code is not number"});
 			}else{
 				if(_id == "" || typeof _id == 'undefined'){
@@ -20482,8 +20489,8 @@ var controller = {
 				var definition = req.body.definition.replace(/[^\w\s ,]/gi, '');
 				data.definition = definition;
 			}
-
-			if(typeof req.body.code != "number"){
+			
+			if(isNaN(code) && typeof code !== 'undefined'){
 				res.json({"err_code": 6, "err_msg": "Code is not number"});
 			}else{
 				if(_id == "" || typeof _id == 'undefined'){
@@ -20570,7 +20577,7 @@ var controller = {
 				data.definition = definition;
 			}
 			
-			if(typeof req.body.code != "number"){
+			if(isNaN(code) && typeof code !== 'undefined'){
 				res.json({"err_code": 6, "err_msg": "Code is not number"});
 			}else{
 				if(_id == "" || typeof _id == 'undefined'){

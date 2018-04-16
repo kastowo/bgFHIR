@@ -3155,11 +3155,16 @@ var controller = {
       });
     },
 		availableTime: function getAvailableTime(req, res){
+			var availableTime = req.query._id;
 			var practitionerRoleId = req.query.practitioner_role_id;
 			var healthcareServiceId = req.query.healthcare_service_id;
 			
 			var condition = "";
 			var join = "";
+			
+			if(typeof availableTime !== 'undefined' && availableTime !== ""){
+        condition += "available_time_id = '" + availableTime + "' AND ";  
+      }
 			
 			if(typeof practitionerRoleId !== 'undefined' && practitionerRoleId !== ""){
         condition += "practitioner_role_id = '" + practitionerRoleId + "' AND ";  
@@ -3176,7 +3181,7 @@ var controller = {
       }
       
 			var query = "select available_time_id, available_time_day_of_week, available_time_all_day, available_time_start, available_time_end from baciro_fhir.AVAILABLE_TIME " + fixCondition;
-			
+			//console.log(query);
       
 			var arrAvailableTime = [];
       db.query(query,function(dataJson){
@@ -3197,10 +3202,16 @@ var controller = {
       });
     },
 		notAvailable: function getNotAvailable(req, res){
+			//console.log(req.query);
+			var notAvailableId = req.query._id;
 			var practitionerRoleId = req.query.practitioner_role_id;			      
       var healthcareServiceId = req.query.healthcare_service_id;
 			var condition = "";
 			var join = "";
+			
+			if(typeof notAvailableId !== 'undefined' && notAvailableId !== ""){
+        condition += "not_available_id = '" + notAvailableId + "' AND ";  
+      }
 			
 			if(typeof practitionerRoleId !== 'undefined' && practitionerRoleId !== ""){
         condition += "practitioner_role_id = '" + practitionerRoleId + "' AND ";  
@@ -3218,7 +3229,7 @@ var controller = {
 			
 			var query = "select not_available_id, not_available_description, not_available_during from baciro_fhir.NOT_AVAILABLE " + fixCondition;
 			
-      
+      //console.log(query);
 			var arrAvailableTime = [];
       db.query(query,function(dataJson){
         rez = lowercaseObject(dataJson);
@@ -5747,8 +5758,6 @@ var controller = {
       });
     },
 		availableTime: function addAvailableTime(req, res){
-			
-			
 			var available_time_id = req.body.id;
 			var available_time_day_of_week = req.body.daysOfWeek;
 			var available_time_all_day = req.body.allDay;
@@ -5796,7 +5805,7 @@ var controller = {
         " VALUES ('"+available_time_id+"', " + values.slice(0, -1) + ")";
 			console.log(query);
       db.upsert(query,function(succes){
-        var query = "SELECT available_time_id, available_time_day_of_week, available_time_all_day, available_time_start, available_time_end, practitioner_role_id FROM BACIRO_FHIR.AVAILABLE_TIME  WHERE practitioner_role_id = '" + practitioner_role_id + "' ";
+        var query = "SELECT available_time_id, available_time_day_of_week, available_time_all_day, available_time_start, available_time_end, practitioner_role_id FROM BACIRO_FHIR.AVAILABLE_TIME  WHERE available_time_id = '" + available_time_id + "' ";
         db.query(query,function(dataJson){
           rez = lowercaseObject(dataJson);
           res.json({"err_code":0,"data":rez});
@@ -5842,7 +5851,7 @@ var controller = {
         " VALUES ('"+not_available_id+"', " + values.slice(0, -1) + ")";
 			console.log(query);
       db.upsert(query,function(succes){
-        var query = "SELECT not_available_id, not_available_description, not_available_during, not_available_during FROM BACIRO_FHIR.NOT_AVAILABLE  WHERE practitioner_role_id = '" + practitioner_role_id + "' ";
+        var query = "SELECT not_available_id, not_available_description, not_available_during, not_available_during FROM BACIRO_FHIR.NOT_AVAILABLE  WHERE not_available_id = '" + not_available_id + "' ";
         db.query(query,function(dataJson){
           rez = lowercaseObject(dataJson);
           res.json({"err_code":0,"data":rez});
@@ -9479,6 +9488,124 @@ var controller = {
         });
       },function(e){
           res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "updateEndpointPayloadType"});
+      });
+    },
+		availableTime: function addAvailableTime(req, res){
+			var _id = req.params._id;
+			var domainResource = req.params.dr;
+			
+			var available_time_day_of_week = req.body.daysOfWeek;
+			var available_time_all_day = req.body.allDay;
+			var available_time_start = req.body.availableEndTime;
+			var available_time_end = req.body.availableEndTime;
+			var practitioner_role_id = req.body.practitionerRoleid;
+			var healthcare_service_id = req.body.healthcareServiceId;
+			
+			var column = "";
+      var values = "";
+			
+			if(typeof available_time_day_of_week !== 'undefined'){
+        column += 'available_time_day_of_week,';
+        values += " '" + available_time_day_of_week +"',";
+      }
+			
+			if(typeof available_time_all_day !== 'undefined'){
+        column += 'available_time_all_day,';
+        values += " " + available_time_all_day +",";
+      }
+			
+			if(typeof practitioner_role_id !== 'undefined'){
+        column += 'practitioner_role_id,';
+        values += "'" + practitioner_role_id +"',";
+      }
+			
+			if(typeof healthcare_service_id !== 'undefined'){
+        column += 'healthcare_service_id,';
+        values += "'" + healthcare_service_id +"',";
+      }
+			
+			if(typeof available_time_start !== 'undefined'){
+        column += 'available_time_start,';
+        values += "to_date('"+ available_time_start + "', 'yyyy-MM-dd'),";
+      }
+			
+			if(typeof available_time_end !== 'undefined'){
+        column += 'available_time_end,';
+        values += "to_date('"+ available_time_end + "', 'yyyy-MM-dd'),";
+      }
+			
+			var arrResource = domainResource.split('|');
+			var fieldResource = arrResource[0];
+			var valueResource = arrResource[1];
+			var condition = "available_time_id = '" + _id + "' AND " + fieldResource + " = '" + valueResource + "'";
+
+			var query = "UPSERT INTO BACIRO_FHIR.AVAILABLE_TIME(available_time_id," + column.slice(0, -1) + ") SELECT available_time_id, " + values.slice(0, -1) + " FROM BACIRO_FHIR.AVAILABLE_TIME WHERE " + condition;
+console.log(query);
+
+      db.upsert(query,function(succes){
+        var query = "SELECT available_time_id, available_time_day_of_week, available_time_all_day, available_time_start, available_time_end, practitioner_role_id FROM BACIRO_FHIR.AVAILABLE_TIME  WHERE available_time_id = '" + _id + "' ";
+				console.log(query);
+        db.query(query,function(dataJson){
+          rez = lowercaseObject(dataJson);
+          res.json({"err_code":0,"data":rez});
+        },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "updateAvailableTime"});
+        });
+      },function(e){
+          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "updateAvailableTime"});
+      });
+    },
+		notAvailable: function addNotAvailable(req, res){
+			//console.log(req);
+			var _id = req.params._id;
+			var domainResource = req.params.dr;
+			
+			var not_available_description = req.body.description;
+			var not_available_during = req.body.during;
+			var healthcare_service_id = req.body.healthcareServiceId;
+			var practitioner_role_id = req.body.practitionerRoleid;
+			var not_available_id = req.body.id;
+			
+			var column = "";
+      var values = "";
+			
+			if(typeof not_available_description !== 'undefined'){
+        column += 'not_available_description,';
+        values += "'" + not_available_description +"',";
+      }
+			
+			if(typeof practitioner_role_id !== 'undefined'){
+        column += 'practitioner_role_id,';
+        values += "'" + practitioner_role_id +"',";
+      }
+			
+			if(typeof healthcare_service_id !== 'undefined'){
+        column += 'healthcare_service_id,';
+        values += "'" + healthcare_service_id +"',";
+      }
+			
+			if(typeof not_available_during !== 'undefined'){
+        column += 'not_available_during,';
+        values += "to_date('"+ not_available_during + "', 'yyyy-MM-dd'),";
+      }
+			
+			var arrResource = domainResource.split('|');
+			var fieldResource = arrResource[0];
+			var valueResource = arrResource[1];
+			var condition = "not_available_id = '" + _id + "' AND " + fieldResource + " = '" + valueResource + "'";
+
+			var query = "UPSERT INTO BACIRO_FHIR.NOT_AVAILABLE(not_available_id," + column.slice(0, -1) + ") SELECT not_available_id, " + values.slice(0, -1) + " FROM BACIRO_FHIR.NOT_AVAILABLE WHERE " + condition;
+console.log(query);
+      db.upsert(query,function(succes){
+        var query = "SELECT not_available_id, not_available_description, not_available_during, not_available_during FROM BACIRO_FHIR.NOT_AVAILABLE  WHERE not_available_id = '" + _id + "' ";
+        db.query(query,function(dataJson){
+          rez = lowercaseObject(dataJson);
+          res.json({"err_code":0,"data":rez});
+        },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "updateNotAvailable"});
+        });
+      },function(e){
+          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "updateNotAvailable"});
       });
     }
 		//hardika end add service provider directory resources

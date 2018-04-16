@@ -19,7 +19,7 @@ var db = new phoenix("jdbc:phoenix:" + "192.168.1.231" + ":/hbase-unsecure");
 var controller = {
 	get: {
     Location: function getLocation(req, res){
-			console.log(req.query);
+			//console.log(req.query);
       var apikey = req.params.apikey;
       var hostFHIR = configYaml.fhir.host;
       var portFHIR = configYaml.fhir.port;
@@ -469,8 +469,8 @@ var controller = {
         values += "" + altitude +",";
       }
 			
-      var condition = "LOCATION_POSITION_ID = '" + locationPositionId + "'";
-
+			
+      /*var condition = "LOCATION_POSITION_ID = '" + locationPositionId + "'";
 			var query = "UPSERT INTO BACIRO_FHIR.LOCATION_POSITION(LOCATION_POSITION_ID," + column.slice(0, -1) + ") SELECT LOCATION_POSITION_ID, " + values.slice(0, -1) + " FROM BACIRO_FHIR.LOCATION_POSITION WHERE " + condition;
 			console.log(query);
 			
@@ -484,7 +484,44 @@ var controller = {
         });
       },function(e){
           res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "updateLocationPosition"});
-      });
+      });*/
+			
+			var domainResource = req.params.dr;
+			var arrResource = domainResource.split('|');
+			var fieldResource = arrResource[0];
+			var valueResource = arrResource[1];
+			var condition = "LOCATION_POSITION_ID = '" + locationPositionId + "' AND " + fieldResource + " = '" + valueResource + "'";
+			
+			var query3 = "SELECT LOCATION_POSITION_ID,LOCATION_ID FROM BACIRO_FHIR.LOCATION WHERE " + condition ;
+			console.log(query3);
+        db.query(query3,function(dataJson){
+					rez = lowercaseObject(dataJson);
+					//console.log(rez);
+					if(rez.length > 0){
+		  			var condition = "LOCATION_POSITION_ID = '" + locationPositionId + "'";
+						var query = "UPSERT INTO BACIRO_FHIR.LOCATION_POSITION(LOCATION_POSITION_ID," + column.slice(0, -1) + ") SELECT LOCATION_POSITION_ID, " + values.slice(0, -1) + " FROM BACIRO_FHIR.LOCATION_POSITION WHERE " + condition;
+						console.log(query);
+
+						db.upsert(query,function(succes){
+							var query2 = "SELECT LOCATION_POSITION_ID,LOCATION_POSITION_LONGITUDE,LOCATION_POSITION_LATITUDE,LOCATION_POSITION_ALTITUDE FROM BACIRO_FHIR.LOCATION_POSITION WHERE LOCATION_POSITION_ID = '" + locationPositionId + "' ";
+							db.query(query2,function(dataJson){
+								rez = lowercaseObject(dataJson);
+								console.log(rez);
+								res.json({"err_code":0,"data":rez});
+							},function(e){
+								res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "updateLocationPosition"});
+							});
+						},function(e){
+								res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "updateLocationPosition"});
+						});
+					}else{
+						res.json({"err_code": 3, "err_msg":"relation location id and location position id not exist", "application": "Api Phoenix", "function": "updateLocationPosition"});
+					}
+          
+        },function(e){
+          res.json({"err_code": 4, "err_msg":e, "application": "Api Phoenix", "function": "updateLocationPosition"});
+        });
+						
 		}
 	}
 }

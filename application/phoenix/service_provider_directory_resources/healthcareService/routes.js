@@ -5,5 +5,6 @@ var routesHealthcareService = function(app, HealthcareService){
 	app.post('/:apikey/HealthcareService', HealthcareService.post.healthcareService);
 	//app.post('/:apikey/HealthcareServiceAvailableTime', HealthcareService.post.availableTime);
 	//app.post('/:apikey/HealthcareServiceNotAvailable', HealthcareService.post.notAvailable);
+	app.put('/:apikey/HealthcareService/:healthcare_service_id?', HealthcareService.put.healthcareService);
 }
 module.exports = routesHealthcareService;

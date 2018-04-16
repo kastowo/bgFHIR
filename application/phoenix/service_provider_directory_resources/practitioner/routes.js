@@ -7,5 +7,9 @@ var routesPractitioner = function(app, Practitioner){
 	app.post('/:apikey/Qualification', Practitioner.post.qualification);
 	app.post('/:apikey/PractitionerCommunication', Practitioner.post.practitionerCommunication);
 	
+	app.put('/:apikey/Practitioner/:practitioner_id?', Practitioner.put.practitioner);
+	app.put('/:apikey/Qualification/:qualification_id?/:dr?', Practitioner.put.qualification);
+	app.put('/:apikey/PractitionerCommunication/:practitioner_communication_id?/:dr?', Practitioner.put.practitionerCommunication);
+	
 }
 module.exports = routesPractitioner;

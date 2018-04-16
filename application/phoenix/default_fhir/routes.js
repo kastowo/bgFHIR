@@ -285,6 +285,8 @@ var routesDefaultFHIR = function(app, DefaultFHIR){
 	app.put('/:apikey/endpoint-status/:_id', DefaultFHIR.put.endpointStatus);
 	app.put('/:apikey/endpoint-connection-type/:_id', DefaultFHIR.put.endpointConnectionType);
 	app.put('/:apikey/endpoint-payload-type/:_id', DefaultFHIR.put.endpointPayloadType);
+	app.put('/:apikey/AvailableTime/:_id?/:dr?', DefaultFHIR.put.availableTime);
+	app.put('/:apikey/NotAvailable/:_id?/:dr?', DefaultFHIR.put.notAvailable);
 	// Service Provider Directory Resources, by : hardika cs(end)
 	
 

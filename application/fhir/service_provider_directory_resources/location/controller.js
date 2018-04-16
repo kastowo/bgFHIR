@@ -1693,14 +1693,15 @@ var controller = {
 							checkUniqeValue(apikey, "LOCATION_POSITION_ID|" + locationPositionId, 'LOCATION_POSITION', function(resLocationPositionID){
 								if(resLocationPositionID.err_code > 0){
 									//console.log(dataLocation);
-										ApiFHIR.put('locationPosition', {"apikey": apikey, "_id": locationPositionId}, {body: dataLocationPosition, json: true}, function(error, response, body){
-											location = body;
-											if(location.err_code > 0){
-												res.json(location);	
-											}else{
-												res.json({"err_code": 0, "err_msg": "Location Position has been update.", "data": [{"_id": locationId}]});
-											}
-										})
+									ApiFHIR.put('locationPosition', {"apikey": apikey, "_id": locationPositionId, "dr": "LOCATION_ID|"+locationId}, {body: dataLocationPosition, json: true}, function(error, response, body){
+										//console.log(body);
+										location = body;
+										if(location.err_code > 0){
+											res.json(location);	
+										}else{
+											res.json({"err_code": 0, "err_msg": "Location Position has been update.", "data": [{"_id": locationId}]});
+										}
+									})
 								}else{
 									res.json({"err_code": 503, "err_msg": "Location Id not found"});		
 								}

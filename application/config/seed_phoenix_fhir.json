@@ -913,19 +913,34 @@
 				"location": "%(apikey)s/Location/%(_id)s"
 			},
 			"locationPosition":{
-				"location": "%(apikey)s/LocationPosition/%(_id)s"
-			},
-			"location":{
-				"location": "%(apikey)s/Location/%(_id)s"
-			},
-			"locationPosition":{
-				"location": "%(apikey)s/LocationPosition/%(_id)s"
+				"location": "%(apikey)s/LocationPosition/%(_id)s/%(dr)s"
 			},
 			"organization":{
 				"location": "%(apikey)s/Organization/%(_id)s"
 			},
 			"organizationContact":{
-				"location": "%(apikey)s/organizationContact/%(_id)s"
+				"location": "%(apikey)s/OrganizationContact/%(_id)s/%(dr)s"
+			},
+			"practitioner":{
+				"location": "%(apikey)s/Practitioner/%(_id)s"
+			},
+			"qualification":{
+				"location": "%(apikey)s/Qualification/%(_id)s/%(dr)s"
+			},
+			"communication":{
+				"location": "%(apikey)s/PractitionerCommunication/%(_id)s/%(dr)s"
+			},
+			"practitionerRole":{
+				"location": "%(apikey)s/PractitionerRole/%(_id)s"
+			},
+			"availableTime":{
+				"location": "%(apikey)s/AvailableTime/%(_id)s/%(dr)s"
+			},
+			"notAvailable":{
+				"location": "%(apikey)s/NotAvailable/%(_id)s/%(dr)s"
+			},
+			"healthcareService":{
+				"location": "%(apikey)s/HealthcareService/%(_id)s"
 			}
 		}
 	}

@@ -21,6 +21,7 @@ var db = new phoenix("jdbc:phoenix:" + "192.168.1.231" + ":/hbase-unsecure");
 var controller = {
 	get: {
 		practitioner: function getPractitioner(req, res){
+			console.log(req.body);
 			var practitionerId = req.query._id;
       var practitioner_active = req.query.active;
 			var practitioner_gender = req.query.gender;
@@ -129,16 +130,17 @@ var controller = {
       }
 			      
       var arrPractitioner = [];
-			var query = "SELECT p.practitioner_id as practitioner_id, p.practitioner_active as practitioner_active, p.practitioner_gender as practitioner_gender, p.practitioner_birthdate as practitioner_birthdate, hn.human_name_id as human_name_id, addr.address_id as address_id, cp.contact_point_id as contact_point_id, id.identifier_id , pc.practitioner_communication_id FROM BACIRO_FHIR.PRACTITIONER p LEFT JOIN BACIRO_FHIR.HUMAN_NAME hn ON p.practitioner_id = hn.practitioner_id LEFT JOIN BACIRO_FHIR.ADDRESS addr ON p.practitioner_id = addr.practitioner_id LEFT JOIN BACIRO_FHIR.CONTACT_POINT cp ON p.practitioner_id = cp.practitioner_id LEFT JOIN BACIRO_FHIR.IDENTIFIER id ON p.practitioner_id = id.practitioner_id LEFT JOIN BACIRO_FHIR.PRACTITIONER_COMMUNICATION pc ON p.practitioner_id = pc.practitioner_id " + fixCondition;
+			/*var query = "SELECT p.practitioner_id as practitioner_id, p.practitioner_active as practitioner_active, p.practitioner_gender as practitioner_gender, p.practitioner_birthdate as practitioner_birthdate, hn.human_name_id as human_name_id, addr.address_id as address_id, cp.contact_point_id as contact_point_id, id.identifier_id , pc.practitioner_communication_id FROM BACIRO_FHIR.PRACTITIONER p LEFT JOIN BACIRO_FHIR.HUMAN_NAME hn ON p.practitioner_id = hn.practitioner_id LEFT JOIN BACIRO_FHIR.ADDRESS addr ON p.practitioner_id = addr.practitioner_id LEFT JOIN BACIRO_FHIR.CONTACT_POINT cp ON p.practitioner_id = cp.practitioner_id LEFT JOIN BACIRO_FHIR.IDENTIFIER id ON p.practitioner_id = id.practitioner_id LEFT JOIN BACIRO_FHIR.PRACTITIONER_COMMUNICATION pc ON p.practitioner_id = pc.practitioner_id " + fixCondition;*/
+			var query = "SELECT p.practitioner_id as practitioner_id, p.practitioner_active as practitioner_active, p.practitioner_gender as practitioner_gender, p.practitioner_birthdate as practitioner_birthdate FROM BACIRO_FHIR.PRACTITIONER p " + fixCondition;
 			
-      //console.log(query);
+      console.log(query);
       db.query(query,function(dataJson){
         rez = lowercaseObject(dataJson);
         for(i = 0; i < rez.length; i++){
           var Practitioner = {};
 					Practitioner.resourceType = "Practitioner";
           Practitioner.id = rez[i].practitioner_id;
-          Practitioner.active = rez[i].practitioner_gender;
+          Practitioner.active = rez[i].practitioner_active;
 					Practitioner.gender = rez[i].practitioner_gender;
 					Practitioner.birthdate = rez[i].practitioner_birthdate;
           arrPractitioner[i] = Practitioner;
@@ -170,7 +172,7 @@ var controller = {
 			
 			var query = "SELECT practitioner_communication_id, practitioner_communication_language, practitioner_communication_preferred FROM BACIRO_FHIR.practitioner_communication "  + fixCondition ;
 			
-      console.log(query);
+      //console.log(query);
       db.query(query,function(dataJson){
         rez = lowercaseObject(dataJson);
         for(i = 0; i < rez.length; i++){
@@ -391,8 +393,150 @@ var controller = {
           res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "addPractitionerCommunication"});
       });
     }
-  
-}
+	},
+	put:{
+		practitioner: function addPractitioner(req, res){
+			console.log(req);
+			var practitioner_id = req.params.practitioner_id;
+			var practitioner_active = req.body.active;
+			var practitioner_gender = req.body.gender;
+			var practitioner_birthDate = req.body.birthDate;
+			
+			var column = "";
+      var values = "";
+			
+			if(typeof practitioner_active !== 'undefined'){
+        column += 'practitioner_active,';
+        values += " " + practitioner_active +",";
+      }
+			
+			if(typeof practitioner_gender !== 'undefined'){
+        column += 'practitioner_gender,';
+        values += "'" + practitioner_gender +"',";
+      }
+			
+			if(typeof practitioner_birthDate !== 'undefined'){
+        column += 'practitioner_birthDate,';
+        values += "to_date('"+ practitioner_birthDate + "', 'yyyy-MM-dd'),";
+      }			
+			
+			var condition = "practitioner_id = '" + practitioner_id + "'";
+
+			var query = "UPSERT INTO BACIRO_FHIR.PRACTITIONER(practitioner_id," + column.slice(0, -1) + ") SELECT practitioner_id, " + values.slice(0, -1) + " FROM BACIRO_FHIR.PRACTITIONER WHERE " + condition;
+			console.log(query);
+      db.upsert(query,function(succes){
+        var query = "SELECT p.practitioner_id as practitioner_id, p.practitioner_active as practitioner_active, p.practitioner_gender as practitioner_gender, p.practitioner_birthdate as practitioner_birthdate FROM BACIRO_FHIR.PRACTITIONER p WHERE practitioner_id = '" + practitioner_id + "' ";
+        db.query(query,function(dataJson){
+          rez = lowercaseObject(dataJson);
+          res.json({"err_code":0,"data":rez});
+        },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "updatePractitioner"});
+        });
+      },function(e){
+          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "updatePractitioner"});
+      });
+    },
+		qualification: function addQualification(req, res){
+			var _id = req.params.qualification_id;
+			var qualification_code = req.body.code;
+			var organization_id = req.body.issuer;
+			var qualification_period_start = req.body.period_start;
+			var qualification_period_end = req.body.period_end;
+			var practitioner_id = req.body.practitioner_id;
+			var domainResource = req.params.dr;
+			
+			var column = "";
+      var values = "";
+			
+			if(typeof qualification_code !== 'undefined'){
+        column += 'qualification_code,';
+        values += "'" + qualification_code +"',";
+      }
+			
+			if(typeof qualification_period_end !== 'undefined'){
+        column += 'qualification_period_end,';
+        values += "to_date('"+ qualification_period_end + "', 'yyyy-MM-dd'),";
+      }
+
+      if(typeof qualification_period_start !== 'undefined'){
+        column += 'qualification_period_start,';
+        values += "to_date('"+ qualification_period_start + "', 'yyyy-MM-dd'),";
+      }
+			
+			if(typeof practitioner_id !== 'undefined'){
+        column += 'practitioner_id,';
+        values += "'" + practitioner_id +"',";
+      }
+			
+			var arrResource = domainResource.split('|');
+			var fieldResource = arrResource[0];
+			var valueResource = arrResource[1];
+			var condition = "qualification_id = '" + _id + "' AND " + fieldResource + " = '" + valueResource + "'";
+			
+			var query = "UPSERT INTO BACIRO_FHIR.QUALIFICATION(qualification_id," + column.slice(0, -1) + ") SELECT qualification_id, " + values.slice(0, -1) + " FROM BACIRO_FHIR.QUALIFICATION WHERE " + condition;
+			console.log(query);
+
+
+      db.upsert(query,function(succes){
+        var query = "SELECT q.qualification_id as qualification_id, q.qualification_code as qualification_code, q.qualification_period_start as qualification_period_start, q.qualification_period_end as qualification_period_end, q.practitioner_id as practitioner_id FROM BACIRO_FHIR.QUALIFICATION q WHERE q.qualification_id = '" + _id + "' ";
+        db.query(query,function(dataJson){
+          rez = lowercaseObject(dataJson);
+          res.json({"err_code":0,"data":rez});
+        },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "addQualification"});
+        });
+      },function(e){
+          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "addQualification"});
+      });
+    },
+		practitionerCommunication: function addPractitionerCommunication(req, res){
+			console.log(req.params);
+			console.log(req.body);
+			var _id = req.params.practitioner_communication_id;
+			var practitioner_communication_language = req.body.communication_language;
+			var practitioner_communication_preferred = req.body.communication_preferred;
+			var practitioner_id = req.body.practitioner_id;
+			var domainResource = req.params.dr;
+			
+			var column = "";
+      var values = "";
+			
+			if(typeof practitioner_communication_language !== 'undefined'){
+        column += 'practitioner_communication_language,';
+        values += "'" + practitioner_communication_language +"',";
+      }
+			
+			if(typeof practitioner_communication_preferred !== 'undefined'){
+        column += 'practitioner_communication_preferred,';
+        values += "" + practitioner_communication_preferred +",";
+      }
+			
+			if(typeof practitioner_id !== 'undefined'){
+        column += 'practitioner_id,';
+        values += "'" + practitioner_id +"',";
+      }
+			
+			var arrResource = domainResource.split('|');
+			var fieldResource = arrResource[0];
+			var valueResource = arrResource[1];
+			var condition = "practitioner_communication_id = '" + _id + "' AND " + fieldResource + " = '" + valueResource + "'";
+			
+			var query = "UPSERT INTO BACIRO_FHIR.PRACTITIONER_COMMUNICATION(practitioner_communication_id," + column.slice(0, -1) + ") SELECT practitioner_communication_id, " + values.slice(0, -1) + " FROM BACIRO_FHIR.PRACTITIONER_COMMUNICATION WHERE " + condition;
+			console.log(query);
+
+      db.upsert(query,function(succes){
+        var query = "SELECT practitioner_communication_id, practitioner_communication_language, practitioner_communication_preferred, practitioner_id FROM BACIRO_FHIR.PRACTITIONER_COMMUNICATION WHERE practitioner_communication_id = '" + _id + "' ";
+        db.query(query,function(dataJson){
+          rez = lowercaseObject(dataJson);
+          res.json({"err_code":0,"data":rez});
+        },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "addPractitionerCommunication"});
+        });
+      },function(e){
+          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "addPractitionerCommunication"});
+      });
+    }
+	}
 }
 function lowercaseObject(jsonData){
   var rez = [];

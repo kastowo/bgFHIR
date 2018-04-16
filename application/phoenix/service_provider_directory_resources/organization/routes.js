@@ -6,7 +6,7 @@ var routesOrganization = function(app, Organization){
 	app.post('/:apikey/OrganizationContact', Organization.post.organizationContact);
 	
 	app.put('/:apikey/Organization/:organization_id?', Organization.put.organization);
-	app.put('/:apikey/OrganizationContact/:organization_contact_id?', Organization.put.organizationContact);
+	app.put('/:apikey/OrganizationContact/:organization_contact_id?/:dr?', Organization.put.organizationContact);
 	
 }
 module.exports = routesOrganization;

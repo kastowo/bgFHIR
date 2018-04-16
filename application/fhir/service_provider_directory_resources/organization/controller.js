@@ -2777,12 +2777,13 @@ var controller = {
 							checkUniqeValue(apikey, "ORGANIZATION_CONTACT_ID|" + organizationContactId, 'ORGANIZATION_CONTACT', function(resOrganizationID){
 								if(resOrganizationID.err_code > 0){
 									//console.log(dataEndpoint);
-										ApiFHIR.put('organizationContact', {"apikey": apikey, "_id": organizationContactId}, {body: dataOrganization, json: true}, function(error, response, body){
+										ApiFHIR.put('organizationContact', {"apikey": apikey, "_id": organizationContactId, "dr": "ORGANIZATION_ID|"+organizationId}, {body: dataOrganization, json: true}, function(error, response, body){
+											console.log(body);
 											organization = body;
 											if(organization.err_code > 0){
 												res.json(organization);	
 											}else{
-												res.json({"err_code": 0, "err_msg": "Organization Contact has been update.", "data": [{"_id": organizationId}]});
+												res.json({"err_code": 0, "err_msg": "Organization Contact has been update.", "data": [{"_id": organizationContactId}]});
 											}
 										})
 								}else{

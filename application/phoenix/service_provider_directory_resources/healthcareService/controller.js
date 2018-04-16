@@ -89,7 +89,7 @@ var controller = {
       }
 			      
       
-			var query = "select hs.healthcare_service_id as healthcare_service_id, healthcare_service_active, hs.organization_id as providedBy, healthcare_service_category, healthcare_service_type, healthcare_service_specialty, l.location_id as location_id, ca.location_id as coverage_area, healthcare_service_name, healthcare_service_comment, healthcare_service_extra_details, hs.attachment_id as attachment_id, healthcare_service_service_provision_code,healthcare_service_eligibility, healthcare_service_eligibility_note, healthcare_service_program_name, healthcare_service_characteristic, healthcare_service_referral_method, healthcare_service_appointegerment_required, pr.practitioner_role_availability_exceptions as practitioner_role_availability_exceptions, ep.endpoint_id as endpoint_id from BACIRO_FHIR.HEALTHCARE_SERVICE hs LEFT JOIN BACIRO_FHIR.location l ON l.LOCATION_HEALTHCARE_SERVICE_LOCATION = hs.healthcare_service_id LEFT JOIN BACIRO_FHIR.location ca ON ca.LOCATION_HEALTHCARE_SERVICE_COVERAGE_AREA = hs.healthcare_service_id LEFT JOIN BACIRO_FHIR.practitioner_role pr ON pr.PRACTITIONER_ROLE_ID = hs.PRACTITIONER_ROLE_ID LEFT JOIN BACIRO_FHIR.endpoint ep ON ep.healthcare_service_id = hs.healthcare_service_id " + fixCondition;
+			var query = "select hs.healthcare_service_id as healthcare_service_id, healthcare_service_active, hs.organization_id as organization_id, healthcare_service_category, healthcare_service_type, healthcare_service_specialty, l.location_id as location_id, ca.location_id as coverage_area, healthcare_service_name, healthcare_service_comment, healthcare_service_extra_details, hs.attachment_id as attachment_id, healthcare_service_service_provision_code,healthcare_service_eligibility, healthcare_service_eligibility_note, healthcare_service_program_name, healthcare_service_characteristic, healthcare_service_referral_method, healthcare_service_appointegerment_required, pr.practitioner_role_availability_exceptions as practitioner_role_availability_exceptions, ep.endpoint_id as endpoint_id from BACIRO_FHIR.HEALTHCARE_SERVICE hs LEFT JOIN BACIRO_FHIR.location l ON l.LOCATION_HEALTHCARE_SERVICE_LOCATION = hs.healthcare_service_id LEFT JOIN BACIRO_FHIR.location ca ON ca.LOCATION_HEALTHCARE_SERVICE_COVERAGE_AREA = hs.healthcare_service_id LEFT JOIN BACIRO_FHIR.practitioner_role pr ON pr.PRACTITIONER_ROLE_ID = hs.PRACTITIONER_ROLE_ID LEFT JOIN BACIRO_FHIR.endpoint ep ON ep.healthcare_service_id = hs.healthcare_service_id " + fixCondition;
 			
       console.log(query);
 			var arrHealthcareService = [];
@@ -99,8 +99,8 @@ var controller = {
           var HealthcareService = {};
 					HealthcareService.resourceType = "HealthcareService";
           HealthcareService.id = rez[i].healthcare_service_id;
-          HealthcareService.active = rez[i].practitioner_role_active;
-					HealthcareService.providedBy = rez[i].providedBy;
+          HealthcareService.active = rez[i].healthcare_service_active;
+					HealthcareService.providedBy = rez[i].organization_id;
 					HealthcareService.category = rez[i].healthcare_service_category;
 					HealthcareService.type = rez[i].healthcare_service_type;
 					HealthcareService.specialty = rez[i].healthcare_service_specialty;
@@ -461,6 +461,154 @@ var controller = {
       });
     }
   
+	},
+	put:{
+		healthcareService: function updateHealthcareService(req, res){
+			console.log(req.params);
+			console.log(req.body);
+			var healthcare_service_id = req.params.healthcare_service_id;
+			//var healthcare_service_id = req.body.id;
+			var healthcare_service_active = req.body.active;
+			var healthcare_service_category = req.body.category;
+			var healthcare_service_type = req.body.type;
+			var healthcare_service_specialty = req.body.specialty;
+			var healthcare_service_name = req.body.name;
+			var healthcare_service_comment = req.body.comment;
+			var healthcare_service_extra_details = req.body.extraDetails;
+			var healthcare_service_service_provision_code = req.body.serviceProvisionCode;
+			var healthcare_service_eligibility = req.body.eligibility;
+			var healthcare_service_eligibility_note = req.body.eligibilityNote;
+			var healthcare_service_program_name = req.body.programName;
+			var healthcare_service_characteristic = req.body.characteristic;
+			var healthcare_service_referral_method = req.body.referralMethod;
+			var healthcare_service_appointegerment_required = req.body.appointmentRequired;
+			var healthcare_service_availability_exceptions = req.body.availabilityExceptions;
+			var organization_id = req.body.providedBy;
+			var attachment_id = req.body.attachmentId;
+			var location_id = req.body.location;
+			var location_coverageArea = req.body.coverageArea;
+			var endpoint_id = req.body.endpoint;
+			
+			var column = "";
+      var values = "";
+			
+			if(typeof healthcare_service_active !== 'undefined'){
+        column += 'healthcare_service_active,';
+        values += " " + healthcare_service_active +",";
+      }
+			
+			if(typeof healthcare_service_category !== 'undefined'){
+        column += 'healthcare_service_category,';
+        values += "'" + healthcare_service_category +"',";
+      }
+			
+			if(typeof healthcare_service_type !== 'undefined'){
+        column += 'healthcare_service_type,';
+        values += "'" + healthcare_service_type +"',";
+      }
+			
+			if(typeof healthcare_service_specialty !== 'undefined'){
+        column += 'healthcare_service_specialty,';
+        values += "'" + healthcare_service_specialty +"',";
+      }
+			
+			if(typeof healthcare_service_name !== 'undefined'){
+        column += 'healthcare_service_name,';
+        values += "'" + healthcare_service_name +"',";
+      }
+			
+			if(typeof healthcare_service_comment !== 'undefined'){
+        column += 'healthcare_service_comment,';
+        values += "'" + healthcare_service_comment +"',";
+      }
+			
+			if(typeof healthcare_service_extra_details !== 'undefined'){
+        column += 'healthcare_service_extra_details,';
+        values += "'" + healthcare_service_extra_details +"',";
+      }
+			
+			if(typeof healthcare_service_service_provision_code !== 'undefined'){
+        column += 'healthcare_service_service_provision_code,';
+        values += "'" + healthcare_service_service_provision_code +"',";
+      }
+			
+			if(typeof healthcare_service_eligibility !== 'undefined'){
+        column += ',';
+        values += "'" + healthcare_service_eligibility +"',";
+      }
+			
+			if(typeof healthcare_service_eligibility_note !== 'undefined'){
+        column += 'healthcare_service_eligibility_note,';
+        values += "'" + healthcare_service_eligibility_note +"',";
+      }
+			
+			if(typeof healthcare_service_program_name !== 'undefined'){
+        column += 'healthcare_service_program_name,';
+        values += "'" + healthcare_service_program_name +"',";
+      }
+			
+			if(typeof healthcare_service_characteristic !== 'undefined'){
+        column += 'healthcare_service_characteristic,';
+        values += "'" + healthcare_service_characteristic +"',";
+      }
+			
+			if(typeof healthcare_service_referral_method !== 'undefined'){
+        column += 'healthcare_service_referral_method,';
+        values += "'" + healthcare_service_referral_method +"',";
+      }
+			
+			if(typeof healthcare_service_appointegerment_required !== 'undefined'){
+        column += 'healthcare_service_appointegerment_required,';
+        values += "" + healthcare_service_appointegerment_required +",";
+      }
+			
+			if(typeof healthcare_service_availability_exceptions !== 'undefined'){
+        column += 'healthcare_service_availability_exceptions,';
+        values += "'" + healthcare_service_availability_exceptions +"',";
+      }
+			
+			if(typeof organization_id !== 'undefined'){
+        column += 'organization_id,';
+        values += "'" + organization_id +"',";
+      }
+			
+			if(typeof attachment_id !== 'undefined'){
+        column += 'attachment_id,';
+        values += "'" + attachment_id +"',";
+      }
+			
+			/*if(typeof location_id !== 'undefined'){
+        column += 'location_id,';
+        values += "'" + location_id +"',";
+      }
+			
+			if(typeof location_coverageArea !== 'undefined'){
+        column += 'location_id,';
+        values += "'" + location_coverageArea +"',";
+      }
+			
+			if(typeof endpoint_id !== 'undefined'){
+        column += 'endpoint_id,';
+        values += "'" + endpoint_id +"',";
+      }*/
+			
+			var condition = "healthcare_service_id = '" + healthcare_service_id + "'";
+			
+			var query = "UPSERT INTO BACIRO_FHIR.HEALTHCARE_SERVICE(healthcare_service_id," + column.slice(0, -1) + ") SELECT healthcare_service_id, " + values.slice(0, -1) + " FROM BACIRO_FHIR.HEALTHCARE_SERVICE WHERE " + condition;
+			console.log(query);
+			
+      db.upsert(query,function(succes){
+				var query5 = "SELECT healthcare_service_id, healthcare_service_active, healthcare_service_category, healthcare_service_type, healthcare_service_specialty, healthcare_service_name, healthcare_service_comment, healthcare_service_extra_details, healthcare_service_service_provision_code, healthcare_service_eligibility,healthcare_service_eligibility_note, healthcare_service_program_name,healthcare_service_characteristic, healthcare_service_referral_method, healthcare_service_appointegerment_required, healthcare_service_availability_exceptions, organization_id, attachment_id FROM BACIRO_FHIR.HEALTHCARE_SERVICE  WHERE healthcare_service_id = '" + healthcare_service_id + "' ";
+				db.query(query5,function(dataJson){
+					rez = lowercaseObject(dataJson);
+					res.json({"err_code":0,"data":rez});
+				},function(e){
+					res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "updateHealthcareService"});
+				});	
+      },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "updateHealthcareService"});
+      });
+    }
 	}
 }
 function lowercaseObject(jsonData){
