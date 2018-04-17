@@ -7196,7 +7196,7 @@ var controller = {
 		contactentityTypeCode: function getContactentityTypeCode(req, res){
 			var ipAddres = req.connection.remoteAddress;
 			var apikey = req.params.apikey;
-			var code = req.params.code.replace(/[^\w\s ,]/gi, '').trim().toLowerCase();
+			var code = req.params.code.replace(/[^\w\s ,]/gi, '').trim().toUpperCase();
 
 			if(code == "" || typeof code == 'undefined'){
 				res.json({"err_code": 4, "err_msg": "Code is required."});
@@ -7396,7 +7396,7 @@ var controller = {
 		bedStatusCode: function getBedStatusCode(req, res){
 			var ipAddres = req.connection.remoteAddress;
 			var apikey = req.params.apikey;
-			var code = req.params.code.replace(/[^\w\s ,]/gi, '').trim().toLowerCase();
+			var code = req.params.code.replace(/[^\w\s ,]/gi, '').trim().toUpperCase();
 
 			if(code == "" || typeof code == 'undefined'){
 				res.json({"err_code": 4, "err_msg": "Code is required."});
@@ -7596,7 +7596,7 @@ var controller = {
 		serviceDeliveryLocationRoleTypeCode: function getServiceDeliveryLocationRoleTypeCode(req, res){
 			var ipAddres = req.connection.remoteAddress;
 			var apikey = req.params.apikey;
-			var code = req.params.code.replace(/[^\w\s ,]/gi, '').trim().toLowerCase();
+			var code = req.params.code.replace(/[^\w\s ,]/gi, '').trim().toUpperCase();
 
 			if(code == "" || typeof code == 'undefined'){
 				res.json({"err_code": 4, "err_msg": "Code is required."});
@@ -7792,7 +7792,7 @@ var controller = {
 		qualificationCodeCode: function getQualificationCodeCode(req, res){
 			var ipAddres = req.connection.remoteAddress;
 			var apikey = req.params.apikey;
-			var code = req.params.code.replace(/[^\w\s ,]/gi, '').trim().toLowerCase();
+			var code = req.params.code.replace(/[^\w\s ,]/gi, '').trim().toUpperCase();
 
 			if(code == "" || typeof code == 'undefined'){
 				res.json({"err_code": 4, "err_msg": "Code is required."});
@@ -8769,9 +8769,10 @@ var controller = {
 			});
 		},
 		endpointPayloadTypeCode: function getEndpointPayloadTypeCode(req, res){
-			var ipAddres = req.Payload.remoteAddress;
+			var ipAddres = req.connection.remoteAddress;
 			var apikey = req.params.apikey;
-			var code = req.params.code.replace(/[^\w\s ,]/gi, '').trim().toLowerCase();
+			//var code = req.params.code.replace(/[^\w\s ,]/gi, '').trim().toLowerCase();
+			var code = req.params.code.trim().toLowerCase();
 
 			if(code == "" || typeof code == 'undefined'){
 				res.json({"err_code": 4, "err_msg": "Code is required."});
@@ -20094,7 +20095,7 @@ var controller = {
 													  	
 													  	//cek apakah ada error atau tidak
 													  	if(locationPhysicalType.err_code == 0){
-														  	res.json({"err_code": 0, "err_msg": "Location Mode has been update.","data":locationPhysicalType.data});
+														  	res.json({"err_code": 0, "err_msg": "Location physical type has been update.","data":locationPhysicalType.data});
 													  	}else{
 													  		res.json({"err_code": 3, "err_msg": locationPhysicalType.error, "application": "Api FHIR", "function": "updateLocationPhysicalType"});
 													  	}
@@ -20115,7 +20116,7 @@ var controller = {
 											  	
 											  	//cek apakah ada error atau tidak
 											  	if(locationPhysicalType.err_code == 0){
-												  	res.json({"err_code": 0, "err_msg": "Location Mode has been update.","data":locationPhysicalType.data});
+												  	res.json({"err_code": 0, "err_msg": "Location physical type has been update.","data":locationPhysicalType.data});
 											  	}else{
 											  		res.json({"err_code": 3, "err_msg": locationPhysicalType.error, "application": "Api FHIR", "function": "updateLocationPhysicalType"});
 											  	}

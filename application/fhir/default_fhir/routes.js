@@ -102,7 +102,7 @@ var routesDefaultFHIR = function(app, DefaultFHIR){
 	app.get('/:apikey/location-mode/:_id?', DefaultFHIR.get.locationMode);
 	app.get('/:apikey/location-mode/code/:code?', DefaultFHIR.get.locationModeCode);
 	app.get('/:apikey/service-delivery-location-role-type/:_id?', DefaultFHIR.get.serviceDeliveryLocationRoleType);
-	app.get('/:apikey/service-delivery-location-role-type/code/:code?', DefaultFHIR.get.serviceDeliveryLocationRoleType);
+	app.get('/:apikey/service-delivery-location-role-type/code/:code?', DefaultFHIR.get.serviceDeliveryLocationRoleTypeCode);
 	app.get('/:apikey/location-physical-type/:_id?', DefaultFHIR.get.locationPhysicalType);
 	app.get('/:apikey/location-physical-type/code/:code?', DefaultFHIR.get.locationPhysicalTypeCode);
 	app.get('/:apikey/qualification-code/:_id?', DefaultFHIR.get.qualificationCode);
