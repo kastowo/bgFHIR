@@ -46,6 +46,14 @@ var ClinicalCategorizationResources = require("./clinical_categorization_resourc
 //import devices_and_substances module
 var Device = require("./devices_and_substances/device/controller");
 
+//import service_provider_directory_resources
+var Organization = require("./service_provider_directory_resources/organization/controller");
+var Endpoint = require("./service_provider_directory_resources/endpoint/controller");
+var Location = require("./service_provider_directory_resources/location/controller");
+var Practitioner = require("./service_provider_directory_resources/practitioner/controller");
+var PractitionerRole = require("./service_provider_directory_resources/practitionerRole/controller");
+var HealthcareService = require("./service_provider_directory_resources/healthcareService/controller");
+
 //import routes
 var routesDefaultFHIR	= require('./default_fhir/routes');
 
@@ -59,6 +67,12 @@ var routesSlot		= require('./scheduling_and_appointments/slot/routes');
 var routesAppointment	= require('./scheduling_and_appointments/appointment/routes');
 var routesAppointmentResponse		= require('./scheduling_and_appointments/appointment_response/routes');
 var routesDevice 		= require("./devices_and_substances/device/routes");
+var routesOrganization = require('./service_provider_directory_resources/organization/routes');
+var routesEndpoint = require('./service_provider_directory_resources/endpoint/routes');
+var routesLocation = require('./service_provider_directory_resources/location/routes');
+var routesPractitioner = require('./service_provider_directory_resources/practitioner/routes');
+var routesPractitionerRole = require('./service_provider_directory_resources/practitionerRole/routes');
+var routesHealthcareService = require('./service_provider_directory_resources/healthcareService/routes');
 
 //setrouting
 routesDefaultFHIR(app, DefaultFHIR);
@@ -72,6 +86,12 @@ routesSlot(app, Slot);
 routesAppointment(app, Appointment);
 routesAppointmentResponse(app, AppointmentResponse);
 routesDevice(app, Device);
+routesOrganization(app, Organization);
+routesEndpoint(app, Endpoint);
+routesLocation(app, Location);
+routesPractitioner(app, Practitioner);
+routesPractitionerRole(app, PractitionerRole);
+routesHealthcareService(app, HealthcareService);
 
 var server = app.listen(port, host, function () {
   console.log("Server running at http://%s:%s", host, port);

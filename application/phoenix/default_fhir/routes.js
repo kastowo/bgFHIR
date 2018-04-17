@@ -132,7 +132,45 @@ var routesDefaultFHIR = function(app, DefaultFHIR){
 	app.get('/:apikey/substance-category/code/:code', DefaultFHIR.get.substanceCategoryCode);
 	app.get('/:apikey/substance-code/:_id', DefaultFHIR.get.substanceCode);
 	app.get('/:apikey/substance-code/code/:code', DefaultFHIR.get.substanceCodeCode);
-
+	app.get('/:apikey/organization-type/:_id', DefaultFHIR.get.organizationType);
+	app.get('/:apikey/organization-type/code/:code', DefaultFHIR.get.organizationTypeCode);
+	app.get('/:apikey/contactentity-type/:_id', DefaultFHIR.get.contactentityType);
+	app.get('/:apikey/contactentity-type/code/:code', DefaultFHIR.get.contactentityTypeCode);
+	app.get('/:apikey/location-status/:_id', DefaultFHIR.get.locationStatus);
+	app.get('/:apikey/location-status/code/:code', DefaultFHIR.get.locationStatusCode);
+	app.get('/:apikey/bed-status/:_id', DefaultFHIR.get.bedStatus);
+	app.get('/:apikey/bed-status/code/:code', DefaultFHIR.get.bedStatusCode);
+	app.get('/:apikey/location-mode/:_id', DefaultFHIR.get.locationMode);
+	app.get('/:apikey/location-mode/code/:code', DefaultFHIR.get.locationModeCode);
+	app.get('/:apikey/service-delivery-location-role-type/:_id', DefaultFHIR.get.serviceDeliveryLocationRoleType);
+	app.get('/:apikey/service-delivery-location-role-type/code/:code', DefaultFHIR.get.serviceDeliveryLocationRoleTypeCode);
+	app.get('/:apikey/location-physical-type/:_id', DefaultFHIR.get.locationPhysicalType);
+	app.get('/:apikey/location-physical-type/code/:code', DefaultFHIR.get.locationPhysicalTypeCode);
+	app.get('/:apikey/qualification-code/:_id', DefaultFHIR.get.qualificationCode);
+	app.get('/:apikey/qualification-code/code/:code', DefaultFHIR.get.qualificationCodeCode);
+	app.get('/:apikey/practitioner-role-code/:_id', DefaultFHIR.get.practitionerRoleCode);
+	app.get('/:apikey/practitioner-role-code/code/:code', DefaultFHIR.get.practitionerRoleCodeCode);
+	app.get('/:apikey/practice-code/:_id', DefaultFHIR.get.practiceCode);
+	app.get('/:apikey/practice-code/code/:code', DefaultFHIR.get.practiceCodeCode);
+	app.get('/:apikey/days-of-week/:_id', DefaultFHIR.get.daysOfWeek);
+	app.get('/:apikey/days-of-week/code/:code', DefaultFHIR.get.daysOfWeekCode);
+	app.get('/:apikey/service-category/:_id', DefaultFHIR.get.serviceCategory);
+	app.get('/:apikey/service-category/code/:code', DefaultFHIR.get.serviceCategoryCode);
+	app.get('/:apikey/service-type/:_id', DefaultFHIR.get.serviceType);
+	app.get('/:apikey/service-type/code/:code', DefaultFHIR.get.serviceTypeCode);
+	app.get('/:apikey/service-provision-conditions/:_id', DefaultFHIR.get.serviceProvisionConditions);
+	app.get('/:apikey/service-provision-conditions/code/:code', DefaultFHIR.get.serviceProvisionConditionsCode);
+	app.get('/:apikey/service-referral-method/:_id', DefaultFHIR.get.serviceReferralMethod);
+	app.get('/:apikey/service-referral-method/code/:code', DefaultFHIR.get.serviceReferralMethodCode);
+	app.get('/:apikey/endpoint-status/:_id', DefaultFHIR.get.endpointStatus);
+	app.get('/:apikey/endpoint-status/code/:code', DefaultFHIR.get.endpointStatusCode);
+	app.get('/:apikey/endpoint-connection-type/:_id', DefaultFHIR.get.endpointConnectionType);
+	app.get('/:apikey/endpoint-connection-type/code/:code', DefaultFHIR.get.endpointConnectionTypeCode);
+	app.get('/:apikey/endpoint-payload-type/:_id', DefaultFHIR.get.endpointPayloadType);
+	app.get('/:apikey/endpoint-payload-type/code/:code', DefaultFHIR.get.endpointPayloadTypeCode);
+	app.get('/:apikey/AvailableTime', DefaultFHIR.get.availableTime);
+	app.get('/:apikey/NotAvailable', DefaultFHIR.get.notAvailable);
+	
 	//post
 	app.post('/:apikey/identity-AssuranceLevel', DefaultFHIR.post.identityAssuranceLevel);
 	app.post('/:apikey/administrative-gender', DefaultFHIR.post.administrativeGender);
@@ -199,6 +237,26 @@ var routesDefaultFHIR = function(app, DefaultFHIR){
 	app.post('/:apikey/metric-calibration-state', DefaultFHIR.post.metricCalibrationState);
 	app.post('/:apikey/substance-category', DefaultFHIR.post.substanceCategory);
 	app.post('/:apikey/substance-code', DefaultFHIR.post.substanceCode);
+	app.post('/:apikey/organization-type', DefaultFHIR.post.organizationType);
+	app.post('/:apikey/contactentity-type', DefaultFHIR.post.contactentityType);
+	app.post('/:apikey/location-status', DefaultFHIR.post.locationStatus);
+	app.post('/:apikey/bed-status', DefaultFHIR.post.bedStatus);
+	app.post('/:apikey/location-mode', DefaultFHIR.post.locationMode);
+	app.post('/:apikey/service-delivery-location-role-type', DefaultFHIR.post.serviceDeliveryLocationRoleType);
+	app.post('/:apikey/location-physical-type', DefaultFHIR.post.locationPhysicalType);
+	app.post('/:apikey/qualification-code', DefaultFHIR.post.qualificationCode);
+	app.post('/:apikey/practitioner-role-code', DefaultFHIR.post.practitionerRoleCode);
+	app.post('/:apikey/practice-code', DefaultFHIR.post.practiceCode);
+	app.post('/:apikey/days-of-week', DefaultFHIR.post.daysOfWeek);
+	app.post('/:apikey/service-category', DefaultFHIR.post.serviceCategory);
+	app.post('/:apikey/service-type', DefaultFHIR.post.serviceType);
+	app.post('/:apikey/service-provision-conditions', DefaultFHIR.post.serviceProvisionConditions);
+	app.post('/:apikey/service-referral-method', DefaultFHIR.post.serviceReferralMethod);
+	app.post('/:apikey/endpoint-status', DefaultFHIR.post.endpointStatus);
+	app.post('/:apikey/endpoint-connection-type', DefaultFHIR.post.endpointConnectionType);
+	app.post('/:apikey/endpoint-payload-type', DefaultFHIR.post.endpointPayloadType);
+	app.post('/:apikey/AvailableTime', DefaultFHIR.post.availableTime);
+	app.post('/:apikey/NotAvailable', DefaultFHIR.post.notAvailable);
 
 	//put
 	app.put('/:apikey/identity-AssuranceLevel/:_id', DefaultFHIR.put.identityAssuranceLevel);
@@ -268,6 +326,26 @@ var routesDefaultFHIR = function(app, DefaultFHIR){
 	app.put('/:apikey/substance-status/:_id', DefaultFHIR.put.substanceStatus);
 	app.put('/:apikey/substance-category/:_id', DefaultFHIR.put.substanceCategory);
 	app.put('/:apikey/substance-code/:_id', DefaultFHIR.put.substanceCode);
+	app.put('/:apikey/organization-type/:_id', DefaultFHIR.put.organizationType);
+	app.put('/:apikey/contactentity-type/:_id', DefaultFHIR.put.contactentityType);
+	app.put('/:apikey/location-status/:_id', DefaultFHIR.put.locationStatus);
+	app.put('/:apikey/bed-status/:_id', DefaultFHIR.put.bedStatus);
+	app.put('/:apikey/location-mode/:_id', DefaultFHIR.put.locationMode);
+	app.put('/:apikey/service-delivery-location-role-type/:_id', DefaultFHIR.put.serviceDeliveryLocationRoleType);
+	app.put('/:apikey/location-physical-type/:_id', DefaultFHIR.put.locationPhysicalType);
+	app.put('/:apikey/qualification-code/:_id', DefaultFHIR.put.qualificationCode);
+	app.put('/:apikey/practitioner-role-code/:_id', DefaultFHIR.put.practitionerRoleCode);
+	app.put('/:apikey/practice-code/:_id', DefaultFHIR.put.practiceCode);
+	app.put('/:apikey/days-of-week/:_id', DefaultFHIR.put.daysOfWeek);
+	app.put('/:apikey/service-category/:_id', DefaultFHIR.put.serviceCategory);
+	app.put('/:apikey/service-type/:_id', DefaultFHIR.put.serviceType);
+	app.put('/:apikey/service-provision-conditions/:_id', DefaultFHIR.put.serviceProvisionConditions);
+	app.put('/:apikey/service-referral-method/:_id', DefaultFHIR.put.serviceReferralMethod);
+	app.put('/:apikey/endpoint-status/:_id', DefaultFHIR.put.endpointStatus);
+	app.put('/:apikey/endpoint-connection-type/:_id', DefaultFHIR.put.endpointConnectionType);
+	app.put('/:apikey/endpoint-payload-type/:_id', DefaultFHIR.put.endpointPayloadType);
+	app.put('/:apikey/AvailableTime/:_id?/:dr?', DefaultFHIR.put.availableTime);
+	app.put('/:apikey/NotAvailable/:_id?/:dr?', DefaultFHIR.put.notAvailable);
 	
 
 }
