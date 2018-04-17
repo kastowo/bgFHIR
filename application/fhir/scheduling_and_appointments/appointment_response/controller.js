@@ -577,7 +577,7 @@ var controller = {
 						//check apikey
 						checkApikey(apikey, ipAddres, function(result){
 							if(result.err_code == 0){
-								myEmitter.prependListener('updateAppointmentResponse', function(){
+								myEmitter.prependOnceListener('updateAppointmentResponse', function(){
 									checkUniqeValue(apikey, "APPOINTMENT_RESPONSE_ID|" + appointmentResponseId, 'APPOINTMENT_RESPONSE', function(resAppointmentResponseID){
 										if(resAppointmentResponseID.err_code > 0){
 												ApiFHIR.put('appointmentResponse', {"apikey": apikey, "_id": appointmentResponseId}, {body: dataAppointmentResponse, json: true}, function(error, response, body){

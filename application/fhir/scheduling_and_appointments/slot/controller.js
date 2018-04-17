@@ -452,7 +452,7 @@ var controller = {
 						//check apikey
 						checkApikey(apikey, ipAddres, function(result){
 							if(result.err_code == 0){
-								myEmitter.prependListener('updateSlot', function(){
+								myEmitter.prependOnceListener('updateSlot', function(){
 									checkUniqeValue(apikey, "SLOT_ID|" + slotId, 'SLOT', function(resSlotID){
 										if(resSlotID.err_code > 0){
 												ApiFHIR.put('slot', {"apikey": apikey, "_id": slotId}, {body: dataSlot, json: true}, function(error, response, body){

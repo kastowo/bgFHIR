@@ -950,7 +950,7 @@ var controller = {
 				//check apikey
 				checkApikey(apikey, ipAddres, function(result){
 					if(result.err_code == 0){	
-						myEmitter.prependListener('updateGroup', function(){
+						myEmitter.prependOnceListener('updateGroup', function(){
 							checkUniqeValue(apikey, "GROUP_ID|" + groupId, 'GROUP_', function(resultCheckId){
 								if(resultCheckId.err_code > 0){ //menunjukan data tersebut ada, 
 									ApiFHIR.put('group', {"apikey": apikey, "_id": groupId}, {body: dataGroup, json: true}, function(error, response, body){
@@ -967,7 +967,7 @@ var controller = {
 							})
 						})
 
-						myEmitter.prependListener('checkGroupCode', function(){
+						myEmitter.prependOnceListener('checkGroupCode', function(){
 							if(!validator.isEmpty(groupCode)){
 								checkUniqeValue(apikey, "GROUP_CODE|" + groupCode, 'GROUP_', function(resGroupCode){
 									if(resGroupCode.err_code == 0){
@@ -1134,7 +1134,7 @@ var controller = {
 				//check apikey
 				checkApikey(apikey, ipAddres, function(result){
 					if(result.err_code == 0){	
-						myEmitter.prependListener('updateGroupMember', function(){
+						myEmitter.prependOnceListener('updateGroupMember', function(){
 							checkUniqeValue(apikey, "GROUP_ID|" + groupId, 'GROUP_', function(resultCheckId){
 								if(resultCheckId.err_code > 0){ //menunjukan data tersebut ada, 
 									checkUniqeValue(apikey, "GROUP_MEMBER_ID|" + groupMemberId, 'GROUP_MEMBER', function(resGroupMemberId){

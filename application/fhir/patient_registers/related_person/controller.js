@@ -2409,7 +2409,7 @@ var controller = {
 						//check apikey
 						checkApikey(apikey, ipAddres, function(result){
 							if(result.err_code == 0){	
-								myEmitter.prependListener('updateRelatedPerson', function(){
+								myEmitter.prependOnceListener('updateRelatedPerson', function(){
 									ApiFHIR.put('relatedPerson', {"apikey": apikey, "_id": relatedPersonId}, {body: dataRelatedPerson, json: true}, function(error, response, body){
 				  					relatedPerson = body;
 				  					if(relatedPerson.err_code > 0){
@@ -2420,7 +2420,7 @@ var controller = {
 				  				})
 								})
 								
-								myEmitter.prependListener('checkRelatedPersonID', function(){
+								myEmitter.prependOnceListener('checkRelatedPersonID', function(){
 									checkUniqeValue(apikey, "RELATED_PERSON_ID|" + relatedPersonId, 'RELATED_PERSON', function(resRelatedPersonId){
 										if(resRelatedPersonId.err_code > 0){ //menunjukan data patient valid
 											if(validator.isEmpty(patientId)){
@@ -2441,7 +2441,7 @@ var controller = {
 								})
 							
 
-								myEmitter.prependListener('checkGender', function(){
+								myEmitter.prependOnceListener('checkGender', function(){
 									if(validator.isEmpty(relationshipCode)){
 										myEmitter.emit('checkRelatedPersonID');
 									}else{
@@ -2574,7 +2574,7 @@ var controller = {
 						//check apikey
 						checkApikey(apikey, ipAddres, function(result){
 							if(result.err_code == 0){
-								myEmitter.prependListener('checkRelatedPersonID', function(){
+								myEmitter.prependOnceListener('checkRelatedPersonID', function(){
 									checkUniqeValue(apikey, "RELATED_PERSON_ID|" + relatedPersonId, 'RELATED_PERSON', function(resRelatedPersonID){
 										if(resRelatedPersonID.err_code > 0){
 											checkUniqeValue(apikey, "IDENTIFIER_ID|" + identifierId, 'IDENTIFIER', function(resIdentifierID){
@@ -2597,7 +2597,7 @@ var controller = {
 									})
 								})
 
-								myEmitter.prependListener('checkIdentifierValue', function(){
+								myEmitter.prependOnceListener('checkIdentifierValue', function(){
 									if(validator.isEmpty(identifierValue)){
 										myEmitter.emit('checkRelatedPersonID');
 									}else{
@@ -2611,7 +2611,7 @@ var controller = {
 									}
 								})
 
-								myEmitter.prependListener('checkIdentifierType', function(){
+								myEmitter.prependOnceListener('checkIdentifierType', function(){
 									if(validator.isEmpty(identifierTypeCode)){
 										myEmitter.emit('checkIdentifierValue');
 									}else{
@@ -2913,7 +2913,7 @@ var controller = {
 						//check apikey
 						checkApikey(apikey, ipAddres, function(result){
 							if(result.err_code == 0){
-								myEmitter.prependListener('checkRelatedPersonID', function(){
+								myEmitter.prependOnceListener('checkRelatedPersonID', function(){
 									checkUniqeValue(apikey, "RELATED_PERSON_ID|" + relatedPersonId, 'RELATED_PERSON', function(resRelatedPersonID){
 										if(resRelatedPersonID.err_code > 0){
 											checkUniqeValue(apikey, "CONTACT_POINT_ID|" + contactPointId, 'CONTACT_POINT', function(resContactPointID){
@@ -2936,7 +2936,7 @@ var controller = {
 									})
 								})
 
-								myEmitter.prependListener('checkContactPointValue', function(){
+								myEmitter.prependOnceListener('checkContactPointValue', function(){
 									if(validator.isEmpty(contactPointValue)){
 										myEmitter.emit('checkRelatedPersonID');
 									}else{
@@ -2950,7 +2950,7 @@ var controller = {
 									}
 								})
 
-								myEmitter.prependListener('checkContactPointUse', function(){
+								myEmitter.prependOnceListener('checkContactPointUse', function(){
 									if(validator.isEmpty(contactPointUseCode)){
 										myEmitter.emit('checkContactPointValue');
 									}else{
@@ -3139,7 +3139,7 @@ var controller = {
 						//check apikey
 						checkApikey(apikey, ipAddres, function(result){
 							if(result.err_code == 0){
-								myEmitter.prependListener('checkRelatedPersonID', function(){
+								myEmitter.prependOnceListener('checkRelatedPersonID', function(){
 									checkUniqeValue(apikey, "RELATED_PERSON_ID|" + relatedPersonId, 'RELATED_PERSON', function(resRelatedPersonID){
 										if(resRelatedPersonID.err_code > 0){
 											checkUniqeValue(apikey, "ADDRESS_ID|" + addressId, 'ADDRESS', function(resAddressID){
@@ -3162,7 +3162,7 @@ var controller = {
 									})
 								})
 
-								myEmitter.prependListener('checkAddressType', function(){
+								myEmitter.prependOnceListener('checkAddressType', function(){
 									if(validator.isEmpty(addressTypeCode)){
 										myEmitter.emit('checkRelatedPersonID');
 									}else{
@@ -3292,7 +3292,7 @@ var controller = {
 						//check apikey
 						checkApikey(apikey, ipAddres, function(result){
 							if(result.err_code == 0){
-								myEmitter.prependListener('checkRelatedPersonID', function(){
+								myEmitter.prependOnceListener('checkRelatedPersonID', function(){
 									checkUniqeValue(apikey, "RELATED_PERSON_ID|" + relatedPersonId, 'RELATED_PERSON', function(resRelatedPersonID){
 										if(resRelatedPersonID.err_code > 0){
 											checkUniqeValue(apikey, "ATTACHMENT_ID|" + attachmentId, 'ATTACHMENT', function(resAttachmentID){
