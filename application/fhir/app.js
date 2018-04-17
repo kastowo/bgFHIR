@@ -43,6 +43,9 @@ var AppointmentResponse = require("./scheduling_and_appointments/appointment_res
 //import clinical categorization resources
 var ClinicalCategorizationResources = require("./clinical_categorization_resources/controller");
 
+//import devices_and_substances module
+var Device = require("./devices_and_substances/device/controller");
+
 //import routes
 var routesDefaultFHIR	= require('./default_fhir/routes');
 
@@ -55,6 +58,7 @@ var routesSchedule		= require('./scheduling_and_appointments/schedule/routes');
 var routesSlot		= require('./scheduling_and_appointments/slot/routes');
 var routesAppointment	= require('./scheduling_and_appointments/appointment/routes');
 var routesAppointmentResponse		= require('./scheduling_and_appointments/appointment_response/routes');
+var routesDevice 		= require("./devices_and_substances/device/routes");
 
 //setrouting
 routesDefaultFHIR(app, DefaultFHIR);
@@ -67,6 +71,7 @@ routesSchedule(app, Schedule);
 routesSlot(app, Slot);
 routesAppointment(app, Appointment);
 routesAppointmentResponse(app, AppointmentResponse);
+routesDevice(app, Device);
 
 var server = app.listen(port, host, function () {
   console.log("Server running at http://%s:%s", host, port);

@@ -282,6 +282,7 @@ var controller = {
 			var patientId = req.query.patient_id;
 			var patientContactId = req.query.patient_contact_id;
 			var relatedPersonId = req.query.related_person_id;
+			var deviceId = req.query.device_id;
 
 			//susun query
 			var condition = "";
@@ -305,6 +306,10 @@ var controller = {
 			if (typeof relatedPersonId !== 'undefined' && relatedPersonId !== "") {
 				condition += "related_person_id = '" + relatedPersonId + "' AND ";
 			}
+
+			if(typeof deviceId !== 'undefined' && deviceId !== ""){
+        condition += "device_id = '" + deviceId + "' AND ";  
+      }
 
 			if (condition == "") {
 				fixCondition = "";
@@ -3971,6 +3976,7 @@ var controller = {
 			var patient_id = req.body.patient_id;
 			var patient_contact_id = req.body.patient_contact_id;
 			var related_person_id = req.body.related_person_id;
+			var device_id = req.body.device_id;
 
 			//susun query
 			var column = "";
@@ -4037,6 +4043,11 @@ var controller = {
 				column += 'related_person_id,';
 				values += "'" + related_person_id + "',";
 			}
+
+			if(typeof device_id !== 'undefined'){
+        column += 'device_id,';
+        values += "'"+ device_id + "',";
+      }
 
 			var query = "UPSERT INTO BACIRO_FHIR.CONTACT_POINT(contact_point_id, " + column.slice(0, -1) + ")" +
 				" VALUES ('" + contact_point_id + "', " + values.slice(0, -1) + ")";
@@ -6583,6 +6594,7 @@ var controller = {
 			var patient_id = req.body.patient_id;
 			var patient_contact_id = req.body.patient_contact_id;
 			var related_person_id = req.body.related_person_id;
+			var device_id = req.body.device_id;
 
 			//susun query
 			var column = "";
@@ -6649,6 +6661,11 @@ var controller = {
 				column += 'related_person_id,';
 				values += "'" + related_person_id + "',";
 			}
+
+			if(typeof device_id !== 'undefined'){
+        column += 'device_id,';
+        values += "'"+ device_id + "',";
+      }
 
 			if (domainResource !== "" && typeof domainResource !== 'undefined') {
 				var arrResource = domainResource.split('|');

@@ -639,6 +639,12 @@
      },
      "substanceCode": {
         "location": "%(apikey)s/substance-code"
+     },
+     "device": {
+        "location": "%(apikey)s/device"
+     },
+     "deviceUdi": {
+        "location": "%(apikey)s/device-udi"
      }
 		},
 		"PUT": {
@@ -881,6 +887,12 @@
      },         
      "substanceCode":{
         "location": "%(apikey)s/substance-code/%(_id)d"
+     },
+     "device": {
+        "location": "%(apikey)s/device/%(_id)s"
+     },
+     "deviceUdi": {
+        "location": "%(apikey)s/device-udi/%(_id)s"
      }
 		}
 	}
