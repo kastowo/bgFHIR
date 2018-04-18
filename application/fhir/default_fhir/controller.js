@@ -9096,7 +9096,7 @@ var controller = {
 		bedStatusCode: function getBedStatusCode(req, res){
 			var ipAddres = req.connection.remoteAddress;
 			var apikey = req.params.apikey;
-			var code = req.params.code.replace(/[^\w\s ,]/gi, '').trim().toLowerCase();
+			var code = req.params.code.replace(/[^\w\s ,]/gi, '').trim().toUpperCase();
 
 			if(code == "" || typeof code == 'undefined'){
 				res.json({"err_code": 4, "err_msg": "Code is required."});
@@ -9296,7 +9296,7 @@ var controller = {
 		serviceDeliveryLocationRoleTypeCode: function getServiceDeliveryLocationRoleTypeCode(req, res){
 			var ipAddres = req.connection.remoteAddress;
 			var apikey = req.params.apikey;
-			var code = req.params.code.replace(/[^\w\s ,]/gi, '').trim().toLowerCase();
+			var code = req.params.code.replace(/[^\w\s ,]/gi, '').trim().toUpperCase();
 
 			if(code == "" || typeof code == 'undefined'){
 				res.json({"err_code": 4, "err_msg": "Code is required."});
@@ -9492,7 +9492,7 @@ var controller = {
 		qualificationCodeCode: function getQualificationCodeCode(req, res){
 			var ipAddres = req.connection.remoteAddress;
 			var apikey = req.params.apikey;
-			var code = req.params.code.replace(/[^\w\s ,]/gi, '').trim().toLowerCase();
+			var code = req.params.code.replace(/[^\w\s ,]/gi, '').trim().toUpperCase();
 
 			if(code == "" || typeof code == 'undefined'){
 				res.json({"err_code": 4, "err_msg": "Code is required."});
