@@ -754,6 +754,27 @@
      "deviceUdi": {
         "location": "%(apikey)s/device-udi"
      },
+     "deviceComponent": {
+        "location": "%(apikey)s/device-component"
+     },
+     "deviceComponentProductionSpecification": {
+        "location": "%(apikey)s/device-component-production-specification"
+     },
+     "deviceMetric": {
+        "location": "%(apikey)s/device-metric"
+     },
+     "deviceMetricCalibration": {
+        "location": "%(apikey)s/device-metric-calibration"
+     },
+     "substance": {
+        "location": "%(apikey)s/substance"
+     },
+     "substanceInstance": {
+        "location": "%(apikey)s/substance-instance"
+     },
+     "substanceIngredient": {
+        "location": "%(apikey)s/substance-ingredient"
+     },
 		"organizationType":{
 			"location": "%(apikey)s/organization-type"
 		},
@@ -1091,6 +1112,27 @@
      },
      "deviceUdi": {
         "location": "%(apikey)s/device-udi/%(_id)s"
+     },
+     "deviceComponent": {
+        "location": "%(apikey)s/device-component/%(_id)s"
+     },
+     "deviceComponentProductionSpecification": {
+        "location": "%(apikey)s/device-component-production-specification/%(_id)s/%(dr)s"
+     },
+     "deviceMetric": {
+        "location": "%(apikey)s/device-metric/%(_id)s"
+     },
+     "deviceMetricCalibration": {
+        "location": "%(apikey)s/device-metric-calibration/%(_id)s/%(dr)s"
+     },
+     "substance": {
+        "location": "%(apikey)s/substance/%(_id)s"
+     },
+     "substanceInstance": {
+        "location": "%(apikey)s/substance-instance/%(_id)s/%(dr)s"
+     },
+     "substanceIngredient": {
+        "location": "%(apikey)s/substance-ingredient/%(_id)s/%(dr)s"
      },
 		"organizationType":{
 			"location": "%(apikey)s/organization-type/%(_id)d"

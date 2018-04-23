@@ -1079,9 +1079,7 @@ var controller = {
 								})
 
 								myEmitter.prependOnceListener('checkDeviceID', function(){
-									if(validator.isEmpty(deviceId)){
-										myEmitter.emit('updateDevice');
-									}else{
+									if(!validator.isEmpty(deviceId)){
 										checkUniqeValue(apikey, "DEVICE_ID|" + deviceId, 'DEVICE', function(resDeviceID){
 											if(resDeviceID.err_code > 0){
 												myEmitter.emit('updateDevice');

@@ -1596,6 +1596,9 @@ var AppointmentResponse = require("./scheduling_and_appointments/appointment_res
 
 //import devices_and_substances module
 var Device = require("./devices_and_substances/device/controller");
+var DeviceComponent = require("./devices_and_substances/device_component/controller");
+var DeviceMetric = require("./devices_and_substances/device_metric/controller");
+var Substance = require("./devices_and_substances/substance/controller");
 
 //import service_provider_directory_resources
 var Organization = require("./service_provider_directory_resources/organization/controller");
@@ -1616,6 +1619,9 @@ var routesSlot           = require('./scheduling_and_appointments/slot/routes');
 var routesAppointment    = require('./scheduling_and_appointments/appointment/routes');  
 var routesAppointmentResponse           = require('./scheduling_and_appointments/appointment_response/routes');  
 var routesDevice    = require("./devices_and_substances/device/routes");
+var routesDeviceComponent   = require("./devices_and_substances/device_component/routes");
+var routesDeviceMetric      = require("./devices_and_substances/device_metric/routes");
+var routesSubstance      = require("./devices_and_substances/substance/routes");
 var routesOrganization = require('./service_provider_directory_resources/organization/routes');
 var routesEndpoint = require('./service_provider_directory_resources/endpoint/routes');
 var routesLocation = require('./service_provider_directory_resources/location/routes');
@@ -1634,6 +1640,9 @@ routesSlot(app, Slot);
 routesAppointment(app, Appointment);
 routesAppointmentResponse(app, AppointmentResponse);
 routesDevice(app, Device);
+routesDeviceComponent(app, DeviceComponent);
+routesDeviceMetric(app, DeviceMetric);
+routesSubstance(app, Substance);
 routesOrganization(app, Organization);
 routesEndpoint(app, Endpoint);
 routesLocation(app, Location);
