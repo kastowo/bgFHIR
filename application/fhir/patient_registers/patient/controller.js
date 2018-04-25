@@ -4490,7 +4490,7 @@ var controller = {
 										myEmitter.emit('checkCommunicationId');
 									}else{
 										checkCode(apikey, communicationLanguageCode, 'LANGUAGES', function(resLanguageCode){
-											if(resLanguageCode.err_code == 0){
+											if(resLanguageCode.err_code > 0){
 												myEmitter.emit('checkCommunicationId');				
 											}else{
 												res.json({"err_code": 503, "err_msg": "Language code not found."});	
