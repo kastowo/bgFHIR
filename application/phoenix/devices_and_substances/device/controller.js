@@ -47,10 +47,16 @@ var controller = {
         join = " LEFT JOIN BACIRO_FHIR.DEVICE_UDI du ON d.device_udi_id = du.device_udi_id ";
 
         if(typeof deviceName !== 'undefined' && deviceName !== ""){
+          if(deviceName.indexOf('nonbreaking_space') > 0){
+            deviceName = deviceName.replace(/nonbreaking_space/g, " ");
+          }
           condition += "(du.device_udi_name = '" + deviceName + "' OR d.device_type = '" + deviceName +  "') AND ";    
         }
 
         if(typeof deviceUdiCarrier !== 'undefined' && deviceUdiCarrier !== ""){
+          if(deviceUdiCarrier.indexOf('nonbreaking_space') > 0){
+            deviceUdiCarrier = deviceUdiCarrier.replace(/nonbreaking_space/g, " ");
+          }
           condition += "(du.device_udi_carrier_hrf = '" + deviceUdiCarrier + "' OR du.device_udi_carrier_aidc = '" + deviceUdiCarrier +  "') AND ";    
         }
 
@@ -64,10 +70,16 @@ var controller = {
       }
 
       if(typeof deviceManufacturer !== 'undefined' && deviceManufacturer !== ""){
+        if(deviceManufacturer.indexOf('nonbreaking_space') > 0){
+            deviceManufacturer = deviceManufacturer.replace(/nonbreaking_space/g, " ");
+          }
         condition += "d.device_manufacturer = '" + deviceManufacturer + "' AND ";  
       }
 
       if(typeof deviceModel !== 'undefined' && deviceModel !== ""){
+        if(deviceModel.indexOf('nonbreaking_space') > 0){
+            deviceModel = deviceModel.replace(/nonbreaking_space/g, " ");
+          }
         condition += "d.device_model = '" + deviceModel + "' AND ";  
       }
 
@@ -94,7 +106,7 @@ var controller = {
       }
 
       var arrDevice = [];
-      var query = "SELECT device_id, device_status, device_type, device_lot_number, device_manufacturer, device_manufacture_date, device_expiration_date, device_model, device_version, device_url, device_note, device_safety, patient_id, organization_id, location_id, device_udi_id FROM BACIRO_FHIR.DEVICE d " + fixCondition;
+      var query = "SELECT device_id, device_status, device_type, device_lot_number, device_manufacturer, device_manufacture_date, device_expiration_date, device_model, device_version, device_url, device_note, device_safety, patient_id, organization_id, location_id, d.device_udi_id as device_udi_id FROM BACIRO_FHIR.DEVICE d " + fixCondition;
 
       db.query(query,function(dataJson){
         rez = lowercaseObject(dataJson);

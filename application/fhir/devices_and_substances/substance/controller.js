@@ -45,8 +45,8 @@ var controller = {
 					var instanceId = req.query.instance;
 					var instanceExpiry = req.query.expiry;
 					var instanceQuantity = req.query.quantity;
-					var substanceStatus = req.query.statue;
-					var ingredientSubstance = req.query.substance_reference;
+					var substanceStatus = req.query.status;
+					// var ingredientSubstance = req.query.substance_reference;
 					
 					
 					var qString = {};

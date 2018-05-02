@@ -62,7 +62,13 @@ var controller = {
 
 					if(typeof deviceName !== 'undefined'){
 						if(!validator.isEmpty(deviceName)){
-							qString.device_name = deviceName; 
+							if(deviceName.indexOf(" ") > 0){
+								qString.device_name = deviceName.replace(/ /g, "nonbreaking_space"); 
+							}else{
+								qString.device_name = deviceName; 	
+							}
+						}else{
+							res.json({"err_code": 1, "err_msg": "Device name is empty."});
 						}
 					}
 
@@ -76,7 +82,11 @@ var controller = {
 
 					if(typeof deviceManufacturer !== 'undefined'){
 						if(!validator.isEmpty(deviceManufacturer)){
-							qString.manufacturer = deviceManufacturer; 
+							if(deviceManufacturer.indexOf(" ") > 0){
+								qString.manufacturer = deviceManufacturer.replace(/ /g, "nonbreaking_space"); 
+							}else{
+								qString.manufacturer = deviceManufacturer; 	
+							}
 						}else{
 							res.json({"err_code": 1, "err_msg": "Manufacturer is empty."});
 						}
@@ -84,7 +94,12 @@ var controller = {
 
 					if(typeof deviceModel !== 'undefined'){
 						if(!validator.isEmpty(deviceModel)){
-							qString.model = deviceModel; 
+							if(deviceModel.indexOf(" ") > 0){
+								qString.model = deviceModel.replace(/ /g, "nonbreaking_space"); 
+							}else{
+								qString.model = deviceModel; 
+							}
+							
 						}else{
 							res.json({"err_code": 1, "err_msg": "Model is empty."});
 						}
@@ -124,7 +139,11 @@ var controller = {
 
 					if(typeof deviceUdiCarrier !== 'undefined'){
 						if(!validator.isEmpty(deviceUdiCarrier)){
-							qString.udi_carrier = deviceUdiCarrier; 
+							if(deviceUdiCarrier.indexOf(" ") > 0){
+								qString.udi_carrier = deviceUdiCarrier.replace(/ /g, "nonbreaking_space"); 
+							}else{
+								qString.udi_carrier = deviceUdiCarrier; 
+							}
 						}else{
 							res.json({"err_code": 1, "err_msg": "Udi Carrier is empty."});
 						}
@@ -191,7 +210,7 @@ var controller = {
 															objectDevice.location = device.location;
 															objectDevice.url = device.url;
 															objectDevice.note = device.note;
-															objectDevice.device_safety = device.device_safety;
+															objectDevice.safety = device.safety;
 
 															newDevice[index] = objectDevice;
 
@@ -229,9 +248,9 @@ var controller = {
 																		objectDevice.location = device.location;
 																		objectDevice.url = device.url;
 																		objectDevice.note = device.note;
-																		objectDevice.device_safety = device.device_safety;
+																		objectDevice.safety = device.safety;
 																		
-																		newDevice = objectDevice;
+																		newDevice[index] = objectDevice;
 
 																		if(index == countDevice -1 ){
 																			res.json({"err_code": 0, "data":newDevice});				
@@ -393,7 +412,7 @@ var controller = {
 
 					if(typeof req.body.manufacture_date !== 'undefined'){
 						var deviceManufactureDate = req.body.manufacture_date;
-						if(validator.isEmpty(req.body.deviceManufactureDate)){
+						if(validator.isEmpty(req.body.manufacture_date)){
 							err_code = 2;
 							err_msg = "Manufacture date is required."
 						}else{
@@ -409,7 +428,7 @@ var controller = {
 
 					if(typeof req.body.expiration_date !== 'undefined'){
 						var deviceExpirationDate = req.body.expiration_date;
-						if(validator.isEmpty(req.body.deviceExpirationDate)){
+						if(validator.isEmpty(req.body.expiration_date)){
 							err_code = 2;
 							err_msg = "Expiration date is required."
 						}else{
