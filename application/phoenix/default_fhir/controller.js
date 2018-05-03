@@ -16,7 +16,8 @@ var portFHIR = configYaml.fhir.port;
 
 // var phoenix = require("./phoenix.js");
 var phoenix = require(path.resolve("./phoenix.js"));
-var db = new phoenix("jdbc:phoenix:" + host + ":/hbase-unsecure");
+//var db = new phoenix("jdbc:phoenix:" + host + ":/hbase-unsecure");
+var db = new phoenix("jdbc:phoenix:" + "192.168.1.231" + ":/hbase-unsecure");
 
 var controller = {
 	get: {
@@ -143,6 +144,11 @@ var controller = {
 			var personId = req.query.person_id;
 			var patientId = req.query.patient_id;
 			var relatedPersonId = req.query.related_person_id;
+			var episodeOfCareId = req.query.episode_of_care_id;
+			var identifierValue = req.query.identifier_value;
+			var encounterId = req.query.encounter_id;
+			var accountId = req.query.account_id;
+			var flagId = req.query.flag_id;
 
 			//susun query
 			var condition = "";
@@ -166,7 +172,28 @@ var controller = {
 				condition += "i.related_person_id = '" + relatedPersonId + "' AND ";
 				systemURI = hostFHIR + ':' + portFHIR + '/' + apikey + '/RelatedPerson/' + relatedPersonId + '/Identifier/';
 			}
-
+			
+			if (typeof episodeOfCareId !== 'undefined' && episodeOfCareId !== "") {
+				condition += "episode_of_care_id = '" + episodeOfCareId + "' AND ";
+				systemURI = hostFHIR + ':' + portFHIR + '/' + apikey + '/EpisodeOfCare/' + episodeOfCareId + '/Identifier/';
+			}
+			
+			if (typeof identifierValue !== 'undefined' && identifierValue !== "") {
+				condition += "identifier_value = '" + identifierValue + "' AND ";
+			}
+			
+			if (typeof encounterId !== 'undefined' && encounterId !== "") {
+				condition += "encounter_id = '" + encounterId + "' AND ";
+			}
+			
+			if (typeof accountId !== 'undefined' && accountId !== "") {
+				condition += "account_id = '" + accountId + "' AND ";
+			}
+			
+			if (typeof flagId !== 'undefined' && flagId !== "") {
+				condition += "flag_id = '" + flagId + "' AND ";
+			}
+			
 			if (condition == "") {
 				fixCondition = "";
 			} else {
@@ -175,7 +202,7 @@ var controller = {
 
 			var arrIdentifier = [];
 			var query = "SELECT identifier_id, identifier_use, identifier_type, identifier_system, identifier_value, identifier_period_start, identifier_period_end, org.organization_id as organization_id FROM BACIRO_FHIR.IDENTIFIER i LEFT JOIN BACIRO_FHIR.ORGANIZATION org on i.organization_id = org.organization_id " + fixCondition; //join ke organization
-
+			
 			db.query(query, function (dataJson) {
 				rez = lowercaseObject(dataJson);
 				for (i = 0; i < rez.length; i++) {
@@ -3234,6 +3261,11 @@ var controller = {
 			var person_id = req.body.person_id;
 			var patient_id = req.body.patient_id;
 			var related_person_id = req.body.related_person_id;
+			var episode_of_care_id = req.body.episode_of_care_id;
+			var encounter_id = req.body.encounter_id;
+			var hospitalization_id = req.body.hospitalization_id;
+			var account_id = req.body.account_id;
+			var flag_id = req.body.flag_id;
 
 			//susun query
 			var column = "";
@@ -3283,9 +3315,32 @@ var controller = {
 				column += 'related_person_id,';
 				values += "'" + related_person_id + "',";
 			}
+			
+			if (typeof episode_of_care_id !== 'undefined') {
+				column += 'episode_of_care_id,';
+				values += "'" + episode_of_care_id + "',";
+			}
+			
+			if (typeof encounter_id !== 'undefined') {
+				column += 'encounter_id,';
+				values += "'" + encounter_id + "',";
+			}
+			if (typeof hospitalization_id !== 'undefined') {
+				column += 'hospitalization_id,';
+				values += "'" + hospitalization_id + "',";
+			}
+			if (typeof account_id !== 'undefined') {
+				column += 'account_id,';
+				values += "'" + account_id + "',";
+			}
+			if (typeof flag_id !== 'undefined') {
+				column += 'flag_id,';
+				values += "'" + flag_id + "',";
+			}
 
 			var query = "UPSERT INTO BACIRO_FHIR.IDENTIFIER(identifier_id, " + column.slice(0, -1) + ")" +
 				" VALUES ('" + identifier_id + "', " + values.slice(0, -1) + ")";
+				
 			db.upsert(query, function (succes) {
 				var arrIdentifier = [];
 				var query = "SELECT identifier_id, identifier_use, identifier_type, identifier_system, identifier_value, identifier_period_start, identifier_period_end FROM BACIRO_FHIR.IDENTIFIER WHERE identifier_id = '" + identifier_id + "' ";

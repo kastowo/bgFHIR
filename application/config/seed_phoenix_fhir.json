@@ -474,6 +474,51 @@
 			},
 			"reAdmissionIndicator": {
 				"location": "%(apikey)s/re-admission-indicator"
+			},
+			"episodeOfCare": {
+				"location": "%(apikey)s/episode-of-care"
+			},
+			"episodeOfCareHistory": {
+				"location": "%(apikey)s/episode-of-care-history"
+			},
+			"episodeOfCareDiagnosis": {
+				"location": "%(apikey)s/episode-of-care-diagnosis"
+			},
+			"referralRequest": {
+				"location": "%(apikey)s/referral-request"
+			},
+			"encounter": {
+				"location": "%(apikey)s/encounter"
+			},
+			"encounterClassHistory": {
+				"location": "%(apikey)s/encounter-class-history"
+			},
+			"encounterStatusHistory": {
+				"location": "%(apikey)s/encounter-status-history"
+			},
+			"encounterDiagnosis": {
+				"location": "%(apikey)s/encounter-diagnosis"
+			},
+			"encounterHospitalization": {
+				"location": "%(apikey)s/encounter-hospitalization"
+			},
+			"encounterLocation": {
+				"location": "%(apikey)s/encounter-location"
+			},
+			"encounterParticipant": {
+				"location": "%(apikey)s/encounter-participant"
+			},
+			"account": {
+				"location": "%(apikey)s/account"
+			},
+			"accountCoverage": {
+				"location": "%(apikey)s/account-coverage"
+			},
+			"accountGuarantor": {
+				"location": "%(apikey)s/account-guarantor"
+			},
+			"flag": {
+				"location": "%(apikey)s/flag"
 			}
 		},
 		"PUT": {
@@ -650,6 +695,48 @@
 			},
 			"reAdmissionIndicator": {
 				"location": "%(apikey)s/reAdmissionIndicator/%(_id)d"
+			},
+			"episodeOfCare": {
+				"location": "%(apikey)s/episode-of-care/%(_id)s"
+			},
+			"episodeOfCareHistory": {
+				"location": "%(apikey)s/episode-of-care-history/%(_id)s/%(dr)s"
+			},
+			"episodeOfCareDiagnosis": {
+				"location": "%(apikey)s/episode-of-care-diagnosis/%(_id)s/%(dr)s"
+			},
+			"encounter": {
+				"location": "%(apikey)s/encounter/%(_id)s"
+			},
+			"encounterStatusHistory": {
+				"location": "%(apikey)s/encounter-status-history/%(_id)s/%(dr)s"
+			},
+			"encounterClassHistory": {
+				"location": "%(apikey)s/encounter-class-history/%(_id)s/%(dr)s"
+			},
+			"encounterDiagnosis": {
+				"location": "%(apikey)s/encounter-diagnosis/%(_id)s/%(dr)s"
+			},
+			"encounterHospitalization": {
+				"location": "%(apikey)s/encounter-hospitalization/%(_id)s/%(dr)s"
+			},
+			"encounterLocation": {
+				"location": "%(apikey)s/encounter-location/%(_id)s/%(dr)s"
+			},
+			"encounterParticipant": {
+				"location": "%(apikey)s/encounter-participant/%(_id)s/%(dr)s"
+			},
+			"account": {
+				"location": "%(apikey)s/account/%(_id)s"
+			},
+			"accountGuarantor": {
+				"location": "%(apikey)s/account-guarantor/%(_id)s/%(dr)s"
+			},
+			"accountCoverage": {
+				"location": "%(apikey)s/account-coverage/%(_id)s/%(dr)s"
+			},
+			"flag": {
+				"location": "%(apikey)s/flag/%(_id)s"
 			}
 		}
 	}
