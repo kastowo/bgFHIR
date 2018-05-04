@@ -142,7 +142,7 @@ var controller = {
       var arrOrganization = [];
 			
       var query = "select l.location_id as location_id, location_status, location_operational_status, location_name, location_alias, location_description, location_mode, location_type, address_id, location_physical_type, l.organization_id as organization_id, parent_id, location_position_id from baciro_fhir.location l  " + fixCondition;
-			console.log(query);
+			//console.log(query);
 			var arrLocation = [];
       db.query(query,function(dataJson){
         rez = lowercaseObject(dataJson);
@@ -231,16 +231,16 @@ var controller = {
       }
       
 			var query = "select endpoint_id from baciro_fhir.endpoint " + fixCondition;
-			console.log(query);
+			//console.log(query);
       
 			var arrEndpoint = [];
       db.query(query,function(dataJson){
         rez = lowercaseObject(dataJson);
-				console.log(rez);
+				//console.log(rez);
         for(i = 0; i < rez.length; i++){
 					var Endpoint = {};
 					Endpoint.id = hostfhir + ":" + portfhir + "/" + apikey + "/endpoint?_id=" + rez[i].endpoint_id;
-          console.log(Endpoint);
+          //console.log(Endpoint);
           arrEndpoint[i] = Endpoint;
         }
         res.json({"err_code":0,"data": arrEndpoint});
@@ -399,7 +399,7 @@ var controller = {
 						
       var query = "UPSERT INTO BACIRO_FHIR.ENDPOINT(endpoint_id, " + column.slice(0, -1) + ")"+
         " VALUES ('"+endpoint_id+"', " + values.slice(0, -1) + ")";
-			console.log(query);
+			//console.log(query);
       db.upsert(query,function(succes){
         var query = "SELECT endpoint_id, healthcare_service_id FROM BACIRO_FHIR.ENDPOINT  WHERE endpoint_id = '" + endpoint_id + "' ";
         db.query(query,function(dataJson){
@@ -415,7 +415,7 @@ var controller = {
   },
 	put: {
 		location: function updateLocation(req, res){
-			console.log(req.body);
+			//console.log(req.body);
 			var location_id = req.params.location_id;
 			var location_status = req.body.status;
 			var location_operational_status = req.body.operationalStatus;
@@ -498,7 +498,7 @@ var controller = {
 			var condition = "LOCATION_ID = '" + location_id + "'";
 
 			var query = "UPSERT INTO BACIRO_FHIR.LOCATION(LOCATION_ID," + column.slice(0, -1) + ") SELECT LOCATION_ID, " + values.slice(0, -1) + " FROM BACIRO_FHIR.LOCATION WHERE " + condition;
-			console.log(query);
+			//console.log(query);
 			
 			db.upsert(query,function(succes){
         var query2 = "UPSERT INTO BACIRO_FHIR.ENDPOINT(ENDPOINT_ID, LOCATION_ID) SELECT ENDPOINT_ID, '" + location_id + "' FROM BACIRO_FHIR.ENDPOINT WHERE ENDPOINT_ID = '" + locationEndpointId + "'";
@@ -564,20 +564,20 @@ var controller = {
 			var condition = "LOCATION_POSITION_ID = '" + locationPositionId + "' AND " + fieldResource + " = '" + valueResource + "'";
 			
 			var query3 = "SELECT LOCATION_POSITION_ID,LOCATION_ID FROM BACIRO_FHIR.LOCATION WHERE " + condition ;
-			console.log(query3);
+			//console.log(query3);
         db.query(query3,function(dataJson){
 					rez = lowercaseObject(dataJson);
 					//console.log(rez);
 					if(rez.length > 0){
 		  			var condition = "LOCATION_POSITION_ID = '" + locationPositionId + "'";
 						var query = "UPSERT INTO BACIRO_FHIR.LOCATION_POSITION(LOCATION_POSITION_ID," + column.slice(0, -1) + ") SELECT LOCATION_POSITION_ID, " + values.slice(0, -1) + " FROM BACIRO_FHIR.LOCATION_POSITION WHERE " + condition;
-						console.log(query);
+						//console.log(query);
 
 						db.upsert(query,function(succes){
 							var query2 = "SELECT LOCATION_POSITION_ID,LOCATION_POSITION_LONGITUDE,LOCATION_POSITION_LATITUDE,LOCATION_POSITION_ALTITUDE FROM BACIRO_FHIR.LOCATION_POSITION WHERE LOCATION_POSITION_ID = '" + locationPositionId + "' ";
 							db.query(query2,function(dataJson){
 								rez = lowercaseObject(dataJson);
-								console.log(rez);
+								//console.log(rez);
 								res.json({"err_code":0,"data":rez});
 							},function(e){
 								res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "updateLocationPosition"});

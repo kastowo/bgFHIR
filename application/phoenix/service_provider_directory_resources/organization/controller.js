@@ -159,7 +159,7 @@ var controller = {
       
       var arrOrganization = [];
       var query = "select organization_id, organization_active, organization_type, organization_name, organization_alias, parent_id from baciro_fhir.organization o " + fixCondition;
-			//console.log(query);
+			////console.log(query);
       db.query(query,function(dataJson){
         rez = lowercaseObject(dataJson);
         for(i = 0; i < rez.length; i++){
@@ -315,16 +315,16 @@ var controller = {
       }
       
 			var query = "select endpoint_id from baciro_fhir.endpoint " + fixCondition;
-			console.log(query);
+			////console.log(query);
       
 			var arrEndpoint = [];
       db.query(query,function(dataJson){
         rez = lowercaseObject(dataJson);
-				console.log(rez);
+				////console.log(rez);
         for(i = 0; i < rez.length; i++){
 					var Endpoint = {};
 					Endpoint.id = hostfhir + ":" + portfhir + "/" + apikey + "/endpoint?_id=" + rez[i].endpoint_id;
-          console.log(Endpoint);
+          ////console.log(Endpoint);
           arrEndpoint[i] = Endpoint;
         }
         res.json({"err_code":0,"data": arrEndpoint});
@@ -396,7 +396,7 @@ var controller = {
       });
     },
 		organizationContact: function addOrganizationContact(req, res){
-			//console.log(req.body);
+			////console.log(req.body);
       var organization_contact_id = req.body.id;
       var purpose = req.body.purpose;
       var humanNameId = req.body.humanNameId;
@@ -426,13 +426,13 @@ var controller = {
       }
 
       var query = "UPSERT INTO BACIRO_FHIR.ORGANIZATION_CONTACT(ORGANIZATION_CONTACT_ID, " + column.slice(0, -1) + ")"+ " VALUES ('"+organization_contact_id+"', " + values.slice(0, -1) + ")";
-			//console.log(query);
+			////console.log(query);
       db.upsert(query,function(succes){
         var query2 = "SELECT ORGANIZATION_CONTACT_ID,ORGANIZATION_CONTACT_PURPOSE,HUMAN_NAME_ID,ADDRESS_ID,ORGANIZATION_ID FROM BACIRO_FHIR.ORGANIZATION_CONTACT WHERE ORGANIZATION_ID = '" + OrganizationId + "' ";
 				
 				db.query(query2,function(dataJson){
           rez = lowercaseObject(dataJson);
-					//console.log(rez);
+					////console.log(rez);
           res.json({"err_code":0,"data":rez});
         },function(e){
           res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "addOrganizationContact"});
@@ -457,7 +457,7 @@ var controller = {
 						
       var query = "UPSERT INTO BACIRO_FHIR.ENDPOINT(endpoint_id, " + column.slice(0, -1) + ")"+
         " VALUES ('"+endpoint_id+"', " + values.slice(0, -1) + ")";
-			console.log(query);
+			//console.log(query);
       db.upsert(query,function(succes){
         var query = "SELECT endpoint_id, organization_id FROM BACIRO_FHIR.ENDPOINT  WHERE endpoint_id = '" + endpoint_id + "' ";
         db.query(query,function(dataJson){
@@ -517,7 +517,7 @@ var controller = {
 			var condition = "ORGANIZATION_ID = '" + organization_id + "'";
 
 			var query = "UPSERT INTO BACIRO_FHIR.ORGANIZATION(ORGANIZATION_ID," + column.slice(0, -1) + ") SELECT ORGANIZATION_ID, " + values.slice(0, -1) + " FROM BACIRO_FHIR.ORGANIZATION WHERE " + condition;
-			//console.log(query);
+			////console.log(query);
 			
       db.upsert(query,function(succes){
         var query = "SELECT organization_id, organization_active, organization_type, organization_name, organization_alias, parent_id, endpoint_id FROM BACIRO_FHIR.ORGANIZATION WHERE organization_id = '" + organization_id + "' ";
@@ -532,7 +532,7 @@ var controller = {
       });
     },
 		organizationContact: function addOrganizationContact(req, res){
-			console.log(req.body);
+			//console.log(req.body);
       var organization_contact_id = req.params.organization_contact_id;
       var purpose = req.body.purpose;
       var humanNameId = req.body.humanNameId;
@@ -568,13 +568,13 @@ var controller = {
 			var condition = "ORGANIZATION_CONTACT_ID = '" + organization_contact_id + "' AND " + fieldResource + " = '" + valueResource + "'";
 			
 			var query = "UPSERT INTO BACIRO_FHIR.ORGANIZATION_CONTACT(ORGANIZATION_CONTACT_ID," + column.slice(0, -1) + ") SELECT ORGANIZATION_CONTACT_ID, " + values.slice(0, -1) + " FROM BACIRO_FHIR.ORGANIZATION_CONTACT WHERE " + condition;
-			console.log(query);
+			//console.log(query);
       db.upsert(query,function(succes){
         var query2 = "SELECT ORGANIZATION_CONTACT_ID,ORGANIZATION_CONTACT_PURPOSE,HUMAN_NAME_ID,ADDRESS_ID,ORGANIZATION_ID FROM BACIRO_FHIR.ORGANIZATION_CONTACT WHERE ORGANIZATION_ID = '" + OrganizationId + "' ";
 				
 				db.query(query2,function(dataJson){
           rez = lowercaseObject(dataJson);
-					//console.log(rez);
+					////console.log(rez);
           res.json({"err_code":0,"data":rez});
         },function(e){
           res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "addOrganizationContact"});

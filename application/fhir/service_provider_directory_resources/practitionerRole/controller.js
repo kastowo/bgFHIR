@@ -393,7 +393,7 @@ var controller = {
 
 																																ApiFHIR.get('PractitionerRoleHealthcareService', {"apikey": apikey}, {}, function(error, response, body){
 																																	PractitionerRoleHealthcareService = JSON.parse(body);
-																																	console.log(PractitionerRoleHealthcareService);
+																																	//console.log(PractitionerRoleHealthcareService);
 																																	if(PractitionerRoleHealthcareService.err_code == 0){
 																																		var objectPractitionerRole = {};
 																																		objectPractitionerRole.resourceType = practitionerRole.resourceType;
@@ -426,7 +426,7 @@ var controller = {
 
 																																ApiFHIR.get('PractitionerRoleEndpoint', {"apikey": apikey}, {}, function(error, response, body){
 																																	PractitionerRoleEndpoint = JSON.parse(body);
-																																	console.log(PractitionerRoleEndpoint);
+																																	//console.log(PractitionerRoleEndpoint);
 																																	if(PractitionerRoleEndpoint.err_code == 0){
 																																		var objectPractitionerRole = {};
 																																		objectPractitionerRole.resourceType = practitionerRole.resourceType;
@@ -1421,10 +1421,10 @@ var controller = {
 											"availableEndTime" : availableEndTime
 										}
 										ApiFHIR.post('availableTime', {"apikey": apikey}, {body: dataAvailableTime, json: true}, function(error, response, body){
-											console.log(body);
+											//console.log(body);
 											practitionerRole = body;
 											if(practitionerRole.err_code == 0){
-												console.log("tes123");
+												//console.log("tes123");
 												res.json({"err_code": 0, "err_msg": "Available Time has been add in this practitioner role.", "data": practitionerRole.data});
 											} else {
 												res.json(practitionerRole);
@@ -1840,10 +1840,10 @@ var controller = {
 											"id" : endpoint_id,
 										}
 										ApiFHIR.post('PractitionerRoleEndpoint', {"apikey": apikey}, {body: dataEndpoint, json: true}, function(error, response, body){
-											console.log(body);
+											//console.log(body);
 											practitionerRole = body;
 											if(practitionerRole.err_code == 0){
-												console.log("tes123");
+												//console.log("tes123");
 												res.json({"err_code": 0, "err_msg": "Endpoint has been add in this practitioner role.", "data": practitionerRole.data});
 											} else {
 												res.json(practitionerRole);
@@ -1899,10 +1899,10 @@ var controller = {
 											"id" : location_id,
 										}
 										ApiFHIR.post('PractitionerRoleLocation', {"apikey": apikey}, {body: dataLocation, json: true}, function(error, response, body){
-											console.log(body);
+											//console.log(body);
 											practitionerRole = body;
 											if(practitionerRole.err_code == 0){
-												console.log("tes123");
+												//console.log("tes123");
 												res.json({"err_code": 0, "err_msg": "Location has been add in this practitioner role.", "data": practitionerRole.data});
 											} else {
 												res.json(practitionerRole);
@@ -1958,10 +1958,10 @@ var controller = {
 											"id" : healthcare_service_id
 										}
 										ApiFHIR.post('PractitionerRoleHealthcareService', {"apikey": apikey}, {body: dataHS, json: true}, function(error, response, body){
-											console.log(body);
+											//console.log(body);
 											practitionerRole = body;
 											if(practitionerRole.err_code == 0){
-												console.log("tes123");
+												//console.log("tes123");
 												res.json({"err_code": 0, "err_msg": "Healthcare Service has been add in this practitioner role.", "data": practitionerRole.data});
 											} else {
 												res.json(practitionerRole);
@@ -2358,7 +2358,7 @@ var controller = {
 										if(resAvailableTimeId.err_code > 0){
 											ApiFHIR.put('availableTime', {"apikey": apikey, "_id": availableTimeId, "dr": "PRACTITIONER_ROLE_ID|"+practitionerRoleId}, {body: dataAvailableTime, json: true}, function(error, response, body){
 												availableTime = body;
-												console.log(availableTime);
+												//console.log(availableTime);
 												if(availableTime.err_code > 0){
 													res.json(availableTime);	
 												}else{

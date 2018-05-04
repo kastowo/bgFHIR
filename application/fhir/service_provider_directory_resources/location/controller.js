@@ -1298,10 +1298,10 @@ var controller = {
 											"id" : endpoint_id,
 										}
 										ApiFHIR.post('locationEndpoint', {"apikey": apikey}, {body: dataEndpoint, json: true}, function(error, response, body){
-											console.log(body);
+											//console.log(body);
 											location = body;
 											if(location.err_code == 0){
-												console.log("tes123");
+												//console.log("tes123");
 												res.json({"err_code": 0, "err_msg": "Endpoint has been add in this location.", "data": location.data});
 											} else {
 												res.json(location);

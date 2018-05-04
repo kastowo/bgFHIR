@@ -114,7 +114,7 @@ var controller = {
       
 			var query = "select pr.practitioner_role_id as practitioner_role_id, practitioner_role_active, practitioner_role_period_start, practitioner_role_period_end, pr.practitioner_id as practitioner_id, pr.organization_id as organization_id, practitioner_role_code, practitioner_role_specialty, practitioner_role_availability_exceptions from BACIRO_FHIR.PRACTITIONER_ROLE pr  " + fixCondition;
 			
-      console.log(query);
+      //console.log(query);
 			var arrPractitionerRole = [];
       db.query(query,function(dataJson){
         rez = lowercaseObject(dataJson);
@@ -179,16 +179,16 @@ var controller = {
       }
       
 			var query = "select endpoint_id from baciro_fhir.endpoint " + fixCondition;
-			console.log(query);
+			//console.log(query);
       
 			var arrEndpoint = [];
       db.query(query,function(dataJson){
         rez = lowercaseObject(dataJson);
         for(i = 0; i < rez.length; i++){
-					console.log(hostfhir + ":" + portfhir + "/" + apikey + "/endpoint?_id=" + rez[i].endpoint_id);
+					//console.log(hostfhir + ":" + portfhir + "/" + apikey + "/endpoint?_id=" + rez[i].endpoint_id);
           var Endpoint = {};
 					Endpoint.id = hostfhir + ":" + portfhir + "/" + apikey + "/endpoint?_id=" + rez[i].endpoint_id;
-          console.log(Endpoint);
+          //console.log(Endpoint);
           arrEndpoint[i] = Endpoint;
         }
         res.json({"err_code":0,"data": arrEndpoint});
@@ -224,7 +224,7 @@ var controller = {
       }
       
 			var query = "select location_id from baciro_fhir.Location " + fixCondition;
-			console.log(query);
+			//console.log(query);
       
 			var arrLocation = [];
       db.query(query,function(dataJson){
@@ -269,7 +269,7 @@ var controller = {
       }
       
 			var query = "select healthcare_service_id from baciro_fhir.healthcare_service " + fixCondition;
-			console.log(query);
+			//console.log(query);
       
 			var arrHS = [];
       db.query(query,function(dataJson){
@@ -438,7 +438,7 @@ var controller = {
 
       var query = "UPSERT INTO BACIRO_FHIR.PRACTITIONER_ROLE(practitioner_role_id, " + column.slice(0, -1) + ")"+
         " VALUES ('"+practitioner_role_id+"', " + values.slice(0, -1) + ")";
-			console.log(query);
+			//console.log(query);
       db.upsert(query,function(succes){
 				var query2 = "UPSERT INTO BACIRO_FHIR.ENDPOINT(ENDPOINT_ID, PRACTITIONER_ROLE_ID) SELECT ENDPOINT_ID, '" + practitioner_role_id + "' FROM BACIRO_FHIR.ENDPOINT WHERE ENDPOINT_ID = '" + endpoint_id + "'";
         db.upsert(query2,function(dataJson){
@@ -487,7 +487,7 @@ var controller = {
 						
       var query = "UPSERT INTO BACIRO_FHIR.ENDPOINT(endpoint_id, " + column.slice(0, -1) + ")"+
         " VALUES ('"+endpoint_id+"', " + values.slice(0, -1) + ")";
-			console.log(query);
+			//console.log(query);
       db.upsert(query,function(succes){
         var query = "SELECT endpoint_id, practitioner_role_id FROM BACIRO_FHIR.ENDPOINT  WHERE endpoint_id = '" + endpoint_id + "' ";
         db.query(query,function(dataJson){
@@ -520,7 +520,7 @@ var controller = {
 						
       var query = "UPSERT INTO BACIRO_FHIR.location(location_id, " + column.slice(0, -1) + ")"+
         " VALUES ('"+location_id+"', " + values.slice(0, -1) + ")";
-			console.log(query);
+			//console.log(query);
       db.upsert(query,function(succes){
         var query = "SELECT location_id, practitioner_role_id FROM BACIRO_FHIR.location  WHERE location_id = '" + location_id + "' ";
         db.query(query,function(dataJson){
@@ -547,7 +547,7 @@ var controller = {
 						
       var query = "UPSERT INTO BACIRO_FHIR.healthcare_service(healthcare_service_id, " + column.slice(0, -1) + ")"+
         " VALUES ('"+healthcare_service_id+"', " + values.slice(0, -1) + ")";
-			console.log(query);
+			//console.log(query);
       db.upsert(query,function(succes){
         var query = "SELECT healthcare_service_id, practitioner_role_id FROM BACIRO_FHIR.healthcare_service  WHERE healthcare_service_id = '" + healthcare_service_id + "' ";
         db.query(query,function(dataJson){
@@ -734,7 +734,7 @@ var controller = {
 			var condition = "practitioner_role_id = '" + practitioner_role_id + "'";
 			
 			var query = "UPSERT INTO BACIRO_FHIR.PRACTITIONER_ROLE(practitioner_role_id," + column.slice(0, -1) + ") SELECT practitioner_role_id, " + values.slice(0, -1) + " FROM BACIRO_FHIR.PRACTITIONER_ROLE WHERE " + condition;
-			console.log(query);
+			//console.log(query);
 			
       db.upsert(query,function(succes){
 				var query5 = "SELECT practitioner_id, practitioner_role_active, practitioner_role_code, practitioner_role_specialty, practitioner_role_availability_exceptions, practitioner_role_period_start, practitioner_role_period_end, practitioner_id, organization_id FROM BACIRO_FHIR.PRACTITIONER_ROLE  WHERE practitioner_role_id = '" + practitioner_role_id + "' ";

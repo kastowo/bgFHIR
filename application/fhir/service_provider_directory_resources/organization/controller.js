@@ -1387,7 +1387,7 @@ var controller = {
 																																									ApiFHIR.post('organizationContact', {"apikey": apikey}, {body: dataOrganizationContact, json: true}, function(error, response, body){
 																																										organizationContact = body;
 																																										if(organizationContact.err_code > 0){
-																																											console.log(organizationContact);
+																																											//console.log(organizationContact);
 																																											res.json(organizationContact);	
 																																										}
 																																									})
@@ -1976,7 +1976,7 @@ var controller = {
 																					ApiFHIR.post('organizationContact', {"apikey": apikey}, {body: dataOrganizationContact, json: true}, function(error, response, body){
 																						organizationContact = body;
 																						if(organizationContact.err_code > 0){
-																							console.log(organizationContact);
+																							//console.log(organizationContact);
 																							res.json(organizationContact);	
 																						}
 																					})
@@ -2614,10 +2614,10 @@ var controller = {
 											"id" : endpoint_id,
 										}
 										ApiFHIR.post('OrganizationEndpoint', {"apikey": apikey}, {body: dataEndpoint, json: true}, function(error, response, body){
-											console.log(body);
+											//console.log(body);
 											organization = body;
 											if(organization.err_code == 0){
-												console.log("tes123");
+												//console.log("tes123");
 												res.json({"err_code": 0, "err_msg": "Endpoint has been add in this organization.", "data": organization.data});
 											} else {
 												res.json(organization);
@@ -2865,7 +2865,7 @@ var controller = {
 								if(resOrganizationID.err_code > 0){
 									//console.log(dataEndpoint);
 										ApiFHIR.put('organizationContact', {"apikey": apikey, "_id": organizationContactId, "dr": "ORGANIZATION_ID|"+organizationId}, {body: dataOrganization, json: true}, function(error, response, body){
-											console.log(body);
+											//console.log(body);
 											organization = body;
 											if(organization.err_code > 0){
 												res.json(organization);	

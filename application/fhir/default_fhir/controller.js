@@ -3881,7 +3881,7 @@ var controller = {
 								//cek apakah ada error atau tidak
 								var actPriority = JSON.parse(body);
 								//cara cek error
-								//console.log (actEncounterCode)
+								////console.log (actEncounterCode)
 								//cek apakah ada error atau tidak
 								if (actPriority.err_code == 0) {
 									//cek jumdata dulu
@@ -4039,7 +4039,7 @@ var controller = {
 								//cek apakah ada error atau tidak
 								var accountStatus = JSON.parse(body);
 								//cara cek error
-								//console.log (actEncounterCode)
+								////console.log (actEncounterCode)
 								//cek apakah ada error atau tidak
 								if (accountStatus.err_code == 0) {
 									//cek jumdata dulu
@@ -4197,7 +4197,7 @@ var controller = {
 								//cek apakah ada error atau tidak
 								var accountType = JSON.parse(body);
 								//cara cek error
-								//console.log (actEncounterCode)
+								////console.log (actEncounterCode)
 								//cek apakah ada error atau tidak
 								if (accountType.err_code == 0) {
 									//cek jumdata dulu
@@ -4355,7 +4355,7 @@ var controller = {
 								//cek apakah ada error atau tidak
 								var diagnosisRole = JSON.parse(body);
 								//cara cek error
-								//console.log (actEncounterCode)
+								////console.log (actEncounterCode)
 								//cek apakah ada error atau tidak
 								if (diagnosisRole.err_code == 0) {
 									//cek jumdata dulu
@@ -4513,7 +4513,7 @@ var controller = {
 								//cek apakah ada error atau tidak
 								var encounterAdmitSource = JSON.parse(body);
 								//cara cek error
-								//console.log (actEncounterCode)
+								////console.log (actEncounterCode)
 								//cek apakah ada error atau tidak
 								if (encounterAdmitSource.err_code == 0) {
 									//cek jumdata dulu
@@ -4671,7 +4671,7 @@ var controller = {
 								//cek apakah ada error atau tidak
 								var encounterDiet = JSON.parse(body);
 								//cara cek error
-								//console.log (actEncounterCode)
+								////console.log (actEncounterCode)
 								//cek apakah ada error atau tidak
 								if (encounterDiet.err_code == 0) {
 									//cek jumdata dulu
@@ -4829,7 +4829,7 @@ var controller = {
 								//cek apakah ada error atau tidak
 								var encounterDischargeDisposition = JSON.parse(body);
 								//cara cek error
-								//console.log (actEncounterCode)
+								////console.log (actEncounterCode)
 								//cek apakah ada error atau tidak
 								if (encounterDischargeDisposition.err_code == 0) {
 									//cek jumdata dulu
@@ -4987,7 +4987,7 @@ var controller = {
 								//cek apakah ada error atau tidak
 								var encounterLocationStatus = JSON.parse(body);
 								//cara cek error
-								//console.log (actEncounterCode)
+								////console.log (actEncounterCode)
 								//cek apakah ada error atau tidak
 								if (encounterLocationStatus.err_code == 0) {
 									//cek jumdata dulu
@@ -5153,7 +5153,7 @@ var controller = {
 								port = port;
 								//system =(+ host + ':' + port + '/'+ apikey +'/' +system+);
 								//cara cek error
-								//console.log (actEncounterCode)	//192.168.56.101:2008/90867b984d2a5038ee21a190996b900b/encounter-participant-type
+								////console.log (actEncounterCode)	//192.168.56.101:2008/90867b984d2a5038ee21a190996b900b/encounter-participant-type
 								//cek apakah ada error atau tidak
 								if (encounterParticipantType.err_code == 0) {
 									//cek jumdata dulu
@@ -5316,7 +5316,7 @@ var controller = {
 								//cek apakah ada error atau tidak
 								var encounterReason = JSON.parse(body);
 								//cara cek error
-								//console.log (actEncounterCode)
+								////console.log (actEncounterCode)
 								//cek apakah ada error atau tidak
 								if (encounterReason.err_code == 0) {
 									//cek jumdata dulu
@@ -5474,7 +5474,7 @@ var controller = {
 								//cek apakah ada error atau tidak
 								var encounterSpecialCourtesy = JSON.parse(body);
 								//cara cek error
-								//console.log (actEncounterCode)
+								////console.log (actEncounterCode)
 								//cek apakah ada error atau tidak
 								if (encounterSpecialCourtesy.err_code == 0) {
 									//cek jumdata dulu
@@ -5632,7 +5632,7 @@ var controller = {
 								//cek apakah ada error atau tidak
 								var encounterSpecialArrangements = JSON.parse(body);
 								//cara cek error
-								//console.log (actEncounterCode)
+								////console.log (actEncounterCode)
 								//cek apakah ada error atau tidak
 								if (encounterSpecialArrangements.err_code == 0) {
 									//cek jumdata dulu
@@ -5790,7 +5790,7 @@ var controller = {
 								//cek apakah ada error atau tidak
 								var encounterStatus = JSON.parse(body);
 								//cara cek error
-								//console.log (actEncounterCode)
+								////console.log (actEncounterCode)
 								//cek apakah ada error atau tidak
 								if (encounterStatus.err_code == 0) {
 									//cek jumdata dulu
@@ -5948,7 +5948,7 @@ var controller = {
 								//cek apakah ada error atau tidak
 								var encounterType = JSON.parse(body);
 								//cara cek error
-								//console.log (actEncounterCode)
+								////console.log (actEncounterCode)
 								//cek apakah ada error atau tidak
 								if (encounterType.err_code == 0) {
 									//cek jumdata dulu
@@ -6106,7 +6106,7 @@ var controller = {
 								//cek apakah ada error atau tidak
 								var episodeOfCareStatus = JSON.parse(body);
 								//cara cek error
-								//console.log (actEncounterCode)
+								////console.log (actEncounterCode)
 								//cek apakah ada error atau tidak
 								if (episodeOfCareStatus.err_code == 0) {
 									//cek jumdata dulu
@@ -6264,7 +6264,7 @@ var controller = {
 								//cek apakah ada error atau tidak
 								var episodeOfCareType = JSON.parse(body);
 								//cara cek error
-								//console.log (actEncounterCode)
+								////console.log (actEncounterCode)
 								//cek apakah ada error atau tidak
 								if (episodeOfCareType.err_code == 0) {
 									//cek jumdata dulu
@@ -6422,7 +6422,7 @@ var controller = {
 								//cek apakah ada error atau tidak
 								var flagStatus = JSON.parse(body);
 								//cara cek error
-								//console.log (actEncounterCode)
+								////console.log (actEncounterCode)
 								//cek apakah ada error atau tidak
 								if (flagStatus.err_code == 0) {
 									//cek jumdata dulu
@@ -6580,7 +6580,7 @@ var controller = {
 								//cek apakah ada error atau tidak
 								var flagCategory = JSON.parse(body);
 								//cara cek error
-								//console.log (actEncounterCode)
+								////console.log (actEncounterCode)
 								//cek apakah ada error atau tidak
 								if (flagCategory.err_code == 0) {
 									//cek jumdata dulu
@@ -6738,7 +6738,7 @@ var controller = {
 								//cek apakah ada error atau tidak
 								var flagCode = JSON.parse(body);
 								//cara cek error
-								//console.log (actEncounterCode)
+								////console.log (actEncounterCode)
 								//cek apakah ada error atau tidak
 								if (flagCode.err_code == 0) {
 									//cek jumdata dulu
@@ -6896,7 +6896,7 @@ var controller = {
 								//cek apakah ada error atau tidak
 								var reAdmissionIndicator = JSON.parse(body);
 								//cara cek error
-								//console.log (actEncounterCode)
+								////console.log (actEncounterCode)
 								//cek apakah ada error atau tidak
 								if (reAdmissionIndicator.err_code == 0) {
 									//cek jumdata dulu
@@ -12706,7 +12706,7 @@ var controller = {
 													"display": display,
 													"definition": definition
 												};
-								console.log(dataOrganizationType);
+								//console.log(dataOrganizationType);
 								//method, endpoint, params, options, callback
 								ApiFHIR.post('organizationType', {"apikey": apikey}, {body: dataOrganizationType, json:true}, function(error, response, body){
 									if(error){
@@ -12773,7 +12773,7 @@ var controller = {
 													"display": display,
 													"definition": definition
 												};
-								console.log(dataContactentityType);
+								//console.log(dataContactentityType);
 								//method, endpoint, params, options, callback
 								ApiFHIR.post('contactentityType', {"apikey": apikey}, {body: dataContactentityType, json:true}, function(error, response, body){
 									if(error){
@@ -12782,7 +12782,7 @@ var controller = {
 									  	//cek apakah ada error atau tidak
 									  	var contactentityType = body; //object
 									  	//cek apakah ada error atau tidak
-											console.log(contactentityType);
+											//console.log(contactentityType);
 									  	if(contactentityType.err_code == 0){
 										  	res.json({"err_code": 0, "err_msg": "Contactentity Type has been add.", "data":contactentityType.data});
 									  	}else{
@@ -20318,7 +20318,7 @@ var controller = {
 				data.display = display;
 			}
 			
-			//console.log(req.body.code);
+			////console.log(req.body.code);
 			/*if(typeof req.body.code != "number"){*/
 			if(isNaN(code) && typeof code !== 'undefined'){
 				res.json({"err_code": 6, "err_msg": "Code is not number"});

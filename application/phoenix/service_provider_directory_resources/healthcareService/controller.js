@@ -94,7 +94,7 @@ var controller = {
       
 			var query = "select hs.healthcare_service_id as healthcare_service_id, healthcare_service_active, hs.organization_id as organization_id, healthcare_service_category, healthcare_service_type, healthcare_service_specialty, healthcare_service_name, healthcare_service_comment, healthcare_service_extra_details, hs.attachment_id as attachment_id, healthcare_service_service_provision_code,healthcare_service_eligibility, healthcare_service_eligibility_note, healthcare_service_program_name, healthcare_service_characteristic, healthcare_service_referral_method, healthcare_service_appointegerment_required, healthcare_service_availability_exceptions from BACIRO_FHIR.HEALTHCARE_SERVICE hs " + fixCondition;
 			
-      console.log(query);
+      //console.log(query);
 			var arrHealthcareService = [];
       db.query(query,function(dataJson){
         rez = lowercaseObject(dataJson);
@@ -130,7 +130,7 @@ var controller = {
       });
     },
 		availableTime: function getAvailableTime(req, res){
-			console.log(req.query);
+			//console.log(req.query);
 			var healthcare_service_id = req.query.healthcare_service_id;			    
 			
 			var condition = "";
@@ -148,7 +148,7 @@ var controller = {
       
 			var query = "select available_time_id, available_time_day_of_week, available_time_all_day, available_time_start, available_time_end from baciro_fhir.AVAILABLE_TIME " + fixCondition;
 			
-      console.log(query);
+      //console.log(query);
 			var arrAvailableTime = [];
       db.query(query,function(dataJson){
         rez = lowercaseObject(dataJson);
@@ -186,7 +186,7 @@ var controller = {
 			
 			var query = "select not_available_id, not_available_description, not_available_during from baciro_fhir.NOT_AVAILABLE " + fixCondition;
 			
-      console.log(query);
+      //console.log(query);
 			var arrAvailableTime = [];
       db.query(query,function(dataJson){
         rez = lowercaseObject(dataJson);
@@ -226,16 +226,16 @@ var controller = {
       }
       
 			var query = "select endpoint_id from baciro_fhir.endpoint " + fixCondition;
-			console.log(query);
+			//console.log(query);
       
 			var arrEndpoint = [];
       db.query(query,function(dataJson){
         rez = lowercaseObject(dataJson);
         for(i = 0; i < rez.length; i++){
-					console.log(hostfhir + ":" + portfhir + "/" + apikey + "/endpoint?_id=" + rez[i].endpoint_id);
+					//console.log(hostfhir + ":" + portfhir + "/" + apikey + "/endpoint?_id=" + rez[i].endpoint_id);
           var Endpoint = {};
 					Endpoint.id = hostfhir + ":" + portfhir + "/" + apikey + "/endpoint?_id=" + rez[i].endpoint_id;
-          console.log(Endpoint);
+          //console.log(Endpoint);
           arrEndpoint[i] = Endpoint;
         }
         res.json({"err_code":0,"data": arrEndpoint});
@@ -266,7 +266,7 @@ var controller = {
       }
       
 			var query = "select location_id from baciro_fhir.Location " + fixCondition;
-			console.log(query);
+			//console.log(query);
       
 			var arrLocation = [];
       db.query(query,function(dataJson){
@@ -306,7 +306,7 @@ var controller = {
       }
       
 			var query = "select location_id from baciro_fhir.Location " + fixCondition;
-			console.log(query);
+			//console.log(query);
       
 			var arrLocation = [];
       db.query(query,function(dataJson){
@@ -454,17 +454,17 @@ var controller = {
 
       var query = "UPSERT INTO BACIRO_FHIR.HEALTHCARE_SERVICE(healthcare_service_id, " + column.slice(0, -1) + ")"+
         " VALUES ('"+healthcare_service_id+"', " + values.slice(0, -1) + ")";
-			console.log(query);
+			//console.log(query);
 			
       db.upsert(query,function(succes){
 				
 				var query2 = "UPSERT INTO BACIRO_FHIR.ENDPOINT(ENDPOINT_ID, HEALTHCARE_SERVICE_ID) SELECT ENDPOINT_ID, '" + healthcare_service_id + "' FROM BACIRO_FHIR.ENDPOINT WHERE ENDPOINT_ID = '" + endpoint_id + "'";
         db.upsert(query2,function(dataJson){
 					var query3 = "UPSERT INTO BACIRO_FHIR.LOCATION(LOCATION_ID, LOCATION_HEALTHCARE_SERVICE_LOCATION) SELECT LOCATION_ID, '" + healthcare_service_id + "' FROM BACIRO_FHIR.LOCATION WHERE LOCATION_ID = '" + location_id + "'";
-					console.log(query3);
+					//console.log(query3);
 					db.upsert(query3,function(dataJson){
 						var query4 = "UPSERT INTO BACIRO_FHIR.LOCATION(LOCATION_ID, LOCATION_HEALTHCARE_SERVICE_COVERAGE_AREA) SELECT LOCATION_ID, '" + healthcare_service_id + "' FROM BACIRO_FHIR.LOCATION WHERE LOCATION_ID = '" + location_coverageArea + "'";
-						console.log(query4);
+						//console.log(query4);
 						db.upsert(query4,function(dataJson){
 				
 							var query = "SELECT healthcare_service_id, healthcare_service_active, healthcare_service_category, healthcare_service_type, healthcare_service_specialty, healthcare_service_name, healthcare_service_comment, healthcare_service_extra_details, healthcare_service_service_provision_code, healthcare_service_eligibility, healthcare_service_eligibility_note,healthcare_service_program_name,healthcare_service_characteristic,  healthcare_service_referral_method, healthcare_service_appointegerment_required, healthcare_service_availability_exceptions, organization_id FROM BACIRO_FHIR.HEALTHCARE_SERVICE  WHERE healthcare_service_id = '" + healthcare_service_id + "' ";
@@ -530,7 +530,7 @@ var controller = {
 
       var query = "UPSERT INTO BACIRO_FHIR.AVAILABLE_TIME(available_time_id, " + column.slice(0, -1) + ")"+
         " VALUES ('"+available_time_id+"', " + values.slice(0, -1) + ")";
-			console.log(query);
+			//console.log(query);
       db.upsert(query,function(succes){
         var query = "SELECT available_time_id, available_time_day_of_week, available_time_all_day, available_time_start, available_time_end, healthcare_service_id FROM BACIRO_FHIR.AVAILABLE_TIME  WHERE healthcare_service_id = '" + healthcare_service_id + "' ";
         db.query(query,function(dataJson){
@@ -570,7 +570,7 @@ var controller = {
 
       var query = "UPSERT INTO BACIRO_FHIR.NOT_AVAILABLE(not_available_id, " + column.slice(0, -1) + ")"+
         " VALUES ('"+not_available_id+"', " + values.slice(0, -1) + ")";
-			console.log(query);
+			//console.log(query);
       db.upsert(query,function(succes){
         var query = "SELECT not_available_id, not_available_description, not_available_during, not_available_during FROM BACIRO_FHIR.NOT_AVAILABLE  WHERE healthcare_service_id = '" + healthcare_service_id + "' ";
         db.query(query,function(dataJson){
@@ -603,7 +603,7 @@ var controller = {
 						
       var query = "UPSERT INTO BACIRO_FHIR.ENDPOINT(endpoint_id, " + column.slice(0, -1) + ")"+
         " VALUES ('"+endpoint_id+"', " + values.slice(0, -1) + ")";
-			console.log(query);
+			//console.log(query);
       db.upsert(query,function(succes){
         var query = "SELECT endpoint_id, healthcare_service_id FROM BACIRO_FHIR.ENDPOINT  WHERE endpoint_id = '" + endpoint_id + "' ";
         db.query(query,function(dataJson){
@@ -636,7 +636,7 @@ var controller = {
 						
       var query = "UPSERT INTO BACIRO_FHIR.location(location_id, " + column.slice(0, -1) + ")"+
         " VALUES ('"+location_id+"', " + values.slice(0, -1) + ")";
-			console.log(query);
+			//console.log(query);
       db.upsert(query,function(succes){
         var query = "SELECT location_id, LOCATION_HEALTHCARE_SERVICE_LOCATION FROM BACIRO_FHIR.location  WHERE location_id = '" + location_id + "' ";
         db.query(query,function(dataJson){
@@ -669,7 +669,7 @@ var controller = {
 						
       var query = "UPSERT INTO BACIRO_FHIR.location(location_id, " + column.slice(0, -1) + ")"+
         " VALUES ('"+location_id+"', " + values.slice(0, -1) + ")";
-			console.log(query);
+			//console.log(query);
       db.upsert(query,function(succes){
         var query = "SELECT location_id, LOCATION_HEALTHCARE_SERVICE_COVERAGE_AREA FROM BACIRO_FHIR.location  WHERE location_id = '" + location_id + "' ";
         db.query(query,function(dataJson){
@@ -686,8 +686,6 @@ var controller = {
 	},
 	put:{
 		healthcareService: function updateHealthcareService(req, res){
-			console.log(req.params);
-			console.log(req.body);
 			var healthcare_service_id = req.params.healthcare_service_id;
 			//var healthcare_service_id = req.body.id;
 			var healthcare_service_active = req.body.active;
@@ -817,7 +815,7 @@ var controller = {
 			var condition = "healthcare_service_id = '" + healthcare_service_id + "'";
 			
 			var query = "UPSERT INTO BACIRO_FHIR.HEALTHCARE_SERVICE(healthcare_service_id," + column.slice(0, -1) + ") SELECT healthcare_service_id, " + values.slice(0, -1) + " FROM BACIRO_FHIR.HEALTHCARE_SERVICE WHERE " + condition;
-			console.log(query);
+			//console.log(query);
 			
       db.upsert(query,function(succes){
 				var query5 = "SELECT healthcare_service_id, healthcare_service_active, healthcare_service_category, healthcare_service_type, healthcare_service_specialty, healthcare_service_name, healthcare_service_comment, healthcare_service_extra_details, healthcare_service_service_provision_code, healthcare_service_eligibility,healthcare_service_eligibility_note, healthcare_service_program_name,healthcare_service_characteristic, healthcare_service_referral_method, healthcare_service_appointegerment_required, healthcare_service_availability_exceptions, organization_id, attachment_id FROM BACIRO_FHIR.HEALTHCARE_SERVICE  WHERE healthcare_service_id = '" + healthcare_service_id + "' ";

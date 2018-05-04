@@ -903,7 +903,7 @@ var controller = {
 										var ApiFHIR = new Apiclient(seedPhoenixFHIR);
 										ApiFHIR.get('HealthcareService', {"apikey": apikey}, {}, function(error, response, body){
 											HealthcareService = JSON.parse(body);
-											console.log(HealthcareService.data[0].attachment_id);
+											//console.log(HealthcareService.data[0].attachment_id);
 											if(HealthcareService.err_code == 0){
 												//res.json({"err_code": 0, "data":attachment.data});	
 												qString = {};
@@ -1572,7 +1572,7 @@ var controller = {
 																																											"period_end": contactPointPeriodEnd,
 																																											"healthcare_service_id" : healthcareServiceId
 																																										}
-																																	console.log(dataContactPoint);
+																																	//console.log(dataContactPoint);
 																																	//post to contact point
 																																	ApiFHIR.post('contactPoint', {"apikey": apikey}, {body: dataContactPoint, json: true}, function(error, response, body){
 																																		contactPoint = body;
@@ -1813,10 +1813,10 @@ var controller = {
 											"availableEndTime" : availableEndTime
 										}
 										ApiFHIR.post('availableTime', {"apikey": apikey}, {body: dataAvailableTime, json: true}, function(error, response, body){
-											console.log(body);
+											//console.log(body);
 											healthcareService = body;
 											if(healthcareService.err_code == 0){
-												console.log("tes123");
+												//console.log("tes123");
 												res.json({"err_code": 0, "err_msg": "Available Time has been add in this Healthcare Service.", "data": healthcareService.data});
 											} else {
 												res.json(healthcareService);
@@ -2242,10 +2242,10 @@ var controller = {
 											"id" : endpoint_id,
 										}
 										ApiFHIR.post('healthcareServiceEndpoint', {"apikey": apikey}, {body: dataEndpoint, json: true}, function(error, response, body){
-											console.log(body);
+											//console.log(body);
 											healthcareService = body;
 											if(healthcareService.err_code == 0){
-												console.log("tes123");
+												//console.log("tes123");
 												res.json({"err_code": 0, "err_msg": "Endpoint has been add in this healthcare service.", "data": healthcareService.data});
 											} else {
 												res.json(healthcareService);
@@ -2301,10 +2301,10 @@ var controller = {
 											"id" : location_id,
 										}
 										ApiFHIR.post('healthcareServiceLocation', {"apikey": apikey}, {body: dataLocation, json: true}, function(error, response, body){
-											console.log(body);
+											//console.log(body);
 											healthcareService = body;
 											if(healthcareService.err_code == 0){
-												console.log("tes123");
+												//console.log("tes123");
 												res.json({"err_code": 0, "err_msg": "Location has been add in this healthcare service.", "data": healthcareService.data});
 											} else {
 												res.json(healthcareService);
@@ -2360,10 +2360,10 @@ var controller = {
 											"id" : location_id,
 										}
 										ApiFHIR.post('healthcareServiceCoverageArea', {"apikey": apikey}, {body: dataLocation, json: true}, function(error, response, body){
-											console.log(body);
+											//console.log(body);
 											healthcareService = body;
 											if(healthcareService.err_code == 0){
-												console.log("tes123");
+												//console.log("tes123");
 												res.json({"err_code": 0, "err_msg": "Location has been add in this healthcare service.", "data": healthcareService.data});
 											} else {
 												res.json(healthcareService);
@@ -3041,7 +3041,7 @@ var controller = {
 										if(resAvailableTimeId.err_code > 0){
 											ApiFHIR.put('availableTime', {"apikey": apikey, "_id": availableTimeId, "dr": "HEALTHCARE_SERVICE_ID|"+healthcareServiceId}, {body: dataAvailableTime, json: true}, function(error, response, body){
 												availableTime = body;
-												console.log(availableTime);
+												//console.log(availableTime);
 												if(availableTime.err_code > 0){
 													res.json(availableTime);	
 												}else{

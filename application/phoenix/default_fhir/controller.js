@@ -5803,7 +5803,7 @@ var controller = {
 
       var query = "UPSERT INTO BACIRO_FHIR.AVAILABLE_TIME(available_time_id, " + column.slice(0, -1) + ")"+
         " VALUES ('"+available_time_id+"', " + values.slice(0, -1) + ")";
-			console.log(query);
+			//console.log(query);
       db.upsert(query,function(succes){
         var query = "SELECT available_time_id, available_time_day_of_week, available_time_all_day, available_time_start, available_time_end, practitioner_role_id FROM BACIRO_FHIR.AVAILABLE_TIME  WHERE available_time_id = '" + available_time_id + "' ";
         db.query(query,function(dataJson){
@@ -5849,7 +5849,7 @@ var controller = {
 
       var query = "UPSERT INTO BACIRO_FHIR.NOT_AVAILABLE(not_available_id, " + column.slice(0, -1) + ")"+
         " VALUES ('"+not_available_id+"', " + values.slice(0, -1) + ")";
-			console.log(query);
+			//console.log(query);
       db.upsert(query,function(succes){
         var query = "SELECT not_available_id, not_available_description, not_available_during, not_available_during FROM BACIRO_FHIR.NOT_AVAILABLE  WHERE not_available_id = '" + not_available_id + "' ";
         db.query(query,function(dataJson){
@@ -7246,7 +7246,7 @@ var controller = {
 			}
 
 			var query = "UPSERT INTO BACIRO_FHIR.ADDRESS(address_id," + column.slice(0, -1) + ") SELECT address_id, " + values.slice(0, -1) + " FROM BACIRO_FHIR.ADDRESS WHERE " + condition;
-			console.log(query);
+			//console.log(query);
 
 			db.upsert(query, function (succes) {
 				var arrAddress = [];
@@ -9540,12 +9540,10 @@ var controller = {
 			var condition = "available_time_id = '" + _id + "' AND " + fieldResource + " = '" + valueResource + "'";
 
 			var query = "UPSERT INTO BACIRO_FHIR.AVAILABLE_TIME(available_time_id," + column.slice(0, -1) + ") SELECT available_time_id, " + values.slice(0, -1) + " FROM BACIRO_FHIR.AVAILABLE_TIME WHERE " + condition;
-console.log(query);
 
       db.upsert(query,function(succes){
         var query = "SELECT available_time_id, available_time_day_of_week, available_time_all_day, available_time_start, available_time_end, practitioner_role_id FROM BACIRO_FHIR.AVAILABLE_TIME  WHERE available_time_id = '" + _id + "' ";
-				console.log(query);
-        db.query(query,function(dataJson){
+				db.query(query,function(dataJson){
           rez = lowercaseObject(dataJson);
           res.json({"err_code":0,"data":rez});
         },function(e){
@@ -9595,7 +9593,6 @@ console.log(query);
 			var condition = "not_available_id = '" + _id + "' AND " + fieldResource + " = '" + valueResource + "'";
 
 			var query = "UPSERT INTO BACIRO_FHIR.NOT_AVAILABLE(not_available_id," + column.slice(0, -1) + ") SELECT not_available_id, " + values.slice(0, -1) + " FROM BACIRO_FHIR.NOT_AVAILABLE WHERE " + condition;
-console.log(query);
       db.upsert(query,function(succes){
         var query = "SELECT not_available_id, not_available_description, not_available_during, not_available_during FROM BACIRO_FHIR.NOT_AVAILABLE  WHERE not_available_id = '" + _id + "' ";
         db.query(query,function(dataJson){
