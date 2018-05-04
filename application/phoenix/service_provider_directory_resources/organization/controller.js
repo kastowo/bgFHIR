@@ -10,6 +10,8 @@ var configYaml = yamlconfig.readConfig(path.resolve('../../application/config/co
 //event emitter
 var host = configYaml.phoenix.host;
 var port = configYaml.phoenix.port;
+var hostfhir = configYaml.fhir.host;
+var portfhir = configYaml.fhir.port;
 
 // var phoenix = require("./phoenix.js");
 var phoenix = require(path.resolve("./phoenix.js"));
@@ -156,7 +158,7 @@ var controller = {
       }
       
       var arrOrganization = [];
-      var query = "select organization_id, organization_active, organization_type, organization_name, organization_alias, parent_id, endpoint_id from baciro_fhir.organization o " + fixCondition;
+      var query = "select organization_id, organization_active, organization_type, organization_name, organization_alias, parent_id from baciro_fhir.organization o " + fixCondition;
 			//console.log(query);
       db.query(query,function(dataJson){
         rez = lowercaseObject(dataJson);
@@ -169,8 +171,7 @@ var controller = {
 					Organization.name = rez[i].organization_name;
 					Organization.alias = rez[i].organization_alias;
 					Organization.parent_id = rez[i].parent_id;
-					Organization.endpoint_id = rez[i].endpoint_id;
-          arrOrganization[i] = Organization;
+					arrOrganization[i] = Organization;
         }
         res.json({"err_code":0,"data": arrOrganization});
       },function(e){
@@ -292,47 +293,41 @@ var controller = {
       });
     },
 		endpoint: function getEndpoint(req, res){
-      var organizationId = req.query.organization_id;
+			var apikey = req.params.apikey;
+			var endpointId = req.query._id;
+			var organizationId = req.query.organization_id;
 			
-      //susun query
-      var condition = "";
+			var condition = "";
+			var join = "";
 			
-			if(typeof organizationId !== 'undefined' && organizationId !== ""){
-        condition += "organization_id = '" + organizationId + "' AND,";  
+			if(typeof endpointId !== 'undefined' && endpointId !== ""){
+        condition += "endpoint_id = '" + endpointId + "' AND ";  
       }
-
-      if(condition == ""){
+						
+			if(typeof organizationId !== 'undefined' && organizationId !== ""){
+        condition += "organization_id = '" + organizationId + "' AND ";  
+      }
+			
+			if(condition == ""){
         fixCondition = "";
       }else{
-        fixCondition = " WHERE " + condition.slice(0, -4);
+        fixCondition = " WHERE  " + condition.slice(0, -4);
       }
       
-      var arrOrganizationContact = [];
-      var query = "SELECT endpoint_id,endpoint_status,endpoint_connection_type,endpoint_name,endpoint_managing_organization,endpoint_period_start,endpoint_period_end,endpoint_payload_type,endpoint_payload_mime_type,endpoint_address,endpoint_header,organization_id,location_id,practitioner_role_id,healthcare_service_id FROM BACIRO_FHIR.ORGANIZATION_CONTACT " + fixCondition;
+			var query = "select endpoint_id from baciro_fhir.endpoint " + fixCondition;
+			console.log(query);
       
+			var arrEndpoint = [];
       db.query(query,function(dataJson){
         rez = lowercaseObject(dataJson);
+				console.log(rez);
         for(i = 0; i < rez.length; i++){
-          var OrganizationContact = {};
-          OrganizationContact.endpoint_id = rez[i].endpoint_id;
-          OrganizationContact.endpoint_status = rez[i].endpoint_status;
-					OrganizationContact.endpoint_connection_type = rez[i].endpoint_connection_type;
-					OrganizationContact.endpoint_name = rez[i].endpoint_name;
-					OrganizationContact.endpoint_managing_organization = rez[i].endpoint_managing_organization;
-					OrganizationContact.endpoint_period_start = rez[i].endpoint_period_start;
-					OrganizationContact.endpoint_period_end = rez[i].endpoint_period_end;
-					OrganizationContact.endpoint_payload_type = rez[i].endpoint_payload_type;
-					OrganizationContact.endpoint_payload_mime_type = rez[i].endpoint_payload_mime_type;
-					OrganizationContact.endpoint_address = rez[i].endpoint_address;
-					OrganizationContact.endpoint_header = rez[i].endpoint_header;
-					OrganizationContact.organization_id = rez[i].organization_id;
-					OrganizationContact.location_id = rez[i].location_id;
-					OrganizationContact.practitioner_role_id = rez[i].practitioner_role_id;
-					OrganizationContact.healthcare_service_id = rez[i].healthcare_service_id;
-               
-          arrOrganizationContact[i] = OrganizationContact;
+					var Endpoint = {};
+					Endpoint.id = hostfhir + ":" + portfhir + "/" + apikey + "/endpoint?_id=" + rez[i].endpoint_id;
+          console.log(Endpoint);
+          arrEndpoint[i] = Endpoint;
         }
-        res.json({"err_code":0,"data": arrOrganizationContact});
+        res.json({"err_code":0,"data": arrEndpoint});
       },function(e){
         res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "getEndpoint"});
       });
@@ -346,7 +341,7 @@ var controller = {
       var organization_name = req.body.name;
       var organization_alias = req.body.alias;
       var organization_parentId = req.body.parentId;
-			var organization_endpointId = req.body.endpointId;
+			//var organization_endpointId = req.body.endpointId;
 
      
       if(organization_id == ""){
@@ -381,10 +376,10 @@ var controller = {
         values += "'" + organization_parentId +"',";
       }
 			
-			if(typeof organization_endpointId !== 'undefined'){
+			/*if(typeof organization_endpointId !== 'undefined'){
         column += 'ENDPOINT_ID,';
         values += "'" + organization_endpointId +"',";
-      }
+      }*/
 
 			var query = "UPSERT INTO BACIRO_FHIR.ORGANIZATION(ORGANIZATION_ID, " + column.slice(0, -1) + ")"+ " VALUES ('"+organization_id+"', " + values.slice(0, -1) + ")";
 			
@@ -447,6 +442,33 @@ var controller = {
       });
 			
 			
+    },
+		endpoint: function addEndpoint(req, res){
+			var endpoint_id = req.body.id;
+			var organization_id = req.body.organizationId;
+			
+			var column = "";
+      var values = "";
+			
+			if(typeof organization_id !== 'undefined'){
+        column += 'organization_id,';
+        values += "'" + organization_id +"',";
+      }
+						
+      var query = "UPSERT INTO BACIRO_FHIR.ENDPOINT(endpoint_id, " + column.slice(0, -1) + ")"+
+        " VALUES ('"+endpoint_id+"', " + values.slice(0, -1) + ")";
+			console.log(query);
+      db.upsert(query,function(succes){
+        var query = "SELECT endpoint_id, organization_id FROM BACIRO_FHIR.ENDPOINT  WHERE endpoint_id = '" + endpoint_id + "' ";
+        db.query(query,function(dataJson){
+          rez = lowercaseObject(dataJson);
+          res.json({"err_code":0,"data":rez});
+        },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "addOrganizationEnpoint"});
+        });
+      },function(e){
+          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "addOrganizationEnpoint"});
+      });
     }
   },
 	put: {

@@ -672,6 +672,30 @@
 			},
 			"healthcareService":{
 				"location": "%(apikey)s/HealthcareService"
+			},
+			"PractitionerRoleEndpoint":{
+				"location": "%(apikey)s/PractitionerRole/Endpoint"
+			},
+			"PractitionerRoleLocation":{
+				"location": "%(apikey)s/PractitionerRole/Location"
+			},
+			"PractitionerRoleHealthcareService":{
+				"location": "%(apikey)s/PractitionerRole/HealthcareService"
+			},
+			"healthcareServiceEndpoint":{
+				"location": "%(apikey)s/HealthcareService/Endpoint"
+			},
+			"healthcareServiceLocation":{
+				"location": "%(apikey)s/HealthcareService/Location"
+			},
+			"healthcareServiceCoverageArea":{
+				"location": "%(apikey)s/HealthcareService/CoverageArea"
+			},
+			"locationEndpoint":{
+				"location": "%(apikey)s/Location/Endpoint"
+			},
+			"OrganizationEndpoint":{
+				"location": "%(apikey)s/Organization/Endpoint"
 			}
 		},
 		"PUT": {

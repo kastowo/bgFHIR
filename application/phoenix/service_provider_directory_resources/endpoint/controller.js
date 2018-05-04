@@ -112,7 +112,7 @@ var controller = {
 			var endpoint_payload_mime_type = req.body.payloadMimeType;
 			var endpoint_address = req.body.address;
 			var endpoint_header = req.body.header;
-			var organization_id = req.body.managingOrganization;
+			//var organization_id = req.body.managingOrganization;
 			var column = "";
       var values = "";
 			
@@ -178,10 +178,10 @@ var controller = {
         values += "'" + endpoint_header +"',";
       }
 			
-			if(typeof organization_id !== 'undefined'){
+			/*if(typeof organization_id !== 'undefined'){
         column += 'organization_id,';
         values += "'" + organization_id +"',";
-      }
+      }*/
 
       var query = "UPSERT INTO BACIRO_FHIR.ENDPOINT(ENDPOINT_ID, " + column.slice(0, -1) + ")"+
         " VALUES ('"+endpoint_id+"', " + values.slice(0, -1) + ")";

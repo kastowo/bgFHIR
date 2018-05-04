@@ -11,6 +11,9 @@ var routesHealthcareService= function(app, HealthcareService){
 	app.post('/:apikey/HealthcareService/:healthcare_service_id?/NotAvailable', HealthcareService.post.notAvailable);
 	app.post('/:apikey/HealthcareService/:healthcare_service_id?/Identifier', HealthcareService.post.identifier);
 	app.post('/:apikey/HealthcareService/:healthcare_service_id?/Telecom', HealthcareService.post.telecom);
+	app.post('/:apikey/HealthcareService/:healthcare_service_id?/Endpoint', HealthcareService.post.endpointRef);
+	app.post('/:apikey/HealthcareService/:healthcare_service_id?/Location', HealthcareService.post.locationRef);
+	app.post('/:apikey/HealthcareService/:healthcare_service_id?/CoverageArea', HealthcareService.post.coverageAreaRef);
 	
 	app.put('/:apikey/HealthcareService/:healthcare_service_id?', HealthcareService.put.healthcaerService);
 	app.put('/:apikey/HealthcareService/:healthcare_service_id?/AvailableTime/:available_time_id?', HealthcareService.put.availableTime);

@@ -4,6 +4,7 @@ var routesLocation = function(app, Location){
 	
 	app.post('/:apikey/Location', Location.post.location);
 	app.post('/:apikey/Location/:location_id?/Telecom', Location.post.telecom);
+	app.post('/:apikey/Location/:location_id?/Endpoint', Location.post.endpointRef);
 	
 	app.put('/:apikey/Location/:location_id?', Location.put.location);
 	app.put('/:apikey/Location/:location_id?/LocationPosition/:location_position_id?', Location.put.locationPosition);

@@ -10,6 +10,9 @@ var routesPractitionerRole= function(app, PractitionerRole){
 	app.post('/:apikey/PractitionerRole/:practitioner_role_id?/NotAvailable', PractitionerRole.post.notAvailable);
 	app.post('/:apikey/PractitionerRole/:practitioner_role_id?/Identifier', PractitionerRole.post.identifier);
 	app.post('/:apikey/PractitionerRole/:practitioner_role_id?/Telecom', PractitionerRole.post.telecom);
+	app.post('/:apikey/PractitionerRole/:practitioner_role_id?/Endpoint', PractitionerRole.post.endpointRef);
+	app.post('/:apikey/PractitionerRole/:practitioner_role_id?/Location', PractitionerRole.post.locationRef);
+	app.post('/:apikey/PractitionerRole/:practitioner_role_id?/HealthcareService', PractitionerRole.post.healthcareServiceRef);
 	
 	app.put('/:apikey/PractitionerRole/:practitioner_role_id?', PractitionerRole.put.practitionerRole);
 	app.put('/:apikey/PractitionerRole/:practitioner_role_id?/AvailableTime/:available_time_id?', PractitionerRole.put.availableTime);

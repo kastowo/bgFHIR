@@ -239,14 +239,7 @@ var controller = {
 																	partOf = organization.parent_id;
 																}																
 																objectOrganization.partOf = partOf;
-																var endpoint;
-																if(organization.endpoint_id !== 'null'){
-																	endpoint = host + ":" + port + "/" + apikey + "/Endpoint?_id=" + organization.endpoint_id;
-																} else {
-																	endpoint = organization.endpoint_id;
-																}
-																objectOrganization.endpoint_id = endpoint;
-
+																
 																newOrganization[index] = objectOrganization
 
 																myEmitter.once('getContactPoint', function(organization, index, newOrganization, countOrganization){
@@ -274,8 +267,7 @@ var controller = {
 																						objectOrganization.alias = organization.alias;
 																						objectOrganization.telecom = contactPoint.data;
 																						objectOrganization.partOf = organization.partOf;
-																						objectOrganization.endpoint_id = organization.endpoint_id;
-
+																						
 																						newOrganization[index] = objectOrganization;
 
 																						myEmitter.once('getAddress', function(organization, index, newOrganization, countOrganization){
@@ -305,8 +297,7 @@ var controller = {
 																									objectOrganization.telecom = organization.telecom;
 																									objectOrganization.address = address.data;
 																									objectOrganization.partOf = organization.partOf;
-																									objectOrganization.endpoint_id = organization.endpoint_id;
-
+																									
 																									newOrganization[index] = objectOrganization;
 
 																									myEmitter.once('getContact', function(organization, index, newOrganization, countOrganization){
@@ -337,12 +328,49 @@ var controller = {
 																												objectOrganization.address = organization.address;
 																												objectOrganization.partOf = organization.partOf;
 																												objectOrganization.contact = contact.data;
-																												objectOrganization.endpoint_id = organization.endpoint_id;
+																												newOrganization[index] = objectOrganization;
+
+																												myEmitter.once('getEndpoint', function(organization, index, newOrganization, countOrganization){
+																										qString = {};
+																										qString.organization_id = organization.id;
+																										seedPhoenixFHIR.path.GET = {
+																											"OrganizationEndpoint" : {
+																												"location": "%(apikey)s/Organization/Endpoint",
+																												"query": qString
+																											}
+																										}
+
+																										var ApiFHIR = new Apiclient(seedPhoenixFHIR);
+
+																										ApiFHIR.get('OrganizationEndpoint', {"apikey": apikey}, {}, function(error, response, body){
+																											endpoint = JSON.parse(body);
+
+																											if(endpoint.err_code == 0){
+																												var objectOrganization = {};
+																												objectOrganization.resourceType = organization.resourceType;
+																												objectOrganization.id = organization.id;
+																												objectOrganization.identifier = organization.identifier;
+																												objectOrganization.active = organization.active;
+																												objectOrganization.type = organization.type;
+																												objectOrganization.name = organization.name;
+																												objectOrganization.alias = organization.alias;
+																												objectOrganization.telecom = organization.telecom;
+																												objectOrganization.address = organization.address;
+																												objectOrganization.partOf = organization.partOf;
+																												objectOrganization.contact = organization.contact;
+																												objectOrganization.endpoint = endpoint.data;
 																												newOrganization[index] = objectOrganization;
 
 																												if(index == countOrganization -1 ){
 																													res.json({"err_code": 0, "data":newOrganization});				
 																												}
+
+																											}else{
+																												res.json(endpoint);			
+																											}
+																										})
+																									})
+																									myEmitter.emit('getEndpoint', objectOrganization, index, newOrganization, countOrganization);
 
 																											}else{
 																												res.json(contact);			
@@ -2544,6 +2572,65 @@ var controller = {
 								res.json({"err_code": 503, "err_msg": "Organization Id not found"});	
 							}
 						})	
+					}else{
+						result.err_code = 500;
+						res.json(result);
+					}	
+				});
+			}else{
+				res.json({"err_code": err_code, "err_msg": err_msg});
+			}
+		},
+		endpointRef: function addEndpointRef(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var regex = new RegExp("([0-9]{4}[-](0[1-9]|1[0-2])[-]([0-2]{1}[0-9]{1}|3[0-1]{1})|([0-2]{1}[0-9]{1}|3[0-1]{1})[-](0[1-9]|1[0-2])[-][0-9]{4})");
+			var organizationId = req.params.organization_id;
+
+			var err_code = 0;
+			var err_msg = "";
+
+			if(typeof req.body.endpoint_id !== 'undefined'){
+				endpoint_id =  req.body.endpoint_id.trim().toLowerCase();
+				if(validator.isEmpty(endpoint_id)){
+					err_code = 2;
+					err_msg = "Endpoint id of Organization is required";
+				}
+			}else{
+				err_code = 1;
+				err_msg = "Please add sub-key 'endpoint id' in json Organization request.";
+			}  
+
+			if(err_code == 0){
+				//check apikey
+				checkApikey(apikey, ipAddres, function(result){
+					if(result.err_code == 0){
+						checkUniqeValue(apikey, "ORGANIZATION_ID|" + organizationId, 'ORGANIZATION', function(resOrganizationID){
+							if(resOrganizationID.err_code > 0){
+								checkUniqeValue(apikey, "ENDPOINT_ID|" + endpoint_id, 'ENDPOINT', function(resEndpointID){
+									if(resEndpointID.err_code > 0){
+										dataEndpoint = {
+											"organizationId" : organizationId,
+											"id" : endpoint_id,
+										}
+										ApiFHIR.post('OrganizationEndpoint', {"apikey": apikey}, {body: dataEndpoint, json: true}, function(error, response, body){
+											console.log(body);
+											organization = body;
+											if(organization.err_code == 0){
+												console.log("tes123");
+												res.json({"err_code": 0, "err_msg": "Endpoint has been add in this organization.", "data": organization.data});
+											} else {
+												res.json(organization);
+											}
+										})													
+									}else{
+										res.json({"err_code": 501, "err_msg": "Endpoint Id not found"});
+									}
+								})
+							}else{
+								res.json({"err_code": 501, "err_msg": "Organization Id not found"});
+							}
+						})
 					}else{
 						result.err_code = 500;
 						res.json(result);

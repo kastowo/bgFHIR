@@ -10,6 +10,7 @@ var routesOrganization = function(app, Organization){
 	app.post('/:apikey/Organization/:organization_id?/Identifier', Organization.post.identifier);
 	app.post('/:apikey/Organization/:organization_id?/Telecom', Organization.post.telecom);
 	app.post('/:apikey/Organization/:organization_id?/Address', Organization.post.address);
+	app.post('/:apikey/Organization/:organization_id?/Endpoint', Organization.post.endpointRef);
 	
 	app.put('/:apikey/Organization/:organization_id?', Organization.put.organization);
 	app.put('/:apikey/Organization/:organization_id?/OrganizationContact/:organization_contact_id?', Organization.put.organizationContact);
