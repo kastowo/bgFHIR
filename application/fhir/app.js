@@ -41,7 +41,10 @@ var Appointment = require("./scheduling_and_appointments/appointment/controller"
 var AppointmentResponse = require("./scheduling_and_appointments/appointment_response/controller");
 
 //import clinical categorization resources
-var ClinicalCategorizationResources = require("./clinical_categorization_resources/controller");
+var EpisodeOfCare = require("./clinical_categorization_resources/episode_of_care/controller");
+var Encounter = require("./clinical_categorization_resources/encounter/controller");
+var Account = require("./clinical_categorization_resources/account/controller");
+var Flag = require("./clinical_categorization_resources/flag/controller");
 
 //import devices_and_substances module
 var Device = require("./devices_and_substances/device/controller");
@@ -65,6 +68,10 @@ var routesPerson		= require('./patient_registers/person/routes');
 var routesPatient		= require('./patient_registers/patient/routes');
 var routesRelatedPerson	= require('./patient_registers/related_person/routes');
 var routesGroup			= require('./patient_registers/group/routes');
+var routesEpisodeOfCare = require('./clinical_categorization_resources/episode_of_care/routes');
+var routesEncounter = require('./clinical_categorization_resources/encounter/routes');
+var routesAccount = require('./clinical_categorization_resources/account/routes');
+var routesFlag = require('./clinical_categorization_resources/flag/routes');
 var routesSchedule		= require('./scheduling_and_appointments/schedule/routes');
 var routesSlot		= require('./scheduling_and_appointments/slot/routes');
 var routesAppointment	= require('./scheduling_and_appointments/appointment/routes');
@@ -87,6 +94,10 @@ routesPerson(app, Person);
 routesPatient(app, Patient);
 routesRelatedPerson(app, RelatedPerson);
 routesGroup(app, Group);
+routesEpisodeOfCare(app, EpisodeOfCare);
+routesEncounter(app, Encounter);
+routesAccount(app, Account);
+routesFlag(app, Flag);
 routesSchedule(app, Schedule);
 routesSlot(app, Slot);
 routesAppointment(app, Appointment);
