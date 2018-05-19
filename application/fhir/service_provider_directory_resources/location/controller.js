@@ -68,7 +68,7 @@ var controller = {
 				if(!validator.isEmpty(locationId)){
 					qString._id = locationId; 
 				}else{
-					res.json({"err_code": 1, "err_msg": "organization id is required."});
+					res.json({"err_code": 1, "err_msg": "location id is required."});
 				}
 			}
 
@@ -232,7 +232,7 @@ var controller = {
 				}
 			}
 
-
+console.log(qString);
 			seedPhoenixFHIR.path.GET = {
 				"Location" : {
 					"location": "%(apikey)s/Location",
@@ -1341,7 +1341,7 @@ var controller = {
 			//input check 
 			if(typeof locationId !== 'undefined'){
 				if(validator.isEmpty(locationId)){
-					err_code = 2;
+					err_code = 1;
 					err_msg = "Location id is required";
 				}
 			}else{
@@ -1605,7 +1605,7 @@ var controller = {
 							if(validator.isEmpty(partOf)){
 								myEmitter.emit('checkManagingOrganization');
 							}else{
-								checkUniqeValue(apikey, "ORGANIZATION_ID|" + partOf, 'ORGANIZATION', function(resPartOfOrganizationID){
+								checkUniqeValue(apikey, "LOCATION_ID|" + partOf, 'LOCATION', function(resPartOfOrganizationID){
 									if(resPartOfOrganizationID.err_code > 0){
 										myEmitter.emit('checkManagingOrganization');				
 									}else{
@@ -1665,7 +1665,7 @@ var controller = {
 			//input check 
 			if(typeof locationId !== 'undefined'){
 				if(validator.isEmpty(locationId)){
-					err_code = 2;
+					err_code = 1;
 					err_msg = "Location id is required";
 				}
 			}else{
@@ -1675,7 +1675,7 @@ var controller = {
 			
 			if(typeof locationPositionId !== 'undefined'){
 				if(validator.isEmpty(locationPositionId)){
-					err_code = 2;
+					err_code = 1;
 					err_msg = "Location Position id is required";
 				}
 			}else{
@@ -1702,10 +1702,6 @@ var controller = {
 			
 			if(typeof req.body.latitude !== 'undefined'){
 				latitude =  req.body.latitude.trim().toLowerCase();
-					/*if (typeof latitude != "number") {
-					err_code = 4;
-					err_msg = "Latitude is not number";
-				}*/
 				if(validator.isEmpty(latitude)){
 					err_code = 2;
 					err_msg = "Latitude is required.";
@@ -1717,11 +1713,7 @@ var controller = {
 			}
 			
 			if(typeof req.body.longitude !== 'undefined'){
-				latitude =  req.body.longitude.trim().toLowerCase();
-					/*if (typeof longitude != "number") {
-					err_code = 4;
-					err_msg = "Longitude is not number";
-				}*/
+				longitude =  req.body.longitude.trim().toLowerCase();
 				if(validator.isEmpty(longitude)){
 					err_code = 2;
 					err_msg = "Longitude is required.";

@@ -19,6 +19,7 @@ var routesOrganization = function(app, Organization){
 	app.put('/:apikey/Organization/:organization_id?/OrganizationContact/:organization_contact_id?/HumanName/:human_name_id?', Organization.put.organizationContactHumanName);
 	app.put('/:apikey/Organization/:organization_id?/Identifier/:identifier_id?', Organization.put.identifier);
 	app.put('/:apikey/Organization/:organization_id?/Telecom/:contact_point_id?', Organization.put.telecom);
+	app.put('/:apikey/Organization/:organization_id?/Address/:address_id?', Organization.put.address);
 
 }
 module.exports = routesOrganization

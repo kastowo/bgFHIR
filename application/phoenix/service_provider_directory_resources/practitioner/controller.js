@@ -25,12 +25,12 @@ var controller = {
 			var practitionerId = req.query._id;
       var practitioner_active = req.query.active;
 			var practitioner_gender = req.query.gender;
-			var addressId = req.query.address;
-			var addressCity = req.query.city;
-			var addressCountry = req.query.country;
-			var addressPostalcode = req.query.postalcode;
-			var addressState = req.query.state;
-			var addressUse = req.query.addressUse;
+			var practitionerAddress = req.query.address;
+			var practitionerAddressCity = req.query.city;
+			var practitionerAddressCountry = req.query.country;
+			var practitionerAddressPostalCode = req.query.postalcode;
+			var practitionerAddressState = req.query.state;
+			var practitionerAddressUseCode = req.query.addressUse;
 			var practitioner_communication = req.query.practitioner_communication;
 			var human_name_family = req.query.human_name_family;
 			var human_name_given = req.query.human_name_given;
@@ -48,7 +48,7 @@ var controller = {
       }
 			
 			if(typeof practitioner_active !== 'undefined' && practitioner_active !== ""){
-        condition += "p.practitioner_active = '" + practitioner_active + "' AND,";  
+        condition += "p.practitioner_active = " + practitioner_active + " AND,";  
       }
 			
 			if(typeof practitioner_gender !== 'undefined' && practitioner_gender !== ""){
@@ -104,29 +104,36 @@ var controller = {
       }
 			
 			if(typeof practitioner_communication !== 'undefined' && practitioner_communication !== ""){
+				join += "LEFT JOIN BACIRO_FHIR.PRACTITIONER_COMMUNICATION pc ON p.practitioner_id = pc.practitioner_id ";  
         condition += "pc.practitioner_communication_id = '" + practitioner_communication + "' AND,";  
       }
 			
 			if(typeof human_name_family !== 'undefined' && human_name_family !== ""){
-        condition += "hn.human_name_family = '" + human_name_family + "' AND,";  
+				join += "LEFT JOIN BACIRO_FHIR.HUMAN_NAME hn ON p.practitioner_id = hn.practitioner_id ";  
+        //condition += "hn.human_name_family = '" + human_name_family + "' AND,";
+				condition += "UPPER(human_name_family) LIKE '%" + human_name_family.toUpperCase() + "%' AND ";
       }
 			
 			if(typeof human_name_given !== 'undefined' && human_name_given !== ""){
-        condition += "hn.human_name_given = '" + human_name_given + "' AND,";  
+				join += "LEFT JOIN BACIRO_FHIR.HUMAN_NAME hn ON p.practitioner_id = hn.practitioner_id ";  
+        //condition += "hn.human_name_given = '" + human_name_given + "' AND,";  
+				condition += "UPPER(human_name_given) LIKE '%" + human_name_given.toUpperCase() + "%' AND ";
       }
 			
 			if(typeof human_name !== 'undefined' && human_name !== ""){
+				join += "LEFT JOIN BACIRO_FHIR.HUMAN_NAME hn ON p.practitioner_id = hn.practitioner_id ";  
         condition += "hn.human_name_id = '" + human_name + "' AND,";  
       }
 			
 			if(typeof contactPointValue !== 'undefined' && contactPointValue !== ""){
+				join += "LEFT JOIN BACIRO_FHIR.HUMAN_NAME hn ON p.practitioner_id = hn.practitioner_id ";  
         condition += "cp.contact_point_value = '" + contactPointValue + "' AND,";  
       }
 
       if(condition == ""){
         fixCondition = "";
       }else{
-        fixCondition = " WHERE  " + condition.slice(0, -4);
+        fixCondition = join + " WHERE  " + condition.slice(0, -4);
       }
 			      
       var arrPractitioner = [];
@@ -341,7 +348,7 @@ var controller = {
         " VALUES ('"+qualification_id+"', " + values.slice(0, -1) + ")";
 			console.log(query);
       db.upsert(query,function(succes){
-        var query = "SELECT q.qualification_id as qualification_id, q.qualification_code as qualification_code, q.qualification_period_start as qualification_period_start, q.qualification_period_end as qualification_period_end, q.practitioner_id as practitioner_id FROM BACIRO_FHIR.QUALIFICATION q WHERE practitioner_id = '" + practitioner_id + "' ";
+        var query = "SELECT q.qualification_id as qualification_id, q.qualification_code as qualification_code, q.qualification_period_start as qualification_period_start, q.qualification_period_end as qualification_period_end, q.practitioner_id as practitioner_id FROM BACIRO_FHIR.QUALIFICATION q WHERE qualification_id = '" + qualification_id + "' ";
         db.query(query,function(dataJson){
           rez = lowercaseObject(dataJson);
           res.json({"err_code":0,"data":rez});
@@ -382,7 +389,7 @@ var controller = {
         " VALUES ('"+practitioner_communication_id+"', " + values.slice(0, -1) + ")";
 			console.log(query);
       db.upsert(query,function(succes){
-        var query = "SELECT practitioner_communication_id, practitioner_communication_language, practitioner_communication_preferred, practitioner_id FROM BACIRO_FHIR.PRACTITIONER_COMMUNICATION WHERE practitioner_id = '" + practitioner_id + "' ";
+        var query = "SELECT practitioner_communication_id, practitioner_communication_language, practitioner_communication_preferred, practitioner_id FROM BACIRO_FHIR.PRACTITIONER_COMMUNICATION WHERE practitioner_communication_id = '" + practitioner_communication_id + "' ";
         db.query(query,function(dataJson){
           rez = lowercaseObject(dataJson);
           res.json({"err_code":0,"data":rez});

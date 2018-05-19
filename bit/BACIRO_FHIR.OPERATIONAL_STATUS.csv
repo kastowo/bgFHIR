@@ -1,0 +1,5 @@
+ID,CODE,DISPLAY,DEFINITION
+1,off,Off,The device is off.
+2,on,On,The device is fully operational.
+3,not-ready,Not Ready,The device is not ready.
+4,standby,Standby,The device is ready but not actively operating.

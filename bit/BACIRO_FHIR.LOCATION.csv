@@ -1,0 +1,5 @@
+LOCATION_ID,LOCATION_STATUS,LOCATION_OPERATIONAL_STATUS,LOCATION_NAME,LOCATION_ALIAS,LOCATION_DESCRIPTION,LOCATION_MODE,LOCATION_TYPE,ADDRESS_ID,LOCATION_PHYSICAL_TYPE,ORGANIZATION_ID,PARENT_ID,LOCATION_POSITION_ID,PRACTITIONER_ROLE_ID,LOCATION_HEALTHCARE_SERVICE_LOCATION,LOCATION_HEALTHCARE_SERVICE_COVERAGE_AREA
+locjf9j2efw,active,c,location name,location alias,description,instance,dx,addjf9j2efw,si,orgjf7woha6,null,lopjf9j2efw,prrjfwc2af2,hcsjfaqjxem,hcsjfaqjxem
+locjfktm8ud,active,c,location name,location alias,description,instance,dx,addjfktm8ud,si,orgjf7woha6,null,lopjfktm8ud,,,
+locjfkuax2w,suspended,c,location name,location alias,description,instance,dx,addjfkuax2w,si,orgjf7woha6,null,lopjfkuax2w,,,
+locjfs0d8mi,active,C,location name,location alias,description,instance,DX,addjfs0d8mi,si,orgjf7woha6,,lopjfs0d8mi,,,

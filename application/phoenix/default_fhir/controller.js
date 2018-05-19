@@ -6856,7 +6856,7 @@ var controller = {
 			db.upsert(query, function (succes) {
 				var arrIdentifier = [];
 				var query = "SELECT identifier_id, identifier_use, identifier_type, identifier_system, identifier_value, identifier_period_start, identifier_period_end FROM BACIRO_FHIR.IDENTIFIER WHERE " + condition;
-
+//console.log(query);
 				db.query(query, function (dataJson) {
 					rez = lowercaseObject(dataJson);
 					for (i = 0; i < rez.length; i++) {
@@ -6974,7 +6974,7 @@ var controller = {
 						HumanName.given = rez[i].human_name_given;
 						HumanName.prefix = rez[i].human_name_prefix;
 						HumanName.prefix = rez[i].human_name_suffix;
-						if (rez[i].human_name_period_start == null) {
+						if (rez[i].human_name_period_start != null) {
 							HumanName.period = formatDate(rez[i].human_name_period_start) + ' to ' + formatDate(rez[i].human_name_period_end);
 						} else {
 							HumanName.period = "";
@@ -9593,7 +9593,7 @@ var controller = {
 			var condition = "not_available_id = '" + _id + "' AND " + fieldResource + " = '" + valueResource + "'";
 
 			var query = "UPSERT INTO BACIRO_FHIR.NOT_AVAILABLE(not_available_id," + column.slice(0, -1) + ") SELECT not_available_id, " + values.slice(0, -1) + " FROM BACIRO_FHIR.NOT_AVAILABLE WHERE " + condition;
-      db.upsert(query,function(succes){
+			db.upsert(query,function(succes){
         var query = "SELECT not_available_id, not_available_description, not_available_during, not_available_during FROM BACIRO_FHIR.NOT_AVAILABLE  WHERE not_available_id = '" + _id + "' ";
         db.query(query,function(dataJson){
           rez = lowercaseObject(dataJson);

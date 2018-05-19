@@ -753,7 +753,7 @@ var controller = {
       }
 			
 			if(typeof healthcare_service_eligibility !== 'undefined'){
-        column += ',';
+        column += 'healthcare_service_eligibility,';
         values += "'" + healthcare_service_eligibility +"',";
       }
 			
@@ -815,7 +815,7 @@ var controller = {
 			var condition = "healthcare_service_id = '" + healthcare_service_id + "'";
 			
 			var query = "UPSERT INTO BACIRO_FHIR.HEALTHCARE_SERVICE(healthcare_service_id," + column.slice(0, -1) + ") SELECT healthcare_service_id, " + values.slice(0, -1) + " FROM BACIRO_FHIR.HEALTHCARE_SERVICE WHERE " + condition;
-			//console.log(query);
+			console.log(query);
 			
       db.upsert(query,function(succes){
 				var query5 = "SELECT healthcare_service_id, healthcare_service_active, healthcare_service_category, healthcare_service_type, healthcare_service_specialty, healthcare_service_name, healthcare_service_comment, healthcare_service_extra_details, healthcare_service_service_provision_code, healthcare_service_eligibility,healthcare_service_eligibility_note, healthcare_service_program_name,healthcare_service_characteristic, healthcare_service_referral_method, healthcare_service_appointegerment_required, healthcare_service_availability_exceptions, organization_id, attachment_id FROM BACIRO_FHIR.HEALTHCARE_SERVICE  WHERE healthcare_service_id = '" + healthcare_service_id + "' ";

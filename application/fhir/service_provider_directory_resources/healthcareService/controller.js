@@ -2364,7 +2364,7 @@ var controller = {
 											healthcareService = body;
 											if(healthcareService.err_code == 0){
 												//console.log("tes123");
-												res.json({"err_code": 0, "err_msg": "Location has been add in this healthcare service.", "data": healthcareService.data});
+												res.json({"err_code": 0, "err_msg": "Location Coverage Area has been add in this healthcare service.", "data": healthcareService.data});
 											} else {
 												res.json(healthcareService);
 											}
@@ -2760,7 +2760,7 @@ var controller = {
 			// organization
 			if(typeof req.body.providedBy !== 'undefined'){
 				providedBy =  req.body.providedBy.trim().toLowerCase();
-				if(validator.isEmpty(organization)){
+				if(validator.isEmpty(providedBy)){
 					err_code = 2;
 					err_msg = "providedBy is required.";
 				}else{
@@ -2932,7 +2932,7 @@ var controller = {
 								myEmitter.emit('checkSpecialty');
 							}else{
 								checkCode(apikey, serviceProvisionCode, 'SERVICE_PROVISION_CONDITIONS', function(resServiceProvisionCode){
-									if(resHealthcareServiceProvisionCode.err_code > 0){
+									if(resServiceProvisionCode.err_code > 0){
 										myEmitter.emit('checkSpecialty');
 									}else{
 										res.json({"err_code": 502, "err_msg": "Healthcare service Specialty not found."});	
@@ -3151,7 +3151,7 @@ var controller = {
 						myEmitter.prependOnceListener('checkHealthcareServiceId', function(){
 							checkUniqeValue(apikey, "HEALTHCARE_SERVICE_ID|" + healthcareServiceId, 'HEALTHCARE_SERVICE', function(resHealthcareServiceId){
 								if(resHealthcareServiceId.err_code > 0){
-									checkUniqeValue(apikey, "NOT_AVAILABLE_ID|" + notAvailableId, 'NOT_AVAILABLE_ID', function(resNotAvailableId){
+									checkUniqeValue(apikey, "NOT_AVAILABLE_ID|" + notAvailableId, 'NOT_AVAILABLE', function(resNotAvailableId){
 										if(resNotAvailableId.err_code > 0){
 											ApiFHIR.put('notAvailable', {"apikey": apikey, "_id": notAvailableId, "dr": "HEALTHCARE_SERVICE_ID|"+healthcareServiceId}, {body: dataNotAvailable, json: true}, function(error, response, body){
 												notAvailable = body;
@@ -3639,7 +3639,7 @@ var controller = {
 								if(reshealthcareServiceId.err_code > 0){
 									checkUniqeValue(apikey, "ATTACHMENT_ID|" + attachmentId, 'ATTACHMENT', function(resAttachmentID){
 										if(resAttachmentID.err_code > 0){
-											ApiFHIR.put('attachment', {"apikey": apikey, "_id": attachmentId/*, "dr": "HEALTHCARE_SERVICE_ID|"+healthcareServiceId*/}, {body: dataAttachment, json: true}, function(error, response, body){
+											ApiFHIR.put('attachment', {"apikey": apikey, "_id": attachmentId, "dr": ""}, {body: dataAttachment, json: true}, function(error, response, body){
 												attachment = body;
 												if(attachment.err_code > 0){
 													res.json(attachment);	

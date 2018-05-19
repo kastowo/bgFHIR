@@ -1,0 +1,3 @@
+ID,CODE,DISPLAY,DEFINITION
+1,not-calibrated,Not Calibrated,The metric has not been calibrated.
+2,calibration-required,Calibration Required,The metric needs to be calibrated.

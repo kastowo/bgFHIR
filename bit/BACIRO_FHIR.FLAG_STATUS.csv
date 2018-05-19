@@ -1,0 +1,3 @@
+ID,CODE,DISPLAY,DEFINITION
+2,active,Active,A current flag that should be displayed to a user. A system may use the category to determine which roles should view the flag.
+3,inactive2,Inactive,The flag does not need to be displayed any more.

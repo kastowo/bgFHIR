@@ -55,7 +55,7 @@ var controller = {
 
       if((typeof organizationAddress !== 'undefined' && organizationAddress !== "")||(typeof organizationAddressCity !== 'undefined' && organizationAddressCity !== "")|| (typeof organizationAddressCountry !== 'undefined' && organizationAddressCountry !== "")|| (typeof organizationAddressPostalCode !== 'undefined' && organizationAddressPostalCode !== "")||(typeof organizationAddressState !== 'undefined' && organizationAddressState !== "")||(typeof organizationAddressUseCode !== 'undefined' && organizationAddressUseCode !== "")){
          //set join 
-        join = " LEFT JOIN BACIRO_FHIR.ADDRESS addr ON addr.organization_id = p.organization_id ";
+        join = " LEFT JOIN BACIRO_FHIR.ADDRESS addr ON addr.organization_id = o.organization_id ";
         
         if(typeof organizationAddress !== 'undefined' && organizationAddress !== ""){
           if(organizationAddress.indexOf('nonbreaking_space') > 0){
@@ -95,7 +95,7 @@ var controller = {
       }
 
       if((typeof organizationEmail !== 'undefined' && organizationEmail !== "") || (typeof organizationTelecom !== 'undefined' && organizationTelecom !== "")){
-        join += " LEFT JOIN BACIRO_FHIR.CONTACT_POINT cp ON cp.organization_id = p.organization_id ";
+        join += " LEFT JOIN BACIRO_FHIR.CONTACT_POINT cp ON cp.organization_id = o.organization_id ";
         
         if(typeof organizationEmail !== 'undefined' && organizationEmail !== ""){
           organizationEmail = organizationEmail.replace('at_sign', '@');
@@ -112,7 +112,7 @@ var controller = {
       }
 
       if((typeof organizationFamily !== 'undefined' && organizationFamily !== "") || (typeof organizationGiven !== 'undefined' && organizationGiven !== "") || (typeof organizationName !== 'undefined' && organizationName !== "") || (typeof organizationPhonetic !== 'undefined' && organizationPhonetic !== "")){
-        join += " LEFT JOIN BACIRO_FHIR.HUMAN_NAME hn ON hn.organization_id = p.organization_id ";
+        join += " LEFT JOIN BACIRO_FHIR.HUMAN_NAME hn ON hn.organization_id = o.organization_id ";
         
         if(typeof organizationFamily !== 'undefined' && organizationFamily !== ""){
           condition += "UPPER(human_name_family) = '" + organizationFamily.toUpperCase() + "' AND ";       
@@ -136,7 +136,7 @@ var controller = {
       }
 
       if((typeof organizationIdentifier !== 'undefined' && organizationIdentifier !== "")){
-        join += " LEFT JOIN BACIRO_FHIR.IDENTIFIER i ON i.organization_id = p.organization_id ";
+        join += " LEFT JOIN BACIRO_FHIR.IDENTIFIER i ON i.organization_id = o.organization_id ";
         
         if(typeof organizationIdentifier !== 'undefined' && organizationIdentifier !== ""){
           condition += "identifier_value = '" + organizationIdentifier + "' AND ";       
@@ -144,11 +144,12 @@ var controller = {
       }
 
       if((typeof organizationEndpoint !== 'undefined' && organizationEndpoint !== "")){
+				condition += "ep.ENDPOINT_ID = '" + organizationEndpoint + "' AND ";       
         join += " LEFT JOIN BACIRO_FHIR.ENDPOINT ep ON ep.organization_id = o.organization_id ";
       }
 
 			if(typeof organizationType !== 'undefined' && organizationType !== ""){
-        condition += "organization_type = " + organizationType + " AND ";  
+        condition += "organization_type = '" + organizationType + "' AND ";  
       }
 
       if(condition == ""){
@@ -158,8 +159,8 @@ var controller = {
       }
       
       var arrOrganization = [];
-      var query = "select organization_id, organization_active, organization_type, organization_name, organization_alias, parent_id from baciro_fhir.organization o " + fixCondition;
-			////console.log(query);
+      var query = "select o.organization_id as organization_id, organization_active, organization_type, organization_name, organization_alias, parent_id from baciro_fhir.organization o " + fixCondition;
+			//console.log(query);
       db.query(query,function(dataJson){
         rez = lowercaseObject(dataJson);
         for(i = 0; i < rez.length; i++){

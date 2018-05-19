@@ -40,7 +40,7 @@ var controller = {
 			//params from query string
 			var practitionerRoleId = req.query._id;
 			var practitionerRoleActive = req.query.active;
-			var practitionerRoleCode = req.query.code;
+			var practitionerRoleCode = req.query.role;
 			var practitionerRolePeriod = req.query.date;
 			var practitionerRoleSpecialty = req.query.specialty;
 			var endpointId = req.query.endpoint;
@@ -2102,7 +2102,7 @@ var controller = {
 			}
 
 			// location
-			if(typeof req.body.location !== 'undefined'){
+			/*if(typeof req.body.location !== 'undefined'){
 				location =  req.body.location.trim().toLowerCase();
 				if(validator.isEmpty(location)){
 					err_code = 2;
@@ -2112,7 +2112,7 @@ var controller = {
 				}
 			}else{
 				location = "";
-			}
+			}*/
 			
 			//practitioner
 			if(typeof req.body.practitioner !== 'undefined'){
@@ -2128,7 +2128,7 @@ var controller = {
 			}
 			
 			//healthcare service
-			if(typeof req.body.healthcareService !== 'undefined'){
+			/*if(typeof req.body.healthcareService !== 'undefined'){
 				healthcareService =  req.body.healthcareService.trim().toLowerCase();
 				if(validator.isEmpty(healthcareService)){
 					err_code = 2;
@@ -2138,9 +2138,9 @@ var controller = {
 				}
 			}else{
 				healthcareService = "";
-			}
+			}*/
 			
-			if(typeof req.body.endpoint !== 'undefined'){
+			/*if(typeof req.body.endpoint !== 'undefined'){
 				endpoint =  req.body.endpoint.trim().toLowerCase();
 				if(validator.isEmpty(endpoint)){
 					err_code = 2;
@@ -2150,7 +2150,7 @@ var controller = {
 				}
 			}else{
 				endpoint = "";
-			}
+			}*/
 
 			if(err_code == 0){
 				//check apikey
@@ -2438,7 +2438,7 @@ var controller = {
 				description = "";
 			}
 			
-			if(typeof req.body.during !== 'undefined'){
+			/*if(typeof req.body.during !== 'undefined'){
 				during =  req.body.during.trim().toLowerCase();
 				if(validator.isEmpty(during)){
 					err_code = 2;
@@ -2448,7 +2448,7 @@ var controller = {
 				}
 			}else{
 				during = "";
-			}
+			}*/
 
 			if(typeof req.body.during !== 'undefined'){
 				during =  req.body.during;

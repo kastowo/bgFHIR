@@ -72,8 +72,7 @@ var controller = {
       }
 			      
       var arrEndpoint = [];
-      var query = "SELECT ep.endpoint_id as endpoint_id, endpoint_status, endpoint_connection_type, endpoint_name, endpoint_managing_organization, endpoint_period_start, endpoint_period_end, endpoint_payload_type, endpoint_payload_mime_type, endpoint_address, endpoint_header, ep.organization_id as organization_id, ep.location_id as location_id, ep.practitioner_role_id as practitioner_role_id, ep.healthcare_service_id as healthcare_service_id FROM BACIRO_FHIR.ENDPOINT ep LEFT JOIN BACIRO_FHIR.IDENTIFIER id ON id.endpoint_id = ep.endpoint_id " + fixCondition;
-      console.log(query);
+      var query = "SELECT ep.endpoint_id as endpoint_id, endpoint_status, endpoint_connection_type, endpoint_name, endpoint_managing_organization, endpoint_period_start, endpoint_period_end, endpoint_payload_type, endpoint_payload_mime_type, endpoint_address, endpoint_header, ep.organization_id as organization_id, ep.location_id as location_id, ep.practitioner_role_id as practitioner_role_id, ep.healthcare_service_id as healthcare_service_id FROM BACIRO_FHIR.ENDPOINT ep " + fixCondition;
       db.query(query,function(dataJson){
         rez = lowercaseObject(dataJson);
         for(i = 0; i < rez.length; i++){
@@ -85,7 +84,7 @@ var controller = {
 					Endpoint.name = rez[i].endpoint_name;
 					//Endpoint.managingOrganization = rez[i].endpoint_managing_organization;
 					Endpoint.managingOrganization = rez[i].organization_id;
-					Endpoint.perito = rez[i].endpoint_period_start + " to " + rez[i].endpoint_period_end;
+					Endpoint.period = rez[i].endpoint_period_start + " to " + rez[i].endpoint_period_end;
 					Endpoint.payloadType = rez[i].endpoint_payload_type;
 					Endpoint.payloadMimeType = rez[i].endpoint_payload_mime_type;
 					Endpoint.address = rez[i].endpoint_address;
@@ -185,8 +184,7 @@ var controller = {
 
       var query = "UPSERT INTO BACIRO_FHIR.ENDPOINT(ENDPOINT_ID, " + column.slice(0, -1) + ")"+
         " VALUES ('"+endpoint_id+"', " + values.slice(0, -1) + ")";
-			console.log(query);
-      db.upsert(query,function(succes){
+			db.upsert(query,function(succes){
         var query = "SELECT ep.endpoint_id as endpoint_id, endpoint_status, endpoint_connection_type, endpoint_name, endpoint_managing_organization, endpoint_period_start, endpoint_period_end, endpoint_payload_type, endpoint_payload_mime_type, endpoint_address, endpoint_header, ep.organization_id as organization_id, ep.location_id as location_id, ep.practitioner_role_id as practitioner_role_id, ep.healthcare_service_id as healthcare_service_id FROM BACIRO_FHIR.ENDPOINT ep WHERE endpoint_id = '" + endpoint_id + "' ";
         db.query(query,function(dataJson){
           rez = lowercaseObject(dataJson);
@@ -202,8 +200,6 @@ var controller = {
 },
 	put: {
     endpoint: function addEndpoint(req, res){
-			//console.log(req.params);
-			//console.log(req.body);
 			var endpoint_id = req.params.endpoint_id;
 			var endpoint_status = req.body.status;
 			var endpoint_connection_type = req.body.connectionType;
@@ -289,8 +285,7 @@ var controller = {
 			var condition = "ENDPOINT_ID = '" + endpoint_id + "'";
 
 			var query = "UPSERT INTO BACIRO_FHIR.ENDPOINT(ENDPOINT_ID," + column.slice(0, -1) + ") SELECT ENDPOINT_ID, " + values.slice(0, -1) + " FROM BACIRO_FHIR.ENDPOINT WHERE " + condition;
-			console.log(query);
-      db.upsert(query,function(succes){
+			db.upsert(query,function(succes){
         var query = "SELECT ep.endpoint_id as endpoint_id, endpoint_status, endpoint_connection_type, endpoint_name, endpoint_managing_organization, endpoint_period_start, endpoint_period_end, endpoint_payload_type, endpoint_payload_mime_type, endpoint_address, endpoint_header, ep.organization_id as organization_id, ep.location_id as location_id, ep.practitioner_role_id as practitioner_role_id, ep.healthcare_service_id as healthcare_service_id FROM BACIRO_FHIR.ENDPOINT ep WHERE endpoint_id = '" + endpoint_id + "' ";
         db.query(query,function(dataJson){
           rez = lowercaseObject(dataJson);

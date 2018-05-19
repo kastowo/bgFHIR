@@ -1,0 +1,5 @@
+ID,CODE,DISPLAY,DEFINITION
+1,home,Home,A communication address at a home.
+2,work,Work,An office address. First choice for business related contacts during business hours.
+3,temp,Temporary,A temporary address. The period can provide more detailed information.
+4,old,Old edit,This address is no longer in use (or was never correct, but retained for records).

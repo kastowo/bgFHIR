@@ -21,7 +21,7 @@ var db = new phoenix("jdbc:phoenix:" + "192.168.1.231" + ":/hbase-unsecure");
 var controller = {
 	get: {
     Location: function getLocation(req, res){
-			//console.log(req.query);
+			console.log(req.query);
       var apikey = req.params.apikey;
       var hostFHIR = configYaml.fhir.host;
       var portFHIR = configYaml.fhir.port;
@@ -84,7 +84,8 @@ var controller = {
 
       if((typeof locationAddress !== 'undefined' && locationAddress !== "")||(typeof locationAddressCity !== 'undefined' && locationAddressCity !== "")|| (typeof locationAddressCountry !== 'undefined' && locationAddressCountry !== "")|| (typeof locationAddressPostalCode !== 'undefined' && locationAddressPostalCode !== "")||(typeof locationAddressState !== 'undefined' && locationAddressState !== "")||(typeof locationAddressUseCode !== 'undefined' && locationAddressUseCode !== "")){
          //set join 
-        join = " LEFT JOIN BACIRO_FHIR.ADDRESS addr ON addr.location_id = l.location_id ";
+        //join = " LEFT JOIN BACIRO_FHIR.ADDRESS addr ON addr.location_id = l.location_id ";
+				join = " LEFT JOIN BACIRO_FHIR.ADDRESS addr ON addr.address_id = l.address_id ";
         
         if(typeof locationAddress !== 'undefined' && locationAddress !== ""){
           if(locationAddress.indexOf('nonbreaking_space') > 0){
@@ -124,12 +125,13 @@ var controller = {
       }
 			
 			if(typeof identifier !== 'undefined' && identifier !== ""){
-        condition += "id.identifier_id = '" + identifier + "' AND ";
+        //condition += "id.identifier_id = '" + identifier + "' AND ";
+				condition += "id.LOCATION_ID = '" + identifier + "' AND ";
 				join += " LEFT JOIN BACIRO_FHIR.IDENTIFIER id ON id.LOCATION_ID = l.LOCATION_ID ";
       }
 			
 			if(typeof endpoint !== 'undefined' && endpoint !== ""){
-        condition += "ep.enpoint_id = '" + endpoint + "' AND ";
+        condition += "ep.endpoint_id = '" + endpoint + "' AND ";
 				join += " LEFT JOIN BACIRO_FHIR.ENDPOINT ep ON ep.LOCATION_ID = l.LOCATION_ID ";
       }
 			
@@ -141,8 +143,8 @@ var controller = {
       
       var arrOrganization = [];
 			
-      var query = "select l.location_id as location_id, location_status, location_operational_status, location_name, location_alias, location_description, location_mode, location_type, address_id, location_physical_type, l.organization_id as organization_id, parent_id, location_position_id from baciro_fhir.location l  " + fixCondition;
-			//console.log(query);
+      var query = "select l.location_id as location_id, location_status, location_operational_status, location_name, location_alias, location_description, location_mode, location_type, location_physical_type, l.address_id as address_id, l.organization_id as organization_id, parent_id, location_position_id from baciro_fhir.location l  " + fixCondition;
+			console.log(query);
 			var arrLocation = [];
       db.query(query,function(dataJson){
         rez = lowercaseObject(dataJson);
@@ -401,7 +403,7 @@ var controller = {
         " VALUES ('"+endpoint_id+"', " + values.slice(0, -1) + ")";
 			//console.log(query);
       db.upsert(query,function(succes){
-        var query = "SELECT endpoint_id, healthcare_service_id FROM BACIRO_FHIR.ENDPOINT  WHERE endpoint_id = '" + endpoint_id + "' ";
+        var query = "SELECT endpoint_id, location_id FROM BACIRO_FHIR.ENDPOINT  WHERE endpoint_id = '" + endpoint_id + "' ";
         db.query(query,function(dataJson){
           rez = lowercaseObject(dataJson);
           res.json({"err_code":0,"data":rez});

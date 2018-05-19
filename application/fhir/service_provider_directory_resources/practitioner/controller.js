@@ -2045,7 +2045,7 @@ var controller = {
 																			}
 																		})
 
-																		res.json({"err_code": 0, "err_msg": "Qualification of Practitioner has been add.", "data": [{"_id": practitionerId}]});
+																		res.json({"err_code": 0, "err_msg": "Qualification of Practitioner has been add.", "data": [{"_id": qualificationId}]});
 
 
 																	}else{
@@ -2156,12 +2156,14 @@ var controller = {
 												"practitioner_id": practitionerId
 											}
 											ApiFHIR.post('practitionerCommunication', {"apikey": apikey}, {body: dataPractitionerCommunication, json: true}, function(error, response, body){
-												qualification = body;
-												if(qualification.err_code > 0){
-													res.json(qualification);	
+												practitionerCommunication = body;
+												if(practitionerCommunication.err_code > 0){
+													res.json(practitionerCommunication);	
+												} else {
+													res.json({"err_code": 0, "err_msg": "ComPractitioner has been add.", "data": practitionerCommunication.data});
 												}
 											})
-											res.json({"err_code": 0, "err_msg": "ComPractitioner has been add.", "data": [{"_id": practitionerId}]});			
+											/*res.json({"err_code": 0, "err_msg": "ComPractitioner has been add.", "data": practitionerCommunication.data});*/			
 										});
 
 										myEmitter.emit('checkPractitionerId');																			
@@ -3312,12 +3314,11 @@ var controller = {
 				identifierPeriodStart = "";
 				identifierPeriodEnd = "";
 			}  
-
 			if(err_code == 0){
 				//check apikey
 				checkApikey(apikey, ipAddres, function(result){
 					if(result.err_code == 0){
-						myEmitter.prependListener('checkPractitionerId', function(){
+						myEmitter.prependListener('checkQualificationId', function(){
 							checkUniqeValue(apikey, "PRACTITIONER_ID|" + practitionerId, 'PRACTITIONER', function(resPractitionerId){
 								if(resPractitionerId.err_code > 0){
 									checkUniqeValue(apikey, "QUALIFICATION_ID|" + qualificationId, 'QUALIFICATION', function(resQualificationId){
@@ -3329,7 +3330,7 @@ var controller = {
 														if(identifier.err_code > 0){
 															res.json(identifier);	
 														}else{
-															res.json({"err_code": 0, "err_msg": "Identifier has been update in this practitioner.", "data": identifier.data});
+															res.json({"err_code": 0, "err_msg": "Identifier has been update in this practitioner qualification.", "data": identifier.data});
 														}
 													})
 													}else{
@@ -4227,7 +4228,7 @@ console.log(dataCommunication);
 			var ipAddres = req.connection.remoteAddress;
 			var apikey = req.params.apikey;
 			var regex = new RegExp("([0-9]{4}[-](0[1-9]|1[0-2])[-]([0-2]{1}[0-9]{1}|3[0-1]{1})|([0-2]{1}[0-9]{1}|3[0-1]{1})[-](0[1-9]|1[0-2])[-][0-9]{4})");
-			var practitionerId = req.params.practitionerId;
+			var practitionerId = req.params.practitioner_id;
 			var attachmentId = req.params.attachment_id;
 
 			var err_code = 0;

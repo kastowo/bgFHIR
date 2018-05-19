@@ -1,0 +1,8 @@
+ID,CODE,DISPLAY,DEFINITION
+1,neutered,Neutered,The animal has been sterilized, castrated or otherwise made infertile
+11,intact,Intact,The animals reproductive organs are intact
+21,unknown,Unknown,Unable to determine whether the animal has been neutered
+31,neut,Neutered,The animal has been sterilized, castrated or otherwise made infertile
+52,anim, , 
+53,anima, , 
+54,anidma, , 

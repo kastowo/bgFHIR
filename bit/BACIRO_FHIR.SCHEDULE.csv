@@ -1,0 +1,11 @@
+SCHEDULE_ID,SCHEDULE_ACTIVE,SCHEDULE_SERVICE_CATEGORY,SCHEDULE_SERVICE_TYPE,SCHEDULE_SPECIALTY,SCHEDULE_PERIOD_START,SCHEDULE_PERIOD_END,SCHEDULE_COMMENT,SCHEDULE_ACTOR_PATIENT_ID,SCHEDULE_ACTOR_PRACTITIONER_ID,SCHEDULE_ACTOR_PRACTITIONER_ROLE_ID,SCHEDULE_ACTOR_RELATED_PERSON_ID,SCHEDULE_ACTOR_HEALTHCARE_SERVICE_ID,SCHEDULE_ACTOR_DEVICE_ID,SCHEDULE_ACTOR_LOCATION_ID
+schjfnqywpz,true,1,1,394577000,2018-04-06 17:00:00.000,2018-04-06 18:00:00.000,Pemeriksaan Mata Kiri,patjezh1q04,prajf9h8zti,prrjfaiww4m,,hcsjfaqiu7t,,
+schjftg7c1w,true,1,1,394577000,2018-04-06 17:00:00.000,2018-04-06 18:00:00.000,Pemeriksaan Mata Kanan,patjezh1q04,prajf9h8zti,prrjfaiww4m,,hcsjfaqiu7t,,
+schjftgbbxy,true,1,1,394577000,2018-04-06 17:00:00.000,2018-04-06 18:00:00.000,Pemeriksaan Mata Kanan,patjezh1q04,prajf9h8zti,prrjfaiww4m,,hcsjfaqiu7t,,
+schjftgj9jw,true,1,1,394577000,2018-04-06 17:00:00.000,2018-04-06 18:00:00.000,Pemeriksaan Mata Kanan,,prajf9h8zti,prrjfaiww4m,,hcsjfaqiu7t,,
+schjftgj9jx,true,1,1,394577000,2018-04-06 17:00:00.000,2018-04-06 18:00:00.000,Pemeriksaan Mata Kanan,,prajf9h8zti,prrjfaiww4m,,hcsjfaqiu7t,,
+schjftgkpdw,true,1,1,394577000,2018-04-06 17:00:00.000,2018-04-06 18:00:00.000,Pemeriksaan Mata Kanan,patjezh1q04,,prrjfaiww4m,,hcsjfaqiu7t,,
+schjftgkpdx,true,1,1,394577000,2018-04-06 17:00:00.000,2018-04-06 18:00:00.000,Pemeriksaan Mata Kanan,patjezh1q04,,prrjfaiww4m,,hcsjfaqiu7t,,
+schjftgofrz,true,1,1,394577000,2018-04-06 17:00:00.000,2018-04-06 18:00:00.000,Pemeriksaan Mata Kanan,patjezh1q04,prajf9h8zti,prrjfaiww4m,,hcsjfaqiu7t,,
+schjftgoo6w,true,1,1,394577000,2018-04-06 17:00:00.000,2018-04-06 18:00:00.000,Pemeriksaan Mata Kanan,patjezh1q04,prajf9h8zti,prrjfaiww4m,,hcsjfaqiu7t,,
+schjftgovb6,true,1,1,394577000,2018-04-06 17:00:00.000,2018-04-06 18:00:00.000,Pemeriksaan Mata Kiri,patjezh1q04,prajf9h8zti,prrjfaiww4m,,hcsjfaqiu7t,,
