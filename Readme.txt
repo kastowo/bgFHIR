@@ -1,5 +1,6 @@
 Service Provider Directory Resource
 1. Organization
+	URL : https://www.hl7.org/fhir/organization.html
 	1.1 Get all data
 		URL : host:port/{apikey}/Organization
 		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/Organization
@@ -898,6 +899,7 @@ Service Provider Directory Resource
 	}
 	
 	2. Location 
+	URL : https://www.hl7.org/fhir/location.html
 	2.1 Get All Data
 		URL : host:port/{apikey}/Location
 		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/Location
@@ -1285,6 +1287,7 @@ Service Provider Directory Resource
 				]
 		}
 	3. Practitioner
+	URL : https://www.hl7.org/fhir/practitioner.html
 	3.1 Get All Data
 		URL : host:port/{apikey}/Practitioner
 		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/
@@ -2133,6 +2136,7 @@ Service Provider Directory Resource
 		}
 		
 	4. Practitioner Role
+	URL : https://www.hl7.org/fhir/practitionerrole.html
 	4.1 Get All Data
 		URL : host:port/{apikey}/PractitionerRole
 		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/
@@ -2665,6 +2669,7 @@ Service Provider Directory Resource
 		}
 	
 	5. Healthcare Service
+	URL : https://www.hl7.org/fhir/healthcareservice.html
 	5.1 Get All Data
 		URL : host:port/{apikey}/HealthcareService
 		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/HealthcareService
@@ -3279,6 +3284,7 @@ Service Provider Directory Resource
 		}
 	
 	6. Endpoint
+	URL : https://www.hl7.org/fhir/endpoint.html
 	6.1 Get All Data
 		URL : host:port/{apikey}/Endpoint
 		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/
