@@ -10,6 +10,8 @@ var configYaml = yamlconfig.readConfig(path.resolve('../../application/config/co
 //event emitter
 var host = configYaml.phoenix.host;
 var port = configYaml.phoenix.port;
+var hostfhir = configYaml.fhir.host;
+var portfhir = configYaml.fhir.port;
 
 // var phoenix = require("./phoenix.js");
 var phoenix = require(path.resolve("./phoenix.js"));
@@ -18,7 +20,7 @@ var db = new phoenix("jdbc:phoenix:" + host + ":/hbase-unsecure");
 var controller = {
 	get: {
     Location: function getLocation(req, res){
-			//console.log(req.query);
+			console.log(req.query);
       var apikey = req.params.apikey;
       var hostFHIR = configYaml.fhir.host;
       var portFHIR = configYaml.fhir.port;
@@ -81,7 +83,8 @@ var controller = {
 
       if((typeof locationAddress !== 'undefined' && locationAddress !== "")||(typeof locationAddressCity !== 'undefined' && locationAddressCity !== "")|| (typeof locationAddressCountry !== 'undefined' && locationAddressCountry !== "")|| (typeof locationAddressPostalCode !== 'undefined' && locationAddressPostalCode !== "")||(typeof locationAddressState !== 'undefined' && locationAddressState !== "")||(typeof locationAddressUseCode !== 'undefined' && locationAddressUseCode !== "")){
          //set join 
-        join = " LEFT JOIN BACIRO_FHIR.ADDRESS addr ON addr.location_id = l.location_id ";
+        //join = " LEFT JOIN BACIRO_FHIR.ADDRESS addr ON addr.location_id = l.location_id ";
+				join = " LEFT JOIN BACIRO_FHIR.ADDRESS addr ON addr.address_id = l.address_id ";
         
         if(typeof locationAddress !== 'undefined' && locationAddress !== ""){
           if(locationAddress.indexOf('nonbreaking_space') > 0){
@@ -121,11 +124,14 @@ var controller = {
       }
 			
 			if(typeof identifier !== 'undefined' && identifier !== ""){
-        condition += "i.identifier_id = '" + identifier + "' AND ";  
+        //condition += "id.identifier_id = '" + identifier + "' AND ";
+				condition += "id.LOCATION_ID = '" + identifier + "' AND ";
+				join += " LEFT JOIN BACIRO_FHIR.IDENTIFIER id ON id.LOCATION_ID = l.LOCATION_ID ";
       }
 			
 			if(typeof endpoint !== 'undefined' && endpoint !== ""){
-        condition += "ep.enpoint_id = '" + endpoint + "' AND ";  
+        condition += "ep.endpoint_id = '" + endpoint + "' AND ";
+				join += " LEFT JOIN BACIRO_FHIR.ENDPOINT ep ON ep.LOCATION_ID = l.LOCATION_ID ";
       }
 			
       if(condition == ""){
@@ -136,7 +142,7 @@ var controller = {
       
       var arrOrganization = [];
 			
-      var query = "select l.location_id as location_id, location_status, location_operational_status, location_name, location_alias, location_description, location_mode, location_type, address_id, location_physical_type, l.organization_id as organization_id, parent_id, location_position_id, ep.endpoint_id as endpoint_id from baciro_fhir.location l LEFT JOIN BACIRO_FHIR.ENDPOINT ep ON ep.location_id = l.location_id " + fixCondition;
+      var query = "select l.location_id as location_id, location_status, location_operational_status, location_name, location_alias, location_description, location_mode, location_type, location_physical_type, l.address_id as address_id, l.organization_id as organization_id, parent_id, location_position_id from baciro_fhir.location l  " + fixCondition;
 			console.log(query);
 			var arrLocation = [];
       db.query(query,function(dataJson){
@@ -158,7 +164,7 @@ var controller = {
 					Location.managingOrganization = rez[i].organization_id;
 					Location.parent_id = rez[i].parent_id;
 					Location.locationPosition = rez[i].location_position_id;
-					Location.endpointId = rez[i].endpoint_id;
+					//Location.endpointId = rez[i].endpoint_id;
 					//Location.endpoint_id = rez[i].endpoint_id;
 					
           arrLocation[i] = Location;
@@ -201,6 +207,46 @@ var controller = {
         res.json({"err_code":0,"data": arrLocation});
       },function(e){
         res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "getLocationPosition"});
+      });
+    },
+		endpoint: function getEndpoint(req, res){
+			var apikey = req.params.apikey;
+			var endpointId = req.query._id;
+			var locationId = req.query.location_id;
+			
+			var condition = "";
+			var join = "";
+			
+			if(typeof endpointId !== 'undefined' && endpointId !== ""){
+        condition += "endpoint_id = '" + endpointId + "' AND ";  
+      }
+						
+			if(typeof locationId !== 'undefined' && locationId !== ""){
+        condition += "location_id = '" + locationId + "' AND ";  
+      }
+			
+			if(condition == ""){
+        fixCondition = "";
+      }else{
+        fixCondition = " WHERE  " + condition.slice(0, -4);
+      }
+      
+			var query = "select endpoint_id from baciro_fhir.endpoint " + fixCondition;
+			//console.log(query);
+      
+			var arrEndpoint = [];
+      db.query(query,function(dataJson){
+        rez = lowercaseObject(dataJson);
+				//console.log(rez);
+        for(i = 0; i < rez.length; i++){
+					var Endpoint = {};
+					Endpoint.id = hostfhir + ":" + portfhir + "/" + apikey + "/endpoint?_id=" + rez[i].endpoint_id;
+          //console.log(Endpoint);
+          arrEndpoint[i] = Endpoint;
+        }
+        res.json({"err_code":0,"data": arrEndpoint});
+      },function(e){
+        res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "getEndpoint"});
       });
     }
   },
@@ -339,11 +385,38 @@ var controller = {
       },function(e){
           res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "addLocationPosition"});
       });
+    },
+		endpoint: function addEndpoint(req, res){
+			var endpoint_id = req.body.id;
+			var location_id = req.body.locationId;
+			
+			var column = "";
+      var values = "";
+			
+			if(typeof location_id !== 'undefined'){
+        column += 'location_id,';
+        values += "'" + location_id +"',";
+      }
+						
+      var query = "UPSERT INTO BACIRO_FHIR.ENDPOINT(endpoint_id, " + column.slice(0, -1) + ")"+
+        " VALUES ('"+endpoint_id+"', " + values.slice(0, -1) + ")";
+			//console.log(query);
+      db.upsert(query,function(succes){
+        var query = "SELECT endpoint_id, location_id FROM BACIRO_FHIR.ENDPOINT  WHERE endpoint_id = '" + endpoint_id + "' ";
+        db.query(query,function(dataJson){
+          rez = lowercaseObject(dataJson);
+          res.json({"err_code":0,"data":rez});
+        },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "addLocationEnpoint"});
+        });
+      },function(e){
+          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "addLocationEnpoint"});
+      });
     }
   },
 	put: {
 		location: function updateLocation(req, res){
-			console.log(req.body);
+			//console.log(req.body);
 			var location_id = req.params.location_id;
 			var location_status = req.body.status;
 			var location_operational_status = req.body.operationalStatus;
@@ -426,7 +499,7 @@ var controller = {
 			var condition = "LOCATION_ID = '" + location_id + "'";
 
 			var query = "UPSERT INTO BACIRO_FHIR.LOCATION(LOCATION_ID," + column.slice(0, -1) + ") SELECT LOCATION_ID, " + values.slice(0, -1) + " FROM BACIRO_FHIR.LOCATION WHERE " + condition;
-			console.log(query);
+			//console.log(query);
 			
 			db.upsert(query,function(succes){
         var query2 = "UPSERT INTO BACIRO_FHIR.ENDPOINT(ENDPOINT_ID, LOCATION_ID) SELECT ENDPOINT_ID, '" + location_id + "' FROM BACIRO_FHIR.ENDPOINT WHERE ENDPOINT_ID = '" + locationEndpointId + "'";
@@ -492,20 +565,20 @@ var controller = {
 			var condition = "LOCATION_POSITION_ID = '" + locationPositionId + "' AND " + fieldResource + " = '" + valueResource + "'";
 			
 			var query3 = "SELECT LOCATION_POSITION_ID,LOCATION_ID FROM BACIRO_FHIR.LOCATION WHERE " + condition ;
-			console.log(query3);
+			//console.log(query3);
         db.query(query3,function(dataJson){
 					rez = lowercaseObject(dataJson);
 					//console.log(rez);
 					if(rez.length > 0){
 		  			var condition = "LOCATION_POSITION_ID = '" + locationPositionId + "'";
 						var query = "UPSERT INTO BACIRO_FHIR.LOCATION_POSITION(LOCATION_POSITION_ID," + column.slice(0, -1) + ") SELECT LOCATION_POSITION_ID, " + values.slice(0, -1) + " FROM BACIRO_FHIR.LOCATION_POSITION WHERE " + condition;
-						console.log(query);
+						//console.log(query);
 
 						db.upsert(query,function(succes){
 							var query2 = "SELECT LOCATION_POSITION_ID,LOCATION_POSITION_LONGITUDE,LOCATION_POSITION_LATITUDE,LOCATION_POSITION_ALTITUDE FROM BACIRO_FHIR.LOCATION_POSITION WHERE LOCATION_POSITION_ID = '" + locationPositionId + "' ";
 							db.query(query2,function(dataJson){
 								rez = lowercaseObject(dataJson);
-								console.log(rez);
+								//console.log(rez);
 								res.json({"err_code":0,"data":rez});
 							},function(e){
 								res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "updateLocationPosition"});

@@ -40,7 +40,7 @@ var controller = {
 			//params from query string
 			var practitionerRoleId = req.query._id;
 			var practitionerRoleActive = req.query.active;
-			var practitionerRoleCode = req.query.code;
+			var practitionerRoleCode = req.query.role;
 			var practitionerRolePeriod = req.query.date;
 			var practitionerRoleSpecialty = req.query.specialty;
 			var endpointId = req.query.endpoint;
@@ -229,14 +229,24 @@ var controller = {
 																objectPractitionerRole.identifier = identifier.data;
 																objectPractitionerRole.active = practitionerRole.active;
 																objectPractitionerRole.period = practitionerRole.period;
-																objectPractitionerRole.practitioner = practitionerRole.practitioner;
-																objectPractitionerRole.organization = practitionerRole.organization;
+																if(practitionerRole.practitioner !== 'null'){
+																	practitioner = host + ":" + port + "/" + apikey + "/practitioner?_id=" + practitionerRole.practitioner;
+																} else {
+																	practitioner = practitionerRole.practitioner;
+																}
+																objectPractitionerRole.practitioner = practitioner;
+																if(practitionerRole.organization !== 'null'){
+																	organization = host + ":" + port + "/" + apikey + "/organization?_id=" + practitionerRole.organization;
+																} else {
+																	organization = practitionerRole.organization;
+																}
+																objectPractitionerRole.organization = organization;
 																objectPractitionerRole.code = practitionerRole.code;
 																objectPractitionerRole.specialty = practitionerRole.specialty;
-																objectPractitionerRole.location = practitionerRole.location;
-																objectPractitionerRole.healthcareService = practitionerRole.healthcareService;
+																//objectPractitionerRole.location = practitionerRole.location;
+																//objectPractitionerRole.healthcareService = practitionerRole.healthcareService;
 																objectPractitionerRole.practitioner_role_availability_exceptions = practitionerRole.practitioner_role_availability_exceptions;
-																objectPractitionerRole.endpoint = practitionerRole.endpoint;
+																//objectPractitionerRole.endpoint = practitionerRole.endpoint;
 
 																newPractitionerRole[index] = objectPractitionerRole
 
@@ -265,12 +275,9 @@ var controller = {
 																						objectPractitionerRole.organization = practitionerRole.organization;
 																						objectPractitionerRole.code = practitionerRole.code;
 																						objectPractitionerRole.specialty = practitionerRole.specialty;
-																						objectPractitionerRole.location = practitionerRole.location;
-																						objectPractitionerRole.healthcareService = practitionerRole.healthcareService;
 																						objectPractitionerRole.telecom = contactPoint.data;
 																						objectPractitionerRole.practitioner_role_availability_exceptions = practitionerRole.practitioner_role_availability_exceptions;
-																						objectPractitionerRole.endpoint = practitionerRole.endpoint;
-
+																						
 																						newPractitionerRole[index] = objectPractitionerRole			
 
 																						myEmitter.once('getAvailableTime', function(practitionerRole, index, newPractitionerRole, countPractitionerRole){
@@ -298,12 +305,9 @@ var controller = {
 																									objectPractitionerRole.organization = practitionerRole.organization;
 																									objectPractitionerRole.code = practitionerRole.code;
 																									objectPractitionerRole.specialty = practitionerRole.specialty;
-																									objectPractitionerRole.location = practitionerRole.location;
-																									objectPractitionerRole.healthcareService = practitionerRole.healthcareService;
 																									objectPractitionerRole.telecom = practitionerRole.telecom;
 																									objectPractitionerRole.availableTime = availableTime.data;
 																									objectPractitionerRole.practitioner_role_availability_exceptions = practitionerRole.practitioner_role_availability_exceptions;
-																									objectPractitionerRole.endpoint = practitionerRole.endpoint;
 																									newPractitionerRole[index] = objectPractitionerRole			
 
 																									myEmitter.once('getNotAvailable', function(practitionerRole, index, newPractitionerRole, countPractitionerRole){
@@ -331,17 +335,139 @@ var controller = {
 																												objectPractitionerRole.organization = practitionerRole.organization;
 																												objectPractitionerRole.code = practitionerRole.code;
 																												objectPractitionerRole.specialty = practitionerRole.specialty;
-																												objectPractitionerRole.location = practitionerRole.location;
-																												objectPractitionerRole.healthcareService = practitionerRole.healthcareService;
 																												objectPractitionerRole.telecom = practitionerRole.telecom;
 																												objectPractitionerRole.availableTime = practitionerRole.availableTime;
 																												objectPractitionerRole.notAvailable = notAvailable.data;
 																												objectPractitionerRole.practitioner_role_availability_exceptions = practitionerRole.practitioner_role_availability_exceptions;
-																												objectPractitionerRole.endpoint = practitionerRole.endpoint;
 																												newPractitionerRole[index] = objectPractitionerRole			
-																												if(index == countPractitionerRole -1 ){
+																												/*if(index == countPractitionerRole -1 ){
 																													res.json({"err_code": 0, "data":newPractitionerRole});				
-																												}
+																												}*/
+																												
+																												myEmitter.once('getLocation', function(practitionerRole, index, newPractitionerRole, countPractitionerRole){
+																													qString = {};
+																													qString.practitioner_role_id = practitionerRole.id;
+																													seedPhoenixFHIR.path.GET = {
+																														"PractitionerRoleLocation" : {
+																															"location": "%(apikey)s/PractitionerRole/Location",
+																															"query": qString
+																														}
+																													}
+
+																													var ApiFHIR = new Apiclient(seedPhoenixFHIR);
+
+																													ApiFHIR.get('PractitionerRoleLocation', {"apikey": apikey}, {}, function(error, response, body){
+																														practitionerRoleLocation = JSON.parse(body);
+																														if(practitionerRoleLocation.err_code == 0){
+																															var objectPractitionerRole = {};
+																															objectPractitionerRole.resourceType = practitionerRole.resourceType;
+																															objectPractitionerRole.id = practitionerRole.id;
+																															objectPractitionerRole.identifier = practitionerRole.identifier;
+																															objectPractitionerRole.active = practitionerRole.active;
+																															objectPractitionerRole.period = practitionerRole.period;
+																															objectPractitionerRole.practitioner = practitionerRole.practitioner;
+																															objectPractitionerRole.organization = practitionerRole.organization;
+																															objectPractitionerRole.code = practitionerRole.code;
+																															objectPractitionerRole.specialty = practitionerRole.specialty;
+																															objectPractitionerRole.location = practitionerRoleLocation.data;
+																															objectPractitionerRole.telecom = practitionerRole.telecom;
+																															objectPractitionerRole.availableTime = practitionerRole.availableTime;
+																															objectPractitionerRole.notAvailable = practitionerRole.notAvailable;
+																															objectPractitionerRole.practitioner_role_availability_exceptions = practitionerRole.practitioner_role_availability_exceptions;
+																															newPractitionerRole[index] = objectPractitionerRole			
+																															/*if(index == countPractitionerRole -1 ){
+																																res.json({"err_code": 0, "data":newPractitionerRole});				
+																															}*/
+																															
+																															myEmitter.once('getHealthcareService', function(practitionerRole, index, newPractitionerRole, countPractitionerRole){
+																																qString = {};
+																																qString.practitioner_role_id = practitionerRole.id;
+																																seedPhoenixFHIR.path.GET = {
+																																	"PractitionerRoleHealthcareService" : {
+																																		"location": "%(apikey)s/PractitionerRole/HealthcareService",
+																																		"query": qString
+																																	}
+																																}
+
+																																var ApiFHIR = new Apiclient(seedPhoenixFHIR);
+
+																																ApiFHIR.get('PractitionerRoleHealthcareService', {"apikey": apikey}, {}, function(error, response, body){
+																																	PractitionerRoleHealthcareService = JSON.parse(body);
+																																	//console.log(PractitionerRoleHealthcareService);
+																																	if(PractitionerRoleHealthcareService.err_code == 0){
+																																		var objectPractitionerRole = {};
+																																		objectPractitionerRole.resourceType = practitionerRole.resourceType;
+																																		objectPractitionerRole.id = practitionerRole.id;
+																																		objectPractitionerRole.identifier = practitionerRole.identifier;
+																																		objectPractitionerRole.active = practitionerRole.active;
+																																		objectPractitionerRole.period = practitionerRole.period;
+																																		objectPractitionerRole.practitioner = practitionerRole.practitioner;
+																																		objectPractitionerRole.organization = practitionerRole.organization;
+																																		objectPractitionerRole.code = practitionerRole.code;
+																																		objectPractitionerRole.specialty = practitionerRole.specialty;
+																																		objectPractitionerRole.location = practitionerRole.location;
+																																		objectPractitionerRole.healthcareService = PractitionerRoleHealthcareService.data;
+																																		objectPractitionerRole.telecom = practitionerRole.telecom;
+																																		objectPractitionerRole.availableTime = practitionerRole.availableTime;
+																																		objectPractitionerRole.notAvailable = practitionerRole.notAvailable;
+																																		objectPractitionerRole.practitioner_role_availability_exceptions = practitionerRole.practitioner_role_availability_exceptions;
+																																		newPractitionerRole[index] = objectPractitionerRole			
+																																		myEmitter.once('getEndpoint', function(practitionerRole, index, newPractitionerRole, countPractitionerRole){
+																																qString = {};
+																																qString.practitioner_role_id = practitionerRole.id;
+																																seedPhoenixFHIR.path.GET = {
+																																	"PractitionerRoleEndpoint" : {
+																																		"location": "%(apikey)s/PractitionerRole/Endpoint",
+																																		"query": qString
+																																	}
+																																}
+
+																																var ApiFHIR = new Apiclient(seedPhoenixFHIR);
+
+																																ApiFHIR.get('PractitionerRoleEndpoint', {"apikey": apikey}, {}, function(error, response, body){
+																																	PractitionerRoleEndpoint = JSON.parse(body);
+																																	//console.log(PractitionerRoleEndpoint);
+																																	if(PractitionerRoleEndpoint.err_code == 0){
+																																		var objectPractitionerRole = {};
+																																		objectPractitionerRole.resourceType = practitionerRole.resourceType;
+																																		objectPractitionerRole.id = practitionerRole.id;
+																																		objectPractitionerRole.identifier = practitionerRole.identifier;
+																																		objectPractitionerRole.active = practitionerRole.active;
+																																		objectPractitionerRole.period = practitionerRole.period;
+																																		objectPractitionerRole.practitioner = practitionerRole.practitioner;
+																																		objectPractitionerRole.organization = practitionerRole.organization;
+																																		objectPractitionerRole.code = practitionerRole.code;
+																																		objectPractitionerRole.specialty = practitionerRole.specialty;
+																																		objectPractitionerRole.location = practitionerRole.location;
+																																		objectPractitionerRole.healthcareService = practitionerRole.healthcareService;
+																																		objectPractitionerRole.telecom = practitionerRole.telecom;
+																																		objectPractitionerRole.availableTime = practitionerRole.availableTime;
+																																		objectPractitionerRole.notAvailable = practitionerRole.notAvailable;	objectPractitionerRole.practitioner_role_availability_exceptions = practitionerRole.practitioner_role_availability_exceptions;
+																																		objectPractitionerRole.endpoint = PractitionerRoleEndpoint.data;
+																																		newPractitionerRole[index] = objectPractitionerRole			
+																																		if(index == countPractitionerRole -1 ){
+																																			res.json({"err_code": 0, "data":newPractitionerRole});				
+																																		}
+																																	}else{
+																																		res.json(PractitionerRoleEndpoint);			
+																																	}
+																																})
+																															})
+																															myEmitter.emit('getEndpoint', objectPractitionerRole, index, newPractitionerRole, countPractitionerRole);
+																																	}else{
+																																		res.json(PractitionerRoleHealthcareService);			
+																																	}
+																																})
+																															})
+																															myEmitter.emit('getHealthcareService', objectPractitionerRole, index, newPractitionerRole, countPractitionerRole);
+																															
+																														}else{
+																															res.json(practitionerRoleLocation);			
+																														}
+																													})
+																												})
+																												myEmitter.emit('getLocation', objectPractitionerRole, index, newPractitionerRole, countPractitionerRole);
+																												
 																											}else{
 																												res.json(notAvailable);			
 																											}
@@ -1295,10 +1421,10 @@ var controller = {
 											"availableEndTime" : availableEndTime
 										}
 										ApiFHIR.post('availableTime', {"apikey": apikey}, {body: dataAvailableTime, json: true}, function(error, response, body){
-											console.log(body);
+											//console.log(body);
 											practitionerRole = body;
 											if(practitionerRole.err_code == 0){
-												console.log("tes123");
+												//console.log("tes123");
 												res.json({"err_code": 0, "err_msg": "Available Time has been add in this practitioner role.", "data": practitionerRole.data});
 											} else {
 												res.json(practitionerRole);
@@ -1680,6 +1806,183 @@ var controller = {
 			}else{
 				res.json({"err_code": err_code, "err_msg": err_msg});
 			}
+		},
+		endpointRef: function addEndpointRef(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var regex = new RegExp("([0-9]{4}[-](0[1-9]|1[0-2])[-]([0-2]{1}[0-9]{1}|3[0-1]{1})|([0-2]{1}[0-9]{1}|3[0-1]{1})[-](0[1-9]|1[0-2])[-][0-9]{4})");
+			var practitionerRoleId = req.params.practitioner_role_id;
+
+			var err_code = 0;
+			var err_msg = "";
+
+			if(typeof req.body.endpoint_id !== 'undefined'){
+				endpoint_id =  req.body.endpoint_id.trim().toLowerCase();
+				if(validator.isEmpty(endpoint_id)){
+					err_code = 2;
+					err_msg = "Endpoint id of Practitioner Role is required";
+				}
+			}else{
+				err_code = 1;
+				err_msg = "Please add sub-key 'endpoint id' in json Practitioner Role request.";
+			}  
+
+			if(err_code == 0){
+				//check apikey
+				checkApikey(apikey, ipAddres, function(result){
+					if(result.err_code == 0){
+						checkUniqeValue(apikey, "PRACTITIONER_ROLE_ID|" + practitionerRoleId, 'PRACTITIONER_ROLE', function(resPractitionerRoleID){
+							if(resPractitionerRoleID.err_code > 0){
+								checkUniqeValue(apikey, "ENDPOINT_ID|" + endpoint_id, 'ENDPOINT', function(resEndpointID){
+									if(resEndpointID.err_code > 0){
+										dataEndpoint = {
+											"practitionerRoleid" : practitionerRoleId,
+											"id" : endpoint_id,
+										}
+										ApiFHIR.post('PractitionerRoleEndpoint', {"apikey": apikey}, {body: dataEndpoint, json: true}, function(error, response, body){
+											//console.log(body);
+											practitionerRole = body;
+											if(practitionerRole.err_code == 0){
+												//console.log("tes123");
+												res.json({"err_code": 0, "err_msg": "Endpoint has been add in this practitioner role.", "data": practitionerRole.data});
+											} else {
+												res.json(practitionerRole);
+											}
+										})													
+									}else{
+										res.json({"err_code": 501, "err_msg": "Endpoint Id not found"});
+									}
+								})
+							}else{
+								res.json({"err_code": 501, "err_msg": "Practitioner Role Id not found"});
+							}
+						})
+					}else{
+						result.err_code = 500;
+						res.json(result);
+					}	
+				});
+			}else{
+				res.json({"err_code": err_code, "err_msg": err_msg});
+			}
+		},
+		locationRef: function addLocationRef(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var regex = new RegExp("([0-9]{4}[-](0[1-9]|1[0-2])[-]([0-2]{1}[0-9]{1}|3[0-1]{1})|([0-2]{1}[0-9]{1}|3[0-1]{1})[-](0[1-9]|1[0-2])[-][0-9]{4})");
+			var practitionerRoleId = req.params.practitioner_role_id;
+
+			var err_code = 0;
+			var err_msg = "";
+
+			if(typeof req.body.location_id !== 'undefined'){
+				location_id =  req.body.location_id.trim().toLowerCase();
+				if(validator.isEmpty(location_id)){
+					err_code = 2;
+					err_msg = "Location id of Practitioner Role is required";
+				}
+			}else{
+				err_code = 1;
+				err_msg = "Please add sub-key 'location id' in json Practitioner Role request.";
+			}  
+
+			if(err_code == 0){
+				//check apikey
+				checkApikey(apikey, ipAddres, function(result){
+					if(result.err_code == 0){
+						checkUniqeValue(apikey, "PRACTITIONER_ROLE_ID|" + practitionerRoleId, 'PRACTITIONER_ROLE', function(resPractitionerRoleID){
+							if(resPractitionerRoleID.err_code > 0){
+								checkUniqeValue(apikey, "LOCATION_ID|" + location_id, 'LOCATION', function(resLocationID){
+									if(resLocationID.err_code > 0){
+										dataLocation = {
+											"practitionerRoleid" : practitionerRoleId,
+											"id" : location_id,
+										}
+										ApiFHIR.post('PractitionerRoleLocation', {"apikey": apikey}, {body: dataLocation, json: true}, function(error, response, body){
+											//console.log(body);
+											practitionerRole = body;
+											if(practitionerRole.err_code == 0){
+												//console.log("tes123");
+												res.json({"err_code": 0, "err_msg": "Location has been add in this practitioner role.", "data": practitionerRole.data});
+											} else {
+												res.json(practitionerRole);
+											}
+										})													
+									}else{
+										res.json({"err_code": 501, "err_msg": "Location Id not found"});
+									}
+								})
+							}else{
+								res.json({"err_code": 501, "err_msg": "Practitioner Role Id not found"});
+							}
+						})
+					}else{
+						result.err_code = 500;
+						res.json(result);
+					}	
+				});
+			}else{
+				res.json({"err_code": err_code, "err_msg": err_msg});
+			}
+		},
+		healthcareServiceRef: function addHealthcareServiceRef(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var regex = new RegExp("([0-9]{4}[-](0[1-9]|1[0-2])[-]([0-2]{1}[0-9]{1}|3[0-1]{1})|([0-2]{1}[0-9]{1}|3[0-1]{1})[-](0[1-9]|1[0-2])[-][0-9]{4})");
+			var practitionerRoleId = req.params.practitioner_role_id;
+
+			var err_code = 0;
+			var err_msg = "";
+
+			if(typeof req.body.healthcare_service_id !== 'undefined'){
+				healthcare_service_id =  req.body.healthcare_service_id.trim().toLowerCase();
+				if(validator.isEmpty(healthcare_service_id)){
+					err_code = 2;
+					err_msg = "Healthcare Service id of Practitioner Role is required";
+				}
+			}else{
+				err_code = 1;
+				err_msg = "Please add sub-key 'Healthcare Service id' in json Practitioner Role request.";
+			}  
+
+			if(err_code == 0){
+				//check apikey
+				checkApikey(apikey, ipAddres, function(result){
+					if(result.err_code == 0){
+						checkUniqeValue(apikey, "PRACTITIONER_ROLE_ID|" + practitionerRoleId, 'PRACTITIONER_ROLE', function(resPractitionerRoleID){
+							if(resPractitionerRoleID.err_code > 0){
+								checkUniqeValue(apikey, "HEALTHCARE_SERVICE_ID|" + healthcare_service_id, 'HEALTHCARE_SERVICE', function(resHealthcareServiceID){
+									if(resHealthcareServiceID.err_code > 0){
+										dataHS = {
+											"practitionerRoleid" : practitionerRoleId,
+											"id" : healthcare_service_id
+										}
+										ApiFHIR.post('PractitionerRoleHealthcareService', {"apikey": apikey}, {body: dataHS, json: true}, function(error, response, body){
+											//console.log(body);
+											practitionerRole = body;
+											if(practitionerRole.err_code == 0){
+												//console.log("tes123");
+												res.json({"err_code": 0, "err_msg": "Healthcare Service has been add in this practitioner role.", "data": practitionerRole.data});
+											} else {
+												res.json(practitionerRole);
+											}
+										})													
+									}else{
+										res.json({"err_code": 501, "err_msg": "Healthcare Service Id not found"});
+									}
+								})
+							}else{
+								res.json({"err_code": 501, "err_msg": "Practitioner Role Id not found"});
+							}
+						})
+					}else{
+						result.err_code = 500;
+						res.json(result);
+					}	
+				});
+			}else{
+				res.json({"err_code": err_code, "err_msg": err_msg});
+			}
 		}
 	},
 	put:{
@@ -1799,7 +2102,7 @@ var controller = {
 			}
 
 			// location
-			if(typeof req.body.location !== 'undefined'){
+			/*if(typeof req.body.location !== 'undefined'){
 				location =  req.body.location.trim().toLowerCase();
 				if(validator.isEmpty(location)){
 					err_code = 2;
@@ -1809,7 +2112,7 @@ var controller = {
 				}
 			}else{
 				location = "";
-			}
+			}*/
 			
 			//practitioner
 			if(typeof req.body.practitioner !== 'undefined'){
@@ -1825,7 +2128,7 @@ var controller = {
 			}
 			
 			//healthcare service
-			if(typeof req.body.healthcareService !== 'undefined'){
+			/*if(typeof req.body.healthcareService !== 'undefined'){
 				healthcareService =  req.body.healthcareService.trim().toLowerCase();
 				if(validator.isEmpty(healthcareService)){
 					err_code = 2;
@@ -1835,9 +2138,9 @@ var controller = {
 				}
 			}else{
 				healthcareService = "";
-			}
+			}*/
 			
-			if(typeof req.body.endpoint !== 'undefined'){
+			/*if(typeof req.body.endpoint !== 'undefined'){
 				endpoint =  req.body.endpoint.trim().toLowerCase();
 				if(validator.isEmpty(endpoint)){
 					err_code = 2;
@@ -1847,7 +2150,7 @@ var controller = {
 				}
 			}else{
 				endpoint = "";
-			}
+			}*/
 
 			if(err_code == 0){
 				//check apikey
@@ -2055,7 +2358,7 @@ var controller = {
 										if(resAvailableTimeId.err_code > 0){
 											ApiFHIR.put('availableTime', {"apikey": apikey, "_id": availableTimeId, "dr": "PRACTITIONER_ROLE_ID|"+practitionerRoleId}, {body: dataAvailableTime, json: true}, function(error, response, body){
 												availableTime = body;
-												console.log(availableTime);
+												//console.log(availableTime);
 												if(availableTime.err_code > 0){
 													res.json(availableTime);	
 												}else{
@@ -2135,7 +2438,7 @@ var controller = {
 				description = "";
 			}
 			
-			if(typeof req.body.during !== 'undefined'){
+			/*if(typeof req.body.during !== 'undefined'){
 				during =  req.body.during.trim().toLowerCase();
 				if(validator.isEmpty(during)){
 					err_code = 2;
@@ -2145,7 +2448,7 @@ var controller = {
 				}
 			}else{
 				during = "";
-			}
+			}*/
 
 			if(typeof req.body.during !== 'undefined'){
 				during =  req.body.during;

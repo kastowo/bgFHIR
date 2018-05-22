@@ -70,27 +70,30 @@ var controller = {
       }
 			
 			if(typeof identifier !== 'undefined' && identifier !== ""){
-				condition += "id.identifier_value = '" + identifier + "' AND ";       
+				condition += "id.identifier_value = '" + identifier + "' AND ";
+				join += " LEFT JOIN BACIRO_FHIR.IDENTIFIER id ON id.HEALTHCARE_SERVICE_ID = hs.HEALTHCARE_SERVICE_ID ";
       }
 			
 			if(typeof location !== 'undefined' && location !== ""){
-				condition += "l.LOCATION_ID = '" + location + "' AND ";       
+				condition += "l.LOCATION_ID = '" + location + "' AND ";
+				join += " LEFT JOIN BACIRO_FHIR.location l ON l.LOCATION_HEALTHCARE_SERVICE_LOCATION = hs.healthcare_service_id ";
       }
 			
 			if(typeof endpoint !== 'undefined' && endpoint !== ""){
-        condition += "ep.endpoint_id = '" + endpoint + "' AND,";  
+        condition += "ep.endpoint_id = '" + endpoint + "' AND,";
+				join += " LEFT JOIN BACIRO_FHIR.endpoint ep ON ep.healthcare_service_id = hs.healthcare_service_id ";
       }
 			
       if(condition == ""){
         fixCondition = "";
       }else{
-        fixCondition = " WHERE  " + condition.slice(0, -4);
+        fixCondition = join + " WHERE  " + condition.slice(0, -4);
       }
 			      
       
-			var query = "select hs.healthcare_service_id as healthcare_service_id, healthcare_service_active, hs.organization_id as organization_id, healthcare_service_category, healthcare_service_type, healthcare_service_specialty, l.location_id as location_id, ca.location_id as coverage_area, healthcare_service_name, healthcare_service_comment, healthcare_service_extra_details, hs.attachment_id as attachment_id, healthcare_service_service_provision_code,healthcare_service_eligibility, healthcare_service_eligibility_note, healthcare_service_program_name, healthcare_service_characteristic, healthcare_service_referral_method, healthcare_service_appointegerment_required, pr.practitioner_role_availability_exceptions as practitioner_role_availability_exceptions, ep.endpoint_id as endpoint_id from BACIRO_FHIR.HEALTHCARE_SERVICE hs LEFT JOIN BACIRO_FHIR.location l ON l.LOCATION_HEALTHCARE_SERVICE_LOCATION = hs.healthcare_service_id LEFT JOIN BACIRO_FHIR.location ca ON ca.LOCATION_HEALTHCARE_SERVICE_COVERAGE_AREA = hs.healthcare_service_id LEFT JOIN BACIRO_FHIR.practitioner_role pr ON pr.PRACTITIONER_ROLE_ID = hs.PRACTITIONER_ROLE_ID LEFT JOIN BACIRO_FHIR.endpoint ep ON ep.healthcare_service_id = hs.healthcare_service_id " + fixCondition;
+			var query = "select hs.healthcare_service_id as healthcare_service_id, healthcare_service_active, hs.organization_id as organization_id, healthcare_service_category, healthcare_service_type, healthcare_service_specialty, healthcare_service_name, healthcare_service_comment, healthcare_service_extra_details, hs.attachment_id as attachment_id, healthcare_service_service_provision_code,healthcare_service_eligibility, healthcare_service_eligibility_note, healthcare_service_program_name, healthcare_service_characteristic, healthcare_service_referral_method, healthcare_service_appointegerment_required, healthcare_service_availability_exceptions from BACIRO_FHIR.HEALTHCARE_SERVICE hs " + fixCondition;
 			
-      console.log(query);
+      //console.log(query);
 			var arrHealthcareService = [];
       db.query(query,function(dataJson){
         rez = lowercaseObject(dataJson);
@@ -103,19 +106,20 @@ var controller = {
 					HealthcareService.category = rez[i].healthcare_service_category;
 					HealthcareService.type = rez[i].healthcare_service_type;
 					HealthcareService.specialty = rez[i].healthcare_service_specialty;
-					HealthcareService.location = rez[i].location_id;
+					//HealthcareService.location = rez[i].location_id;
 					HealthcareService.name = rez[i].healthcare_service_name;
 					HealthcareService.comment = rez[i].healthcare_service_comment;
 					HealthcareService.extraDetails = rez[i].healthcare_service_extra_details;
 					HealthcareService.attachment_id = rez[i].attachment_id;
-					HealthcareService.coverageArea = rez[i].coverage_area;
+					//HealthcareService.coverageArea = rez[i].coverage_area;
 					HealthcareService.serviceProvisionCode = rez[i].healthcare_service_service_provision_code;
 					HealthcareService.eligibility = rez[i].healthcare_service_eligibility;
 					HealthcareService.eligibilityNote = rez[i].healthcare_service_eligibility_note;
 					HealthcareService.programName = rez[i].healthcare_service_program_name;
 					HealthcareService.characteristic = rez[i].healthcare_service_characteristic;
 					HealthcareService.appointmentRequired = rez[i].healthcare_service_referral_method;
-					HealthcareService.endpoint = rez[i].endpoint_id;
+					HealthcareService.availabilityExceptions = rez[i].healthcare_service_availability_exceptions;
+					//HealthcareService.endpoint = rez[i].endpoint_id;
 					
           arrHealthcareService[i] = HealthcareService;
         }
@@ -125,7 +129,7 @@ var controller = {
       });
     },
 		availableTime: function getAvailableTime(req, res){
-			console.log(req.query);
+			//console.log(req.query);
 			var healthcare_service_id = req.query.healthcare_service_id;			    
 			
 			var condition = "";
@@ -143,7 +147,7 @@ var controller = {
       
 			var query = "select available_time_id, available_time_day_of_week, available_time_all_day, available_time_start, available_time_end from baciro_fhir.AVAILABLE_TIME " + fixCondition;
 			
-      console.log(query);
+      //console.log(query);
 			var arrAvailableTime = [];
       db.query(query,function(dataJson){
         rez = lowercaseObject(dataJson);
@@ -181,7 +185,7 @@ var controller = {
 			
 			var query = "select not_available_id, not_available_description, not_available_during from baciro_fhir.NOT_AVAILABLE " + fixCondition;
 			
-      console.log(query);
+      //console.log(query);
 			var arrAvailableTime = [];
       db.query(query,function(dataJson){
         rez = lowercaseObject(dataJson);
@@ -197,12 +201,131 @@ var controller = {
       },function(e){
         res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "getNotAvailable"});
       });
+    },
+		endpoint: function getEndpoint(req, res){
+			var apikey = req.params.apikey;
+			var endpointId = req.query._id;
+			var healthcareServiceId = req.query.healthcare_service_id;
+			
+			var condition = "";
+			var join = "";
+			
+			if(typeof endpointId !== 'undefined' && endpointId !== ""){
+        condition += "endpoint_id = '" + endpointId + "' AND ";  
+      }
+						
+			if(typeof healthcareServiceId !== 'undefined' && healthcareServiceId !== ""){
+        condition += "healthcare_service_id = '" + healthcareServiceId + "' AND ";  
+      }
+			
+			if(condition == ""){
+        fixCondition = "";
+      }else{
+        fixCondition = " WHERE  " + condition.slice(0, -4);
+      }
+      
+			var query = "select endpoint_id from baciro_fhir.endpoint " + fixCondition;
+			//console.log(query);
+      
+			var arrEndpoint = [];
+      db.query(query,function(dataJson){
+        rez = lowercaseObject(dataJson);
+        for(i = 0; i < rez.length; i++){
+					//console.log(hostfhir + ":" + portfhir + "/" + apikey + "/endpoint?_id=" + rez[i].endpoint_id);
+          var Endpoint = {};
+					Endpoint.id = hostfhir + ":" + portfhir + "/" + apikey + "/endpoint?_id=" + rez[i].endpoint_id;
+          //console.log(Endpoint);
+          arrEndpoint[i] = Endpoint;
+        }
+        res.json({"err_code":0,"data": arrEndpoint});
+      },function(e){
+        res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "getEndpoint"});
+      });
+    },
+		location: function getLocation(req, res){
+			var apikey = req.params.apikey;
+			var locationId = req.query._id;
+			var healthcareServiceId = req.query.healthcare_service_id;
+			
+			var condition = "";
+			var join = "";
+			
+			if(typeof locationId !== 'undefined' && locationId !== ""){
+        condition += "location_id = '" + locationId + "' AND ";  
+      }
+			
+			if(typeof healthcareServiceId !== 'undefined' && healthcareServiceId !== ""){
+        condition += "LOCATION_HEALTHCARE_SERVICE_LOCATION = '" + healthcareServiceId + "' AND ";  
+      }
+			
+			if(condition == ""){
+        fixCondition = "";
+      }else{
+        fixCondition = " WHERE  " + condition.slice(0, -4);
+      }
+      
+			var query = "select location_id from baciro_fhir.Location " + fixCondition;
+			//console.log(query);
+      
+			var arrLocation = [];
+      db.query(query,function(dataJson){
+        rez = lowercaseObject(dataJson);
+        for(i = 0; i < rez.length; i++){
+					//console.log(hostfhir + ":" + portfhir + "/" + apikey + "/location?_id=" + rez[i].endpoint_id);
+          var Location = {};
+					Location.id = hostfhir + ":" + portfhir + "/" + apikey + "/location?_id=" + rez[i].location_id;
+          //console.log(Endpoint);
+          arrLocation[i] = Location;
+        }
+        res.json({"err_code":0,"data": arrLocation});
+      },function(e){
+        res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "getLocation"});
+      });
+    },
+		coverageArea: function getCoverageArea(req, res){
+			var apikey = req.params.apikey;
+			var locationId = req.query._id;
+			var healthcareServiceId = req.query.healthcare_service_id;
+			
+			var condition = "";
+			var join = "";
+			
+			if(typeof locationId !== 'undefined' && locationId !== ""){
+        condition += "location_id = '" + locationId + "' AND ";  
+      }
+			
+			if(typeof healthcareServiceId !== 'undefined' && healthcareServiceId !== ""){
+        condition += "LOCATION_HEALTHCARE_SERVICE_COVERAGE_AREA = '" + healthcareServiceId + "' AND ";  
+      }
+			
+			if(condition == ""){
+        fixCondition = "";
+      }else{
+        fixCondition = " WHERE  " + condition.slice(0, -4);
+      }
+      
+			var query = "select location_id from baciro_fhir.Location " + fixCondition;
+			//console.log(query);
+      
+			var arrLocation = [];
+      db.query(query,function(dataJson){
+        rez = lowercaseObject(dataJson);
+        for(i = 0; i < rez.length; i++){
+					//console.log(hostfhir + ":" + portfhir + "/" + apikey + "/location?_id=" + rez[i].endpoint_id);
+          var Location = {};
+					Location.id = hostfhir + ":" + portfhir + "/" + apikey + "/location?_id=" + rez[i].location_id;
+          //console.log(Endpoint);
+          arrLocation[i] = Location;
+        }
+        res.json({"err_code":0,"data": arrLocation});
+      },function(e){
+        res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "getCoverageArea"});
+      });
     }
   },
   post: {
     healthcareService: function addHealthcareService(req, res){
-			
-			console.log(req.body);
+			//console.log(req.body);
 			var healthcare_service_id = req.body.id;
 			var healthcare_service_active = req.body.active;
 			var healthcare_service_category = req.body.category;
@@ -330,17 +453,17 @@ var controller = {
 
       var query = "UPSERT INTO BACIRO_FHIR.HEALTHCARE_SERVICE(healthcare_service_id, " + column.slice(0, -1) + ")"+
         " VALUES ('"+healthcare_service_id+"', " + values.slice(0, -1) + ")";
-			console.log(query);
+			//console.log(query);
 			
       db.upsert(query,function(succes){
 				
 				var query2 = "UPSERT INTO BACIRO_FHIR.ENDPOINT(ENDPOINT_ID, HEALTHCARE_SERVICE_ID) SELECT ENDPOINT_ID, '" + healthcare_service_id + "' FROM BACIRO_FHIR.ENDPOINT WHERE ENDPOINT_ID = '" + endpoint_id + "'";
         db.upsert(query2,function(dataJson){
 					var query3 = "UPSERT INTO BACIRO_FHIR.LOCATION(LOCATION_ID, LOCATION_HEALTHCARE_SERVICE_LOCATION) SELECT LOCATION_ID, '" + healthcare_service_id + "' FROM BACIRO_FHIR.LOCATION WHERE LOCATION_ID = '" + location_id + "'";
-					console.log(query3);
+					//console.log(query3);
 					db.upsert(query3,function(dataJson){
 						var query4 = "UPSERT INTO BACIRO_FHIR.LOCATION(LOCATION_ID, LOCATION_HEALTHCARE_SERVICE_COVERAGE_AREA) SELECT LOCATION_ID, '" + healthcare_service_id + "' FROM BACIRO_FHIR.LOCATION WHERE LOCATION_ID = '" + location_coverageArea + "'";
-						console.log(query4);
+						//console.log(query4);
 						db.upsert(query4,function(dataJson){
 				
 							var query = "SELECT healthcare_service_id, healthcare_service_active, healthcare_service_category, healthcare_service_type, healthcare_service_specialty, healthcare_service_name, healthcare_service_comment, healthcare_service_extra_details, healthcare_service_service_provision_code, healthcare_service_eligibility, healthcare_service_eligibility_note,healthcare_service_program_name,healthcare_service_characteristic,  healthcare_service_referral_method, healthcare_service_appointegerment_required, healthcare_service_availability_exceptions, organization_id FROM BACIRO_FHIR.HEALTHCARE_SERVICE  WHERE healthcare_service_id = '" + healthcare_service_id + "' ";
@@ -406,7 +529,7 @@ var controller = {
 
       var query = "UPSERT INTO BACIRO_FHIR.AVAILABLE_TIME(available_time_id, " + column.slice(0, -1) + ")"+
         " VALUES ('"+available_time_id+"', " + values.slice(0, -1) + ")";
-			console.log(query);
+			//console.log(query);
       db.upsert(query,function(succes){
         var query = "SELECT available_time_id, available_time_day_of_week, available_time_all_day, available_time_start, available_time_end, healthcare_service_id FROM BACIRO_FHIR.AVAILABLE_TIME  WHERE healthcare_service_id = '" + healthcare_service_id + "' ";
         db.query(query,function(dataJson){
@@ -446,7 +569,7 @@ var controller = {
 
       var query = "UPSERT INTO BACIRO_FHIR.NOT_AVAILABLE(not_available_id, " + column.slice(0, -1) + ")"+
         " VALUES ('"+not_available_id+"', " + values.slice(0, -1) + ")";
-			console.log(query);
+			//console.log(query);
       db.upsert(query,function(succes){
         var query = "SELECT not_available_id, not_available_description, not_available_during, not_available_during FROM BACIRO_FHIR.NOT_AVAILABLE  WHERE healthcare_service_id = '" + healthcare_service_id + "' ";
         db.query(query,function(dataJson){
@@ -458,13 +581,110 @@ var controller = {
       },function(e){
           res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "addNotAvailable"});
       });
+    },
+		endpoint: function addEndpoint(req, res){
+			var endpoint_id = req.body.id;
+			var practitioner_role_id = req.body.practitionerRoleid;
+			var healthcare_service_id = req.body.healthcareServiceId;
+			
+			var column = "";
+      var values = "";
+			
+			if(typeof practitioner_role_id !== 'undefined'){
+        column += 'practitioner_role_id,';
+        values += "'" + practitioner_role_id +"',";
+      }
+			
+			if(typeof healthcare_service_id !== 'undefined'){
+        column += 'healthcare_service_id,';
+        values += "'" + healthcare_service_id +"',";
+      }
+						
+      var query = "UPSERT INTO BACIRO_FHIR.ENDPOINT(endpoint_id, " + column.slice(0, -1) + ")"+
+        " VALUES ('"+endpoint_id+"', " + values.slice(0, -1) + ")";
+			//console.log(query);
+      db.upsert(query,function(succes){
+        var query = "SELECT endpoint_id, healthcare_service_id FROM BACIRO_FHIR.ENDPOINT  WHERE endpoint_id = '" + endpoint_id + "' ";
+        db.query(query,function(dataJson){
+          rez = lowercaseObject(dataJson);
+          res.json({"err_code":0,"data":rez});
+        },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "addHealthcareServiceEnpoint"});
+        });
+      },function(e){
+          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "addHealthcareServiceEnpoint"});
+      });
+    },
+		location: function addLocation(req, res){
+			var location_id = req.body.id;
+			var practitioner_role_id = req.body.practitionerRoleid;
+			var healthcare_service_id = req.body.healthcareServiceId;
+			
+			var column = "";
+      var values = "";
+			
+			if(typeof practitioner_role_id !== 'undefined'){
+        column += 'practitioner_role_id,';
+        values += "'" + practitioner_role_id +"',";
+      }
+			
+			if(typeof healthcare_service_id !== 'undefined'){
+        column += 'LOCATION_HEALTHCARE_SERVICE_LOCATION,';
+        values += "'" + healthcare_service_id +"',";
+      }
+						
+      var query = "UPSERT INTO BACIRO_FHIR.location(location_id, " + column.slice(0, -1) + ")"+
+        " VALUES ('"+location_id+"', " + values.slice(0, -1) + ")";
+			//console.log(query);
+      db.upsert(query,function(succes){
+        var query = "SELECT location_id, LOCATION_HEALTHCARE_SERVICE_LOCATION FROM BACIRO_FHIR.location  WHERE location_id = '" + location_id + "' ";
+        db.query(query,function(dataJson){
+          rez = lowercaseObject(dataJson);
+          res.json({"err_code":0,"data":rez});
+        },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "addHealthcareServiceLocation"});
+        });
+      },function(e){
+          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "addHealthcareServiceLocation"});
+      });
+    },
+		coverageArea: function addCoverageArea(req, res){
+			var location_id = req.body.id;
+			var practitioner_role_id = req.body.practitionerRoleid;
+			var healthcare_service_id = req.body.healthcareServiceId;
+			
+			var column = "";
+      var values = "";
+			
+			if(typeof practitioner_role_id !== 'undefined'){
+        column += 'practitioner_role_id,';
+        values += "'" + practitioner_role_id +"',";
+      }
+			
+			if(typeof healthcare_service_id !== 'undefined'){
+        column += 'LOCATION_HEALTHCARE_SERVICE_COVERAGE_AREA,';
+        values += "'" + healthcare_service_id +"',";
+      }
+						
+      var query = "UPSERT INTO BACIRO_FHIR.location(location_id, " + column.slice(0, -1) + ")"+
+        " VALUES ('"+location_id+"', " + values.slice(0, -1) + ")";
+			//console.log(query);
+      db.upsert(query,function(succes){
+        var query = "SELECT location_id, LOCATION_HEALTHCARE_SERVICE_COVERAGE_AREA FROM BACIRO_FHIR.location  WHERE location_id = '" + location_id + "' ";
+        db.query(query,function(dataJson){
+          rez = lowercaseObject(dataJson);
+          res.json({"err_code":0,"data":rez});
+        },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "addHealthcareServiceCoverageArea"});
+        });
+      },function(e){
+          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "addHealthcareServiceCoverageArea"});
+      });
     }
   
 	},
 	put:{
 		healthcareService: function updateHealthcareService(req, res){
-			console.log(req.params);
-			console.log(req.body);
 			var healthcare_service_id = req.params.healthcare_service_id;
 			//var healthcare_service_id = req.body.id;
 			var healthcare_service_active = req.body.active;
@@ -532,7 +752,7 @@ var controller = {
       }
 			
 			if(typeof healthcare_service_eligibility !== 'undefined'){
-        column += ',';
+        column += 'healthcare_service_eligibility,';
         values += "'" + healthcare_service_eligibility +"',";
       }
 			

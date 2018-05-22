@@ -68,7 +68,7 @@ var controller = {
 				if(!validator.isEmpty(locationId)){
 					qString._id = locationId; 
 				}else{
-					res.json({"err_code": 1, "err_msg": "organization id is required."});
+					res.json({"err_code": 1, "err_msg": "location id is required."});
 				}
 			}
 
@@ -232,7 +232,7 @@ var controller = {
 				}
 			}
 
-
+console.log(qString);
 			seedPhoenixFHIR.path.GET = {
 				"Location" : {
 					"location": "%(apikey)s/Location",
@@ -297,14 +297,7 @@ var controller = {
 													}																
 													objectLocation.partOf = partOf;
 													objectLocation.locationPosition = location.locationPosition;
-													var endpointId;															
-													if(location.endpointId !== 'null') {
-														endpointId = host + ":" + port + "/" + apikey + "/Endpoint?_id=" + location.endpointId;
-													} else {
-														endpointId = location.endpointId;
-													}
-													objectLocation.endpointId = endpointId;
-
+													
 													newLocation[index] = objectLocation;
 //	/console.log(objectLocation);
 													myEmitter.once('getAddress', function(location, index, newLocation, countLocation){
@@ -340,8 +333,7 @@ var controller = {
 																objectLocation.managingOrganization = location.managingOrganization;
 																objectLocation.partOf = location.partOf;
 																objectLocation.locationPosition = location.locationPosition;
-																objectLocation.endpointId = location.endpointId;
-
+																
 																newLocation[index] = objectLocation;
 
 																myEmitter.once('getPosition', function(location, index, newLocation, countLocation){
@@ -376,31 +368,29 @@ var controller = {
 																			objectLocation.position = locationPosition.data;
 																			objectLocation.managingOrganization = location.managingOrganization;
 																			objectLocation.partOf = location.partOf;
-																			objectLocation.endpointId = location.endpointId;
 
 																			newLocation[index] = objectLocation;
 
 
-																			if(index == countLocation -1 ){
+																			/*if(index == countLocation -1 ){
 																				res.json({"err_code": 0, "data":newLocation});				
-																			}
-																			/*myEmitter.once('getIdentifier', function(location, index, newLocation, countLocation){
+																			}*/
+																			myEmitter.once('getEndpoint', function(location, index, newLocation, countLocation){
 																				qString = {};
 																				qString.location_id = location.id;
 																				seedPhoenixFHIR.path.GET = {
-																					"Identifier" : {
-																						"location": "%(apikey)s/Identifier",
+																					"LocationEnpoint" : {
+																						"location": "%(apikey)s/Location/Endpoint",
 																						"query": qString
 																					}
 																				}
 																				var ApiFHIR = new Apiclient(seedPhoenixFHIR);
-																				ApiFHIR.get('Identifier', {"apikey": apikey}, {}, function(error, response, body){
-																					identifier = JSON.parse(body);
-																					if(identifier.err_code == 0){
+																				ApiFHIR.get('LocationEnpoint', {"apikey": apikey}, {}, function(error, response, body){
+																					locationEnpoint = JSON.parse(body);
+																					if(locationEnpoint.err_code == 0){
 																						var objectLocation = {};
 																						objectLocation.resourceType = location.resourceType;
 																						objectLocation.id = location.id;
-																						objectLocation.identifier = identifier.data;
 																						objectLocation.status = location.status;
 																						objectLocation.operationalStatus = location.operationalStatus;
 																						objectLocation.name = location.name;
@@ -414,7 +404,7 @@ var controller = {
 																						objectLocation.position = location.position;
 																						objectLocation.managingOrganization = location.managingOrganization;
 																						objectLocation.partOf = location.partOf;
-																						objectLocation.endpointId = location.endpointId;
+																						objectLocation.endpoint = locationEnpoint.data;
 
 																						newLocation[index] = objectLocation;
 
@@ -423,11 +413,11 @@ var controller = {
 																							res.json({"err_code": 0, "data":newLocation});				
 																						}
 																					}else{
-																						res.json(identifier);			
+																						res.json(locationEnpoint);			
 																					}
 																				})
 																			})
-																			myEmitter.emit('getIdentifier', objectLocation, index, newLocation, countLocation);*/
+																			myEmitter.emit('getEndpoint', objectLocation, index, newLocation, countLocation);
 																		}else{
 																			res.json(locationPosition);			
 																		}
@@ -1274,6 +1264,65 @@ var controller = {
 			}else{
 				res.json({"err_code": err_code, "err_msg": err_msg});
 			}
+		},
+		endpointRef: function addEndpointRef(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var regex = new RegExp("([0-9]{4}[-](0[1-9]|1[0-2])[-]([0-2]{1}[0-9]{1}|3[0-1]{1})|([0-2]{1}[0-9]{1}|3[0-1]{1})[-](0[1-9]|1[0-2])[-][0-9]{4})");
+			var locationId = req.params.location_id;
+
+			var err_code = 0;
+			var err_msg = "";
+
+			if(typeof req.body.endpoint_id !== 'undefined'){
+				endpoint_id =  req.body.endpoint_id.trim().toLowerCase();
+				if(validator.isEmpty(endpoint_id)){
+					err_code = 2;
+					err_msg = "Endpoint id of Location is required";
+				}
+			}else{
+				err_code = 1;
+				err_msg = "Please add sub-key 'endpoint id' in json Location request.";
+			}  
+
+			if(err_code == 0){
+				//check apikey
+				checkApikey(apikey, ipAddres, function(result){
+					if(result.err_code == 0){
+						checkUniqeValue(apikey, "LOCATION_ID|" + locationId, 'LOCATION', function(resLocationID){
+							if(resLocationID.err_code > 0){
+								checkUniqeValue(apikey, "ENDPOINT_ID|" + endpoint_id, 'ENDPOINT', function(resEndpointID){
+									if(resEndpointID.err_code > 0){
+										dataEndpoint = {
+											"locationId" : locationId,
+											"id" : endpoint_id,
+										}
+										ApiFHIR.post('locationEndpoint', {"apikey": apikey}, {body: dataEndpoint, json: true}, function(error, response, body){
+											//console.log(body);
+											location = body;
+											if(location.err_code == 0){
+												//console.log("tes123");
+												res.json({"err_code": 0, "err_msg": "Endpoint has been add in this location.", "data": location.data});
+											} else {
+												res.json(location);
+											}
+										})													
+									}else{
+										res.json({"err_code": 501, "err_msg": "Endpoint Id not found"});
+									}
+								})
+							}else{
+								res.json({"err_code": 501, "err_msg": "Location Id not found"});
+							}
+						})
+					}else{
+						result.err_code = 500;
+						res.json(result);
+					}	
+				});
+			}else{
+				res.json({"err_code": err_code, "err_msg": err_msg});
+			}
 		}
 	},
 	put: {
@@ -1292,7 +1341,7 @@ var controller = {
 			//input check 
 			if(typeof locationId !== 'undefined'){
 				if(validator.isEmpty(locationId)){
-					err_code = 2;
+					err_code = 1;
 					err_msg = "Location id is required";
 				}
 			}else{
@@ -1556,7 +1605,7 @@ var controller = {
 							if(validator.isEmpty(partOf)){
 								myEmitter.emit('checkManagingOrganization');
 							}else{
-								checkUniqeValue(apikey, "ORGANIZATION_ID|" + partOf, 'ORGANIZATION', function(resPartOfOrganizationID){
+								checkUniqeValue(apikey, "LOCATION_ID|" + partOf, 'LOCATION', function(resPartOfOrganizationID){
 									if(resPartOfOrganizationID.err_code > 0){
 										myEmitter.emit('checkManagingOrganization');				
 									}else{
@@ -1616,7 +1665,7 @@ var controller = {
 			//input check 
 			if(typeof locationId !== 'undefined'){
 				if(validator.isEmpty(locationId)){
-					err_code = 2;
+					err_code = 1;
 					err_msg = "Location id is required";
 				}
 			}else{
@@ -1626,7 +1675,7 @@ var controller = {
 			
 			if(typeof locationPositionId !== 'undefined'){
 				if(validator.isEmpty(locationPositionId)){
-					err_code = 2;
+					err_code = 1;
 					err_msg = "Location Position id is required";
 				}
 			}else{
@@ -1653,10 +1702,6 @@ var controller = {
 			
 			if(typeof req.body.latitude !== 'undefined'){
 				latitude =  req.body.latitude.trim().toLowerCase();
-					/*if (typeof latitude != "number") {
-					err_code = 4;
-					err_msg = "Latitude is not number";
-				}*/
 				if(validator.isEmpty(latitude)){
 					err_code = 2;
 					err_msg = "Latitude is required.";
@@ -1668,11 +1713,7 @@ var controller = {
 			}
 			
 			if(typeof req.body.longitude !== 'undefined'){
-				latitude =  req.body.longitude.trim().toLowerCase();
-					/*if (typeof longitude != "number") {
-					err_code = 4;
-					err_msg = "Longitude is not number";
-				}*/
+				longitude =  req.body.longitude.trim().toLowerCase();
 				if(validator.isEmpty(longitude)){
 					err_code = 2;
 					err_msg = "Longitude is required.";

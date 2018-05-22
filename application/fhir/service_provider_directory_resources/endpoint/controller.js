@@ -42,7 +42,7 @@ var controller = {
 		var endpointConnectionType = req.query.connection_type;
 		var endpointIdentifier=req.query.identifier;
 		var endpointName=req.query.name;
-		var organization_id=req.query.organization;
+		var organizationId=req.query.organization;
 		var endpointPayloadType=req.query.payload_type;
 		var endpointStatus=req.query.status;			
 
@@ -632,7 +632,7 @@ var controller = {
 																		if(resContactPointUse.err_code > 0){ //code harus lebih besar dari nol, ini menunjukan datanya valid
 									
 																			//event emiter
-																			myEmitter.prependOnceListener('checkEndpointId', function() {
+																			myEmitter.once('checkEndpointId', function() {
 																					checkUniqeValue(apikey, "IDENTIFIER_VALUE|" + identifierValue, 'IDENTIFIER', function(resUniqeValue){
 																						if(resUniqeValue.err_code == 0){ //untuk ini nilai code harus sama dengan 0, menunjukan value tersebut belum ada
 																							checkUniqeValue(apikey, "CONTACT_POINT_VALUE|" + contactPointValue, 'CONTACT_POINT', function(resContactPointValue){

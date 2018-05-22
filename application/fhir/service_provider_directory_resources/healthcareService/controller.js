@@ -199,19 +199,17 @@ var controller = {
 															objectHealthcareService.category = healthcareService.category;
 															objectHealthcareService.type = healthcareService.type;
 															objectHealthcareService.specialty = healthcareService.specialty;
-															objectHealthcareService.location = healthcareService.location;
 															objectHealthcareService.name = healthcareService.name;
 															objectHealthcareService.comment = healthcareService.comment;
 															objectHealthcareService.extraDetails = healthcareService.extraDetails;
 															objectHealthcareService.attachment_id = healthcareService.attachment_id;
-															objectHealthcareService.coverageArea = healthcareService.coverageArea;
 															objectHealthcareService.serviceProvisionCode = healthcareService.serviceProvisionCode;
 															objectHealthcareService.eligibility = healthcareService.eligibility;
 															objectHealthcareService.eligibilityNote = healthcareService.eligibilityNote;
 															objectHealthcareService.programName = healthcareService.programName;
 															objectHealthcareService.characteristic = healthcareService.characteristic;
 															objectHealthcareService.appointmentRequired = healthcareService.appointmentRequired;
-															objectHealthcareService.endpoint = healthcareService.endpoint;
+															objectHealthcareService.availabilityExceptions = healthcareService.availabilityExceptions;
 															
 															newHealthcareService[index] = objectHealthcareService
 																
@@ -239,21 +237,19 @@ var controller = {
 																					objectHealthcareService.category = healthcareService.category;
 																					objectHealthcareService.type = healthcareService.type;
 																					objectHealthcareService.specialty = healthcareService.specialty;
-																					objectHealthcareService.location = healthcareService.location;
 																					objectHealthcareService.name = healthcareService.name;
 																					objectHealthcareService.comment = healthcareService.comment;
 																					objectHealthcareService.extraDetails = healthcareService.extraDetails;
 																					objectHealthcareService.attachment_id = healthcareService.attachment_id;
 																					objectHealthcareService.telecom = contactPoint.data;
-																					objectHealthcareService.coverageArea = healthcareService.coverageArea;
 																					objectHealthcareService.serviceProvisionCode = healthcareService.serviceProvisionCode;
 																					objectHealthcareService.eligibility = healthcareService.eligibility;
 																					objectHealthcareService.eligibilityNote = healthcareService.eligibilityNote;
 																					objectHealthcareService.programName = healthcareService.programName;
 																					objectHealthcareService.characteristic = healthcareService.characteristic;
 																					objectHealthcareService.appointmentRequired = healthcareService.appointmentRequired;
-																					objectHealthcareService.endpoint = healthcareService.endpoint;
-
+																					objectHealthcareService.availabilityExceptions = healthcareService.availabilityExceptions;
+																					
 																					newHealthcareService[index] = objectHealthcareService
 																					
 																					myEmitter.once('getAvailableTime', function(healthcareService, index, newHealthcareService, countHealthcareService){
@@ -280,13 +276,11 @@ var controller = {
 																								objectHealthcareService.category = healthcareService.category;
 																								objectHealthcareService.type = healthcareService.type;
 																								objectHealthcareService.specialty = healthcareService.specialty;
-																								objectHealthcareService.location = healthcareService.location;
 																								objectHealthcareService.name = healthcareService.name;
 																								objectHealthcareService.comment = healthcareService.comment;
 																								objectHealthcareService.extraDetails = healthcareService.extraDetails;
 																								objectHealthcareService.attachment_id = healthcareService.attachment_id;
 																								objectHealthcareService.telecom = healthcareService.telecom;
-																								objectHealthcareService.coverageArea = healthcareService.coverageArea;
 																								objectHealthcareService.serviceProvisionCode = healthcareService.serviceProvisionCode;
 																								objectHealthcareService.eligibility = healthcareService.eligibility;
 																								objectHealthcareService.eligibilityNote = healthcareService.eligibilityNote;
@@ -294,8 +288,8 @@ var controller = {
 																								objectHealthcareService.characteristic = healthcareService.characteristic;
 																								objectHealthcareService.appointmentRequired = healthcareService.appointmentRequired;
 																								objectHealthcareService.availableTime = availableTime.data;
-																								objectHealthcareService.endpoint = healthcareService.endpoint;
-
+																								objectHealthcareService.availabilityExceptions = healthcareService.availabilityExceptions;
+																								
 																								newHealthcareService[index] = objectHealthcareService			
 																								
 																								myEmitter.once('getNotAvailable', function(healthcareService, index, newHealthcareService, countHealthcareService){
@@ -322,13 +316,11 @@ var controller = {
 																											objectHealthcareService.category = healthcareService.category;
 																											objectHealthcareService.type = healthcareService.type;
 																											objectHealthcareService.specialty = healthcareService.specialty;
-																											objectHealthcareService.location = healthcareService.location;
 																											objectHealthcareService.name = healthcareService.name;
 																											objectHealthcareService.comment = healthcareService.comment;
 																											objectHealthcareService.extraDetails = healthcareService.extraDetails;
 																											objectHealthcareService.attachment_id = healthcareService.attachment_id;
 																											objectHealthcareService.telecom = healthcareService.telecom;
-																											objectHealthcareService.coverageArea = healthcareService.coverageArea;
 																											objectHealthcareService.serviceProvisionCode = healthcareService.serviceProvisionCode;
 																											objectHealthcareService.eligibility = healthcareService.eligibility;
 																											objectHealthcareService.eligibilityNote = healthcareService.eligibilityNote;
@@ -337,8 +329,8 @@ var controller = {
 																											objectHealthcareService.appointmentRequired = healthcareService.appointmentRequired;
 																											objectHealthcareService.availableTime = healthcareService.availableTime;
 																											objectHealthcareService.notAvailable = notAvailable.data;
-																											objectHealthcareService.endpoint = healthcareService.endpoint;
-
+																											objectHealthcareService.availabilityExceptions = healthcareService.availabilityExceptions;
+																											
 																											newHealthcareService[index] = objectHealthcareService		
 																											
 																											myEmitter.once('getAttachment', function(healthcareService, index, newHealthcareService, countHealthcareService){
@@ -366,13 +358,11 @@ var controller = {
 																														objectHealthcareService.category = healthcareService.category;
 																														objectHealthcareService.type = healthcareService.type;
 																														objectHealthcareService.specialty = healthcareService.specialty;
-																														objectHealthcareService.location = healthcareService.location;
 																														objectHealthcareService.name = healthcareService.name;
 																														objectHealthcareService.comment = healthcareService.comment;
 																														objectHealthcareService.extraDetails = healthcareService.extraDetails;
 																														objectHealthcareService.photo = attachment.data;
 																														objectHealthcareService.telecom = healthcareService.telecom;
-																														objectHealthcareService.coverageArea = healthcareService.coverageArea;
 																														objectHealthcareService.serviceProvisionCode = healthcareService.serviceProvisionCode;
 																														objectHealthcareService.eligibility = healthcareService.eligibility;
 																														objectHealthcareService.eligibilityNote = healthcareService.eligibilityNote;
@@ -381,12 +371,164 @@ var controller = {
 																														objectHealthcareService.appointmentRequired = healthcareService.appointmentRequired;
 																														objectHealthcareService.availableTime = healthcareService.availableTime;
 																														objectHealthcareService.notAvailable = healthcareService.notAvailable;
-																														objectHealthcareService.endpoint = healthcareService.endpoint;
-
+																														objectHealthcareService.availabilityExceptions = healthcareService.availabilityExceptions;
+																														
 																														newHealthcareService[index] = objectHealthcareService		
-																														if(index == countHealthcareService -1 ){
+																														/*if(index == countHealthcareService -1 ){
 																															res.json({"err_code": 0, "data":newHealthcareService});		
-																														}	
+																														}	*/
+																														
+																														myEmitter.once('getLocation', function(healthcareService, index, newHealthcareService, countHealthcareService){
+																															qString = {};
+																															qString.healthcare_service_id = healthcareService.id;
+																															//qString.healthcare_service_id = healthcareService.id;
+																															seedPhoenixFHIR.path.GET = {
+																																"HealthcareServiceLocation" : {
+																																	"location": "%(apikey)s/HealthcareService/Location",
+																																	"query": qString
+																																}
+																															}
+
+																															var ApiFHIR = new Apiclient(seedPhoenixFHIR);
+
+																															ApiFHIR.get('HealthcareServiceLocation', {"apikey": apikey}, {}, function(error, response, body){
+																																healthcareServiceLocation = JSON.parse(body);
+																																if(healthcareServiceLocation.err_code == 0){
+																																	var objectHealthcareService = {};
+																																	objectHealthcareService.resourceType = healthcareService.resourceType;
+																																	objectHealthcareService.id = healthcareService.id;
+																																	objectHealthcareService.identifier = healthcareService.identifier;
+																																	objectHealthcareService.active = healthcareService.active;
+																																	objectHealthcareService.providedBy = healthcareService.providedBy;
+																																	objectHealthcareService.category = healthcareService.category;
+																																	objectHealthcareService.type = healthcareService.type;
+																																	objectHealthcareService.specialty = healthcareService.specialty;
+																																	objectHealthcareService.location = healthcareServiceLocation.data;
+																																	objectHealthcareService.name = healthcareService.name;
+																																	objectHealthcareService.comment = healthcareService.comment;
+																																	objectHealthcareService.extraDetails = healthcareService.extraDetails;
+																																	objectHealthcareService.photo = attachment.data;
+																																	objectHealthcareService.telecom = healthcareService.telecom;
+																																	objectHealthcareService.serviceProvisionCode = healthcareService.serviceProvisionCode;
+																																	objectHealthcareService.eligibility = healthcareService.eligibility;
+																																	objectHealthcareService.eligibilityNote = healthcareService.eligibilityNote;
+																																	objectHealthcareService.programName = healthcareService.programName;
+																																	objectHealthcareService.characteristic = healthcareService.characteristic;
+																																	objectHealthcareService.appointmentRequired = healthcareService.appointmentRequired;
+																																	objectHealthcareService.availableTime = healthcareService.availableTime;
+																																	objectHealthcareService.notAvailable = healthcareService.notAvailable;
+																																	objectHealthcareService.availabilityExceptions = healthcareService.availabilityExceptions;
+
+																																	newHealthcareService[index] = objectHealthcareService		
+																																	myEmitter.once('getCoverageArea', function(healthcareService, index, newHealthcareService, countHealthcareService){
+																																		qString = {};
+																																		qString.healthcare_service_id = healthcareService.id;
+																																		//qString.healthcare_service_id = healthcareService.id;
+																																		seedPhoenixFHIR.path.GET = {
+																																			"HealthcareServiceCoverageArea" : {
+																																				"location": "%(apikey)s/HealthcareService/CoverageArea",
+																																				"query": qString
+																																			}
+																																		}
+
+																																		var ApiFHIR = new Apiclient(seedPhoenixFHIR);
+
+																																		ApiFHIR.get('HealthcareServiceCoverageArea', {"apikey": apikey}, {}, function(error, response, body){
+																																			healthcareServiceCoverageArea = JSON.parse(body);
+																																			if(healthcareServiceCoverageArea.err_code == 0){
+																																				var objectHealthcareService = {};
+																																				objectHealthcareService.resourceType = healthcareService.resourceType;
+																																				objectHealthcareService.id = healthcareService.id;
+																																				objectHealthcareService.identifier = healthcareService.identifier;
+																																				objectHealthcareService.active = healthcareService.active;
+																																				objectHealthcareService.providedBy = healthcareService.providedBy;
+																																				objectHealthcareService.category = healthcareService.category;
+																																				objectHealthcareService.type = healthcareService.type;
+																																				objectHealthcareService.specialty = healthcareService.specialty;
+																																				objectHealthcareService.location = healthcareService.location;
+																																				objectHealthcareService.name = healthcareService.name;
+																																				objectHealthcareService.comment = healthcareService.comment;
+																																				objectHealthcareService.extraDetails = healthcareService.extraDetails;
+																																				objectHealthcareService.photo = attachment.data;
+																																				objectHealthcareService.telecom = healthcareService.telecom;
+																																				objectHealthcareService.coverageArea = healthcareServiceCoverageArea.data;
+																																				objectHealthcareService.serviceProvisionCode = healthcareService.serviceProvisionCode;
+																																				objectHealthcareService.eligibility = healthcareService.eligibility;
+																																				objectHealthcareService.eligibilityNote = healthcareService.eligibilityNote;
+																																				objectHealthcareService.programName = healthcareService.programName;
+																																				objectHealthcareService.characteristic = healthcareService.characteristic;
+																																				objectHealthcareService.appointmentRequired = healthcareService.appointmentRequired;
+																																				objectHealthcareService.availableTime = healthcareService.availableTime;
+																																				objectHealthcareService.notAvailable = healthcareService.notAvailable;
+																																				objectHealthcareService.availabilityExceptions = healthcareService.availabilityExceptions;
+
+																																				newHealthcareService[index] = objectHealthcareService		
+																																				myEmitter.once('getEndpoint', function(healthcareService, index, newHealthcareService, countHealthcareService){
+																																					qString = {};
+																																					qString.healthcare_service_id = healthcareService.id;
+																																					//qString.healthcare_service_id = healthcareService.id;
+																																					seedPhoenixFHIR.path.GET = {
+																																						"HealthcareServiceEndpoint" : {
+																																							"location": "%(apikey)s/HealthcareService/Endpoint",
+																																							"query": qString
+																																						}
+																																					}
+
+																																					var ApiFHIR = new Apiclient(seedPhoenixFHIR);
+
+																																					ApiFHIR.get('HealthcareServiceEndpoint', {"apikey": apikey}, {}, function(error, response, body){
+																																						healthcareServiceEndpoint = JSON.parse(body);
+																																						if(healthcareServiceEndpoint.err_code == 0){
+																																							var objectHealthcareService = {};
+																																							objectHealthcareService.resourceType = healthcareService.resourceType;
+																																							objectHealthcareService.id = healthcareService.id;
+																																							objectHealthcareService.identifier = healthcareService.identifier;
+																																							objectHealthcareService.active = healthcareService.active;
+																																							objectHealthcareService.providedBy = healthcareService.providedBy;
+																																							objectHealthcareService.category = healthcareService.category;
+																																							objectHealthcareService.type = healthcareService.type;
+																																							objectHealthcareService.specialty = healthcareService.specialty;
+																																							objectHealthcareService.location = healthcareService.location;
+																																							objectHealthcareService.name = healthcareService.name;
+																																							objectHealthcareService.comment = healthcareService.comment;
+																																							objectHealthcareService.extraDetails = healthcareService.extraDetails;
+																																							objectHealthcareService.photo = attachment.data;
+																																							objectHealthcareService.telecom = healthcareService.telecom;
+																																							objectHealthcareService.coverageArea = healthcareService.coverageArea;
+																																							objectHealthcareService.serviceProvisionCode = healthcareService.serviceProvisionCode;
+																																							objectHealthcareService.eligibility = healthcareService.eligibility;
+																																							objectHealthcareService.eligibilityNote = healthcareService.eligibilityNote;
+																																							objectHealthcareService.programName = healthcareService.programName;
+																																							objectHealthcareService.characteristic = healthcareService.characteristic;
+																																							objectHealthcareService.appointmentRequired = healthcareService.appointmentRequired;
+																																							objectHealthcareService.availableTime = healthcareService.availableTime;
+																																							objectHealthcareService.notAvailable = healthcareService.notAvailable;
+																																							objectHealthcareService.availabilityExceptions = healthcareService.availabilityExceptions;
+																																							objectHealthcareService.endpoint = healthcareServiceEndpoint.data;
+
+																																							newHealthcareService[index] = objectHealthcareService		
+																																							if(index == countHealthcareService -1 ){
+																																								res.json({"err_code": 0, "data":newHealthcareService});		
+																																							}	
+																																						}else{
+																																							res.json(healthcareServiceEndpoint);			
+																																						}
+																																					})
+																																				})
+																																				myEmitter.emit('getEndpoint', objectHealthcareService, index, newHealthcareService, countHealthcareService);	
+																																			}else{
+																																				res.json(healthcareServiceCoverageArea);			
+																																			}
+																																		})
+																																	})
+																																	myEmitter.emit('getCoverageArea', objectHealthcareService, index, newHealthcareService, countHealthcareService);	
+																																}else{
+																																	res.json(healthcareServiceLocation);			
+																																}
+																															})
+																														})
+																														myEmitter.emit('getLocation', objectHealthcareService, index, newHealthcareService, countHealthcareService);
+																														
 																													}else{
 																														res.json(attachment);			
 																													}
@@ -761,7 +903,7 @@ var controller = {
 										var ApiFHIR = new Apiclient(seedPhoenixFHIR);
 										ApiFHIR.get('HealthcareService', {"apikey": apikey}, {}, function(error, response, body){
 											HealthcareService = JSON.parse(body);
-											console.log(HealthcareService.data[0].attachment_id);
+											//console.log(HealthcareService.data[0].attachment_id);
 											if(HealthcareService.err_code == 0){
 												//res.json({"err_code": 0, "data":attachment.data});	
 												qString = {};
@@ -1430,7 +1572,7 @@ var controller = {
 																																											"period_end": contactPointPeriodEnd,
 																																											"healthcare_service_id" : healthcareServiceId
 																																										}
-																																	console.log(dataContactPoint);
+																																	//console.log(dataContactPoint);
 																																	//post to contact point
 																																	ApiFHIR.post('contactPoint', {"apikey": apikey}, {body: dataContactPoint, json: true}, function(error, response, body){
 																																		contactPoint = body;
@@ -1671,10 +1813,10 @@ var controller = {
 											"availableEndTime" : availableEndTime
 										}
 										ApiFHIR.post('availableTime', {"apikey": apikey}, {body: dataAvailableTime, json: true}, function(error, response, body){
-											console.log(body);
+											//console.log(body);
 											healthcareService = body;
 											if(healthcareService.err_code == 0){
-												console.log("tes123");
+												//console.log("tes123");
 												res.json({"err_code": 0, "err_msg": "Available Time has been add in this Healthcare Service.", "data": healthcareService.data});
 											} else {
 												res.json(healthcareService);
@@ -2066,7 +2208,185 @@ var controller = {
 			}else{
 				res.json({"err_code": err_code, "err_msg": err_msg});
 			}
-		}/*,
+		},
+		endpointRef: function addEndpointRef(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var regex = new RegExp("([0-9]{4}[-](0[1-9]|1[0-2])[-]([0-2]{1}[0-9]{1}|3[0-1]{1})|([0-2]{1}[0-9]{1}|3[0-1]{1})[-](0[1-9]|1[0-2])[-][0-9]{4})");
+			var healthcareServiceId = req.params.healthcare_service_id;
+
+			var err_code = 0;
+			var err_msg = "";
+
+			if(typeof req.body.endpoint_id !== 'undefined'){
+				endpoint_id =  req.body.endpoint_id.trim().toLowerCase();
+				if(validator.isEmpty(endpoint_id)){
+					err_code = 2;
+					err_msg = "Endpoint id of Healcare Service is required";
+				}
+			}else{
+				err_code = 1;
+				err_msg = "Please add sub-key 'endpoint id' in json Healthcare Service request.";
+			}  
+
+			if(err_code == 0){
+				//check apikey
+				checkApikey(apikey, ipAddres, function(result){
+					if(result.err_code == 0){
+						checkUniqeValue(apikey, "HEALTHCARE_SERVICE_ID|" + healthcareServiceId, 'HEALTHCARE_SERVICE', function(resHSID){
+							if(resHSID.err_code > 0){
+								checkUniqeValue(apikey, "ENDPOINT_ID|" + endpoint_id, 'ENDPOINT', function(resEndpointID){
+									if(resEndpointID.err_code > 0){
+										dataEndpoint = {
+											"healthcareServiceId" : healthcareServiceId,
+											"id" : endpoint_id,
+										}
+										ApiFHIR.post('healthcareServiceEndpoint', {"apikey": apikey}, {body: dataEndpoint, json: true}, function(error, response, body){
+											//console.log(body);
+											healthcareService = body;
+											if(healthcareService.err_code == 0){
+												//console.log("tes123");
+												res.json({"err_code": 0, "err_msg": "Endpoint has been add in this healthcare service.", "data": healthcareService.data});
+											} else {
+												res.json(healthcareService);
+											}
+										})													
+									}else{
+										res.json({"err_code": 501, "err_msg": "Endpoint Id not found"});
+									}
+								})
+							}else{
+								res.json({"err_code": 501, "err_msg": "Healthcare Service Id not found"});
+							}
+						})
+					}else{
+						result.err_code = 500;
+						res.json(result);
+					}	
+				});
+			}else{
+				res.json({"err_code": err_code, "err_msg": err_msg});
+			}
+		},
+		locationRef: function addLocationRef(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var regex = new RegExp("([0-9]{4}[-](0[1-9]|1[0-2])[-]([0-2]{1}[0-9]{1}|3[0-1]{1})|([0-2]{1}[0-9]{1}|3[0-1]{1})[-](0[1-9]|1[0-2])[-][0-9]{4})");
+			var healthcareServiceId = req.params.healthcare_service_id;
+
+			var err_code = 0;
+			var err_msg = "";
+
+			if(typeof req.body.location_id !== 'undefined'){
+				location_id =  req.body.location_id.trim().toLowerCase();
+				if(validator.isEmpty(location_id)){
+					err_code = 2;
+					err_msg = "Location id of Healthcare Service is required";
+				}
+			}else{
+				err_code = 1;
+				err_msg = "Please add sub-key 'location id' in json Healthcare Service request.";
+			}  
+
+			if(err_code == 0){
+				//check apikey
+				checkApikey(apikey, ipAddres, function(result){
+					if(result.err_code == 0){
+						checkUniqeValue(apikey, "HEALTHCARE_SERVICE_ID|" + healthcareServiceId, 'HEALTHCARE_SERVICE', function(resHSID){
+							if(resHSID.err_code > 0){
+								checkUniqeValue(apikey, "LOCATION_ID|" + location_id, 'LOCATION', function(resLocationID){
+									if(resLocationID.err_code > 0){
+										dataLocation = {
+											"healthcareServiceId" : healthcareServiceId,
+											"id" : location_id,
+										}
+										ApiFHIR.post('healthcareServiceLocation', {"apikey": apikey}, {body: dataLocation, json: true}, function(error, response, body){
+											//console.log(body);
+											healthcareService = body;
+											if(healthcareService.err_code == 0){
+												//console.log("tes123");
+												res.json({"err_code": 0, "err_msg": "Location has been add in this healthcare service.", "data": healthcareService.data});
+											} else {
+												res.json(healthcareService);
+											}
+										})													
+									}else{
+										res.json({"err_code": 501, "err_msg": "Location Id not found"});
+									}
+								})
+							}else{
+								res.json({"err_code": 501, "err_msg": "Healthcare Service Id not found"});
+							}
+						})
+					}else{
+						result.err_code = 500;
+						res.json(result);
+					}	
+				});
+			}else{
+				res.json({"err_code": err_code, "err_msg": err_msg});
+			}
+		},
+		coverageAreaRef: function addCoverageAreaRef(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var regex = new RegExp("([0-9]{4}[-](0[1-9]|1[0-2])[-]([0-2]{1}[0-9]{1}|3[0-1]{1})|([0-2]{1}[0-9]{1}|3[0-1]{1})[-](0[1-9]|1[0-2])[-][0-9]{4})");
+			var healthcareServiceId = req.params.healthcare_service_id;
+
+			var err_code = 0;
+			var err_msg = "";
+
+			if(typeof req.body.location_id !== 'undefined'){
+				location_id =  req.body.location_id.trim().toLowerCase();
+				if(validator.isEmpty(location_id)){
+					err_code = 2;
+					err_msg = "Location id of Healthcare Service is required";
+				}
+			}else{
+				err_code = 1;
+				err_msg = "Please add sub-key 'location id' in json Healthcare Service request.";
+			}  
+
+			if(err_code == 0){
+				//check apikey
+				checkApikey(apikey, ipAddres, function(result){
+					if(result.err_code == 0){
+						checkUniqeValue(apikey, "HEALTHCARE_SERVICE_ID|" + healthcareServiceId, 'HEALTHCARE_SERVICE', function(resHSID){
+							if(resHSID.err_code > 0){
+								checkUniqeValue(apikey, "LOCATION_ID|" + location_id, 'LOCATION', function(resLocationID){
+									if(resLocationID.err_code > 0){
+										dataLocation = {
+											"healthcareServiceId" : healthcareServiceId,
+											"id" : location_id,
+										}
+										ApiFHIR.post('healthcareServiceCoverageArea', {"apikey": apikey}, {body: dataLocation, json: true}, function(error, response, body){
+											//console.log(body);
+											healthcareService = body;
+											if(healthcareService.err_code == 0){
+												//console.log("tes123");
+												res.json({"err_code": 0, "err_msg": "Location Coverage Area has been add in this healthcare service.", "data": healthcareService.data});
+											} else {
+												res.json(healthcareService);
+											}
+										})													
+									}else{
+										res.json({"err_code": 501, "err_msg": "Location Id not found"});
+									}
+								})
+							}else{
+								res.json({"err_code": 501, "err_msg": "Healthcare Service Id not found"});
+							}
+						})
+					}else{
+						result.err_code = 500;
+						res.json(result);
+					}	
+				});
+			}else{
+				res.json({"err_code": err_code, "err_msg": err_msg});
+			}
+		}
+		/*,
 		attachment: function addAttachment(req, res){
 			var ipAddres = req.connection.remoteAddress;
 			var apikey = req.params.apikey;
@@ -2440,7 +2760,7 @@ var controller = {
 			// organization
 			if(typeof req.body.providedBy !== 'undefined'){
 				providedBy =  req.body.providedBy.trim().toLowerCase();
-				if(validator.isEmpty(organization)){
+				if(validator.isEmpty(providedBy)){
 					err_code = 2;
 					err_msg = "providedBy is required.";
 				}else{
@@ -2612,7 +2932,7 @@ var controller = {
 								myEmitter.emit('checkSpecialty');
 							}else{
 								checkCode(apikey, serviceProvisionCode, 'SERVICE_PROVISION_CONDITIONS', function(resServiceProvisionCode){
-									if(resHealthcareServiceProvisionCode.err_code > 0){
+									if(resServiceProvisionCode.err_code > 0){
 										myEmitter.emit('checkSpecialty');
 									}else{
 										res.json({"err_code": 502, "err_msg": "Healthcare service Specialty not found."});	
@@ -2721,7 +3041,7 @@ var controller = {
 										if(resAvailableTimeId.err_code > 0){
 											ApiFHIR.put('availableTime', {"apikey": apikey, "_id": availableTimeId, "dr": "HEALTHCARE_SERVICE_ID|"+healthcareServiceId}, {body: dataAvailableTime, json: true}, function(error, response, body){
 												availableTime = body;
-												console.log(availableTime);
+												//console.log(availableTime);
 												if(availableTime.err_code > 0){
 													res.json(availableTime);	
 												}else{
@@ -2831,7 +3151,7 @@ var controller = {
 						myEmitter.prependOnceListener('checkHealthcareServiceId', function(){
 							checkUniqeValue(apikey, "HEALTHCARE_SERVICE_ID|" + healthcareServiceId, 'HEALTHCARE_SERVICE', function(resHealthcareServiceId){
 								if(resHealthcareServiceId.err_code > 0){
-									checkUniqeValue(apikey, "NOT_AVAILABLE_ID|" + notAvailableId, 'NOT_AVAILABLE_ID', function(resNotAvailableId){
+									checkUniqeValue(apikey, "NOT_AVAILABLE_ID|" + notAvailableId, 'NOT_AVAILABLE', function(resNotAvailableId){
 										if(resNotAvailableId.err_code > 0){
 											ApiFHIR.put('notAvailable', {"apikey": apikey, "_id": notAvailableId, "dr": "HEALTHCARE_SERVICE_ID|"+healthcareServiceId}, {body: dataNotAvailable, json: true}, function(error, response, body){
 												notAvailable = body;
@@ -3319,7 +3639,7 @@ var controller = {
 								if(reshealthcareServiceId.err_code > 0){
 									checkUniqeValue(apikey, "ATTACHMENT_ID|" + attachmentId, 'ATTACHMENT', function(resAttachmentID){
 										if(resAttachmentID.err_code > 0){
-											ApiFHIR.put('attachment', {"apikey": apikey, "_id": attachmentId/*, "dr": "HEALTHCARE_SERVICE_ID|"+healthcareServiceId*/}, {body: dataAttachment, json: true}, function(error, response, body){
+											ApiFHIR.put('attachment', {"apikey": apikey, "_id": attachmentId, "dr": ""}, {body: dataAttachment, json: true}, function(error, response, body){
 												attachment = body;
 												if(attachment.err_code > 0){
 													res.json(attachment);	

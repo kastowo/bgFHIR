@@ -239,14 +239,7 @@ var controller = {
 																	partOf = organization.parent_id;
 																}																
 																objectOrganization.partOf = partOf;
-																var endpoint;
-																if(organization.endpoint_id !== 'null'){
-																	endpoint = host + ":" + port + "/" + apikey + "/Endpoint?_id=" + organization.endpoint_id;
-																} else {
-																	endpoint = organization.endpoint_id;
-																}
-																objectOrganization.endpoint_id = endpoint;
-
+																
 																newOrganization[index] = objectOrganization
 
 																myEmitter.once('getContactPoint', function(organization, index, newOrganization, countOrganization){
@@ -274,8 +267,7 @@ var controller = {
 																						objectOrganization.alias = organization.alias;
 																						objectOrganization.telecom = contactPoint.data;
 																						objectOrganization.partOf = organization.partOf;
-																						objectOrganization.endpoint_id = organization.endpoint_id;
-
+																						
 																						newOrganization[index] = objectOrganization;
 
 																						myEmitter.once('getAddress', function(organization, index, newOrganization, countOrganization){
@@ -305,8 +297,7 @@ var controller = {
 																									objectOrganization.telecom = organization.telecom;
 																									objectOrganization.address = address.data;
 																									objectOrganization.partOf = organization.partOf;
-																									objectOrganization.endpoint_id = organization.endpoint_id;
-
+																									
 																									newOrganization[index] = objectOrganization;
 
 																									myEmitter.once('getContact', function(organization, index, newOrganization, countOrganization){
@@ -337,12 +328,49 @@ var controller = {
 																												objectOrganization.address = organization.address;
 																												objectOrganization.partOf = organization.partOf;
 																												objectOrganization.contact = contact.data;
-																												objectOrganization.endpoint_id = organization.endpoint_id;
+																												newOrganization[index] = objectOrganization;
+
+																												myEmitter.once('getEndpoint', function(organization, index, newOrganization, countOrganization){
+																										qString = {};
+																										qString.organization_id = organization.id;
+																										seedPhoenixFHIR.path.GET = {
+																											"OrganizationEndpoint" : {
+																												"location": "%(apikey)s/Organization/Endpoint",
+																												"query": qString
+																											}
+																										}
+
+																										var ApiFHIR = new Apiclient(seedPhoenixFHIR);
+
+																										ApiFHIR.get('OrganizationEndpoint', {"apikey": apikey}, {}, function(error, response, body){
+																											endpoint = JSON.parse(body);
+
+																											if(endpoint.err_code == 0){
+																												var objectOrganization = {};
+																												objectOrganization.resourceType = organization.resourceType;
+																												objectOrganization.id = organization.id;
+																												objectOrganization.identifier = organization.identifier;
+																												objectOrganization.active = organization.active;
+																												objectOrganization.type = organization.type;
+																												objectOrganization.name = organization.name;
+																												objectOrganization.alias = organization.alias;
+																												objectOrganization.telecom = organization.telecom;
+																												objectOrganization.address = organization.address;
+																												objectOrganization.partOf = organization.partOf;
+																												objectOrganization.contact = organization.contact;
+																												objectOrganization.endpoint = endpoint.data;
 																												newOrganization[index] = objectOrganization;
 
 																												if(index == countOrganization -1 ){
 																													res.json({"err_code": 0, "data":newOrganization});				
 																												}
+
+																											}else{
+																												res.json(endpoint);			
+																											}
+																										})
+																									})
+																									myEmitter.emit('getEndpoint', objectOrganization, index, newOrganization, countOrganization);
 
 																											}else{
 																												res.json(contact);			
@@ -1359,7 +1387,7 @@ var controller = {
 																																									ApiFHIR.post('organizationContact', {"apikey": apikey}, {body: dataOrganizationContact, json: true}, function(error, response, body){
 																																										organizationContact = body;
 																																										if(organizationContact.err_code > 0){
-																																											console.log(organizationContact);
+																																											//console.log(organizationContact);
 																																											res.json(organizationContact);	
 																																										}
 																																									})
@@ -1948,7 +1976,7 @@ var controller = {
 																					ApiFHIR.post('organizationContact', {"apikey": apikey}, {body: dataOrganizationContact, json: true}, function(error, response, body){
 																						organizationContact = body;
 																						if(organizationContact.err_code > 0){
-																							console.log(organizationContact);
+																							//console.log(organizationContact);
 																							res.json(organizationContact);	
 																						}
 																					})
@@ -2552,6 +2580,65 @@ var controller = {
 			}else{
 				res.json({"err_code": err_code, "err_msg": err_msg});
 			}
+		},
+		endpointRef: function addEndpointRef(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var regex = new RegExp("([0-9]{4}[-](0[1-9]|1[0-2])[-]([0-2]{1}[0-9]{1}|3[0-1]{1})|([0-2]{1}[0-9]{1}|3[0-1]{1})[-](0[1-9]|1[0-2])[-][0-9]{4})");
+			var organizationId = req.params.organization_id;
+
+			var err_code = 0;
+			var err_msg = "";
+
+			if(typeof req.body.endpoint_id !== 'undefined'){
+				endpoint_id =  req.body.endpoint_id.trim().toLowerCase();
+				if(validator.isEmpty(endpoint_id)){
+					err_code = 2;
+					err_msg = "Endpoint id of Organization is required";
+				}
+			}else{
+				err_code = 1;
+				err_msg = "Please add sub-key 'endpoint id' in json Organization request.";
+			}  
+
+			if(err_code == 0){
+				//check apikey
+				checkApikey(apikey, ipAddres, function(result){
+					if(result.err_code == 0){
+						checkUniqeValue(apikey, "ORGANIZATION_ID|" + organizationId, 'ORGANIZATION', function(resOrganizationID){
+							if(resOrganizationID.err_code > 0){
+								checkUniqeValue(apikey, "ENDPOINT_ID|" + endpoint_id, 'ENDPOINT', function(resEndpointID){
+									if(resEndpointID.err_code > 0){
+										dataEndpoint = {
+											"organizationId" : organizationId,
+											"id" : endpoint_id,
+										}
+										ApiFHIR.post('OrganizationEndpoint', {"apikey": apikey}, {body: dataEndpoint, json: true}, function(error, response, body){
+											//console.log(body);
+											organization = body;
+											if(organization.err_code == 0){
+												//console.log("tes123");
+												res.json({"err_code": 0, "err_msg": "Endpoint has been add in this organization.", "data": organization.data});
+											} else {
+												res.json(organization);
+											}
+										})													
+									}else{
+										res.json({"err_code": 501, "err_msg": "Endpoint Id not found"});
+									}
+								})
+							}else{
+								res.json({"err_code": 501, "err_msg": "Organization Id not found"});
+							}
+						})
+					}else{
+						result.err_code = 500;
+						res.json(result);
+					}	
+				});
+			}else{
+				res.json({"err_code": err_code, "err_msg": err_msg});
+			}
 		}
 	},
 	put:{
@@ -2778,7 +2865,7 @@ var controller = {
 								if(resOrganizationID.err_code > 0){
 									//console.log(dataEndpoint);
 										ApiFHIR.put('organizationContact', {"apikey": apikey, "_id": organizationContactId, "dr": "ORGANIZATION_ID|"+organizationId}, {body: dataOrganization, json: true}, function(error, response, body){
-											console.log(body);
+											//console.log(body);
 											organization = body;
 											if(organization.err_code > 0){
 												res.json(organization);	
@@ -2992,12 +3079,12 @@ var controller = {
 				//check apikey
 				checkApikey(apikey, ipAddres, function(result){
 					if(result.err_code == 0){
-						myEmitter.prependListener('checkOrganizationContactID', function(){
+						myEmitter.prependOnceListener('checkOrganizationContactID', function(){
 							checkUniqeValue(apikey, "ORGANIZATION_CONTACT_ID|" + organizationContactId, 'ORGANIZATION_CONTACT', function(resOrganizationId){
 								if(resOrganizationId.err_code > 0){
 									checkUniqeValue(apikey, "ADDRESS_ID|" + addressId, 'ADDRESS', function(resAddressID){
 										if(resAddressID.err_code > 0){
-											ApiFHIR.put('address', {"apikey": apikey, "_id": addressId, "dr": "ORGANIZATION_ID|"+organizationId}, {body: dataAddress, json: true}, function(error, response, body){
+											ApiFHIR.put('address', {"apikey": apikey, "_id": addressId,"dr":""}, {body: dataAddress, json: true}, function(error, response, body){
 												address = body;
 												if(address.err_code > 0){
 													res.json(address);	
@@ -3348,12 +3435,12 @@ var controller = {
 									if(resOrganizationId.err_code > 0){
 										checkUniqeValue(apikey, "CONTACT_POINT_ID|" + contactPointId, 'CONTACT_POINT', function(resContactPointID){
 											if(resContactPointID.err_code > 0){
-												ApiFHIR.put('contactPoint', {"apikey": apikey, "_id": contactPointId, "dr": "ORGANIZATION_ID|"+organizationId}, {body: dataContactPoint, json: true}, function(error, response, body){
+												ApiFHIR.put('contactPoint', {"apikey": apikey, "_id": contactPointId, "dr": "ORGANIZATION_CONTACT_ID|"+organizationContactId}, {body: dataContactPoint, json: true}, function(error, response, body){
 													contactPoint = body;
 													if(contactPoint.err_code > 0){
 														res.json(contactPoint);	
 													}else{
-														res.json({"err_code": 0, "err_msg": "Telecom has been update in this organization.", "data": contactPoint.data});
+														res.json({"err_code": 0, "err_msg": "Telecom has been update in this Organization Contact.", "data": contactPoint.data});
 													}
 												})
 											}else{
@@ -3361,7 +3448,7 @@ var controller = {
 											}
 										})
 									}else{
-										res.json({"err_code": 504, "err_msg": "Endpoint Id not found"});		
+										res.json({"err_code": 504, "err_msg": "Organization Contact Id not found"});		
 									}
 								})
 							})
@@ -3374,7 +3461,7 @@ var controller = {
 										if(resContactPointValue.err_code == 0){
 											myEmitter.emit('checkEndpointId');				
 										}else{
-											res.json({"err_code": 503, "err_msg": "Identifier value already exist."});	
+											res.json({"err_code": 503, "err_msg": "Contact value already exist."});	
 										}
 									})
 								}
@@ -3517,7 +3604,7 @@ var controller = {
 									if(resOrganizationId.err_code > 0){
 										checkUniqeValue(apikey, "IDENTIFIER_ID|" + identifierId, 'IDENTIFIER', function(resIdentifierID){
 											if(resIdentifierID.err_code > 0){
-												ApiFHIR.put('identifier', {"apikey": apikey, "_id": organizationId, "dr": "ORGANIZATION_ID|"+organizationId}, {body: dataIdentifier, json: true}, function(error, response, body){
+												ApiFHIR.put('identifier', {"apikey": apikey, "_id": identifierId, "dr": "ORGANIZATION_ID|"+organizationId}, {body: dataIdentifier, json: true}, function(error, response, body){
 													identifier = body;
 													if(identifier.err_code > 0){
 														res.json(identifier);	
@@ -3769,7 +3856,219 @@ var controller = {
 			}else{
 				res.json({"err_code": err_code, "err_msg": err_msg});
 			}
-		}	
+		},
+		address: function updateAddress(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var regex = new RegExp("([0-9]{4}[-](0[1-9]|1[0-2])[-]([0-2]{1}[0-9]{1}|3[0-1]{1})|([0-2]{1}[0-9]{1}|3[0-1]{1})[-](0[1-9]|1[0-2])[-][0-9]{4})");
+			var organizationId = req.params.organization_id;
+			var addressId = req.params.address_id;
+
+			var err_code = 0;
+			var err_msg = "";
+			var dataAddress = {};
+
+			//input check 
+			if(typeof organizationId !== 'undefined'){
+				if(validator.isEmpty(organizationId)){
+					err_code = 1;
+					err_msg = "Organization id is required";
+				}
+			}else{
+				err_code = 2;
+				err_msg = "Organization id is required";
+			}
+
+			if(typeof addressId !== 'undefined'){
+				if(validator.isEmpty(addressId)){
+					err_code = 2;
+					err_msg = "Address id is required";
+				}
+			}else{
+				err_code = 2;
+				err_msg = "Address id is required";
+			}
+
+			//address use
+			if(typeof req.body.use !== 'undefined'){
+				addressUseCode =  req.body.use.trim().toLowerCase();
+				if(validator.isEmpty(addressUseCode)){
+					err_code = 2;
+					err_msg = "Address Use is required";
+				}else{
+					dataAddress.use = addressUseCode;
+				}
+			}else{
+				addressUseCode = "";
+			} 
+
+			//address type
+			if(typeof req.body.type !== 'undefined'){
+				addressTypeCode =  req.body.type.trim().toLowerCase();
+				if(validator.isEmpty(addressTypeCode)){
+					err_code = 2;
+					err_msg = "Address Type is required";
+				}else{
+					dataAddress.type = addressTypeCode;
+				}
+			}else{
+				addressTypeCode = "";
+			} 
+
+			//address text
+			if(typeof req.body.text !== 'undefined'){
+				addressText =  req.body.text;
+				if(validator.isEmpty(addressText)){
+					err_code = 2;
+					err_msg = "Address Text is required";
+				}else{
+					dataAddress.text = addressText;
+				}
+			}
+
+			//address line
+			if(typeof req.body.line !== 'undefined'){
+				addressLine =  req.body.line;
+				if(validator.isEmpty(addressLine)){
+					err_code = 2;
+					err_msg = "Address Line is required";
+				}else{
+					dataAddress.line = addressLine;
+				}
+			}
+
+			//address city
+			if(typeof req.body.city !== 'undefined'){
+				addressCity =  req.body.city;
+				if(validator.isEmpty(addressCity)){
+					err_code = 2;
+					err_msg = "Address City is required";
+				}else{
+					dataAddress.city = addressCity;
+				}
+			} 
+
+			//address district
+			if(typeof req.body.district !== 'undefined'){
+				addressDistrict =  req.body.district;
+				dataAddress.district = addressDistrict;
+			}
+
+			//address state
+			if(typeof req.body.state !== 'undefined'){
+				addressState =  req.body.state;
+				if(validator.isEmpty(addressState)){
+					err_code = 2;
+					err_msg = "State is required";
+				}else{
+					dataAddress.state = addressState;
+				}
+			}
+
+			//address postal code
+			if(typeof req.body.postal_code !== 'undefined'){
+				addressPostalCode =  req.body.postal_code;
+				if(!validator.isPostalCode(addressPostalCode, 'any')){
+					err_code = 2;
+					err_msg = "Postal Code invalid format.";
+				}else{
+					dataAddress.postal_code = addressPostalCode;
+				}
+			} 
+
+			//address country
+			if(typeof req.body.country !== 'undefined'){
+				addressCountry =  req.body.country;
+				if(validator.isEmpty(addressCountry)){
+					err_code = 2;
+					err_msg = "Country is required";
+				}else{
+					dataAddress.country = addressCountry;
+				}
+			} 
+
+			//address period
+			if(typeof req.body.period !== 'undefined'){
+				var period = req.body.period;
+				if(period.indexOf("to") > 0){
+					arrPeriod = period.split("to");
+					addressPeriodStart = arrPeriod[0];
+					addressPeriodEnd = arrPeriod[1];
+
+					if(!regex.test(addressPeriodStart) && !regex.test(addressPeriodEnd)){
+						err_code = 2;
+						err_msg = "Address Period invalid date format.";
+					}else{
+						dataAddress.period_start = addressPeriodStart;
+						dataAddress.period_end = addressPeriodEnd;
+					}	
+				}else{
+					dataAddress.period_start = "";
+					dataAddress.period_end = "";
+				}
+			}
+
+			if(err_code == 0){
+				//check apikey
+				checkApikey(apikey, ipAddres, function(result){
+					if(result.err_code == 0){
+						myEmitter.prependOnceListener('checkLocationID', function(){
+							checkUniqeValue(apikey, "ORGANIZATION_ID|" + organizationId, 'ORGANIZATION', function(resLocationID){
+								if(resLocationID.err_code > 0){
+									checkUniqeValue(apikey, "ADDRESS_ID|" + addressId, 'ADDRESS', function(resAddressID){
+										if(resAddressID.err_code > 0){
+											ApiFHIR.put('address', {"apikey": apikey, "_id": addressId, "dr": "ADDRESS_ID|"+addressId}, {body: dataAddress, json: true}, function(error, response, body){
+												address = body;
+												if(address.err_code > 0){
+													res.json(address);	
+												}else{
+													res.json({"err_code": 0, "err_msg": "Address has been update in this Organization.", "data": address.data});
+												}
+											})
+										}else{
+											res.json({"err_code": 505, "err_msg": "Address Id not found"});		
+										}
+									})
+								}else{
+									res.json({"err_code": 504, "err_msg": "Organization Id not found"});		
+								}
+							})
+						})
+
+						myEmitter.prependOnceListener('checkAddressType', function(){
+							if(validator.isEmpty(addressTypeCode)){
+								myEmitter.emit('checkLocationID');
+							}else{
+								checkCode(apikey, addressTypeCode, 'ADDRESS_TYPE', function(resAddressTypeCode){
+									if(resAddressTypeCode.err_code > 0){ //code harus lebih besar dari nol, ini menunjukan datanya valid
+										myEmitter.emit('checkLocationID');
+									}else{
+										res.json({"err_code": 502, "err_msg": "Address Type Code not found"});		
+									}
+								})
+							}
+						})
+
+						if(validator.isEmpty(addressUseCode)){
+							myEmitter.emit('checkAddressType');	
+						}else{
+							checkCode(apikey, addressUseCode, 'ADDRESS_USE', function(resAddressUseCode){
+								if(resAddressUseCode.err_code > 0){ //code harus lebih besar dari nol, ini menunjukan datanya valid
+									myEmitter.emit('checkAddressType');
+								}else{
+									res.json({"err_code": 501, "err_msg": "Address Use Code not found"});
+								}
+							})
+						}
+					}else{
+						result.err_code = 500;
+						res.json(result);
+					}	
+				});
+			}else{
+				res.json({"err_code": err_code, "err_msg": err_msg});
+			}
+		}
 	}
 }
 
