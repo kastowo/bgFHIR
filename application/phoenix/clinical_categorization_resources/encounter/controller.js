@@ -169,7 +169,7 @@ var controller = {
 					} else {
 						Encounter.appointment = "";
 					}
-					Encounter.period = rez[i].period_start + " to " + rez[i].period_end;
+					Encounter.period = formatDate(rez[i].period_start) + " to " + formatDate(rez[i].period_end);
 					Encounter.length = rez[i].length;
 					Encounter.reason = rez[i].reason;
 					if (rez[i].org_id !== 'null') {
@@ -182,7 +182,6 @@ var controller = {
 					} else {
 						Encounter.partOf = "";
 					}
-					//Encounter.partOf = rez[i].parent;
 
           arrEncounter[i] = Encounter;
         }
@@ -231,7 +230,7 @@ var controller = {
 					var StatusHistory = {};
 					StatusHistory.id = rez[i].encounter_status_history_id;
 					StatusHistory.status = rez[i].encounter_status_history_status;
-					StatusHistory.period = rez[i].encounter_status_history_period_start + " to " + rez[i].encounter_status_history_period_end;
+					StatusHistory.period = formatDate(rez[i].encounter_status_history_period_start) + " to " + formatDate(rez[i].encounter_status_history_period_end);
 					/*if (rez[i].encounter_status_history_period_start == null) {
 						StatusHistory.period_start = formatDate(rez[i].encounter_status_history_period_start);
 					} else {
@@ -291,7 +290,7 @@ var controller = {
 					var ClassHistory = {};
 					ClassHistory.id = rez[i].encounter_class_history_id;
 					ClassHistory.class = rez[i].encounter_class_history_class;
-					ClassHistory.period = rez[i].encounter_class_history_period_start + " to " + rez[i].encounter_class_history_period_end;
+					ClassHistory.period = formatDate(rez[i].encounter_class_history_period_start) + " to " + formatDate(rez[i].encounter_class_history_period_end);
 
 					/*if (rez[i].encounter_class_history_period_start == null) {
 						ClassHistory.period_start = formatDate(rez[i].encounter_class_history_period_start);
@@ -381,7 +380,7 @@ var controller = {
 					
 					Participant.id = rez[i].encounter_participant_id;
 					Participant.type = rez[i].encounter_participant_type;
-					Participant.period = rez[i].encounter_participant_period_start + " to " + rez[i].encounter_participant_period_end;
+					Participant.period = formatDate(rez[i].encounter_participant_period_start) + " to " + formatDate(rez[i].encounter_participant_period_end);
 					Participant.individual = arrIndividual[i];
 
 					arrParticipant[i] = Participant;
@@ -514,7 +513,7 @@ var controller = {
 					PreAdmissionIdentifier.use = rez[i].identifier_use;
 					PreAdmissionIdentifier.type = rez[i].identifier_type;
 					PreAdmissionIdentifier.value = rez[i].identifier_value;
-					PreAdmissionIdentifier.period = rez[i].period_start + " to " + rez[i].period_end;
+					PreAdmissionIdentifier.period = formatDate(rez[i].period_start) + " to " + formatDate(rez[i].period_end);
 					PreAdmissionIdentifier.assigner = rez[i].org_id;
 					
 					arrPreAdmissionIdentifier[i] = PreAdmissionIdentifier;
@@ -596,7 +595,7 @@ var controller = {
 						Location.location = "";
 					}
 					Location.status = rez[i].encounter_location_status;
-					Location.period = rez[i].encounter_location_period_start + " to " + rez[i].encounter_location_period_end;
+					Location.period = formatDate(rez[i].encounter_location_period_start) + " to " + formatDate(rez[i].encounter_location_period_end);
 
 					arrLocation[i] = Location;
 				}

@@ -1409,7 +1409,6 @@ var controller = {
     diagnosis: function addDiagnosis(req, res) {
       var ipAddres = req.connection.remoteAddress;
       var apikey = req.params.apikey;
-      //var regex = new RegExp("([0-9]{4}[-](0[1-9]|1[0-2])[-]([0-2]{1}[0-9]{1}|3[0-1]{1})|([0-2]{1}[0-9]{1}|3[0-1]{1})[-](0[1-9]|1[0-2])[-][0-9]{4})");
       var episodeOfCareId = req.params.episode_of_care_id;
 
       var err_code = 0;

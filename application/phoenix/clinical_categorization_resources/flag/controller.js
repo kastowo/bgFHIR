@@ -66,7 +66,7 @@ var controller = {
 			if (condition == "") {
         fixCondition = "";
       } else {
-        fixCondition = join + " WHERE  " + condition.slice(0, -4);
+        fixCondition = join + " WHERE " + condition.slice(0, -4);
       }
 			
 			var arrFlag = [];
@@ -151,7 +151,7 @@ var controller = {
           Flag.category = rez[i].flag_category;
           Flag.code = rez[i].flag_code;
           Flag.subject = arrSubject[i];					
-					Flag.period = rez[i].period_start + " to " + rez[i].period_end;
+					Flag.period = formatDate(rez[i].period_start) + " to " + formatDate(rez[i].period_end);
 					if(rez[i].encounter != "null"){
 						Flag.encounter = hostFHIR + ':' + portFHIR + '/' + apikey + '/Encounter?_id=' +  rez[i].encounter;
 					} else {

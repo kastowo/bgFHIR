@@ -968,85 +968,96 @@ var controller = {
        codeCode = "";
       }    
 			//subject patient
-      if (typeof req.body.subject.Patient !== 'undefined') {
-        var subPatientId = req.body.subject.Patient.trim().toLowerCase();
-        if (validator.isEmpty(subPatientId)) {
-          subPatientId = "";
-        }
-				dataFlag.subject_patient_id = subPatientId;
-      } else {
-        subPatientId = "";
-      }
-			//subject Location
-      if (typeof req.body.subject.Location !== 'undefined') {
-        var subLocationId = req.body.subject.Location.trim().toLowerCase();
-        if (validator.isEmpty(subLocationId)) {
-          subLocationId = "";
-        }
-				dataFlag.subject_location_id = subLocationId;
-      } else {
-        subLocationId = "";
-      }
-			//subject Group
-      if (typeof req.body.subject.Group !== 'undefined') {
-        var subGroupId = req.body.subject.Group.trim().toLowerCase();
-        if (validator.isEmpty(subGroupId)) {
-          subGroupId = "";
-        }
-				dataFlag.subject_group_id = subGroupId;
-      } else {
-        subGroupId = "";
-      }
-			//subject Organization
-      if (typeof req.body.subject.Organization !== 'undefined') {
-        var subOrganizationId = req.body.subject.Organization.trim().toLowerCase();
-        if (validator.isEmpty(subOrganizationId)) {
-          subOrganizationId = "";
-        }
-				dataFlag.subject_organization_id = subOrganizationId;
-      } else {
-        subOrganizationId = "";
-      }
-			//subject Practitioner
-      if (typeof req.body.subject.Practitioner !== 'undefined') {
-        var subPractitionerId = req.body.subject.Practitioner.trim().toLowerCase();
-        if (validator.isEmpty(subPractitionerId)) {
-          subPractitionerId = "";
-        }
-				dataFlag.subject_practitioner_id = subPractitionerId;
-      } else {
-        subPractitionerId = "";
-      }
-			//subject PlanDefinition
-      if (typeof req.body.subject.PlanDefinition !== 'undefined') {
-        var subPlanDefinitionId = req.body.subject.PlanDefinition.trim().toLowerCase();
-        if (validator.isEmpty(subPlanDefinitionId)) {
-          subPlanDefinitionId = "";
-        }
-				dataFlag.subject_plan_definition_id = subPlanDefinitionId;
-      } else {
-        subPlanDefinitionId = "";
-      }
-			//subject Medication
-      if (typeof req.body.subject.Medication !== 'undefined') {
-        var subMedicationId = req.body.subject.Medication.trim().toLowerCase();
-        if (validator.isEmpty(subMedicationId)) {
-          subMedicationId = "";
-        }
-				dataFlag.subject_medication_id = subMedicationId;
-      } else {
-        subMedicationId = "";
-      }
-			//subject Procedure
-      if (typeof req.body.subject.Procedure !== 'undefined') {
-        var subProcedureId = req.body.subject.Procedure.trim().toLowerCase();
-        if (validator.isEmpty(subProcedureId)) {
-          subProcedureId = "";
-        }
-				dataFlag.subject_procedure_id = subProcedureId;
-      } else {
-        subProcedureId = "";
-      }
+      if (typeof req.body.subject !== 'undefined') {
+				if (typeof req.body.subject.Patient !== 'undefined') {
+					var subPatientId = req.body.subject.Patient.trim().toLowerCase();
+					if (validator.isEmpty(subPatientId)) {
+						subPatientId = "";
+					}
+					dataFlag.subject_patient_id = subPatientId;
+				} else {
+					subPatientId = "";
+				}
+				//subject Location
+				if (typeof req.body.subject.Location !== 'undefined') {
+					var subLocationId = req.body.subject.Location.trim().toLowerCase();
+					if (validator.isEmpty(subLocationId)) {
+						subLocationId = "";
+					}
+					dataFlag.subject_location_id = subLocationId;
+				} else {
+					subLocationId = "";
+				}
+				//subject Group
+				if (typeof req.body.subject.Group !== 'undefined') {
+					var subGroupId = req.body.subject.Group.trim().toLowerCase();
+					if (validator.isEmpty(subGroupId)) {
+						subGroupId = "";
+					}
+					dataFlag.subject_group_id = subGroupId;
+				} else {
+					subGroupId = "";
+				}
+				//subject Organization
+				if (typeof req.body.subject.Organization !== 'undefined') {
+					var subOrganizationId = req.body.subject.Organization.trim().toLowerCase();
+					if (validator.isEmpty(subOrganizationId)) {
+						subOrganizationId = "";
+					}
+					dataFlag.subject_organization_id = subOrganizationId;
+				} else {
+					subOrganizationId = "";
+				}
+				//subject Practitioner
+				if (typeof req.body.subject.Practitioner !== 'undefined') {
+					var subPractitionerId = req.body.subject.Practitioner.trim().toLowerCase();
+					if (validator.isEmpty(subPractitionerId)) {
+						subPractitionerId = "";
+					}
+					dataFlag.subject_practitioner_id = subPractitionerId;
+				} else {
+					subPractitionerId = "";
+				}
+				//subject PlanDefinition
+				if (typeof req.body.subject.PlanDefinition !== 'undefined') {
+					var subPlanDefinitionId = req.body.subject.PlanDefinition.trim().toLowerCase();
+					if (validator.isEmpty(subPlanDefinitionId)) {
+						subPlanDefinitionId = "";
+					}
+					dataFlag.subject_plan_definition_id = subPlanDefinitionId;
+				} else {
+					subPlanDefinitionId = "";
+				}
+				//subject Medication
+				if (typeof req.body.subject.Medication !== 'undefined') {
+					var subMedicationId = req.body.subject.Medication.trim().toLowerCase();
+					if (validator.isEmpty(subMedicationId)) {
+						subMedicationId = "";
+					}
+					dataFlag.subject_medication_id = subMedicationId;
+				} else {
+					subMedicationId = "";
+				}
+				//subject Procedure
+				if (typeof req.body.subject.Procedure !== 'undefined') {
+					var subProcedureId = req.body.subject.Procedure.trim().toLowerCase();
+					if (validator.isEmpty(subProcedureId)) {
+						subProcedureId = "";
+					}
+					dataFlag.subject_procedure_id = subProcedureId;
+				} else {
+					subProcedureId = "";
+				}
+			} else {
+				subPatientId = "";
+				subLocationId = "";
+				subGroupId = "";
+				subOrganizationId = "";
+				subPractitionerId = "";
+				subPlanDefinitionId = "";
+				subMedicationId = "";
+				subProcedureId = "";
+			}
       //period
       if (typeof req.body.period !== 'undefined' && req.body.period !== "") {
         var flagPeriod = req.body.period;
@@ -1077,45 +1088,52 @@ var controller = {
         encounterId = "";
       }
 			//author Device
-      if (typeof req.body.author.Device !== 'undefined') {
-        var authorDeviceId = req.body.author.Device.trim().toLowerCase();
-        if (validator.isEmpty(authorDeviceId)) {
-          authorDeviceId = "";
-        }
-				dataFlag.author_device_id = authorDeviceId;
-      } else {
-        authorDeviceId = "";
-      }
-			//author Organization
-      if (typeof req.body.author.Organization !== 'undefined') {
-        var authorOrganizationId = req.body.author.Organization.trim().toLowerCase();
-        if (validator.isEmpty(authorOrganizationId)) {
-          authorOrganizationId = "";
-        }
-				dataFlag.author_organization_id = authorOrganizationId;
-      } else {
-        authorOrganizationId = "";
-      }
-			//author Patient
-      if (typeof req.body.author.Patient !== 'undefined') {
-        var authorPatientId = req.body.author.Patient.trim().toLowerCase();
-        if (validator.isEmpty(authorPatientId)) {
-          authorPatientId = "";
-        }
-				dataFlag.author_patient_id = authorPatientId;
-      } else {
-        authorPatientId = "";
-      }
-			//author Practitioner
-      if (typeof req.body.author.Practitioner !== 'undefined') {
-        var authorPractitionerId = req.body.author.Practitioner.trim().toLowerCase();
-        if (validator.isEmpty(authorPractitionerId)) {
-          authorPractitionerId = "";
-        }
-				dataFlag.author_practitioner_id = authorPractitionerId;
-      } else {
-        authorPractitionerId = "";
-      }
+      if (typeof req.body.author !== 'undefined') {
+				if (typeof req.body.author.Device !== 'undefined') {
+					var authorDeviceId = req.body.author.Device.trim().toLowerCase();
+					if (validator.isEmpty(authorDeviceId)) {
+						authorDeviceId = "";
+					}
+					dataFlag.author_device_id = authorDeviceId;
+				} else {
+					authorDeviceId = "";
+				}
+				//author Organization
+				if (typeof req.body.author.Organization !== 'undefined') {
+					var authorOrganizationId = req.body.author.Organization.trim().toLowerCase();
+					if (validator.isEmpty(authorOrganizationId)) {
+						authorOrganizationId = "";
+					}
+					dataFlag.author_organization_id = authorOrganizationId;
+				} else {
+					authorOrganizationId = "";
+				}
+				//author Patient
+				if (typeof req.body.author.Patient !== 'undefined') {
+					var authorPatientId = req.body.author.Patient.trim().toLowerCase();
+					if (validator.isEmpty(authorPatientId)) {
+						authorPatientId = "";
+					}
+					dataFlag.author_patient_id = authorPatientId;
+				} else {
+					authorPatientId = "";
+				}
+				//author Practitioner
+				if (typeof req.body.author.Practitioner !== 'undefined') {
+					var authorPractitionerId = req.body.author.Practitioner.trim().toLowerCase();
+					if (validator.isEmpty(authorPractitionerId)) {
+						authorPractitionerId = "";
+					}
+					dataFlag.author_practitioner_id = authorPractitionerId;
+				} else {
+					authorPractitionerId = "";
+				}
+			} else {
+				authorDeviceId = "";
+				authorOrganizationId = "";
+				authorPatientId = "";
+				authorPractitionerId = "";
+			}
 			
       if (err_code == 0) {
         checkApikey(apikey, ipAddres, function (result) {
