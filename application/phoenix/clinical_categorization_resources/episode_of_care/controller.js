@@ -158,7 +158,7 @@ var controller = {
 					var StatusHistory = {};
 					StatusHistory.id = rez[i].episode_of_care_status_history_id;
 					StatusHistory.code = rez[i].episode_of_care_status_history_code;
-					StatusHistory.period = rez[i].episode_of_care_status_history_period_start + " to " + rez[i].episode_of_care_status_history_period_end;
+					StatusHistory.period = formatDate(rez[i].episode_of_care_status_history_period_start) + " to " + formatDate(rez[i].episode_of_care_status_history_period_end);
 
 					arrStatusHistory[i] = StatusHistory;
 				}

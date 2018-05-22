@@ -127,8 +127,8 @@ var controller = {
           Account.type = rez[i].acc_type;
           Account.name = rez[i].acc_name;
           Account.subject = arrSubject[i];					
-					Account.period = rez[i].period_start + " to " + rez[i].period_end;
-					Account.active = rez[i].active_start + " to " + rez[i].active_end ;
+					Account.period = formatDate(rez[i].period_start) + " to " + formatDate(rez[i].period_end);
+					Account.active = formatDate(rez[i].active_start) + " to " + formatDate(rez[i].active_end);
 					Account.balance = rez[i].acc_balance;
 					if(rez[i].owner != "null"){
 						Account.owner = hostFHIR + ':' + portFHIR + '/' + apikey + '/Organization?_id=' +  rez[i].owner;
@@ -206,7 +206,7 @@ var controller = {
 					Guarantor.id = rez[i].account_guarantor_id;
 					Guarantor.party = arrParty[i];
 					Guarantor.onHold = rez[i].account_guarantor_on_hold;
-					Guarantor.period = rez[i].account_guarantor_period_start + " to " + rez[i].account_guarantor_period_end;
+					Guarantor.period = formatDate(rez[i].account_guarantor_period_start) + " to " + formatDate(rez[i].account_guarantor_period_end);
 
 					arrGuarantor[i] = Guarantor;
 				}

@@ -2247,7 +2247,7 @@ var controller = {
         }
       } else {
         err_code = 1;
-        err_msg = "Please add 'status history' in json request.";
+        err_msg = "Please add 'class history' in json request.";
       }
       //statusHistory period
       if (typeof req.body.period !== 'undefined') {
@@ -2873,22 +2873,28 @@ var controller = {
       } else {
 				reasonCode = "";
 			}
-			if (typeof req.body.subject.patient_id !== 'undefined'){
-				var subjectPatientId = req.body.subject.patient_id.trim().toLowerCase();
-				if (validator.isEmpty(subjectPatientId)) {
-          subjectPatientId = "";
-        }
-        dataEncounter.subject_patient_id = subjectPatientId;
-      } else {
+			if (typeof req.body.subject !== 'undefined'){
+				if (typeof req.body.subject.patient_id !== 'undefined'){
+					var subjectPatientId = req.body.subject.patient_id.trim().toLowerCase();
+					if (validator.isEmpty(subjectPatientId)) {
+						subjectPatientId = "";
+					}
+					dataEncounter.subject_patient_id = subjectPatientId;
+				} else {
+					subjectPatientId = "";
+				}
+				
+				if (typeof req.body.subject.group_id !== 'undefined'){
+					var subjectGroupId = req.body.subject.group_id.trim().toLowerCase();
+					if (validator.isEmpty(subjectGroupId)) {
+						subjectGroupId = "";
+					}
+					dataEncounter.subject_group_id = subjectGroupId;
+				} else {
+					subjectGroupId = "";
+				}
+			} else {
 				subjectPatientId = "";
-			}
-			if (typeof req.body.subject.group_id !== 'undefined'){
-				var subjectGroupId = req.body.subject.group_id.trim().toLowerCase();
-				if (validator.isEmpty(subjectGroupId)) {
-          subjectGroupId = "";
-        }
-        dataEncounter.subject_group_id = subjectGroupId;
-      } else {
 				subjectGroupId = "";
 			}
 			if (typeof req.body.appointment !== 'undefined') {
@@ -3786,24 +3792,29 @@ var controller = {
         err_code = 2;
         err_msg = "Diagnosis id is required";
       }
-			if (typeof req.body.condition.condition !== 'undefined') {
-        var conditionId = req.body.condition.condition.trim().toLowerCase();
-        if (validator.isEmpty(conditionId)) {
-          conditionId = "";
-        }
-        dataDiagnosis.condition_id = conditionId;
-      } else {
-        conditionId = "";
-      }
-			if (typeof req.body.condition.procedure !== 'undefined') {
-        var procedureId = req.body.condition.procedure.trim().toLowerCase();
-        if (validator.isEmpty(procedureId)) {
-          procedureId = "";
-        }
-        dataDiagnosis.procedure_id = procedureId;
-      } else {
-        procedureId = "";
-      }
+			if (typeof req.body.condition !== 'undefined') {
+				if (typeof req.body.condition.condition !== 'undefined') {
+					var conditionId = req.body.condition.condition.trim().toLowerCase();
+					if (validator.isEmpty(conditionId)) {
+						conditionId = "";
+					}
+					dataDiagnosis.condition_id = conditionId;
+				} else {
+					conditionId = "";
+				}
+				if (typeof req.body.condition.procedure !== 'undefined') {
+					var procedureId = req.body.condition.procedure.trim().toLowerCase();
+					if (validator.isEmpty(procedureId)) {
+						procedureId = "";
+					}
+					dataDiagnosis.procedure_id = procedureId;
+				} else {
+					procedureId = "";
+				}
+			} else {
+				conditionId = "";
+				procedureId = "";
+			}
 			if (typeof req.body.role !== 'undefined') {
         var roleCode = req.body.role.trim().toLowerCase();
         if (validator.isEmpty(roleCode)) {
@@ -4249,25 +4260,29 @@ var controller = {
 				periodStart = "";
 				periodEnd ="";
 			}
-			if (typeof req.body.individual.practitioner !== 'undefined') {
-        var practitionerId = req.body.individual.practitioner.trim().toLowerCase();
-        if (validator.isEmpty(practitionerId)) {
-          practitionerId = "";
-        }
-        dataParticipant.individual_practitioner_id = practitionerId;
-      } else {
-        practitionerId = "";
-      }
-			if (typeof req.body.individual.related_person !== 'undefined') {
-        var relatedPersonId = req.body.individual.related_person.trim().toLowerCase();
-        if (validator.isEmpty(relatedPersonId)) {
-          relatedPersonId = "";
-        }
-        dataParticipant.individual_related_person_id = relatedPersonId;
-      } else {
-        relatedPersonId = "";
-      }
-			
+			if (typeof req.body.individual !== 'undefined') {
+				if (typeof req.body.individual.practitioner !== 'undefined') {
+					var practitionerId = req.body.individual.practitioner.trim().toLowerCase();
+					if (validator.isEmpty(practitionerId)) {
+						practitionerId = "";
+					}
+					dataParticipant.individual_practitioner_id = practitionerId;
+				} else {
+					practitionerId = "";
+				}
+				if (typeof req.body.individual.related_person !== 'undefined') {
+					var relatedPersonId = req.body.individual.related_person.trim().toLowerCase();
+					if (validator.isEmpty(relatedPersonId)) {
+						relatedPersonId = "";
+					}
+					dataParticipant.individual_related_person_id = relatedPersonId;
+				} else {
+					relatedPersonId = "";
+				}
+			} else {
+				practitionerId = "";
+				relatedPersonId = "";
+			}
 			if (err_code == 0) {
 				checkApikey(apikey, ipAddres, function (result) {
           if (result.err_code == 0) {
@@ -4438,8 +4453,7 @@ var controller = {
           dataLocation.location_id = locId;
         }
       } else {
-        err_code = 1;
-        err_msg = "Please add 'location id' in json request.";
+        locId = "";
       }
 			
 			if (err_code == 0) {
@@ -4450,31 +4464,22 @@ var controller = {
                 if (resEpisodeOfCareID.err_code > 0) {
                   checkUniqeValue(apikey, "ENCOUNTER_LOCATION_ID|" + locationId, 'ENCOUNTER_LOCATION', function (resLocationID) {
                     if (resLocationID.err_code > 0) {
-											checkUniqeValue(apikey, "LOCATION_ID|" + locId, 'LOCATION', function (resLocId) {
-												if (resLocId.err_code > 0) { //code > 0 => data valid
-													ApiFHIR.put('encounterLocation', {
-														"apikey": apikey,
-														"_id": locationId,
-														"dr": "ENCOUNTER_ID|" + encounterId
-													}, {
-														body: dataLocation,
-														json: true
-													}, function (error, response, body) {
-														location = body;
-														if (location.err_code > 0) {
-															res.json(location);
-														} else {
-															res.json({
-																"err_code": 0,
-																"err_msg": "Location has been update in this encounter.",
-																"data": location.data
-															});
-														}
-													})
+											ApiFHIR.put('encounterLocation', {
+												"apikey": apikey,
+												"_id": locationId,
+												"dr": "ENCOUNTER_ID|" + encounterId
+											}, {
+												body: dataLocation,
+												json: true
+											}, function (error, response, body) {
+												location = body;
+												if (location.err_code > 0) {
+													res.json(location);
 												} else {
 													res.json({
-														"err_code": 504,
-														"err_msg": "Location Id not found"
+														"err_code": 0,
+														"err_msg": "Location has been update in this encounter.",
+														"data": location.data
 													});
 												}
 											})
@@ -4493,10 +4498,26 @@ var controller = {
                 }
               })
 						})
+						myEmitter.prependOnceListener('checkLocationID', function () {
+							if (!validator.isEmpty(locId)) {
+								checkUniqeValue(apikey, "LOCATION_ID|" + locId, 'LOCATION', function (resLocId) {
+									if (resLocId.err_code > 0) { //code > 0 => data valid
+										myEmitter.emit('checkEncounterID');
+									} else {
+										res.json({
+											"err_code": 501,
+											"err_msg": "Location Id not found"
+										});
+									}
+								})
+							} else {
+								myEmitter.emit('checkEncounterID');
+							}
+						})
 						if (!validator.isEmpty(statusCode)) {
 							checkCode(apikey, statusCode, 'LOCATION_STATUS', function (resLocationStatusCode) {
 								if (resLocationStatusCode.err_code > 0) {
-									myEmitter.emit('checkEncounterID');
+									myEmitter.emit('checkLocationID');
 								} else {
 									res.json({
 										"err_code": 501,
@@ -4505,7 +4526,7 @@ var controller = {
 								}
 							})
 						} else {
-							myEmitter.emit('checkEncounterID');
+							myEmitter.emit('checkLocationID');
 						}
 					} else {
             result.err_code = 500;
