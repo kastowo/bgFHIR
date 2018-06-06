@@ -13,8 +13,7 @@ var port = configYaml.phoenix.port;
 
 // var phoenix = require("./phoenix.js");
 var phoenix = require(path.resolve("./phoenix.js"));
-// var db = new phoenix("jdbc:phoenix:" + host + ":/hbase-unsecure");
-var db = new phoenix("jdbc:phoenix:" + "192.168.1.231" + ":/hbase-unsecure");
+var db = new phoenix("jdbc:phoenix:" + host + ":/hbase-unsecure");
 
 var controller = {
 	get: {

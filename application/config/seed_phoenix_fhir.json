@@ -284,114 +284,216 @@
 			"reAdmissionIndicatorCode": {
 				"location": "%(apikey)s/re-admission-indicator/code/%(code)s"
 			},
-			"organizationType":{
-				"location": "%(apikey)s/organization-type/%(_id)d"
-			},
-			"organizationTypeCode":{
-			  "location": "%(apikey)s/organization-type/code/%(code)s"
-			},
-			"contactentityType":{
-				"location": "%(apikey)s/contactentity-type/%(_id)d"
-			},
-			"contactentityTypeCode":{
-				"location": "%(apikey)s/contactentity-type/code/%(code)s"
-			},
-			"locationStatus":{
-				"location": "%(apikey)s/location-status/%(_id)d"
-			},
-			"locationStatusCode":{
-				"location": "%(apikey)s/location-status/code/%(code)s"
-			},
-			"bedStatus":{
-				"location": "%(apikey)s/bed-status/%(_id)d"
-			},
-			"bedStatusCode":{
-				"location": "%(apikey)s/bed-status/code/%(code)s"
-			},
-			"locationMode":{
-				"location": "%(apikey)s/location-mode/%(_id)d"
-			},
-			"locationModeCode":{
-				"location": "%(apikey)s/location-mode/code/%(code)s"
-			},
-			"serviceDeliveryLocationRoleType":{
-				"location": "%(apikey)s/service-delivery-location-role-type/%(_id)d"
-			},
-			"serviceDeliveryLocationRoleTypeCode":{
-				"location": "%(apikey)s/service-delivery-location-role-type/code/%(code)s"
-			},
-			"locationPhysicalType":{
-				"location": "%(apikey)s/location-physical-type/%(_id)d"
-			},
-			"locationPhysicalTypeCode":{
-				"location": "%(apikey)s/location-physical-type/code/%(code)s"
-			},
-			"qualificationCode":{
-				"location": "%(apikey)s/qualification-code/%(_id)d"
-			},
-			"qualificationCodeCode":{
-				"location": "%(apikey)s/qualification-code/code/%(code)s"
-			},
-			"practitionerRoleCode":{
-				"location": "%(apikey)s/practitioner-role-code/%(_id)d"
-			},
-			"practitionerRoleCodeCode":{
-				"location": "%(apikey)s/practitioner-role-code/code/%(code)s"
-			},
-			"practiceCode":{
-				"location": "%(apikey)s/practice-code/%(_id)d"
-			},
-			"practiceCodeCode":{
-				"location": "%(apikey)s/practice-code/code/%(code)s"
-			},
-			"daysOfWeek":{
-				"location": "%(apikey)s/days-of-week/%(_id)d"
-			},
-			"daysOfWeekCode":{
-				"location": "%(apikey)s/days-of-week/code/%(code)s"
-			},
-			"serviceCategory":{
-				"location": "%(apikey)s/service-category/%(_id)d"
-			},
-			"serviceCategoryCode":{
-				"location": "%(apikey)s/service-category/code/%(code)s"
-			},
-			"serviceType":{
-				"location": "%(apikey)s/service-type/%(_id)d"
-			},
-			"serviceTypeCode":{
-				"location": "%(apikey)s/service-type/code/%(code)s"
-			},
-			"serviceProvisionConditions":{
-				"location": "%(apikey)s/service-provision-conditions/%(_id)d"
-			},
-			"serviceProvisionConditionsCode":{
-				"location": "%(apikey)s/service-provision-conditions/code/%(code)s"
-			},
-			"serviceReferralMethod":{
-				"location": "%(apikey)s/service-referral-method/%(_id)d"
-			},
-			"serviceReferralMethodCode":{
-				"location": "%(apikey)s/service-referral-method/code/%(code)s"
-			},
-			"endpointStatus":{
-				"location": "%(apikey)s/endpoint-status/%(_id)d"
-			},
-			"endpointStatusCode":{
-				"location": "%(apikey)s/endpoint-status/code/%(code)s"
-			},
-			"endpointConnectionType":{
-				"location": "%(apikey)s/endpoint-connection-type/%(_id)d"
-			},
-			"endpointConnectionTypeCode":{
-				"location": "%(apikey)s/endpoint-connection-type/code/%(code)s"
-			},
-			"endpointPayloadType":{
-				"location": "%(apikey)s/endpoint-payload-type/%(_id)d"
-			},
-			"endpointPayloadTypeCode":{
-				"location": "%(apikey)s/endpoint-payload-type/code/%(code)s"
-			}
+	    "udiEntryType":{
+	      "location": "%(apikey)s/udi-entry-type/%(_id)d"
+	    },
+	    "udiEntryTypeCode":{
+	      "location": "%(apikey)s/udi-entry-type/code/%(code)s"
+      },
+     "deviceStatus":{
+        "location": "%(apikey)s/device-status/%(_id)d"
+     },
+     "deviceStatusCode":{
+        "location": "%(apikey)s/device-status/code/%(code)s"
+     },
+     "deviceKind":{
+        "location": "%(apikey)s/device-kind/%(_id)d"
+     },
+     "deviceKindCode":{
+        "location": "%(apikey)s/device-kind/code/%(code)s"
+     },
+     "deviceSafety":{
+        "location": "%(apikey)s/device-safety/%(_id)d"
+     },
+     "deviceSafetyCode":{
+        "location": "%(apikey)s/device-safety/code/%(code)s"
+     },
+     "operationalStatus":{
+        "location": "%(apikey)s/operational-status/%(_id)d"
+     },
+     "operationalStatusCode":{
+        "location": "%(apikey)s/operational-status/code/%(code)s"
+     },
+     "parameterGroup":{
+        "location": "%(apikey)s/parameter-group/%(_id)d"
+     },
+     "parameterGroupCode":{
+        "location": "%(apikey)s/parameter-group/code/%(code)s"
+     },
+     "measurementPrinciple":{
+        "location": "%(apikey)s/measurement-principle/%(_id)d"
+     },
+     "measurementPrincipleCode":{
+        "location": "%(apikey)s/measurement-principle/code/%(code)s"
+     },
+     "specificationType":{
+        "location": "%(apikey)s/specification-type/%(_id)d"
+     },
+     "specificationTypeCode":{
+        "location": "%(apikey)s/specification-type/code/%(code)s"
+     },
+     "metricOperationalStatus":{
+        "location": "%(apikey)s/metric-operational-status/%(_id)d"
+     },
+     "metricOperationalStatusCode":{
+        "location": "%(apikey)s/metric-operational-status/code/%(code)s"
+     },
+     "deviceMetricType":{
+        "location": "%(apikey)s/device-metric-type/%(_id)d"
+     },
+     "deviceMetricTypeCode":{
+        "location": "%(apikey)s/device-metric-type/code/%(code)s"
+     },
+     "metricColor":{
+        "location": "%(apikey)s/metric-color/%(_id)d"
+     },
+     "metricColorCode":{
+        "location": "%(apikey)s/metric-color/code/%(code)s"
+     },
+     "metricCategory":{
+        "location": "%(apikey)s/metric-category/%(_id)d"
+     },
+     "metricColorCode":{
+        "location": "%(apikey)s/metric-category/code/%(code)s"
+     },
+     "metricCalibrationType":{
+        "location": "%(apikey)s/metric-calibration-type/%(_id)d"
+     },
+     "metricCalibrationTypeCode":{
+        "location": "%(apikey)s/metric-calibration-type/code/%(code)s"
+     },
+     "metricCalibrationState":{
+        "location": "%(apikey)s/metric-calibration-state/%(_id)d"
+     },
+     "metricCalibrationStateCode":{
+        "location": "%(apikey)s/metric-calibration-state/code/%(code)s"
+     },
+     "substanceStatus":{
+        "location": "%(apikey)s/substance-status/%(_id)d"
+     },
+     "substanceStatusCode":{
+        "location": "%(apikey)s/substance-status/code/%(code)s"
+     },
+     "substanceCategory":{
+        "location": "%(apikey)s/substance-category/%(_id)d"
+     },
+     "substanceCategoryCode":{
+        "location": "%(apikey)s/substance-category/code/%(code)s"
+     },
+     "substanceCode":{
+        "location": "%(apikey)s/substance-code/%(_id)d"
+     },
+     "substanceCodeCode":{
+        "location": "%(apikey)s/substance-code/code/%(code)s"
+     },
+		"organizationType":{
+			"location": "%(apikey)s/organization-type/%(_id)d"
+		},
+		"organizationTypeCode":{
+		  "location": "%(apikey)s/organization-type/code/%(code)s"
+		},
+		"contactentityType":{
+			"location": "%(apikey)s/contactentity-type/%(_id)d"
+		},
+		"contactentityTypeCode":{
+			"location": "%(apikey)s/contactentity-type/code/%(code)s"
+		},
+		"locationStatus":{
+			"location": "%(apikey)s/location-status/%(_id)d"
+		},
+		"locationStatusCode":{
+			"location": "%(apikey)s/location-status/code/%(code)s"
+		},
+		"bedStatus":{
+			"location": "%(apikey)s/bed-status/%(_id)d"
+		},
+		"bedStatusCode":{
+			"location": "%(apikey)s/bed-status/code/%(code)s"
+		},
+		"locationMode":{
+			"location": "%(apikey)s/location-mode/%(_id)d"
+		},
+		"locationModeCode":{
+			"location": "%(apikey)s/location-mode/code/%(code)s"
+		},
+		"serviceDeliveryLocationRoleType":{
+			"location": "%(apikey)s/service-delivery-location-role-type/%(_id)d"
+		},
+		"serviceDeliveryLocationRoleTypeCode":{
+			"location": "%(apikey)s/service-delivery-location-role-type/code/%(code)s"
+		},
+		"locationPhysicalType":{
+			"location": "%(apikey)s/location-physical-type/%(_id)d"
+		},
+		"locationPhysicalTypeCode":{
+			"location": "%(apikey)s/location-physical-type/code/%(code)s"
+		},
+		"qualificationCode":{
+			"location": "%(apikey)s/qualification-code/%(_id)d"
+		},
+		"qualificationCodeCode":{
+			"location": "%(apikey)s/qualification-code/code/%(code)s"
+		},
+		"practitionerRoleCode":{
+			"location": "%(apikey)s/practitioner-role-code/%(_id)d"
+		},
+		"practitionerRoleCodeCode":{
+			"location": "%(apikey)s/practitioner-role-code/code/%(code)s"
+		},
+		"practiceCode":{
+			"location": "%(apikey)s/practice-code/%(_id)d"
+		},
+		"practiceCodeCode":{
+			"location": "%(apikey)s/practice-code/code/%(code)s"
+		},
+		"daysOfWeek":{
+			"location": "%(apikey)s/days-of-week/%(_id)d"
+		},
+		"daysOfWeekCode":{
+			"location": "%(apikey)s/days-of-week/code/%(code)s"
+		},
+		"serviceCategory":{
+			"location": "%(apikey)s/service-category/%(_id)d"
+		},
+		"serviceCategoryCode":{
+			"location": "%(apikey)s/service-category/code/%(code)s"
+		},
+		"serviceType":{
+			"location": "%(apikey)s/service-type/%(_id)d"
+		},
+		"serviceTypeCode":{
+			"location": "%(apikey)s/service-type/code/%(code)s"
+		},
+		"serviceProvisionConditions":{
+			"location": "%(apikey)s/service-provision-conditions/%(_id)d"
+		},
+		"serviceProvisionConditionsCode":{
+			"location": "%(apikey)s/service-provision-conditions/code/%(code)s"
+		},
+		"serviceReferralMethod":{
+			"location": "%(apikey)s/service-referral-method/%(_id)d"
+		},
+		"serviceReferralMethodCode":{
+			"location": "%(apikey)s/service-referral-method/code/%(code)s"
+		},
+		"endpointStatus":{
+			"location": "%(apikey)s/endpoint-status/%(_id)d"
+		},
+		"endpointStatusCode":{
+			"location": "%(apikey)s/endpoint-status/code/%(code)s"
+		},
+		"endpointConnectionType":{
+			"location": "%(apikey)s/endpoint-connection-type/%(_id)d"
+		},
+		"endpointConnectionTypeCode":{
+			"location": "%(apikey)s/endpoint-connection-type/code/%(code)s"
+		},
+		"endpointPayloadType":{
+			"location": "%(apikey)s/endpoint-payload-type/%(_id)d"
+		},
+		"endpointPayloadTypeCode":{
+			"location": "%(apikey)s/endpoint-payload-type/code/%(code)s"
+		}
 		},
 		"POST": {
 			"identityAssuranceLevel": {
@@ -583,120 +685,186 @@
 			"reAdmissionIndicator": {
 				"location": "%(apikey)s/re-admission-indicator"
 			},
-			"organizationType":{
-				"location": "%(apikey)s/organization-type"
-			},
-			"contactentityType":{
-				"location": "%(apikey)s/contactentity-type"
-			},
-			"locationStatus":{
-				"location": "%(apikey)s/location-status"
-			},
-			"bedStatus":{
-				"location": "%(apikey)s/bed-status"
-			},
-			"locationMode":{
-				"location": "%(apikey)s/location-mode"
-			},
-			"serviceDeliveryLocationRoleType":{
-				"location": "%(apikey)s/service-delivery-location-role-type"
-			},
-			"locationPhysicalType":{
-				"location": "%(apikey)s/location-physical-type"
-			},
-			"qualificationCode":{
-				"location": "%(apikey)s/qualification-code"
-			},
-			"practitionerRoleCode":{
-				"location": "%(apikey)s/practitioner-role-code"
-			},
-			"practiceCode":{
-				"location": "%(apikey)s/practice-code"
-			},
-			"daysOfWeek":{
-				"location": "%(apikey)s/days-of-week"
-			},
-			"serviceCategory":{
-				"location": "%(apikey)s/service-category"
-			},
-			"serviceType":{
-				"location": "%(apikey)s/service-type"
-			},
-			"serviceProvisionConditions":{
-				"location": "%(apikey)s/service-provision-conditions"
-			},
-			"serviceReferralMethod":{
-				"location": "%(apikey)s/service-referral-method"
-			},
-			"endpointStatus":{
-				"location": "%(apikey)s/endpoint-status"
-			},
-			"endpointConnectionType":{
-				"location": "%(apikey)s/endpoint-connection-type"
-			},
-			"endpointPayloadType":{
-				"location": "%(apikey)s/endpoint-payload-type"
-			},
-			"organization":{
-				"location": "%(apikey)s/Organization"
-			},
-			"organizationContact":{
-				"location": "%(apikey)s/organizationContact"
-			},
-			"endpoint":{
-				"location": "%(apikey)s/Endpoint"
-			},
-			"location":{
-				"location": "%(apikey)s/Location"
-			},
-			"locationPosition":{
-				"location": "%(apikey)s/LocationPosition"
-			},
-			"practitioner":{
-				"location": "%(apikey)s/Practitioner"
-			},
-			"qualification":{
-				"location": "%(apikey)s/Qualification"
-			},
-			"practitionerCommunication":{
-				"location": "%(apikey)s/PractitionerCommunication"
-			},
-			"practitionerRole":{
-				"location": "%(apikey)s/PractitionerRole"
-			},
-			"availableTime":{
-				"location": "%(apikey)s/AvailableTime"
-			},
-			"notAvailable":{
-				"location": "%(apikey)s/NotAvailable"
-			},
-			"healthcareService":{
-				"location": "%(apikey)s/HealthcareService"
-			},
-			"PractitionerRoleEndpoint":{
-				"location": "%(apikey)s/PractitionerRole/Endpoint"
-			},
-			"PractitionerRoleLocation":{
-				"location": "%(apikey)s/PractitionerRole/Location"
-			},
-			"PractitionerRoleHealthcareService":{
-				"location": "%(apikey)s/PractitionerRole/HealthcareService"
-			},
-			"healthcareServiceEndpoint":{
-				"location": "%(apikey)s/HealthcareService/Endpoint"
-			},
-			"healthcareServiceLocation":{
-				"location": "%(apikey)s/HealthcareService/Location"
-			},
-			"healthcareServiceCoverageArea":{
-				"location": "%(apikey)s/HealthcareService/CoverageArea"
-			},
-			"locationEndpoint":{
-				"location": "%(apikey)s/Location/Endpoint"
-			},
-			"OrganizationEndpoint":{
-				"location": "%(apikey)s/Organization/Endpoint"
-			}
+	    "slot": {
+	    	"location": "%(apikey)s/slot"
+	    },
+     "appointment": {
+        "location": "%(apikey)s/appointment"
+     },
+     "appointmentParticipant": {
+        "location": "%(apikey)s/appointment-participant"
+     },
+     "appointmentResponse": {
+        "location": "%(apikey)s/appointment-response"
+     },
+     "udiEntryType": {
+        "location": "%(apikey)s/udi-entry-type"
+     },
+     "deviceStatus": {
+        "location": "%(apikey)s/device-status"
+     },
+     "deviceKind": {
+        "location": "%(apikey)s/device-kind"
+     },
+     "deviceSafety": {
+        "location": "%(apikey)s/device-safety"
+     },
+     "operationalStatus": {
+        "location": "%(apikey)s/operational-status"
+     },
+     "parameterGroup": {
+        "location": "%(apikey)s/parameter-group"
+     },
+     "measurementPrinciple": {
+        "location": "%(apikey)s/measurement-principle"
+     },
+     "specificationType": {
+        "location": "%(apikey)s/specification-type"
+     },
+     "metricOperationalStatus": {
+        "location": "%(apikey)s/metric-operational-status"
+     },
+     "deviceMetricType": {
+        "location": "%(apikey)s/device-metric-type"
+     },
+     "metricColor": {
+        "location": "%(apikey)s/metric-color"
+     },
+     "metricCategory": {
+        "location": "%(apikey)s/metric-category"
+     },
+     "metricCalibrationType": {
+        "location": "%(apikey)s/metric-calibration-type"
+     },
+     "metricCalibrationState": {
+        "location": "%(apikey)s/metric-calibration-state"
+     },
+     "substanceStatus": {
+        "location": "%(apikey)s/substance-status"
+     },
+     "substanceCategory": {
+        "location": "%(apikey)s/substance-category"
+     },
+     "substanceCode": {
+        "location": "%(apikey)s/substance-code"
+     },
+     "device": {
+        "location": "%(apikey)s/device"
+     },
+     "deviceUdi": {
+        "location": "%(apikey)s/device-udi"
+     },
+     "deviceComponent": {
+        "location": "%(apikey)s/device-component"
+     },
+     "deviceComponentProductionSpecification": {
+        "location": "%(apikey)s/device-component-production-specification"
+     },
+     "deviceMetric": {
+        "location": "%(apikey)s/device-metric"
+     },
+     "deviceMetricCalibration": {
+        "location": "%(apikey)s/device-metric-calibration"
+     },
+     "substance": {
+        "location": "%(apikey)s/substance"
+     },
+     "substanceInstance": {
+        "location": "%(apikey)s/substance-instance"
+     },
+     "substanceIngredient": {
+        "location": "%(apikey)s/substance-ingredient"
+     },
+		"organizationType":{
+			"location": "%(apikey)s/organization-type"
+		},
+		"contactentityType":{
+			"location": "%(apikey)s/contactentity-type"
+		},
+		"locationStatus":{
+			"location": "%(apikey)s/location-status"
+		},
+		"bedStatus":{
+			"location": "%(apikey)s/bed-status"
+		},
+		"locationMode":{
+			"location": "%(apikey)s/location-mode"
+		},
+		"serviceDeliveryLocationRoleType":{
+			"location": "%(apikey)s/service-delivery-location-role-type"
+		},
+		"locationPhysicalType":{
+			"location": "%(apikey)s/location-physical-type"
+		},
+		"qualificationCode":{
+			"location": "%(apikey)s/qualification-code"
+		},
+		"practitionerRoleCode":{
+			"location": "%(apikey)s/practitioner-role-code"
+		},
+		"practiceCode":{
+			"location": "%(apikey)s/practice-code"
+		},
+		"daysOfWeek":{
+			"location": "%(apikey)s/days-of-week"
+		},
+		"serviceCategory":{
+			"location": "%(apikey)s/service-category"
+		},
+		"serviceType":{
+			"location": "%(apikey)s/service-type"
+		},
+		"serviceProvisionConditions":{
+			"location": "%(apikey)s/service-provision-conditions"
+		},
+		"serviceReferralMethod":{
+			"location": "%(apikey)s/service-referral-method"
+		},
+		"endpointStatus":{
+			"location": "%(apikey)s/endpoint-status"
+		},
+		"endpointConnectionType":{
+			"location": "%(apikey)s/endpoint-connection-type"
+		},
+		"endpointPayloadType":{
+			"location": "%(apikey)s/endpoint-payload-type"
+		},
+		"organization":{
+			"location": "%(apikey)s/Organization"
+		},
+		"organizationContact":{
+			"location": "%(apikey)s/organizationContact"
+		},
+		"endpoint":{
+			"location": "%(apikey)s/Endpoint"
+		},
+		"location":{
+			"location": "%(apikey)s/Location"
+		},
+		"locationPosition":{
+			"location": "%(apikey)s/LocationPosition"
+		},
+		"practitioner":{
+			"location": "%(apikey)s/Practitioner"
+		},
+		"qualification":{
+			"location": "%(apikey)s/Qualification"
+		},
+		"practitionerCommunication":{
+			"location": "%(apikey)s/PractitionerCommunication"
+		},
+		"practitionerRole":{
+			"location": "%(apikey)s/PractitionerRole"
+		},
+		"availableTime":{
+			"location": "%(apikey)s/AvailableTime"
+		},
+		"notAvailable":{
+			"location": "%(apikey)s/NotAvailable"
+		},
+		"healthcareService":{
+			"location": "%(apikey)s/HealthcareService"
+		}
 		},
 		"PUT": {
 			"identityAssuranceLevel": {
@@ -873,99 +1041,192 @@
 			"reAdmissionIndicator": {
 				"location": "%(apikey)s/reAdmissionIndicator/%(_id)d"
 			},
-			"organizationType":{
-				"location": "%(apikey)s/organization-type/%(_id)d"
-			},
-			"contactentityType":{
-				"location": "%(apikey)s/contactentity-type/%(_id)d"
-			},
-			"locationStatus":{
-				"location": "%(apikey)s/location-status/%(_id)d"
-			},
-			"bedStatus":{
-				"location": "%(apikey)s/bed-status/%(_id)d"
-			},
-			"locationMode":{
-				"location": "%(apikey)s/location-mode/%(_id)d"
-			},
-			"locationMode":{
-				"location": "%(apikey)s/location-mode/%(_id)d"
-			},
-			"serviceDeliveryLocationRoleType":{
-				"location": "%(apikey)s/service-delivery-location-role-type/%(_id)d"
-			},
-			"locationPhysicalType":{
-				"location": "%(apikey)s/location-physical-type/%(_id)d"
-			},
-			"qualificationCode":{
-				"location": "%(apikey)s/qualification-code/%(_id)d"
-			},
-			"practitionerRoleCode":{
-				"location": "%(apikey)s/practitioner-role-code/%(_id)d"
-			},
-			"practiceCode":{
-				"location": "%(apikey)s/practice-code/%(_id)d"
-			},
-			"daysOfWeek":{
-				"location": "%(apikey)s/days-of-week/%(_id)d"
-			},
-			"serviceType":{
-				"location": "%(apikey)s/service-type/%(_id)d"
-			},
-			"serviceCategory":{
-				"location": "%(apikey)s/service-category/%(_id)d"
-			},
-			"serviceProvisionConditions":{
-				"location": "%(apikey)s/service-provision-conditions/%(_id)d"
-			},
-			"serviceReferralMethod":{
-				"location": "%(apikey)s/service-referral-method/%(_id)d"
-			},
-			"endpointStatus":{
-				"location": "%(apikey)s/endpoint-status/%(_id)d"
-			},
-			"endpointConnectionType":{
-				"location": "%(apikey)s/endpoint-connection-type/%(_id)d"
-			},
-			"endpointPayloadType":{
-				"location": "%(apikey)s/endpoint-payload-type/%(_id)d"
-			},
-			"endpoint":{
-				"location": "%(apikey)s/Endpoint/%(_id)s"
-			},
-			"location":{
-				"location": "%(apikey)s/Location/%(_id)s"
-			},
-			"locationPosition":{
-				"location": "%(apikey)s/LocationPosition/%(_id)s/%(dr)s"
-			},
-			"organization":{
-				"location": "%(apikey)s/Organization/%(_id)s"
-			},
-			"organizationContact":{
-				"location": "%(apikey)s/OrganizationContact/%(_id)s/%(dr)s"
-			},
-			"practitioner":{
-				"location": "%(apikey)s/Practitioner/%(_id)s"
-			},
-			"qualification":{
-				"location": "%(apikey)s/Qualification/%(_id)s/%(dr)s"
-			},
-			"communication":{
-				"location": "%(apikey)s/PractitionerCommunication/%(_id)s/%(dr)s"
-			},
-			"practitionerRole":{
-				"location": "%(apikey)s/PractitionerRole/%(_id)s"
-			},
-			"availableTime":{
-				"location": "%(apikey)s/AvailableTime/%(_id)s/%(dr)s"
-			},
-			"notAvailable":{
-				"location": "%(apikey)s/NotAvailable/%(_id)s/%(dr)s"
-			},
-			"healthcareService":{
-				"location": "%(apikey)s/HealthcareService/%(_id)s"
-			}
+      "schedule": {
+          "location": "%(apikey)s/schedule/%(_id)s"
+      },
+     	"slot": {
+        "location": "%(apikey)s/slot/%(_id)s"
+     	},
+     "appointment": {
+        "location": "%(apikey)s/appointment/%(_id)s"
+     },
+     "appointmentParticipant": {
+        "location": "%(apikey)s/appointment-participant/%(_id)s/%(dr)s"
+     },
+     "appointmentResponse": {
+        "location": "%(apikey)s/appointment-response/%(_id)s"
+     },         
+     "udiEntryType":{
+        "location": "%(apikey)s/udi-entry-type/%(_id)d"
+     },         
+     "deviceStatus":{
+        "location": "%(apikey)s/device-status/%(_id)d"
+     },         
+     "deviceKind":{
+        "location": "%(apikey)s/device-kind/%(_id)d"
+     },         
+     "deviceSafety":{
+        "location": "%(apikey)s/device-safety/%(_id)d"
+     },         
+     "operationalStatus":{
+        "location": "%(apikey)s/operational-status/%(_id)d"
+     },         
+     "parameterGroup":{
+        "location": "%(apikey)s/parameter-group/%(_id)d"
+     },         
+     "measurementPrinciple":{
+        "location": "%(apikey)s/measurement-principle/%(_id)d"
+     },         
+     "specificationType":{
+        "location": "%(apikey)s/specification-type/%(_id)d"
+     },         
+     "metricOperationalStatus":{
+        "location": "%(apikey)s/metric-operational-status/%(_id)d"
+     },         
+     "deviceMetricType":{
+        "location": "%(apikey)s/device-metric-type/%(_id)d"
+     },         
+     "metricColor":{
+        "location": "%(apikey)s/metric-color/%(_id)d"
+     },         
+     "metricCategory":{
+        "location": "%(apikey)s/metric-category/%(_id)d"
+     },         
+     "metricCalibrationType":{
+        "location": "%(apikey)s/metric-calibration-type/%(_id)d"
+     },         
+     "metricCalibrationState":{
+        "location": "%(apikey)s/metric-calibration-state/%(_id)d"
+     },         
+     "substanceStatus":{
+        "location": "%(apikey)s/substance-status/%(_id)d"
+     },         
+     "substanceCategory":{
+        "location": "%(apikey)s/substance-category/%(_id)d"
+     },         
+     "substanceCode":{
+        "location": "%(apikey)s/substance-code/%(_id)d"
+     },
+     "device": {
+        "location": "%(apikey)s/device/%(_id)s"
+     },
+     "deviceUdi": {
+        "location": "%(apikey)s/device-udi/%(_id)s"
+     },
+     "deviceComponent": {
+        "location": "%(apikey)s/device-component/%(_id)s"
+     },
+     "deviceComponentProductionSpecification": {
+        "location": "%(apikey)s/device-component-production-specification/%(_id)s/%(dr)s"
+     },
+     "deviceMetric": {
+        "location": "%(apikey)s/device-metric/%(_id)s"
+     },
+     "deviceMetricCalibration": {
+        "location": "%(apikey)s/device-metric-calibration/%(_id)s/%(dr)s"
+     },
+     "substance": {
+        "location": "%(apikey)s/substance/%(_id)s"
+     },
+     "substanceInstance": {
+        "location": "%(apikey)s/substance-instance/%(_id)s/%(dr)s"
+     },
+     "substanceIngredient": {
+        "location": "%(apikey)s/substance-ingredient/%(_id)s/%(dr)s"
+     },
+		"organizationType":{
+			"location": "%(apikey)s/organization-type/%(_id)d"
+		},
+		"contactentityType":{
+			"location": "%(apikey)s/contactentity-type/%(_id)d"
+		},
+		"locationStatus":{
+			"location": "%(apikey)s/location-status/%(_id)d"
+		},
+		"bedStatus":{
+			"location": "%(apikey)s/bed-status/%(_id)d"
+		},
+		"locationMode":{
+			"location": "%(apikey)s/location-mode/%(_id)d"
+		},
+		"locationMode":{
+			"location": "%(apikey)s/location-mode/%(_id)d"
+		},
+		"serviceDeliveryLocationRoleType":{
+			"location": "%(apikey)s/service-delivery-location-role-type/%(_id)d"
+		},
+		"locationPhysicalType":{
+			"location": "%(apikey)s/location-physical-type/%(_id)d"
+		},
+		"qualificationCode":{
+			"location": "%(apikey)s/qualification-code/%(_id)d"
+		},
+		"practitionerRoleCode":{
+			"location": "%(apikey)s/practitioner-role-code/%(_id)d"
+		},
+		"practiceCode":{
+			"location": "%(apikey)s/practice-code/%(_id)d"
+		},
+		"daysOfWeek":{
+			"location": "%(apikey)s/days-of-week/%(_id)d"
+		},
+		"serviceType":{
+			"location": "%(apikey)s/service-type/%(_id)d"
+		},
+		"serviceCategory":{
+			"location": "%(apikey)s/service-category/%(_id)d"
+		},
+		"serviceProvisionConditions":{
+			"location": "%(apikey)s/service-provision-conditions/%(_id)d"
+		},
+		"serviceReferralMethod":{
+			"location": "%(apikey)s/service-referral-method/%(_id)d"
+		},
+		"endpointStatus":{
+			"location": "%(apikey)s/endpoint-status/%(_id)d"
+		},
+		"endpointConnectionType":{
+			"location": "%(apikey)s/endpoint-connection-type/%(_id)d"
+		},
+		"endpointPayloadType":{
+			"location": "%(apikey)s/endpoint-payload-type/%(_id)d"
+		},
+		"endpoint":{
+			"location": "%(apikey)s/Endpoint/%(_id)s"
+		},
+		"location":{
+			"location": "%(apikey)s/Location/%(_id)s"
+		},
+		"locationPosition":{
+			"location": "%(apikey)s/LocationPosition/%(_id)s/%(dr)s"
+		},
+		"organization":{
+			"location": "%(apikey)s/Organization/%(_id)s"
+		},
+		"organizationContact":{
+			"location": "%(apikey)s/OrganizationContact/%(_id)s/%(dr)s"
+		},
+		"practitioner":{
+			"location": "%(apikey)s/Practitioner/%(_id)s"
+		},
+		"qualification":{
+			"location": "%(apikey)s/Qualification/%(_id)s/%(dr)s"
+		},
+		"communication":{
+			"location": "%(apikey)s/PractitionerCommunication/%(_id)s/%(dr)s"
+		},
+		"practitionerRole":{
+			"location": "%(apikey)s/PractitionerRole/%(_id)s"
+		},
+		"availableTime":{
+			"location": "%(apikey)s/AvailableTime/%(_id)s/%(dr)s"
+		},
+		"notAvailable":{
+			"location": "%(apikey)s/NotAvailable/%(_id)s/%(dr)s"
+		},
+		"healthcareService":{
+			"location": "%(apikey)s/HealthcareService/%(_id)s"
+		}
 		}
 	}
 }

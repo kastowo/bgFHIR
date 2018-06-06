@@ -98,7 +98,40 @@ var routesDefaultFHIR = function(app, DefaultFHIR){
 	app.get('/:apikey/check-uniqevalue/:fdvalue/:tbname', DefaultFHIR.get.checkUniqeValue);
 	app.get('/:apikey/check-groupqouta/:group_id', DefaultFHIR.get.checkGroupQuota);
 	app.get('/:apikey/check-memberentitygroup/:entity_id/:group_id', DefaultFHIR.get.checkMemberEntityGroup);
-	// Service Provider Directory Resources, by : hardika cs(start)
+	app.get('/:apikey/udi-entry-type/:_id', DefaultFHIR.get.udiEntryType);
+	app.get('/:apikey/udi-entry-type/code/:code', DefaultFHIR.get.udiEntryTypeCode);
+	app.get('/:apikey/device-status/:_id', DefaultFHIR.get.deviceStatus);
+	app.get('/:apikey/device-status/code/:code', DefaultFHIR.get.deviceStatusCode);
+	app.get('/:apikey/device-kind/:_id', DefaultFHIR.get.deviceKind);
+	app.get('/:apikey/device-kind/code/:code', DefaultFHIR.get.deviceKindCode);
+	app.get('/:apikey/device-safety/:_id', DefaultFHIR.get.deviceSafety);
+	app.get('/:apikey/device-safety/code/:code', DefaultFHIR.get.deviceSafetyCode);
+	app.get('/:apikey/operational-status/:_id', DefaultFHIR.get.operationalStatus);
+	app.get('/:apikey/operational-status/code/:code', DefaultFHIR.get.operationalStatusCode);
+	app.get('/:apikey/parameter-group/:_id', DefaultFHIR.get.parameterGroup);
+	app.get('/:apikey/parameter-group/code/:code', DefaultFHIR.get.parameterGroupCode);
+	app.get('/:apikey/measurement-principle/:_id', DefaultFHIR.get.measurementPrinciple);
+	app.get('/:apikey/measurement-principle/code/:code', DefaultFHIR.get.measurementPrincipleCode);
+	app.get('/:apikey/specification-type/:_id', DefaultFHIR.get.specificationType);
+	app.get('/:apikey/specification-type/code/:code', DefaultFHIR.get.specificationTypeCode);
+	app.get('/:apikey/metric-operational-status/:_id', DefaultFHIR.get.metricOperationalStatus);
+	app.get('/:apikey/metric-operational-status/code/:code', DefaultFHIR.get.metricOperationalStatusCode);
+	app.get('/:apikey/device-metric-type/:_id?', DefaultFHIR.get.deviceMetricType);
+	app.get('/:apikey/device-metric-type/code/:code?', DefaultFHIR.get.deviceMetricTypeCode);
+	app.get('/:apikey/metric-color/:_id', DefaultFHIR.get.metricColor);
+	app.get('/:apikey/metric-color/code/:code', DefaultFHIR.get.metricColorCode);
+	app.get('/:apikey/metric-category/:_id', DefaultFHIR.get.metricCategory);
+	app.get('/:apikey/metric-category/code/:code', DefaultFHIR.get.metricCategoryCode);
+	app.get('/:apikey/metric-calibration-type/:_id', DefaultFHIR.get.metricCalibrationType);
+	app.get('/:apikey/metric-calibration-type/code/:code', DefaultFHIR.get.metricCalibrationTypeCode);
+	app.get('/:apikey/metric-calibration-state/:_id', DefaultFHIR.get.metricCalibrationState);
+	app.get('/:apikey/metric-calibration-state/code/:code', DefaultFHIR.get.metricCalibrationStateCode);
+	app.get('/:apikey/substance-status/:_id', DefaultFHIR.get.substanceStatus);
+	app.get('/:apikey/substance-status/code/:code', DefaultFHIR.get.substanceStatusCode);
+	app.get('/:apikey/substance-category/:_id', DefaultFHIR.get.substanceCategory);
+	app.get('/:apikey/substance-category/code/:code', DefaultFHIR.get.substanceCategoryCode);
+	app.get('/:apikey/substance-code/:_id', DefaultFHIR.get.substanceCode);
+	app.get('/:apikey/substance-code/code/:code', DefaultFHIR.get.substanceCodeCode);
 	app.get('/:apikey/organization-type/:_id', DefaultFHIR.get.organizationType);
 	app.get('/:apikey/organization-type/code/:code', DefaultFHIR.get.organizationTypeCode);
 	app.get('/:apikey/contactentity-type/:_id', DefaultFHIR.get.contactentityType);
@@ -135,11 +168,9 @@ var routesDefaultFHIR = function(app, DefaultFHIR){
 	app.get('/:apikey/endpoint-connection-type/code/:code', DefaultFHIR.get.endpointConnectionTypeCode);
 	app.get('/:apikey/endpoint-payload-type/:_id', DefaultFHIR.get.endpointPayloadType);
 	app.get('/:apikey/endpoint-payload-type/code/:code', DefaultFHIR.get.endpointPayloadTypeCode);
-	
 	app.get('/:apikey/AvailableTime', DefaultFHIR.get.availableTime);
 	app.get('/:apikey/NotAvailable', DefaultFHIR.get.notAvailable);
-	//hcs end
-
+	
 	//post
 	app.post('/:apikey/identity-AssuranceLevel', DefaultFHIR.post.identityAssuranceLevel);
 	app.post('/:apikey/administrative-gender', DefaultFHIR.post.administrativeGender);
@@ -190,7 +221,22 @@ var routesDefaultFHIR = function(app, DefaultFHIR){
 	app.post('/:apikey/appointment-status', DefaultFHIR.post.appointmentStatus);
 	app.post('/:apikey/participant-required', DefaultFHIR.post.participantRequired);
 	app.post('/:apikey/participation-status', DefaultFHIR.post.participationStatus);
-	// Service Provider Directory Resources, by : hardika cs(start)
+	app.post('/:apikey/udi-entry-type', DefaultFHIR.post.udiEntryType);
+	app.post('/:apikey/device-status', DefaultFHIR.post.deviceStatus);
+	app.post('/:apikey/device-kind', DefaultFHIR.post.deviceKind);
+	app.post('/:apikey/device-safety', DefaultFHIR.post.deviceSafety);
+	app.post('/:apikey/operational-status', DefaultFHIR.post.operationalStatus);
+	app.post('/:apikey/parameter-group', DefaultFHIR.post.parameterGroup);
+	app.post('/:apikey/measurement-principle', DefaultFHIR.post.measurementPrinciple);
+	app.post('/:apikey/specification-type', DefaultFHIR.post.specificationType);
+	app.post('/:apikey/metric-operational-status', DefaultFHIR.post.metricOperationalStatus);
+	app.post('/:apikey/device-metric-type', DefaultFHIR.post.deviceMetricType);
+	app.post('/:apikey/metric-color', DefaultFHIR.post.metricColor);
+	app.post('/:apikey/metric-category', DefaultFHIR.post.metricCategory);
+	app.post('/:apikey/metric-calibration-type', DefaultFHIR.post.metricCalibrationType);
+	app.post('/:apikey/metric-calibration-state', DefaultFHIR.post.metricCalibrationState);
+	app.post('/:apikey/substance-category', DefaultFHIR.post.substanceCategory);
+	app.post('/:apikey/substance-code', DefaultFHIR.post.substanceCode);
 	app.post('/:apikey/organization-type', DefaultFHIR.post.organizationType);
 	app.post('/:apikey/contactentity-type', DefaultFHIR.post.contactentityType);
 	app.post('/:apikey/location-status', DefaultFHIR.post.locationStatus);
@@ -209,11 +255,8 @@ var routesDefaultFHIR = function(app, DefaultFHIR){
 	app.post('/:apikey/endpoint-status', DefaultFHIR.post.endpointStatus);
 	app.post('/:apikey/endpoint-connection-type', DefaultFHIR.post.endpointConnectionType);
 	app.post('/:apikey/endpoint-payload-type', DefaultFHIR.post.endpointPayloadType);
-	
 	app.post('/:apikey/AvailableTime', DefaultFHIR.post.availableTime);
 	app.post('/:apikey/NotAvailable', DefaultFHIR.post.notAvailable);
-	// Service Provider Directory Resources, by : hardika cs(end)
-
 
 	//put
 	app.put('/:apikey/identity-AssuranceLevel/:_id', DefaultFHIR.put.identityAssuranceLevel);
@@ -266,7 +309,23 @@ var routesDefaultFHIR = function(app, DefaultFHIR){
 	app.put('/:apikey/flag-category/:_id', DefaultFHIR.put.flagCategory);	
 	app.put('/:apikey/flag-code/:_id', DefaultFHIR.put.flagCode);		
 	app.put('/:apikey/re-admission-indicator/:_id', DefaultFHIR.put.reAdmissionIndicator);	
-	// Service Provider Directory Resources, by : hardika cs(start)
+	app.put('/:apikey/udi-entry-type/:_id', DefaultFHIR.put.udiEntryType);
+	app.put('/:apikey/device-status/:_id', DefaultFHIR.put.deviceStatus);
+	app.put('/:apikey/device-kind/:_id', DefaultFHIR.put.deviceKind);
+	app.put('/:apikey/device-safety/:_id', DefaultFHIR.put.deviceSafety);
+	app.put('/:apikey/operational-status/:_id', DefaultFHIR.put.operationalStatus);
+	app.put('/:apikey/parameter-group/:_id', DefaultFHIR.put.parameterGroup);
+	app.put('/:apikey/measurement-principle/:_id', DefaultFHIR.put.measurementPrinciple);
+	app.put('/:apikey/specification-type/:_id', DefaultFHIR.put.specificationType);
+	app.put('/:apikey/metric-operational-status/:_id', DefaultFHIR.put.metricOperationalStatus);
+	app.put('/:apikey/device-metric-type/:_id', DefaultFHIR.put.deviceMetricType);
+	app.put('/:apikey/metric-color/:_id', DefaultFHIR.put.metricColor);
+	app.put('/:apikey/metric-category/:_id', DefaultFHIR.put.metricCategory);
+	app.put('/:apikey/metric-calibration-type/:_id', DefaultFHIR.put.metricCalibrationType);
+	app.put('/:apikey/metric-calibration-state/:_id', DefaultFHIR.put.metricCalibrationState);
+	app.put('/:apikey/substance-status/:_id', DefaultFHIR.put.substanceStatus);
+	app.put('/:apikey/substance-category/:_id', DefaultFHIR.put.substanceCategory);
+	app.put('/:apikey/substance-code/:_id', DefaultFHIR.put.substanceCode);
 	app.put('/:apikey/organization-type/:_id', DefaultFHIR.put.organizationType);
 	app.put('/:apikey/contactentity-type/:_id', DefaultFHIR.put.contactentityType);
 	app.put('/:apikey/location-status/:_id', DefaultFHIR.put.locationStatus);
@@ -287,7 +346,6 @@ var routesDefaultFHIR = function(app, DefaultFHIR){
 	app.put('/:apikey/endpoint-payload-type/:_id', DefaultFHIR.put.endpointPayloadType);
 	app.put('/:apikey/AvailableTime/:_id?/:dr?', DefaultFHIR.put.availableTime);
 	app.put('/:apikey/NotAvailable/:_id?/:dr?', DefaultFHIR.put.notAvailable);
-	// Service Provider Directory Resources, by : hardika cs(end)
 	
 
 }

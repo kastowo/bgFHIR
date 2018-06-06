@@ -4300,7 +4300,7 @@ var controller = {
 						//check apikey
 						checkApikey(apikey, ipAddres, function(result){
 							if(result.err_code == 0){
-								myEmitter.prependListener('checkPatientID', function(){
+								myEmitter.prependOnceListener('checkPatientID', function(){
 									checkUniqeValue(apikey, "PATIENT_ID|" + patientId, 'PATIENT', function(resPatientID){
 										if(resPatientID.err_code > 0){
 												ApiFHIR.put('patient', {"apikey": apikey, "_id": patientId}, {body: dataPatient, json: true}, function(error, response, body){
@@ -4317,7 +4317,7 @@ var controller = {
 									})
 								})
 
-								myEmitter.prependListener('checkAnimalId', function(){
+								myEmitter.prependOnceListener('checkAnimalId', function(){
 									if(validator.isEmpty(animalId)){
 										myEmitter.emit('checkPatientID');
 									}else{
@@ -4331,7 +4331,7 @@ var controller = {
 									}
 								})
 
-								myEmitter.prependListener('checkAnimalBreeds', function(){
+								myEmitter.prependOnceListener('checkAnimalBreeds', function(){
 									if(validator.isEmpty(animalBreedCode)){
 										myEmitter.emit('checkAnimalId');
 									}else{
@@ -4345,7 +4345,7 @@ var controller = {
 									}
 								})
 
-								myEmitter.prependListener('checkAnimalSpesies', function(){
+								myEmitter.prependOnceListener('checkAnimalSpesies', function(){
 									if(validator.isEmpty(animalSpeciesCode)){
 										myEmitter.emit('checkAnimalBreeds');
 									}else{
@@ -4359,7 +4359,7 @@ var controller = {
 									}
 								})
 
-								myEmitter.prependListener('checkLinkType', function(){
+								myEmitter.prependOnceListener('checkLinkType', function(){
 									if(validator.isEmpty(linkTypeCode)){
 										myEmitter.emit('checkAnimalSpesies');
 									}else{
@@ -4373,7 +4373,7 @@ var controller = {
 									}
 								})
 
-								myEmitter.prependListener('checkLinkOtherId', function(){
+								myEmitter.prependOnceListener('checkLinkOtherId', function(){
 									if(validator.isEmpty(linkOtherId)){
 										myEmitter.emit('checkLinkType');
 									}else{
@@ -4387,7 +4387,7 @@ var controller = {
 									}
 								})
 
-								myEmitter.prependListener('checkLinkOtherRelatedPerson', function(){
+								myEmitter.prependOnceListener('checkLinkOtherRelatedPerson', function(){
 									if(validator.isEmpty(linkOtherRelatedPersonId)){
 										myEmitter.emit('checkLinkOtherId');
 									}else{
@@ -4401,7 +4401,7 @@ var controller = {
 									}
 								})
 
-								myEmitter.prependListener('checkLinkOtherPatient', function(){
+								myEmitter.prependOnceListener('checkLinkOtherPatient', function(){
 									if(validator.isEmpty(linkOtherPatientId)){
 										myEmitter.emit('checkLinkOtherRelatedPerson');
 									}else{
@@ -4415,7 +4415,7 @@ var controller = {
 									}
 								})
 
-								myEmitter.prependListener('checkManagingOrganization', function(){
+								myEmitter.prependOnceListener('checkManagingOrganization', function(){
 									if(validator.isEmpty(managingOrganizationOrganizationId)){
 										myEmitter.emit('checkLinkOtherPatient');
 									}else{
@@ -4429,7 +4429,7 @@ var controller = {
 									}
 								})
 
-								myEmitter.prependListener('checkGeneralPractitionerId', function(){
+								myEmitter.prependOnceListener('checkGeneralPractitionerId', function(){
 									if(validator.isEmpty(generalPractitionerId)){
 										myEmitter.emit('checkManagingOrganization');
 									}else{
@@ -4443,7 +4443,7 @@ var controller = {
 									}
 								})
 
-								myEmitter.prependListener('checkGeneralPractitionerPractitioner', function(){
+								myEmitter.prependOnceListener('checkGeneralPractitionerPractitioner', function(){
 									if(validator.isEmpty(generalPractitionerPractitionerId)){
 										myEmitter.emit('checkGeneralPractitionerId');
 									}else{
@@ -4457,7 +4457,7 @@ var controller = {
 									}
 								})
 
-								myEmitter.prependListener('checkGeneralPractitionerOrganization', function(){
+								myEmitter.prependOnceListener('checkGeneralPractitionerOrganization', function(){
 									if(validator.isEmpty(generalPractitionerOrganizationId)){
 										myEmitter.emit('checkGeneralPractitionerPractitioner');
 									}else{
@@ -4471,7 +4471,7 @@ var controller = {
 									}
 								})
 
-								myEmitter.prependListener('checkCommunicationId', function(){
+								myEmitter.prependOnceListener('checkCommunicationId', function(){
 									if(validator.isEmpty(communicationId)){
 										myEmitter.emit('checkGeneralPractitionerPractitioner');
 									}else{
@@ -4485,12 +4485,12 @@ var controller = {
 									}
 								})
 
-								myEmitter.prependListener('checkLanguage', function(){
+								myEmitter.prependOnceListener('checkLanguage', function(){
 									if(validator.isEmpty(communicationLanguageCode)){
 										myEmitter.emit('checkCommunicationId');
 									}else{
 										checkCode(apikey, communicationLanguageCode, 'LANGUAGES', function(resLanguageCode){
-											if(resLanguageCode.err_code == 0){
+											if(resLanguageCode.err_code > 0){
 												myEmitter.emit('checkCommunicationId');				
 											}else{
 												res.json({"err_code": 503, "err_msg": "Language code not found."});	
@@ -4499,7 +4499,7 @@ var controller = {
 									}
 								})
 
-								myEmitter.prependListener('checkMaritalStatus', function(){
+								myEmitter.prependOnceListener('checkMaritalStatus', function(){
 									if(validator.isEmpty(maritalStatusCode)){
 										myEmitter.emit('checkLanguage');
 									}else{
@@ -4631,7 +4631,7 @@ var controller = {
 						//check apikey
 						checkApikey(apikey, ipAddres, function(result){
 							if(result.err_code == 0){
-								myEmitter.prependListener('checkPatientID', function(){
+								myEmitter.prependOnceListener('checkPatientID', function(){
 									checkUniqeValue(apikey, "PATIENT_ID|" + patientId, 'PATIENT', function(resPatientID){
 										if(resPatientID.err_code > 0){
 											checkUniqeValue(apikey, "IDENTIFIER_ID|" + identifierId, 'IDENTIFIER', function(resIdentifierID){
@@ -4654,7 +4654,7 @@ var controller = {
 									})
 								})
 
-								myEmitter.prependListener('checkIdentifierValue', function(){
+								myEmitter.prependOnceListener('checkIdentifierValue', function(){
 									if(validator.isEmpty(identifierValue)){
 										myEmitter.emit('checkPatientID');
 									}else{
@@ -4668,7 +4668,7 @@ var controller = {
 									}
 								})
 
-								myEmitter.prependListener('checkIdentifierType', function(){
+								myEmitter.prependOnceListener('checkIdentifierType', function(){
 									if(validator.isEmpty(identifierTypeCode)){
 										myEmitter.emit('checkIdentifierValue');
 									}else{
@@ -4971,7 +4971,7 @@ var controller = {
 						//check apikey
 						checkApikey(apikey, ipAddres, function(result){
 							if(result.err_code == 0){
-								myEmitter.prependListener('checkPatientID', function(){
+								myEmitter.prependOnceListener('checkPatientID', function(){
 									checkUniqeValue(apikey, "PATIENT_ID|" + patientId, 'PATIENT', function(resPatientID){
 										if(resPatientID.err_code > 0){
 											checkUniqeValue(apikey, "CONTACT_POINT_ID|" + contactPointId, 'CONTACT_POINT', function(resContactPointID){
@@ -4994,7 +4994,7 @@ var controller = {
 									})
 								})
 
-								myEmitter.prependListener('checkContactPointValue', function(){
+								myEmitter.prependOnceListener('checkContactPointValue', function(){
 									if(validator.isEmpty(contactPointValue)){
 										myEmitter.emit('checkPatientID');
 									}else{
@@ -5008,7 +5008,7 @@ var controller = {
 									}
 								})
 
-								myEmitter.prependListener('checkContactPointUse', function(){
+								myEmitter.prependOnceListener('checkContactPointUse', function(){
 									if(validator.isEmpty(contactPointUseCode)){
 										myEmitter.emit('checkContactPointValue');
 									}else{
@@ -5197,7 +5197,7 @@ var controller = {
 						//check apikey
 						checkApikey(apikey, ipAddres, function(result){
 							if(result.err_code == 0){
-								myEmitter.prependListener('checkPatientID', function(){
+								myEmitter.prependOnceListener('checkPatientID', function(){
 									checkUniqeValue(apikey, "PATIENT_ID|" + patientId, 'PATIENT', function(resPatientID){
 										if(resPatientID.err_code > 0){
 											checkUniqeValue(apikey, "ADDRESS_ID|" + addressId, 'ADDRESS', function(resAddressID){
@@ -5220,7 +5220,7 @@ var controller = {
 									})
 								})
 
-								myEmitter.prependListener('checkAddressType', function(){
+								myEmitter.prependOnceListener('checkAddressType', function(){
 									if(validator.isEmpty(addressTypeCode)){
 										myEmitter.emit('checkPatientID');
 									}else{
@@ -5350,7 +5350,7 @@ var controller = {
 						//check apikey
 						checkApikey(apikey, ipAddres, function(result){
 							if(result.err_code == 0){
-								myEmitter.prependListener('checkPatientID', function(){
+								myEmitter.prependOnceListener('checkPatientID', function(){
 									checkUniqeValue(apikey, "PATIENT_ID|" + patientId, 'PATIENT', function(resPatientID){
 										if(resPatientID.err_code > 0){
 											checkUniqeValue(apikey, "ATTACHMENT_ID|" + attachmentId, 'ATTACHMENT', function(resAttachmentID){
@@ -5771,7 +5771,7 @@ var controller = {
 						//check apikey
 						checkApikey(apikey, ipAddres, function(result){
 							if(result.err_code == 0){
-								myEmitter.prependListener('checkPatientID', function(){
+								myEmitter.prependOnceListener('checkPatientID', function(){
 									checkUniqeValue(apikey, "PATIENT_ID|" + patientId, 'PATIENT', function(resPatientID){
 										if(resPatientID.err_code > 0){
 											checkUniqeValue(apikey, "PATIENT_CONTACT_ID|" + contactId, 'PATIENT_CONTACT', function(resContactID){
@@ -5857,7 +5857,7 @@ var controller = {
 
 
 
-								myEmitter.prependListener("checkOrganizationId", function(){
+								myEmitter.prependOnceListener("checkOrganizationId", function(){
 									if(validator.isEmpty(contactOrganizationId)){
 										myEmitter.emit('checkPatientID');
 									}else{
@@ -5871,7 +5871,7 @@ var controller = {
 									}
 								})
 
-								myEmitter.prependListener("checkGender", function(){
+								myEmitter.prependOnceListener("checkGender", function(){
 									if(validator.isEmpty(contactGender)){
 										myEmitter.emit('checkOrganizationId');
 									}else{
@@ -5885,7 +5885,7 @@ var controller = {
 									}
 								})
 
-								myEmitter.prependListener("checkAddressTypeCode", function(){
+								myEmitter.prependOnceListener("checkAddressTypeCode", function(){
 									if(validator.isEmpty(contactAddressTypeCode)){
 										myEmitter.emit('checkGender');
 									}else{
@@ -5899,7 +5899,7 @@ var controller = {
 									}
 								})
 
-								myEmitter.prependListener("checkAddressUseCode", function(){
+								myEmitter.prependOnceListener("checkAddressUseCode", function(){
 									if(validator.isEmpty(contactAddressUseCode)){
 										myEmitter.emit('checkAddressTypeCode');
 									}else{
@@ -5913,7 +5913,7 @@ var controller = {
 									}
 								})
 
-								myEmitter.prependListener("checkNameUseCode", function(){
+								myEmitter.prependOnceListener("checkNameUseCode", function(){
 									if(validator.isEmpty(contactNameUseCode)){
 										myEmitter.emit('checkAddressUseCode');
 									}else{

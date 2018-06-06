@@ -2436,7 +2436,7 @@ var controller = {
 						//check apikey
 						checkApikey(apikey, ipAddres, function(result){
 							if(result.err_code == 0){
-								myEmitter.prependListener('addPersonLink', function(){
+								myEmitter.prependOnceListener('addPersonLink', function(){
 									checkUniqeValue(apikey, "PERSON_ID|" + personId, 'PERSON', function(resPersonID){
 										if(resPersonID.err_code > 0){
 											//person_link
@@ -2466,7 +2466,7 @@ var controller = {
 									})	
 								})
 
-								myEmitter.prependListener('checkAssuranceLevel', function(){
+								myEmitter.prependOnceListener('checkAssuranceLevel', function(){
 									if(validator.isEmpty(assuranceLevel)){
 										myEmitter.emit('addPersonLink');
 									}else{
@@ -2605,7 +2605,7 @@ var controller = {
 						//check apikey
 						checkApikey(apikey, ipAddres, function(result){
 							if(result.err_code == 0){
-								myEmitter.prependListener('updatePerson', function(){
+								myEmitter.prependOnceListener('updatePerson', function(){
 									checkUniqeValue(apikey, "PERSON_ID|" + personId, 'PERSON', function(resPersonID){
 										if(resPersonID.err_code > 0){
 												ApiFHIR.put('person', {"apikey": apikey, "_id": personId}, {body: dataPerson, json: true}, function(error, response, body){
@@ -2622,7 +2622,7 @@ var controller = {
 									})
 								})
 
-								myEmitter.prependListener('checkOrganizationId', function(){
+								myEmitter.prependOnceListener('checkOrganizationId', function(){
 									if(validator.isEmpty(organizationId)){
 										myEmitter.emit('updatePerson');
 									}else{
@@ -2756,7 +2756,7 @@ var controller = {
 						//check apikey
 						checkApikey(apikey, ipAddres, function(result){
 							if(result.err_code == 0){
-								myEmitter.prependListener('checkPersonID', function(){
+								myEmitter.prependOnceListener('checkPersonID', function(){
 									checkUniqeValue(apikey, "PERSON_ID|" + personId, 'PERSON', function(resPersonID){
 										if(resPersonID.err_code > 0){
 											checkUniqeValue(apikey, "IDENTIFIER_ID|" + identifierId, 'IDENTIFIER', function(resIdentifierID){
@@ -2779,7 +2779,7 @@ var controller = {
 									})
 								})
 
-								myEmitter.prependListener('checkIdentifierValue', function(){
+								myEmitter.prependOnceListener('checkIdentifierValue', function(){
 									if(validator.isEmpty(identifierValue)){
 										myEmitter.emit('checkPersonID');
 									}else{
@@ -2793,7 +2793,7 @@ var controller = {
 									}
 								})
 
-								myEmitter.prependListener('checkIdentifierType', function(){
+								myEmitter.prependOnceListener('checkIdentifierType', function(){
 									if(validator.isEmpty(identifierTypeCode)){
 										myEmitter.emit('checkIdentifierValue');
 									}else{
@@ -3096,7 +3096,7 @@ var controller = {
 						//check apikey
 						checkApikey(apikey, ipAddres, function(result){
 							if(result.err_code == 0){
-								myEmitter.prependListener('checkPersonID', function(){
+								myEmitter.prependOnceListener('checkPersonID', function(){
 									checkUniqeValue(apikey, "PERSON_ID|" + personId, 'PERSON', function(resPersonID){
 										if(resPersonID.err_code > 0){
 											checkUniqeValue(apikey, "CONTACT_POINT_ID|" + contactPointId, 'CONTACT_POINT', function(resContactPointID){
@@ -3119,7 +3119,7 @@ var controller = {
 									})
 								})
 
-								myEmitter.prependListener('checkContactPointValue', function(){
+								myEmitter.prependOnceListener('checkContactPointValue', function(){
 									if(validator.isEmpty(contactPointValue)){
 										myEmitter.emit('checkPersonID');
 									}else{
@@ -3133,7 +3133,7 @@ var controller = {
 									}
 								})
 
-								myEmitter.prependListener('checkContactPointUse', function(){
+								myEmitter.prependOnceListener('checkContactPointUse', function(){
 									if(validator.isEmpty(contactPointUseCode)){
 										myEmitter.emit('checkContactPointValue');
 									}else{
@@ -3322,7 +3322,7 @@ var controller = {
 						//check apikey
 						checkApikey(apikey, ipAddres, function(result){
 							if(result.err_code == 0){
-								myEmitter.prependListener('checkPersonID', function(){
+								myEmitter.prependOnceListener('checkPersonID', function(){
 									checkUniqeValue(apikey, "PERSON_ID|" + personId, 'PERSON', function(resPersonID){
 										if(resPersonID.err_code > 0){
 											checkUniqeValue(apikey, "ADDRESS_ID|" + addressId, 'ADDRESS', function(resAddressID){
@@ -3345,7 +3345,7 @@ var controller = {
 									})
 								})
 
-								myEmitter.prependListener('checkAddressType', function(){
+								myEmitter.prependOnceListener('checkAddressType', function(){
 									if(validator.isEmpty(addressTypeCode)){
 										myEmitter.emit('checkPersonID');
 									}else{
@@ -3475,7 +3475,7 @@ var controller = {
 						//check apikey
 						checkApikey(apikey, ipAddres, function(result){
 							if(result.err_code == 0){
-								myEmitter.prependListener('checkPatientID', function(){
+								myEmitter.prependOnceListener('checkPatientID', function(){
 									checkUniqeValue(apikey, "PERSON_ID|" + personId, 'PERSON', function(resPersonID){
 										if(resPersonID.err_code > 0){
 											checkUniqeValue(apikey, "ATTACHMENT_ID|" + attachmentId, 'ATTACHMENT', function(resAttachmentID){
@@ -3627,7 +3627,7 @@ var controller = {
 						//check apikey
 						checkApikey(apikey, ipAddres, function(result){
 							if(result.err_code == 0){
-								myEmitter.prependListener('updatePersonLink', function(){
+								myEmitter.prependOnceListener('updatePersonLink', function(){
 									checkUniqeValue(apikey, "PERSON_ID|" + personId, 'PERSON', function(resPersonID){
 										if(resPersonID.err_code > 0){
 											checkUniqeValue(apikey, "PERSON_LINK_ID|" + personLinkId, 'PERSON_LINK', function(resPersonLinkID){
@@ -3651,7 +3651,7 @@ var controller = {
 									})	
 								})
 
-								myEmitter.prependListener('checkAssuranceLevel', function(){
+								myEmitter.prependOnceListener('checkAssuranceLevel', function(){
 									if(validator.isEmpty(assuranceLevel)){
 										myEmitter.emit('updatePersonLink');
 									}else{
