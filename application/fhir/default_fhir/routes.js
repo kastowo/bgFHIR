@@ -153,6 +153,12 @@ var routesDefaultFHIR = function(app, DefaultFHIR){
 	app.get('/:apikey/endpoint-connection-type/code/:code?', DefaultFHIR.get.endpointConnectionTypeCode);
 	app.get('/:apikey/endpoint-payload-type/:_id?', DefaultFHIR.get.endpointPayloadType);
 	app.get('/:apikey/endpoint-payload-type/code/:code?', DefaultFHIR.get.endpointPayloadTypeCode);
+	app.get('/:apikey/adverse-event-category/:_id?', DefaultFHIR.get.adverseEventCategory);
+	app.get('/:apikey/adverse-event-category/code/:code?', DefaultFHIR.get.adverseEventCategoryCode);
+	app.get('/:apikey/adverse-event-type/:_id?', DefaultFHIR.get.adverseEventType);
+	app.get('/:apikey/adverse-event-type/code/:code?', DefaultFHIR.get.adverseEventTypeCode);
+	app.get('/:apikey/adverse-event-seriousness/:_id?', DefaultFHIR.get.adverseEventSeriousness);
+	app.get('/:apikey/adverse-event-seriousness/code/:code?', DefaultFHIR.get.adverseEventSeriousnessCode);
 	// Service Provider Directory Resources, by : hardika cs(end)
 
 	//post method
@@ -236,6 +242,9 @@ var routesDefaultFHIR = function(app, DefaultFHIR){
 	app.post('/:apikey/endpoint-status', DefaultFHIR.post.endpointStatus);
 	app.post('/:apikey/endpoint-connection-type', DefaultFHIR.post.endpointConnectionType);
 	app.post('/:apikey/endpoint-payload-type', DefaultFHIR.post.endpointPayloadType);
+	app.post('/:apikey/adverse-event-category', DefaultFHIR.post.adverseEventCategory);
+	app.post('/:apikey/adverse-event-type', DefaultFHIR.post.adverseEventType);
+	app.post('/:apikey/adverse-event-seriousness', DefaultFHIR.post.adverseEventSeriousness);
 	// Service Provider Directory Resources, by : hardika cs(end)
 
 
@@ -319,6 +328,9 @@ var routesDefaultFHIR = function(app, DefaultFHIR){
 	app.put('/:apikey/endpoint-status/:_id', DefaultFHIR.put.endpointStatus);
 	app.put('/:apikey/endpoint-connection-type/:_id', DefaultFHIR.put.endpointConnectionType);
 	app.put('/:apikey/endpoint-payload-type/:_id', DefaultFHIR.put.endpointPayloadType);
+	app.put('/:apikey/adverse-event-category/:_id', DefaultFHIR.put.adverseEventCategory);
+	app.put('/:apikey/adverse-event-type/:_id', DefaultFHIR.put.adverseEventType);
+	app.put('/:apikey/adverse-event-seriousness/:_id', DefaultFHIR.put.adverseEventSeriousness);
 	// Service Provider Directory Resources, by : hardika cs(end)
 	
 }

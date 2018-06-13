@@ -170,6 +170,12 @@ var routesDefaultFHIR = function(app, DefaultFHIR){
 	app.get('/:apikey/endpoint-payload-type/code/:code', DefaultFHIR.get.endpointPayloadTypeCode);
 	app.get('/:apikey/AvailableTime', DefaultFHIR.get.availableTime);
 	app.get('/:apikey/NotAvailable', DefaultFHIR.get.notAvailable);
+	app.get('/:apikey/adverse-event-category/:_id', DefaultFHIR.get.adverseEventCategory);
+	app.get('/:apikey/adverse-event-category/code/:code', DefaultFHIR.get.adverseEventCategoryCode);
+	app.get('/:apikey/adverse-event-type/:_id', DefaultFHIR.get.adverseEventType);
+	app.get('/:apikey/adverse-event-type/code/:code', DefaultFHIR.get.adverseEventTypeCode);
+	app.get('/:apikey/adverse-event-seriousness/:_id', DefaultFHIR.get.adverseEventSeriousness);
+	app.get('/:apikey/adverse-event-seriousness/code/:code', DefaultFHIR.get.adverseEventSeriousnessCode);
 	
 	//post
 	app.post('/:apikey/identity-AssuranceLevel', DefaultFHIR.post.identityAssuranceLevel);
@@ -257,6 +263,9 @@ var routesDefaultFHIR = function(app, DefaultFHIR){
 	app.post('/:apikey/endpoint-payload-type', DefaultFHIR.post.endpointPayloadType);
 	app.post('/:apikey/AvailableTime', DefaultFHIR.post.availableTime);
 	app.post('/:apikey/NotAvailable', DefaultFHIR.post.notAvailable);
+	app.post('/:apikey/adverse-event-category', DefaultFHIR.post.adverseEventCategory);
+	app.post('/:apikey/adverse-event-type', DefaultFHIR.post.adverseEventType);
+	app.post('/:apikey/adverse-event-seriousness', DefaultFHIR.post.adverseEventSeriousness);
 
 	//put
 	app.put('/:apikey/identity-AssuranceLevel/:_id', DefaultFHIR.put.identityAssuranceLevel);
@@ -346,7 +355,9 @@ var routesDefaultFHIR = function(app, DefaultFHIR){
 	app.put('/:apikey/endpoint-payload-type/:_id', DefaultFHIR.put.endpointPayloadType);
 	app.put('/:apikey/AvailableTime/:_id?/:dr?', DefaultFHIR.put.availableTime);
 	app.put('/:apikey/NotAvailable/:_id?/:dr?', DefaultFHIR.put.notAvailable);
-	
+	app.put('/:apikey/adverse-event-category/:_id', DefaultFHIR.put.adverseEventCategory);
+	app.put('/:apikey/adverse-event-type/:_id', DefaultFHIR.put.adverseEventType);
+	app.put('/:apikey/adverse-event-seriousness/:_id', DefaultFHIR.put.adverseEventSeriousness);
 
 }
 module.exports = routesDefaultFHIR;

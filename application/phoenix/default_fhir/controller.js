@@ -11,12 +11,14 @@ var configYaml = yamlconfig.readConfig(path.resolve('../../application/config/co
 var host = configYaml.phoenix.host;
 var port = configYaml.phoenix.port;
 
+var hostHbase = configYaml.hbase.host;
+
 var hostFHIR = configYaml.fhir.host;
 var portFHIR = configYaml.fhir.port;
 
 // var phoenix = require("./phoenix.js");
 var phoenix = require(path.resolve("./phoenix.js"));
-var db = new phoenix("jdbc:phoenix:" + host + ":/hbase-unsecure");
+var db = new phoenix("jdbc:phoenix:" + hostHbase + ":/hbase-unsecure");
 
 var controller = {
 	get: {
@@ -151,6 +153,11 @@ var controller = {
 			var qualificationId = req.query.qualification_id;
 			var practitionerRoleId = req.query.practitioner_role_id;
 			var healthcareServiceId = req.query.healthcare_service_id;
+			var account_id = req.query.account_id;
+			var encounter_id = req.query.encounter_id;
+			var episode_of_care_id = req.query.episode_of_care_id;
+			var flag_id = req.query.flag_id;
+			
 
 			//susun query
 			var condition = "";
@@ -201,6 +208,22 @@ var controller = {
 			
 			if(typeof healthcareServiceId !== 'undefined' && healthcareServiceId !== ""){
         condition += "healthcare_service_id = '" + healthcareServiceId + "' AND,";  
+      }
+			
+			if(typeof account_id !== 'undefined' && account_id !== ""){
+        condition += "account_id = '" + account_id + "' AND,";  
+      }
+			
+			if(typeof encounter_id !== 'undefined' && encounter_id !== ""){
+        condition += "encounter_id = '" + encounter_id + "' AND,";  
+      }
+			
+			if(typeof episode_of_care_id !== 'undefined' && episode_of_care_id !== ""){
+        condition += "episode_of_care_id = '" + episode_of_care_id + "' AND,";  
+      }
+			
+			if(typeof flag_id !== 'undefined' && flag_id !== ""){
+        condition += "flag_id = '" + flag_id + "' AND,";  
       }
 
 			if (condition == "") {
@@ -3758,6 +3781,96 @@ var controller = {
       },function(e){
         res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "getNotAvailable"});
       });
+    },
+		adverseEventCategory	: function getAdverseEventCategory(req, res){
+      _id = req.params._id;
+
+      if(_id == 0){
+        condition = "";
+      }else{
+        condition = "WHERE id = "+ _id;
+      }
+
+      var query = "SELECT id, code, display, definition FROM baciro_fhir.ADVERSE_EVENT_CATEGORY " + condition;
+      
+      db.query(query,function(dataJson){
+        rez = lowercaseObject(dataJson);
+        res.json({"err_code":0,"data":rez});
+      },function(e){
+        res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "getAdverseEventCategory"});
+      });
+    },
+		adverseEventCategoryCode: function getAdverseEventCategoryCode(req, res){
+      code = req.params.code;
+
+      var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.ADVERSE_EVENT_CATEGORY WHERE code = '" + code + "' ";
+      
+      db.query(query,function(dataJson){
+        rez = lowercaseObject(dataJson);
+        res.json({"err_code":0,"data":rez});
+      },function(e){
+        res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "getAdverseEventCategoryCode"});
+      });
+    },
+		adverseEventType	: function getAdverseEventType(req, res){
+			_id = req.params._id;
+
+      if(_id == 0){
+        condition = "";
+      }else{
+        condition = "WHERE id = "+ _id;
+      }
+
+      var query = "SELECT id, code, display, definition FROM baciro_fhir.ADVERSE_EVENT_TYPE " + condition;
+      
+      db.query(query,function(dataJson){
+        rez = lowercaseObject(dataJson);
+        res.json({"err_code":0,"data":rez});
+      },function(e){
+        res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "getAdverseEventType"});
+      });
+    },
+		adverseEventTypeCode: function getAdverseEventTypeCode(req, res){
+      code = req.params.code;
+
+      var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.ADVERSE_EVENT_TYPE WHERE code = '" + code + "' ";
+      
+      db.query(query,function(dataJson){
+        rez = lowercaseObject(dataJson);
+        res.json({"err_code":0,"data":rez});
+      },function(e){
+        res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "getAdverseEventTypeCode"});
+      });
+    },
+		adverseEventSeriousness	: function getAdverseEventSeriousness(req, res){
+			_id = req.params._id;
+
+      if(_id == 0){
+        condition = "";
+      }else{
+        condition = "WHERE id = "+ _id;
+      }
+
+      var query = "SELECT id, code, display, definition FROM baciro_fhir.ADVERSE_EVENT_SERIOUSNESS " + condition;
+      
+      db.query(query,function(dataJson){
+        rez = lowercaseObject(dataJson);
+        res.json({"err_code":0,"data":rez});
+      },function(e){
+        res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "getAdverseEventSeriousness"});
+      });
+    },
+		adverseEventSeriousnessCode: function getAdverseEventSeriousnessCode(req, res){
+      code = req.params.code;
+
+      var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.ADVERSE_EVENT_SERIOUSNESS WHERE code = '" + code + "' ";
+      
+      db.query(query,function(dataJson){
+        rez = lowercaseObject(dataJson);
+        res.json({"err_code":0,"data":rez});
+      },function(e){
+        res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "getAdverseEventSeriousnessCode"});
+      });
     }
 	},
 	post: {
@@ -6718,6 +6831,67 @@ var controller = {
         });
       },function(e){
           res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "addNotAvailable"});
+      });
+    },
+		adverseEventCategory	: function addAdverseEventCategory(req, res){			
+      var code = req.body.code;
+      var display = req.body.display;
+      var definition = req.body.definition;
+     
+      var query = "UPSERT INTO BACIRO_FHIR.ADVERSE_EVENT_CATEGORY(id, code, display, definition)"+
+        " VALUES (NEXT VALUE FOR BACIRO_FHIR.ADVERSE_EVENT_CATEGORY,'"+code+"','"+display+"','"+definition+"')";
+      db.upsert(query,function(succes){
+        var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.ADVERSE_EVENT_CATEGORY WHERE code = '" + code + "' ";
+        db.query(query,function(dataJson){
+          rez = lowercaseObject(dataJson);
+          res.json({"err_code":0,"data":rez});
+        },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "addAdverseEventCategory"});
+        });
+      },function(e){
+          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "addadverseEventCategory"});
+      });
+    },
+		adverseEventType	: function addAdverseEventType(req, res){	
+      
+      var code = req.body.code;
+      var display = req.body.display;
+      var definition = req.body.definition;
+     
+      var query = "UPSERT INTO BACIRO_FHIR.ADVERSE_EVENT_TYPE(id, code, display, definition)"+
+        " VALUES (NEXT VALUE FOR BACIRO_FHIR.ADVERSE_EVENT_TYPE,'"+code+"','"+display+"','"+definition+"')";
+			
+      db.upsert(query,function(succes){
+        var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.ADVERSE_EVENT_TYPE WHERE code = '" + code + "' ";
+        db.query(query,function(dataJson){
+          rez = lowercaseObject(dataJson);
+          res.json({"err_code":0,"data":rez});
+        },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "addAdverseEventType"});
+        });
+      },function(e){
+          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "addadverseEventType"});
+      });
+    },
+		adverseEventSeriousness	: function addAdverseEventSeriousness(req, res){	
+      
+      var code = req.body.code;
+      var display = req.body.display;
+      var definition = req.body.definition;
+     
+      var query = "UPSERT INTO BACIRO_FHIR.ADVERSE_EVENT_SERIOUSNESS(id, code, display, definition)"+
+        " VALUES (NEXT VALUE FOR BACIRO_FHIR.ADVERSE_EVENT_SERIOUSNESS,'"+code+"','"+display+"','"+definition+"')";
+			
+      db.upsert(query,function(succes){
+        var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.ADVERSE_EVENT_SERIOUSNESS WHERE code = '" + code + "' ";
+        db.query(query,function(dataJson){
+          rez = lowercaseObject(dataJson);
+          res.json({"err_code":0,"data":rez});
+        },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "addAdverseEventSeriousness"});
+        });
+      },function(e){
+          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "addadverseEventSeriousness"});
       });
     }
 	},
@@ -11036,7 +11210,7 @@ var controller = {
           res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "updateEndpointPayloadType"});
       });
     },
-		availableTime: function addAvailableTime(req, res){
+		availableTime: function updateAvailableTime(req, res){
 			var _id = req.params._id;
 			var domainResource = req.params.dr;
 			
@@ -11101,7 +11275,7 @@ var controller = {
           res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "updateAvailableTime"});
       });
     },
-		notAvailable: function addNotAvailable(req, res){
+		notAvailable: function updateNotAvailable(req, res){
 			//console.log(req);
 			var _id = req.params._id;
 			var domainResource = req.params.dr;
@@ -11152,6 +11326,129 @@ var controller = {
         });
       },function(e){
           res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "updateNotAvailable"});
+      });
+    },
+		adverseEventCategory: function updateAdverseEventCategory(req, res){
+      var _id = req.params._id;
+      var code = req.body.code;
+      var display = req.body.display;
+      var definition = req.body.definition;
+      
+      //susun query update
+      var column = "";
+      var values = "";
+
+      if(typeof code !== 'undefined'){
+        column += 'code,';
+        values += "'" +code +"',";
+      }
+
+      if(typeof display !== 'undefined'){
+        column += 'display,';
+        values += "'" +display +"',";
+      }
+
+      if(typeof definition !== 'undefined'){
+        column += 'definition,';
+        values += "'" +definition +"',";
+      }
+
+
+      var query = "UPSERT INTO BACIRO_FHIR.ADVERSE_EVENT_CATEGORY(id," + column.slice(0, -1) + ") SELECT id, " + values.slice(0, -1) + " FROM BACIRO_FHIR.ADVERSE_EVENT_CATEGORY WHERE id = " + _id;
+      
+      db.upsert(query,function(succes){
+        var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.ADVERSE_EVENT_CATEGORY WHERE id = "+ _id;
+
+        db.query(query,function(dataJson){
+          rez = lowercaseObject(dataJson);
+          res.json({"err_code":0,"data":rez});
+        },function(e){
+          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "updateAdverseEventCategory"});
+        });
+      },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "updateAdverseEventCategory"});
+      });
+    },
+		adverseEventType: function updateadverseEventType(req, res){
+      var _id = req.params._id;
+      var code = req.body.code;
+      var display = req.body.display;
+      var definition = req.body.definition;
+      
+      //susun query update
+      var column = "";
+      var values = "";
+
+      if(typeof code !== 'undefined'){
+        column += 'code,';
+        values += "'" +code +"',";
+      }
+
+      if(typeof display !== 'undefined'){
+        column += 'display,';
+        values += "'" +display +"',";
+      }
+
+      if(typeof definition !== 'undefined'){
+        column += 'definition,';
+        values += "'" +definition +"',";
+      }
+
+
+      var query = "UPSERT INTO BACIRO_FHIR.ADVERSE_EVENT_TYPE(id," + column.slice(0, -1) + ") SELECT id, " + values.slice(0, -1) + " FROM BACIRO_FHIR.ADVERSE_EVENT_TYPE WHERE id = " + _id;
+      
+      db.upsert(query,function(succes){
+        var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.ADVERSE_EVENT_TYPE WHERE id = "+ _id;
+
+        db.query(query,function(dataJson){
+          rez = lowercaseObject(dataJson);
+          res.json({"err_code":0,"data":rez});
+        },function(e){
+          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "updateAdverseEventType"});
+        });
+      },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "updateAdverseEventType"});
+      });
+    },
+		adverseEventSeriousness: function updateadverseEventSeriousness(req, res){
+      var _id = req.params._id;
+      var code = req.body.code;
+      var display = req.body.display;
+      var definition = req.body.definition;
+      
+      //susun query update
+      var column = "";
+      var values = "";
+
+      if(typeof code !== 'undefined'){
+        column += 'code,';
+        values += "'" +code +"',";
+      }
+
+      if(typeof display !== 'undefined'){
+        column += 'display,';
+        values += "'" +display +"',";
+      }
+
+      if(typeof definition !== 'undefined'){
+        column += 'definition,';
+        values += "'" +definition +"',";
+      }
+
+
+      var query = "UPSERT INTO BACIRO_FHIR.ADVERSE_EVENT_SERIOUSNESS(id," + column.slice(0, -1) + ") SELECT id, " + values.slice(0, -1) + " FROM BACIRO_FHIR.ADVERSE_EVENT_SERIOUSNESS WHERE id = " + _id;
+      
+      db.upsert(query,function(succes){
+        var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.ADVERSE_EVENT_SERIOUSNESS WHERE id = "+ _id;
+
+        db.query(query,function(dataJson){
+          rez = lowercaseObject(dataJson);
+          res.json({"err_code":0,"data":rez});
+        },function(e){
+          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "updateAdverseEventSeriousness"});
+        });
+      },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "updateAdverseEventSeriousness"});
       });
     }
 	}

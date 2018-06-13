@@ -11,9 +11,11 @@ var configYaml = yamlconfig.readConfig(path.resolve('../../application/config/co
 var host = configYaml.phoenix.host;
 var port = configYaml.phoenix.port;
 
+var hostHbase = configYaml.hbase.host;
+
 // var phoenix = require("./phoenix.js");
 var phoenix = require(path.resolve("./phoenix.js")); 
-var db = new phoenix("jdbc:phoenix:" + host + ":/hbase-unsecure");
+var db = new phoenix("jdbc:phoenix:" + hostHbase + ":/hbase-unsecure");
 
 var controller = {
 	get: {
@@ -250,7 +252,7 @@ var controller = {
 
 			var arrCoverage = [];
 			var query = "SELECT account_coverage_id, coverage_id, account_coverage_priority FROM BACIRO_FHIR.ACCOUNT_COVERAGE " + fixCondition;
-			console.log(query)
+			//console.log(query)
 			db.query(query, function (dataJson) {
 				rez = lowercaseObject(dataJson);
 				for (i = 0; i < rez.length; i++) {
@@ -399,7 +401,7 @@ var controller = {
       }
 
 			var query = "UPSERT INTO BACIRO_FHIR.ACCOUNT(ACCOUNT_ID, " + column.slice(0, -1) + ")" + " VALUES ('" + id + "', " + values.slice(0, -1) + ")";
-			console.log(query)
+			//console.log(query)
       db.upsert(query, function (succes) {
         var query = "SELECT ACCOUNT_ID, ACCOUNT_STATUS, ACCOUNT_TYPE, ACCOUNT_NAME, SUBJECT_PATIENT_ID, SUBJECT_DEVICE_ID, SUBJECT_PRACTITIONER_ID, SUBJECT_LOCATION_ID, SUBJECT_HEALTHCARE_SERVICE_ID, SUBJECT_ORGANIZATION_ID, ACCOUNT_PERIOD_START, ACCOUNT_PERIOD_END, ACCOUNT_ACTIVE_START, ACCOUNT_ACTIVE_END, ACCOUNT_BALANCE, OWNER_ORGANIZATION_ID, ACCOUNT_DESCRIPTION, EPISODE_OF_CARE_ID, ENCOUNTER_ID FROM BACIRO_FHIR.ACCOUNT WHERE ACCOUNT_ID = '" + id + "' ";
         db.query(query, function (dataJson) {
@@ -450,7 +452,7 @@ var controller = {
       }
 			
 			var query = "UPSERT INTO BACIRO_FHIR.ACCOUNT_COVERAGE(ACCOUNT_COVERAGE_ID, " + column.slice(0, -1) + ")" + " VALUES ('" + id + "', " + values.slice(0, -1) + ")";
-			console.log(query)
+			//console.log(query)
 			db.upsert(query, function (succes) {
 				var query = "SELECT account_coverage_id, coverage_id, account_coverage_priority, account_id FROM BACIRO_FHIR.ACCOUNT_COVERAGE WHERE account_coverage_id = '" + id + "' ";
 				
@@ -531,10 +533,10 @@ var controller = {
       }
 			
 			var query = "UPSERT INTO BACIRO_FHIR.ACCOUNT_GUARANTOR(account_guarantor_id, " + column.slice(0, -1) + ")" + " VALUES ('" + id + "', " + values.slice(0, -1) + ")";
-			console.log(query)
+			//console.log(query)
 			db.upsert(query, function (succes) {
 				var query = "SELECT account_guarantor_id, party_patient_id, party_related_person_id, party_organization_id, account_guarantor_on_hold, account_guarantor_period_start, account_guarantor_period_end, account_id FROM BACIRO_FHIR.ACCOUNT_GUARANTOR WHERE account_guarantor_id = '" + id + "' ";
-				console.log(query);
+				//console.log(query);
 				db.query(query, function (dataJson) {
 					rez = lowercaseObject(dataJson);
 					res.json({
@@ -747,7 +749,7 @@ var controller = {
 			}
 			
 			var query = "UPSERT INTO BACIRO_FHIR.ACCOUNT_GUARANTOR(account_guarantor_id," + column.slice(0, -1) + ") SELECT account_guarantor_id, " + values.slice(0, -1) + " FROM BACIRO_FHIR.ACCOUNT_GUARANTOR WHERE " + condition;
-			console.log(query)
+			//console.log(query)
 			db.upsert(query, function (succes) {
         res.json({
           "err_code": 0,
@@ -794,7 +796,7 @@ var controller = {
 			}
 			
 			var query = "UPSERT INTO BACIRO_FHIR.ACCOUNT_COVERAGE(account_coverage_id," + column.slice(0, -1) + ") SELECT account_coverage_id, " + values.slice(0, -1) + " FROM BACIRO_FHIR.ACCOUNT_COVERAGE WHERE " + condition;
-			console.log(query)
+			//console.log(query)
 			db.upsert(query, function (succes) {
         res.json({
           "err_code": 0,

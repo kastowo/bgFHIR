@@ -6,11 +6,12 @@ var yamlconfig = require('yaml-config');
 var configYaml = yamlconfig.readConfig('../config/config.yml');
 
 //event emitter
+var hostHbase = configYaml.hbase.host;
 var host = configYaml.phoenix.host;
 var port = configYaml.phoenix.port;
 
 var phoenix = require("./phoenix.js");
-var db = new phoenix("jdbc:phoenix:" + host + ":/hbase-unsecure");
+var db = new phoenix("jdbc:phoenix:" + hostHbase + ":/hbase-unsecure");
 
 //setting midleware
 app.use (function(req,res,next){

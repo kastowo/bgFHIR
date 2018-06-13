@@ -290,210 +290,228 @@
 	    "udiEntryTypeCode":{
 	      "location": "%(apikey)s/udi-entry-type/code/%(code)s"
       },
-     "deviceStatus":{
-        "location": "%(apikey)s/device-status/%(_id)d"
-     },
-     "deviceStatusCode":{
-        "location": "%(apikey)s/device-status/code/%(code)s"
-     },
-     "deviceKind":{
-        "location": "%(apikey)s/device-kind/%(_id)d"
-     },
-     "deviceKindCode":{
-        "location": "%(apikey)s/device-kind/code/%(code)s"
-     },
-     "deviceSafety":{
-        "location": "%(apikey)s/device-safety/%(_id)d"
-     },
-     "deviceSafetyCode":{
-        "location": "%(apikey)s/device-safety/code/%(code)s"
-     },
-     "operationalStatus":{
-        "location": "%(apikey)s/operational-status/%(_id)d"
-     },
-     "operationalStatusCode":{
-        "location": "%(apikey)s/operational-status/code/%(code)s"
-     },
-     "parameterGroup":{
-        "location": "%(apikey)s/parameter-group/%(_id)d"
-     },
-     "parameterGroupCode":{
-        "location": "%(apikey)s/parameter-group/code/%(code)s"
-     },
-     "measurementPrinciple":{
-        "location": "%(apikey)s/measurement-principle/%(_id)d"
-     },
-     "measurementPrincipleCode":{
-        "location": "%(apikey)s/measurement-principle/code/%(code)s"
-     },
-     "specificationType":{
-        "location": "%(apikey)s/specification-type/%(_id)d"
-     },
-     "specificationTypeCode":{
-        "location": "%(apikey)s/specification-type/code/%(code)s"
-     },
-     "metricOperationalStatus":{
-        "location": "%(apikey)s/metric-operational-status/%(_id)d"
-     },
-     "metricOperationalStatusCode":{
-        "location": "%(apikey)s/metric-operational-status/code/%(code)s"
-     },
-     "deviceMetricType":{
-        "location": "%(apikey)s/device-metric-type/%(_id)d"
-     },
-     "deviceMetricTypeCode":{
-        "location": "%(apikey)s/device-metric-type/code/%(code)s"
-     },
-     "metricColor":{
-        "location": "%(apikey)s/metric-color/%(_id)d"
-     },
-     "metricColorCode":{
-        "location": "%(apikey)s/metric-color/code/%(code)s"
-     },
-     "metricCategory":{
-        "location": "%(apikey)s/metric-category/%(_id)d"
-     },
-     "metricColorCode":{
-        "location": "%(apikey)s/metric-category/code/%(code)s"
-     },
-     "metricCalibrationType":{
-        "location": "%(apikey)s/metric-calibration-type/%(_id)d"
-     },
-     "metricCalibrationTypeCode":{
-        "location": "%(apikey)s/metric-calibration-type/code/%(code)s"
-     },
-     "metricCalibrationState":{
-        "location": "%(apikey)s/metric-calibration-state/%(_id)d"
-     },
-     "metricCalibrationStateCode":{
-        "location": "%(apikey)s/metric-calibration-state/code/%(code)s"
-     },
-     "substanceStatus":{
-        "location": "%(apikey)s/substance-status/%(_id)d"
-     },
-     "substanceStatusCode":{
-        "location": "%(apikey)s/substance-status/code/%(code)s"
-     },
-     "substanceCategory":{
-        "location": "%(apikey)s/substance-category/%(_id)d"
-     },
-     "substanceCategoryCode":{
-        "location": "%(apikey)s/substance-category/code/%(code)s"
-     },
-     "substanceCode":{
-        "location": "%(apikey)s/substance-code/%(_id)d"
-     },
-     "substanceCodeCode":{
-        "location": "%(apikey)s/substance-code/code/%(code)s"
-     },
-		"organizationType":{
-			"location": "%(apikey)s/organization-type/%(_id)d"
-		},
-		"organizationTypeCode":{
-		  "location": "%(apikey)s/organization-type/code/%(code)s"
-		},
-		"contactentityType":{
-			"location": "%(apikey)s/contactentity-type/%(_id)d"
-		},
-		"contactentityTypeCode":{
-			"location": "%(apikey)s/contactentity-type/code/%(code)s"
-		},
-		"locationStatus":{
-			"location": "%(apikey)s/location-status/%(_id)d"
-		},
-		"locationStatusCode":{
-			"location": "%(apikey)s/location-status/code/%(code)s"
-		},
-		"bedStatus":{
-			"location": "%(apikey)s/bed-status/%(_id)d"
-		},
-		"bedStatusCode":{
-			"location": "%(apikey)s/bed-status/code/%(code)s"
-		},
-		"locationMode":{
-			"location": "%(apikey)s/location-mode/%(_id)d"
-		},
-		"locationModeCode":{
-			"location": "%(apikey)s/location-mode/code/%(code)s"
-		},
-		"serviceDeliveryLocationRoleType":{
-			"location": "%(apikey)s/service-delivery-location-role-type/%(_id)d"
-		},
-		"serviceDeliveryLocationRoleTypeCode":{
-			"location": "%(apikey)s/service-delivery-location-role-type/code/%(code)s"
-		},
-		"locationPhysicalType":{
-			"location": "%(apikey)s/location-physical-type/%(_id)d"
-		},
-		"locationPhysicalTypeCode":{
-			"location": "%(apikey)s/location-physical-type/code/%(code)s"
-		},
-		"qualificationCode":{
-			"location": "%(apikey)s/qualification-code/%(_id)d"
-		},
-		"qualificationCodeCode":{
-			"location": "%(apikey)s/qualification-code/code/%(code)s"
-		},
-		"practitionerRoleCode":{
-			"location": "%(apikey)s/practitioner-role-code/%(_id)d"
-		},
-		"practitionerRoleCodeCode":{
-			"location": "%(apikey)s/practitioner-role-code/code/%(code)s"
-		},
-		"practiceCode":{
-			"location": "%(apikey)s/practice-code/%(_id)d"
-		},
-		"practiceCodeCode":{
-			"location": "%(apikey)s/practice-code/code/%(code)s"
-		},
-		"daysOfWeek":{
-			"location": "%(apikey)s/days-of-week/%(_id)d"
-		},
-		"daysOfWeekCode":{
-			"location": "%(apikey)s/days-of-week/code/%(code)s"
-		},
-		"serviceCategory":{
-			"location": "%(apikey)s/service-category/%(_id)d"
-		},
-		"serviceCategoryCode":{
-			"location": "%(apikey)s/service-category/code/%(code)s"
-		},
-		"serviceType":{
-			"location": "%(apikey)s/service-type/%(_id)d"
-		},
-		"serviceTypeCode":{
-			"location": "%(apikey)s/service-type/code/%(code)s"
-		},
-		"serviceProvisionConditions":{
-			"location": "%(apikey)s/service-provision-conditions/%(_id)d"
-		},
-		"serviceProvisionConditionsCode":{
-			"location": "%(apikey)s/service-provision-conditions/code/%(code)s"
-		},
-		"serviceReferralMethod":{
-			"location": "%(apikey)s/service-referral-method/%(_id)d"
-		},
-		"serviceReferralMethodCode":{
-			"location": "%(apikey)s/service-referral-method/code/%(code)s"
-		},
-		"endpointStatus":{
-			"location": "%(apikey)s/endpoint-status/%(_id)d"
-		},
-		"endpointStatusCode":{
-			"location": "%(apikey)s/endpoint-status/code/%(code)s"
-		},
-		"endpointConnectionType":{
-			"location": "%(apikey)s/endpoint-connection-type/%(_id)d"
-		},
-		"endpointConnectionTypeCode":{
-			"location": "%(apikey)s/endpoint-connection-type/code/%(code)s"
-		},
-		"endpointPayloadType":{
-			"location": "%(apikey)s/endpoint-payload-type/%(_id)d"
-		},
-		"endpointPayloadTypeCode":{
-			"location": "%(apikey)s/endpoint-payload-type/code/%(code)s"
-		}
+			"deviceStatus":{
+				"location": "%(apikey)s/device-status/%(_id)d"
+			},
+			"deviceStatusCode":{
+				"location": "%(apikey)s/device-status/code/%(code)s"
+			},
+			"deviceKind":{
+				"location": "%(apikey)s/device-kind/%(_id)d"
+			},
+			"deviceKindCode":{
+				"location": "%(apikey)s/device-kind/code/%(code)s"
+			},
+			"deviceSafety":{
+				"location": "%(apikey)s/device-safety/%(_id)d"
+			},
+			"deviceSafetyCode":{
+				"location": "%(apikey)s/device-safety/code/%(code)s"
+			},
+			"operationalStatus":{
+				"location": "%(apikey)s/operational-status/%(_id)d"
+			},
+			"operationalStatusCode":{
+				"location": "%(apikey)s/operational-status/code/%(code)s"
+			},
+			"parameterGroup":{
+				"location": "%(apikey)s/parameter-group/%(_id)d"
+			},
+			"parameterGroupCode":{
+				"location": "%(apikey)s/parameter-group/code/%(code)s"
+			},
+			"measurementPrinciple":{
+				"location": "%(apikey)s/measurement-principle/%(_id)d"
+			},
+			"measurementPrincipleCode":{
+				"location": "%(apikey)s/measurement-principle/code/%(code)s"
+			},
+			"specificationType":{
+				"location": "%(apikey)s/specification-type/%(_id)d"
+			},
+			"specificationTypeCode":{
+				"location": "%(apikey)s/specification-type/code/%(code)s"
+			},
+			"metricOperationalStatus":{
+				"location": "%(apikey)s/metric-operational-status/%(_id)d"
+			},
+			"metricOperationalStatusCode":{
+				"location": "%(apikey)s/metric-operational-status/code/%(code)s"
+			},
+			"deviceMetricType":{
+				"location": "%(apikey)s/device-metric-type/%(_id)d"
+			},
+			"deviceMetricTypeCode":{
+				"location": "%(apikey)s/device-metric-type/code/%(code)s"
+			},
+			"metricColor":{
+				"location": "%(apikey)s/metric-color/%(_id)d"
+			},
+			"metricColorCode":{
+				"location": "%(apikey)s/metric-color/code/%(code)s"
+			},
+			"metricCategory":{
+				"location": "%(apikey)s/metric-category/%(_id)d"
+			},
+			"metricColorCode":{
+				"location": "%(apikey)s/metric-category/code/%(code)s"
+			},
+			"metricCalibrationType":{
+				"location": "%(apikey)s/metric-calibration-type/%(_id)d"
+			},
+			"metricCalibrationTypeCode":{
+				"location": "%(apikey)s/metric-calibration-type/code/%(code)s"
+			},
+			"metricCalibrationState":{
+				"location": "%(apikey)s/metric-calibration-state/%(_id)d"
+			},
+			"metricCalibrationStateCode":{
+				"location": "%(apikey)s/metric-calibration-state/code/%(code)s"
+			},
+			"substanceStatus":{
+				"location": "%(apikey)s/substance-status/%(_id)d"
+			},
+			"substanceStatusCode":{
+				"location": "%(apikey)s/substance-status/code/%(code)s"
+			},
+			"substanceCategory":{
+				"location": "%(apikey)s/substance-category/%(_id)d"
+			},
+			"substanceCategoryCode":{
+				"location": "%(apikey)s/substance-category/code/%(code)s"
+			},
+			"substanceCode":{
+				"location": "%(apikey)s/substance-code/%(_id)d"
+			},
+			"substanceCodeCode":{
+				"location": "%(apikey)s/substance-code/code/%(code)s"
+			},
+			"organizationType":{
+				"location": "%(apikey)s/organization-type/%(_id)d"
+			},
+			"organizationTypeCode":{
+				"location": "%(apikey)s/organization-type/code/%(code)s"
+			},
+			"contactentityType":{
+				"location": "%(apikey)s/contactentity-type/%(_id)d"
+			},
+			"contactentityTypeCode":{
+				"location": "%(apikey)s/contactentity-type/code/%(code)s"
+			},
+			"locationStatus":{
+				"location": "%(apikey)s/location-status/%(_id)d"
+			},
+			"locationStatusCode":{
+				"location": "%(apikey)s/location-status/code/%(code)s"
+			},
+			"bedStatus":{
+				"location": "%(apikey)s/bed-status/%(_id)d"
+			},
+			"bedStatusCode":{
+				"location": "%(apikey)s/bed-status/code/%(code)s"
+			},
+			"locationMode":{
+				"location": "%(apikey)s/location-mode/%(_id)d"
+			},
+			"locationModeCode":{
+				"location": "%(apikey)s/location-mode/code/%(code)s"
+			},
+			"serviceDeliveryLocationRoleType":{
+				"location": "%(apikey)s/service-delivery-location-role-type/%(_id)d"
+			},
+			"serviceDeliveryLocationRoleTypeCode":{
+				"location": "%(apikey)s/service-delivery-location-role-type/code/%(code)s"
+			},
+			"locationPhysicalType":{
+				"location": "%(apikey)s/location-physical-type/%(_id)d"
+			},
+			"locationPhysicalTypeCode":{
+				"location": "%(apikey)s/location-physical-type/code/%(code)s"
+			},
+			"qualificationCode":{
+				"location": "%(apikey)s/qualification-code/%(_id)d"
+			},
+			"qualificationCodeCode":{
+				"location": "%(apikey)s/qualification-code/code/%(code)s"
+			},
+			"practitionerRoleCode":{
+				"location": "%(apikey)s/practitioner-role-code/%(_id)d"
+			},
+			"practitionerRoleCodeCode":{
+				"location": "%(apikey)s/practitioner-role-code/code/%(code)s"
+			},
+			"practiceCode":{
+				"location": "%(apikey)s/practice-code/%(_id)d"
+			},
+			"practiceCodeCode":{
+				"location": "%(apikey)s/practice-code/code/%(code)s"
+			},
+			"daysOfWeek":{
+				"location": "%(apikey)s/days-of-week/%(_id)d"
+			},
+			"daysOfWeekCode":{
+				"location": "%(apikey)s/days-of-week/code/%(code)s"
+			},
+			"serviceCategory":{
+				"location": "%(apikey)s/service-category/%(_id)d"
+			},
+			"serviceCategoryCode":{
+				"location": "%(apikey)s/service-category/code/%(code)s"
+			},
+			"serviceType":{
+				"location": "%(apikey)s/service-type/%(_id)d"
+			},
+			"serviceTypeCode":{
+				"location": "%(apikey)s/service-type/code/%(code)s"
+			},
+			"serviceProvisionConditions":{
+				"location": "%(apikey)s/service-provision-conditions/%(_id)d"
+			},
+			"serviceProvisionConditionsCode":{
+				"location": "%(apikey)s/service-provision-conditions/code/%(code)s"
+			},
+			"serviceReferralMethod":{
+				"location": "%(apikey)s/service-referral-method/%(_id)d"
+			},
+			"serviceReferralMethodCode":{
+				"location": "%(apikey)s/service-referral-method/code/%(code)s"
+			},
+			"endpointStatus":{
+				"location": "%(apikey)s/endpoint-status/%(_id)d"
+			},
+			"endpointStatusCode":{
+				"location": "%(apikey)s/endpoint-status/code/%(code)s"
+			},
+			"endpointConnectionType":{
+				"location": "%(apikey)s/endpoint-connection-type/%(_id)d"
+			},
+			"endpointConnectionTypeCode":{
+				"location": "%(apikey)s/endpoint-connection-type/code/%(code)s"
+			},
+			"endpointPayloadType":{
+				"location": "%(apikey)s/endpoint-payload-type/%(_id)d"
+			},
+			"endpointPayloadTypeCode":{
+				"location": "%(apikey)s/endpoint-payload-type/code/%(code)s"
+			},
+				"adverseEventCategory":{
+				"location": "%(apikey)s/adverse-event-category/%(_id)d"
+			},
+			"adverseEventCategoryCode":{
+				"location": "%(apikey)s/adverse-event-category/code/%(code)s"
+			},
+				"adverseEventType":{
+				"location": "%(apikey)s/adverse-event-type/%(_id)d"
+			},
+			"adverseEventTypeCode":{
+				"location": "%(apikey)s/adverse-event-type/code/%(code)s"
+			},
+				"adverseEventSeriousness":{
+				"location": "%(apikey)s/adverse-event-seriousness/%(_id)d"
+			},
+				"adverseEventSeriousnessCode":{
+				"location": "%(apikey)s/adverse-event-seriousness/code/%(code)s"
+			}
 		},
 		"POST": {
 			"identityAssuranceLevel": {
@@ -864,6 +882,15 @@
 		},
 		"healthcareService":{
 			"location": "%(apikey)s/HealthcareService"
+		},
+			"adverseEventCategory":{
+			"location": "%(apikey)s/adverse-event-category"
+		},
+			"adverseEventType":{
+			"location": "%(apikey)s/adverse-event-type"
+		},
+			"adverseEventSeriousness":{
+			"location": "%(apikey)s/adverse-event-seriousness"
 		}
 		},
 		"PUT": {
@@ -1226,7 +1253,17 @@
 		},
 		"healthcareService":{
 			"location": "%(apikey)s/HealthcareService/%(_id)s"
+		},
+			"adverseEventCategory":{
+			"location": "%(apikey)s/adverse-event-category/%(_id)d"
+		},
+			"adverseEventType":{
+			"location": "%(apikey)s/adverse-event-type/%(_id)d"
+		},
+			"adverseEventSeriousness":{
+			"location": "%(apikey)s/adverse-event-seriousness/%(_id)d"
 		}
+			
 		}
 	}
 }

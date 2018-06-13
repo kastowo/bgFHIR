@@ -8896,7 +8896,7 @@ var controller = {
 		contactentityTypeCode: function getContactentityTypeCode(req, res){
 			var ipAddres = req.connection.remoteAddress;
 			var apikey = req.params.apikey;
-			var code = req.params.code.replace(/[^\w\s ,]/gi, '').trim().toLowerCase();
+			var code = req.params.code.replace(/[^\w\s ,]/gi, '').trim().toUpperCase();
 
 			if(code == "" || typeof code == 'undefined'){
 				res.json({"err_code": 4, "err_msg": "Code is required."});
@@ -9687,7 +9687,7 @@ var controller = {
 		practiceCodeCode: function getPracticeCodeCode(req, res){
 			var ipAddres = req.connection.remoteAddress;
 			var apikey = req.params.apikey;
-			var code = req.params.code.replace(/[^\w\s ,]/gi, '').trim().toLowerCase();
+			var code = req.params.code.replace(/[^\w\s ,]/gi, '').trim();
 
 			if(code == "" || typeof code == 'undefined'){
 				res.json({"err_code": 4, "err_msg": "Code is required."});
@@ -9883,8 +9883,8 @@ var controller = {
 		serviceCategoryCode: function getServiceCategoryCode(req, res){
 			var ipAddres = req.connection.remoteAddress;
 			var apikey = req.params.apikey;
-			var code = req.params.code.replace(/[^\w\s ,]/gi, '').trim().toLowerCase();
-
+			//var code = req.params.code.replace(/[^\w\s ,]/gi, '').trim().toLowerCase();
+			var code = req.params.code.replace(/[^\w\s ,]/gi, '');
 			if(code == "" || typeof code == 'undefined'){
 				res.json({"err_code": 4, "err_msg": "Code is required."});
 			}else{
@@ -10495,6 +10495,300 @@ var controller = {
 								  	}
 							  	}else{
 							  		res.json({"err_code": 3, "err_msg": endpointPayloadType.error, "application": "Api FHIR", "function": "getEndpointPayloadTypeCode"});
+							  	}
+							  }
+						})
+					}else{
+						result.err_code = 500;
+						res.json(result);
+					}	
+				});
+			}				
+		},
+		adverseEventCategory: function getAdverseEventCategory(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var _id = req.params._id;
+			checkApikey(apikey, ipAddres, function(result){
+				if(result.err_code == 0){
+					if(_id == "" || typeof _id == 'undefined'){
+						//method, endpoint, params, options, callback
+						ApiFHIR.get('adverseEventCategory', {"apikey": apikey, "_id": 0}, {}, function(error, response, body){
+							if(error){
+							  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "adverseEventCategory"});
+							  }else{
+							  	//cek apakah ada error atau tidak
+							  	var adverseEventCategory = JSON.parse(body); 
+							  	
+							  	//cek apakah ada error atau tidak
+							  	if(adverseEventCategory.err_code == 0){
+								  	//cek jumdata dulu
+								  	if(adverseEventCategory.data.length > 0){
+								  		res.json({"err_code": 0, "data":adverseEventCategory.data});
+								  	}else{
+							  			res.json({"err_code": 2, "err_msg": "Adverse Event Category is not found"});	
+								  	}
+							  	}else{
+							  		res.json({"err_code": 3, "err_msg": adverseEventCategory.error, "application": "Api FHIR", "function": "getAdverseEventCategory"});
+							  	}
+							  }
+						})	
+					}else{
+						if(validator.isInt(_id)){
+							ApiFHIR.get('adverseEventCategory', {"apikey": apikey, "_id": _id}, {}, function(error, response, body){
+								if(error){
+								  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "getAdverseEventCategory"});
+								  }else{
+								  	//cek apakah ada error atau tidak
+								  	var adverseEventCategory = JSON.parse(body); 
+								  	
+								  	//cek apakah ada error atau tidak
+								  	if(adverseEventCategory.err_code == 0){
+									  	//cek jumdata dulu
+									  	if(adverseEventCategory.data.length > 0){
+									  		res.json({"err_code": 0, "data":adverseEventCategory.data});
+									  	}else{
+								  			res.json({"err_code": 2, "err_msg": "Adverse Event Category is not found"});	
+									  	}
+								  	}else{
+								  		res.json({"err_code": 3, "err_msg": adverseEventCategory.error, "application": "Api FHIR", "function": "getAdverseEventCategory"});
+								  	}
+								  }
+							})
+						}else{
+							res.json({"err_code": 4, "err_msg": "Id must be a number."});
+						}
+						
+					}
+				}else{
+					result.err_code = 500;
+					res.json(result);
+				}	
+			});
+		},
+		adverseEventCategoryCode: function getAdverseEventCategoryCode(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var code = req.params.code.replace(/[^\w\s ,]/gi, '').trim().toUpperCase();
+
+			if(code == "" || typeof code == 'undefined'){
+				res.json({"err_code": 4, "err_msg": "Code is required."});
+			}else{
+				checkApikey(apikey, ipAddres, function(result){
+					if(result.err_code == 0){	
+						ApiFHIR.get('adverseEventCategoryCode', {"apikey": apikey, "code": code}, {}, function(error, response, body){
+							if(error){
+							  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "getAdverseEventCategoryCode"});
+							  }else{
+							  	//cek apakah ada error atau tidak
+							  	var adverseEventCategory = JSON.parse(body); 
+							  	
+							  	//cek apakah ada error atau tidak
+							  	if(adverseEventCategory.err_code == 0){
+								  	//cek jumdata dulu
+								  	if(adverseEventCategory.data.length > 0){
+								  		res.json({"err_code": 0, "data":adverseEventCategory.data});
+								  	}else{
+							  			res.json({"err_code": 2, "err_msg": "Adverse Event Category Code is not found"});	
+								  	}
+							  	}else{
+							  		res.json({"err_code": 3, "err_msg": adverseEventCategory.error, "application": "Api FHIR", "function": "getadverseEventCategoryCode"});
+							  	}
+							  }
+						})
+					}else{
+						result.err_code = 500;
+						res.json(result);
+					}	
+				});
+			}				
+		},
+		adverseEventType: function getAdverseEventType(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var _id = req.params._id;
+			checkApikey(apikey, ipAddres, function(result){
+				if(result.err_code == 0){
+					if(_id == "" || typeof _id == 'undefined'){
+						//method, endpoint, params, options, callback
+						ApiFHIR.get('adverseEventType', {"apikey": apikey, "_id": 0}, {}, function(error, response, body){
+							if(error){
+							  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "getAdverseEventType"});
+							  }else{
+							  	//cek apakah ada error atau tidak
+							  	var adverseEventType = JSON.parse(body); 
+							  	
+							  	//cek apakah ada error atau tidak
+							  	if(adverseEventType.err_code == 0){
+								  	//cek jumdata dulu
+								  	if(adverseEventType.data.length > 0){
+								  		res.json({"err_code": 0, "data":adverseEventType.data});
+								  	}else{
+							  			res.json({"err_code": 2, "err_msg": "Adverse Event Type is not found"});	
+								  	}
+							  	}else{
+							  		res.json({"err_code": 3, "err_msg": adverseEventType.error, "application": "Api FHIR", "function": "getAdverseEventType"});
+							  	}
+							  }
+						})	
+					}else{
+						if(validator.isInt(_id)){
+							ApiFHIR.get('adverseEventType', {"apikey": apikey, "_id": _id}, {}, function(error, response, body){
+								if(error){
+								  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "getAdverseEventType"});
+								  }else{
+								  	//cek apakah ada error atau tidak
+								  	var adverseEventType = JSON.parse(body); 
+								  	
+								  	//cek apakah ada error atau tidak
+								  	if(adverseEventType.err_code == 0){
+									  	//cek jumdata dulu
+									  	if(adverseEventType.data.length > 0){
+									  		res.json({"err_code": 0, "data":adverseEventType.data});
+									  	}else{
+								  			res.json({"err_code": 2, "err_msg": "Adverse Event Type is not found"});	
+									  	}
+								  	}else{
+								  		res.json({"err_code": 3, "err_msg": adverseEventType.error, "application": "Api FHIR", "function": "getAdverseEventType"});
+								  	}
+								  }
+							})
+						}else{
+							res.json({"err_code": 4, "err_msg": "Id must be a number."});
+						}
+						
+					}
+				}else{
+					result.err_code = 500;
+					res.json(result);
+				}	
+			});
+		},
+		adverseEventTypeCode: function getAdverseEventTypeCode(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			//var code = req.params.code.replace(/[^\w\s ,]/gi, '').trim().toLowerCase();
+			var code = req.params.code.replace(/[^\w\s ,]/gi, '');
+			if(code == "" || typeof code == 'undefined'){
+				res.json({"err_code": 4, "err_msg": "Code is required."});
+			}else{
+				checkApikey(apikey, ipAddres, function(result){
+					if(result.err_code == 0){	
+						ApiFHIR.get('adverseEventTypeCode', {"apikey": apikey, "code": code}, {}, function(error, response, body){
+							if(error){
+							  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "getAdverseEventType"});
+							  }else{
+							  	//cek apakah ada error atau tidak
+							  	var adverseEventType = JSON.parse(body); 
+							  	
+							  	//cek apakah ada error atau tidak
+							  	if(adverseEventType.err_code == 0){
+								  	//cek jumdata dulu
+								  	if(adverseEventType.data.length > 0){
+								  		res.json({"err_code": 0, "data":adverseEventType.data});
+								  	}else{
+							  			res.json({"err_code": 2, "err_msg": "Adverse Event Type Code is not found"});	
+								  	}
+							  	}else{
+							  		res.json({"err_code": 3, "err_msg": adverseEventType.error, "application": "Api FHIR", "function": "getAdverseEventTypeCode"});
+							  	}
+							  }
+						})
+					}else{
+						result.err_code = 500;
+						res.json(result);
+					}	
+				});
+			}				
+		},
+		adverseEventSeriousness: function getAdverseEventSeriousness(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var _id = req.params._id;
+			checkApikey(apikey, ipAddres, function(result){
+				if(result.err_code == 0){
+					if(_id == "" || typeof _id == 'undefined'){
+						//method, endpoint, params, options, callback
+						ApiFHIR.get('adverseEventSeriousness', {"apikey": apikey, "_id": 0}, {}, function(error, response, body){
+							if(error){
+							  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "adverseEventSeriousness"});
+							  }else{
+							  	//cek apakah ada error atau tidak
+							  	var adverseEventSeriousness = JSON.parse(body); 
+							  	
+							  	//cek apakah ada error atau tidak
+							  	if(adverseEventSeriousness.err_code == 0){
+								  	//cek jumdata dulu
+								  	if(adverseEventSeriousness.data.length > 0){
+								  		res.json({"err_code": 0, "data":adverseEventSeriousness.data});
+								  	}else{
+							  			res.json({"err_code": 2, "err_msg": "Adverse Event Seriousness is not found"});	
+								  	}
+							  	}else{
+							  		res.json({"err_code": 3, "err_msg": adverseEventSeriousness.error, "application": "Api FHIR", "function": "getAdverseEventSeriousness"});
+							  	}
+							  }
+						})	
+					}else{
+						if(validator.isInt(_id)){
+							ApiFHIR.get('adverseEventSeriousness', {"apikey": apikey, "_id": _id}, {}, function(error, response, body){
+								if(error){
+								  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "getAdverseEventSeriousness"});
+								  }else{
+								  	//cek apakah ada error atau tidak
+								  	var adverseEventSeriousness = JSON.parse(body); 
+								  	
+								  	//cek apakah ada error atau tidak
+								  	if(adverseEventSeriousness.err_code == 0){
+									  	//cek jumdata dulu
+									  	if(adverseEventSeriousness.data.length > 0){
+									  		res.json({"err_code": 0, "data":adverseEventSeriousness.data});
+									  	}else{
+								  			res.json({"err_code": 2, "err_msg": "Adverse Event Seriousness is not found"});	
+									  	}
+								  	}else{
+								  		res.json({"err_code": 3, "err_msg": adverseEventSeriousness.error, "application": "Api FHIR", "function": "getAdverseEventSeriousness"});
+								  	}
+								  }
+							})
+						}else{
+							res.json({"err_code": 4, "err_msg": "Id must be a number."});
+						}
+						
+					}
+				}else{
+					result.err_code = 500;
+					res.json(result);
+				}	
+			});
+		},
+		adverseEventSeriousnessCode: function getAdverseEventSeriousnessCode(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var code = req.params.code.replace(/[^\w\s ,]/gi, '').trim();
+
+			if(code == "" || typeof code == 'undefined'){
+				res.json({"err_code": 4, "err_msg": "Code is required."});
+			}else{
+				checkApikey(apikey, ipAddres, function(result){
+					if(result.err_code == 0){	
+						ApiFHIR.get('adverseEventSeriousnessCode', {"apikey": apikey, "code": code}, {}, function(error, response, body){
+							if(error){
+							  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "getAdverseEventSeriousnessCode"});
+							  }else{
+							  	//cek apakah ada error atau tidak
+							  	var adverseEventSeriousness = JSON.parse(body); 
+							  	
+							  	//cek apakah ada error atau tidak
+							  	if(adverseEventSeriousness.err_code == 0){
+								  	//cek jumdata dulu
+								  	if(adverseEventSeriousness.data.length > 0){
+								  		res.json({"err_code": 0, "data":adverseEventSeriousness.data});
+								  	}else{
+							  			res.json({"err_code": 2, "err_msg": "Adverse Event Seriousness Code is not found"});	
+								  	}
+							  	}else{
+							  		res.json({"err_code": 3, "err_msg": adverseEventSeriousness.error, "application": "Api FHIR", "function": "getadverseEventSeriousnessCode"});
 							  	}
 							  }
 						})
@@ -15786,7 +16080,7 @@ var controller = {
 			}
 
 			if(validator.isEmpty(definition)){
-				err_code = 2;
+				err_code = 3;
 				err_msg = "Definition is required";
 			}
 
@@ -15853,7 +16147,7 @@ var controller = {
 			}
 
 			if(validator.isEmpty(definition)){
-				err_code = 2;
+				err_code = 3;
 				err_msg = "Definition is required";
 			}
 
@@ -15920,7 +16214,7 @@ var controller = {
 			}
 
 			if(validator.isEmpty(definition)){
-				err_code = 2;
+				err_code = 3;
 				err_msg = "Definition is required";
 			}
 
@@ -16047,7 +16341,7 @@ var controller = {
 			}
 			
 			if(validator.isEmpty(definition)){
-				err_code = 2;
+				err_code = 3;
 				err_msg = "Definition is required";
 			}
 
@@ -16180,7 +16474,7 @@ var controller = {
 			}
 
 			if(validator.isEmpty(definition)){
-				err_code = 2;
+				err_code = 3;
 				err_msg = "Definition is required";
 			}
 
@@ -16394,7 +16688,7 @@ var controller = {
 			}
 
 			if(validator.isEmpty(definition)){
-				err_code = 2;
+				err_code = 3;
 				err_msg = "Definition is required";
 			}
 
@@ -16461,7 +16755,7 @@ var controller = {
 			}
 
 			if(validator.isEmpty(definition)){
-				err_code = 2;
+				err_code = 3;
 				err_msg = "Definition is required";
 			}
 
@@ -16528,7 +16822,7 @@ var controller = {
 			}
 
 			if(validator.isEmpty(definition)){
-				err_code = 2;
+				err_code = 3;
 				err_msg = "Definition is required";
 			}
 
@@ -16595,7 +16889,7 @@ var controller = {
 			}
 
 			if(validator.isEmpty(definition)){
-				err_code = 2;
+				err_code = 3;
 				err_msg = "Definition is required";
 			}
 
@@ -16685,6 +16979,217 @@ var controller = {
 										  	res.json({"err_code": 0, "err_msg": "Endpoint Status has been add.", "data":endpointPayloadType.data});
 									  	}else{
 									  		res.json({"err_code": 3, "err_msg": endpointPayloadType.error, "application": "Api FHIR", "function": "addEndpointPayloadType"});
+									  	}
+									  }
+								})
+							}else{
+								res.json(resultCode);
+							}
+						})
+					}else{
+						result.err_code = 500;
+						res.json(result);
+					}	
+				});
+			}else{
+				res.json({"err_code": err_code, "err_msg": err_msg});
+			}
+		},
+		adverseEventCategory: function addAdverseEventCategory(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			
+			var code = req.body.code.trim().toUpperCase();
+			var display = req.body.display;
+			var definition = req.body.definition.replace(/[^\w\s , ( ) / .]/gi, '');
+			
+			var err_code = 0;
+			var err_msg = '';
+			
+			//input checking
+			if(validator.isEmpty(code)){
+				err_code = 1;
+				err_msg = "Code is required";
+			}
+
+			if(validator.isEmpty(display)){
+				err_code = 2;
+				err_msg = "Display is required";
+			}
+
+			/*if(validator.isEmpty(definition)){
+				err_code = 2;
+				err_msg = "Definition is required";
+			}*/
+
+			if(err_code == 0){
+				checkApikey(apikey, ipAddres, function(result){
+					if(result.err_code == 0){
+						checkCode(apikey, code, 'ADVERSE_EVENT_CATEGORY', function(resultCode){
+							if(resultCode.err_code == 0){
+								//susun body
+								var dataAdverseEventCategory = {
+													"code": code,	
+													"display": display,
+													"definition": definition
+												};
+							
+								//method, endpoint, params, options, callback
+								ApiFHIR.post('adverseEventCategory', {"apikey": apikey}, {body: dataAdverseEventCategory, json:true}, function(error, response, body){
+									if(error){
+									  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "addAdverseEventCategory"});
+									  }else{
+									  	//cek apakah ada error atau tidak
+									  	var adverseEventCategory = body; //object
+									  	//cek apakah ada error atau tidak
+									  	if(adverseEventCategory.err_code == 0){
+										  	res.json({"err_code": 0, "err_msg": "Adverse Event Category has been add.", "data":adverseEventCategory.data});
+									  	}else{
+									  		res.json({"err_code": 3, "err_msg": adverseEventCategory.error, "application": "Api FHIR", "function": "addAdverseEventCategory"});
+									  	}
+									  }
+								})
+							}else{
+								res.json(resultCode);
+							}
+						})
+					}else{
+						result.err_code = 500;
+						res.json(result);
+					}	
+				});
+			}else{
+				res.json({"err_code": err_code, "err_msg": err_msg});
+			}
+		},
+		adverseEventType: function addAdverseEventType(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			
+			//var code = req.body.code.trim().toLowerCase();
+			var code = req.body.code;
+			var display = req.body.display;
+			var definition = req.body.definition.replace(/[^\w\s , ( ) / .]/gi, '');
+			
+			var err_code = 0;
+			var err_msg = '';
+			
+			//input checking
+			if(validator.isEmpty(code)){
+				err_code = 1;
+				err_msg = "Code is required";
+			}
+
+			if(validator.isEmpty(display)){
+				err_code = 2;
+				err_msg = "Display is required";
+			}
+
+			/*if(validator.isEmpty(definition)){
+				err_code = 3;
+				err_msg = "Definition is required";
+			}*/
+			
+			//if (typeof code != "number") {
+			if (isNaN(code)) {	
+				err_code = 4;
+				err_msg = "Code is not number";
+			}
+
+			if(err_code == 0){
+				checkApikey(apikey, ipAddres, function(result){
+					if(result.err_code == 0){
+						checkCode(apikey, code, 'ADVERSE_EVENT_TYPE', function(resultCode){
+							if(resultCode.err_code == 0){
+								//susun body
+								var dataAdverseEventType = {
+													"code": code,	
+													"display": display,
+													"definition": definition
+												};
+							
+								//method, endpoint, params, options, callback
+								ApiFHIR.post('adverseEventType', {"apikey": apikey}, {body: dataAdverseEventType, json:true}, function(error, response, body){
+									if(error){
+										console.log("error");
+									  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "addAdverseEventType"});
+									  }else{
+											console.log("ok");
+									  	//cek apakah ada error atau tidak
+									  	var adverseEventType = body; //object
+											
+									  	//cek apakah ada error atau tidak
+									  	if(adverseEventType.err_code == 0){
+										  	res.json({"err_code": 0, "err_msg": "Adverse Event Type has been add.", "data":adverseEventType.data});
+									  	}else{
+									  		res.json({"err_code": 3, "err_msg": adverseEventType.error, "application": "Api FHIR", "function": "addAdverseEventType"});
+									  	}
+									  }
+								})
+							}else{
+								res.json(resultCode);
+							}
+						})
+					}else{
+						result.err_code = 500;
+						res.json(result);
+					}	
+				});
+			}else{
+				res.json({"err_code": err_code, "err_msg": err_msg});
+			}
+		},
+		adverseEventSeriousness: function addAdverseEventSeriousness(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			
+			var code = req.body.code.trim();
+			var display = req.body.display;
+			var definition = req.body.definition.replace(/[^\w\s , ( ) / .]/gi, '');
+			
+			var err_code = 0;
+			var err_msg = '';
+			
+			//input checking
+			if(validator.isEmpty(code)){
+				err_code = 1;
+				err_msg = "Code is required";
+			}
+
+			if(validator.isEmpty(display)){
+				err_code = 2;
+				err_msg = "Display is required";
+			}
+
+			/*if(validator.isEmpty(definition)){
+				err_code = 2;
+				err_msg = "Definition is required";
+			}*/
+
+			if(err_code == 0){
+				checkApikey(apikey, ipAddres, function(result){
+					if(result.err_code == 0){
+						checkCode(apikey, code, 'ADVERSE_EVENT_Seriousness', function(resultCode){
+							if(resultCode.err_code == 0){
+								//susun body
+								var dataAdverseEventSeriousness = {
+													"code": code,	
+													"display": display,
+													"definition": definition
+												};
+							
+								//method, endpoint, params, options, callback
+								ApiFHIR.post('adverseEventSeriousness', {"apikey": apikey}, {body: dataAdverseEventSeriousness, json:true}, function(error, response, body){
+									if(error){
+									  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "addAdverseEventSeriousness"});
+									  }else{
+									  	//cek apakah ada error atau tidak
+									  	var adverseEventSeriousness = body; //object
+									  	//cek apakah ada error atau tidak
+									  	if(adverseEventSeriousness.err_code == 0){
+										  	res.json({"err_code": 0, "err_msg": "Adverse Event Seriousness has been add.", "data":adverseEventSeriousness.data});
+									  	}else{
+									  		res.json({"err_code": 3, "err_msg": adverseEventSeriousness.error, "application": "Api FHIR", "function": "addAdverseEventSeriousness"});
 									  	}
 									  }
 								})
@@ -25284,6 +25789,259 @@ var controller = {
 												  	res.json({"err_code": 0, "err_msg": "Endpoint Payload Type has been update.","data":endpointPayloadType.data});
 											  	}else{
 											  		res.json({"err_code": 3, "err_msg": endpointPayloadType.error, "application": "Api FHIR", "function": "updateEndpointPayloadType"});
+											  	}
+											  }
+										})
+									}
+								}else{
+									res.json(resultCheckId);
+								}
+							})
+						}else{
+							result.err_code = 500;
+							res.json(result);
+						}	
+					});
+				}else{
+					res.json({"err_code": 4, "err_msg": "Id must be a number."});	
+				}
+			}
+		},
+		adverseEventCategory: function updateAdverseEventCategory(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var _id = req.params._id;
+
+			var dataAdverseEventCategory = {};
+
+			if(typeof req.body.code !== 'undefined'){
+				var code = req.body.code.trim().toUpperCase();
+				dataAdverseEventCategory.code = code;
+			}
+			if(typeof req.body.display !== 'undefined'){
+				var display = req.body.display;
+				dataAdverseEventCategory.display = display;
+			}
+			if(typeof req.body.definition !== 'undefined'){
+				var definition = req.body.definition.replace(/[^\w\s ,]/gi, '');
+				dataAdverseEventCategory.definition = definition;
+			}
+
+			if(_id == "" || typeof _id == 'undefined'){
+				res.json({"err_code": 5, "err_msg": "Id is required."});	
+			}else{
+				if(validator.isInt(_id)){
+					checkApikey(apikey, ipAddres, function(result){
+						if(result.err_code == 0){
+							checkId(apikey, _id, 'ADVERSE_EVENT_CATEGORY', function(resultCheckId){
+								if(resultCheckId.err_code == 0){
+									if(typeof req.body.code !== 'undefined'){
+										checkCode(apikey, code, 'ADVERSE_EVENT_CATEGORY', function(resultCode){
+											if(resultCode.err_code == 0){
+												//method, endpoint, params, options, callback
+												ApiFHIR.put('adverseEventCategory', {"apikey": apikey, "_id": _id}, {body: dataAdverseEventCategory, json: true}, function(error, response, body){
+													if(error){
+													  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "updateAdverseEventCategory"});
+													  }else{
+													  	//cek apakah ada error atau tidak
+													  	var adverseEventCategory = body; 
+													  	
+													  	//cek apakah ada error atau tidak
+													  	if(adverseEventCategory.err_code == 0){
+														  	res.json({"err_code": 0, "err_msg": "Adverse Event Category has been update.","data":adverseEventCategory.data});
+													  	}else{
+													  		res.json({"err_code": 3, "err_msg": adverseEventCategory.error, "application": "Api FHIR", "function": "updateAdverseEventCategory"});
+													  	}
+													  }
+												})
+											}else{
+												res.json(resultCode);
+											}
+										})
+									}else{
+										//method, endpoint, params, options, callback
+										ApiFHIR.put('adverseEventCategory', {"apikey": apikey, "_id": _id}, {body: dataAdverseEventCategory, json: true}, function(error, response, body){
+											if(error){
+											  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "updateAdverseEventCategory"});
+											  }else{
+											  	//cek apakah ada error atau tidak
+											  	var adverseEventCategory = body; 
+											  	
+											  	//cek apakah ada error atau tidak
+											  	if(adverseEventCategory.err_code == 0){
+												  	res.json({"err_code": 0, "err_msg": "Adverse Event Category has been update.","data":adverseEventCategory.data});
+											  	}else{
+											  		res.json({"err_code": 3, "err_msg": adverseEventCategory.error, "application": "Api FHIR", "function": "updateAdverseEventCategory"});
+											  	}
+											  }
+										})
+									}
+								}else{
+									res.json(resultCheckId);
+								}
+							})
+						}else{
+							result.err_code = 500;
+							res.json(result);
+						}	
+					});
+				}else{
+					res.json({"err_code": 4, "err_msg": "Id must be a number."});	
+				}
+			}
+		},
+		adverseEventType: function updateadverseEventType(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var _id = req.params._id;
+
+			var data = {};
+
+			if(typeof req.body.code !== 'undefined'){
+				var code = req.body.code.trim().toLowerCase();
+				data.code = code;
+			}
+			if(typeof req.body.display !== 'undefined'){
+				var display = req.body.display;
+				data.display = display;
+			}
+			if(typeof req.body.definition !== 'undefined'){
+				var definition = req.body.definition.replace(/[^\w\s ,]/gi, '');
+				data.definition = definition;
+			}
+			
+			if(isNaN(code) && typeof code !== 'undefined'){
+				res.json({"err_code": 6, "err_msg": "Code is not number"});
+			}else{
+				if(_id == "" || typeof _id == 'undefined'){
+					res.json({"err_code": 5, "err_msg": "Id is required."});	
+				}else{
+					if(validator.isInt(_id)){
+						checkApikey(apikey, ipAddres, function(result){
+							if(result.err_code == 0){
+								checkId(apikey, _id, 'ADVERSE_EVENT_TYPE', function(resultCheckId){
+									if(resultCheckId.err_code == 0){
+										if(typeof req.body.code !== 'undefined'){
+											checkCode(apikey, code, 'ADVERSE_EVENT_TYPE', function(resultCode){
+												if(resultCode.err_code == 0){
+													//method, endpoint, params, options, callback
+													ApiFHIR.put('adverseEventType', {"apikey": apikey, "_id": _id}, {body: data, json: true}, function(error, response, body){
+														if(error){
+																res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "updateAdverseEventType"});
+															}else{
+																//cek apakah ada error atau tidak
+																var adverseEventType = body; 
+
+																//cek apakah ada error atau tidak
+																if(adverseEventType.err_code == 0){
+																	res.json({"err_code": 0, "err_msg": "Adverse Event Type has been update.","data":adverseEventType.data});
+																}else{
+																	res.json({"err_code": 3, "err_msg": adverseEventType.error, "application": "Api FHIR", "function": "updateAdverseEventType"});
+																}
+															}
+													})
+												}else{
+													res.json(resultCode);
+												}
+											})
+										}else{
+											//method, endpoint, params, options, callback
+											ApiFHIR.put('adverseEventType', {"apikey": apikey, "_id": _id}, {body: data, json: true}, function(error, response, body){
+												if(error){
+														res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "updateAdverseEventType"});
+													}else{
+														//cek apakah ada error atau tidak
+														var adverseEventType = body; 
+
+														//cek apakah ada error atau tidak
+														if(adverseEventType.err_code == 0){
+															res.json({"err_code": 0, "err_msg": "Adverse Event Type has been update.","data":adverseEventType.data});
+														}else{
+															res.json({"err_code": 3, "err_msg": adverseEventType.error, "application": "Api FHIR", "function": "updateAdverseEventType"});
+														}
+													}
+											})
+										}
+									}else{
+										res.json(resultCheckId);
+									}
+								})
+							}else{
+								result.err_code = 500;
+								res.json(result);
+							}	
+						});
+					}else{
+						res.json({"err_code": 4, "err_msg": "Id must be a number."});	
+					}
+				}
+			}
+		},
+		adverseEventSeriousness: function updateAdverseEventSeriousness(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var _id = req.params._id;
+
+			var data = {};
+
+			if(typeof req.body.code !== 'undefined'){
+				var code = req.body.code.trim();
+				data.code = code;
+			}
+			if(typeof req.body.display !== 'undefined'){
+				var display = req.body.display;
+				data.display = display;
+			}
+			if(typeof req.body.definition !== 'undefined'){
+				var definition = req.body.definition.replace(/[^\w\s ,]/gi, '');
+				data.definition = definition;
+			}
+
+			if(_id == "" || typeof _id == 'undefined'){
+				res.json({"err_code": 5, "err_msg": "Id is required."});	
+			}else{
+				if(validator.isInt(_id)){
+					checkApikey(apikey, ipAddres, function(result){
+						if(result.err_code == 0){
+							checkId(apikey, _id, 'ADVERSE_EVENT_Seriousness', function(resultCheckId){
+								if(resultCheckId.err_code == 0){
+									if(typeof req.body.code !== 'undefined'){
+										checkCode(apikey, code, 'ADVERSE_EVENT_Seriousness', function(resultCode){
+											if(resultCode.err_code == 0){
+												//method, endpoint, params, options, callback
+												ApiFHIR.put('adverseEventSeriousness', {"apikey": apikey, "_id": _id}, {body: data, json: true}, function(error, response, body){
+													if(error){
+													  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "updateAdverseEventSeriousness"});
+													  }else{
+													  	//cek apakah ada error atau tidak
+													  	var adverseEventSeriousness = body; 
+													  	
+													  	//cek apakah ada error atau tidak
+													  	if(adverseEventSeriousness.err_code == 0){
+														  	res.json({"err_code": 0, "err_msg": "Adverse Event Seriousness has been update.","data":adverseEventSeriousness.data});
+													  	}else{
+													  		res.json({"err_code": 3, "err_msg": adverseEventSeriousness.error, "application": "Api FHIR", "function": "updateAdverseEventSeriousness"});
+													  	}
+													  }
+												})
+											}else{
+												res.json(resultCode);
+											}
+										})
+									}else{
+										//method, endpoint, params, options, callback
+										ApiFHIR.put('adverseEventSeriousness', {"apikey": apikey, "_id": _id}, {body: data, json: true}, function(error, response, body){
+											if(error){
+											  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "updateAdverseEventSeriousness"});
+											  }else{
+											  	//cek apakah ada error atau tidak
+											  	var adverseEventSeriousness = body; 
+											  	
+											  	//cek apakah ada error atau tidak
+											  	if(adverseEventSeriousness.err_code == 0){
+												  	res.json({"err_code": 0, "err_msg": "Adverse Event Seriousness has been update.","data":adverseEventSeriousness.data});
+											  	}else{
+											  		res.json({"err_code": 3, "err_msg": adverseEventSeriousness.error, "application": "Api FHIR", "function": "updateAdverseEventSeriousness"});
 											  	}
 											  }
 										})
