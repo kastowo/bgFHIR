@@ -343,6 +343,11 @@ var controller = {
         values += "'" + practitioner_id +"',";
       }
 			
+			if(typeof organization_id !== 'undefined'){
+        column += 'organization_id,';
+        values += "'" + organization_id +"',";
+      }
+			
 			
 
       var query = "UPSERT INTO BACIRO_FHIR.QUALIFICATION(qualification_id, " + column.slice(0, -1) + ")"+
@@ -474,6 +479,11 @@ var controller = {
 			if(typeof practitioner_id !== 'undefined'){
         column += 'practitioner_id,';
         values += "'" + practitioner_id +"',";
+      }
+			
+			if(typeof organization_id !== 'undefined'){
+        column += 'organization_id,';
+        values += "'" + organization_id +"',";
       }
 			
 			var arrResource = domainResource.split('|');
