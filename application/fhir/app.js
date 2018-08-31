@@ -60,6 +60,12 @@ var Practitioner = require("./service_provider_directory_resources/practitioner/
 var PractitionerRole = require("./service_provider_directory_resources/practitionerRole/controller");
 var HealthcareService = require("./service_provider_directory_resources/healthcareService/controller");
 
+var Immunization = require("./medication/immunization/controller");
+var ImmunizationRecommendation = require("./medication/immunizationRecommendation/controller");
+var Medication = require("./medication/medication/controller");
+
+var AdverseEvent = require("./clinical_summary/adverseEvent/controller");
+
 //import routes
 var routesDefaultFHIR	= require('./default_fhir/routes');
 
@@ -87,6 +93,12 @@ var routesPractitioner = require('./service_provider_directory_resources/practit
 var routesPractitionerRole = require('./service_provider_directory_resources/practitionerRole/routes');
 var routesHealthcareService = require('./service_provider_directory_resources/healthcareService/routes');
 
+var routesImmunization = require('./medication/immunization/routes');
+var routesImmunizationRecommendation = require('./medication/immunizationRecommendation/routes');
+var routesMedication = require('./medication/medication/routes');
+
+var routesAdverseEvent = require('./clinical_summary/adverseEvent/routes');
+
 //setrouting
 routesDefaultFHIR(app, DefaultFHIR);
 // routesClinicalCategorizationResources(app, ClinicalCategorizationResources);
@@ -112,6 +124,12 @@ routesLocation(app, Location);
 routesPractitioner(app, Practitioner);
 routesPractitionerRole(app, PractitionerRole);
 routesHealthcareService(app, HealthcareService);
+
+routesImmunization(app, Immunization);
+routesImmunizationRecommendation(app, ImmunizationRecommendation);
+routesMedication(app, Medication);
+
+routesAdverseEvent(app, AdverseEvent);
 
 var server = app.listen(port, host, function () {
   console.log("Server running at http://%s:%s", host, port);

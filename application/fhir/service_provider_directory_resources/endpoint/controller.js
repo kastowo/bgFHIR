@@ -632,7 +632,7 @@ var controller = {
 																		if(resContactPointUse.err_code > 0){ //code harus lebih besar dari nol, ini menunjukan datanya valid
 									
 																			//event emiter
-																			myEmitter.once('checkEndpointId', function() {
+																			myEmitter.prependOnceListener('checkEndpointId', function() {
 																					checkUniqeValue(apikey, "IDENTIFIER_VALUE|" + identifierValue, 'IDENTIFIER', function(resUniqeValue){
 																						if(resUniqeValue.err_code == 0){ //untuk ini nilai code harus sama dengan 0, menunjukan value tersebut belum ada
 																							checkUniqeValue(apikey, "CONTACT_POINT_VALUE|" + contactPointValue, 'CONTACT_POINT', function(resContactPointValue){

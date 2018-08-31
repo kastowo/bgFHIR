@@ -883,6 +883,238 @@
 			},
 			"deviceKindCode":{
 				"location": "%(apikey)s/device-kind/code/%(code)s"
+			},
+			"immunizationStatus":{
+				"location": "%(apikey)s/immunization-status/%(_id)d"
+			},
+			"immunizationStatusCode":{
+				"location": "%(apikey)s/immunization-status/code/%(code)s"
+			},
+			"vaccineCode":{
+				"location": "%(apikey)s/vaccine-code/%(_id)d"
+			},
+			"vaccineCodeCode":{
+				"location": "%(apikey)s/vaccine-code/code/%(code)s"
+			},
+			"immunizationOrigin":{
+				"location": "%(apikey)s/immunization-origin/%(_id)d"
+			},
+			"immunizationOriginCode":{
+				"location": "%(apikey)s/immunization-origin/code/%(code)s"
+			},
+			"immunizationSite":{
+				"location": "%(apikey)s/immunization-site/%(_id)d"
+			},
+			"immunizationSiteCode":{
+				"location": "%(apikey)s/immunization-site/code/%(code)s"
+			},
+			"immunizationRoute":{
+				"location": "%(apikey)s/immunization-route/%(_id)d"
+			},
+			"immunizationRouteCode":{
+				"location": "%(apikey)s/immunization-route/code/%(code)s"
+			},
+			"immunizationRole":{
+				"location": "%(apikey)s/immunization-role/%(_id)d"
+			},
+			"immunizationRoleCode":{
+				"location": "%(apikey)s/immunization-role/code/%(code)s"
+			},
+			"immunizationReason":{
+				"location": "%(apikey)s/immunization-reason/%(_id)d"
+			},
+			"immunizationReasonCode":{
+				"location": "%(apikey)s/immunization-reason/code/%(code)s"
+			},
+			"noImmunizationReason":{
+				"location": "%(apikey)s/no-immunization-reason/%(_id)d"
+			},
+			"noImmunizationReasonCode":{
+				"location": "%(apikey)s/no-immunization-reason/code/%(code)s"
+			},
+			"vaccinationProtocolDoseTarget":{
+				"location": "%(apikey)s/vaccination-protocol-dose-target/%(_id)d"
+			},
+			"vaccinationProtocolDoseTargetCode":{
+				"location": "%(apikey)s/vaccination-protocol-dose-target/code/%(code)s"
+			},
+			"vaccinationProtocolDoseStatus":{
+				"location": "%(apikey)s/vaccination-protocol-dose-status/%(_id)d"
+			},
+			"vaccinationProtocolDoseStatusCode":{
+				"location": "%(apikey)s/vaccination-protocol-dose-status/code/%(code)s"
+			},
+			"vaccinationProtocolDoseStatusReason":{
+				"location": "%(apikey)s/vaccination-protocol-dose-status-reason/%(_id)d"
+			},
+			"vaccinationProtocolDoseStatusReasonCode":{
+				"location": "%(apikey)s/vaccination-protocol-dose-status-reason/code/%(code)s"
+			},
+			"immunizationRecommendationTargetDisease":{
+				"location": "%(apikey)s/immunization-recommendation-target-disease/%(_id)d"
+			},
+			"immunizationRecommendationTargetDiseaseCode":{
+				"location": "%(apikey)s/immunization-recommendation-target-disease/code/%(code)s"
+			},
+			"immunizationRecommendationStatus":{
+				"location": "%(apikey)s/immunization-recommendation-status/%(_id)d"
+			},
+			"immunizationRecommendationStatusCode":{
+				"location": "%(apikey)s/immunization-recommendation-status/code/%(code)s"
+			},
+			"immunizationRecommendationDateCriterion":{
+				"location": "%(apikey)s/immunization-recommendation-date-criterion/%(_id)d"
+			},
+			"immunizationRecommendationDateCriterionCode":{
+				"location": "%(apikey)s/immunization-recommendation-date-criterion/code/%(code)s"
+			},
+			"medicationStatus":{
+				"location": "%(apikey)s/medication-status/%(_id)d"
+			},
+			"medicationStatusCode":{
+				"location": "%(apikey)s/medication-status/code/%(code)s"
+			},
+			"medicationFormCodes":{
+				"location": "%(apikey)s/medication-form-codes/%(_id)d"
+			},
+			"medicationFormCodesCode":{
+				"location": "%(apikey)s/medication-form-codes/code/%(code)s"
+			},
+			"medicationPackageForm":{
+				"location": "%(apikey)s/medication-package-form/%(_id)d"
+			},
+			"medicationPackageFormCode":{
+				"location": "%(apikey)s/medication-package-form/code/%(code)s"
+			},
+			"medicationAdminStatus":{
+				"location": "%(apikey)s/medication-admin-status/%(_id)d"
+			},
+			"medicationAdminStatusCode":{
+				"location": "%(apikey)s/medication-admin-status/code/%(code)s"
+			},
+			"medicationAdminCategory":{
+				"location": "%(apikey)s/medication-admin-category/%(_id)d"
+			},
+			"medicationAdminCategoryCode":{
+				"location": "%(apikey)s/medication-admin-category/code/%(code)s"
+			},
+			"reasonMedicationNotGivenCodes":{
+				"location": "%(apikey)s/reason-medication-not-given-codes/%(_id)d"
+			},
+			"reasonMedicationNotGivenCodesCode":{
+				"location": "%(apikey)s/reason-medication-not-given-codes/code/%(code)s"
+			},
+			"reasonMedicationGivenCodes":{
+				"location": "%(apikey)s/reason-medication-given-codes/%(_id)d"
+			},
+			"reasonMedicationGivenCodesCode":{
+				"location": "%(apikey)s/reason-medication-given-codes/code/%(code)s"
+			},
+			"approachSiteCodes":{
+				"location": "%(apikey)s/approach-site-codes/%(_id)d"
+			},
+			"approachSiteCodesCode":{
+				"location": "%(apikey)s/approach-site-codes/code/%(code)s"
+			},
+			"administrationMethodCodes":{
+				"location": "%(apikey)s/administration-method-codes/%(_id)d"
+			},
+			"administrationMethodCodesCode":{
+				"location": "%(apikey)s/administration-method-codes/code/%(code)s"
+			},
+			"medicationDispenseStatus":{
+				"location": "%(apikey)s/medication-dispense-status/%(_id)d"
+			},
+			"medicationDispenseStatusCode":{
+				"location": "%(apikey)s/medication-dispense-status/code/%(code)s"
+			},
+			"medicationDispenseCategory":{
+				"location": "%(apikey)s/medication-dispense-category/%(_id)d"
+			},
+			"medicationDispenseCategoryCode":{
+				"location": "%(apikey)s/medication-dispense-category/code/%(code)s"
+			},
+			"actPharmacySupplyType":{
+				"location": "%(apikey)s/act-pharmacy-supply-type/%(_id)d"
+			},
+			"actPharmacySupplyTypeCode":{
+				"location": "%(apikey)s/act-pharmacy-supply-type/code/%(code)s"
+			},
+			"actSubstanceAdminSubstitutionCode":{
+				"location": "%(apikey)s/act-substance-admin-substitution-code/%(_id)d"
+			},
+			"actSubstanceAdminSubstitutionCodeCode":{
+				"location": "%(apikey)s/act-substance-admin-substitution-code/code/%(code)s"
+			},
+			"actSubstanceAdminSubstitutionReason":{
+				"location": "%(apikey)s/act-substance-admin-substitution-reason/%(_id)d"
+			},
+			"actSubstanceAdminSubstitutionReasonCode":{
+				"location": "%(apikey)s/act-substance-admin-substitution-reason/code/%(code)s"
+			}
+			
+			,
+			"medicationRequestStatus":{
+				"location": "%(apikey)s/medication-request-status/%(_id)d"
+			},
+			"medicationRequestStatusCode":{
+				"location": "%(apikey)s/medication-request-status/code/%(code)s"
+			},
+			"medicationRequestIntent":{
+				"location": "%(apikey)s/medication-request-intent/%(_id)d"
+			},
+			"medicationRequestIntentCode":{
+				"location": "%(apikey)s/medication-request-intent/code/%(code)s"
+			},
+			"medicationRequestCategory":{
+				"location": "%(apikey)s/medication-request-category/%(_id)d"
+			},
+			"medicationRequestCategoryCode":{
+				"location": "%(apikey)s/medication-request-category/code/%(code)s"
+			},
+			"medicationRequestPriority":{
+				"location": "%(apikey)s/medication-request-priority/%(_id)d"
+			},
+			"medicationRequestPriorityCode":{
+				"location": "%(apikey)s/medication-request-priority/code/%(code)s"
+			},
+			"medicationCodes":{
+				"location": "%(apikey)s/medication-codes/%(_id)d"
+			},
+			"medicationCodesCode":{
+				"location": "%(apikey)s/medication-codes/code/%(code)s"
+			},
+			"substanceAdminSubstitutionReason":{
+				"location": "%(apikey)s/substance-admin-substitution-reason/%(_id)d"
+			},
+			"substanceAdminSubstitutionReasonCode":{
+				"location": "%(apikey)s/substance-admin-substitution-reason/code/%(code)s"
+			}
+			
+			,
+			"medicationStatementStatus":{
+				"location": "%(apikey)s/medication-statement-status/%(_id)d"
+			},
+			"medicationStatementStatusCode":{
+				"location": "%(apikey)s/medication-statement-status/code/%(code)s"
+			},
+			"medicationStatementCategory":{
+				"location": "%(apikey)s/medication-statement-category/%(_id)d"
+			},
+			"medicationStatementCategoryCode":{
+				"location": "%(apikey)s/medication-statement-category/code/%(code)s"
+			},
+			"medicationStatementTaken":{
+				"location": "%(apikey)s/medication-statement-taken/%(_id)d"
+			},
+			"medicationStatementTakenCode":{
+				"location": "%(apikey)s/medication-statement-taken/code/%(code)s"
+			},
+			"reasonMedicationNotTakenCodes":{
+				"location": "%(apikey)s/reason-medication-not-taken-codes/%(_id)d"
+			},
+			"reasonMedicationNotTakenCodesCode":{
+				"location": "%(apikey)s/reason-medication-not-taken-codes/code/%(code)s"
 			}
 		},
 		"POST": {
@@ -1449,6 +1681,130 @@
 			},
 			"deviceKind":{
 				"location": "%(apikey)s/device-kind"
+			},
+			"adverseEvent":{
+				"location": "%(apikey)s/AdverseEvent"
+			},
+			"adverseEventSuspectEntity":{
+				"location": "%(apikey)s/AdverseEventSuspectEntity"
+			}
+			
+			,
+			"immunizationStatus":{
+				"location": "%(apikey)s/immunization-status"
+			},
+			"vaccineCode":{
+				"location": "%(apikey)s/vaccine-code"
+			},
+			"immunizationOrigin":{
+				"location": "%(apikey)s/immunization-origin"
+			},
+			"immunizationSite":{
+				"location": "%(apikey)s/immunization-site"
+			},
+			"immunizationRoute":{
+				"location": "%(apikey)s/immunization-route"
+			},
+			"immunizationRole":{
+				"location": "%(apikey)s/immunization-role"
+			},
+			"immunizationReason":{
+				"location": "%(apikey)s/immunization-reason"
+			},
+			"noImmunizationReason":{
+				"location": "%(apikey)s/no-immunization-reason"
+			},
+			"vaccinationProtocolDoseTarget":{
+				"location": "%(apikey)s/vaccination-protocol-dose-target"
+			},
+			"vaccinationProtocolDoseStatus":{
+				"location": "%(apikey)s/vaccination-protocol-dose-status"
+			},
+			"vaccinationProtocolDoseStatusReason":{
+				"location": "%(apikey)s/vaccination-protocol-dose-status-reason"
+			},
+			"immunizationRecommendationTargetDisease":{
+				"location": "%(apikey)s/immunization-recommendation-target-disease"
+			},
+			"immunizationRecommendationStatus":{
+				"location": "%(apikey)s/immunization-recommendation-status"
+			},
+			"immunizationRecommendationDateCriterion":{
+				"location": "%(apikey)s/immunization-recommendation-date-criterion"
+			},
+			"medicationStatus":{
+				"location": "%(apikey)s/medication-status"
+			},
+			"medicationFormCodes":{
+				"location": "%(apikey)s/medication-form-codes"
+			},
+			"medicationPackageForm":{
+				"location": "%(apikey)s/medication-package-form"
+			},
+			"medicationAdminStatus":{
+				"location": "%(apikey)s/medication-admin-status"
+			},
+			"medicationAdminCategory":{
+				"location": "%(apikey)s/medication-admin-category"
+			},
+			"reasonMedicationNotGivenCodes":{
+				"location": "%(apikey)s/reason-medication-not-given-codes"
+			},
+			"reasonMedicationGivenCodes":{
+				"location": "%(apikey)s/reason-medication-given-codes"
+			},
+			"approachSiteCodes":{
+				"location": "%(apikey)s/approach-site-codes"
+			},
+			"administrationMethodCodes":{
+				"location": "%(apikey)s/administration-method-codes"
+			},
+			"medicationDispenseStatus":{
+				"location": "%(apikey)s/medication-dispense-status"
+			},
+			"medicationDispenseCategory":{
+				"location": "%(apikey)s/medication-dispense-category"
+			},
+			"actPharmacySupplyType":{
+				"location": "%(apikey)s/act-pharmacy-supply-type"
+			},
+			"actSubstanceAdminSubstitutionCode":{
+				"location": "%(apikey)s/act-substance-admin-substitution-code"
+			},
+			"actSubstanceAdminSubstitutionReason":{
+				"location": "%(apikey)s/act-substance-admin-substitution-reason"
+			},
+			"medicationRequestStatus":{
+				"location": "%(apikey)s/medication-request-status"
+			},
+			"medicationRequestCategory":{
+				"location": "%(apikey)s/medication-request-category"
+			},
+			"medicationRequestIntent":{
+				"location": "%(apikey)s/medication-request-intent"
+			},
+			"medicationRequestPriority":{
+				"location": "%(apikey)s/medication-request-priority"
+			},
+			"medicationCodes":{
+				"location": "%(apikey)s/medication-codes"
+			},
+			"substanceAdminSubstitutionReason":{
+				"location": "%(apikey)s/substance-admin-substitution-reason"
+			}
+			
+			,
+			"medicationStatementStatus":{
+				"location": "%(apikey)s/medication-statement-status"
+			},
+			"medicationStatementCategory":{
+				"location": "%(apikey)s/medication-statement-category"
+			},
+			"medicationStatementTaken":{
+				"location": "%(apikey)s/medication-statement-taken"
+			},
+			"reasonMedicationNotTakenCodes":{
+				"location": "%(apikey)s/reason-medication-not-taken-codes"
 			}
 		},
 		"PUT": {
@@ -2006,6 +2362,123 @@
 			},
 			"deviceKind":{
 				"location": "%(apikey)s/device-kind/%(_id)d"
+			}
+			
+			,
+			"immunizationStatus":{
+				"location": "%(apikey)s/immunization-status/%(_id)d"
+			},
+			"vaccineCode":{
+				"location": "%(apikey)s/vaccine-code/%(_id)d"
+			},
+			"immunizationOrigin":{
+				"location": "%(apikey)s/immunization-origin/%(_id)d"
+			},
+			"immunizationSite":{
+				"location": "%(apikey)s/immunization-site/%(_id)d"
+			},
+			"immunizationRoute":{
+				"location": "%(apikey)s/immunization-route/%(_id)d"
+			},
+			"immunizationRole":{
+				"location": "%(apikey)s/immunization-role/%(_id)d"
+			},
+			"immunizationReason":{
+				"location": "%(apikey)s/immunization-reason/%(_id)d"
+			},
+			"noImmunizationReason":{
+				"location": "%(apikey)s/no-immunization-reason/%(_id)d"
+			},
+			"vaccinationProtocolDoseTarget":{
+				"location": "%(apikey)s/vaccination-protocol-dose-target/%(_id)d"
+			},
+			"vaccinationProtocolDoseStatus":{
+				"location": "%(apikey)s/vaccination-protocol-dose-status/%(_id)d"
+			},
+			"vaccinationProtocolDoseStatusReason":{
+				"location": "%(apikey)s/vaccination-protocol-dose-status-reason/%(_id)d"
+			},
+			"immunizationRecommendationTargetDisease":{
+				"location": "%(apikey)s/immunization-recommendation-target-disease/%(_id)d"
+			},
+			"immunizationRecommendationStatus":{
+				"location": "%(apikey)s/immunization-recommendation-status/%(_id)d"
+			},
+			"immunizationRecommendationDateCriterion":{
+				"location": "%(apikey)s/immunization-recommendation-date-criterion/%(_id)d"
+			},
+			"medicationStatus":{
+				"location": "%(apikey)s/medication-status/%(_id)d"
+			},
+			"medicationFormCodes":{
+				"location": "%(apikey)s/medication-form-codes/%(_id)d"
+			},
+			"medicationPackageForm":{
+				"location": "%(apikey)s/medication-package-form/%(_id)d"
+			},
+			"medicationAdminStatus":{
+				"location": "%(apikey)s/medication-admin-status/%(_id)d"
+			},
+			"medicationAdminCategory":{
+				"location": "%(apikey)s/medication-admin-category/%(_id)d"
+			},
+			"reasonMedicationNotGivenCodes":{
+				"location": "%(apikey)s/reason-medication-not-given-codes/%(_id)d"
+			},
+			"reasonMedicationGivenCodes":{
+				"location": "%(apikey)s/reason-medication-given-codes/%(_id)d"
+			},
+			"approachSiteCodes":{
+				"location": "%(apikey)s/approach-site-codes/%(_id)d"
+			},
+			"administrationMethodCodes":{
+				"location": "%(apikey)s/administration-method-codes/%(_id)d"
+			},
+			"medicationDispenseStatus":{
+				"location": "%(apikey)s/medication-dispense-status/%(_id)d"
+			},
+			"medicationDispenseCategory":{
+				"location": "%(apikey)s/medication-dispense-category/%(_id)d"
+			},
+			"actPharmacySupplyType":{
+				"location": "%(apikey)s/act-pharmacy-supply-type/%(_id)d"
+			},
+			"actSubstanceAdminSubstitutionCode":{
+				"location": "%(apikey)s/act-substance-admin-substitution-code/%(_id)d"
+			},
+			"actSubstanceAdminSubstitutionReason":{
+				"location": "%(apikey)s/act-substance-admin-substitution-reason/%(_id)d"
+			},
+			"medicationRequestStatus":{
+				"location": "%(apikey)s/medication-request-status/%(_id)d"
+			},
+			"medicationRequestIntent":{
+				"location": "%(apikey)s/medication-request-intent/%(_id)d"
+			},
+			"medicationRequestCategory":{
+				"location": "%(apikey)s/medication-request-category/%(_id)d"
+			},
+			"medicationRequestPriority":{
+				"location": "%(apikey)s/medication-request-priority/%(_id)d"
+			},
+			"medicationCodes":{
+				"location": "%(apikey)s/medication-codes/%(_id)d"
+			},
+			"substanceAdminSubstitutionReason":{
+				"location": "%(apikey)s/substance-admin-substitution-reason/%(_id)d"
+			}
+			,
+			"medicationStatementStatus":{
+				"location": "%(apikey)s/medication-statement-status/%(_id)d"
+			},
+			"medicationStatementCategory":{
+				"location": "%(apikey)s/medication-statement-category/%(_id)d"
+			},
+			"medicationStatementTaken":{
+				"location": "%(apikey)s/medication-statement-taken/%(_id)d"
+			},
+			"reasonMedicationNotTakenCodes":{
+				"location": "%(apikey)s/reason-medication-not-taken-codes/%(_id)d"
 			}
 		}
 	}

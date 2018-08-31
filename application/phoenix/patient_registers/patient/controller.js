@@ -550,7 +550,8 @@ var controller = {
 
       var query = "UPSERT INTO BACIRO_FHIR.PATIENT(patient_id, patient_gender, patient_birthdate, patient_active, patient_animal_id, organization_id, patient_deceased, patient_deceased_date, patient_marital_status, patient_multiple_birth, patient_multiple_number)"+
         " VALUES ('"+patient_id+"', '"+patient_gender+"', to_date('" + patient_birthdate + "', 'yyyy-MM-dd'), "+patient_active+", '"+patient_animal_id+"' , '"+organization_id+"', "+patient_deceased+", " + patient_deceased_date + ", '"+ patient_marital_status +"', "+ patient_multiple_birth +", "+ patient_multiple_number +")";
-      
+			console.log("query patient");
+      console.log(query);
       db.upsert(query,function(succes){
         var query = "SELECT patient_id, patient_gender, patient_birthdate, patient_active, patient_animal_id, organization_id, patient_deceased, patient_deceased_date, patient_marital_status, patient_multiple_birth, patient_multiple_number FROM BACIRO_FHIR.PATIENT WHERE patient_id = '" + patient_id + "' ";
         db.query(query,function(dataJson){

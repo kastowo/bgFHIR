@@ -1,0 +1,1424 @@
+# bgFHIR 
+by HCS
+1. organization-type	
+	a. Get all data
+		Method : GET
+		URL Format : host:port/{apikey}/organization-type 
+		Example : 192.168.15.134:2008/f188bfb0a60c976b39a1e9dbbc94360d/organization-type/
+
+	b. Get data by id
+		Method : GET
+		URL Format : host:port/{apikey}/organization-type/{id} 
+		Example : 192.168.15.134:2008/f188bfb0a60c976b39a1e9dbbc94360d/organization-type/11
+
+	c. Get data by code
+		Method : GET
+		URL Format : host:port/{apikey}/organization-type/code/{code} 
+		Example : 192.168.15.134:2008/f188bfb0a60c976b39a1e9dbbc94360d/organization-type/code/prov
+
+		Response : 
+		{
+			"err_code": 0,
+			"data": [
+				{
+					"id": "11",
+					"code": "prov",
+					"display": "Healthcare Provider",
+					"definition": "An organization that provides healthcare services."
+				}
+			]
+		}
+
+	d. Add organization-type
+		Method : POST
+		URL Format : host:port/{apikey}/organization-type
+		Example : 192.168.15.134:2008/f188bfb0a60c976b39a1e9dbbc94360d/organization-type
+		Request :
+			{
+				"code": "prov",
+				"display": "Healthcare Provider",
+				"definition": "An organization that provides healthcare services."
+			}
+
+		Response : 
+			{
+			    "err_code": 0,
+			    "err_msg": "Organization type has been add.",
+			    "data": [
+			        {
+								"id": "11",
+								"code": "prov",
+								"display": "Healthcare Provider",
+								"definition": "An organization that provides healthcare services."
+			        }
+			    ]
+			}
+
+		Keterangan :
+			Data yang harus ditambahkan pada API ini dapat dilihat pada link ini https://www.hl7.org/fhir//valueset-organization-type.html
+
+	e. Update organization-type
+		Method : PUT
+		URL Format : host:port/{apikey}/organization-type/{id} 
+		Example : 192.168.15.134:2008/f188bfb0a60c976b39a1e9dbbc94360d/organization-type/11
+		Request :
+			{
+				"code": "prov",
+				"display": "Healthcare Service edit"
+			}
+
+		Response :
+			{
+			    "err_code": 0,
+			    "err_msg": "Orgaization type has been update.",
+			    "data": [
+			        {
+								"id": "11",
+								"code": "prov",
+								"display": "Healthcare Provider edit",
+								"definition": "An organization that provides healthcare services."
+			        }
+			    ]
+			}	
+
+2. contactentity-type	
+	a. Get all data
+		Method : GET
+		URL Format : host:port/{apikey}/contactentity-type	
+		Example : 192.168.15.134:2008/f188bfb0a60c976b39a1e9dbbc94360d/contactentity-type
+
+	b. Get data by id
+		Method : GET
+		URL Format : host:port/{apikey}/contactentity-type/{id} 
+		Example : 192.168.15.134:2008/f188bfb0a60c976b39a1e9dbbc94360d/contactentity-type/11
+
+	c. Get data by code
+		Method : GET
+		URL Format : host:port/{apikey}/organization-type/code/{code} 
+		Example : 192.168.15.134:2008/f188bfb0a60c976b39a1e9dbbc94360d/contactentity-type/code/BILL
+
+		Response : 
+		{
+			"err_code": 0,
+			"data": [
+					{
+							"id": "100",
+							"code": "BILL",
+							"display": "Billing",
+							"definition": "Contact details for information regarding to billing/general finance enquiries."
+					}
+			]
+		}
+
+	d. Add contactentity-type	
+		Method : POST
+		URL Format : host:port/{apikey}/contactentity-type	
+		Example : 192.168.15.134:2008/f188bfb0a60c976b39a1e9dbbc94360d/contactentity-type	
+		Request :
+			{
+				"code": "BILL",
+				"display": "Billing",
+				"definition": "Contact details for information regarding to billing/general finance enquiries."
+			}
+
+		Response : 
+			{
+			    "err_code": 0,
+			    "err_msg": "Contactentity type has been add.",
+			    "data": [
+			        {
+								"id": "11",
+								"code": "BILL",
+								"display": "Billing",
+								"definition": "Contact details for information regarding to billing/general finance enquiries."
+			        }
+			    ]
+			}
+
+		Keterangan :
+			Data yang harus ditambahkan pada API ini dapat dilihat pada link ini https://www.hl7.org/fhir/valueset-contactentity-type.html
+
+	e. Update contactentity-type
+		Method : PUT
+		URL Format : host:port/{apikey}/contactentity-type/{id} 
+		Example : 192.168.15.134:2008/f188bfb0a60c976b39a1e9dbbc94360d/contactentity-type/11
+		Request :
+			{
+				"code": "bill",
+				"display": "Billing edit",
+			}
+
+		Response :
+			{
+			    "err_code": 0,
+			    "err_msg": "Contactentity type has been update.",
+			    "data": [
+			        {
+								"id": "11",
+								"code": "BILL",
+								"display": "Billing edit",
+								"definition": "Contact details for information regarding to billing/general finance enquiries."
+			        }
+			    ]
+			}	
+			
+3. location-status
+	a. Get all data
+		Method : GET
+		URL Format : host:port/{apikey}/location-status
+		Example : 192.168.15.134:2008/f188bfb0a60c976b39a1e9dbbc94360d/location-status
+
+	b. Get data by id
+		Method : GET
+		URL Format : host:port/{apikey}/location-status/{id} 
+		Example : 192.168.15.134:2008/f188bfb0a60c976b39a1e9dbbc94360d/location-status/11
+
+	c. Get data by code
+		Method : GET
+		URL Format : host:port/{apikey}/location-status/code/{code} 
+		Example : 192.168.15.134:2008/f188bfb0a60c976b39a1e9dbbc94360d/location-status/code/active
+
+		Response : 
+		{
+				"err_code": 0,
+				"data": [
+						{
+								"id": "100",
+								"code": "active",
+								"display": "Active",
+								"definition": "The location is operational."
+						}
+				]
+		}
+
+	d. Add location-status	
+		Method : POST
+		URL Format : host:port/{apikey}/location-status
+		Example : 192.168.15.134:2008/f188bfb0a60c976b39a1e9dbbc94360d/location-status
+		Request :
+			{
+				"code": "active",
+				"display": "Active",
+				"definition": "The location is operational."
+			}
+
+		Response : 
+			{
+			    "err_code": 0,
+			    "err_msg": "Location status has been add.",
+			    "data": [
+			        {
+								"id": "11",
+								"code": "active",
+								"display": "Active",
+								"definition": "The location is operational."
+			        }
+			    ]
+			}
+
+		Keterangan :
+			Data yang harus ditambahkan pada API ini dapat dilihat pada link ini https://www.hl7.org/fhir/valueset-location-status.html
+
+	e. Update location-status	
+		Method : PUT
+		URL Format : host:port/{apikey}/location-status/{id} 
+		Example : 192.168.15.134:2008/f188bfb0a60c976b39a1e9dbbc94360d/location-status/11
+		Request :
+			{
+				"code": "active",
+				"display": "Active edit"
+			}
+
+		Response :
+			{
+			    "err_code": 0,
+			    "err_msg": "location-status	 has been update.",
+			    "data": [
+			        {
+								"id": "11",
+								"code": "active",
+								"display": "Active edit",
+								"definition": "The location is operational."
+			        }
+			    ]
+			}	
+			
+4. bed-status
+	a. Get all data
+		Method : GET
+		URL Format : host:port/{apikey}/bed-status
+		Example : 192.168.15.134:2008/f188bfb0a60c976b39a1e9dbbc94360d/bed-status
+
+	b. Get data by id
+		Method : GET
+		URL Format : host:port/{apikey}/bed-status/{id} 
+		Example : 192.168.15.134:2008/f188bfb0a60c976b39a1e9dbbc94360d/bed-status/11
+
+	c. Get data by code
+		Method : GET
+		URL Format : host:port/{apikey}/bed-status/code/{code} 
+		Example : 192.168.15.134:2008/f188bfb0a60c976b39a1e9dbbc94360d/bed-status/code/c
+
+		Response : 
+		{
+				"err_code": 0,
+				"data": [
+						{
+								"id": "100",
+								"code": "C",
+								"description": "Closed"
+						}
+				]
+		}
+
+	d. Add bed-status	
+		Method : POST
+		URL Format : host:port/{apikey}/bed-status
+		Example : 192.168.15.134:2008/f188bfb0a60c976b39a1e9dbbc94360d/bed-status
+		Request :
+			{
+				"code": "C",
+								"description": "Closed"
+			}
+
+		Response : 
+			{
+			    "err_code": 0,
+			    "err_msg": "Bed status has been add.",
+			    "data": [
+			        {
+								"id": "11",
+								"code": "C",
+								"description": "Closed"
+			        }
+			    ]
+			}
+
+		Keterangan :
+			Data yang harus ditambahkan pada API ini dapat dilihat pada link ini https://www.hl7.org/fhir/v2/0116/index.html	
+
+	e. Update bed-status	
+		Method : PUT
+		URL Format : host:port/{apikey}/bed-status/{id} 
+		Example : 192.168.15.134:2008/f188bfb0a60c976b39a1e9dbbc94360d/bed-status/11
+		Request :
+			{
+				"code": "C",
+				"description": "Closed edit"
+			}
+
+		Response :
+			{
+			    "err_code": 0,
+			    "err_msg": "bed-status	 has been update.",
+			    "data": [
+			        {
+								"id": "11",
+								"code": "C",
+								"description": "Closed edit"
+			        }
+			    ]
+			}
+			
+5. location-mode	
+	a. Get all data
+		Method : GET
+		URL Format : host:port/{apikey}/location-mode
+		Example : 192.168.15.134:2008/f188bfb0a60c976b39a1e9dbbc94360d/location-mode
+
+	b. Get data by id
+		Method : GET
+		URL Format : host:port/{apikey}/location-mode/{id} 
+		Example : 192.168.15.134:2008/f188bfb0a60c976b39a1e9dbbc94360d/location-mode/11
+
+	c. Get data by code
+		Method : GET
+		URL Format : host:port/{apikey}/location-mode/code/{code} 
+		Example : 192.168.15.134:2008/f188bfb0a60c976b39a1e9dbbc94360d/location-mode/code/c
+
+		Response : 
+		{
+    "err_code": 0,
+    "data": [
+        {
+            "id": "100",
+            "code": "instance",
+            "display": "hcs",
+            "definition": "The Location resource represents a specific instance of a location (e.g. Operating Theatre 1A)."
+        }
+    ]
+		}
+
+	d. Add location-mode	
+		Method : POST
+		URL Format : host:port/{apikey}/location-mode
+		Example : 192.168.15.134:2008/f188bfb0a60c976b39a1e9dbbc94360d/location-mode
+		Request :
+			{
+				"code": "instance",
+									"display": "Instance",
+									"definition": "The Location resource represents a specific instance of a location (e.g. Operating Theatre 1A)."
+			}
+
+		Response : 
+			{
+			    "err_code": 0,
+			    "err_msg": "Location Mode has been add.",
+			    "data": [
+			        {
+								"id": "11",
+								"code": "instance",
+									"display": "Instance",
+									"definition": "The Location resource represents a specific instance of a location (e.g. Operating Theatre 1A)."
+			        }
+			    ]
+			}
+
+		Keterangan :
+			Data yang harus ditambahkan pada API ini dapat dilihat pada link ini https://www.hl7.org/fhir/valueset-location-mode.html
+
+	e. Update location-mode	
+		Method : PUT
+		URL Format : host:port/{apikey}/location-mode/{id} 
+		Example : 192.168.15.134:2008/f188bfb0a60c976b39a1e9dbbc94360d/location-mode/11
+		Request :
+			{
+				"code": "C",
+				"description": "Closed edit"
+			}
+
+		Response :
+			{
+					"err_code": 0,
+					"err_msg": "Location Mode has been update.",
+					"data": [
+							{
+									"id": "100",
+									"code": "instance",
+									"display": "Instance",
+									"definition": "The Location resource represents a specific instance of a location (e.g. Operating Theatre 1A)."
+							}
+					]
+			}
+
+6. service-delivery-location-role-type
+	a. Get all data
+		Method : GET
+		URL Format : host:port/{apikey}/service-delivery-location-role-type
+		Example : 192.168.15.134:2008/f188bfb0a60c976b39a1e9dbbc94360d/service-delivery-location-role-type
+
+	b. Get data by id
+		Method : GET
+		URL Format : host:port/{apikey}/service-delivery-location-role-type/{id} 
+		Example : 192.168.15.134:2008/f188bfb0a60c976b39a1e9dbbc94360d/service-delivery-location-role-type/11
+
+	c. Get data by code
+		Method : GET
+		URL Format : host:port/{apikey}/service-delivery-location-role-type/code/{code} 
+		Example : 192.168.15.134:2008/f188bfb0a60c976b39a1e9dbbc94360d/service-delivery-location-role-type/code/dx
+
+		Response : 
+		{
+			"err_code": 0,
+			"data": [
+					{
+							"id": "100",
+							"code": "DX",
+							"display": "hcs",
+							"definition": "A practice setting where diagnostic procedures or therapeutic interventions are performed"
+					}
+			]
+		}
+
+	d. Add service-delivery-location-role-type	
+		Method : POST
+		URL Format : host:port/{apikey}/service-delivery-location-role-type
+		Example : 192.168.15.134:2008/f188bfb0a60c976b39a1e9dbbc94360d/service-delivery-location-role-type
+		Request :
+			{
+				"code": "DX",
+				"display": "Diagnostics or therapeutics unit",
+				"definition": "A practice setting where diagnostic procedures or therapeutic interventions are performed"
+			}
+
+		Response : 
+			{
+			    "err_code": 0,
+			    "err_msg": "Service delivery location- role- type has been add.",
+			    "data": [
+			        {
+								"id": "11",
+								"code": "DX",
+								"display": "Diagnostics or therapeutics unit",
+								"definition": "A practice setting where diagnostic procedures or therapeutic interventions are performed"
+			        }
+			    ]
+			}
+
+		Keterangan :
+			Data yang harus ditambahkan pada API ini dapat dilihat pada link ini https://www.hl7.org/fhir/v2/0116/index.html	
+
+	e. Update service-delivery-location-role-type	
+		Method : PUT
+		URL Format : host:port/{apikey}/service-delivery-location-role-type/{id} 
+		Example : 192.168.15.134:2008/f188bfb0a60c976b39a1e9dbbc94360d/service-delivery-location-role-type/11
+		Request :
+			{
+				"display": "Diagnostics or therapeutics unit",
+			}
+
+		Response :
+			{
+					"err_code": 0,
+					"err_msg": "Update Service Delivery Location Role Type Code has been update.",
+					"data": [
+							{
+									"id": "100",
+									"code": "DX",
+									"display": "Diagnostics or therapeutics unit",
+									"definition": "A practice setting where diagnostic procedures or therapeutic interventions are performed"
+							}
+					]
+			}
+
+7. location-physical-type
+	a. Get all data
+		Method : GET
+		URL Format : host:port/{apikey}/location-physical-type
+		Example : 192.168.15.134:2008/f188bfb0a60c976b39a1e9dbbc94360d/location-physical-type
+
+	b. Get data by id
+		Method : GET
+		URL Format : host:port/{apikey}/location-physical-type/{id} 
+		Example : 192.168.15.134:2008/f188bfb0a60c976b39a1e9dbbc94360d/location-physical-type/11
+
+	c. Get data by code
+		Method : GET
+		URL Format : host:port/{apikey}/location-physical-type/code/{code} 
+		Example : 192.168.15.134:2008/f188bfb0a60c976b39a1e9dbbc94360d/location-physical-type/code/si
+
+		Response : 
+		{
+			"err_code": 0,
+			"data": [
+					{
+							"id": "100",
+							"code": "si",
+							"display": "Site",
+							"definition": "A collection of buildings or other locations such as a site or a campus."
+					}
+			]
+		}
+
+	d. Add location-physical-type	
+		Method : POST
+		URL Format : host:port/{apikey}/location-physical-type
+		Example : 192.168.15.134:2008/f188bfb0a60c976b39a1e9dbbc94360d/location-physical-type
+		Request :
+			{
+				"code": "si",
+				"display": "Site",
+				"definition": "A collection of buildings or other locations such as a site or a campus."
+			}
+
+		Response : 
+			{
+			    "err_code": 0,
+			    "err_msg": "Location Physical Type has been add.",
+			    "data": [
+			        {
+								"id": "100",
+									"code": "si",
+									"display": "Site",
+									"definition": "A collection of buildings or other locations such as a site or a campus."
+			        }
+			    ]
+			}
+
+		Keterangan :
+			Data yang harus ditambahkan pada API ini dapat dilihat pada link ini https://www.hl7.org/fhir/valueset-location-physical-type.html			
+
+	e. Update location-physical-type	
+		Method : PUT
+		URL Format : host:port/{apikey}/location-physical-type/{id} 
+		Example : 192.168.15.134:2008/f188bfb0a60c976b39a1e9dbbc94360d/location-physical-type/11
+		Request :
+			{
+				"code": "si",
+				"display": "Site"
+			}
+
+		Response :
+			{
+					"err_code": 0,
+					"err_msg": "Location physical type has been update.",
+					"data": [
+							{
+									"id": "100",
+									"code": "si",
+									"display": "Site",
+									"definition": "A collection of buildings or other locations such as a site or a campus."
+							}
+					]
+			}
+			
+8. qualification-code	
+	a. Get all data
+		Method : GET
+		URL Format : host:port/{apikey}/qualification-code	
+		Example : 192.168.15.134:2008/f188bfb0a60c976b39a1e9dbbc94360d/qualification-code	
+
+	b. Get data by id
+		Method : GET
+		URL Format : host:port/{apikey}/qualification-code/{id} 
+		Example : 192.168.15.134:2008/f188bfb0a60c976b39a1e9dbbc94360d/qualification-code/11
+
+	c. Get data by code
+		Method : GET
+		URL Format : host:port/{apikey}/qualification-code/code/{code} 
+		Example : 192.168.15.134:2008/f188bfb0a60c976b39a1e9dbbc94360d/qualification-code/code/AA
+
+		Response : 
+		{
+				"err_code": 0,
+				"data": [
+						{
+								"id": "101",
+								"code": "AA",
+								"description": "Associate of Arts"
+						}
+				]
+		}
+
+	d. Add qualification-code		
+		Method : POST
+		URL Format : host:port/{apikey}/qualification-code	
+		Example : 192.168.15.134:2008/f188bfb0a60c976b39a1e9dbbc94360d/qualification-code	
+		Request :
+			{
+				"code": "AA",
+				"description": "Associate of Arts"
+			}
+
+		Response : 
+			{
+			    "err_code": 0,
+			    "err_msg": "Qualification Code has been add.",
+			    "data": [
+			        {
+								"id": "101",
+								"code": "AA",
+								"description": "Associate of Arts"
+			        }
+			    ]
+			}
+
+		Keterangan :
+			Data yang harus ditambahkan pada API ini dapat dilihat pada link ini https://www.hl7.org/fhir/v2/0360/2.7/index.html		
+
+	e. Update qualification-code		
+		Method : PUT
+		URL Format : host:port/{apikey}/qualification-code/{id} 
+		Example : 192.168.15.134:2008/f188bfb0a60c976b39a1e9dbbc94360d/qualification-code/11
+		Request :
+			{
+				"description": "Associate of Arts"
+			}
+
+		Response :
+			{
+					"err_code": 0,
+					"err_msg": "Qualification Code has been update.",
+					"data": [
+							{
+									"id": "101",
+									"code": "AA",
+									"description": "Associate of Arts"
+							}
+					]
+			}
+			
+9. practitioner-role-code	
+	a. Get all data
+		Method : GET
+		URL Format : host:port/{apikey}/practitioner-role-code	
+		Example : 192.168.15.134:2008/f188bfb0a60c976b39a1e9dbbc94360d/practitioner-role-code	
+
+	b. Get data by id
+		Method : GET
+		URL Format : host:port/{apikey}/practitioner-role-code/{id} 
+		Example : 192.168.15.134:2008/f188bfb0a60c976b39a1e9dbbc94360d/practitioner-role-code/11
+
+	c. Get data by code
+		Method : GET
+		URL Format : host:port/{apikey}/practitioner-role-code/code/{code} 
+		Example : 192.168.15.134:2008/f188bfb0a60c976b39a1e9dbbc94360d/practitioner-role-code/code/doctor
+
+		Response : 
+		{
+				"err_code": 0,
+				"data": [
+						{
+								"id": "100",
+								"code": "doctor",
+								"display": "Doctor",
+								"definition": "A qualified/registered medical practitioner"
+						}
+				]
+		}
+
+	d. Add practitioner-role-code		
+		Method : POST
+		URL Format : host:port/{apikey}/practitioner-role-code	
+		Example : 192.168.15.134:2008/f188bfb0a60c976b39a1e9dbbc94360d/practitioner-role-code	
+		Request :
+			{
+				"code": "doctor",
+				"display": "Doctor",
+				"definition": "A qualified/registered medical practitioner"
+			}
+
+		Response : 
+			{
+			    "err_code": 0,
+			    "err_msg": "Practitioner Role Code has been add.",
+			    "data": [
+			        {
+								"id": "100",
+								"code": "doctor",
+								"display": "Doctor",
+								"definition": "A qualified/registered medical practitioner"
+			        }
+			    ]
+			}
+
+		Keterangan :
+			Data yang harus ditambahkan pada API ini dapat dilihat pada link ini https://www.hl7.org/fhir/valueset-practitioner-role.html
+
+	e. Update practitioner-role-code		
+		Method : PUT
+		URL Format : host:port/{apikey}/practitioner-role-code/{id} 
+		Example : 192.168.15.134:2008/f188bfb0a60c976b39a1e9dbbc94360d/practitioner-role-code/11
+		Request :
+			{
+				"code": "doctor",
+			}
+
+		Response :
+			{
+			    "err_code": 0,
+			    "err_msg": "Practitioner Role Code has been update.",
+			    "data": [
+			        {
+								"id": "100",
+								"code": "doctor",
+								"display": "Doctor",
+								"definition": "A qualified/registered medical practitioner"
+			        }
+			    ]
+			}
+			
+10. practice-code
+	a. Get all data
+		Method : GET
+		URL Format : host:port/{apikey}/practice-code	
+		Example : 192.168.15.134:2008/f188bfb0a60c976b39a1e9dbbc94360d/practice-code	
+
+	b. Get data by id
+		Method : GET
+		URL Format : host:port/{apikey}/practice-code/{id} 
+		Example : 192.168.15.134:2008/f188bfb0a60c976b39a1e9dbbc94360d/practice-code/11
+
+	c. Get data by code
+		Method : GET
+		URL Format : host:port/{apikey}/practice-code/code/{code} 
+		Example : 192.168.15.134:2008/f188bfb0a60c976b39a1e9dbbc94360d/practice-code/code/408467006
+
+		Response : 
+		{
+				"err_code": 0,
+				"data": [
+						{
+            "id": "100",
+            "code": "408467006",
+            "display": "Adult mental illness"
+						}
+				]
+		}
+
+	d. Add practice-code		
+		Method : POST
+		URL Format : host:port/{apikey}/practice-code	
+		Example : 192.168.15.134:2008/f188bfb0a60c976b39a1e9dbbc94360d/practice-code	
+		Request :
+			{
+				"code": "408467006",
+				"display": "Adult mental illness"
+			}
+
+		Response : 
+			{
+			    "err_code": 0,
+			    "err_msg": "Practivi Code has been add.",
+			    "data": [
+			        {
+								"id": "100",
+								"code": "408467006",
+            		"display": "Adult mental illness"
+			        }
+			    ]
+			}
+
+		Keterangan :
+			Data yang harus ditambahkan pada API ini dapat dilihat pada link ini https://www.hl7.org/fhir/valueset-c80-practice-codes.html
+
+	e. Update practice-code		
+		Method : PUT
+		URL Format : host:port/{apikey}/practice-code/{id} 
+		Example : 192.168.15.134:2008/f188bfb0a60c976b39a1e9dbbc94360d/practice-code/11
+		Request :
+			{
+				"code": "408467006",
+				"display": "Adult mental illness"
+			}
+
+		Response :
+			{
+			    "err_code": 0,
+			    "err_msg": "practice-code		 has been update.",
+			    "data": [
+			        {
+								"id": "110",
+								"code": "408467006",
+            		"display": "Adult mental illness"
+			        }
+			    ]
+			}
+			
+11. days-of-week
+	a. Get all data
+		Method : GET
+		URL Format : host:port/{apikey}/days-of-week	
+		Example : 192.168.15.134:2008/f188bfb0a60c976b39a1e9dbbc94360d/days-of-week	
+
+	b. Get data by id
+		Method : GET
+		URL Format : host:port/{apikey}/days-of-week/{id} 
+		Example : 192.168.15.134:2008/f188bfb0a60c976b39a1e9dbbc94360d/days-of-week/11
+
+	c. Get data by code
+		Method : GET
+		URL Format : host:port/{apikey}/days-of-week/code/{code} 
+		Example : 192.168.15.134:2008/f188bfb0a60c976b39a1e9dbbc94360d/days-of-week/code/mon
+
+		Response : 
+		{
+				"err_code": 0,
+				"data": [
+						{
+								"id": "100",
+								"code": "mon",
+								"display": "Monday",
+								"definition": "Monday"
+						}
+				]
+		}
+
+	d. Add days-of-week		
+		Method : POST
+		URL Format : host:port/{apikey}/days-of-week	
+		Example : 192.168.15.134:2008/f188bfb0a60c976b39a1e9dbbc94360d/days-of-week	
+		Request :
+			"code": "mon",
+			"display": "Monday",
+			"definition": "Monday"
+
+		Response : 
+			{
+					"err_code": 0,
+					"err_msg": "Days Of Week has been add.",
+					"data": [
+							{
+									"id": "100",
+									"code": "mon",
+									"display": "Monday",
+									"definition": "Monday"
+							}
+					]
+			}
+
+		Keterangan :
+			Data yang harus ditambahkan pada API ini dapat dilihat pada link ini https://www.hl7.org/fhir/valueset-days-of-week.html
+
+	e. Update days-of-week		
+		Method : PUT
+		URL Format : host:port/{apikey}/days-of-week/{id} 
+		Example : 192.168.15.134:2008/f188bfb0a60c976b39a1e9dbbc94360d/days-of-week/11
+		Request :
+			{
+				"display": "Monday"
+			}
+
+		Response :
+			{
+					"err_code": 0,
+					"err_msg": "Days Of Week has been update.",
+					"data": [
+							{
+									"id": "100",
+									"code": "mon",
+									"display": "Monday",
+									"definition": "Monday"
+							}
+					]
+			}
+
+12. service-category
+	a. Get all data
+		Method : GET
+		URL Format : host:port/{apikey}/service-category	
+		Example : 192.168.15.134:2008/f188bfb0a60c976b39a1e9dbbc94360d/service-category	
+
+	b. Get data by id
+		Method : GET
+		URL Format : host:port/{apikey}/service-category/{id} 
+		Example : 192.168.15.134:2008/f188bfb0a60c976b39a1e9dbbc94360d/service-category/11
+
+	c. Get data by code
+		Method : GET
+		URL Format : host:port/{apikey}/service-category/code/{code} 
+		Example : 192.168.15.134:2008/f188bfb0a60c976b39a1e9dbbc94360d/service-category/code/1
+
+		Response : 
+		{
+				"err_code": 0,
+				"data": [
+						{
+								"id": "100",
+								"code": "1",
+								"display": "Adoption",
+								"definition": "Adoption"
+						}
+				]
+		}
+
+	d. Add service-category		
+		Method : POST
+		URL Format : host:port/{apikey}/service-category	
+		Example : 192.168.15.134:2008/f188bfb0a60c976b39a1e9dbbc94360d/service-category	
+		Request :
+			{
+				"code": "1",
+				"display": "Adoption",
+				"definition": "Adoption"
+			}
+
+		Response : 
+			{
+			    "err_code": 0,
+			    "err_msg": "Service Category has been add.",
+			    "data": [
+			        {
+								"id": "100",
+								"code": "1",
+								"display": "Adoption",
+								"definition": "Adoption"
+			        }
+			    ]
+			}
+
+		Keterangan :
+			Data yang harus ditambahkan pada API ini dapat dilihat pada link ini https://www.hl7.org/fhir/valueset-service-category.html
+
+	e. Update service-category		
+		Method : PUT
+		URL Format : host:port/{apikey}/service-category/{id} 
+		Example : 192.168.15.134:2008/f188bfb0a60c976b39a1e9dbbc94360d/service-category/100
+		Request :
+			{
+				"code": "C",
+				"description": "Closed edit"
+			}
+
+		Response :
+			{
+			    "err_code": 0,
+			    "err_msg": "Service Category		 has been update.",
+			    "data": [
+			        {
+								"id": "100",
+								"code": "1",
+								"display": "Adoption",
+								"definition": "Adoption"
+			        }
+			    ]
+			}
+			
+13. service-type
+	a. Get all data
+		Method : GET
+		URL Format : host:port/{apikey}/service-type	
+		Example : 192.168.15.134:2008/f188bfb0a60c976b39a1e9dbbc94360d/service-type	
+
+	b. Get data by id
+		Method : GET
+		URL Format : host:port/{apikey}/service-type/{id} 
+		Example : 192.168.15.134:2008/f188bfb0a60c976b39a1e9dbbc94360d/service-type/11
+
+	c. Get data by code
+		Method : GET
+		URL Format : host:port/{apikey}/service-type/code/{code} 
+		Example : 192.168.15.134:2008/f188bfb0a60c976b39a1e9dbbc94360d/service-type/code/1
+
+		Response : 
+		{
+				"err_code": 0,
+				"data": [
+						{
+								"id": "100",
+								"code": "1",
+								"display": "Adoption",
+								"definition": "Adoption  permanent care information/support"
+						}
+				]
+		}
+
+	d. Add service-type		
+		Method : POST
+		URL Format : host:port/{apikey}/service-type	
+		Example : 192.168.15.134:2008/f188bfb0a60c976b39a1e9dbbc94360d/service-type	
+		Request :
+			{
+				"code": "1",
+				"display": "Adoption/Permanent Care Info/Support",
+				"definition": "Adoption  permanent care information/support"
+			}
+
+		Response : 
+			{
+			    "err_code": 0,
+			    "err_msg": "Service Type has been add.",
+			    "data": [
+			        {
+								"id": "100",
+								"code": "1",
+								"display": "Adoption/Permanent Care Info/Support",
+								"definition": "Adoption  permanent care information/support"
+			        }
+			    ]
+			}
+
+		Keterangan :
+			Data yang harus ditambahkan pada API ini dapat dilihat pada link ini https://www.hl7.org/fhir/valueset-service-type.html
+
+	e. Update service-type		
+		Method : PUT
+		URL Format : host:port/{apikey}/service-type/{id} 
+		Example : 192.168.15.134:2008/f188bfb0a60c976b39a1e9dbbc94360d/service-type/100
+		Request :
+			{
+				"display": "Adoption/Permanent Care Info/Support",
+			}
+
+		Response :
+			{
+					"err_code": 0,
+					"err_msg": "Service Type has been update.",
+					"data": [
+							{
+									"id": "100",
+									"code": "1",
+									"display": "Adoption/Permanent Care Info/Support",
+									"definition": "Adoption  permanent care information/support"
+							}
+					]
+			}
+			
+14. service-provision-conditions
+	a. Get all data
+		Method : GET
+		URL Format : host:port/{apikey}/service-provision-conditions	
+		Example : 192.168.15.134:2008/f188bfb0a60c976b39a1e9dbbc94360d/service-provision-conditions	
+
+	b. Get data by id
+		Method : GET
+		URL Format : host:port/{apikey}/service-provision-conditions/{id} 
+		Example : 192.168.15.134:2008/f188bfb0a60c976b39a1e9dbbc94360d/service-provision-conditions/11
+
+	c. Get data by code
+		Method : GET
+		URL Format : host:port/{apikey}/service-provision-conditions/code/{code} 
+		Example : 192.168.15.134:2008/f188bfb0a60c976b39a1e9dbbc94360d/service-provision-conditions/code/free
+
+		Response : 
+		{
+				"err_code": 0,
+				"data": [
+						{
+								"id": "100",
+								"code": "free",
+								"display": "Free",
+								"definition": "This service is available for no patient cost."
+						}
+				]
+		}
+
+	d. Add service-provision-conditions		
+		Method : POST
+		URL Format : host:port/{apikey}/service-provision-conditions	
+		Example : 192.168.15.134:2008/f188bfb0a60c976b39a1e9dbbc94360d/service-provision-conditions	
+		Request :
+			{
+				"code": "free",
+				"display": "Free",
+				"definition": "This service is available for no patient cost."
+			}
+
+		Response : 
+			{
+					"err_code": 0,
+					"err_msg": "Service Provision Conditions has been add.",
+					"data": [
+							{
+									"id": "100",
+									"code": "free",
+									"display": "Free",
+									"definition": "This service is available for no patient cost."
+							}
+					]
+			}
+
+		Keterangan :
+			Data yang harus ditambahkan pada API ini dapat dilihat pada link ini https://www.hl7.org/fhir/valueset-service-provision-conditions.html
+
+	e. Update service-provision-conditions		
+		Method : PUT
+		URL Format : host:port/{apikey}/service-provision-conditions/{id} 
+		Example : 192.168.15.134:2008/f188bfb0a60c976b39a1e9dbbc94360d/service-provision-conditions/100
+		Request :
+			{
+				"display": "Free"
+			}
+
+		Response :
+			{
+					"err_code": 0,
+					"err_msg": "Service Provision Conditions has been update.",
+					"data": [
+							{
+									"id": "100",
+									"code": "free",
+									"display": "Free",
+									"definition": "This service is available for no patient cost."
+							}
+					]
+			}
+15. service-referral-method
+	a. Get all data
+		Method : GET
+		URL Format : host:port/{apikey}/service-referral-method	
+		Example : 192.168.15.134:2008/f188bfb0a60c976b39a1e9dbbc94360d/service-referral-method	
+
+	b. Get data by id
+		Method : GET
+		URL Format : host:port/{apikey}/service-referral-method/{id} 
+		Example : 192.168.15.134:2008/f188bfb0a60c976b39a1e9dbbc94360d/service-referral-method/11
+
+	c. Get data by code
+		Method : GET
+		URL Format : host:port/{apikey}/service-referral-method/code/{code} 
+		Example : 192.168.15.134:2008/f188bfb0a60c976b39a1e9dbbc94360d/service-referral-method/code/fax
+
+		Response : 
+		{
+				"err_code": 0,
+				"data": [
+						{
+								"id": "100",
+								"code": "fax",
+								"display": "Fax",
+								"definition": "eferrals may be accepted by fax."
+						}
+				]
+		}
+
+	d. Add service-referral-method		
+		Method : POST
+		URL Format : host:port/{apikey}/service-referral-method	
+		Example : 192.168.15.134:2008/f188bfb0a60c976b39a1e9dbbc94360d/service-referral-method	
+		Request :
+			{
+				"code": "C",
+								"description": "Closed"
+			}
+
+		Response : 
+			{
+					"err_code": 0,
+					"err_msg": "Service Referral Method has been add.",
+					"data": [
+							{
+									"id": "100",
+									"code": "fax",
+									"display": "Fax",
+									"definition": "eferrals may be accepted by fax."
+							}
+					]
+			}
+
+		Keterangan :
+			Data yang harus ditambahkan pada API ini dapat dilihat pada link ini https://www.hl7.org/fhir/valueset-service-referral-method.html
+
+	e. Update service-referral-method		
+		Method : PUT
+		URL Format : host:port/{apikey}/service-referral-method/{id} 
+		Example : 192.168.15.134:2008/f188bfb0a60c976b39a1e9dbbc94360d/service-referral-method/11
+		Request :
+			{
+				"display": "Fax"
+			}
+
+		Response :
+			{
+					"err_code": 0,
+					"err_msg": "Service Referral Method has been update.",
+					"data": [
+							{
+									"id": "100",
+									"code": "fax",
+									"display": "Fax",
+									"definition": "eferrals may be accepted by fax."
+							}
+					]
+			}
+16. endpoint-status
+	a. Get all data
+		Method : GET
+		URL Format : host:port/{apikey}/endpoint-status	
+		Example : 192.168.15.134:2008/f188bfb0a60c976b39a1e9dbbc94360d/endpoint-status	
+
+	b. Get data by id
+		Method : GET
+		URL Format : host:port/{apikey}/endpoint-status/{id} 
+		Example : 192.168.15.134:2008/f188bfb0a60c976b39a1e9dbbc94360d/endpoint-status/11
+
+	c. Get data by code
+		Method : GET
+		URL Format : host:port/{apikey}/endpoint-status/code/{code} 
+		Example : 192.168.15.134:2008/f188bfb0a60c976b39a1e9dbbc94360d/endpoint-status/code/active
+
+		Response : 
+		{
+				"err_code": 0,
+				"data": [
+						{
+								"id": "100",
+								"code": "active",
+								"display": "Active",
+								"definition": "This endpoint is expected to be active and can be used"
+						}
+				]
+		}
+
+	d. Add endpoint-status		
+		Method : POST
+		URL Format : host:port/{apikey}/endpoint-status	
+		Example : 192.168.15.134:2008/f188bfb0a60c976b39a1e9dbbc94360d/endpoint-status	
+		Request :
+			"code": "active",
+								"display": "Active",
+								"definition": "This endpoint is expected to be active and can be used"
+
+		Response : 
+			{
+			    "err_code": 0,
+			    "err_msg": "Endpoint status has been add.",
+			    "data": [
+			        {
+								"id": "100",
+								"code": "active",
+								"display": "Active",
+								"definition": "This endpoint is expected to be active and can be used"
+			        }
+			    ]
+			}
+
+		Keterangan :
+			Data yang harus ditambahkan pada API ini dapat dilihat pada link ini https://www.hl7.org/fhir/valueset-endpoint-status.html
+	e. Update endpoint-status		
+		Method : PUT
+		URL Format : host:port/{apikey}/endpoint-status/{id} 
+		Example : 192.168.15.134:2008/f188bfb0a60c976b39a1e9dbbc94360d/endpoint-status/100
+		Request :
+			{
+				"code": "active",
+				"display": "Active",
+				"definition": "This endpoint is expected to be active and can be used"
+			}
+
+		Response :
+			{
+			    "err_code": 0,
+			    "err_msg": "Endpoint Status		 has been update.",
+			    "data": [
+			        {
+								"id": "11",
+								"code": "active",
+								"display": "Active",
+								"definition": "This endpoint is expected to be active and can be used"
+			        }
+			    ]
+			}
+17. endpoint-connection-type
+	a. Get all data
+		Method : GET
+		URL Format : host:port/{apikey}/endpoint-connection-type	
+		Example : 192.168.15.134:2008/f188bfb0a60c976b39a1e9dbbc94360d/endpoint-connection-type	
+
+	b. Get data by id
+		Method : GET
+		URL Format : host:port/{apikey}/endpoint-connection-type/{id} 
+		Example : 192.168.15.134:2008/f188bfb0a60c976b39a1e9dbbc94360d/endpoint-connection-type/11
+
+	c. Get data by code
+		Method : GET
+		URL Format : host:port/{apikey}/endpoint-connection-type/code/{code} 
+		Example : 192.168.15.134:2008/f188bfb0a60c976b39a1e9dbbc94360d/endpoint-connection-type/code/ihexcpd
+
+		Response : 
+		{
+				"err_code": 0,
+				"data": [
+						{
+								"id": "100",
+								"code": "ihexcpd",
+								"display": "IHE XCPD",
+								"definition": "IHE Cross Community Patient Discovery Profile (XCPD)"
+						}
+				]
+		}
+	d. Add endpoint-connection-type		
+		Method : POST
+		URL Format : host:port/{apikey}/endpoint-connection-type	
+		Example : 192.168.15.134:2008/f188bfb0a60c976b39a1e9dbbc94360d/endpoint-connection-type	
+		Request :
+			{
+				"code": "ihexcpd",
+				"display": "IHE XCPD",
+				"definition": "IHE Cross Community Patient Discovery Profile (XCPD)"
+			}
+
+		Response : 
+			{
+					"err_code": 0,
+					"err_msg": "Endpoint Connection Type has been add.",
+					"data": [
+							{
+									"id": "100",
+									"code": "ihexcpd",
+									"display": "IHE XCPD",
+									"definition": "IHE Cross Community Patient Discovery Profile (XCPD)"
+							}
+					]
+			}
+
+		Keterangan :
+			Data yang harus ditambahkan pada API ini dapat dilihat pada link ini https://www.hl7.org/fhir/valueset-endpoint-connection-type.html
+
+	e. Update endpoint-connection-type		
+		Method : PUT
+		URL Format : host:port/{apikey}/endpoint-connection-type/{id} 
+		Example : 192.168.15.134:2008/f188bfb0a60c976b39a1e9dbbc94360d/endpoint-connection-type/11
+		Request :
+			{
+				"display": "IHE XCPD"
+			}
+
+		Response :
+			{
+					"err_code": 0,
+					"err_msg": "Endpoint Connection Type has been update.",
+					"data": [
+							{
+									"id": "100",
+									"code": "ihexcpd",
+									"display": "IHE XCPD",
+									"definition": "IHE Cross Community Patient Discovery Profile (XCPD)"
+							}
+					]
+			}
+18. endpoint-payload-type
+	a. Get all data
+		Method : GET
+		URL Format : host:port/{apikey}/endpoint-payload-type	
+		Example : 192.168.15.134:2008/f188bfb0a60c976b39a1e9dbbc94360d/endpoint-payload-type	
+
+	b. Get data by id
+		Method : GET
+		URL Format : host:port/{apikey}/endpoint-payload-type/{id} 
+		Example : 192.168.15.134:2008/f188bfb0a60c976b39a1e9dbbc94360d/endpoint-payload-type/11
+
+	c. Get data by code
+		Method : GET
+		URL Format : host:port/{apikey}/endpoint-payload-type/code/{code} 
+		Example : 192.168.15.134:2008/f188bfb0a60c976b39a1e9dbbc94360d/endpoint-payload-type/code/urn:ihe:pcc:handp:2008
+
+		Response : 
+		{
+				"err_code": 0,
+				"data": [
+						{
+								"id": "100",
+								"code": "urn:ihe:pcc:handp:2008",
+								"display": "HCS"
+						}
+				]
+		}
+
+	d. Add endpoint-payload-type		
+		Method : POST
+		URL Format : host:port/{apikey}/endpoint-payload-type	
+		Example : 192.168.15.134:2008/f188bfb0a60c976b39a1e9dbbc94360d/endpoint-payload-type	
+		Request :
+			{
+				"code": "urn:ihe:pcc:handp:2008",
+				"display": "History and Physical Specification"
+			}
+
+		Response : 
+			{
+					"err_code": 0,
+					"err_msg": "Endpoint Payload Type has been add.",
+					"data": [
+							{
+									"id": "100",
+									"code": "urn:ihe:pcc:handp:2008",
+									"display": "History and Physical Specification"
+							}
+					]
+			}
+
+		Keterangan :
+			Data yang harus ditambahkan pada API ini dapat dilihat pada link ini https://www.hl7.org/fhir/valueset-endpoint-payload-type.html
+
+	e. Update endpoint-payload-type		
+		Method : PUT
+		URL Format : host:port/{apikey}/endpoint-payload-type/{id} 
+		Example : 192.168.15.134:2008/f188bfb0a60c976b39a1e9dbbc94360d/endpoint-payload-type/11
+		Request :
+			{
+				"display": "History and Physical Specification"
+			}
+
+		Response :
+			{
+					"err_code": 0,
+					"err_msg": "Endpoint Payload Type has been update.",
+					"data": [
+							{
+									"id": "100",
+									"code": "urn:ihe:pcc:handp:2008",
+									"display": "History and Physical Specification"
+							}
+					]
+			}

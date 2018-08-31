@@ -41,6 +41,9 @@ Default FHIR
 				]
 		}
 		
+		Keterangan :
+			Data yang harus ditambahkan pada API ini dapat dilihat pada link ini https://www.hl7.org/fhir/valueset-adverse-event-category.html
+			
 	e. put
 		Method : PUT
 		Url format : host:port/{apikey}/adverse-event-category/{id}
@@ -66,6 +69,7 @@ Default FHIR
 		}
 		
 2. adverse-event-type
+	URL : 
 	a. get all data
 		Method : GET 
 		Url format : host:port/{apikey}/adverse-event-type
@@ -106,6 +110,9 @@ Default FHIR
 				]
 		}
 		
+		Keterangan :
+			Data yang harus ditambahkan pada API ini dapat dilihat pada link ini https://www.hl7.org/fhir/valueset-adverse-event-type.html
+			
 	e. put
 		Method : PUT
 		Url format : host:port/{apikey}/adverse-event-type/{id}
@@ -170,6 +177,9 @@ Default FHIR
 						}
 				]
 		}
+		
+		Keterangan :
+			Data yang harus ditambahkan pada API ini dapat dilihat pada link ini https://www.hl7.org/fhir/valueset-adverse-event-seriousness.html
 		
 	e. put
 		Method : PUT
@@ -236,6 +246,9 @@ Default FHIR
 				]
 		}
 		
+		Keterangan :
+			Data yang harus ditambahkan pada API ini dapat dilihat pada link ini https://www.hl7.org/fhir/valueset-adverse-event-outcome.html
+			
 	e. put
 		Method : PUT
 		Url format : host:port/{apikey}/adverse-event-outcome/{id}
@@ -299,6 +312,10 @@ Default FHIR
 						}
 				]
 		}
+		
+		Keterangan :
+			Data yang harus ditambahkan pada API ini dapat dilihat pada link ini https://www.hl7.org/fhir/valueset-adverse-event-causality.html
+			
 		
 	e. put
 		Method : PUT
@@ -364,6 +381,9 @@ Default FHIR
 				]
 		}
 		
+		Keterangan :
+			Data yang harus ditambahkan pada API ini dapat dilihat pada link ini https://www.hl7.org/fhir/valueset-adverse-event-causality-assess.html
+			
 	e. put
 		Method : PUT
 		Url format : host:port/{apikey}/adverse-event-causality-assess/{id}
@@ -427,6 +447,9 @@ Default FHIR
 						}
 				]
 		}
+		
+		Keterangan :
+			Data yang harus ditambahkan pada API ini dapat dilihat pada link ini https://www.hl7.org/fhir/valueset-adverse-event-causality-method.html
 		
 	e. put
 		Method : PUT
@@ -492,6 +515,9 @@ Default FHIR
 				]
 		}
 		
+		Keterangan :
+			Data yang harus ditambahkan pada API ini dapat dilihat pada link ini https://www.hl7.org/fhir/valueset-adverse-event-causality-result.html
+		
 	e. put
 		Method : PUT
 		Url format : host:port/{apikey}/adverse-event-causality-result/{id}
@@ -555,6 +581,9 @@ Default FHIR
 						}
 				]
 		}
+		
+		Keterangan :
+			Data yang harus ditambahkan pada API ini dapat dilihat pada link ini https://www.hl7.org/fhir/valueset-allergy-clinical-status.html
 		
 	e. put
 		Method : PUT
@@ -621,6 +650,9 @@ Default FHIR
 				]
 		}
 		
+		Keterangan :
+			Data yang harus ditambahkan pada API ini dapat dilihat pada link ini https://www.hl7.org/fhir/valueset-allergy-verification-status.html
+		
 	e. put
 		Method : PUT
 		Url format : host:port/{apikey}/allergy-verification-status/{id}
@@ -685,6 +717,9 @@ Default FHIR
 						}
 				]
 		}
+		
+		Keterangan :
+			Data yang harus ditambahkan pada API ini dapat dilihat pada link ini https://www.hl7.org/fhir/valueset-allergy-intolerance-type.html
 		
 	e. put
 		Method : PUT
@@ -751,6 +786,9 @@ Default FHIR
 				]
 		}
 		
+		Keterangan :
+			Data yang harus ditambahkan pada API ini dapat dilihat pada link ini https://www.hl7.org/fhir/valueset-allergy-intolerance-category.html
+		
 	e. put
 		Method : PUT
 		Url format : host:port/{apikey}/allergy-intolerance-category/{id}
@@ -815,6 +853,9 @@ Default FHIR
 						}
 				]
 		}
+		
+		Keterangan :
+			Data yang harus ditambahkan pada API ini dapat dilihat pada link ini https://www.hl7.org/fhir/valueset-allergy-intolerance-criticality.html
 		
 	e. put
 		Method : PUT
@@ -881,6 +922,9 @@ Default FHIR
 				]
 		}
 		
+		Keterangan :
+			Data yang harus ditambahkan pada API ini dapat dilihat pada link ini https://www.hl7.org/fhir/valueset-allergyintolerance-code.html
+		
 	e. put
 		Method : PUT
 		Url format : host:port/{apikey}/allergy-intolerance-code/{id}
@@ -945,6 +989,9 @@ Default FHIR
 						}
 				]
 		}
+		
+		Keterangan :
+			Data yang harus ditambahkan pada API ini dapat dilihat pada link ini https://www.hl7.org/fhir/valueset-substance-code.html
 		
 	e. put
 		Method : PUT
@@ -1011,6 +1058,9 @@ Default FHIR
 				]
 		}
 		
+		Keterangan :
+			Data yang harus ditambahkan pada API ini dapat dilihat pada link ini https://www.hl7.org/fhir/valueset-clinical-findings.html
+		
 	e. put
 		Method : PUT
 		Url format : host:port/{apikey}/clinical-findings/{id}
@@ -1075,6 +1125,9 @@ Default FHIR
 						}
 				]
 		}
+		
+		Keterangan :
+			Data yang harus ditambahkan pada API ini dapat dilihat pada link ini https://www.hl7.org/fhir/valueset-reaction-event-severity.html
 		
 	e. put
 		Method : PUT
@@ -1141,6 +1194,9 @@ Default FHIR
 				]
 		}
 		
+		Keterangan :
+			Data yang harus ditambahkan pada API ini dapat dilihat pada link ini https://www.hl7.org/fhir/valueset-route-codes.html
+		
 	e. put
 		Method : PUT
 		Url format : host:port/{apikey}/route-codes/{id}
@@ -1205,6 +1261,9 @@ Default FHIR
 						}
 				]
 		}
+		
+		Keterangan :
+			Data yang harus ditambahkan pada API ini dapat dilihat pada link ini https://www.hl7.org/fhir/valueset-care-plan-status.html
 		
 	e. put
 		Method : PUT
@@ -1271,6 +1330,10 @@ Default FHIR
 				]
 		}
 		
+		Keterangan :
+			Data yang harus ditambahkan pada API ini dapat dilihat pada link ini https://www.hl7.org/fhir/valueset-care-plan-intent.html
+
+			
 	e. put
 		Method : PUT
 		Url format : host:port/{apikey}/care-plan-intent/{id}
@@ -1335,6 +1398,9 @@ Default FHIR
 						}
 				]
 		}
+		
+		Keterangan :
+			Data yang harus ditambahkan pada API ini dapat dilihat pada link ini https://www.hl7.org/fhir/valueset-care-plan-category.html
 		
 	e. put
 		Method : PUT
@@ -1401,6 +1467,10 @@ Default FHIR
 				]
 		}
 		
+		Keterangan :
+			Data yang harus ditambahkan pada API ini dapat dilihat pada link ini https://www.hl7.org/fhir/valueset-care-plan-activity-outcome.html
+
+		
 	e. put
 		Method : PUT
 		Url format : host:port/{apikey}/care-plan-activity-outcome/{id}
@@ -1466,6 +1536,9 @@ Default FHIR
 				]
 		}
 		
+		Keterangan :
+			Data yang harus ditambahkan pada API ini dapat dilihat pada link ini https://www.hl7.org/fhir/valueset-care-plan-activity-category.html
+			
 	e. put
 		Method : PUT
 		Url format : host:port/{apikey}/care-plan-activity-category/{id}
@@ -1530,6 +1603,10 @@ Default FHIR
 						}
 				]
 		}
+		
+		Keterangan :
+			Data yang harus ditambahkan pada API ini dapat dilihat pada link ini https://www.hl7.org/fhir/valueset-care-plan-activity.html
+
 		
 	e. put
 		Method : PUT
@@ -1596,6 +1673,10 @@ Default FHIR
 				]
 		}
 		
+		Keterangan :
+			Data yang harus ditambahkan pada API ini dapat dilihat pada link ini https://www.hl7.org/fhir/valueset-activity-reason.html
+
+		
 	e. put
 		Method : PUT
 		Url format : host:port/{apikey}/activity-reason/{id}
@@ -1660,6 +1741,9 @@ Default FHIR
 						}
 				]
 		}
+		
+		Keterangan :
+			Data yang harus ditambahkan pada API ini dapat dilihat pada link ini https://www.hl7.org/fhir/valueset-care-plan-activity-status.html
 		
 	e. put
 		Method : PUT
@@ -1726,6 +1810,9 @@ Default FHIR
 				]
 		}
 		
+		Keterangan :
+			Data yang harus ditambahkan pada API ini dapat dilihat pada link ini https://www.hl7.org/fhir/valueset-medication-codes.html
+		
 	e. put
 		Method : PUT
 		Url format : host:port/{apikey}/medication-codes/{id}
@@ -1790,6 +1877,9 @@ Default FHIR
 						}
 				]
 		}
+		
+		Keterangan :
+			Data yang harus ditambahkan pada API ini dapat dilihat pada link ini https://www.hl7.org/fhir/valueset-care-team-status.html
 		
 	e. put
 		Method : PUT
@@ -1856,6 +1946,10 @@ Default FHIR
 				]
 		}
 		
+		Keterangan :
+			Data yang harus ditambahkan pada API ini dapat dilihat pada link ini https://www.hl7.org/fhir/valueset-care-team-category.html
+
+		
 	e. put
 		Method : PUT
 		Url format : host:port/{apikey}/care-team-category/{id}
@@ -1921,6 +2015,10 @@ Default FHIR
 				]
 		}
 		
+		Keterangan :
+			Data yang harus ditambahkan pada API ini dapat dilihat pada link ini https://www.hl7.org/fhir/valueset-participant-role.html
+
+			
 	e. put
 		Method : PUT
 		Url format : host:port/{apikey}/participant-role/{id}
@@ -1986,6 +2084,10 @@ Default FHIR
 				]
 		}
 		
+		Keterangan :
+			Data yang harus ditambahkan pada API ini dapat dilihat pada link ini https://www.hl7.org/fhir/valueset-clinical-impression-status.html
+
+		
 	e. put
 		Method : PUT
 		Url format : host:port/{apikey}/clinical-impression-status/{id}
@@ -2048,6 +2150,10 @@ Default FHIR
 						}
 				]
 		}
+		
+		Keterangan :
+			Data yang harus ditambahkan pada API ini dapat dilihat pada link ini https://www.hl7.org/fhir/valueset-investigation-sets.html
+
 		
 	e. put
 		Method : PUT
@@ -2112,6 +2218,10 @@ Default FHIR
 				]
 		}
 		
+		Keterangan :
+			Data yang harus ditambahkan pada API ini dapat dilihat pada link ini https://www.hl7.org/fhir/valueset-clinicalimpression-prognosis.html
+
+			
 	e. put
 		Method : PUT
 		Url format : host:port/{apikey}/clinicalimpression-prognosis/{id}
@@ -2175,6 +2285,10 @@ Default FHIR
 						}
 				]
 		}
+		
+		Keterangan :
+			Data yang harus ditambahkan pada API ini dapat dilihat pada link ini https://www.hl7.org/fhir/valueset-condition-clinical.html
+
 		
 	e. put
 		Method : PUT
@@ -2241,6 +2355,10 @@ Default FHIR
 				]
 		}
 		
+		Keterangan :
+			Data yang harus ditambahkan pada API ini dapat dilihat pada link ini https://www.hl7.org/fhir/valueset-condition-ver-status.html
+
+			
 	e. put
 		Method : PUT
 		Url format : host:port/{apikey}/condition-ver-status/{id}
@@ -2306,6 +2424,10 @@ Default FHIR
 				]
 		}
 		
+		Keterangan :
+			Data yang harus ditambahkan pada API ini dapat dilihat pada link ini https://www.hl7.org/fhir/valueset-condition-category.html
+
+			
 	e. put
 		Method : PUT
 		Url format : host:port/{apikey}/condition-category/{id}
@@ -2369,6 +2491,10 @@ Default FHIR
 				]
 		}
 		
+		Keterangan :
+			Data yang harus ditambahkan pada API ini dapat dilihat pada link ini https://www.hl7.org/fhir/valueset-condition-severity.html
+
+			
 	e. put
 		Method : PUT
 		Url format : host:port/{apikey}/condition-severity/{id}
@@ -2432,6 +2558,10 @@ Default FHIR
 				]
 		}
 		
+		Keterangan :
+			Data yang harus ditambahkan pada API ini dapat dilihat pada link ini https://www.hl7.org/fhir/valueset-condition-code.html
+
+			
 	e. put
 		Method : PUT
 		Url format : host:port/{apikey}/condition-code/{id}
@@ -2497,6 +2627,10 @@ Default FHIR
 				]
 		}
 		
+		Keterangan :
+			Data yang harus ditambahkan pada API ini dapat dilihat pada link ini https://www.hl7.org/fhir/valueset-body-site.html
+
+			
 	e. put
 		Method : PUT
 		Url format : host:port/{apikey}/body-site/{id}
@@ -2562,6 +2696,10 @@ Default FHIR
 				]
 		}
 		
+		Keterangan :
+			Data yang harus ditambahkan pada API ini dapat dilihat pada link ini https://www.hl7.org/fhir/valueset-condition-stage.html
+
+			
 	e. put
 		Method : PUT
 		Url format : host:port/{apikey}/condition-stage/{id}
@@ -2608,9 +2746,9 @@ Default FHIR
 		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/manifestation-or-symptom
 		body : 
 			{
-				"code" : "786005",
-				"display" : "Clinical stage I B",
-				"definition" : ""
+				"code": "109006",
+				"display": "Anxiety disorder of childhood OR adolescence",
+				"definition": "null"
 			}
 
 		response : 
@@ -2627,15 +2765,19 @@ Default FHIR
 				]
 		}
 		
+		Keterangan :
+			Data yang harus ditambahkan pada API ini dapat dilihat pada link ini https://www.hl7.org/fhir/valueset-manifestation-or-symptom.html
+
+			
 	e. put
 		Method : PUT
 		Url format : host:port/{apikey}/manifestation-or-symptom/{id}
 		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/manifestation-or-symptom/100
 		body:
 			{
-				"code" : "786005",
-				"display" : "Clinical stage I B",
-				"definition" : ""
+				"code": "109006",
+				"display": "Anxiety disorder of childhood OR adolescence",
+				"definition": "null"
 			}
 		response : 
 		{
@@ -2692,6 +2834,10 @@ Default FHIR
 				]
 		}
 		
+		Keterangan :
+			Data yang harus ditambahkan pada API ini dapat dilihat pada link ini https://www.hl7.org/fhir/valueset-observation-status.html
+
+			
 	e. put
 		Method : PUT
 		Url format : host:port/{apikey}/observation-status/{id}
@@ -2757,6 +2903,10 @@ Default FHIR
 				]
 		}
 		
+		Keterangan :
+			Data yang harus ditambahkan pada API ini dapat dilihat pada link ini https://www.hl7.org/fhir/valueset-detectedissue-category.html
+
+			
 	e. put
 		Method : PUT
 		Url format : host:port/{apikey}/detectedissue-category/{id}
@@ -2822,6 +2972,10 @@ Default FHIR
 				]
 		}
 		
+		Keterangan :
+			Data yang harus ditambahkan pada API ini dapat dilihat pada link ini https://www.hl7.org/fhir/valueset-detectedissue-severity.html
+
+			
 	e. put
 		Method : PUT
 		Url format : host:port/{apikey}/detectedissue-severity/{id}
@@ -2887,6 +3041,10 @@ Default FHIR
 				]
 		}
 		
+		Keterangan :
+			Data yang harus ditambahkan pada API ini dapat dilihat pada link ini https://www.hl7.org/fhir/valueset-detectedissue-mitigation-action.html
+
+			
 	e. put
 		Method : PUT
 		Url format : host:port/{apikey}/detectedissue-mitigation-action/{id}
@@ -2952,6 +3110,10 @@ Default FHIR
 				]
 		}
 		
+		Keterangan :
+			Data yang harus ditambahkan pada API ini dapat dilihat pada link ini https://www.hl7.org/fhir/valueset-history-status.html
+
+			
 	e. put
 		Method : PUT
 		Url format : host:port/{apikey}/history-status/{id}
@@ -3017,6 +3179,10 @@ Default FHIR
 				]
 		}
 		
+		Keterangan :
+			Data yang harus ditambahkan pada API ini dapat dilihat pada link ini https://www.hl7.org/fhir/valueset-history-not-done-reason.html
+
+			
 	e. put
 		Method : PUT
 		Url format : host:port/{apikey}/history-not-done-reason/{id}
@@ -3082,6 +3248,10 @@ Default FHIR
 				]
 		}
 		
+		Keterangan :
+			Data yang harus ditambahkan pada API ini dapat dilihat pada link ini https://www.hl7.org/fhir/v3/FamilyMember/vs.html
+
+			
 	e. put
 		Method : PUT
 		Url format : host:port/{apikey}/family-member/{id}
@@ -3147,6 +3317,10 @@ Default FHIR
 				]
 		}
 		
+		Keterangan :
+			Data yang harus ditambahkan pada API ini dapat dilihat pada link ini https://www.hl7.org/fhir/valueset-condition-outcome.html
+
+			
 	e. put
 		Method : PUT
 		Url format : host:port/{apikey}/condition-outcome/{id}
@@ -3212,6 +3386,10 @@ Default FHIR
 				]
 		}
 		
+		Keterangan :
+			Data yang harus ditambahkan pada API ini dapat dilihat pada link ini https://www.hl7.org/fhir/valueset-risk-probability.html
+
+			
 	e. put
 		Method : PUT
 		Url format : host:port/{apikey}/risk-probability/{id}
@@ -3277,6 +3455,10 @@ Default FHIR
 				]
 		}
 		
+		Keterangan :
+			Data yang harus ditambahkan pada API ini dapat dilihat pada link ini https://www.hl7.org/fhir/valueset-goal-status.html
+
+			
 	e. put
 		Method : PUT
 		Url format : host:port/{apikey}/goal-status/{id}
@@ -3342,6 +3524,10 @@ Default FHIR
 				]
 		}
 		
+		Keterangan :
+			Data yang harus ditambahkan pada API ini dapat dilihat pada link ini https://www.hl7.org/fhir/valueset-goal-category.html
+
+			
 	e. put
 		Method : PUT
 		Url format : host:port/{apikey}/goal-category/{id}
@@ -3407,6 +3593,10 @@ Default FHIR
 				]
 		}
 		
+		Keterangan :
+			Data yang harus ditambahkan pada API ini dapat dilihat pada link ini https://www.hl7.org/fhir/valueset-goal-priority.html
+
+		
 	e. put
 		Method : PUT
 		Url format : host:port/{apikey}/goal-priority/{id}
@@ -3470,6 +3660,10 @@ Default FHIR
 				]
 		}
 		
+		Keterangan :
+			Data yang harus ditambahkan pada API ini dapat dilihat pada link ini https://www.hl7.org/fhir/valueset-goal-start-event.html
+
+			
 	e. put
 		Method : PUT
 		Url format : host:port/{apikey}/goal-start-event/{id}
@@ -3531,6 +3725,10 @@ Default FHIR
 				]
 		}
 		
+		Keterangan :
+			Data yang harus ditambahkan pada API ini dapat dilihat pada link ini https://www.hl7.org/fhir/valueset-observation-codes.html
+
+			
 	e. put
 		Method : PUT
 		Url format : host:port/{apikey}/observation-codes/{id}
@@ -3593,6 +3791,10 @@ Default FHIR
 						}
 				]
 		}
+		
+		Keterangan :
+			Data yang harus ditambahkan pada API ini dapat dilihat pada link ini https://www.hl7.org/fhir/valueset-event-status.html
+
 		
 	e. put
 		Method : PUT
@@ -3659,6 +3861,10 @@ Default FHIR
 				]
 		}
 		
+		Keterangan :
+			Data yang harus ditambahkan pada API ini dapat dilihat pada link ini https://www.hl7.org/fhir/valueset-procedure-not-performed-reason.html
+
+		
 	e. put
 		Method : PUT
 		Url format : host:port/{apikey}/procedure-not-performed-reason/{id}
@@ -3722,6 +3928,10 @@ Default FHIR
 				]
 		}
 		
+		Keterangan :
+			Data yang harus ditambahkan pada API ini dapat dilihat pada link ini https://www.hl7.org/fhir/valueset-procedure-category.html
+
+		
 	e. put
 		Method : PUT
 		Url format : host:port/{apikey}/procedure-category/{id}
@@ -3784,6 +3994,10 @@ Default FHIR
 						}
 				]
 		}
+		
+		Keterangan :
+			Data yang harus ditambahkan pada API ini dapat dilihat pada link ini https://www.hl7.org/fhir/valueset-procedure-code.html
+
 		
 	e. put
 		Method : PUT
@@ -3850,6 +4064,10 @@ Default FHIR
 				]
 		}
 		
+		Keterangan :
+			Data yang harus ditambahkan pada API ini dapat dilihat pada link ini https://www.hl7.org/fhir/valueset-performer-role.html
+
+		
 	e. put
 		Method : PUT
 		Url format : host:port/{apikey}/performer-role/{id}
@@ -3914,6 +4132,10 @@ Default FHIR
 				]
 		}
 		
+		Keterangan :
+			Data yang harus ditambahkan pada API ini dapat dilihat pada link ini https://www.hl7.org/fhir/valueset-procedure-reason.html
+
+			
 	e. put
 		Method : PUT
 		Url format : host:port/{apikey}/procedure-reason/{id}
@@ -3976,6 +4198,10 @@ Default FHIR
 				]
 		}
 		
+		Keterangan :
+			Data yang harus ditambahkan pada API ini dapat dilihat pada link ini https://www.hl7.org/fhir/valueset-procedure-outcome.html
+
+		
 	e. put
 		Method : PUT
 		Url format : host:port/{apikey}/procedure-outcome/{id}
@@ -4035,6 +4261,10 @@ Default FHIR
 						}
 				]
 		}
+		
+		Keterangan :
+			Data yang harus ditambahkan pada API ini dapat dilihat pada link ini https://www.hl7.org/fhir/valueset-procedure-followup.html
+
 		
 	e. put
 		Method : PUT
@@ -4098,6 +4328,10 @@ Default FHIR
 				]
 		}
 		
+		Keterangan :
+			Data yang harus ditambahkan pada API ini dapat dilihat pada link ini https://www.hl7.org/fhir/valueset-device-action.html
+
+		
 	e. put
 		Method : PUT
 		Url format : host:port/{apikey}/device-action/{id}
@@ -4126,7 +4360,7 @@ Default FHIR
 	a. get all data
 		Method : GET 
 		Url format : host:port/{apikey}/device-kind
-		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/procedure-kind
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/device-kind
 		
 	b. get by id
 		Method : GET
@@ -4162,6 +4396,10 @@ Default FHIR
 				]
 		}
 		
+		Keterangan :
+			Data yang harus ditambahkan pada API ini dapat dilihat pada link ini https://www.hl7.org/fhir/valueset-device-kind.html
+
+		
 	e. put
 		Method : PUT
 		Url format : host:port/{apikey}/device-kind/{id}
@@ -4185,3 +4423,2593 @@ Default FHIR
 						}
 				]
 		}
+		
+66. immunization-status
+	a. get all data
+		Method : GET 
+		Url format : host:port/{apikey}/immunization-status
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/immunization-status
+		
+	b. get by id
+		Method : GET
+		Url format : host:port/{apikey}/immunization-status/{id}
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/immunization-status/130
+	
+	c. Get data by code
+		Method : GET
+		Url format : host:port/{apikey}/immunization-status/code/{code}
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/immunization-status/code/completed
+		
+	d. Add 
+		Method : POST
+		Url format : host:port/{apikey}/immunization-status
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/immunization-status
+		body : 
+			{
+				"code" : "completed",
+				"display" : "Completed",
+				"definition" : "All actions that are implied by the administration have occurred."
+			}
+		response : 
+		{
+				"err_code": 0,
+				"err_msg": "Immunization Status has been add.",
+				"data": [
+						{
+								"id": "100",
+								"code": "completed",
+								"display": "Completed",
+								"definition": "All actions that are implied by the administration have occurred."
+						}
+				]
+		}
+		
+		Keterangan :
+			Data yang harus ditambahkan pada API ini dapat dilihat pada link ini https://www.hl7.org/fhir/valueset-immunization-status.html
+		
+	e. put
+		Method : PUT
+		Url format : host:port/{apikey}/immunization-status/{id}
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/immunization-status/100
+		body:
+			{
+				"code" : "completed",
+				"display" : "Completed",
+				"definition" : "All actions that are implied by the administration have occurred."
+			}
+		response : 
+		{
+				"err_code": 0,
+				"err_msg": "Immunization Status has been update.",
+				"data": [
+						{
+								"id": "100",
+								"code": "completed",
+								"display": "Completed",
+								"definition": "All actions that are implied by the administration have occurred."
+						}
+				]
+		}
+		
+67. vaccine-code
+	a. get all data
+		Method : GET 
+		Url format : host:port/{apikey}/vaccine-code
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/vaccine-code
+		
+	b. get by id
+		Method : GET
+		Url format : host:port/{apikey}/vaccine-code/{id}
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/vaccine-code/130
+	
+	c. Get data by code
+		Method : GET
+		Url format : host:port/{apikey}/vaccine-code/code/{code}
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/vaccine-code/code/01
+		
+	d. Add 
+		Method : POST
+		Url format : host:port/{apikey}/vaccine-code
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/vaccine-code
+		body : 
+			{
+				"code" : "01",
+				"system" : " http://hl7.org/fhir/sid/cvx",
+				"display" : "DTP"
+			}
+		response : 
+		{
+				"err_code": 0,
+				"err_msg": "Vaccine Code has been add.",
+				"data": [
+						{
+								"id": "100",
+								"code": "01",
+								"display": "DTP",
+								"system": " http://hl7.org/fhir/sid/cvx"
+						}
+				]
+		}
+		
+		Keterangan :
+			Data yang harus ditambahkan pada API ini dapat dilihat pada link ini https://www.hl7.org/fhir/valueset-vaccine-code.html
+		
+	e. put
+		Method : PUT
+		Url format : host:port/{apikey}/vaccine-code/{id}
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/vaccine-code/100
+		body:
+			{
+				"code" : "01",
+				"system" : " http://hl7.org/fhir/sid/cvx",
+				"display" : "DTP"
+			}
+		response : 
+		{
+				"err_code": 0,
+				"err_msg": "Vaccine Code has been update.",
+				"data": [
+						{
+								"id": "100",
+								"code": "01",
+								"system": " http://hl7.org/fhir/sid/cvx",
+								"display": "DTP"
+						}
+				]
+		}
+		
+68. immunization-origin
+	a. get all data
+		Method : GET 
+		Url format : host:port/{apikey}/immunization-origin
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/immunization-origin
+		
+	b. get by id
+		Method : GET
+		Url format : host:port/{apikey}/immunization-origin/{id}
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/immunization-origin/130
+	
+	c. Get data by code
+		Method : GET
+		Url format : host:port/{apikey}/immunization-origin/code/{code}
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/immunization-origin/code/provider
+		
+	d. Add 
+		Method : POST
+		Url format : host:port/{apikey}/immunization-origin
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/immunization-origin
+		body : 
+			{
+				"code" : "provider",
+				"display" : "DTP",
+				"definition" : "The data for the immunization event originated with another provider."
+			}
+		response : 
+		{
+				"err_code": 0,
+				"err_msg": "Immunization Origin has been add.",
+				"data": [
+						{
+								"id": "100",
+								"code": "provider",
+								"display": "DTP",
+								"definition": "The data for the immunization event originated with another provider."
+						}
+				]
+		}
+		
+		Keterangan :
+			Data yang harus ditambahkan pada API ini dapat dilihat pada link ini https://www.hl7.org/fhir/valueset-immunization-origin.html
+		
+	e. put
+		Method : PUT
+		Url format : host:port/{apikey}/immunization-origin/{id}
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/immunization-origin/100
+		body:
+			{
+				"code" : "provider",
+				"display" : "DTP",
+				"definition" : "The data for the immunization event originated with another provider."
+			}
+		response : 
+		{
+				"err_code": 0,
+				"err_msg": "Immunization Origin has been update.",
+				"data": [
+						{
+								"id": "100",
+								"code": "provider",
+								"display": "DTP",
+								"definition": "The data for the immunization event originated with another provider."
+						}
+				]
+		}
+		
+69.  immunization-site
+	a. get all data
+		Method : GET 
+		Url format : host:port/{apikey}/immunization-site
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/immunization-site
+		
+	b. get by id
+		Method : GET
+		Url format : host:port/{apikey}/immunization-site/{id}
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/immunization-site/130
+	
+	c. Get data by code
+		Method : GET
+		Url format : host:port/{apikey}/immunization-site/code/{code}
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/immunization-site/code/LA
+		
+	d. Add 
+		Method : POST
+		Url format : host:port/{apikey}/immunization-site
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/immunization-site
+		body : 
+			{
+				"code" : "LA",
+				"display" : "Left arm",
+				"definition" : "left arm."
+			}
+		response : 
+		{
+				"err_code": 0,
+				"err_msg": "Immunization Site has been add.",
+				"data": [
+						{
+								"id": "100",
+								"code": "LA",
+								"display": "Left arm",
+								"definition": "left arm."
+						}
+				]
+		}
+		
+		Keterangan :
+			Data yang harus ditambahkan pada API ini dapat dilihat pada link ini https://www.hl7.org/fhir/valueset-immunization-site.html
+			
+	e. put
+		Method : PUT
+		Url format : host:port/{apikey}/immunization-site/{id}
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/immunization-site/100
+		body:
+			{
+				"code" : "LA",
+				"display" : "Left arm",
+				"definition" : "left arm."
+			}
+		response : 
+		{
+				"err_code": 0,
+				"err_msg": "Immunization Site has been update.",
+				"data": [
+						{
+								"id": "100",
+								"code": "LA",
+								"display": "Left arm",
+								"definition": "left arm."
+						}
+				]
+		}
+		
+70. immunization-route
+	a. get all data
+		Method : GET 
+		Url format : host:port/{apikey}/immunization-route
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/immunization-route
+		
+	b. get by id
+		Method : GET
+		Url format : host:port/{apikey}/immunization-route/{id}
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/immunization-route/130
+	
+	c. Get data by code
+		Method : GET
+		Url format : host:port/{apikey}/immunization-route/code/{code}
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/immunization-route/code/IM
+		
+	d. Add 
+		Method : POST
+		Url format : host:port/{apikey}/immunization-route
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/immunization-route
+		body : 
+			{
+				"code" : "IM",
+				"display" : "Injection, intramuscular",
+				"definition" : "Injection, intramuscular."
+			}
+		response : 
+		{
+				"err_code": 0,
+				"err_msg": "Immunization Routes has been add.",
+				"data": [
+						{
+								"id": "100",
+								"code": "IM",
+								"display": "Injection, intramuscular",
+								"definition": "Injection, intramuscular."
+						}
+				]
+		}
+		
+		Keterangan :
+			Data yang harus ditambahkan pada API ini dapat dilihat pada link ini https://www.hl7.org/fhir/valueset-immunization-route.html
+			
+	e. put
+		Method : PUT
+		Url format : host:port/{apikey}/immunization-route/{id}
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/immunization-route/100
+		body:
+			{
+				"code" : "IM",
+				"display" : "Injection, intramuscular",
+				"definition" : "Injection, intramuscular."
+			}
+		response : 
+		{
+				"err_code": 0,
+				"err_msg": "Immunization Routes has been update.",
+				"data": [
+						{
+								"id": "100",
+								"code": "IM",
+								"display": "Injection, intramuscular",
+								"definition": "Injection, intramuscular."
+						}
+				]
+		}
+		
+71. immunization-role
+	a. get all data
+		Method : GET 
+		Url format : host:port/{apikey}/immunization-role
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/immunization-role
+		
+	b. get by id
+		Method : GET
+		Url format : host:port/{apikey}/immunization-role/{id}
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/immunization-role/130
+	
+	c. Get data by code
+		Method : GET
+		Url format : host:port/{apikey}/immunization-role/code/{code}
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/immunization-role/code/OP
+		
+	d. Add 
+		Method : POST
+		Url format : host:port/{apikey}/immunization-role
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/immunization-role
+		body : 
+			{
+				"code" : "OP",
+				"display" : "Ordering Provider"
+			}
+		response : 
+		{
+				"err_code": 0,
+				"err_msg": "Immunization Role has been add.",
+				"data": [
+						{
+								"id": "100",
+								"code": "OP",
+								"display": "Ordering Provider"
+						}
+				]
+		}
+		
+		Keterangan :
+			Data yang harus ditambahkan pada API ini dapat dilihat pada link ini https://www.hl7.org/fhir/valueset-immunization-role.html
+		
+	e. put
+		Method : PUT
+		Url format : host:port/{apikey}/immunization-role/{id}
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/immunization-role/100
+		body:
+			{
+				"code" : "OP",
+				"display" : "Ordering Provider"
+			}
+		response : 
+		{
+				"err_code": 0,
+				"err_msg": "Immunization Role has been update.",
+				"data": [
+						{
+								"id": "100",
+								"code": "OP",
+								"display": "Ordering Provider"
+						}
+				]
+		}
+		
+72. immunization-reason
+	a. get all data
+		Method : GET 
+		Url format : host:port/{apikey}/immunization-reason
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/immunization-reason
+		
+	b. get by id
+		Method : GET
+		Url format : host:port/{apikey}/immunization-reason/{id}
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/immunization-reason/130
+	
+	c. Get data by code
+		Method : GET
+		Url format : host:port/{apikey}/immunization-reason/code/{code}
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/immunization-reason/code/281657000
+		
+	d. Add 
+		Method : POST
+		Url format : host:port/{apikey}/immunization-reason
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/immunization-reason
+		body : 
+			{
+				"code" : "281657000",
+				"display" : "Travel vaccinations"
+			}
+		response : 
+		{
+				"err_code": 0,
+				"err_msg": "Immunization Reason has been add.",
+				"data": [
+						{
+								"id": "100",
+								"code": "281657000",
+								"display": "Travel vaccinations"
+						}
+				]
+		}
+		
+		Keterangan :
+			Data yang harus ditambahkan pada API ini dapat dilihat pada link ini https://www.hl7.org/fhir/valueset-immunization-reason.html
+		
+	e. put
+		Method : PUT
+		Url format : host:port/{apikey}/immunization-reason/{id}
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/immunization-reason/100
+		body:
+			{
+				"code" : "281657000",
+				"display" : "Travel vaccinations"
+			}
+		response : 
+		{
+				"err_code": 0,
+				"err_msg": "Immunization Reason has been update.",
+				"data": [
+						{
+								"id": "100",
+								"code": "281657000",
+								"display": "Travel vaccinations"
+						}
+				]
+		}
+		
+73. no-immunization-reason
+	a. get all data
+		Method : GET 
+		Url format : host:port/{apikey}/no-immunization-reason
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/no-immunization-reason
+		
+	b. get by id
+		Method : GET
+		Url format : host:port/{apikey}/no-immunization-reason/{id}
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/no-immunization-reason/130
+	
+	c. Get data by code
+		Method : GET
+		Url format : host:port/{apikey}/no-immunization-reason/code/{code}
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/no-immunization-reason/code/IMMUNE
+		
+	d. Add 
+		Method : POST
+		Url format : host:port/{apikey}/no-immunization-reason
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/no-immunization-reason
+		body : 
+			{
+				"code" : "immune",
+				"system" : "http://hl7.org/fhir/v3/ActReason",
+				"display" : "immunity",
+				"definition" : "Testing has shown that the patient already has immunity to the agent targeted by the immunization."
+			}
+		response : 
+		{
+				"err_code": 0,
+				"err_msg": "No Immunization Reason has been add.",
+				"data": [
+						{
+								"id": "100",
+								"code": "IMMUNE",
+								"system": "http://hl7.org/fhir/v3/ActReason",
+								"display": "immunity",
+								"definition": "Testing has shown that the patient already has immunity to the agent targeted by the immunization."
+						}
+				]
+		}
+		
+		Keterangan :
+			Data yang harus ditambahkan pada API ini dapat dilihat pada link ini https://www.hl7.org/fhir/valueset-no-immunization-reason.html
+		
+	e. put
+		Method : PUT
+		Url format : host:port/{apikey}/no-immunization-reason/{id}
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/no-immunization-reason/100
+		body:
+			{
+				"code" : "immune",
+				"system" : "http://hl7.org/fhir/v3/ActReason",
+				"display" : "immunity",
+				"definition" : "Testing has shown that the patient already has immunity to the agent targeted by the immunization."
+			}
+		response : 
+		{
+				"err_code": 0,
+				"err_msg": "No Immunization Reason has been update.",
+				"data": [
+						{
+								"id": "100",
+								"code": "IMMUNE",
+								"system": "http://hl7.org/fhir/v3/ActReason",
+								"display": "immunity",
+								"definition": "Testing has shown that the patient already has immunity to the agent targeted by the immunization."
+						}
+				]
+		}
+		
+74. vaccination-protocol-dose-target
+	a. get all data
+		Method : GET 
+		Url format : host:port/{apikey}/vaccination-protocol-dose-target
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/vaccination-protocol-dose-target
+		
+	b. get by id
+		Method : GET
+		Url format : host:port/{apikey}/vaccination-protocol-dose-target/{id}
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/vaccination-protocol-dose-target/130
+	
+	c. Get data by code
+		Method : GET
+		Url format : host:port/{apikey}/vaccination-protocol-dose-target/code/{code}
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/vaccination-protocol-dose-target/code/1857005
+		
+	d. Add 
+		Method : POST
+		Url format : host:port/{apikey}/vaccination-protocol-dose-target
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/vaccination-protocol-dose-target
+		body : 
+			{
+				"code" : "1857005",
+				"display" : "Gestational rubella syndrome"
+			}
+		response : 
+		{
+				"err_code": 0,
+				"err_msg": "Vaccination Protocol Dose Target has been add.",
+				"data": [
+						{
+								"id": "110",
+								"code": "1857005",
+								"display": "Gestational rubella syndrome"
+						}
+				]
+		}
+		
+		Keterangan :
+			Data yang harus ditambahkan pada API ini dapat dilihat pada link ini https://www.hl7.org/fhir/valueset-vaccination-protocol-dose-target.html
+		
+	e. put
+		Method : PUT
+		Url format : host:port/{apikey}/vaccination-protocol-dose-target/{id}
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/vaccination-protocol-dose-targets/100
+		body:
+			{
+				"code" : "1857005",
+				"display" : "Gestational rubella syndrome"
+			}
+		response : 
+		{
+				"err_code": 0,
+				"err_msg": "Vaccination Protocol Dose Target has been update.",
+				"data": [
+						{
+								"id": "110",
+								"code": "1857005",
+								"display": "Gestational rubella syndrome"
+						}
+				]
+		}
+		
+75. vaccination-protocol-dose-status
+	a. get all data
+		Method : GET 
+		Url format : host:port/{apikey}/vaccination-protocol-dose-status
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/vaccination-protocol-dose-status
+		
+	b. get by id
+		Method : GET
+		Url format : host:port/{apikey}/vaccination-protocol-dose-status/{id}
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/vaccination-protocol-dose-status/130
+	
+	c. Get data by code
+		Method : GET
+		Url format : host:port/{apikey}/vaccination-protocol-dose-status/code/{code}
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/vaccination-protocol-dose-status/code/count
+		
+	d. Add 
+		Method : POST
+		Url format : host:port/{apikey}/vaccination-protocol-dose-status
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/vaccination-protocol-dose-status
+		body : 
+			{
+				"code" : "count",
+				"display" : "Counts",
+				"definition" : "The dose counts toward fulfilling a path to immunity for a patient, providing protection against the target disease."
+				}
+		response : 
+		{
+				"err_code": 0,
+				"err_msg": "Vaccination Protocol Dose Status has been add.",
+				"data": [
+						{
+								"id": "100",
+								"code": "count",
+								"display": "Counts",
+								"definition": "The dose counts toward fulfilling a path to immunity for a patient, providing protection against the target disease."
+						}
+				]
+		}
+		
+		Keterangan :
+			Data yang harus ditambahkan pada API ini dapat dilihat pada link ini https://www.hl7.org/fhir/valueset-vaccination-protocol-dose-status.html
+			
+	e. put
+		Method : PUT
+		Url format : host:port/{apikey}/vaccination-protocol-dose-status/{id}
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/vaccination-protocol-dose-status/100
+		body:
+			{
+				"code" : "count",
+				"display" : "Counts",
+				"definition" : "The dose counts toward fulfilling a path to immunity for a patient, providing protection against the target disease."
+			}
+		response : 
+		{
+				"err_code": 0,
+				"err_msg": "Vaccination Protocol Dose Status has been update.",
+				"data": [
+						{
+								"id": "100",
+								"code": "count",
+								"display": "Counts",
+								"definition": "The dose counts toward fulfilling a path to immunity for a patient, providing protection against the target disease."
+						}
+				]
+		}
+		
+76. vaccination-protocol-dose-status-reason
+	a. get all data
+		Method : GET 
+		Url format : host:port/{apikey}/vaccination-protocol-dose-status-reason
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/vaccination-protocol-dose-status-reason
+		
+	b. get by id
+		Method : GET
+		Url format : host:port/{apikey}/vaccination-protocol-dose-status-reason/{id}
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/vaccination-protocol-dose-status-reason/130
+	
+	c. Get data by code
+		Method : GET
+		Url format : host:port/{apikey}/vaccination-protocol-dose-status-reason/code/{code}
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/vaccination-protocol-dose-status-reason/code/advstorage
+		
+	d. Add 
+		Method : POST
+		Url format : host:port/{apikey}/vaccination-protocol-dose-status-reason
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/vaccination-protocol-dose-status-reason
+		body : 
+			{
+				"code" : "advstorage",
+				"display" : "Adverse storage condition",
+				"definition" : "The product was stored in a manner inconsistent with manufacturer guidelines potentially reducing the effectiveness of the product."
+			}
+		response : 
+		{
+				"err_code": 0,
+				"err_msg": "Vaccination Protocol Dose Status Reason has been add.",
+				"data": [
+						{
+								"id": "100",
+								"code": "advstorage",
+								"display": "Adverse storage condition",
+								"definition": "The product was stored in a manner inconsistent with manufacturer guidelines potentially reducing the effectiveness of the product."
+						}
+				]
+		}
+		
+		Keterangan :
+			Data yang harus ditambahkan pada API ini dapat dilihat pada link ini https://www.hl7.org/fhir/valueset-vaccination-protocol-dose-status-reason.html
+			
+	e. put
+		Method : PUT
+		Url format : host:port/{apikey}/vaccination-protocol-dose-status-reason/{id}
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/vaccination-protocol-dose-status-reason/100
+		body:
+			{
+				"code" : "advstorage",
+				"display" : "Adverse storage condition",
+				"definition" : "The product was stored in a manner inconsistent with manufacturer guidelines potentially reducing the effectiveness of the product."
+			}
+		response : 
+		{
+				"err_code": 0,
+				"err_msg": "Vaccination Protocol Dose Status Reason has been update.",
+				"data": [
+						{
+								"id": "100",
+								"code": "advstorage",
+								"display": "Adverse storage condition",
+								"definition": "The product was stored in a manner inconsistent with manufacturer guidelines potentially reducing the effectiveness of the product."
+						}
+				]
+		}
+		
+77. immunization-recommendation-target-disease
+	a. get all data
+		Method : GET 
+		Url format : host:port/{apikey}/immunization-recommendation-target-disease
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/immunization-recommendation-target-disease
+		
+	b. get by id
+		Method : GET
+		Url format : host:port/{apikey}/immunization-recommendation-target-disease/{id}
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/immunization-recommendation-target-disease/130
+	
+	c. Get data by code
+		Method : GET
+		Url format : host:port/{apikey}/immunization-recommendation-target-disease/code/{code}
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/immunization-recommendation-target-disease/code/1857005
+		
+	d. Add 
+		Method : POST
+		Url format : host:port/{apikey}/immunization-recommendation-target-disease
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/immunization-recommendation-target-disease
+		body : 
+			{
+				"code" : "1857005",
+				"display" : "Gestational rubella syndrome"
+			}
+		response : 
+		{
+				"err_code": 0,
+				"err_msg": "Immunization Recommendation Target Disease has been add.",
+				"data": [
+						{
+								"id": "100",
+								"code": "1857005",
+								"display": "Gestational rubella syndrome"
+						}
+				]
+		}
+		
+		Keterangan :
+			Data yang harus ditambahkan pada API ini dapat dilihat pada link ini https://www.hl7.org/fhir/valueset-immunization-recommendation-target-disease.html
+		
+	e. put
+		Method : PUT
+		Url format : host:port/{apikey}/immunization-recommendation-target-disease/{id}
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/immunization-recommendation-target-disease/100
+		body:
+			{
+				"code" : "1857005",
+				"display" : "Gestational rubella syndrome"
+			}
+		response : 
+		{
+				"err_code": 0,
+				"err_msg": "Immunization Recommendation Target Disease has been update.",
+				"data": [
+						{
+								"id": "100",
+								"code": "1857005",
+								"display": "Gestational rubella syndrome"
+						}
+				]
+		}
+		
+78. immunization-recommendation-status
+	a. get all data
+		Method : GET 
+		Url format : host:port/{apikey}/immunization-recommendation-status
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/immunization-recommendation-status
+		
+	b. get by id
+		Method : GET
+		Url format : host:port/{apikey}/immunization-recommendation-status/{id}
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/immunization-recommendation-status/130
+	
+	c. Get data by code
+		Method : GET
+		Url format : host:port/{apikey}/immunization-recommendation-status/code/{code}
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/immunization-recommendation-status/code/due
+		
+	d. Add 
+		Method : POST
+		Url format : host:port/{apikey}/immunization-recommendation-status
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/immunization-recommendation-status
+		body : 
+			{
+				"code" : "due",
+				"display" : "Due",
+				"definition" : "The patient is due for their next vaccination."
+			}
+		response : 
+		{
+				"err_code": 0,
+				"err_msg": "Immunization Recommendation Status has been add.",
+				"data": [
+						{
+								"id": "100",
+								"code": "due",
+								"display": "Due",
+								"definition": "The patient is due for their next vaccination."
+						}
+				]
+		}
+		
+		Keterangan :
+			Data yang harus ditambahkan pada API ini dapat dilihat pada link ini https://www.hl7.org/fhir/valueset-immunization-recommendation-status.html
+			
+	e. put
+		Method : PUT
+		Url format : host:port/{apikey}/immunization-recommendation-status/{id}
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/immunization-recommendation-status/100
+		body:
+			{
+				"code" : "due",
+				"display" : "Due",
+				"definition" : "The patient is due for their next vaccination."
+			}
+		response : 
+		{
+				"err_code": 0,
+				"err_msg": "Vaccination Protocol Dose Status Reason has been update.",
+				"data": [
+						{
+								"id": "100",
+								"code": "due",
+								"display": "Due",
+								"definition": "The patient is due for their next vaccination."
+						}
+				]
+		}
+		
+79. immunization-recommendation-status
+	a. get all data
+		Method : GET 
+		Url format : host:port/{apikey}/immunization-recommendation-date-criterion
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/immunization-recommendation-date-criterion
+		
+	b. get by id
+		Method : GET
+		Url format : host:port/{apikey}/immunization-recommendation-date-criterion/{id}
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/immunization-recommendation-date-criterion/130
+	
+	c. Get data by code
+		Method : GET
+		Url format : host:port/{apikey}/immunization-recommendation-date-criterion/code/{code}
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/immunization-recommendation-date-criterion/code/due
+		
+	d. Add 
+		Method : POST
+		Url format : host:port/{apikey}/immunization-recommendation-date-criterion
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/immunization-recommendation-date-criterion
+		body : 
+			{
+				"code" : "due",
+				"display" : "Due",
+				"definition" : "Date the next dose is considered due."
+			}
+		response : 
+		{
+					"err_code": 0,
+					"err_msg": "Immunization Recommendation Date Criterion has been add.",
+					"data": [
+							{
+									"id": "100",
+									"code": "due",
+									"display": "Due",
+									"definition": "Date the next dose is considered due."
+							}
+					]
+			}
+			
+			Keterangan :
+			Data yang harus ditambahkan pada API ini dapat dilihat pada link ini https://www.hl7.org/fhir/valueset-immunization-recommendation-date-criterion.html
+		
+	e. put
+		Method : PUT
+		Url format : host:port/{apikey}/immunization-recommendation-date-criterion/{id}
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/immunization-recommendation-date-criterion/100
+		body:
+			{
+				"code" : "due",
+				"display" : "Due",
+				"definition" : "Date the next dose is considered due."
+			}
+		response : 
+		{
+				"err_code": 0,
+				"err_msg": "Immunization Recommendation Date Criterion has been update.",
+				"data": [
+						{
+								"id": "101",
+								"code": "undefined",
+								"display": "Due",
+								"definition": "Date the next dose is considered due."
+						}
+				]
+		}
+		
+80. medication-status
+	a. get all data
+		Method : GET 
+		Url format : host:port/{apikey}/medication-status
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/medication-status
+		
+	b. get by id
+		Method : GET
+		Url format : host:port/{apikey}/medication-status/{id}
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/medication-status/130
+	
+	c. Get data by code
+		Method : GET
+		Url format : host:port/{apikey}/medication-status/code/{code}
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/medication-status/code/active
+		
+	d. Add 
+		Method : POST
+		Url format : host:port/{apikey}/medication-status
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/medication-status
+		body : 
+			{
+				"code" : "active",
+				"display" : "Active",
+				"definition" : "The medication is available for use"
+			}
+		response : 
+		{
+				"err_code": 0,
+				"err_msg": "Medication Status has been add.",
+				"data": [
+						{
+								"id": "100",
+								"code": "active",
+								"display": "Active",
+								"definition": "The medication is available for use"
+						}
+				]
+		}
+		
+		Keterangan :
+			Data yang harus ditambahkan pada API ini dapat dilihat pada link ini https://www.hl7.org/fhir/valueset-medication-status.html
+			
+	e. put
+		Method : PUT
+		Url format : host:port/{apikey}/medication-status/{id}
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/medication-status/100
+		body:
+			{
+				"code" : "active",
+				"display" : "Active",
+				"definition" : "The medication is available for use"
+			}
+		response : 
+		{
+				"err_code": 0,
+				"err_msg": "Medication Status has been update.",
+				"data": [
+						{
+								"id": "100",
+								"code": "active",
+								"display": "Active",
+								"definition": "The medication is available for use"
+						}
+				]
+		}
+		
+81. medication-form-codes
+	a. get all data
+		Method : GET 
+		Url format : host:port/{apikey}/medication-form-codes
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/medication-form-codes
+		
+	b. get by id
+		Method : GET
+		Url format : host:port/{apikey}/medication-form-codes/{id}
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/medication-form-codes/130
+	
+	c. Get data by code
+		Method : GET
+		Url format : host:port/{apikey}/medication-form-codes/code/{code}
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/medication-form-codes/code/7946007
+		
+	d. Add 
+		Method : POST
+		Url format : host:port/{apikey}/medication-form-codes
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/medication-form-codes
+		body : 
+			{
+				"code" : "7946007",
+				"display" : "Drug suspension",
+				"definition" : ""
+			}
+		response : 
+		{
+				"err_code": 0,
+				"err_msg": "Medication Form Codes has been add.",
+				"data": [
+						{
+								"id": "100",
+								"code": "7946007",
+								"display": "Drug suspension",
+								"definition": "null"
+						}
+				]
+		}
+		
+		Keterangan :
+			Data yang harus ditambahkan pada API ini dapat dilihat pada link ini https://www.hl7.org/fhir/valueset-medication-form-codes.html
+			
+	e. put
+		Method : PUT
+		Url format : host:port/{apikey}/medication-form-codes/{id}
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/medication-form-codes/100
+		body:
+			{
+				"code" : "7946007",
+				"display" : "Drug suspension",
+				"definition" : ""
+			}
+		response : 
+		{
+				"err_code": 0,
+				"err_msg": "Medication Form Codes has been update.",
+				"data": [
+						{
+								"id": "100",
+								"code": "7946007",
+								"display": "Drug suspension",
+								"definition": "null"
+						}
+				]
+		}
+		
+82. medication-package-form
+	a. get all data
+		Method : GET 
+		Url format : host:port/{apikey}/medication-package-form
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/medication-package-form
+		
+	b. get by id
+		Method : GET
+		Url format : host:port/{apikey}/medication-package-form/{id}
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/medication-package-form/130
+	
+	c. Get data by code
+		Method : GET
+		Url format : host:port/{apikey}/medication-package-form/code/{code}
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/medication-package-form/code/ampoule
+		
+	d. Add 
+		Method : POST
+		Url format : host:port/{apikey}/medication-package-form
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/medication-package-form
+		body : 
+			{
+				"code" : "ampoule",
+				"display" : "Ampoule",
+				"definition" : "A sealed glass capsule containing a liquid"
+			}
+		response : 
+		{
+				"err_code": 0,
+				"err_msg": "Medication Package Form has been add.",
+				"data": [
+						{
+								"id": "100",
+								"code": "ampoule",
+								"display": "Ampoule",
+								"definition": "A sealed glass capsule containing a liquid"
+						}
+				]
+		}
+		
+		Keterangan :
+			Data yang harus ditambahkan pada API ini dapat dilihat pada link ini https://www.hl7.org/fhir/valueset-medication-package-form.html
+
+	e. put
+		Method : PUT
+		Url format : host:port/{apikey}/medication-package-form/{id}
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/medication-package-form/100
+		body:
+			{
+				"code" : "ampoule",
+				"display" : "Ampoule",
+				"definition" : "A sealed glass capsule containing a liquid"
+			}
+		response : 
+		{
+				"err_code": 0,
+				"err_msg": "Medication Package Form has been update.",
+				"data": [
+						{
+								"id": "100",
+								"code": "ampoule",
+								"display": "Ampoule",
+								"definition": "A sealed glass capsule containing a liquid"
+						}
+				]
+		}	
+		
+		
+83. medication-statement-status
+	a. get all data
+		Method : GET 
+		Url format : host:port/{apikey}/medication-statement-status
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/medication-statement-status
+		
+	b. get by id
+		Method : GET
+		Url format : host:port/{apikey}/medication-statement-status/{id}
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/medication-statement-status/130
+	
+	c. Get data by code
+		Method : GET
+		Url format : host:port/{apikey}/medication-statement-status/code/{code}
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/medication-statement-status/code/active
+		
+	d. Add 
+		Method : POST
+		Url format : host:port/{apikey}/medication-statement-status
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/medication-statement-status
+		body : 
+			{
+				"code" : "active",
+				"display" : "Active",
+				"definition" : "The medication is still being taken."
+			}
+			
+		response : 
+			{
+					"err_code": 0,
+					"err_msg": "Medication Statement Status has been add.",
+					"data": [
+							{
+									"id": "100",
+									"code": "active",
+									"display": "Active",
+									"definition": "The medication is still being taken."
+							}
+					]
+			}
+			
+			Keterangan :
+			Data yang harus ditambahkan pada API ini dapat dilihat pada link ini https://www.hl7.org/fhir/valueset-medication-statement-status.html
+
+	e. put
+		Method : PUT
+		Url format : host:port/{apikey}/medication-statement-status/{id}
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/medication-statement-status/100
+		body:
+			{
+				"code" : "active",
+				"display" : "Active",
+				"definition" : "The medication is still being taken."
+			}
+			
+		response : 
+			{
+					"err_code": 0,
+					"err_msg": "Medication Statement Status has been update.",
+					"data": [
+							{
+									"id": "100",
+									"code": "active",
+									"display": "Active",
+									"definition": "The medication is still being taken."
+							}
+					]
+			}		
+
+84. medication-statement-category
+	a. get all data
+		Method : GET 
+		Url format : host:port/{apikey}/medication-statement-category
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/medication-statement-category
+		
+	b. get by id
+		Method : GET
+		Url format : host:port/{apikey}/medication-statement-category/{id}
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/medication-statement-category/130
+	
+	c. Get data by code
+		Method : GET
+		Url format : host:port/{apikey}/medication-statement-category/code/{code}
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/medication-statement-category/code/inpatient
+		
+	d. Add 
+		Method : POST
+		Url format : host:port/{apikey}/medication-statement-category
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/medication-statement-category
+		body : 
+			{
+				"code" : "inpatient",
+				"display" : "Inpatient",
+				"definition" : "Includes orders for medications to be administered or consumed in an inpatient or acute care setting"
+			}
+			
+		response : 
+			{
+					"err_code": 0,
+					"err_msg": "Medication Statement Category has been add.",
+					"data": [
+							{
+									"id": "100",
+									"code": "inpatient",
+									"display": "Inpatient",
+									"definition": "Includes orders for medications to be administered or consumed in an inpatient or acute care setting"
+							}
+					]
+			}
+			
+			Keterangan :
+			Data yang harus ditambahkan pada API ini dapat dilihat pada link ini https://www.hl7.org/fhir/valueset-medication-statement-category.html
+
+	e. put
+		Method : PUT
+		Url format : host:port/{apikey}/medication-statement-category/{id}
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/medication-statement-category/100
+		body:
+			{
+				"code" : "inpatient",
+				"display" : "Inpatient",
+				"definition" : "Includes orders for medications to be administered or consumed in an inpatient or acute care setting"
+			}
+			
+		response : 
+			{
+					"err_code": 0,
+					"err_msg": "Medication Statement Category has been update.",
+					"data": [
+							{
+									"id": "100",
+									"code": "inpatient",
+									"display": "Inpatient",
+									"definition": "Includes orders for medications to be administered or consumed in an inpatient or acute care setting"
+							}
+					]
+			}
+		
+85. medication-statement-taken
+	a. get all data
+		Method : GET 
+		Url format : host:port/{apikey}/medication-statement-taken
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/medication-statement-taken
+		
+	b. get by id
+		Method : GET
+		Url format : host:port/{apikey}/medication-statement-taken/{id}
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/medication-statement-taken/130
+	
+	c. Get data by code
+		Method : GET
+		Url format : host:port/{apikey}/medication-statement-taken/code/{code}
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/medication-statement-taken/code/y
+		
+	d. Add 
+		Method : POST
+		Url format : host:port/{apikey}/medication-statement-taken
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/medication-statement-taken
+		body : 
+			{
+				"code" : "y",
+				"display" : "Yes",
+				"definition" : "Positive assertion that patient has taken medication"
+			}
+			
+		response : 
+			{
+					"err_code": 0,
+					"err_msg": "Medication Statement Taken has been add.",
+					"data": [
+							{
+									"id": "100",
+									"code": "y",
+									"display": "Yes",
+									"definition": "Positive assertion that patient has taken medication"
+							}
+					]
+			}
+			
+			Keterangan :
+			Data yang harus ditambahkan pada API ini dapat dilihat pada link ini https://www.hl7.org/fhir/valueset-medication-statement-taken.html
+
+	e. put
+		Method : PUT
+		Url format : host:port/{apikey}/medication-statement-taken/{id}
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/medication-statement-taken/100
+		body:
+			{
+				"code" : "y",
+				"display" : "Yes",
+				"definition" : "Positive assertion that patient has taken medication"
+			}
+			
+		response : 
+			{
+					"err_code": 0,
+					"err_msg": "Medication Statement Taken has been update.",
+					"data": [
+							{
+									"id": "100",
+									"code": "y",
+									"display": "Yes",
+									"definition": "Positive assertion that patient has taken medication"
+							}
+					]
+			}
+				
+86.  reason-medication-not-taken-codes
+	a. get all data
+		Method : GET 
+		Url format : host:port/{apikey}/reason-medication-not-taken-codes
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/reason-medication-not-taken-codes
+		
+	b. get by id
+		Method : GET
+		Url format : host:port/{apikey}/reason-medication-not-taken-codes/{id}
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/reason-medication-not-taken-codes/130
+	
+	c. Get data by code
+		Method : GET
+		Url format : host:port/{apikey}/reason-medication-not-taken-codes/code/{code}
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/reason-medication-not-taken-codes/code/182862001
+		
+	d. Add 
+		Method : POST
+		Url format : host:port/{apikey}/reason-medication-not-taken-codes
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/reason-medication-not-taken-codes
+		body : 
+			{
+				"code" : "182862001",
+				"display" : "Drug not taken - dislike taste",
+				"definition" : ""
+			}
+			
+		response : 
+			{
+					"err_code": 0,
+					"err_msg": "Reason Medication Not Taken Codes has been add.",
+					"data": [
+							{
+									"id": "100",
+									"code": "182862001",
+									"display": "Drug not taken - dislike taste",
+									"definition": "null"
+							}
+					]
+			}
+			
+			Keterangan :
+			Data yang harus ditambahkan pada API ini dapat dilihat pada link ini https://www.hl7.org/fhir/valueset-reason-medication-not-taken-codes.html		
+
+	e. put
+		Method : PUT
+		Url format : host:port/{apikey}/reason-medication-not-taken-codes/{id}
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/reason-medication-not-taken-codes/100
+		body:
+			{
+				"code" : "182862001",
+				"display" : "Drug not taken - dislike taste",
+				"definition" : ""
+			}
+			
+		response : 
+			{
+					"err_code": 0,
+					"err_msg": "Reason Medication Not Taken Codes has been update.",
+					"data": [
+							{
+									"id": "100",
+									"code": "182862001",
+									"display": "Drug not taken - dislike taste",
+									"definition": "null"
+							}
+					]
+			}
+								
+87. medication-request-status
+	a. get all data
+		Method : GET 
+		Url format : host:port/{apikey}/medication-request-status
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/medication-request-status
+		
+	b. get by id
+		Method : GET
+		Url format : host:port/{apikey}/medication-request-status/{id}
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/medication-request-status/130
+	
+	c. Get data by code
+		Method : GET
+		Url format : host:port/{apikey}/medication-request-status/code/{code}
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/medication-request-status/code/active
+		
+	d. Add 
+		Method : POST
+		Url format : host:port/{apikey}/medication-request-status
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/medication-request-status
+		body : 
+			{
+				"code" : "active",
+				"display" : "Active",
+				"definition" : "The prescription is 'actionable', but not all actions that are implied by it have occurred yet."
+			}
+			
+		response : 
+			{
+					"err_code": 0,
+					"err_msg": "Medication Request Status has been add.",
+					"data": [
+							{
+									"id": "100",
+									"code": "active",
+									"display": "Active",
+									"definition": "The prescription is actionable, but not all actions that are implied by it have occurred yet."
+							}
+					]
+			}
+			
+			Keterangan :
+			Data yang harus ditambahkan pada API ini dapat dilihat pada link ini https://www.hl7.org/fhir/valueset-medication-request-status.html
+		
+
+	e. put
+		Method : PUT
+		Url format : host:port/{apikey}/medication-request-status/{id}
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/medication-request-status/100
+		body:
+			{
+				"code" : "active",
+				"display" : "Active",
+				"definition" : "The prescription is 'actionable', but not all actions that are implied by it have occurred yet."
+			}
+			
+		response : 
+			{
+					"err_code": 0,
+					"err_msg": "Medication Request Status has been update.",
+					"data": [
+							{
+									"id": "100",
+									"code": "active",
+									"display": "Active",
+									"definition": "The prescription is actionable, but not all actions that are implied by it have occurred yet."
+							}
+					]
+			}
+		
+88.   medication-request-intent
+	a. get all data
+		Method : GET 
+		Url format : host:port/{apikey}/medication-request-intent
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/medication-request-intent
+		
+	b. get by id
+		Method : GET
+		Url format : host:port/{apikey}/medication-request-intent/{id}
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/medication-request-intent/130
+	
+	c. Get data by code
+		Method : GET
+		Url format : host:port/{apikey}/medication-request-intent/code/{code}
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/medication-request-intent/code/proposal
+		
+	d. Add 
+		Method : POST
+		Url format : host:port/{apikey}/medication-request-intent
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/medication-request-intent
+		body : 
+			{
+				"code" : "proposal",
+				"display" : "Proposal",
+				"definition" : "The request is a suggestion made by someone/something that doesn't have an intention to ensure it occurs and without providing an authorization to act"
+			}
+			
+		response : 
+			{
+					"err_code": 0,
+					"err_msg": "Medication Request Intent has been add.",
+					"data": [
+							{
+									"id": "100",
+									"code": "proposal",
+									"display": "Proposal",
+									"definition": "The request is a suggestion made by someone/something that doesnt have an intention to ensure it occurs and without providing an authorization to act"
+							}
+					]
+			}
+			
+			Keterangan :
+			Data yang harus ditambahkan pada API ini dapat dilihat pada link ini https://www.hl7.org/fhir/valueset-medication-request-intent.html
+		
+
+	e. put
+		Method : PUT
+		Url format : host:port/{apikey}/medication-request-intent/{id}
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/medication-request-intent/100
+		body:
+			{
+				"code" : "proposal",
+				"display" : "Proposal",
+				"definition" : "The request is a suggestion made by someone/something that doesn't have an intention to ensure it occurs and without providing an authorization to act"
+			}
+			
+		response : 
+			{
+					"err_code": 0,
+					"err_msg": "Medication Request Intent has been update.",
+					"data": [
+							{
+									"id": "100",
+									"code": "proposal",
+									"display": "Proposal",
+									"definition": "The request is a suggestion made by someone/something that doesnt have an intention to ensure it occurs and without providing an authorization to act"
+							}
+					]
+			}
+		
+89.   medication-request-category
+	a. get all data
+		Method : GET 
+		Url format : host:port/{apikey}/medication-request-category
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/medication-request-category
+		
+	b. get by id
+		Method : GET
+		Url format : host:port/{apikey}/medication-request-category/{id}
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/medication-request-category/130
+	
+	c. Get data by code
+		Method : GET
+		Url format : host:port/{apikey}/medication-request-category/code/{code}
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/medication-request-category/code/inpatient
+		
+	d. Add 
+		Method : POST
+		Url format : host:port/{apikey}/medication-request-category
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/medication-request-category
+		body : 
+			{
+				"code" : "inpatient",
+				"display" : "Inpatient",
+				"definition" : "Includes orders for medications to be administered or consumed in an inpatient or acute care setting"
+			}
+			
+		response : 
+			{
+					"err_code": 0,
+					"err_msg": "Medication Request Category has been add.",
+					"data": [
+							{
+									"id": "100",
+									"code": "inpatient",
+									"display": "Inpatient",
+									"definition": "Includes orders for medications to be administered or consumed in an inpatient or acute care setting"
+							}
+					]
+			}
+			
+			Keterangan :
+			Data yang harus ditambahkan pada API ini dapat dilihat pada link ini https://www.hl7.org/fhir/valueset-medication-request-category.html
+		
+	e. put
+		Method : PUT
+		Url format : host:port/{apikey}/medication-request-category/{id}
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/medication-request-category/100
+		body:
+			{
+				"code" : "inpatient",
+				"display" : "Inpatient",
+				"definition" : "Includes orders for medications to be administered or consumed in an inpatient or acute care setting"
+			}
+			
+		response : 
+			{
+					"err_code": 0,
+					"err_msg": "Medication Request Category has been update.",
+					"data": [
+							{
+									"id": "100",
+									"code": "inpatient",
+									"display": "Inpatient",
+									"definition": "Includes orders for medications to be administered or consumed in an inpatient or acute care setting"
+							}
+					]
+			}
+						
+90.  medication-request-priority
+	a. get all data
+		Method : GET 
+		Url format : host:port/{apikey}/medication-request-priority
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/medication-request-priority
+		
+	b. get by id
+		Method : GET
+		Url format : host:port/{apikey}/medication-request-priority/{id}
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/medication-request-priority/130
+	
+	c. Get data by code
+		Method : GET
+		Url format : host:port/{apikey}/medication-request-priority/code/{code}
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/medication-request-priority/code/ampoule
+		
+	d. Add 
+		Method : POST
+		Url format : host:port/{apikey}/medication-request-priority
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/medication-request-priority
+		body : 
+			{
+				"code" : "routine",
+				"display" : "Routine",
+				"definition" : "The order has a normal priority."
+			}
+			
+		response : 
+			{
+					"err_code": 0,
+					"err_msg": "Medication Request Priority has been add.",
+					"data": [
+							{
+									"id": "100",
+									"code": "routine",
+									"display": "Routine",
+									"definition": "The order has a normal priority."
+							}
+					]
+			}
+			
+			Keterangan :
+			Data yang harus ditambahkan pada API ini dapat dilihat pada link ini https://www.hl7.org/fhir/valueset-medication-request-priority.html
+		
+
+	e. put
+		Method : PUT
+		Url format : host:port/{apikey}/medication-request-priority/{id}
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/medication-request-priority/100
+		body:
+			{
+				"code" : "routine",
+				"display" : "Routine",
+				"definition" : "The order has a normal priority."
+			}
+			
+		response : 
+			{
+					"err_code": 0,
+					"err_msg": "Medication Request Priority has been update.",
+					"data": [
+							{
+									"id": "100",
+									"code": "routine",
+									"display": "Routine",
+									"definition": "The order has a normal priority."
+							}
+					]
+			}
+						
+91.   medication-codes
+	a. get all data
+		Method : GET 
+		Url format : host:port/{apikey}/medication-codes
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/medication-codes
+		
+	b. get by id
+		Method : GET
+		Url format : host:port/{apikey}/medication-codes/{id}
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/medication-codes/130
+	
+	c. Get data by code
+		Method : GET
+		Url format : host:port/{apikey}/medication-codes/code/{code}
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/medication-codes/code/261000
+		
+	d. Add 
+		Method : POST
+		Url format : host:port/{apikey}/medication-codes
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/medication-codes
+		body : 
+			{
+				"code" : "261000",
+				"display" : "Codeine phosphate",
+				"definition" : ""
+			}
+			
+		response : 
+			{
+					"err_code": 0,
+					"err_msg": "Medication Codes has been add.",
+					"data": [
+							{
+									"id": "100",
+									"code": "261000",
+									"display": "Codeine phosphate",
+									"definition": "null"
+							}
+					]
+			}
+			
+			Keterangan :
+			Data yang harus ditambahkan pada API ini dapat dilihat pada link ini https://www.hl7.org/fhir/valueset-medication-codes.html
+		
+
+	e. put
+		Method : PUT
+		Url format : host:port/{apikey}/medication-codes/{id}
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/medication-codes/100
+		body:
+			{
+				"code" : "261000",
+				"display" : "Codeine phosphate",
+				"definition" : ""
+			}
+			
+		response : 
+			{
+					"err_code": 0,
+					"err_msg": "Medication Codes has been update.",
+					"data": [
+							{
+									"id": "100",
+									"code": "261000",
+									"display": "Codeine phosphate",
+									"definition": "null"
+							}
+					]
+			}
+						
+92.   substance-admin-substitution-reason
+	a. get all data
+		Method : GET 
+		Url format : host:port/{apikey}/substance-admin-substitution-reason
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/substance-admin-substitution-reason
+		
+	b. get by id
+		Method : GET
+		Url format : host:port/{apikey}/substance-admin-substitution-reason/{id}
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/substance-admin-substitution-reason/130
+	
+	c. Get data by code
+		Method : GET
+		Url format : host:port/{apikey}/substance-admin-substitution-reason/code/{code}
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/substance-admin-substitution-reason/code/CT
+		
+	d. Add 
+		Method : POST
+		Url format : host:port/{apikey}/substance-admin-substitution-reason
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/substance-admin-substitution-reason
+		body : 
+			{
+				"code" : "CT",
+				"display" : "continuing therapy",
+				"definition" : "Indicates that the decision to substitute or to not substitute was driven by a desire to maintain consistency with a pre-existing therapy. I.e. The performer provided the same item/service as had been previously provided rather than providing exactly what was ordered, or rather than substituting with a lower-cost equivalent."
+			}
+			
+		response : 
+			{
+					"err_code": 0,
+					"err_msg": "Substance Admin Substitution Reason has been add.",
+					"data": [
+							{
+									"id": "100",
+									"code": "CT",
+									"display": "continuing therapy",
+									"definition": "Indicates that the decision to substitute or to not substitute was driven by a desire to maintain consistency with a pre-existing therapy. I.e. The performer provided the same item/service as had been previously provided rather than providing exactly what was ordered, or rather than substituting with a lower-cost equivalent."
+							}
+					]
+			}
+			
+			Keterangan :
+			Data yang harus ditambahkan pada API ini dapat dilihat pada link ini https://www.hl7.org/fhir/v3/SubstanceAdminSubstitutionReason/vs.html
+		
+
+	e. put
+		Method : PUT
+		Url format : host:port/{apikey}/substance-admin-substitution-reason/{id}
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/substance-admin-substitution-reason/100
+		body:
+			{
+				"code" : "CT",
+				"display" : "continuing therapy",
+				"definition" : "Indicates that the decision to substitute or to not substitute was driven by a desire to maintain consistency with a pre-existing therapy. I.e. The performer provided the same item/service as had been previously provided rather than providing exactly what was ordered, or rather than substituting with a lower-cost equivalent."
+			}
+			
+		response : 
+			{
+					"err_code": 0,
+					"err_msg": "Substance Admin Substitution Reason has been update.",
+					"data": [
+							{
+									"id": "100",
+									"code": "CT",
+									"display": "continuing therapy",
+									"definition": "Indicates that the decision to substitute or to not substitute was driven by a desire to maintain consistency with a pre-existing therapy. I.e. The performer provided the same item/service as had been previously provided rather than providing exactly what was ordered, or rather than substituting with a lower-cost equivalent."
+							}
+					]
+			}
+						
+93. medication-dispense-status
+	a. get all data
+		Method : GET 
+		Url format : host:port/{apikey}/medication-dispense-status
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/medication-dispense-status
+		
+	b. get by id
+		Method : GET
+		Url format : host:port/{apikey}/medication-dispense-status/{id}
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/medication-dispense-status/130
+	
+	c. Get data by code
+		Method : GET
+		Url format : host:port/{apikey}/medication-dispense-status/code/{code}
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/medication-dispense-status/code/in-progress
+		
+	d. Add 
+		Method : POST
+		Url format : host:port/{apikey}/medication-dispense-status
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/medication-dispense-status
+		body : 
+			{
+				"code" : "in-progress",
+				"display" : "In Progress",
+				"definition" : "The dispense has started but has not yet completed."
+			}
+			
+		response : 
+			{
+					"err_code": 0,
+					"err_msg": "Medication Dispense Status has been add.",
+					"data": [
+							{
+									"id": "100",
+									"code": "in-progress",
+									"display": "In Progress",
+									"definition": "The dispense has started but has not yet completed."
+							}
+					]
+			}
+			
+			Keterangan :
+			Data yang harus ditambahkan pada API ini dapat dilihat pada link ini https://www.hl7.org/fhir/valueset-medication-dispense-status.html
+		
+
+	e. put
+		Method : PUT
+		Url format : host:port/{apikey}/medication-dispense-status/{id}
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/medication-dispense-status/100
+		body:
+			{
+				"code" : "in-progress",
+				"display" : "In Progress",
+				"definition" : "The dispense has started but has not yet completed."
+			}
+			
+		response : 
+			{
+					"err_code": 0,
+					"err_msg": "Medication Dispense Status has been update.",
+					"data": [
+							{
+									"id": "100",
+									"code": "in-progress",
+									"display": "In Progress",
+									"definition": "The dispense has started but has not yet completed."
+							}
+					]
+			}
+		
+94. medication-dispense-category
+	a. get all data
+		Method : GET 
+		Url format : host:port/{apikey}/medication-dispense-category
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/medication-dispense-category
+		
+	b. get by id
+		Method : GET
+		Url format : host:port/{apikey}/medication-dispense-category/{id}
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/medication-dispense-category/130
+	
+	c. Get data by code
+		Method : GET
+		Url format : host:port/{apikey}/medication-dispense-category/code/{code}
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/medication-dispense-category/code/inpatient
+		
+	d. Add 
+		Method : POST
+		Url format : host:port/{apikey}/medication-dispense-category
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/medication-dispense-category
+		body : 
+			{
+				"code" : "inpatient",
+				"display" : "Inpatient",
+				"definition" : "Includes dispenses for medications to be administered or consumed in an inpatient or acute care setting"
+			}
+			
+		response : 
+			{
+					"err_code": 0,
+					"err_msg": "Medication Dispense Category has been add.",
+					"data": [
+							{
+									"id": "100",
+									"code": "inpatient",
+									"display": "Inpatient",
+									"definition": "Includes dispenses for medications to be administered or consumed in an inpatient or acute care setting"
+							}
+					]
+			}
+			
+			Keterangan :
+			Data yang harus ditambahkan pada API ini dapat dilihat pada link ini https://www.hl7.org/fhir/valueset-medication-dispense-category.html
+		
+
+	e. put
+		Method : PUT
+		Url format : host:port/{apikey}/medication-dispense-category/{id}
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/medication-dispense-category/100
+		body:
+			{
+				"code" : "inpatient",
+				"display" : "Inpatient",
+				"definition" : "Includes dispenses for medications to be administered or consumed in an inpatient or acute care setting"
+			}
+			
+		response : 
+			{
+					"err_code": 0,
+					"err_msg": "Medication Dispense Category has been update.",
+					"data": [
+							{
+									"id": "100",
+									"code": "inpatient",
+									"display": "Inpatient",
+									"definition": "Includes dispenses for medications to be administered or consumed in an inpatient or acute care setting"
+							}
+					]
+			}	
+
+95.  act-pharmacy-supply-type
+	a. get all data
+		Method : GET 
+		Url format : host:port/{apikey}/act-pharmacy-supply-type
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/act-pharmacy-supply-type
+		
+	b. get by id
+		Method : GET
+		Url format : host:port/{apikey}/act-pharmacy-supply-type/{id}
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/act-pharmacy-supply-type/130
+	
+	c. Get data by code
+		Method : GET
+		Url format : host:port/{apikey}/act-pharmacy-supply-type/code/{code}
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/act-pharmacy-supply-type/code/DF
+		
+	d. Add 
+		Method : POST
+		Url format : host:port/{apikey}/act-pharmacy-supply-type
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/act-pharmacy-supply-type
+		body : 
+			{
+				"code" : "DF",
+				"display" : "Daily Fill",
+				"definition" : "A fill providing sufficient supply for one day"
+			}
+			
+		response : 
+			{
+					"err_code": 0,
+					"err_msg": "Act Pharmacy Supply Type has been add.",
+					"data": [
+							{
+									"id": "100",
+									"code": "DF",
+									"display": "Daily Fill",
+									"definition": "A fill providing sufficient supply for one day"
+							}
+					]
+			}
+			
+			Keterangan :
+			Data yang harus ditambahkan pada API ini dapat dilihat pada link ini https://www.hl7.org/fhir/v3/ActPharmacySupplyType/vs.html
+		
+	e. put
+		Method : PUT
+		Url format : host:port/{apikey}/act-pharmacy-supply-type/{id}
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/act-pharmacy-supply-type/100
+		body:
+			{
+				"code" : "DF",
+				"display" : "Daily Fill",
+				"definition" : "A fill providing sufficient supply for one day"
+			}
+			
+		response : 
+			{
+					"err_code": 0,
+					"err_msg": "Act Pharmacy Supply Type has been update.",
+					"data": [
+							{
+									"id": "100",
+									"code": "DF",
+									"display": "Daily Fill",
+									"definition": "A fill providing sufficient supply for one day"
+							}
+					]
+			}
+		
+96. act-substance-admin-substitution-code
+	a. get all data
+		Method : GET 
+		Url format : host:port/{apikey}/act-substance-admin-substitution-code
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/act-substance-admin-substitution-code
+		
+	b. get by id
+		Method : GET
+		Url format : host:port/{apikey}/act-substance-admin-substitution-code/{id}
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/act-substance-admin-substitution-code/130
+	
+	c. Get data by code
+		Method : GET
+		Url format : host:port/{apikey}/act-substance-admin-substitution-code/code/{code}
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/act-substance-admin-substitution-code/code/ampoule
+		
+	d. Add 
+		Method : POST
+		Url format : host:port/{apikey}/act-substance-admin-substitution-code
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/act-substance-admin-substitution-code
+		body : 
+			{
+				"code" : "E",
+				"display" : "equivalent",
+				"definition" : "Description: Substitution occurred or is permitted with another bioequivalent and therapeutically equivalent product."
+			}
+			
+		response : 
+			{
+					"err_code": 0,
+					"err_msg": "Act Substance Admin Substitution Code has been add.",
+					"data": [
+							{
+									"id": "100",
+									"code": "E",
+									"display": "equivalent",
+									"definition": "Description Substitution occurred or is permitted with another bioequivalent and therapeutically equivalent product."
+							}
+					]
+			}
+			
+			Keterangan :
+			Data yang harus ditambahkan pada API ini dapat dilihat pada link ini https://www.hl7.org/fhir/v3/ActSubstanceAdminSubstitutionCode/vs.html
+		
+
+	e. put
+		Method : PUT
+		Url format : host:port/{apikey}/act-substance-admin-substitution-code/{id}
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/act-substance-admin-substitution-code/100
+		body:
+			{
+				"code" : "E",
+				"display" : "equivalent",
+				"definition" : "Description: Substitution occurred or is permitted with another bioequivalent and therapeutically equivalent product."
+			}	
+			
+		response : 
+			{
+					"err_code": 0,
+					"err_msg": "Act Substance Admin Substitution Code has been update.",
+					"data": [
+							{
+									"id": "100",
+									"code": "E",
+									"display": "equivalent",
+									"definition": "Description Substitution occurred or is permitted with another bioequivalent and therapeutically equivalent product."
+							}
+					]
+			}
+
+97.  act-substance-admin-substitution-reason
+	a. get all data
+		Method : GET 
+		Url format : host:port/{apikey}/act-substance-admin-substitution-reason
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/act-substance-admin-substitution-reason
+		
+	b. get by id
+		Method : GET
+		Url format : host:port/{apikey}/act-substance-admin-substitution-reason/{id}
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/act-substance-admin-substitution-reason/130
+	
+	c. Get data by code
+		Method : GET
+		Url format : host:port/{apikey}/act-substance-admin-substitution-reason/code/{code}
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/act-substance-admin-substitution-reason/code/ampoule
+		
+	d. Add 
+		Method : POST
+		Url format : host:port/{apikey}/act-substance-admin-substitution-reason
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/act-substance-admin-substitution-reason
+		body : 
+			{
+				"code" : "CT",
+				"display" : "continuing therapy",
+				"definition" : "Indicates that the decision to substitute or to not substitute was driven by a desire to maintain consistency with a pre-existing therapy. I.e. The performer provided the same item/service as had been previously provided rather than providing exactly what was ordered, or rather than substituting with a lower-cost equivalent."
+			}
+			
+		response : 
+			{
+					"err_code": 0,
+					"err_msg": "Act Substance Admin Substitution Reason has been add.",
+					"data": [
+							{
+									"id": "100",
+									"code": "CT",
+									"display": "continuing therapy",
+									"definition": "Indicates that the decision to substitute or to not substitute was driven by a desire to maintain consistency with a pre-existing therapy. I.e. The performer provided the same item/service as had been previously provided rather than providing exactly what was ordered, or rather than substituting with a lower-cost equivalent."
+							}
+					]
+			}
+			
+			Keterangan :
+			Data yang harus ditambahkan pada API ini dapat dilihat pada link ini https://www.hl7.org/fhir/v3/SubstanceAdminSubstitutionReason/vs.html
+
+	e. put
+		Method : PUT
+		Url format : host:port/{apikey}/act-substance-admin-substitution-reason/{id}
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/act-substance-admin-substitution-reason/100
+		body:
+			{
+				"code" : "CT",
+				"display" : "continuing therapy",
+				"definition" : "Indicates that the decision to substitute or to not substitute was driven by a desire to maintain consistency with a pre-existing therapy. I.e. The performer provided the same item/service as had been previously provided rather than providing exactly what was ordered, or rather than substituting with a lower-cost equivalent."
+			}
+			
+		response : 
+			{
+					"err_code": 0,
+					"err_msg": "Act Substance Admin Substitution Reason has been update.",
+					"data": [
+							{
+									"id": "100",
+									"code": "CT",
+									"display": "continuing therapy",
+									"definition": "Indicates that the decision to substitute or to not substitute was driven by a desire to maintain consistency with a pre-existing therapy. I.e. The performer provided the same item/service as had been previously provided rather than providing exactly what was ordered, or rather than substituting with a lower-cost equivalent."
+							}
+					]
+			}
+
+98.   medication-admin-status
+	a. get all data
+		Method : GET 
+		Url format : host:port/{apikey}/medication-admin-status
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/medication-admin-status
+		
+	b. get by id
+		Method : GET
+		Url format : host:port/{apikey}/medication-admin-status/{id}
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/medication-admin-status/130
+	
+	c. Get data by code
+		Method : GET
+		Url format : host:port/{apikey}/medication-admin-status/code/{code}
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/medication-admin-status/code/ampoule
+		
+	d. Add 
+		Method : POST
+		Url format : host:port/{apikey}/medication-admin-status
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/medication-admin-status
+		body : 
+			{
+				"code" : "in-progress",
+				"display" : "In Progress",
+				"definition" : "The administration has started but has not yet completed."
+			}
+			
+		response : 
+			{
+					"err_code": 0,
+					"err_msg": "Medication Admin Status has been add.",
+					"data": [
+							{
+									"id": "100",
+									"code": "in-progress",
+									"display": "In Progress",
+									"definition": "The administration has started but has not yet completed."
+							}
+					]
+			}
+			
+			Keterangan :
+			Data yang harus ditambahkan pada API ini dapat dilihat pada link ini https://www.hl7.org/fhir/valueset-medication-admin-status.html
+		
+
+	e. put
+		Method : PUT
+		Url format : host:port/{apikey}/medication-admin-status/{id}
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/medication-admin-status/100
+		body:
+			{
+				"code" : "in-progress",
+				"display" : "In Progress",
+				"definition" : "The administration has started but has not yet completed."
+			}
+			
+		response : 
+			{
+					"err_code": 0,
+					"err_msg": "Medication Admin Status has been update.",
+					"data": [
+							{
+									"id": "100",
+									"code": "in-progress",
+									"display": "In Progress",
+									"definition": "The administration has started but has not yet completed."
+							}
+					]
+			}
+
+99.   medication-admin-category
+	a. get all data
+		Method : GET 
+		Url format : host:port/{apikey}/medication-admin-category
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/medication-admin-category
+		
+	b. get by id
+		Method : GET
+		Url format : host:port/{apikey}/medication-admin-category/{id}
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/medication-admin-category/130
+	
+	c. Get data by code
+		Method : GET
+		Url format : host:port/{apikey}/medication-admin-category/code/{code}
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/medication-admin-category/code/ampoule
+		
+	d. Add 
+		Method : POST
+		Url format : host:port/{apikey}/medication-admin-category
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/medication-admin-category
+		body : 
+			{
+				"code" : "inpatient",
+				"display" : "Inpatient",
+				"definition" : "Includes administrations in an inpatient or acute care setting"
+			}
+			
+		response : 
+			{
+					"err_code": 0,
+					"err_msg": "Medication Admin Category has been add.",
+					"data": [
+							{
+									"id": "100",
+									"code": "inpatient",
+									"display": "Inpatient",
+									"definition": "Includes administrations in an inpatient or acute care setting"
+							}
+					]
+			}
+			
+			Keterangan :
+			Data yang harus ditambahkan pada API ini dapat dilihat pada link ini https://www.hl7.org/fhir/valueset-medication-admin-category.html
+		
+
+	e. put
+		Method : PUT
+		Url format : host:port/{apikey}/medication-admin-category/{id}
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/medication-admin-category/100
+		body:
+			{
+				"code" : "inpatient",
+				"display" : "Inpatient",
+				"definition" : "Includes administrations in an inpatient or acute care setting"
+			}
+			
+		response : 
+			{
+					"err_code": 0,
+					"err_msg": "Medication Category has been update.",
+					"data": [
+							{
+									"id": "100",
+									"code": "inpatient",
+									"display": "Inpatient",
+									"definition": "Includes administrations in an inpatient or acute care setting"
+							}
+					]
+			}													
+																
+100.  reason-medication-not-given-codes
+	a. get all data
+		Method : GET 
+		Url format : host:port/{apikey}/reason-medication-not-given-codes
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/reason-medication-not-given-codes
+		
+	b. get by id
+		Method : GET
+		Url format : host:port/{apikey}/reason-medication-not-given-codes/{id}
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/reason-medication-not-given-codes/130
+	
+	c. Get data by code
+		Method : GET
+		Url format : host:port/{apikey}/reason-medication-not-given-codes/code/{code}
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/reason-medication-not-given-codes/code/134396000
+		
+	d. Add 
+		Method : POST
+		Url format : host:port/{apikey}/reason-medication-not-given-codes
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/reason-medication-not-given-codes
+		body : 
+			{
+				"code" : "134396000",
+				"display" : "Statin declined",
+				"definition" : ""
+			}
+			
+		response : 
+			{
+					"err_code": 0,
+					"err_msg": "Reason Medication Not Given Codes has been add.",
+					"data": [
+							{
+									"id": "100",
+									"code": "134396000",
+									"display": "Statin declined",
+									"definition": "null"
+							}
+					]
+			}
+			
+			Keterangan :
+			Data yang harus ditambahkan pada API ini dapat dilihat pada link ini https://www.hl7.org/fhir/valueset-reason-medication-not-given-codes.html
+		
+
+	e. put
+		Method : PUT
+		Url format : host:port/{apikey}/reason-medication-not-given-codes/{id}
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/reason-medication-not-given-codes/100
+		body:
+			{
+				"code" : "134396000",
+				"display" : "Statin declined",
+				"definition" : ""
+			}
+			
+		response : 
+			{
+					"err_code": 0,
+					"err_msg": "Reason Medication Not Given Codes has been update.",
+					"data": [
+							{
+									"id": "100",
+									"code": "134396000",
+									"display": "Statin declined",
+									"definition": "null"
+							}
+					]
+			}
+																																
+101.  reason-medication-given-codes
+	a. get all data
+		Method : GET 
+		Url format : host:port/{apikey}/reason-medication-given-codes
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/reason-medication-given-codes
+		
+	b. get by id
+		Method : GET
+		Url format : host:port/{apikey}/reason-medication-given-codes/{id}
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/reason-medication-given-codes/130
+	
+	c. Get data by code
+		Method : GET
+		Url format : host:port/{apikey}/reason-medication-given-codes/code/{code}
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/reason-medication-given-codes/code/a
+		
+	d. Add 
+		Method : POST
+		Url format : host:port/{apikey}/reason-medication-given-codes
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/reason-medication-given-codes
+		body : 
+			{
+				"code" : "a",
+				"display" : "None",
+				"definition" : "No reason known."
+			}
+			
+		response : 
+			{
+					"err_code": 0,
+					"err_msg": "Reason Medication Given Codes has been add.",
+					"data": [
+							{
+									"id": "100",
+									"code": "a",
+									"display": "None",
+									"definition": "No reason known."
+							}
+					]
+			}
+			
+			Keterangan :
+			Data yang harus ditambahkan pada API ini dapat dilihat pada link ini https://www.hl7.org/fhir/valueset-reason-medication-given-codes.html
+
+	e. put
+		Method : PUT
+		Url format : host:port/{apikey}/reason-medication-given-codes/{id}
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/reason-medication-given-codes/100
+		body:
+			{
+				"code" : "a",
+				"display" : "None",
+				"definition" : "No reason known."
+			}
+			
+		response : 
+			{
+					"err_code": 0,
+					"err_msg": "Reason Medication Given Codes has been update.",
+					"data": [
+							{
+									"id": "100",
+									"code": "a",
+									"display": "None",
+									"definition": "No reason known."
+							}
+					]
+			}							
+102.  approach-site-codes
+	a. get all data
+		Method : GET 
+		Url format : host:port/{apikey}/approach-site-codes
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/approach-site-codes
+		
+	b. get by id
+		Method : GET
+		Url format : host:port/{apikey}/approach-site-codes/{id}
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/approach-site-codes/130
+	
+	c. Get data by code
+		Method : GET
+		Url format : host:port/{apikey}/approach-site-codes/code/{code}
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/approach-site-codes/code/106004
+		
+	d. Add 
+		Method : POST
+		Url format : host:port/{apikey}/approach-site-codes
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/approach-site-codes
+		body : 
+			{
+				"code" : "106004",
+				"display" : "Posterior carpal region",
+				"definition" : ""
+			}
+
+		response : 
+			{
+					"err_code": 0,
+					"err_msg": "Approach Site Codes has been add.",
+					"data": [
+							{
+									"id": "100",
+									"code": "106004",
+									"display": "Posterior carpal region",
+									"definition": "null"
+							}
+					]
+			}
+			
+			Keterangan :
+			Data yang harus ditambahkan pada API ini dapat dilihat pada link ini https://www.hl7.org/fhir/valueset-approach-site-codes.html
+		
+
+	e. put
+		Method : PUT
+		Url format : host:port/{apikey}/approach-site-codes/{id}
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/approach-site-codes/100
+		body:
+			{
+				"code" : "106004",
+				"display" : "Posterior carpal region",
+				"definition" : ""
+			}
+			
+		response : 
+			{
+					"err_code": 0,
+					"err_msg": "Approach Site Codes has been update.",
+					"data": [
+							{
+									"id": "100",
+									"code": "106004",
+									"display": "Posterior carpal region",
+									"definition": "null"
+							}
+					]
+			}
+										
+103.  administration-method-codes
+	a. get all data
+		Method : GET 
+		Url format : host:port/{apikey}/administration-method-codes
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/administration-method-codes
+		
+	b. get by id
+		Method : GET
+		Url format : host:port/{apikey}/administration-method-codes/{id}
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/administration-method-codes/130
+	
+	c. Get data by code
+		Method : GET
+		Url format : host:port/{apikey}/administration-method-codes/code/{code}
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/administration-method-codes/code/417924000
+		
+	d. Add 
+		Method : POST
+		Url format : host:port/{apikey}/administration-method-codes
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/administration-method-codes
+		body : 
+			{
+				"code" : "417924000",
+				"display" : "Apply",
+				"definition" : ""
+			}
+			
+		response : 
+			{
+					"err_code": 0,
+					"err_msg": "Administration Method Codes has been add.",
+					"data": [
+							{
+									"id": "100",
+									"code": "417924000",
+									"display": "Apply",
+									"definition": "null"
+							}
+					]
+			}
+			
+			Keterangan :
+			Data yang harus ditambahkan pada API ini dapat dilihat pada link ini https://www.hl7.org/fhir/valueset-administration-method-codes.html
+		
+
+	e. put
+		Method : PUT
+		Url format : host:port/{apikey}/administration-method-codes/{id}
+		example : 192.168.1.90:2008/21494c4a05f01c2d4309b420e6387f4c/administration-method-codes/100
+		body:
+			{
+				"code" : "417924000",
+				"display" : "Apply",
+				"definition" : ""
+			}
+			
+		response : 
+			{
+					"err_code": 0,
+					"err_msg": "Administration Method Codes has been update.",
+					"data": [
+							{
+									"id": "100",
+									"code": "417924000",
+									"display": "Apply",
+									"definition": "null"
+							}
+					]
+			}
+										

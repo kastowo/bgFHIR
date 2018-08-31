@@ -157,7 +157,7 @@ var controller = {
 			var encounter_id = req.query.encounter_id;
 			var episode_of_care_id = req.query.episode_of_care_id;
 			var flag_id = req.query.flag_id;
-			
+			var immunization_id = req.query.immunization_id;
 
 			//susun query
 			var condition = "";
@@ -183,15 +183,15 @@ var controller = {
 			}
 
 			if(typeof organizationId !== 'undefined' && organizationId !== ""){
-        condition += "org.organization_id = '" + organizationId + "' AND,";  
+        condition += "organization_id = '" + organizationId + "' AND,";  
       }
 			
 			if(typeof endpointId !== 'undefined' && endpointId !== ""){
-        condition += "i.endpoint_id = '" + endpointId + "' AND,";  
+        condition += "endpoint_id = '" + endpointId + "' AND,";  
       }
 			
 			if(typeof locationId !== 'undefined' && locationId !== ""){
-        condition += "i.location_id = '" + locationId + "' AND,";  
+        condition += "location_id = '" + locationId + "' AND,";  
       }
 			
 			if(typeof practitionerId !== 'undefined' && practitionerId !== ""){
@@ -224,6 +224,10 @@ var controller = {
 			
 			if(typeof flag_id !== 'undefined' && flag_id !== ""){
         condition += "flag_id = '" + flag_id + "' AND,";  
+      }
+			
+			if(typeof immunization_id !== 'undefined' && immunization_id !== ""){
+        condition += "immunization_id = '" + immunization_id + "' AND,";  
       }
 
 			if (condition == "") {
@@ -5731,7 +5735,1155 @@ var controller = {
       },function(e){
         res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "getDeviceKindCode"});
       });
-    }
+    },
+		
+		immunizationStatus	: function getImmunizationStatus(req, res){
+			_id = req.params._id;
+
+      if(_id == 0){
+        condition = "";
+      }else{
+        condition = "WHERE id = "+ _id;
+      }
+
+      var query = "SELECT id, code, display, definition FROM baciro_fhir.IMMUNIZATION_STATUS " + condition;
+      console.log(query);
+      db.query(query,function(dataJson){
+        rez = lowercaseObject(dataJson);
+        res.json({"err_code":0,"data":rez});
+      },function(e){
+        res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "getImmunizationStatus"});
+      });
+    },
+		immunizationStatusCode: function getImmunizationStatusCode(req, res){
+      code = req.params.code;
+
+      var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.IMMUNIZATION_STATUS WHERE code = '" + code + "' ";
+      
+      db.query(query,function(dataJson){
+        rez = lowercaseObject(dataJson);
+        res.json({"err_code":0,"data":rez});
+      },function(e){
+        res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "getImmunizationStatusCode"});
+      });
+    },
+		vaccineCode	: function getVaccineCode(req, res){
+			_id = req.params._id;
+
+      if(_id == 0){
+        condition = "";
+      }else{
+        condition = "WHERE id = "+ _id;
+      }
+
+      var query = "SELECT id, code, system, display FROM baciro_fhir.VACCINE_CODE " + condition;
+      
+      db.query(query,function(dataJson){
+        rez = lowercaseObject(dataJson);
+        res.json({"err_code":0,"data":rez});
+      },function(e){
+        res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "getVaccineCode"});
+      });
+    },
+		vaccineCodeCode: function getVaccineCodeCode(req, res){
+      code = req.params.code;
+
+      var query = "SELECT id, code, system, display FROM BACIRO_FHIR.VACCINE_CODE WHERE code = '" + code + "' ";
+      console.log(query);
+      db.query(query,function(dataJson){
+        rez = lowercaseObject(dataJson);
+        res.json({"err_code":0,"data":rez});
+      },function(e){
+        res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "getVaccineCodeCode"});
+      });
+    },
+		immunizationOrigin	: function getImmunizationOrigin(req, res){
+			_id = req.params._id;
+
+      if(_id == 0){
+        condition = "";
+      }else{
+        condition = "WHERE id = "+ _id;
+      }
+
+      var query = "SELECT id, code, display, definition FROM baciro_fhir.IMMUNIZATION_ORIGIN " + condition;
+      
+      db.query(query,function(dataJson){
+        rez = lowercaseObject(dataJson);
+        res.json({"err_code":0,"data":rez});
+      },function(e){
+        res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "getImmunizationOrigin"});
+      });
+    },
+		immunizationOriginCode: function getImmunizationOriginCode(req, res){
+      code = req.params.code;
+
+      var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.IMMUNIZATION_ORIGIN WHERE code = '" + code + "' ";
+      
+      db.query(query,function(dataJson){
+        rez = lowercaseObject(dataJson);
+        res.json({"err_code":0,"data":rez});
+      },function(e){
+        res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "getImmunizationOriginCode"});
+      });
+    },
+		immunizationSite	: function getImmunizationSite(req, res){
+			_id = req.params._id;
+
+      if(_id == 0){
+        condition = "";
+      }else{
+        condition = "WHERE id = "+ _id;
+      }
+
+      var query = "SELECT id, code, display, definition FROM baciro_fhir.IMMUNIZATION_SITE " + condition;
+      
+      db.query(query,function(dataJson){
+        rez = lowercaseObject(dataJson);
+        res.json({"err_code":0,"data":rez});
+      },function(e){
+        res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "getImmunizationSite"});
+      });
+    },
+		immunizationSiteCode: function getImmunizationSiteCode(req, res){
+      code = req.params.code;
+
+      var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.IMMUNIZATION_SITE WHERE code = '" + code + "' ";
+      
+      db.query(query,function(dataJson){
+        rez = lowercaseObject(dataJson);
+        res.json({"err_code":0,"data":rez});
+      },function(e){
+        res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "getImmunizationSiteCode"});
+      });
+    },
+		immunizationRoute	: function getImmunizationRoute(req, res){
+			_id = req.params._id;
+
+      if(_id == 0){
+        condition = "";
+      }else{
+        condition = "WHERE id = "+ _id;
+      }
+
+      var query = "SELECT id, code, display, definition FROM baciro_fhir.IMMUNIZATION_ROUTE " + condition;
+      
+      db.query(query,function(dataJson){
+        rez = lowercaseObject(dataJson);
+        res.json({"err_code":0,"data":rez});
+      },function(e){
+        res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "getImmunizationRoute"});
+      });
+    },
+		immunizationRouteCode: function getImmunizationRouteCode(req, res){
+      code = req.params.code;
+
+      var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.IMMUNIZATION_ROUTE WHERE code = '" + code + "' ";
+      
+      db.query(query,function(dataJson){
+        rez = lowercaseObject(dataJson);
+        res.json({"err_code":0,"data":rez});
+      },function(e){
+        res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "getImmunizationRouteCode"});
+      });
+    },
+		immunizationRole	: function getImmunizationRole(req, res){
+			_id = req.params._id;
+
+      if(_id == 0){
+        condition = "";
+      }else{
+        condition = "WHERE id = "+ _id;
+      }
+
+      var query = "SELECT id, code, display FROM baciro_fhir.IMMUNIZATION_ROLE " + condition;
+      
+      db.query(query,function(dataJson){
+        rez = lowercaseObject(dataJson);
+        res.json({"err_code":0,"data":rez});
+      },function(e){
+        res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "getImmunizationRole"});
+      });
+    },
+		immunizationRoleCode: function getImmunizationRoleCode(req, res){
+      code = req.params.code;
+
+      var query = "SELECT id, code, display FROM BACIRO_FHIR.IMMUNIZATION_ROLE WHERE code = '" + code + "' ";
+      
+      db.query(query,function(dataJson){
+        rez = lowercaseObject(dataJson);
+        res.json({"err_code":0,"data":rez});
+      },function(e){
+        res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "getImmunizationRoleCode"});
+      });
+    },
+		immunizationReason	: function getImmunizationReason(req, res){
+			_id = req.params._id;
+
+      if(_id == 0){
+        condition = "";
+      }else{
+        condition = "WHERE id = "+ _id;
+      }
+
+      var query = "SELECT id, code, display FROM baciro_fhir.IMMUNIZATION_REASON " + condition;
+      
+      db.query(query,function(dataJson){
+        rez = lowercaseObject(dataJson);
+        res.json({"err_code":0,"data":rez});
+      },function(e){
+        res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "getImmunizationReason"});
+      });
+    },
+		immunizationReasonCode: function getImmunizationReasonCode(req, res){
+      code = req.params.code;
+
+      var query = "SELECT id, code, display FROM BACIRO_FHIR.IMMUNIZATION_REASON WHERE code = '" + code + "' ";
+      
+      db.query(query,function(dataJson){
+        rez = lowercaseObject(dataJson);
+        res.json({"err_code":0,"data":rez});
+      },function(e){
+        res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "getImmunizationReasonCode"});
+      });
+    },
+		noImmunizationReason	: function getNoImmunizationReason(req, res){
+			_id = req.params._id;
+
+      if(_id == 0){
+        condition = "";
+      }else{
+        condition = "WHERE id = "+ _id;
+      }
+
+      var query = "SELECT id, code, SYSTEM, display, definition FROM baciro_fhir.NO_IMMUNIZATION_REASON " + condition;
+      
+      db.query(query,function(dataJson){
+        rez = lowercaseObject(dataJson);
+        res.json({"err_code":0,"data":rez});
+      },function(e){
+        res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "getNoImmunizationReason"});
+      });
+    },
+		noImmunizationReasonCode: function getNoImmunizationReasonCode(req, res){
+      code = req.params.code;
+
+      var query = "SELECT id, code, SYSTEM, display, definition FROM BACIRO_FHIR.NO_IMMUNIZATION_REASON WHERE code = '" + code + "' ";
+      
+      db.query(query,function(dataJson){
+        rez = lowercaseObject(dataJson);
+        res.json({"err_code":0,"data":rez});
+      },function(e){
+        res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "getNoImmunizationReasonCode"});
+      });
+    },
+		vaccinationProtocolDoseTarget	: function getVaccinationProtocolDoseTarget(req, res){
+			_id = req.params._id;
+
+      if(_id == 0){
+        condition = "";
+      }else{
+        condition = "WHERE id = "+ _id;
+      }
+
+      var query = "SELECT id, code, display FROM baciro_fhir.VACCINATION_PROTOCOL_DOSE_TARGET " + condition;
+      
+      db.query(query,function(dataJson){
+        rez = lowercaseObject(dataJson);
+        res.json({"err_code":0,"data":rez});
+      },function(e){
+        res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "getVaccinationProtocolDoseTarget"});
+      });
+    },
+		vaccinationProtocolDoseTargetCode: function getVaccinationProtocolDoseTargetCode(req, res){
+      code = req.params.code;
+
+      var query = "SELECT id, code, display FROM BACIRO_FHIR.VACCINATION_PROTOCOL_DOSE_TARGET WHERE code = '" + code + "' ";
+      
+      db.query(query,function(dataJson){
+        rez = lowercaseObject(dataJson);
+        res.json({"err_code":0,"data":rez});
+      },function(e){
+        res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "getVaccinationProtocolDoseTargetCode"});
+      });
+    },
+		vaccinationProtocolDoseStatus	: function getVaccinationProtocolDoseStatus(req, res){
+			_id = req.params._id;
+
+      if(_id == 0){
+        condition = "";
+      }else{
+        condition = "WHERE id = "+ _id;
+      }
+
+      var query = "SELECT id, code, display, definition FROM baciro_fhir.VACCINATION_PROTOCOL_DOSE_STATUS " + condition;
+      
+      db.query(query,function(dataJson){
+        rez = lowercaseObject(dataJson);
+        res.json({"err_code":0,"data":rez});
+      },function(e){
+        res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "getVaccinationProtocolDoseStatus"});
+      });
+    },
+		vaccinationProtocolDoseStatusCode: function getVaccinationProtocolDoseStatusCode(req, res){
+      code = req.params.code;
+
+      var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.VACCINATION_PROTOCOL_DOSE_STATUS WHERE code = '" + code + "' ";
+      
+      db.query(query,function(dataJson){
+        rez = lowercaseObject(dataJson);
+        res.json({"err_code":0,"data":rez});
+      },function(e){
+        res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "getVaccinationProtocolDoseStatusCode"});
+      });
+    },
+		vaccinationProtocolDoseStatusReason	: function getVaccinationProtocolDoseStatusReason(req, res){
+			_id = req.params._id;
+
+      if(_id == 0){
+        condition = "";
+      }else{
+        condition = "WHERE id = "+ _id;
+      }
+
+      var query = "SELECT id, code, display, definition FROM baciro_fhir.VACCINATION_PROTOCOL_DOSE_STATUS_REASON " + condition;
+      
+      db.query(query,function(dataJson){
+        rez = lowercaseObject(dataJson);
+        res.json({"err_code":0,"data":rez});
+      },function(e){
+        res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "getVaccinationProtocolDoseStatusReason"});
+      });
+    },
+		vaccinationProtocolDoseStatusReasonCode: function getVaccinationProtocolDoseStatusReasonCode(req, res){
+      code = req.params.code;
+
+      var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.VACCINATION_PROTOCOL_DOSE_STATUS_REASON WHERE code = '" + code + "' ";
+      
+      db.query(query,function(dataJson){
+        rez = lowercaseObject(dataJson);
+        res.json({"err_code":0,"data":rez});
+      },function(e){
+        res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "getVaccinationProtocolDoseStatusReasonCode"});
+      });
+    },
+		immunizationRecommendationStatus	: function getImmunizationRecommendationStatus(req, res){
+			_id = req.params._id;
+
+      if(_id == 0){
+        condition = "";
+      }else{
+        condition = "WHERE id = "+ _id;
+      }
+
+      var query = "SELECT id, code, display, definition FROM baciro_fhir.IMMUNIZATION_RECOMMENDATION_STATUS " + condition;
+      
+      db.query(query,function(dataJson){
+        rez = lowercaseObject(dataJson);
+        res.json({"err_code":0,"data":rez});
+      },function(e){
+        res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "getImmunizationRecommendationStatus"});
+      });
+    },
+		immunizationRecommendationStatusCode: function getImmunizationRecommendationStatusCode(req, res){
+      code = req.params.code;
+
+      var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.IMMUNIZATION_RECOMMENDATION_STATUS WHERE code = '" + code + "' ";
+      
+      db.query(query,function(dataJson){
+        rez = lowercaseObject(dataJson);
+        res.json({"err_code":0,"data":rez});
+      },function(e){
+        res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "getImmunizationRecommendationStatusCode"});
+      });
+    },
+		immunizationRecommendationDateCriterion	: function getImmunizationRecommendationDateCriterion(req, res){
+			_id = req.params._id;
+
+      if(_id == 0){
+        condition = "";
+      }else{
+        condition = "WHERE id = "+ _id;
+      }
+
+      var query = "SELECT id, code, display, definition FROM baciro_fhir.IMMUNIZATION_RECOMMENDATION_DATE_CRITERION " + condition;
+      
+      db.query(query,function(dataJson){
+        rez = lowercaseObject(dataJson);
+        res.json({"err_code":0,"data":rez});
+      },function(e){
+        res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "getImmunizationRecommendationDateCriterion"});
+      });
+    },
+		immunizationRecommendationDateCriterionCode: function getImmunizationRecommendationDateCriterionCode(req, res){
+      code = req.params.code;
+
+      var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.IMMUNIZATION_RECOMMENDATION_DATE_CRITERION WHERE code = '" + code + "' ";
+      
+      db.query(query,function(dataJson){
+        rez = lowercaseObject(dataJson);
+        res.json({"err_code":0,"data":rez});
+      },function(e){
+        res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "getImmunizationRecommendationDateCriterionCode"});
+      });
+    },
+		immunizationRecommendationTargetDisease	: function getImmunizationRecommendationTargetDisease(req, res){
+			_id = req.params._id;
+
+      if(_id == 0){
+        condition = "";
+      }else{
+        condition = "WHERE id = "+ _id;
+      }
+
+      var query = "SELECT id, code, display FROM baciro_fhir.IMMUNIZATION_RECOMMENDATION_TARGET_DISEASE " + condition;
+      
+      db.query(query,function(dataJson){
+        rez = lowercaseObject(dataJson);
+        res.json({"err_code":0,"data":rez});
+      },function(e){
+        res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "getImmunizationRecommendationTargetDisease"});
+      });
+    },
+		immunizationRecommendationTargetDiseaseCode: function getImmunizationRecommendationTargetDiseaseCode(req, res){
+      code = req.params.code;
+
+      var query = "SELECT id, code, display FROM BACIRO_FHIR.IMMUNIZATION_RECOMMENDATION_TARGET_DISEASE WHERE code = '" + code + "' ";
+      
+      db.query(query,function(dataJson){
+        rez = lowercaseObject(dataJson);
+        res.json({"err_code":0,"data":rez});
+      },function(e){
+        res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "getImmunizationRecommendationTargetDiseaseCode"});
+      });
+    },
+		
+		medicationStatus	: function getMedicationStatus(req, res){
+			_id = req.params._id;
+
+      if(_id == 0){
+        condition = "";
+      }else{
+        condition = "WHERE id = "+ _id;
+      }
+
+      var query = "SELECT id, code, display, definition FROM baciro_fhir.MEDICATION_STATUS " + condition;
+      
+      db.query(query,function(dataJson){
+        rez = lowercaseObject(dataJson);
+        res.json({"err_code":0,"data":rez});
+      },function(e){
+        res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "getMedicationStatus"});
+      });
+    },
+		medicationStatusCode: function getMedicationStatusCode(req, res){
+      code = req.params.code;
+
+      var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.MEDICATION_STATUS WHERE code = '" + code + "' ";
+      
+      db.query(query,function(dataJson){
+        rez = lowercaseObject(dataJson);
+        res.json({"err_code":0,"data":rez});
+      },function(e){
+        res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "getMedicationStatusCode"});
+      });
+    },
+		medicationFormCodes	: function getMedicationFormCodes(req, res){
+			_id = req.params._id;
+
+      if(_id == 0){
+        condition = "";
+      }else{
+        condition = "WHERE id = "+ _id;
+      }
+
+      var query = "SELECT id, code, display, definition FROM baciro_fhir.MEDICATION_FORM_CODES " + condition;
+      
+      db.query(query,function(dataJson){
+        rez = lowercaseObject(dataJson);
+        res.json({"err_code":0,"data":rez});
+      },function(e){
+        res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "getMedicationFormCodes"});
+      });
+    },
+		medicationFormCodesCode: function getMedicationFormCodesCode(req, res){
+      code = req.params.code;
+
+      var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.MEDICATION_FORM_CODES WHERE code = '" + code + "' ";
+      
+      db.query(query,function(dataJson){
+        rez = lowercaseObject(dataJson);
+        res.json({"err_code":0,"data":rez});
+      },function(e){
+        res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "getMedicationFormCodesCode"});
+      });
+    },
+		medicationPackageForm	: function getMedicationPackageForm(req, res){
+			_id = req.params._id;
+
+      if(_id == 0){
+        condition = "";
+      }else{
+        condition = "WHERE id = "+ _id;
+      }
+
+      var query = "SELECT id, code, display, definition FROM baciro_fhir.MEDICATION_PACKAGE_FORM " + condition;
+      
+      db.query(query,function(dataJson){
+        rez = lowercaseObject(dataJson);
+        res.json({"err_code":0,"data":rez});
+      },function(e){
+        res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "getMedicationPackageForm"});
+      });
+    },
+		medicationPackageFormCode: function getMedicationPackageFormCode(req, res){
+      code = req.params.code;
+
+      var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.MEDICATION_PACKAGE_FORM WHERE code = '" + code + "' ";
+      
+      db.query(query,function(dataJson){
+        rez = lowercaseObject(dataJson);
+        res.json({"err_code":0,"data":rez});
+      },function(e){
+        res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "getMedicationPackageFormCode"});
+      });
+    },
+		
+		medicationAdminStatus	: function getMedicationAdminStatus(req, res){
+			console.log("tes");
+			_id = req.params._id;
+
+      if(_id == 0){
+        condition = "";
+      }else{
+        condition = "WHERE id = "+ _id;
+      }
+
+      var query = "SELECT id, code, display, definition FROM baciro_fhir.MEDICATION_ADMIN_STATUS " + condition;
+      console.log(query);
+      db.query(query,function(dataJson){
+        rez = lowercaseObject(dataJson);
+        res.json({"err_code":0,"data":rez});
+      },function(e){
+        res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "getMedicationAdminStatus"});
+      });
+    },
+		medicationAdminStatusCode: function getMedicationAdminStatusCode(req, res){
+      code = req.params.code;
+
+      var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.MEDICATION_ADMIN_STATUS WHERE code = '" + code + "' ";
+      
+      db.query(query,function(dataJson){
+        rez = lowercaseObject(dataJson);
+        res.json({"err_code":0,"data":rez});
+      },function(e){
+        res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "getMedicationAdminStatusCode"});
+      });
+    },
+		medicationAdminCategory	: function getMedicationAdminCategory(req, res){
+			_id = req.params._id;
+
+      if(_id == 0){
+        condition = "";
+      }else{
+        condition = "WHERE id = "+ _id;
+      }
+
+      var query = "SELECT id, code, display, definition FROM baciro_fhir.MEDICATION_ADMIN_CATEGORY " + condition;
+      
+      db.query(query,function(dataJson){
+        rez = lowercaseObject(dataJson);
+        res.json({"err_code":0,"data":rez});
+      },function(e){
+        res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "getMedicationAdminCategory"});
+      });
+    },
+		medicationAdminCategoryCode: function getMedicationAdminCategoryCode(req, res){
+      code = req.params.code;
+
+      var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.MEDICATION_ADMIN_CATEGORY WHERE code = '" + code + "' ";
+      
+      db.query(query,function(dataJson){
+        rez = lowercaseObject(dataJson);
+        res.json({"err_code":0,"data":rez});
+      },function(e){
+        res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "getMedicationAdminCategoryCode"});
+      });
+    },
+		reasonMedicationNotGivenCodes	: function getReasonMedicationNotGivenCodes(req, res){
+			_id = req.params._id;
+
+      if(_id == 0){
+        condition = "";
+      }else{
+        condition = "WHERE id = "+ _id;
+      }
+
+      var query = "SELECT id, code, display, definition FROM baciro_fhir.REASON_MEDICATION_NOT_GIVEN_CODES " + condition;
+      
+      db.query(query,function(dataJson){
+        rez = lowercaseObject(dataJson);
+        res.json({"err_code":0,"data":rez});
+      },function(e){
+        res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "getReasonMedicationNotGivenCodes"});
+      });
+    },
+		reasonMedicationNotGivenCodesCode: function getReasonMedicationNotGivenCodesCode(req, res){
+      code = req.params.code;
+
+      var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.REASON_MEDICATION_NOT_GIVEN_CODES WHERE code = '" + code + "' ";
+      
+      db.query(query,function(dataJson){
+        rez = lowercaseObject(dataJson);
+        res.json({"err_code":0,"data":rez});
+      },function(e){
+        res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "getReasonMedicationNotGivenCodesCode"});
+      });
+    },
+		reasonMedicationGivenCodes	: function getReasonMedicationGivenCodes(req, res){
+			_id = req.params._id;
+
+      if(_id == 0){
+        condition = "";
+      }else{
+        condition = "WHERE id = "+ _id;
+      }
+
+      var query = "SELECT id, code, display, definition FROM baciro_fhir.REASON_MEDICATION_GIVEN_CODES " + condition;
+      
+      db.query(query,function(dataJson){
+        rez = lowercaseObject(dataJson);
+        res.json({"err_code":0,"data":rez});
+      },function(e){
+        res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "getReasonMedicationGivenCodes"});
+      });
+    },
+		reasonMedicationGivenCodesCode: function getReasonMedicationGivenCodesCode(req, res){
+      code = req.params.code;
+
+      var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.REASON_MEDICATION_GIVEN_CODES WHERE code = '" + code + "' ";
+      
+      db.query(query,function(dataJson){
+        rez = lowercaseObject(dataJson);
+        res.json({"err_code":0,"data":rez});
+      },function(e){
+        res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "getReasonMedicationGivenCodesCode"});
+      });
+    },
+		approachSiteCodes	: function getApproachSiteCodes(req, res){
+			_id = req.params._id;
+
+      if(_id == 0){
+        condition = "";
+      }else{
+        condition = "WHERE id = "+ _id;
+      }
+
+      var query = "SELECT id, code, display, definition FROM baciro_fhir.APPROACH_SITE_CODES " + condition;
+      
+      db.query(query,function(dataJson){
+        rez = lowercaseObject(dataJson);
+        res.json({"err_code":0,"data":rez});
+      },function(e){
+        res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "getApproachSiteCodes"});
+      });
+    },
+		approachSiteCodesCode: function getApproachSiteCodesCode(req, res){
+      code = req.params.code;
+
+      var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.APPROACH_SITE_CODES WHERE code = '" + code + "' ";
+      
+      db.query(query,function(dataJson){
+        rez = lowercaseObject(dataJson);
+        res.json({"err_code":0,"data":rez});
+      },function(e){
+        res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "getApproachSiteCodesCode"});
+      });
+    },
+		administrationMethodCodes	: function getAdministrationMethodCodes(req, res){
+			_id = req.params._id;
+
+      if(_id == 0){
+        condition = "";
+      }else{
+        condition = "WHERE id = "+ _id;
+      }
+
+      var query = "SELECT id, code, display, definition FROM baciro_fhir.ADMINISTRATION_METHOD_CODES " + condition;
+      
+      db.query(query,function(dataJson){
+        rez = lowercaseObject(dataJson);
+        res.json({"err_code":0,"data":rez});
+      },function(e){
+        res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "getAdministrationMethodCodes"});
+      });
+    },
+		administrationMethodCodesCode: function getAdministrationMethodCodesCode(req, res){
+      code = req.params.code;
+
+      var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.ADMINISTRATION_METHOD_CODES WHERE code = '" + code + "' ";
+      
+      db.query(query,function(dataJson){
+        rez = lowercaseObject(dataJson);
+        res.json({"err_code":0,"data":rez});
+      },function(e){
+        res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "getAdministrationMethodCodesCode"});
+      });
+    },
+		
+		medicationDispenseStatus	: function getMedicationDispenseStatus(req, res){
+			_id = req.params._id;
+
+      if(_id == 0){
+        condition = "";
+      }else{
+        condition = "WHERE id = "+ _id;
+      }
+
+      var query = "SELECT id, code, display, definition FROM baciro_fhir.MEDICATION_DISPENSE_STATUS " + condition;
+      
+      db.query(query,function(dataJson){
+        rez = lowercaseObject(dataJson);
+        res.json({"err_code":0,"data":rez});
+      },function(e){
+        res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "getMedicationDispenseStatus"});
+      });
+    },
+		medicationDispenseStatusCode: function getMedicationDispenseStatusCode(req, res){
+      code = req.params.code;
+
+      var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.MEDICATION_DISPENSE_STATUS WHERE code = '" + code + "' ";
+      
+      db.query(query,function(dataJson){
+        rez = lowercaseObject(dataJson);
+        res.json({"err_code":0,"data":rez});
+      },function(e){
+        res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "getMedicationDispenseStatusCode"});
+      });
+    },
+		medicationDispenseCategory	: function getMedicationDispenseCategory(req, res){
+			_id = req.params._id;
+
+      if(_id == 0){
+        condition = "";
+      }else{
+        condition = "WHERE id = "+ _id;
+      }
+
+      var query = "SELECT id, code, display, definition FROM baciro_fhir.MEDICATION_DISPENSE_CATEGORY " + condition;
+      
+      db.query(query,function(dataJson){
+        rez = lowercaseObject(dataJson);
+        res.json({"err_code":0,"data":rez});
+      },function(e){
+        res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "getMedicationDispenseCategory"});
+      });
+    },
+		medicationDispenseCategoryCode: function getMedicationDispenseCategoryCode(req, res){
+      code = req.params.code;
+
+      var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.MEDICATION_DISPENSE_CATEGORY WHERE code = '" + code + "' ";
+      
+      db.query(query,function(dataJson){
+        rez = lowercaseObject(dataJson);
+        res.json({"err_code":0,"data":rez});
+      },function(e){
+        res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "getMedicationDispenseCategoryCode"});
+      });
+    },
+		actPharmacySupplyType	: function getActPharmacySupplyType(req, res){
+			_id = req.params._id;
+
+      if(_id == 0){
+        condition = "";
+      }else{
+        condition = "WHERE id = "+ _id;
+      }
+
+      var query = "SELECT id, code, display, definition FROM baciro_fhir.ACT_PHARMACY_SUPPLY_TYPE " + condition;
+      
+      db.query(query,function(dataJson){
+        rez = lowercaseObject(dataJson);
+        res.json({"err_code":0,"data":rez});
+      },function(e){
+        res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "getActPharmacySupplyType"});
+      });
+    },
+		actPharmacySupplyTypeCode: function getActPharmacySupplyTypeCode(req, res){
+      code = req.params.code;
+
+      var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.ACT_PHARMACY_SUPPLY_TYPE WHERE code = '" + code + "' ";
+      
+      db.query(query,function(dataJson){
+        rez = lowercaseObject(dataJson);
+        res.json({"err_code":0,"data":rez});
+      },function(e){
+        res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "getActPharmacySupplyTypeCode"});
+      });
+    },
+		actSubstanceAdminSubstitutionCode	: function getActSubstanceAdminSubstitutionCode(req, res){
+			_id = req.params._id;
+
+      if(_id == 0){
+        condition = "";
+      }else{
+        condition = "WHERE id = "+ _id;
+      }
+
+      var query = "SELECT id, code, display, definition FROM baciro_fhir.ACT_SUBSTANCE_ADMIN_SUBSTITUTION_CODE " + condition;
+      
+      db.query(query,function(dataJson){
+        rez = lowercaseObject(dataJson);
+        res.json({"err_code":0,"data":rez});
+      },function(e){
+        res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "getActSubstanceAdminSubstitutionCode"});
+      });
+    },
+		actSubstanceAdminSubstitutionCodeCode: function getActSubstanceAdminSubstitutionCodeCode(req, res){
+      code = req.params.code;
+
+      var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.ACT_SUBSTANCE_ADMIN_SUBSTITUTION_CODE WHERE code = '" + code + "' ";
+      
+      db.query(query,function(dataJson){
+        rez = lowercaseObject(dataJson);
+        res.json({"err_code":0,"data":rez});
+      },function(e){
+        res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "getActSubstanceAdminSubstitutionCodeCode"});
+      });
+    },
+		actSubstanceAdminSubstitutionReason	: function getActSubstanceAdminSubstitutionReason(req, res){
+			_id = req.params._id;
+
+      if(_id == 0){
+        condition = "";
+      }else{
+        condition = "WHERE id = "+ _id;
+      }
+
+      var query = "SELECT id, code, display, definition FROM baciro_fhir.ACT_SUBSTANCE_ADMIN_SUBSTITUTION_REASON " + condition;
+      
+      db.query(query,function(dataJson){
+        rez = lowercaseObject(dataJson);
+        res.json({"err_code":0,"data":rez});
+      },function(e){
+        res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "getActSubstanceAdminSubstitutionReason"});
+      });
+    },
+		actSubstanceAdminSubstitutionReasonCode: function getActSubstanceAdminSubstitutionReasonCode(req, res){
+      code = req.params.code;
+
+      var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.ACT_SUBSTANCE_ADMIN_SUBSTITUTION_REASON WHERE code = '" + code + "' ";
+      
+      db.query(query,function(dataJson){
+        rez = lowercaseObject(dataJson);
+        res.json({"err_code":0,"data":rez});
+      },function(e){
+        res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "getActSubstanceAdminSubstitutionReasonCode"});
+      });
+    },
+		
+		medicationRequestStatus	: function getMedicationRequestStatus(req, res){
+			_id = req.params._id;
+
+      if(_id == 0){
+        condition = "";
+      }else{
+        condition = "WHERE id = "+ _id;
+      }
+
+      var query = "SELECT id, code, display, definition FROM baciro_fhir.MEDICATION_REQUEST_STATUS " + condition;
+      
+      db.query(query,function(dataJson){
+        rez = lowercaseObject(dataJson);
+        res.json({"err_code":0,"data":rez});
+      },function(e){
+        res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "getMedicationRequestStatus"});
+      });
+    },
+		medicationRequestStatusCode: function getMedicationRequestStatusCode(req, res){
+      code = req.params.code;
+
+      var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.MEDICATION_REQUEST_STATUS WHERE code = '" + code + "' ";
+      
+      db.query(query,function(dataJson){
+        rez = lowercaseObject(dataJson);
+        res.json({"err_code":0,"data":rez});
+      },function(e){
+        res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "getMedicationRequestStatusCode"});
+      });
+    },
+		medicationRequestIntent	: function getMedicationRequestIntent(req, res){
+			_id = req.params._id;
+
+      if(_id == 0){
+        condition = "";
+      }else{
+        condition = "WHERE id = "+ _id;
+      }
+
+      var query = "SELECT id, code, display, definition FROM baciro_fhir.MEDICATION_REQUEST_INTENT " + condition;
+      
+      db.query(query,function(dataJson){
+        rez = lowercaseObject(dataJson);
+        res.json({"err_code":0,"data":rez});
+      },function(e){
+        res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "getMedicationRequestIntent"});
+      });
+    },
+		medicationRequestIntentCode: function getMedicationRequestIntentCode(req, res){
+      code = req.params.code;
+
+      var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.MEDICATION_REQUEST_INTENT WHERE code = '" + code + "' ";
+      
+      db.query(query,function(dataJson){
+        rez = lowercaseObject(dataJson);
+        res.json({"err_code":0,"data":rez});
+      },function(e){
+        res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "getMedicationRequestIntentCode"});
+      });
+    },
+		medicationRequestCategory	: function getMedicationRequestCategory(req, res){
+			_id = req.params._id;
+
+      if(_id == 0){
+        condition = "";
+      }else{
+        condition = "WHERE id = "+ _id;
+      }
+
+      var query = "SELECT id, code, display, definition FROM baciro_fhir.MEDICATION_REQUEST_CATEGORY " + condition;
+      
+      db.query(query,function(dataJson){
+        rez = lowercaseObject(dataJson);
+        res.json({"err_code":0,"data":rez});
+      },function(e){
+        res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "getMedicationRequestCategory"});
+      });
+    },
+		medicationRequestCategoryCode: function getMedicationRequestCategoryCode(req, res){
+      code = req.params.code;
+
+      var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.MEDICATION_REQUEST_CATEGORY WHERE code = '" + code + "' ";
+      
+      db.query(query,function(dataJson){
+        rez = lowercaseObject(dataJson);
+        res.json({"err_code":0,"data":rez});
+      },function(e){
+        res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "getMedicationRequestCategoryCode"});
+      });
+    },
+		medicationRequestPriority	: function getMedicationRequestPriority(req, res){
+			_id = req.params._id;
+
+      if(_id == 0){
+        condition = "";
+      }else{
+        condition = "WHERE id = "+ _id;
+      }
+
+      var query = "SELECT id, code, display, definition FROM baciro_fhir.MEDICATION_REQUEST_PRIORITY " + condition;
+      
+      db.query(query,function(dataJson){
+        rez = lowercaseObject(dataJson);
+        res.json({"err_code":0,"data":rez});
+      },function(e){
+        res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "getMedicationRequestPriority"});
+      });
+    },
+		medicationRequestPriorityCode: function getMedicationRequestPriorityCode(req, res){
+      code = req.params.code;
+
+      var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.MEDICATION_REQUEST_PRIORITY WHERE code = '" + code + "' ";
+      
+      db.query(query,function(dataJson){
+        rez = lowercaseObject(dataJson);
+        res.json({"err_code":0,"data":rez});
+      },function(e){
+        res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "getMedicationRequestPriorityCode"});
+      });
+    },
+		medicationCodes	: function getMedicationCodes(req, res){
+			_id = req.params._id;
+
+      if(_id == 0){
+        condition = "";
+      }else{
+        condition = "WHERE id = "+ _id;
+      }
+
+      var query = "SELECT id, code, display, definition FROM baciro_fhir.MEDICATION_CODES " + condition;
+      
+      db.query(query,function(dataJson){
+        rez = lowercaseObject(dataJson);
+        res.json({"err_code":0,"data":rez});
+      },function(e){
+        res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "getMedicationCodes"});
+      });
+    },
+		medicationCodesCode: function getMedicationCodesCode(req, res){
+      code = req.params.code;
+
+      var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.MEDICATION_CODES WHERE code = '" + code + "' ";
+      
+      db.query(query,function(dataJson){
+        rez = lowercaseObject(dataJson);
+        res.json({"err_code":0,"data":rez});
+      },function(e){
+        res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "getMedicationCodesCode"});
+      });
+    },
+		substanceAdminSubstitutionReason	: function getSubstanceAdminSubstitutionReason(req, res){
+			_id = req.params._id;
+
+      if(_id == 0){
+        condition = "";
+      }else{
+        condition = "WHERE id = "+ _id;
+      }
+
+      var query = "SELECT id, code, display, definition FROM baciro_fhir.SUBSTANCE_ADMIN_SUBSTITUTION_REASON " + condition;
+      
+      db.query(query,function(dataJson){
+        rez = lowercaseObject(dataJson);
+        res.json({"err_code":0,"data":rez});
+      },function(e){
+        res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "getSubstanceAdminSubstitutionReason"});
+      });
+    },
+		substanceAdminSubstitutionReasonCode: function getSubstanceAdminSubstitutionReasonCode(req, res){
+      code = req.params.code;
+
+      var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.SUBSTANCE_ADMIN_SUBSTITUTION_REASON WHERE code = '" + code + "' ";
+      
+      db.query(query,function(dataJson){
+        rez = lowercaseObject(dataJson);
+        res.json({"err_code":0,"data":rez});
+      },function(e){
+        res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "getSubstanceAdminSubstitutionReasonCode"});
+      });
+    },
+		
+		medicationStatementStatus	: function getMedicationStatementStatus(req, res){
+			_id = req.params._id;
+
+      if(_id == 0){
+        condition = "";
+      }else{
+        condition = "WHERE id = "+ _id;
+      }
+			
+      var query = "SELECT id, code, display, definition FROM baciro_fhir.MEDICATION_STATEMENT_STATUS " + condition;
+			console.log(query);
+      
+      db.query(query,function(dataJson){
+        rez = lowercaseObject(dataJson);
+        res.json({"err_code":0,"data":rez});
+      },function(e){
+        res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "getMedicationStatementStatus"});
+      });
+    },
+		medicationStatementStatusCode: function getMedicationStatementStatusCode(req, res){
+      code = req.params.code;
+
+      var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.MEDICATION_STATEMENT_STATUS WHERE code = '" + code + "' ";
+      
+      db.query(query,function(dataJson){
+        rez = lowercaseObject(dataJson);
+        res.json({"err_code":0,"data":rez});
+      },function(e){
+        res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "getMedicationStatementStatusCode"});
+      });
+    },
+		medicationStatementCategory	: function getMedicationStatementCategory(req, res){
+			_id = req.params._id;
+
+      if(_id == 0){
+        condition = "";
+      }else{
+        condition = "WHERE id = "+ _id;
+      }
+
+      var query = "SELECT id, code, display, definition FROM baciro_fhir.MEDICATION_STATEMENT_CATEGORY " + condition;
+      
+      db.query(query,function(dataJson){
+        rez = lowercaseObject(dataJson);
+        res.json({"err_code":0,"data":rez});
+      },function(e){
+        res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "getMedicationStatementCategory"});
+      });
+    },
+		medicationStatementCategoryCode: function getMedicationStatementCategoryCode(req, res){
+      code = req.params.code;
+
+      var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.MEDICATION_STATEMENT_CATEGORY WHERE code = '" + code + "' ";
+      
+      db.query(query,function(dataJson){
+        rez = lowercaseObject(dataJson);
+        res.json({"err_code":0,"data":rez});
+      },function(e){
+        res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "getMedicationStatementCategoryCode"});
+      });
+    },
+		medicationStatementTaken	: function getMedicationStatementTaken(req, res){
+			_id = req.params._id;
+
+      if(_id == 0){
+        condition = "";
+      }else{
+        condition = "WHERE id = "+ _id;
+      }
+
+      var query = "SELECT id, code, display, definition FROM baciro_fhir.MEDICATION_STATEMENT_TAKEN " + condition;
+      
+      db.query(query,function(dataJson){
+        rez = lowercaseObject(dataJson);
+        res.json({"err_code":0,"data":rez});
+      },function(e){
+        res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "getMedicationStatementTaken"});
+      });
+    },
+		medicationStatementTakenCode: function getMedicationStatementTakenCode(req, res){
+      code = req.params.code;
+
+      var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.MEDICATION_STATEMENT_TAKEN WHERE code = '" + code + "' ";
+      
+      db.query(query,function(dataJson){
+        rez = lowercaseObject(dataJson);
+        res.json({"err_code":0,"data":rez});
+      },function(e){
+        res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "getMedicationStatementTakenCode"});
+      });
+    },
+		reasonMedicationNotTakenCodes	: function getReasonMedicationNotTakenCodes(req, res){
+			_id = req.params._id;
+
+      if(_id == 0){
+        condition = "";
+      }else{
+        condition = "WHERE id = "+ _id;
+      }
+
+      var query = "SELECT id, code, display, definition FROM baciro_fhir.REASON_MEDICATION_NOT_TAKEN_CODES " + condition;
+      
+      db.query(query,function(dataJson){
+        rez = lowercaseObject(dataJson);
+        res.json({"err_code":0,"data":rez});
+      },function(e){
+        res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "getReasonMedicationNotTakenCodes"});
+      });
+    },
+		reasonMedicationNotTakenCodesCode: function getReasonMedicationNotTakenCodesCode(req, res){
+      code = req.params.code;
+
+      var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.REASON_MEDICATION_NOT_TAKEN_CODES WHERE code = '" + code + "' ";
+      
+      db.query(query,function(dataJson){
+        rez = lowercaseObject(dataJson);
+        res.json({"err_code":0,"data":rez});
+      },function(e){
+        res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "getReasonMedicationNotTakenCodesCode"});
+      });
+    },
 	},
 	post: {
 		identityAssuranceLevel: function addIdentityAssuranceLevel(req, res) {
@@ -6459,6 +7611,7 @@ var controller = {
 			var qualificationId = req.body.qualification_id;
 			var practitionerRoleId = req.body.practitioner_role_id;
 			var healthcareServiceId = req.body.healthcare_service_id;
+			var immunization_id = req.body.immunization_id;
 
 			//susun query
 			var column = "";
@@ -6542,6 +7695,11 @@ var controller = {
 			if(typeof healthcareServiceId !== 'undefined'){
         column += 'healthcare_service_id,';
         values += "'"+ healthcareServiceId + "',";
+      }
+			
+			if(typeof immunization_id !== 'undefined'){
+        column += 'immunization_id,';
+        values += "'"+ immunization_id + "',";
       }
 
 			var query = "UPSERT INTO BACIRO_FHIR.IDENTIFIER(identifier_id, " + column.slice(0, -1) + ")" +
@@ -10049,7 +11207,809 @@ var controller = {
       },function(e){
           res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "addDeviceKind"});
       });
-    }
+    },
+		immunizationStatus	: function addImmunizationStatus(req, res){	
+      
+      var code = req.body.code;
+      var display = req.body.display;
+      var definition = req.body.definition;
+     
+      var query = "UPSERT INTO BACIRO_FHIR.IMMUNIZATION_STATUS(id, code, display, definition)"+
+        " VALUES (NEXT VALUE FOR BACIRO_FHIR.IMMUNIZATION_STATUS,'"+code+"','"+display+"','"+definition+"')";
+			
+      db.upsert(query,function(succes){
+        var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.IMMUNIZATION_STATUS WHERE code = '" + code + "' ";
+        db.query(query,function(dataJson){
+          rez = lowercaseObject(dataJson);
+          res.json({"err_code":0,"data":rez});
+        },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "addImmunizationStatus"});
+        });
+      },function(e){
+          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "addImmunizationStatus"});
+      });
+    },
+		vaccineCode	: function addVaccineCode(req, res){	
+      
+      var code = req.body.code;
+      var display = req.body.display;
+      var system = req.body.system;
+     
+      var query = "UPSERT INTO BACIRO_FHIR.VACCINE_CODE(id, code, display, system)"+
+        " VALUES (NEXT VALUE FOR BACIRO_FHIR.VACCINE_CODE,'"+code+"','"+display+"','"+system+"')";
+			
+      db.upsert(query,function(succes){
+        var query = "SELECT id, code, display, system FROM BACIRO_FHIR.VACCINE_CODE WHERE code = '" + code + "' ";
+        db.query(query,function(dataJson){
+          rez = lowercaseObject(dataJson);
+          res.json({"err_code":0,"data":rez});
+        },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "addVaccineCode"});
+        });
+      },function(e){
+          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "addVaccineCode"});
+      });
+    },
+		immunizationOrigin	: function addImmunizationOrigin(req, res){	
+      
+      var code = req.body.code;
+      var display = req.body.display;
+      var definition = req.body.definition;
+     
+      var query = "UPSERT INTO BACIRO_FHIR.IMMUNIZATION_ORIGIN(id, code, display, definition)"+
+        " VALUES (NEXT VALUE FOR BACIRO_FHIR.IMMUNIZATION_ORIGIN,'"+code+"','"+display+"','"+definition+"')";
+			
+      db.upsert(query,function(succes){
+        var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.IMMUNIZATION_ORIGIN WHERE code = '" + code + "' ";
+        db.query(query,function(dataJson){
+          rez = lowercaseObject(dataJson);
+          res.json({"err_code":0,"data":rez});
+        },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "addImmunizationOrigin"});
+        });
+      },function(e){
+          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "addImmunizationOrigin"});
+      });
+    },
+		immunizationSite	: function addImmunizationSite(req, res){	
+      
+      var code = req.body.code;
+      var display = req.body.display;
+      var definition = req.body.definition;
+     
+      var query = "UPSERT INTO BACIRO_FHIR.IMMUNIZATION_SITE(id, code, display, definition)"+
+        " VALUES (NEXT VALUE FOR BACIRO_FHIR.IMMUNIZATION_SITE,'"+code+"','"+display+"','"+definition+"')";
+			
+      db.upsert(query,function(succes){
+        var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.IMMUNIZATION_SITE WHERE code = '" + code + "' ";
+        db.query(query,function(dataJson){
+          rez = lowercaseObject(dataJson);
+          res.json({"err_code":0,"data":rez});
+        },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "addImmunizationSite"});
+        });
+      },function(e){
+          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "addImmunizationSite"});
+      });
+    },
+		immunizationRoute	: function addImmunizationRoute(req, res){	
+      
+      var code = req.body.code;
+      var display = req.body.display;
+      var definition = req.body.definition;
+     
+      var query = "UPSERT INTO BACIRO_FHIR.IMMUNIZATION_ROUTE(id, code, display, definition)"+
+        " VALUES (NEXT VALUE FOR BACIRO_FHIR.IMMUNIZATION_ROUTE,'"+code+"','"+display+"','"+definition+"')";
+			
+      db.upsert(query,function(succes){
+        var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.IMMUNIZATION_ROUTE WHERE code = '" + code + "' ";
+        db.query(query,function(dataJson){
+          rez = lowercaseObject(dataJson);
+          res.json({"err_code":0,"data":rez});
+        },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "addImmunizationRoute"});
+        });
+      },function(e){
+          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "addImmunizationRoute"});
+      });
+    },
+		immunizationRole	: function addImmunizationRole(req, res){	
+      
+      var code = req.body.code;
+      var display = req.body.display;
+      
+      var query = "UPSERT INTO BACIRO_FHIR.IMMUNIZATION_ROLE(id, code, display)"+
+        " VALUES (NEXT VALUE FOR BACIRO_FHIR.IMMUNIZATION_ROLE,'"+code+"','"+display+"')";
+			
+      db.upsert(query,function(succes){
+        var query = "SELECT id, code, display FROM BACIRO_FHIR.IMMUNIZATION_ROLE WHERE code = '" + code + "' ";
+        db.query(query,function(dataJson){
+          rez = lowercaseObject(dataJson);
+          res.json({"err_code":0,"data":rez});
+        },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "addImmunizationRole"});
+        });
+      },function(e){
+          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "addImmunizationRole"});
+      });
+    },
+		immunizationReason	: function addImmunizationReason(req, res){	
+      
+      var code = req.body.code;
+      var display = req.body.display;
+      
+      var query = "UPSERT INTO BACIRO_FHIR.IMMUNIZATION_REASON(id, code, display)"+
+        " VALUES (NEXT VALUE FOR BACIRO_FHIR.IMMUNIZATION_REASON,'"+code+"','"+display+"')";
+			
+      db.upsert(query,function(succes){
+        var query = "SELECT id, code, display FROM BACIRO_FHIR.IMMUNIZATION_REASON WHERE code = '" + code + "' ";
+        db.query(query,function(dataJson){
+          rez = lowercaseObject(dataJson);
+          res.json({"err_code":0,"data":rez});
+        },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "addImmunizationReason"});
+        });
+      },function(e){
+          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "addImmunizationReason"});
+      });
+    },
+		noImmunizationReason	: function addNoImmunizationReason(req, res){	
+      
+      var code = req.body.code;
+      var system = req.body.system;
+			var display = req.body.display;
+      var definition = req.body.definition;
+     
+      var query = "UPSERT INTO BACIRO_FHIR.NO_IMMUNIZATION_REASON(id, code, system, display, definition)"+
+        " VALUES (NEXT VALUE FOR BACIRO_FHIR.NO_IMMUNIZATION_REASON,'"+code+"','"+system+"','"+display+"','"+definition+"')";
+			
+      db.upsert(query,function(succes){
+        var query = "SELECT id, code, system, display, definition FROM BACIRO_FHIR.NO_IMMUNIZATION_REASON WHERE code = '" + code + "' ";
+        db.query(query,function(dataJson){
+          rez = lowercaseObject(dataJson);
+          res.json({"err_code":0,"data":rez});
+        },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "addNoImmunizationReason"});
+        });
+      },function(e){
+          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "addNoImmunizationReason"});
+      });
+    },
+		vaccinationProtocolDoseTarget	: function addVaccinationProtocolDoseTarget(req, res){	
+      
+      var code = req.body.code;
+      var display = req.body.display;
+      
+      var query = "UPSERT INTO BACIRO_FHIR.VACCINATION_PROTOCOL_DOSE_TARGET(id, code, display)"+
+        " VALUES (NEXT VALUE FOR BACIRO_FHIR.VACCINATION_PROTOCOL_DOSE_TARGET,'"+code+"','"+display+"')";
+			
+      db.upsert(query,function(succes){
+        var query = "SELECT id, code, display FROM BACIRO_FHIR.VACCINATION_PROTOCOL_DOSE_TARGET WHERE code = '" + code + "' ";
+        db.query(query,function(dataJson){
+          rez = lowercaseObject(dataJson);
+          res.json({"err_code":0,"data":rez});
+        },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "addVaccinationProtocolDoseTarget"});
+        });
+      },function(e){
+          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "addVaccinationProtocolDoseTarget"});
+      });
+    },
+		vaccinationProtocolDoseStatus	: function addVaccinationProtocolDoseStatus(req, res){	
+      
+      var code = req.body.code;
+      var display = req.body.display;
+      var definition = req.body.definition;
+     
+      var query = "UPSERT INTO BACIRO_FHIR.VACCINATION_PROTOCOL_DOSE_STATUS(id, code, display, definition)"+
+        " VALUES (NEXT VALUE FOR BACIRO_FHIR.VACCINATION_PROTOCOL_DOSE_STATUS,'"+code+"','"+display+"','"+definition+"')";
+			
+      db.upsert(query,function(succes){
+        var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.VACCINATION_PROTOCOL_DOSE_STATUS WHERE code = '" + code + "' ";
+        db.query(query,function(dataJson){
+          rez = lowercaseObject(dataJson);
+          res.json({"err_code":0,"data":rez});
+        },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "addVaccinationProtocolDoseStatus"});
+        });
+      },function(e){
+          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "addVaccinationProtocolDoseStatus"});
+      });
+    },
+		vaccinationProtocolDoseStatusReason	: function addVaccinationProtocolDoseStatusReason(req, res){	
+      
+      var code = req.body.code;
+      var display = req.body.display;
+      var definition = req.body.definition;
+     
+      var query = "UPSERT INTO BACIRO_FHIR.VACCINATION_PROTOCOL_DOSE_STATUS_REASON(id, code, display, definition)"+
+        " VALUES (NEXT VALUE FOR BACIRO_FHIR.VACCINATION_PROTOCOL_DOSE_STATUS_REASON,'"+code+"','"+display+"','"+definition+"')";
+			
+      db.upsert(query,function(succes){
+        var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.VACCINATION_PROTOCOL_DOSE_STATUS_REASON WHERE code = '" + code + "' ";
+        db.query(query,function(dataJson){
+          rez = lowercaseObject(dataJson);
+          res.json({"err_code":0,"data":rez});
+        },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "addVaccinationProtocolDoseStatusReason"});
+        });
+      },function(e){
+          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "addVaccinationProtocolDoseStatusReason"});
+      });
+    },
+		
+		immunizationRecommendationTargetDisease	: function addImmunizationRecommendationTargetDisease(req, res){
+      var code = req.body.code;
+      var display = req.body.display;
+     
+      var query = "UPSERT INTO BACIRO_FHIR.IMMUNIZATION_RECOMMENDATION_TARGET_DISEASE(id, code, display)"+
+        " VALUES (NEXT VALUE FOR BACIRO_FHIR.IMMUNIZATION_RECOMMENDATION_TARGET_DISEASE,'"+code+"','"+display+"')";
+			
+			console.log(query);
+			
+      db.upsert(query,function(succes){
+        var query = "SELECT id, code, display FROM BACIRO_FHIR.IMMUNIZATION_RECOMMENDATION_TARGET_DISEASE WHERE code = '" + code + "' ";
+        db.query(query,function(dataJson){
+          rez = lowercaseObject(dataJson);
+          res.json({"err_code":0,"data":rez});
+        },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "addImmunizationRecommendationTargetDisease"});
+        });
+      },function(e){
+          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "addImmunizationRecommendationTargetDisease"});
+      });
+    },
+		immunizationRecommendationStatus	: function addImmunizationRecommendationStatus(req, res){	
+      
+      var code = req.body.code;
+      var display = req.body.display;
+      var definition = req.body.definition;
+     
+      var query = "UPSERT INTO BACIRO_FHIR.IMMUNIZATION_RECOMMENDATION_STATUS(id, code, display, definition)"+
+        " VALUES (NEXT VALUE FOR BACIRO_FHIR.IMMUNIZATION_RECOMMENDATION_STATUS,'"+code+"','"+display+"','"+definition+"')";
+			
+      db.upsert(query,function(succes){
+        var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.IMMUNIZATION_RECOMMENDATION_STATUS WHERE code = '" + code + "' ";
+        db.query(query,function(dataJson){
+          rez = lowercaseObject(dataJson);
+          res.json({"err_code":0,"data":rez});
+        },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "addImmunizationRecommendationStatus"});
+        });
+      },function(e){
+          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "addImmunizationRecommendationStatus"});
+      });
+    },
+		immunizationRecommendationDateCriterion	: function addImmunizationRecommendationDateCriterion(req, res){	
+      
+      var code = req.body.code;
+      var display = req.body.display;
+      var definition = req.body.definition;
+     
+      var query = "UPSERT INTO BACIRO_FHIR.IMMUNIZATION_RECOMMENDATION_DATE_CRITERION(id, code, display, definition)"+
+        " VALUES (NEXT VALUE FOR BACIRO_FHIR.IMMUNIZATION_RECOMMENDATION_DATE_CRITERION,'"+code+"','"+display+"','"+definition+"')";
+			
+      db.upsert(query,function(succes){
+        var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.IMMUNIZATION_RECOMMENDATION_DATE_CRITERION WHERE code = '" + code + "' ";
+        db.query(query,function(dataJson){
+          rez = lowercaseObject(dataJson);
+          res.json({"err_code":0,"data":rez});
+        },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "addImmunizationRecommendationDateCriterion"});
+        });
+      },function(e){
+          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "addImmunizationRecommendationDateCriterion"});
+      });
+    },
+		
+		medicationStatus	: function addMedicationStatus(req, res){	
+      
+      var code = req.body.code;
+      var display = req.body.display;
+      var definition = req.body.definition;
+     
+      var query = "UPSERT INTO BACIRO_FHIR.MEDICATION_STATUS(id, code, display, definition)"+
+        " VALUES (NEXT VALUE FOR BACIRO_FHIR.MEDICATION_STATUS,'"+code+"','"+display+"','"+definition+"')";
+			
+      db.upsert(query,function(succes){
+        var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.MEDICATION_STATUS WHERE code = '" + code + "' ";
+        db.query(query,function(dataJson){
+          rez = lowercaseObject(dataJson);
+          res.json({"err_code":0,"data":rez});
+        },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "addMedicationStatus"});
+        });
+      },function(e){
+          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "addMedicationStatus"});
+      });
+    },
+		medicationFormCodes	: function addMedicationFormCodes(req, res){	
+      
+      var code = req.body.code;
+      var display = req.body.display;
+      var definition = req.body.definition;
+     
+      var query = "UPSERT INTO BACIRO_FHIR.MEDICATION_FORM_CODES(id, code, display, definition)"+
+        " VALUES (NEXT VALUE FOR BACIRO_FHIR.MEDICATION_FORM_CODES,'"+code+"','"+display+"','"+definition+"')";
+			
+      db.upsert(query,function(succes){
+        var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.MEDICATION_FORM_CODES WHERE code = '" + code + "' ";
+        db.query(query,function(dataJson){
+          rez = lowercaseObject(dataJson);
+          res.json({"err_code":0,"data":rez});
+        },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "addMedicationFormCodes"});
+        });
+      },function(e){
+          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "addMedicationFormCodes"});
+      });
+    },
+		medicationPackageForm	: function addMedicationPackageForm(req, res){	
+      
+      var code = req.body.code;
+      var display = req.body.display;
+      var definition = req.body.definition;
+     
+      var query = "UPSERT INTO BACIRO_FHIR.MEDICATION_PACKAGE_FORM(id, code, display, definition)"+
+        " VALUES (NEXT VALUE FOR BACIRO_FHIR.MEDICATION_PACKAGE_FORM,'"+code+"','"+display+"','"+definition+"')";
+			
+      db.upsert(query,function(succes){
+        var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.MEDICATION_PACKAGE_FORM WHERE code = '" + code + "' ";
+        db.query(query,function(dataJson){
+          rez = lowercaseObject(dataJson);
+          res.json({"err_code":0,"data":rez});
+        },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "addMedicationPackageForm"});
+        });
+      },function(e){
+          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "addMedicationPackageForm"});
+      });
+    },
+		
+		medicationAdminStatus	: function addMedicationAdminStatus(req, res){	
+      
+      var code = req.body.code;
+      var display = req.body.display;
+      var definition = req.body.definition;
+     
+      var query = "UPSERT INTO BACIRO_FHIR.MEDICATION_ADMIN_STATUS(id, code, display, definition)"+
+        " VALUES (NEXT VALUE FOR BACIRO_FHIR.MEDICATION_ADMIN_STATUS,'"+code+"','"+display+"','"+definition+"')";
+			
+      db.upsert(query,function(succes){
+        var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.MEDICATION_ADMIN_STATUS WHERE code = '" + code + "' ";
+        db.query(query,function(dataJson){
+          rez = lowercaseObject(dataJson);
+          res.json({"err_code":0,"data":rez});
+        },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "addMedicationAdminStatus"});
+        });
+      },function(e){
+          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "addMedicationAdminStatus"});
+      });
+    },
+		medicationAdminCategory	: function addMedicationAdminCategory(req, res){	
+      
+      var code = req.body.code;
+      var display = req.body.display;
+      var definition = req.body.definition;
+     
+      var query = "UPSERT INTO BACIRO_FHIR.MEDICATION_ADMIN_CATEGORY(id, code, display, definition)"+
+        " VALUES (NEXT VALUE FOR BACIRO_FHIR.MEDICATION_ADMIN_CATEGORY,'"+code+"','"+display+"','"+definition+"')";
+			
+      db.upsert(query,function(succes){
+        var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.MEDICATION_ADMIN_CATEGORY WHERE code = '" + code + "' ";
+        db.query(query,function(dataJson){
+          rez = lowercaseObject(dataJson);
+          res.json({"err_code":0,"data":rez});
+        },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "addMedicationAdminCategory"});
+        });
+      },function(e){
+          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "addMedicationAdminCategory"});
+      });
+    },
+		reasonMedicationNotGivenCodes	: function addReasonMedicationNotGivenCodes(req, res){	
+      
+      var code = req.body.code;
+      var display = req.body.display;
+      var definition = req.body.definition;
+     
+      var query = "UPSERT INTO BACIRO_FHIR.REASON_MEDICATION_NOT_GIVEN_CODES(id, code, display, definition)"+
+        " VALUES (NEXT VALUE FOR BACIRO_FHIR.REASON_MEDICATION_NOT_GIVEN_CODES,'"+code+"','"+display+"','"+definition+"')";
+			
+      db.upsert(query,function(succes){
+        var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.REASON_MEDICATION_NOT_GIVEN_CODES WHERE code = '" + code + "' ";
+        db.query(query,function(dataJson){
+          rez = lowercaseObject(dataJson);
+          res.json({"err_code":0,"data":rez});
+        },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "addReasonMedicationNotGivenCodes"});
+        });
+      },function(e){
+          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "addReasonMedicationNotGivenCodes"});
+      });
+    },
+		reasonMedicationGivenCodes	: function addReasonMedicationGivenCodes(req, res){	
+      
+      var code = req.body.code;
+      var display = req.body.display;
+      var definition = req.body.definition;
+     
+      var query = "UPSERT INTO BACIRO_FHIR.REASON_MEDICATION_GIVEN_CODES(id, code, display, definition)"+
+        " VALUES (NEXT VALUE FOR BACIRO_FHIR.REASON_MEDICATION_GIVEN_CODES,'"+code+"','"+display+"','"+definition+"')";
+			
+      db.upsert(query,function(succes){
+        var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.REASON_MEDICATION_GIVEN_CODES WHERE code = '" + code + "' ";
+        db.query(query,function(dataJson){
+          rez = lowercaseObject(dataJson);
+          res.json({"err_code":0,"data":rez});
+        },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "addReasonMedicationGivenCodes"});
+        });
+      },function(e){
+          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "addReasonMedicationGivenCodes"});
+      });
+    },
+		approachSiteCodes	: function addApproachSiteCodes(req, res){	
+      
+      var code = req.body.code;
+      var display = req.body.display;
+      var definition = req.body.definition;
+     
+      var query = "UPSERT INTO BACIRO_FHIR.APPROACH_SITE_CODES(id, code, display, definition)"+
+        " VALUES (NEXT VALUE FOR BACIRO_FHIR.APPROACH_SITE_CODES,'"+code+"','"+display+"','"+definition+"')";
+			
+      db.upsert(query,function(succes){
+        var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.APPROACH_SITE_CODES WHERE code = '" + code + "' ";
+        db.query(query,function(dataJson){
+          rez = lowercaseObject(dataJson);
+          res.json({"err_code":0,"data":rez});
+        },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "addApproachSiteCodes"});
+        });
+      },function(e){
+          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "addApproachSiteCodes"});
+      });
+    },
+		administrationMethodCodes	: function addAdministrationMethodCodes(req, res){	
+      
+      var code = req.body.code;
+      var display = req.body.display;
+      var definition = req.body.definition;
+     
+      var query = "UPSERT INTO BACIRO_FHIR.ADMINISTRATION_METHOD_CODES(id, code, display, definition)"+
+        " VALUES (NEXT VALUE FOR BACIRO_FHIR.ADMINISTRATION_METHOD_CODES,'"+code+"','"+display+"','"+definition+"')";
+			
+      db.upsert(query,function(succes){
+        var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.ADMINISTRATION_METHOD_CODES WHERE code = '" + code + "' ";
+        db.query(query,function(dataJson){
+          rez = lowercaseObject(dataJson);
+          res.json({"err_code":0,"data":rez});
+        },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "addAdministrationMethodCodes"});
+        });
+      },function(e){
+          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "addAdministrationMethodCodes"});
+      });
+    },
+		
+		medicationDispenseStatus	: function addMedicationDispenseStatus(req, res){	
+      
+      var code = req.body.code;
+      var display = req.body.display;
+      var definition = req.body.definition;
+     
+      var query = "UPSERT INTO BACIRO_FHIR.MEDICATION_DISPENSE_STATUS(id, code, display, definition)"+
+        " VALUES (NEXT VALUE FOR BACIRO_FHIR.MEDICATION_DISPENSE_STATUS,'"+code+"','"+display+"','"+definition+"')";
+			
+      db.upsert(query,function(succes){
+        var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.MEDICATION_DISPENSE_STATUS WHERE code = '" + code + "' ";
+        db.query(query,function(dataJson){
+          rez = lowercaseObject(dataJson);
+          res.json({"err_code":0,"data":rez});
+        },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "addMedicationDispenseStatus"});
+        });
+      },function(e){
+          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "addMedicationDispenseStatus"});
+      });
+    },
+		medicationDispenseCategory	: function addMedicationDispenseCategory(req, res){	
+      
+      var code = req.body.code;
+      var display = req.body.display;
+      var definition = req.body.definition;
+     
+      var query = "UPSERT INTO BACIRO_FHIR.MEDICATION_DISPENSE_CATEGORY(id, code, display, definition)"+
+        " VALUES (NEXT VALUE FOR BACIRO_FHIR.MEDICATION_DISPENSE_CATEGORY,'"+code+"','"+display+"','"+definition+"')";
+			
+      db.upsert(query,function(succes){
+        var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.MEDICATION_DISPENSE_CATEGORY WHERE code = '" + code + "' ";
+        db.query(query,function(dataJson){
+          rez = lowercaseObject(dataJson);
+          res.json({"err_code":0,"data":rez});
+        },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "addMedicationDispenseCategory"});
+        });
+      },function(e){
+          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "addMedicationDispenseCategory"});
+      });
+    },
+		actPharmacySupplyType	: function addActPharmacySupplyType(req, res){	
+      
+      var code = req.body.code;
+      var display = req.body.display;
+      var definition = req.body.definition;
+     
+      var query = "UPSERT INTO BACIRO_FHIR.ACT_PHARMACY_SUPPLY_TYPE(id, code, display, definition)"+
+        " VALUES (NEXT VALUE FOR BACIRO_FHIR.ACT_PHARMACY_SUPPLY_TYPE,'"+code+"','"+display+"','"+definition+"')";
+			
+      db.upsert(query,function(succes){
+        var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.ACT_PHARMACY_SUPPLY_TYPE WHERE code = '" + code + "' ";
+        db.query(query,function(dataJson){
+          rez = lowercaseObject(dataJson);
+          res.json({"err_code":0,"data":rez});
+        },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "addActPharmacySupplyType"});
+        });
+      },function(e){
+          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "addActPharmacySupplyType"});
+      });
+    },
+		actSubstanceAdminSubstitutionCode	: function addActSubstanceAdminSubstitutionCode(req, res){	
+      
+      var code = req.body.code;
+      var display = req.body.display;
+      var definition = req.body.definition;
+     
+      var query = "UPSERT INTO BACIRO_FHIR.ACT_SUBSTANCE_ADMIN_SUBSTITUTION_CODE(id, code, display, definition)"+
+        " VALUES (NEXT VALUE FOR BACIRO_FHIR.ACT_SUBSTANCE_ADMIN_SUBSTITUTION_CODE,'"+code+"','"+display+"','"+definition+"')";
+			
+      db.upsert(query,function(succes){
+        var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.ACT_SUBSTANCE_ADMIN_SUBSTITUTION_CODE WHERE code = '" + code + "' ";
+        db.query(query,function(dataJson){
+          rez = lowercaseObject(dataJson);
+          res.json({"err_code":0,"data":rez});
+        },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "addActSubstanceAdminSubstitutionCode"});
+        });
+      },function(e){
+          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "addActSubstanceAdminSubstitutionCode"});
+      });
+    },
+		actSubstanceAdminSubstitutionReason	: function addActSubstanceAdminSubstitutionReason(req, res){	
+      
+      var code = req.body.code;
+      var display = req.body.display;
+      var definition = req.body.definition;
+     
+      var query = "UPSERT INTO BACIRO_FHIR.ACT_SUBSTANCE_ADMIN_SUBSTITUTION_REASON(id, code, display, definition)"+
+        " VALUES (NEXT VALUE FOR BACIRO_FHIR.ACT_SUBSTANCE_ADMIN_SUBSTITUTION_REASON,'"+code+"','"+display+"','"+definition+"')";
+			
+      db.upsert(query,function(succes){
+        var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.ACT_SUBSTANCE_ADMIN_SUBSTITUTION_REASON WHERE code = '" + code + "' ";
+        db.query(query,function(dataJson){
+          rez = lowercaseObject(dataJson);
+          res.json({"err_code":0,"data":rez});
+        },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "addActSubstanceAdminSubstitutionReason"});
+        });
+      },function(e){
+          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "addActSubstanceAdminSubstitutionReason"});
+      });
+    },
+		
+		medicationRequestStatus	: function addMedicationRequestStatus(req, res){	
+      
+      var code = req.body.code;
+      var display = req.body.display;
+      var definition = req.body.definition;
+     
+      var query = "UPSERT INTO BACIRO_FHIR.MEDICATION_REQUEST_STATUS(id, code, display, definition)"+
+        " VALUES (NEXT VALUE FOR BACIRO_FHIR.MEDICATION_REQUEST_STATUS,'"+code+"','"+display+"','"+definition+"')";
+			
+      db.upsert(query,function(succes){
+        var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.MEDICATION_REQUEST_STATUS WHERE code = '" + code + "' ";
+        db.query(query,function(dataJson){
+          rez = lowercaseObject(dataJson);
+          res.json({"err_code":0,"data":rez});
+        },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "addMedicationRequestStatus"});
+        });
+      },function(e){
+          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "addMedicationRequestStatus"});
+      });
+    },
+		medicationRequestIntent	: function addMedicationRequestIntent(req, res){	
+      
+      var code = req.body.code;
+      var display = req.body.display;
+      var definition = req.body.definition;
+     
+      var query = "UPSERT INTO BACIRO_FHIR.MEDICATION_REQUEST_INTENT(id, code, display, definition)"+
+        " VALUES (NEXT VALUE FOR BACIRO_FHIR.MEDICATION_REQUEST_INTENT,'"+code+"','"+display+"','"+definition+"')";
+			
+      db.upsert(query,function(succes){
+        var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.MEDICATION_REQUEST_INTENT WHERE code = '" + code + "' ";
+        db.query(query,function(dataJson){
+          rez = lowercaseObject(dataJson);
+          res.json({"err_code":0,"data":rez});
+        },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "addMedicationRequestIntent"});
+        });
+      },function(e){
+          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "addMedicationRequestIntent"});
+      });
+    },
+		medicationRequestCategory	: function addMedicationRequestCategory(req, res){	
+      
+      var code = req.body.code;
+      var display = req.body.display;
+      var definition = req.body.definition;
+     
+      var query = "UPSERT INTO BACIRO_FHIR.MEDICATION_REQUEST_CATEGORY(id, code, display, definition)"+
+        " VALUES (NEXT VALUE FOR BACIRO_FHIR.MEDICATION_REQUEST_CATEGORY,'"+code+"','"+display+"','"+definition+"')";
+			
+      db.upsert(query,function(succes){
+        var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.MEDICATION_REQUEST_CATEGORY WHERE code = '" + code + "' ";
+        db.query(query,function(dataJson){
+          rez = lowercaseObject(dataJson);
+          res.json({"err_code":0,"data":rez});
+        },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "addMedicationRequestCategory"});
+        });
+      },function(e){
+          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "addMedicationRequestCategory"});
+      });
+    },
+		medicationRequestPriority	: function addMedicationRequestPriority(req, res){	
+      
+      var code = req.body.code;
+      var display = req.body.display;
+      var definition = req.body.definition;
+     
+      var query = "UPSERT INTO BACIRO_FHIR.MEDICATION_REQUEST_PRIORITY(id, code, display, definition)"+
+        " VALUES (NEXT VALUE FOR BACIRO_FHIR.MEDICATION_REQUEST_PRIORITY,'"+code+"','"+display+"','"+definition+"')";
+			
+      db.upsert(query,function(succes){
+        var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.MEDICATION_REQUEST_PRIORITY WHERE code = '" + code + "' ";
+        db.query(query,function(dataJson){
+          rez = lowercaseObject(dataJson);
+          res.json({"err_code":0,"data":rez});
+        },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "addMedicationRequestPriority"});
+        });
+      },function(e){
+          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "addMedicationRequestPriority"});
+      });
+    },
+		medicationCodes	: function addMedicationCodes(req, res){	
+      
+      var code = req.body.code;
+      var display = req.body.display;
+      var definition = req.body.definition;
+     
+      var query = "UPSERT INTO BACIRO_FHIR.MEDICATION_CODES(id, code, display, definition)"+
+        " VALUES (NEXT VALUE FOR BACIRO_FHIR.MEDICATION_CODES,'"+code+"','"+display+"','"+definition+"')";
+			
+      db.upsert(query,function(succes){
+        var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.MEDICATION_CODES WHERE code = '" + code + "' ";
+        db.query(query,function(dataJson){
+          rez = lowercaseObject(dataJson);
+          res.json({"err_code":0,"data":rez});
+        },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "addMedicationCodes"});
+        });
+      },function(e){
+          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "addMedicationCodes"});
+      });
+    },
+		substanceAdminSubstitutionReason	: function addSubstanceAdminSubstitutionReason(req, res){	
+      
+      var code = req.body.code;
+      var display = req.body.display;
+      var definition = req.body.definition;
+     
+      var query = "UPSERT INTO BACIRO_FHIR.SUBSTANCE_ADMIN_SUBSTITUTION_REASON(id, code, display, definition)"+
+        " VALUES (NEXT VALUE FOR BACIRO_FHIR.SUBSTANCE_ADMIN_SUBSTITUTION_REASON,'"+code+"','"+display+"','"+definition+"')";
+			
+      db.upsert(query,function(succes){
+        var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.SUBSTANCE_ADMIN_SUBSTITUTION_REASON WHERE code = '" + code + "' ";
+        db.query(query,function(dataJson){
+          rez = lowercaseObject(dataJson);
+          res.json({"err_code":0,"data":rez});
+        },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "addSubstanceAdminSubstitutionReason"});
+        });
+      },function(e){
+          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "addSubstanceAdminSubstitutionReason"});
+      });
+    },
+		
+		medicationStatementStatus	: function addMedicationStatementStatus(req, res){	
+      
+      var code = req.body.code;
+      var display = req.body.display;
+      var definition = req.body.definition;
+     
+      var query = "UPSERT INTO BACIRO_FHIR.MEDICATION_STATEMENT_STATUS(id, code, display, definition)"+
+        " VALUES (NEXT VALUE FOR BACIRO_FHIR.MEDICATION_STATEMENT_STATUS,'"+code+"','"+display+"','"+definition+"')";
+			
+      db.upsert(query,function(succes){
+        var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.MEDICATION_STATEMENT_STATUS WHERE code = '" + code + "' ";
+        db.query(query,function(dataJson){
+          rez = lowercaseObject(dataJson);
+          res.json({"err_code":0,"data":rez});
+        },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "addMedicationStatementStatus"});
+        });
+      },function(e){
+          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "addMedicationStatementStatus"});
+      });
+    },
+		medicationStatementCategory	: function addMedicationStatementCategory(req, res){	
+      
+      var code = req.body.code;
+      var display = req.body.display;
+      var definition = req.body.definition;
+     
+      var query = "UPSERT INTO BACIRO_FHIR.MEDICATION_STATEMENT_CATEGORY(id, code, display, definition)"+
+        " VALUES (NEXT VALUE FOR BACIRO_FHIR.MEDICATION_STATEMENT_CATEGORY,'"+code+"','"+display+"','"+definition+"')";
+			
+      db.upsert(query,function(succes){
+        var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.MEDICATION_STATEMENT_CATEGORY WHERE code = '" + code + "' ";
+        db.query(query,function(dataJson){
+          rez = lowercaseObject(dataJson);
+          res.json({"err_code":0,"data":rez});
+        },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "addMedicationStatementCategory"});
+        });
+      },function(e){
+          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "addMedicationStatementCategory"});
+      });
+    },
+		medicationStatementTaken	: function addMedicationStatementTaken(req, res){	
+      
+      var code = req.body.code;
+      var display = req.body.display;
+      var definition = req.body.definition;
+     
+      var query = "UPSERT INTO BACIRO_FHIR.MEDICATION_STATEMENT_TAKEN(id, code, display, definition)"+
+        " VALUES (NEXT VALUE FOR BACIRO_FHIR.MEDICATION_STATEMENT_TAKEN,'"+code+"','"+display+"','"+definition+"')";
+			
+      db.upsert(query,function(succes){
+        var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.MEDICATION_STATEMENT_TAKEN WHERE code = '" + code + "' ";
+        db.query(query,function(dataJson){
+          rez = lowercaseObject(dataJson);
+          res.json({"err_code":0,"data":rez});
+        },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "addMedicationStatementTaken"});
+        });
+      },function(e){
+          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "addMedicationStatementTaken"});
+      });
+    },
+		reasonMedicationNotTakenCodes	: function addReasonMedicationNotTakenCodes(req, res){	
+      
+      var code = req.body.code;
+      var display = req.body.display;
+      var definition = req.body.definition;
+     
+      var query = "UPSERT INTO BACIRO_FHIR.REASON_MEDICATION_NOT_TAKEN_CODES(id, code, display, definition)"+
+        " VALUES (NEXT VALUE FOR BACIRO_FHIR.REASON_MEDICATION_NOT_TAKEN_CODES,'"+code+"','"+display+"','"+definition+"')";
+			
+      db.upsert(query,function(succes){
+        var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.REASON_MEDICATION_NOT_TAKEN_CODES WHERE code = '" + code + "' ";
+        db.query(query,function(dataJson){
+          rez = lowercaseObject(dataJson);
+          res.json({"err_code":0,"data":rez});
+        },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "addReasonMedicationNotTakenCodes"});
+        });
+      },function(e){
+          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "addReasonMedicationNotTakenCodes"});
+      });
+    },
 	},
 	put: {
 		identityAssuranceLevel: function updateIdentityAssuranceLevel(req, res) {
@@ -17101,7 +19061,1553 @@ var controller = {
       },function(e){
           res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "updateDeviceKind"});
       });
-    }
+    },
+		immunizationStatus: function updateImmunizationStatus(req, res){
+      var _id = req.params._id;
+      var code = req.body.code;
+      var display = req.body.display;
+      var definition = req.body.definition;
+      
+      //susun query update
+      var column = "";
+      var values = "";
+
+      if(typeof code !== 'undefined'){
+        column += 'code,';
+        values += "'" +code +"',";
+      }
+
+      if(typeof display !== 'undefined'){
+        column += 'display,';
+        values += "'" +display +"',";
+      }
+
+      if(typeof definition !== 'undefined'){
+        column += 'definition,';
+        values += "'" +definition +"',";
+      }
+
+
+      var query = "UPSERT INTO BACIRO_FHIR.IMMUNIZATION_STATUS(id," + column.slice(0, -1) + ") SELECT id, " + values.slice(0, -1) + " FROM BACIRO_FHIR.IMMUNIZATION_STATUS WHERE id = " + _id;
+      
+      db.upsert(query,function(succes){
+        var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.IMMUNIZATION_STATUS WHERE id = "+ _id;
+
+        db.query(query,function(dataJson){
+          rez = lowercaseObject(dataJson);
+          res.json({"err_code":0,"data":rez});
+        },function(e){
+          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "updateImmunizationStatus"});
+        });
+      },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "updateImmunizationStatus"});
+      });
+    },
+		vaccineCode: function updateVaccineCode(req, res){
+      var _id = req.params._id;
+      var code = req.body.code;
+      var display = req.body.display;
+      var system = req.body.system;
+      
+      //susun query update
+      var column = "";
+      var values = "";
+
+      if(typeof code !== 'undefined'){
+        column += 'code,';
+        values += "'" +code +"',";
+      }
+
+      if(typeof display !== 'undefined'){
+        column += 'display,';
+        values += "'" +display +"',";
+      }
+
+      if(typeof system !== 'undefined'){
+        column += 'system,';
+        values += "'" +system +"',";
+      }
+
+
+      var query = "UPSERT INTO BACIRO_FHIR.VACCINE_CODE(id," + column.slice(0, -1) + ") SELECT id, " + values.slice(0, -1) + " FROM BACIRO_FHIR.VACCINE_CODE WHERE id = " + _id;
+      
+      db.upsert(query,function(succes){
+        var query = "SELECT id, code, system, display FROM BACIRO_FHIR.VACCINE_CODE WHERE id = "+ _id;
+
+        db.query(query,function(dataJson){
+          rez = lowercaseObject(dataJson);
+          res.json({"err_code":0,"data":rez});
+        },function(e){
+          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "updateVaccineCode"});
+        });
+      },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "updateVaccineCode"});
+      });
+    },
+		immunizationOrigin: function updateImmunizationOrigin(req, res){
+      var _id = req.params._id;
+      var code = req.body.code;
+      var display = req.body.display;
+      var definition = req.body.definition;
+      
+      //susun query update
+      var column = "";
+      var values = "";
+
+      if(typeof code !== 'undefined'){
+        column += 'code,';
+        values += "'" +code +"',";
+      }
+
+      if(typeof display !== 'undefined'){
+        column += 'display,';
+        values += "'" +display +"',";
+      }
+
+      if(typeof definition !== 'undefined'){
+        column += 'definition,';
+        values += "'" +definition +"',";
+      }
+
+
+      var query = "UPSERT INTO BACIRO_FHIR.IMMUNIZATION_ORIGIN(id," + column.slice(0, -1) + ") SELECT id, " + values.slice(0, -1) + " FROM BACIRO_FHIR.IMMUNIZATION_ORIGIN WHERE id = " + _id;
+      
+      db.upsert(query,function(succes){
+        var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.IMMUNIZATION_ORIGIN WHERE id = "+ _id;
+
+        db.query(query,function(dataJson){
+          rez = lowercaseObject(dataJson);
+          res.json({"err_code":0,"data":rez});
+        },function(e){
+          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "updateImmunizationOrigin"});
+        });
+      },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "updateImmunizationOrigin"});
+      });
+    },
+		immunizationSite: function updateImmunizationSite(req, res){
+      var _id = req.params._id;
+      var code = req.body.code;
+      var display = req.body.display;
+      var definition = req.body.definition;
+      
+      //susun query update
+      var column = "";
+      var values = "";
+
+      if(typeof code !== 'undefined'){
+        column += 'code,';
+        values += "'" +code +"',";
+      }
+
+      if(typeof display !== 'undefined'){
+        column += 'display,';
+        values += "'" +display +"',";
+      }
+
+      if(typeof definition !== 'undefined'){
+        column += 'definition,';
+        values += "'" +definition +"',";
+      }
+
+
+      var query = "UPSERT INTO BACIRO_FHIR.IMMUNIZATION_SITE(id," + column.slice(0, -1) + ") SELECT id, " + values.slice(0, -1) + " FROM BACIRO_FHIR.IMMUNIZATION_SITE WHERE id = " + _id;
+      
+      db.upsert(query,function(succes){
+        var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.IMMUNIZATION_SITE WHERE id = "+ _id;
+
+        db.query(query,function(dataJson){
+          rez = lowercaseObject(dataJson);
+          res.json({"err_code":0,"data":rez});
+        },function(e){
+          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "updateImmunizationSite"});
+        });
+      },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "updateImmunizationSite"});
+      });
+    },
+		immunizationRoute: function updateImmunizationRoute(req, res){
+      var _id = req.params._id;
+      var code = req.body.code;
+      var display = req.body.display;
+      var definition = req.body.definition;
+      
+      //susun query update
+      var column = "";
+      var values = "";
+
+      if(typeof code !== 'undefined'){
+        column += 'code,';
+        values += "'" +code +"',";
+      }
+
+      if(typeof display !== 'undefined'){
+        column += 'display,';
+        values += "'" +display +"',";
+      }
+
+      if(typeof definition !== 'undefined'){
+        column += 'definition,';
+        values += "'" +definition +"',";
+      }
+
+
+      var query = "UPSERT INTO BACIRO_FHIR.IMMUNIZATION_ROUTE(id," + column.slice(0, -1) + ") SELECT id, " + values.slice(0, -1) + " FROM BACIRO_FHIR.IMMUNIZATION_ROUTE WHERE id = " + _id;
+      
+      db.upsert(query,function(succes){
+        var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.IMMUNIZATION_ROUTE WHERE id = "+ _id;
+
+        db.query(query,function(dataJson){
+          rez = lowercaseObject(dataJson);
+          res.json({"err_code":0,"data":rez});
+        },function(e){
+          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "updateImmunizationRoute"});
+        });
+      },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "updateImmunizationRoute"});
+      });
+    },
+		immunizationRole: function updateImmunizationRole(req, res){
+      var _id = req.params._id;
+      var code = req.body.code;
+      var display = req.body.display;
+      
+      //susun query update
+      var column = "";
+      var values = "";
+
+      if(typeof code !== 'undefined'){
+        column += 'code,';
+        values += "'" +code +"',";
+      }
+
+      if(typeof display !== 'undefined'){
+        column += 'display,';
+        values += "'" +display +"',";
+      }
+
+
+      var query = "UPSERT INTO BACIRO_FHIR.IMMUNIZATION_ROLE(id," + column.slice(0, -1) + ") SELECT id, " + values.slice(0, -1) + " FROM BACIRO_FHIR.IMMUNIZATION_ROLE WHERE id = " + _id;
+      
+      db.upsert(query,function(succes){
+        var query = "SELECT id, code, display FROM BACIRO_FHIR.IMMUNIZATION_ROLE WHERE id = "+ _id;
+
+        db.query(query,function(dataJson){
+          rez = lowercaseObject(dataJson);
+          res.json({"err_code":0,"data":rez});
+        },function(e){
+          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "updateImmunizationRole"});
+        });
+      },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "updateImmunizationRole"});
+      });
+    },
+		immunizationReason: function updateImmunizationReason(req, res){
+      var _id = req.params._id;
+      var code = req.body.code;
+      var display = req.body.display;
+      var definition = req.body.definition;
+      
+      //susun query update
+      var column = "";
+      var values = "";
+
+      if(typeof code !== 'undefined'){
+        column += 'code,';
+        values += "'" +code +"',";
+      }
+
+      if(typeof display !== 'undefined'){
+        column += 'display,';
+        values += "'" +display +"',";
+      }
+
+
+      var query = "UPSERT INTO BACIRO_FHIR.IMMUNIZATION_REASON(id," + column.slice(0, -1) + ") SELECT id, " + values.slice(0, -1) + " FROM BACIRO_FHIR.IMMUNIZATION_REASON WHERE id = " + _id;
+      
+      db.upsert(query,function(succes){
+        var query = "SELECT id, code, display FROM BACIRO_FHIR.IMMUNIZATION_REASON WHERE id = "+ _id;
+
+        db.query(query,function(dataJson){
+          rez = lowercaseObject(dataJson);
+          res.json({"err_code":0,"data":rez});
+        },function(e){
+          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "updateImmunizationReason"});
+        });
+      },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "updateImmunizationReason"});
+      });
+    },
+		noImmunizationReason: function updateNoImmunizationReason(req, res){
+      var _id = req.params._id;
+      var code = req.body.code;
+			var system = req.body.system;
+      var display = req.body.display;
+      var definition = req.body.definition;
+      
+      //susun query update
+      var column = "";
+      var values = "";
+
+      if(typeof code !== 'undefined'){
+        column += 'code,';
+        values += "'" +code +"',";
+      }
+			
+			if(typeof system !== 'system'){
+        column += 'system,';
+        values += "'" +system +"',";
+      }
+
+      if(typeof display !== 'undefined'){
+        column += 'display,';
+        values += "'" +display +"',";
+      }
+
+      if(typeof definition !== 'undefined'){
+        column += 'definition,';
+        values += "'" +definition +"',";
+      }
+
+
+      var query = "UPSERT INTO BACIRO_FHIR.NO_IMMUNIZATION_REASON(id," + column.slice(0, -1) + ") SELECT id, " + values.slice(0, -1) + " FROM BACIRO_FHIR.NO_IMMUNIZATION_REASON WHERE id = " + _id;
+      
+      db.upsert(query,function(succes){
+        var query = "SELECT id, code, system, display, definition FROM BACIRO_FHIR.NO_IMMUNIZATION_REASON WHERE id = "+ _id;
+
+        db.query(query,function(dataJson){
+          rez = lowercaseObject(dataJson);
+          res.json({"err_code":0,"data":rez});
+        },function(e){
+          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "updateNoImmunizationReason"});
+        });
+      },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "updateNoImmunizationReason"});
+      });
+    },
+		vaccinationProtocolDoseTarget: function updateVaccinationProtocolDoseTarget(req, res){
+      var _id = req.params._id;
+      var code = req.body.code;
+      var display = req.body.display;
+      
+      //susun query update
+      var column = "";
+      var values = "";
+
+      if(typeof code !== 'undefined'){
+        column += 'code,';
+        values += "'" +code +"',";
+      }
+
+      if(typeof display !== 'undefined'){
+        column += 'display,';
+        values += "'" +display +"',";
+      }
+
+
+      var query = "UPSERT INTO BACIRO_FHIR.VACCINATION_PROTOCOL_DOSE_TARGET(id," + column.slice(0, -1) + ") SELECT id, " + values.slice(0, -1) + " FROM BACIRO_FHIR.VACCINATION_PROTOCOL_DOSE_TARGET WHERE id = " + _id;
+      
+      db.upsert(query,function(succes){
+        var query = "SELECT id, code, display FROM BACIRO_FHIR.VACCINATION_PROTOCOL_DOSE_TARGET WHERE id = "+ _id;
+
+        db.query(query,function(dataJson){
+          rez = lowercaseObject(dataJson);
+          res.json({"err_code":0,"data":rez});
+        },function(e){
+          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "updateVaccinationProtocolDoseTarget"});
+        });
+      },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "updateVaccinationProtocolDoseTarget"});
+      });
+    },
+		vaccinationProtocolDoseStatus: function updateVaccinationProtocolDoseStatus(req, res){
+      var _id = req.params._id;
+      var code = req.body.code;
+      var display = req.body.display;
+      var definition = req.body.definition;
+      
+      //susun query update
+      var column = "";
+      var values = "";
+
+      if(typeof code !== 'undefined'){
+        column += 'code,';
+        values += "'" +code +"',";
+      }
+
+      if(typeof display !== 'undefined'){
+        column += 'display,';
+        values += "'" +display +"',";
+      }
+
+      if(typeof definition !== 'undefined'){
+        column += 'definition,';
+        values += "'" +definition +"',";
+      }
+
+
+      var query = "UPSERT INTO BACIRO_FHIR.VACCINATION_PROTOCOL_DOSE_STATUS(id," + column.slice(0, -1) + ") SELECT id, " + values.slice(0, -1) + " FROM BACIRO_FHIR.VACCINATION_PROTOCOL_DOSE_STATUS WHERE id = " + _id;
+      
+      db.upsert(query,function(succes){
+        var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.VACCINATION_PROTOCOL_DOSE_STATUS WHERE id = "+ _id;
+
+        db.query(query,function(dataJson){
+          rez = lowercaseObject(dataJson);
+          res.json({"err_code":0,"data":rez});
+        },function(e){
+          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "updateVaccinationProtocolDoseStatus"});
+        });
+      },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "updateVaccinationProtocolDoseStatus"});
+      });
+    },
+		vaccinationProtocolDoseStatusReason: function updateVaccinationProtocolDoseStatusReason(req, res){
+      var _id = req.params._id;
+      var code = req.body.code;
+      var display = req.body.display;
+      var definition = req.body.definition;
+      
+      //susun query update
+      var column = "";
+      var values = "";
+
+      if(typeof code !== 'undefined'){
+        column += 'code,';
+        values += "'" +code +"',";
+      }
+
+      if(typeof display !== 'undefined'){
+        column += 'display,';
+        values += "'" +display +"',";
+      }
+
+      if(typeof definition !== 'undefined'){
+        column += 'definition,';
+        values += "'" +definition +"',";
+      }
+
+
+      var query = "UPSERT INTO BACIRO_FHIR.VACCINATION_PROTOCOL_DOSE_STATUS_REASON(id," + column.slice(0, -1) + ") SELECT id, " + values.slice(0, -1) + " FROM BACIRO_FHIR.VACCINATION_PROTOCOL_DOSE_STATUS_REASON WHERE id = " + _id;
+      
+      db.upsert(query,function(succes){
+        var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.VACCINATION_PROTOCOL_DOSE_STATUS_REASON WHERE id = "+ _id;
+
+        db.query(query,function(dataJson){
+          rez = lowercaseObject(dataJson);
+          res.json({"err_code":0,"data":rez});
+        },function(e){
+          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "updateVaccinationProtocolDoseStatusReason"});
+        });
+      },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "updateVaccinationProtocolDoseStatusReason"});
+      });
+    },
+		immunizationRecommendationTargetDisease: function updateImmunizationRecommendationTargetDisease(req, res){
+      var _id = req.params._id;
+      var code = req.body.code;
+      var display = req.body.display;
+      
+      //susun query update
+      var column = "";
+      var values = "";
+
+      if(typeof code !== 'undefined'){
+        column += 'code,';
+        values += "'" +code +"',";
+      }
+
+      if(typeof display !== 'undefined'){
+        column += 'display,';
+        values += "'" +display +"',";
+      }
+
+
+      var query = "UPSERT INTO BACIRO_FHIR.IMMUNIZATION_RECOMMENDATION_TARGET_DISEASE(id," + column.slice(0, -1) + ") SELECT id, " + values.slice(0, -1) + " FROM BACIRO_FHIR.IMMUNIZATION_RECOMMENDATION_TARGET_DISEASE WHERE id = " + _id;
+      
+      db.upsert(query,function(succes){
+        var query = "SELECT id, code, display FROM BACIRO_FHIR.IMMUNIZATION_RECOMMENDATION_TARGET_DISEASE WHERE id = "+ _id;
+
+        db.query(query,function(dataJson){
+          rez = lowercaseObject(dataJson);
+          res.json({"err_code":0,"data":rez});
+        },function(e){
+          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "updateImmunizationRecommendationTargetDisease"});
+        });
+      },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "updateImmunizationRecommendationTargetDisease"});
+      });
+    },
+		immunizationRecommendationStatus: function updateImmunizationRecommendationStatus(req, res){
+      var _id = req.params._id;
+      var code = req.body.code;
+      var display = req.body.display;
+      var definition = req.body.definition;
+      
+      //susun query update
+      var column = "";
+      var values = "";
+
+      if(typeof code !== 'undefined'){
+        column += 'code,';
+        values += "'" +code +"',";
+      }
+
+      if(typeof display !== 'undefined'){
+        column += 'display,';
+        values += "'" +display +"',";
+      }
+
+      if(typeof definition !== 'undefined'){
+        column += 'definition,';
+        values += "'" +definition +"',";
+      }
+
+
+      var query = "UPSERT INTO BACIRO_FHIR.IMMUNIZATION_RECOMMENDATION_STATUS(id," + column.slice(0, -1) + ") SELECT id, " + values.slice(0, -1) + " FROM BACIRO_FHIR.IMMUNIZATION_RECOMMENDATION_STATUS WHERE id = " + _id;
+      
+      db.upsert(query,function(succes){
+        var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.IMMUNIZATION_RECOMMENDATION_STATUS WHERE id = "+ _id;
+
+        db.query(query,function(dataJson){
+          rez = lowercaseObject(dataJson);
+          res.json({"err_code":0,"data":rez});
+        },function(e){
+          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "updateImmunizationRecommendationStatus"});
+        });
+      },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "updateImmunizationRecommendationStatus"});
+      });
+    },
+		immunizationRecommendationDateCriterion: function updateImmunizationRecommendationDateCriterion(req, res){
+      var _id = req.params._id;
+      var code = req.body.code;
+      var display = req.body.display;
+      var definition = req.body.definition;
+      
+      //susun query update
+      var column = "";
+      var values = "";
+
+      if(typeof code !== 'undefined'){
+        column += 'code,';
+        values += "'" +code +"',";
+      }
+
+      if(typeof display !== 'undefined'){
+        column += 'display,';
+        values += "'" +display +"',";
+      }
+
+      if(typeof definition !== 'undefined'){
+        column += 'definition,';
+        values += "'" +definition +"',";
+      }
+
+
+      var query = "UPSERT INTO BACIRO_FHIR.IMMUNIZATION_RECOMMENDATION_DATE_CRITERION(id," + column.slice(0, -1) + ") SELECT id, " + values.slice(0, -1) + " FROM BACIRO_FHIR.IMMUNIZATION_RECOMMENDATION_DATE_CRITERION WHERE id = " + _id;
+      
+      db.upsert(query,function(succes){
+        var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.IMMUNIZATION_RECOMMENDATION_DATE_CRITERION WHERE id = "+ _id;
+
+        db.query(query,function(dataJson){
+          rez = lowercaseObject(dataJson);
+          res.json({"err_code":0,"data":rez});
+        },function(e){
+          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "updateImmunizationRecommendationDateCriterion"});
+        });
+      },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "updateImmunizationRecommendationDateCriterion"});
+      });
+    },
+		
+		medicationStatus: function updateMedicationStatus(req, res){
+      var _id = req.params._id;
+      var code = req.body.code;
+      var display = req.body.display;
+      var definition = req.body.definition;
+      
+      //susun query update
+      var column = "";
+      var values = "";
+
+      if(typeof code !== 'undefined'){
+        column += 'code,';
+        values += "'" +code +"',";
+      }
+
+      if(typeof display !== 'undefined'){
+        column += 'display,';
+        values += "'" +display +"',";
+      }
+
+      if(typeof definition !== 'undefined'){
+        column += 'definition,';
+        values += "'" +definition +"',";
+      }
+
+
+      var query = "UPSERT INTO BACIRO_FHIR.MEDICATION_STATUS(id," + column.slice(0, -1) + ") SELECT id, " + values.slice(0, -1) + " FROM BACIRO_FHIR.MEDICATION_STATUS WHERE id = " + _id;
+      
+      db.upsert(query,function(succes){
+        var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.MEDICATION_STATUS WHERE id = "+ _id;
+
+        db.query(query,function(dataJson){
+          rez = lowercaseObject(dataJson);
+          res.json({"err_code":0,"data":rez});
+        },function(e){
+          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "updateMedicationStatus"});
+        });
+      },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "updateMedicationStatus"});
+      });
+    },
+		medicationFormCodes: function updateMedicationFormCodes(req, res){
+      var _id = req.params._id;
+      var code = req.body.code;
+      var display = req.body.display;
+      var definition = req.body.definition;
+      
+      //susun query update
+      var column = "";
+      var values = "";
+
+      if(typeof code !== 'undefined'){
+        column += 'code,';
+        values += "'" +code +"',";
+      }
+
+      if(typeof display !== 'undefined'){
+        column += 'display,';
+        values += "'" +display +"',";
+      }
+
+      if(typeof definition !== 'undefined'){
+        column += 'definition,';
+        values += "'" +definition +"',";
+      }
+
+
+      var query = "UPSERT INTO BACIRO_FHIR.MEDICATION_FORM_CODES(id," + column.slice(0, -1) + ") SELECT id, " + values.slice(0, -1) + " FROM BACIRO_FHIR.MEDICATION_FORM_CODES WHERE id = " + _id;
+      
+      db.upsert(query,function(succes){
+        var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.MEDICATION_FORM_CODES WHERE id = "+ _id;
+
+        db.query(query,function(dataJson){
+          rez = lowercaseObject(dataJson);
+          res.json({"err_code":0,"data":rez});
+        },function(e){
+          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "updateMedicationFormCodes"});
+        });
+      },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "updateMedicationFormCodes"});
+      });
+    },
+		medicationPackageForm: function updateMedicationPackageForm(req, res){
+      var _id = req.params._id;
+      var code = req.body.code;
+      var display = req.body.display;
+      var definition = req.body.definition;
+      
+      //susun query update
+      var column = "";
+      var values = "";
+
+      if(typeof code !== 'undefined'){
+        column += 'code,';
+        values += "'" +code +"',";
+      }
+
+      if(typeof display !== 'undefined'){
+        column += 'display,';
+        values += "'" +display +"',";
+      }
+
+      if(typeof definition !== 'undefined'){
+        column += 'definition,';
+        values += "'" +definition +"',";
+      }
+
+
+      var query = "UPSERT INTO BACIRO_FHIR.MEDICATION_PACKAGE_FORM(id," + column.slice(0, -1) + ") SELECT id, " + values.slice(0, -1) + " FROM BACIRO_FHIR.MEDICATION_PACKAGE_FORM WHERE id = " + _id;
+      
+      db.upsert(query,function(succes){
+        var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.MEDICATION_PACKAGE_FORM WHERE id = "+ _id;
+
+        db.query(query,function(dataJson){
+          rez = lowercaseObject(dataJson);
+          res.json({"err_code":0,"data":rez});
+        },function(e){
+          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "updateMedicationPackageForm"});
+        });
+      },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "updateMedicationPackageForm"});
+      });
+    },
+		
+		medicationAdminStatus: function updateMedicationAdminStatus(req, res){
+      var _id = req.params._id;
+      var code = req.body.code;
+      var display = req.body.display;
+      var definition = req.body.definition;
+      
+      //susun query update
+      var column = "";
+      var values = "";
+
+      if(typeof code !== 'undefined'){
+        column += 'code,';
+        values += "'" +code +"',";
+      }
+
+      if(typeof display !== 'undefined'){
+        column += 'display,';
+        values += "'" +display +"',";
+      }
+
+      if(typeof definition !== 'undefined'){
+        column += 'definition,';
+        values += "'" +definition +"',";
+      }
+
+
+      var query = "UPSERT INTO BACIRO_FHIR.MEDICATION_ADMIN_STATUS(id," + column.slice(0, -1) + ") SELECT id, " + values.slice(0, -1) + " FROM BACIRO_FHIR.MEDICATION_ADMIN_STATUS WHERE id = " + _id;
+      
+      db.upsert(query,function(succes){
+        var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.MEDICATION_ADMIN_STATUS WHERE id = "+ _id;
+
+        db.query(query,function(dataJson){
+          rez = lowercaseObject(dataJson);
+          res.json({"err_code":0,"data":rez});
+        },function(e){
+          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "updateMedicationAdminStatus"});
+        });
+      },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "updateMedicationAdminStatus"});
+      });
+    },
+		medicationAdminCategory: function updateMedicationAdminCategory(req, res){
+      var _id = req.params._id;
+      var code = req.body.code;
+      var display = req.body.display;
+      var definition = req.body.definition;
+      
+      //susun query update
+      var column = "";
+      var values = "";
+
+      if(typeof code !== 'undefined'){
+        column += 'code,';
+        values += "'" +code +"',";
+      }
+
+      if(typeof display !== 'undefined'){
+        column += 'display,';
+        values += "'" +display +"',";
+      }
+
+      if(typeof definition !== 'undefined'){
+        column += 'definition,';
+        values += "'" +definition +"',";
+      }
+
+
+      var query = "UPSERT INTO BACIRO_FHIR.MEDICATION_ADMIN_CATEGORY(id," + column.slice(0, -1) + ") SELECT id, " + values.slice(0, -1) + " FROM BACIRO_FHIR.MEDICATION_ADMIN_CATEGORY WHERE id = " + _id;
+      
+      db.upsert(query,function(succes){
+        var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.MEDICATION_ADMIN_CATEGORY WHERE id = "+ _id;
+
+        db.query(query,function(dataJson){
+          rez = lowercaseObject(dataJson);
+          res.json({"err_code":0,"data":rez});
+        },function(e){
+          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "updateMedicationAdminCategory"});
+        });
+      },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "updateMedicationAdminCategory"});
+      });
+    },
+		reasonMedicationNotGivenCodes: function updateReasonMedicationNotGivenCodes(req, res){
+      var _id = req.params._id;
+      var code = req.body.code;
+      var display = req.body.display;
+      var definition = req.body.definition;
+      
+      //susun query update
+      var column = "";
+      var values = "";
+
+      if(typeof code !== 'undefined'){
+        column += 'code,';
+        values += "'" +code +"',";
+      }
+
+      if(typeof display !== 'undefined'){
+        column += 'display,';
+        values += "'" +display +"',";
+      }
+
+      if(typeof definition !== 'undefined'){
+        column += 'definition,';
+        values += "'" +definition +"',";
+      }
+
+
+      var query = "UPSERT INTO BACIRO_FHIR.REASON_MEDICATION_NOT_GIVEN_CODES(id," + column.slice(0, -1) + ") SELECT id, " + values.slice(0, -1) + " FROM BACIRO_FHIR.REASON_MEDICATION_NOT_GIVEN_CODES WHERE id = " + _id;
+      
+      db.upsert(query,function(succes){
+        var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.REASON_MEDICATION_NOT_GIVEN_CODES WHERE id = "+ _id;
+
+        db.query(query,function(dataJson){
+          rez = lowercaseObject(dataJson);
+          res.json({"err_code":0,"data":rez});
+        },function(e){
+          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "updateReasonMedicationNotGivenCodes"});
+        });
+      },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "updateReasonMedicationNotGivenCodes"});
+      });
+    },
+		reasonMedicationGivenCodes: function updateReasonMedicationGivenCodes(req, res){
+      var _id = req.params._id;
+      var code = req.body.code;
+      var display = req.body.display;
+      var definition = req.body.definition;
+      
+      //susun query update
+      var column = "";
+      var values = "";
+
+      if(typeof code !== 'undefined'){
+        column += 'code,';
+        values += "'" +code +"',";
+      }
+
+      if(typeof display !== 'undefined'){
+        column += 'display,';
+        values += "'" +display +"',";
+      }
+
+      if(typeof definition !== 'undefined'){
+        column += 'definition,';
+        values += "'" +definition +"',";
+      }
+
+
+      var query = "UPSERT INTO BACIRO_FHIR.REASON_MEDICATION_GIVEN_CODES(id," + column.slice(0, -1) + ") SELECT id, " + values.slice(0, -1) + " FROM BACIRO_FHIR.REASON_MEDICATION_GIVEN_CODES WHERE id = " + _id;
+      
+      db.upsert(query,function(succes){
+        var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.REASON_MEDICATION_GIVEN_CODES WHERE id = "+ _id;
+
+        db.query(query,function(dataJson){
+          rez = lowercaseObject(dataJson);
+          res.json({"err_code":0,"data":rez});
+        },function(e){
+          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "updateReasonMedicationGivenCodes"});
+        });
+      },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "updateReasonMedicationGivenCodes"});
+      });
+    },
+		approachSiteCodes: function updateApproachSiteCodes(req, res){
+      var _id = req.params._id;
+      var code = req.body.code;
+      var display = req.body.display;
+      var definition = req.body.definition;
+      
+      //susun query update
+      var column = "";
+      var values = "";
+
+      if(typeof code !== 'undefined'){
+        column += 'code,';
+        values += "'" +code +"',";
+      }
+
+      if(typeof display !== 'undefined'){
+        column += 'display,';
+        values += "'" +display +"',";
+      }
+
+      if(typeof definition !== 'undefined'){
+        column += 'definition,';
+        values += "'" +definition +"',";
+      }
+
+
+      var query = "UPSERT INTO BACIRO_FHIR.APPROACH_SITE_CODES(id," + column.slice(0, -1) + ") SELECT id, " + values.slice(0, -1) + " FROM BACIRO_FHIR.APPROACH_SITE_CODES WHERE id = " + _id;
+      
+      db.upsert(query,function(succes){
+        var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.APPROACH_SITE_CODES WHERE id = "+ _id;
+
+        db.query(query,function(dataJson){
+          rez = lowercaseObject(dataJson);
+          res.json({"err_code":0,"data":rez});
+        },function(e){
+          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "updateApproachSiteCodes"});
+        });
+      },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "updateApproachSiteCodes"});
+      });
+    },
+		administrationMethodCodes: function updateAdministrationMethodCodes(req, res){
+      var _id = req.params._id;
+      var code = req.body.code;
+      var display = req.body.display;
+      var definition = req.body.definition;
+      
+      //susun query update
+      var column = "";
+      var values = "";
+
+      if(typeof code !== 'undefined'){
+        column += 'code,';
+        values += "'" +code +"',";
+      }
+
+      if(typeof display !== 'undefined'){
+        column += 'display,';
+        values += "'" +display +"',";
+      }
+
+      if(typeof definition !== 'undefined'){
+        column += 'definition,';
+        values += "'" +definition +"',";
+      }
+
+
+      var query = "UPSERT INTO BACIRO_FHIR.ADMINISTRATION_METHOD_CODES(id," + column.slice(0, -1) + ") SELECT id, " + values.slice(0, -1) + " FROM BACIRO_FHIR.ADMINISTRATION_METHOD_CODES WHERE id = " + _id;
+      
+      db.upsert(query,function(succes){
+        var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.ADMINISTRATION_METHOD_CODES WHERE id = "+ _id;
+
+        db.query(query,function(dataJson){
+          rez = lowercaseObject(dataJson);
+          res.json({"err_code":0,"data":rez});
+        },function(e){
+          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "updateAdministrationMethodCodes"});
+        });
+      },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "updateAdministrationMethodCodes"});
+      });
+    },
+		
+		medicationDispenseStatus: function updateMedicationDispenseStatus(req, res){
+      var _id = req.params._id;
+      var code = req.body.code;
+      var display = req.body.display;
+      var definition = req.body.definition;
+      
+      //susun query update
+      var column = "";
+      var values = "";
+
+      if(typeof code !== 'undefined'){
+        column += 'code,';
+        values += "'" +code +"',";
+      }
+
+      if(typeof display !== 'undefined'){
+        column += 'display,';
+        values += "'" +display +"',";
+      }
+
+      if(typeof definition !== 'undefined'){
+        column += 'definition,';
+        values += "'" +definition +"',";
+      }
+
+
+      var query = "UPSERT INTO BACIRO_FHIR.MEDICATION_DISPENSE_STATUS(id," + column.slice(0, -1) + ") SELECT id, " + values.slice(0, -1) + " FROM BACIRO_FHIR.MEDICATION_DISPENSE_STATUS WHERE id = " + _id;
+      
+      db.upsert(query,function(succes){
+        var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.MEDICATION_DISPENSE_STATUS WHERE id = "+ _id;
+
+        db.query(query,function(dataJson){
+          rez = lowercaseObject(dataJson);
+          res.json({"err_code":0,"data":rez});
+        },function(e){
+          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "updateMedicationDispenseStatus"});
+        });
+      },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "updateMedicationDispenseStatus"});
+      });
+    },
+		medicationDispenseCategory: function updateMedicationDispenseCategory(req, res){
+      var _id = req.params._id;
+      var code = req.body.code;
+      var display = req.body.display;
+      var definition = req.body.definition;
+      
+      //susun query update
+      var column = "";
+      var values = "";
+
+      if(typeof code !== 'undefined'){
+        column += 'code,';
+        values += "'" +code +"',";
+      }
+
+      if(typeof display !== 'undefined'){
+        column += 'display,';
+        values += "'" +display +"',";
+      }
+
+      if(typeof definition !== 'undefined'){
+        column += 'definition,';
+        values += "'" +definition +"',";
+      }
+
+
+      var query = "UPSERT INTO BACIRO_FHIR.MEDICATION_DISPENSE_CATEGORY(id," + column.slice(0, -1) + ") SELECT id, " + values.slice(0, -1) + " FROM BACIRO_FHIR.MEDICATION_DISPENSE_CATEGORY WHERE id = " + _id;
+      
+      db.upsert(query,function(succes){
+        var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.MEDICATION_DISPENSE_CATEGORY WHERE id = "+ _id;
+
+        db.query(query,function(dataJson){
+          rez = lowercaseObject(dataJson);
+          res.json({"err_code":0,"data":rez});
+        },function(e){
+          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "updateMedicationDispenseCategory"});
+        });
+      },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "updateMedicationDispenseCategory"});
+      });
+    },
+		actPharmacySupplyType: function updateActPharmacySupplyType(req, res){
+      var _id = req.params._id;
+      var code = req.body.code;
+      var display = req.body.display;
+      var definition = req.body.definition;
+      
+      //susun query update
+      var column = "";
+      var values = "";
+
+      if(typeof code !== 'undefined'){
+        column += 'code,';
+        values += "'" +code +"',";
+      }
+
+      if(typeof display !== 'undefined'){
+        column += 'display,';
+        values += "'" +display +"',";
+      }
+
+      if(typeof definition !== 'undefined'){
+        column += 'definition,';
+        values += "'" +definition +"',";
+      }
+
+
+      var query = "UPSERT INTO BACIRO_FHIR.ACT_PHARMACY_SUPPLY_TYPE(id," + column.slice(0, -1) + ") SELECT id, " + values.slice(0, -1) + " FROM BACIRO_FHIR.ACT_PHARMACY_SUPPLY_TYPE WHERE id = " + _id;
+      
+      db.upsert(query,function(succes){
+        var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.ACT_PHARMACY_SUPPLY_TYPE WHERE id = "+ _id;
+
+        db.query(query,function(dataJson){
+          rez = lowercaseObject(dataJson);
+          res.json({"err_code":0,"data":rez});
+        },function(e){
+          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "updateActPharmacySupplyType"});
+        });
+      },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "updateActPharmacySupplyType"});
+      });
+    },
+		actSubstanceAdminSubstitutionCode: function updateActSubstanceAdminSubstitutionCode(req, res){
+      var _id = req.params._id;
+      var code = req.body.code;
+      var display = req.body.display;
+      var definition = req.body.definition;
+      
+      //susun query update
+      var column = "";
+      var values = "";
+
+      if(typeof code !== 'undefined'){
+        column += 'code,';
+        values += "'" +code +"',";
+      }
+
+      if(typeof display !== 'undefined'){
+        column += 'display,';
+        values += "'" +display +"',";
+      }
+
+      if(typeof definition !== 'undefined'){
+        column += 'definition,';
+        values += "'" +definition +"',";
+      }
+
+
+      var query = "UPSERT INTO BACIRO_FHIR.ACT_SUBSTANCE_ADMIN_SUBSTITUTION_CODE(id," + column.slice(0, -1) + ") SELECT id, " + values.slice(0, -1) + " FROM BACIRO_FHIR.ACT_SUBSTANCE_ADMIN_SUBSTITUTION_CODE WHERE id = " + _id;
+      
+      db.upsert(query,function(succes){
+        var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.ACT_SUBSTANCE_ADMIN_SUBSTITUTION_CODE WHERE id = "+ _id;
+
+        db.query(query,function(dataJson){
+          rez = lowercaseObject(dataJson);
+          res.json({"err_code":0,"data":rez});
+        },function(e){
+          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "updateActSubstanceAdminSubstitutionCode"});
+        });
+      },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "updateActSubstanceAdminSubstitutionCode"});
+      });
+    },
+		actSubstanceAdminSubstitutionReason: function updateActSubstanceAdminSubstitutionReason(req, res){
+      var _id = req.params._id;
+      var code = req.body.code;
+      var display = req.body.display;
+      var definition = req.body.definition;
+      
+      //susun query update
+      var column = "";
+      var values = "";
+
+      if(typeof code !== 'undefined'){
+        column += 'code,';
+        values += "'" +code +"',";
+      }
+
+      if(typeof display !== 'undefined'){
+        column += 'display,';
+        values += "'" +display +"',";
+      }
+
+      if(typeof definition !== 'undefined'){
+        column += 'definition,';
+        values += "'" +definition +"',";
+      }
+
+
+      var query = "UPSERT INTO BACIRO_FHIR.ACT_SUBSTANCE_ADMIN_SUBSTITUTION_REASON(id," + column.slice(0, -1) + ") SELECT id, " + values.slice(0, -1) + " FROM BACIRO_FHIR.ACT_SUBSTANCE_ADMIN_SUBSTITUTION_REASON WHERE id = " + _id;
+      
+      db.upsert(query,function(succes){
+        var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.ACT_SUBSTANCE_ADMIN_SUBSTITUTION_REASON WHERE id = "+ _id;
+
+        db.query(query,function(dataJson){
+          rez = lowercaseObject(dataJson);
+          res.json({"err_code":0,"data":rez});
+        },function(e){
+          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "updateActSubstanceAdminSubstitutionReason"});
+        });
+      },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "updateActSubstanceAdminSubstitutionReason"});
+      });
+    },
+		
+		medicationRequestStatus: function updateMedicationRequestStatus(req, res){
+      var _id = req.params._id;
+      var code = req.body.code;
+      var display = req.body.display;
+      var definition = req.body.definition;
+      
+      //susun query update
+      var column = "";
+      var values = "";
+
+      if(typeof code !== 'undefined'){
+        column += 'code,';
+        values += "'" +code +"',";
+      }
+
+      if(typeof display !== 'undefined'){
+        column += 'display,';
+        values += "'" +display +"',";
+      }
+
+      if(typeof definition !== 'undefined'){
+        column += 'definition,';
+        values += "'" +definition +"',";
+      }
+
+
+      var query = "UPSERT INTO BACIRO_FHIR.MEDICATION_REQUEST_STATUS(id," + column.slice(0, -1) + ") SELECT id, " + values.slice(0, -1) + " FROM BACIRO_FHIR.MEDICATION_REQUEST_STATUS WHERE id = " + _id;
+      
+      db.upsert(query,function(succes){
+        var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.MEDICATION_REQUEST_STATUS WHERE id = "+ _id;
+
+        db.query(query,function(dataJson){
+          rez = lowercaseObject(dataJson);
+          res.json({"err_code":0,"data":rez});
+        },function(e){
+          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "updateMedicationRequestStatus"});
+        });
+      },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "updateMedicationRequestStatus"});
+      });
+    },
+		medicationRequestIntent: function updateMedicationRequestIntent(req, res){
+      var _id = req.params._id;
+      var code = req.body.code;
+      var display = req.body.display;
+      var definition = req.body.definition;
+      
+      //susun query update
+      var column = "";
+      var values = "";
+
+      if(typeof code !== 'undefined'){
+        column += 'code,';
+        values += "'" +code +"',";
+      }
+
+      if(typeof display !== 'undefined'){
+        column += 'display,';
+        values += "'" +display +"',";
+      }
+
+      if(typeof definition !== 'undefined'){
+        column += 'definition,';
+        values += "'" +definition +"',";
+      }
+
+
+      var query = "UPSERT INTO BACIRO_FHIR.MEDICATION_REQUEST_INTENT(id," + column.slice(0, -1) + ") SELECT id, " + values.slice(0, -1) + " FROM BACIRO_FHIR.MEDICATION_REQUEST_INTENT WHERE id = " + _id;
+      
+      db.upsert(query,function(succes){
+        var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.MEDICATION_REQUEST_INTENT WHERE id = "+ _id;
+
+        db.query(query,function(dataJson){
+          rez = lowercaseObject(dataJson);
+          res.json({"err_code":0,"data":rez});
+        },function(e){
+          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "updateMedicationRequestIntent"});
+        });
+      },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "updateMedicationRequestIntent"});
+      });
+    },
+		medicationRequestCategory: function updateMedicationRequestCategory(req, res){
+      var _id = req.params._id;
+      var code = req.body.code;
+      var display = req.body.display;
+      var definition = req.body.definition;
+      
+      //susun query update
+      var column = "";
+      var values = "";
+
+      if(typeof code !== 'undefined'){
+        column += 'code,';
+        values += "'" +code +"',";
+      }
+
+      if(typeof display !== 'undefined'){
+        column += 'display,';
+        values += "'" +display +"',";
+      }
+
+      if(typeof definition !== 'undefined'){
+        column += 'definition,';
+        values += "'" +definition +"',";
+      }
+
+
+      var query = "UPSERT INTO BACIRO_FHIR.MEDICATION_REQUEST_CATEGORY(id," + column.slice(0, -1) + ") SELECT id, " + values.slice(0, -1) + " FROM BACIRO_FHIR.MEDICATION_REQUEST_CATEGORY WHERE id = " + _id;
+      
+      db.upsert(query,function(succes){
+        var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.MEDICATION_REQUEST_CATEGORY WHERE id = "+ _id;
+
+        db.query(query,function(dataJson){
+          rez = lowercaseObject(dataJson);
+          res.json({"err_code":0,"data":rez});
+        },function(e){
+          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "updateMedicationRequestCategory"});
+        });
+      },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "updateMedicationRequestCategory"});
+      });
+    },
+		medicationRequestPriority: function updateMedicationRequestPriority(req, res){
+      var _id = req.params._id;
+      var code = req.body.code;
+      var display = req.body.display;
+      var definition = req.body.definition;
+      
+      //susun query update
+      var column = "";
+      var values = "";
+
+      if(typeof code !== 'undefined'){
+        column += 'code,';
+        values += "'" +code +"',";
+      }
+
+      if(typeof display !== 'undefined'){
+        column += 'display,';
+        values += "'" +display +"',";
+      }
+
+      if(typeof definition !== 'undefined'){
+        column += 'definition,';
+        values += "'" +definition +"',";
+      }
+
+
+      var query = "UPSERT INTO BACIRO_FHIR.MEDICATION_REQUEST_PRIORITY(id," + column.slice(0, -1) + ") SELECT id, " + values.slice(0, -1) + " FROM BACIRO_FHIR.MEDICATION_REQUEST_PRIORITY WHERE id = " + _id;
+      
+      db.upsert(query,function(succes){
+        var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.MEDICATION_REQUEST_PRIORITY WHERE id = "+ _id;
+
+        db.query(query,function(dataJson){
+          rez = lowercaseObject(dataJson);
+          res.json({"err_code":0,"data":rez});
+        },function(e){
+          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "updateMedicationRequestPriority"});
+        });
+      },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "updateMedicationRequestPriority"});
+      });
+    },
+		medicationCodes: function updateMedicationCodes(req, res){
+      var _id = req.params._id;
+      var code = req.body.code;
+      var display = req.body.display;
+      var definition = req.body.definition;
+      
+      //susun query update
+      var column = "";
+      var values = "";
+
+      if(typeof code !== 'undefined'){
+        column += 'code,';
+        values += "'" +code +"',";
+      }
+
+      if(typeof display !== 'undefined'){
+        column += 'display,';
+        values += "'" +display +"',";
+      }
+
+      if(typeof definition !== 'undefined'){
+        column += 'definition,';
+        values += "'" +definition +"',";
+      }
+
+
+      var query = "UPSERT INTO BACIRO_FHIR.MEDICATION_CODES(id," + column.slice(0, -1) + ") SELECT id, " + values.slice(0, -1) + " FROM BACIRO_FHIR.MEDICATION_CODES WHERE id = " + _id;
+      
+      db.upsert(query,function(succes){
+        var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.MEDICATION_CODES WHERE id = "+ _id;
+
+        db.query(query,function(dataJson){
+          rez = lowercaseObject(dataJson);
+          res.json({"err_code":0,"data":rez});
+        },function(e){
+          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "updateMedicationCodes"});
+        });
+      },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "updateMedicationCodes"});
+      });
+    },
+		substanceAdminSubstitutionReason: function updateSubstanceAdminSubstitutionReason(req, res){
+      var _id = req.params._id;
+      var code = req.body.code;
+      var display = req.body.display;
+      var definition = req.body.definition;
+      
+      //susun query update
+      var column = "";
+      var values = "";
+
+      if(typeof code !== 'undefined'){
+        column += 'code,';
+        values += "'" +code +"',";
+      }
+
+      if(typeof display !== 'undefined'){
+        column += 'display,';
+        values += "'" +display +"',";
+      }
+
+      if(typeof definition !== 'undefined'){
+        column += 'definition,';
+        values += "'" +definition +"',";
+      }
+
+
+      var query = "UPSERT INTO BACIRO_FHIR.SUBSTANCE_ADMIN_SUBSTITUTION_REASON(id," + column.slice(0, -1) + ") SELECT id, " + values.slice(0, -1) + " FROM BACIRO_FHIR.SUBSTANCE_ADMIN_SUBSTITUTION_REASON WHERE id = " + _id;
+      
+      db.upsert(query,function(succes){
+        var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.SUBSTANCE_ADMIN_SUBSTITUTION_REASON WHERE id = "+ _id;
+
+        db.query(query,function(dataJson){
+          rez = lowercaseObject(dataJson);
+          res.json({"err_code":0,"data":rez});
+        },function(e){
+          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "updateSubstanceAdminSubstitutionReason"});
+        });
+      },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "updateSubstanceAdminSubstitutionReason"});
+      });
+    },
+		
+		medicationStatementStatus: function updateMedicationStatementStatus(req, res){
+      var _id = req.params._id;
+      var code = req.body.code;
+      var display = req.body.display;
+      var definition = req.body.definition;
+      
+      //susun query update
+      var column = "";
+      var values = "";
+
+      if(typeof code !== 'undefined'){
+        column += 'code,';
+        values += "'" +code +"',";
+      }
+
+      if(typeof display !== 'undefined'){
+        column += 'display,';
+        values += "'" +display +"',";
+      }
+
+      if(typeof definition !== 'undefined'){
+        column += 'definition,';
+        values += "'" +definition +"',";
+      }
+
+
+      var query = "UPSERT INTO BACIRO_FHIR.MEDICATION_STATEMENT_STATUS(id," + column.slice(0, -1) + ") SELECT id, " + values.slice(0, -1) + " FROM BACIRO_FHIR.MEDICATION_STATEMENT_STATUS WHERE id = " + _id;
+      
+      db.upsert(query,function(succes){
+        var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.MEDICATION_STATEMENT_STATUS WHERE id = "+ _id;
+
+        db.query(query,function(dataJson){
+          rez = lowercaseObject(dataJson);
+          res.json({"err_code":0,"data":rez});
+        },function(e){
+          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "updateMedicationStatementStatus"});
+        });
+      },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "updateMedicationStatementStatus"});
+      });
+    },
+		medicationStatementCategory: function updateMedicationStatementCategory(req, res){
+      var _id = req.params._id;
+      var code = req.body.code;
+      var display = req.body.display;
+      var definition = req.body.definition;
+      
+      //susun query update
+      var column = "";
+      var values = "";
+
+      if(typeof code !== 'undefined'){
+        column += 'code,';
+        values += "'" +code +"',";
+      }
+
+      if(typeof display !== 'undefined'){
+        column += 'display,';
+        values += "'" +display +"',";
+      }
+
+      if(typeof definition !== 'undefined'){
+        column += 'definition,';
+        values += "'" +definition +"',";
+      }
+
+
+      var query = "UPSERT INTO BACIRO_FHIR.MEDICATION_STATEMENT_CATEGORY(id," + column.slice(0, -1) + ") SELECT id, " + values.slice(0, -1) + " FROM BACIRO_FHIR.MEDICATION_STATEMENT_CATEGORY WHERE id = " + _id;
+      
+      db.upsert(query,function(succes){
+        var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.MEDICATION_STATEMENT_CATEGORY WHERE id = "+ _id;
+
+        db.query(query,function(dataJson){
+          rez = lowercaseObject(dataJson);
+          res.json({"err_code":0,"data":rez});
+        },function(e){
+          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "updateMedicationStatementCategory"});
+        });
+      },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "updateMedicationStatementCategory"});
+      });
+    },
+		medicationStatementTaken: function updateMedicationStatementTaken(req, res){
+      var _id = req.params._id;
+      var code = req.body.code;
+      var display = req.body.display;
+      var definition = req.body.definition;
+      
+      //susun query update
+      var column = "";
+      var values = "";
+
+      if(typeof code !== 'undefined'){
+        column += 'code,';
+        values += "'" +code +"',";
+      }
+
+      if(typeof display !== 'undefined'){
+        column += 'display,';
+        values += "'" +display +"',";
+      }
+
+      if(typeof definition !== 'undefined'){
+        column += 'definition,';
+        values += "'" +definition +"',";
+      }
+
+
+      var query = "UPSERT INTO BACIRO_FHIR.MEDICATION_STATEMENT_TAKEN(id," + column.slice(0, -1) + ") SELECT id, " + values.slice(0, -1) + " FROM BACIRO_FHIR.MEDICATION_STATEMENT_TAKEN WHERE id = " + _id;
+      
+      db.upsert(query,function(succes){
+        var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.MEDICATION_STATEMENT_TAKEN WHERE id = "+ _id;
+
+        db.query(query,function(dataJson){
+          rez = lowercaseObject(dataJson);
+          res.json({"err_code":0,"data":rez});
+        },function(e){
+          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "updateMedicationStatementTaken"});
+        });
+      },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "updateMedicationStatementTaken"});
+      });
+    },
+		reasonMedicationNotTakenCodes: function updateReasonMedicationNotTakenCodes(req, res){
+      var _id = req.params._id;
+      var code = req.body.code;
+      var display = req.body.display;
+      var definition = req.body.definition;
+      
+      //susun query update
+      var column = "";
+      var values = "";
+
+      if(typeof code !== 'undefined'){
+        column += 'code,';
+        values += "'" +code +"',";
+      }
+
+      if(typeof display !== 'undefined'){
+        column += 'display,';
+        values += "'" +display +"',";
+      }
+
+      if(typeof definition !== 'undefined'){
+        column += 'definition,';
+        values += "'" +definition +"',";
+      }
+
+
+      var query = "UPSERT INTO BACIRO_FHIR.REASON_MEDICATION_NOT_TAKEN_CODES(id," + column.slice(0, -1) + ") SELECT id, " + values.slice(0, -1) + " FROM BACIRO_FHIR.REASON_MEDICATION_NOT_TAKEN_CODES WHERE id = " + _id;
+      
+      db.upsert(query,function(succes){
+        var query = "SELECT id, code, display, definition FROM BACIRO_FHIR.REASON_MEDICATION_NOT_TAKEN_CODES WHERE id = "+ _id;
+
+        db.query(query,function(dataJson){
+          rez = lowercaseObject(dataJson);
+          res.json({"err_code":0,"data":rez});
+        },function(e){
+          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "updateReasonMedicationNotTakenCodes"});
+        });
+      },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "updateReasonMedicationNotTakenCodes"});
+      });
+    },
 	}
 }
 

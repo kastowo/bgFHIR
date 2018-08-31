@@ -283,6 +283,91 @@ var routesDefaultFHIR = function(app, DefaultFHIR){
 	app.get('/:apikey/device-action/code/:code?', DefaultFHIR.get.deviceActionCode);
 	app.get('/:apikey/device-kind/:_id?', DefaultFHIR.get.deviceKind);
 	app.get('/:apikey/device-kind/code/:code?', DefaultFHIR.get.deviceKindCode);
+	
+	
+	app.get('/:apikey/immunization-status/:_id?', DefaultFHIR.get.immunizationStatus);
+	app.get('/:apikey/immunization-status/code/:code?', DefaultFHIR.get.immunizationStatusCode);
+	app.get('/:apikey/vaccine-code/:_id?', DefaultFHIR.get.vaccineCode);
+	app.get('/:apikey/vaccine-code/code/:code?', DefaultFHIR.get.vaccineCodeCode);
+	app.get('/:apikey/immunization-origin/:_id?', DefaultFHIR.get.immunizationOrigin);
+	app.get('/:apikey/immunization-origin/code/:code?', DefaultFHIR.get.immunizationOriginCode);
+	app.get('/:apikey/immunization-site/:_id?', DefaultFHIR.get.immunizationSite);
+	app.get('/:apikey/immunization-site/code/:code?', DefaultFHIR.get.immunizationSiteCode);
+	app.get('/:apikey/immunization-route/:_id?', DefaultFHIR.get.immunizationRoute);
+	app.get('/:apikey/immunization-route/code/:code?', DefaultFHIR.get.immunizationRouteCode);
+	app.get('/:apikey/immunization-role/:_id?', DefaultFHIR.get.immunizationRole);
+	app.get('/:apikey/immunization-role/code/:code?', DefaultFHIR.get.immunizationRoleCode);
+	app.get('/:apikey/immunization-reason/:_id?', DefaultFHIR.get.immunizationReason);
+	app.get('/:apikey/immunization-reason/code/:code?', DefaultFHIR.get.immunizationReasonCode);
+	app.get('/:apikey/no-immunization-reason/:_id?', DefaultFHIR.get.noImmunizationReason);
+	app.get('/:apikey/no-immunization-reason/code/:code?', DefaultFHIR.get.noImmunizationReasonCode);
+	app.get('/:apikey/vaccination-protocol-dose-target/:_id?', DefaultFHIR.get.vaccinationProtocolDoseTarget);
+	app.get('/:apikey/vaccination-protocol-dose-target/code/:code?', DefaultFHIR.get.vaccinationProtocolDoseTargetCode);
+	app.get('/:apikey/vaccination-protocol-dose-status/:_id?', DefaultFHIR.get.vaccinationProtocolDoseStatus);
+	app.get('/:apikey/vaccination-protocol-dose-status/code/:code?', DefaultFHIR.get.vaccinationProtocolDoseStatusCode);
+	app.get('/:apikey/vaccination-protocol-dose-status-reason/:_id?', DefaultFHIR.get.vaccinationProtocolDoseStatusReason);
+	app.get('/:apikey/vaccination-protocol-dose-status-reason/code/:code?', DefaultFHIR.get.vaccinationProtocolDoseStatusReasonCode);
+	
+	app.get('/:apikey/immunization-recommendation-target-disease/:_id?', DefaultFHIR.get.immunizationRecommendationTargetDisease);
+	app.get('/:apikey/immunization-recommendation-target-disease/code/:code?', DefaultFHIR.get.immunizationRecommendationTargetDiseaseCode);
+	app.get('/:apikey/immunization-recommendation-status/:_id?', DefaultFHIR.get.immunizationRecommendationStatus);
+	app.get('/:apikey/immunization-recommendation-status/code/:code?', DefaultFHIR.get.immunizationRecommendationStatusCode);
+	app.get('/:apikey/immunization-recommendation-date-criterion/:_id?', DefaultFHIR.get.immunizationRecommendationDateCriterion);
+	app.get('/:apikey/immunization-recommendation-date-criterion/code/:code?', DefaultFHIR.get.immunizationRecommendationDateCriterionCode);
+	
+	app.get('/:apikey/medication-status/:_id?', DefaultFHIR.get.medicationStatus);
+	app.get('/:apikey/medication-status/code/:code?', DefaultFHIR.get.medicationStatusCode);
+	app.get('/:apikey/medication-form-codes/:_id?', DefaultFHIR.get.medicationFormCodes);
+	app.get('/:apikey/medication-form-codes/code/:code?', DefaultFHIR.get.medicationFormCodesCode);
+	app.get('/:apikey/medication-package-form/:_id?', DefaultFHIR.get.medicationPackageForm);
+	app.get('/:apikey/medication-package-form/code/:code?', DefaultFHIR.get.medicationPackageFormCode);
+	
+	app.get('/:apikey/medication-admin-status/:_id?', DefaultFHIR.get.medicationAdminStatus);
+	app.get('/:apikey/medication-admin-status/code/:code?', DefaultFHIR.get.medicationAdminStatusCode);
+	app.get('/:apikey/medication-admin-category/:_id?', DefaultFHIR.get.medicationAdminCategory);
+	app.get('/:apikey/medication-admin-category/code/:code?', DefaultFHIR.get.medicationAdminCategoryCode);
+	app.get('/:apikey/reason-medication-not-given-codes/:_id?', DefaultFHIR.get.reasonMedicationNotGivenCodes);
+	app.get('/:apikey/reason-medication-not-given-codes/code/:code?', DefaultFHIR.get.reasonMedicationNotGivenCodesCode);
+	app.get('/:apikey/reason-medication-given-codes/:_id?', DefaultFHIR.get.reasonMedicationGivenCodes);
+	app.get('/:apikey/reason-medication-given-codes/code/:code?', DefaultFHIR.get.reasonMedicationGivenCodesCode);
+	app.get('/:apikey/approach-site-codes/:_id?', DefaultFHIR.get.approachSiteCodes);
+	app.get('/:apikey/approach-site-codes/code/:code?', DefaultFHIR.get.approachSiteCodesCode);
+	app.get('/:apikey/administration-method-codes/:_id?', DefaultFHIR.get.administrationMethodCodes);
+	app.get('/:apikey/administration-method-codes/code/:code?', DefaultFHIR.get.administrationMethodCodesCode);
+	
+	app.get('/:apikey/medication-dispense-status/:_id?', DefaultFHIR.get.medicationDispenseStatus);
+	app.get('/:apikey/medication-dispense-status/code/:code?', DefaultFHIR.get.medicationDispenseStatusCode);
+	app.get('/:apikey/medication-dispense-category/:_id?', DefaultFHIR.get.medicationDispenseCategory);
+	app.get('/:apikey/medication-dispense-category/code/:code?', DefaultFHIR.get.medicationDispenseCategoryCode);
+	app.get('/:apikey/act-pharmacy-supply-type/:_id?', DefaultFHIR.get.actPharmacySupplyType);
+	app.get('/:apikey/act-pharmacy-supply-type/code/:code?', DefaultFHIR.get.actPharmacySupplyTypeCode);
+	app.get('/:apikey/act-substance-admin-substitution-code/:_id?', DefaultFHIR.get.actSubstanceAdminSubstitutionCode);
+	app.get('/:apikey/act-substance-admin-substitution-code/code/:code?', DefaultFHIR.get.actSubstanceAdminSubstitutionCodeCode);
+	app.get('/:apikey/act-substance-admin-substitution-reason/:_id?', DefaultFHIR.get.actSubstanceAdminSubstitutionReason);
+	app.get('/:apikey/act-substance-admin-substitution-reason/code/:code?', DefaultFHIR.get.actSubstanceAdminSubstitutionReasonCode);
+	
+	app.get('/:apikey/medication-request-status/:_id?', DefaultFHIR.get.medicationRequestStatus);
+	app.get('/:apikey/medication-request-status/code/:code?', DefaultFHIR.get.medicationRequestStatusCode);
+	app.get('/:apikey/medication-request-intent/:_id?', DefaultFHIR.get.medicationRequestIntent);
+	app.get('/:apikey/medication-request-intent/code/:code?', DefaultFHIR.get.medicationRequestIntentCode);
+	app.get('/:apikey/medication-request-category/:_id?', DefaultFHIR.get.medicationRequestCategory);
+	app.get('/:apikey/medication-request-category/code/:code?', DefaultFHIR.get.medicationRequestCategoryCode);
+	app.get('/:apikey/medication-request-priority/:_id?', DefaultFHIR.get.medicationRequestPriority);
+	app.get('/:apikey/medication-request-priority/code/:code?', DefaultFHIR.get.medicationRequestPriorityCode);
+	app.get('/:apikey/medication-codes/:_id?', DefaultFHIR.get.medicationCodes);
+	app.get('/:apikey/medication-codes/code/:code?', DefaultFHIR.get.medicationCodesCode);
+	app.get('/:apikey/substance-admin-substitution-reason/:_id?', DefaultFHIR.get.substanceAdminSubstitutionReason);
+	app.get('/:apikey/substance-admin-substitution-reason/code/:code?', DefaultFHIR.get.substanceAdminSubstitutionReasonCode);
+	
+	app.get('/:apikey/medication-statement-status/:_id?', DefaultFHIR.get.medicationStatementStatus);
+	app.get('/:apikey/medication-statement-status/code/:code?', DefaultFHIR.get.medicationStatementStatusCode);
+	app.get('/:apikey/medication-statement-category/:_id?', DefaultFHIR.get.medicationStatementCategory);
+	app.get('/:apikey/medication-statement-category/code/:code?', DefaultFHIR.get.medicationStatementCategoryCode);
+	app.get('/:apikey/medication-statement-taken/:_id?', DefaultFHIR.get.medicationStatementTaken);
+	app.get('/:apikey/medication-statement-taken/code/:code?', DefaultFHIR.get.medicationStatementTakenCode);
+	app.get('/:apikey/reason-medication-not-taken-codes/:_id?', DefaultFHIR.get.reasonMedicationNotTakenCodes);
+	app.get('/:apikey/reason-medication-not-taken-codes/code/:code?', DefaultFHIR.get.reasonMedicationNotTakenCodesCode);
+	
 	// Service Provider Directory Resources, by : hardika cs(end)
 
 	//post method
@@ -349,7 +434,7 @@ var routesDefaultFHIR = function(app, DefaultFHIR){
 	app.post('/:apikey/substance-code', DefaultFHIR.post.substanceCode);
 	// Service Provider Directory Resources, by : hardika cs(start)
 	app.post('/:apikey/organization-type', DefaultFHIR.post.organizationType);
-	app.post('/:apikey/contact-entity-type', DefaultFHIR.post.contactentityType);
+	app.post('/:apikey/contactentity-type', DefaultFHIR.post.contactentityType);
 	app.post('/:apikey/location-status', DefaultFHIR.post.locationStatus);
 	app.post('/:apikey/bed-status', DefaultFHIR.post.bedStatus);
 	app.post('/:apikey/location-mode', DefaultFHIR.post.locationMode);
@@ -431,6 +516,50 @@ var routesDefaultFHIR = function(app, DefaultFHIR){
 	app.post('/:apikey/procedure-followup', DefaultFHIR.post.procedureFollowup);
 	app.post('/:apikey/device-action', DefaultFHIR.post.deviceAction);
 	app.post('/:apikey/device-kind', DefaultFHIR.post.deviceKind);
+	
+	app.post('/:apikey/immunization-status', DefaultFHIR.post.immunizationStatus);
+	app.post('/:apikey/vaccine-code', DefaultFHIR.post.vaccineCode);
+	app.post('/:apikey/immunization-origin', DefaultFHIR.post.immunizationOrigin);
+	app.post('/:apikey/immunization-site', DefaultFHIR.post.immunizationSite);
+	app.post('/:apikey/immunization-route', DefaultFHIR.post.immunizationRoute);
+	app.post('/:apikey/immunization-role', DefaultFHIR.post.immunizationRole);
+	app.post('/:apikey/immunization-reason', DefaultFHIR.post.immunizationReason);
+	app.post('/:apikey/no-immunization-reason', DefaultFHIR.post.noImmunizationReason);
+	app.post('/:apikey/vaccination-protocol-dose-target', DefaultFHIR.post.vaccinationProtocolDoseTarget);
+	app.post('/:apikey/vaccination-protocol-dose-status', DefaultFHIR.post.vaccinationProtocolDoseStatus);
+	app.post('/:apikey/vaccination-protocol-dose-status-reason', DefaultFHIR.post.vaccinationProtocolDoseStatusReason);
+	app.post('/:apikey/immunization-recommendation-target-disease', DefaultFHIR.post.immunizationRecommendationTargetDisease);
+	app.post('/:apikey/immunization-recommendation-status', DefaultFHIR.post.immunizationRecommendationStatus);
+	app.post('/:apikey/immunization-recommendation-date-criterion', DefaultFHIR.post.immunizationRecommendationDateCriterion);
+	
+	app.post('/:apikey/medication-status', DefaultFHIR.post.medicationStatus);
+	app.post('/:apikey/medication-form-codes', DefaultFHIR.post.medicationFormCodes);
+	app.post('/:apikey/medication-package-form', DefaultFHIR.post.medicationPackageForm);
+	
+	app.post('/:apikey/medication-admin-status', DefaultFHIR.post.medicationAdminStatus);
+	app.post('/:apikey/medication-admin-category', DefaultFHIR.post.medicationAdminCategory);
+	app.post('/:apikey/reason-medication-not-given-codes', DefaultFHIR.post.reasonMedicationNotGivenCodes);
+	app.post('/:apikey/reason-medication-given-codes', DefaultFHIR.post.reasonMedicationGivenCodes);
+	app.post('/:apikey/approach-site-codes', DefaultFHIR.post.approachSiteCodes);
+	app.post('/:apikey/administration-method-codes', DefaultFHIR.post.administrationMethodCodes);
+	
+	app.post('/:apikey/medication-dispense-status', DefaultFHIR.post.medicationDispenseStatus);
+	app.post('/:apikey/medication-dispense-category', DefaultFHIR.post.medicationDispenseCategory);
+	app.post('/:apikey/act-pharmacy-supply-type', DefaultFHIR.post.actPharmacySupplyType);
+	app.post('/:apikey/act-substance-admin-substitution-code', DefaultFHIR.post.actSubstanceAdminSubstitutionCode);
+	app.post('/:apikey/act-substance-admin-substitution-reason', DefaultFHIR.post.actSubstanceAdminSubstitutionReason);
+	
+	app.post('/:apikey/medication-request-status', DefaultFHIR.post.medicationRequestStatus);
+	app.post('/:apikey/medication-request-intent', DefaultFHIR.post.medicationRequestIntent);
+	app.post('/:apikey/medication-request-category', DefaultFHIR.post.medicationRequestCategory);
+	app.post('/:apikey/medication-request-priority', DefaultFHIR.post.medicationRequestPriority);
+	app.post('/:apikey/medication-codes', DefaultFHIR.post.medicationCodes);
+	app.post('/:apikey/substance-admin-substitution-reason', DefaultFHIR.post.substanceAdminSubstitutionReason);
+	
+	app.post('/:apikey/medication-statement-status', DefaultFHIR.post.medicationStatementStatus);
+	app.post('/:apikey/medication-statement-category', DefaultFHIR.post.medicationStatementCategory);
+	app.post('/:apikey/medication-statement-taken', DefaultFHIR.post.medicationStatementTaken);
+	app.post('/:apikey/reason-medication-not-taken-codes', DefaultFHIR.post.reasonMedicationNotTakenCodes);
 	// Service Provider Directory Resources, by : hardika cs(end)
 
 
@@ -497,7 +626,7 @@ var routesDefaultFHIR = function(app, DefaultFHIR){
 	app.put('/:apikey/substance-code/:_id?', DefaultFHIR.put.substanceCode);
 	// Service Provider Directory Resources, by : hardika cs(start)
 	app.put('/:apikey/organization-type/:_id?', DefaultFHIR.put.organizationType);
-	app.put('/:apikey/contact-entity-type/:_id', DefaultFHIR.put.contactentityType);
+	app.put('/:apikey/contactentity-type/:_id', DefaultFHIR.put.contactentityType);
 	app.put('/:apikey/location-status/:_id', DefaultFHIR.put.locationStatus);
 	app.put('/:apikey/bed-status/:_id', DefaultFHIR.put.bedStatus);
 	app.put('/:apikey/location-mode/:_id', DefaultFHIR.put.locationMode);
@@ -579,6 +708,50 @@ var routesDefaultFHIR = function(app, DefaultFHIR){
 	app.put('/:apikey/procedure-followup/:_id', DefaultFHIR.put.procedureFollowup);
 	app.put('/:apikey/device-action/:_id', DefaultFHIR.put.deviceAction);
 	app.put('/:apikey/device-kind/:_id', DefaultFHIR.put.deviceKind);
+	
+	app.put('/:apikey/immunization-status/:_id', DefaultFHIR.put.immunizationStatus);
+	app.put('/:apikey/vaccine-code/:_id', DefaultFHIR.put.vaccineCode);
+	app.put('/:apikey/immunization-origin/:_id', DefaultFHIR.put.immunizationOrigin);
+	app.put('/:apikey/immunization-site/:_id', DefaultFHIR.put.immunizationSite);
+	app.put('/:apikey/immunization-route/:_id', DefaultFHIR.put.immunizationRoute);
+	app.put('/:apikey/immunization-role/:_id', DefaultFHIR.put.immunizationRole);
+	app.put('/:apikey/immunization-reason/:_id', DefaultFHIR.put.immunizationReason);
+	app.put('/:apikey/no-immunization-reason/:_id', DefaultFHIR.put.noImmunizationReason);
+	app.put('/:apikey/vaccination-protocol-dose-target/:_id', DefaultFHIR.put.vaccinationProtocolDoseTarget);
+	app.put('/:apikey/vaccination-protocol-dose-status/:_id', DefaultFHIR.put.vaccinationProtocolDoseStatus);
+	app.put('/:apikey/vaccination-protocol-dose-status-reason/:_id', DefaultFHIR.put.vaccinationProtocolDoseStatusReason);
+	app.put('/:apikey/immunization-recommendation-target-disease/:_id', DefaultFHIR.put.immunizationRecommendationTargetDisease);
+	app.put('/:apikey/immunization-recommendation-status/:_id', DefaultFHIR.put.immunizationRecommendationStatus);
+	app.put('/:apikey/immunization-recommendation-date-criterion/:_id', DefaultFHIR.put.immunizationRecommendationDateCriterion);
+	
+	app.put('/:apikey/medication-status/:_id', DefaultFHIR.put.medicationStatus);
+	app.put('/:apikey/medication-form-codes/:_id', DefaultFHIR.put.medicationFormCodes);
+	app.put('/:apikey/medication-package-form/:_id', DefaultFHIR.put.medicationPackageForm);
+	
+	app.put('/:apikey/medication-admin-status/:_id', DefaultFHIR.put.medicationAdminStatus);
+	app.put('/:apikey/medication-admin-category/:_id', DefaultFHIR.put.medicationAdminCategory);
+	app.put('/:apikey/reason-medication-not-given-codes/:_id', DefaultFHIR.put.reasonMedicationNotGivenCodes);
+	app.put('/:apikey/reason-medication-given-codes/:_id', DefaultFHIR.put.reasonMedicationGivenCodes);
+	app.put('/:apikey/approach-site-codes/:_id', DefaultFHIR.put.approachSiteCodes);
+	app.put('/:apikey/administration-method-codes/:_id', DefaultFHIR.put.administrationMethodCodes);
+	
+	app.put('/:apikey/medication-dispense-status/:_id', DefaultFHIR.put.medicationDispenseStatus);
+	app.put('/:apikey/medication-dispense-category/:_id', DefaultFHIR.put.medicationDispenseCategory);
+	app.put('/:apikey/act-pharmacy-supply-type/:_id', DefaultFHIR.put.actPharmacySupplyType);
+	app.put('/:apikey/act-substance-admin-substitution-code/:_id', DefaultFHIR.put.actSubstanceAdminSubstitutionCode);
+	app.put('/:apikey/act-substance-admin-substitution-reason/:_id', DefaultFHIR.put.actSubstanceAdminSubstitutionReason);
+	
+	app.put('/:apikey/medication-request-status/:_id', DefaultFHIR.put.medicationRequestStatus);
+	app.put('/:apikey/medication-request-intent/:_id', DefaultFHIR.put.medicationRequestIntent);
+	app.put('/:apikey/medication-request-category/:_id', DefaultFHIR.put.medicationRequestCategory);
+	app.put('/:apikey/medication-request-priority/:_id', DefaultFHIR.put.medicationRequestPriority);
+	app.put('/:apikey/medication-codes/:_id', DefaultFHIR.put.medicationCodes);
+	app.put('/:apikey/substance-admin-substitution-reason/:_id', DefaultFHIR.put.substanceAdminSubstitutionReason);
+	
+	app.put('/:apikey/medication-statement-status/:_id', DefaultFHIR.put.medicationStatementStatus);
+	app.put('/:apikey/medication-statement-category/:_id', DefaultFHIR.put.medicationStatementCategory);
+	app.put('/:apikey/medication-statement-taken/:_id', DefaultFHIR.put.medicationStatementTaken);
+	app.put('/:apikey/reason-medication-not-taken-codes/:_id', DefaultFHIR.put.reasonMedicationNotTakenCodes);
 	// Service Provider Directory Resources, by : hardika cs(end)
 	
 }

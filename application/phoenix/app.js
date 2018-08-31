@@ -1615,6 +1615,17 @@ var Practitioner = require("./service_provider_directory_resources/practitioner/
 var PractitionerRole = require("./service_provider_directory_resources/practitionerRole/controller");
 var HealthcareService = require("./service_provider_directory_resources/healthcareService/controller");
 
+var Immunization = require("./medication/immunization/controller");
+var ImmunizationRecommendation = require("./medication/immunizationRecommendation/controller");
+var Medication = require("./medication/medication/controller");
+var MedicationAdministration = require("./medication/medicationAdministration/controller");
+
+var AdverseEvent = require("./clinical_summary/adverseEvent/controller");
+var AllergyIntolerance = require("./clinical_summary/allergyIntolerance/controller");
+var CarePlan = require("./clinical_summary/carePlan/controller");
+var CareTeam = require("./clinical_summary/careTeam/controller");
+var ClinicalImpression = require("./clinical_summary/clinicalImpression/controller");
+
 //import routes
 var routesDefaultFHIR    = require('./default_fhir/routes');  
 var routesPerson    = require('./patient_registers/person/routes');  
@@ -1639,6 +1650,17 @@ var routesLocation = require('./service_provider_directory_resources/location/ro
 var routesPractitioner = require('./service_provider_directory_resources/practitioner/routes');
 var routesPractitionerRole = require('./service_provider_directory_resources/practitionerRole/routes');
 var routesHealthcareService = require('./service_provider_directory_resources/healthcareService/routes');
+
+var routesImmunization = require('./medication/immunization/routes');
+var routesImmunizationRecommendation = require('./medication/immunizationRecommendation/routes');
+var routesMedication = require('./medication/medication/routes');
+var routesMedicationAdministration = require('./medication/medicationAdministration/routes');
+
+var routesAdverseEvent = require('./clinical_summary/adverseEvent/routes');
+var routesAllergyIntolerance = require('./clinical_summary/allergyIntolerance/routes');
+var routesCarePlan = require('./clinical_summary/carePlan/routes');
+var routesCareTeam = require('./clinical_summary/careTeam/routes');
+var routesClinicalImpression = require('./clinical_summary/clinicalImpression/routes');
 
 //setrouting
 routesDefaultFHIR(app, DefaultFHIR);
@@ -1665,6 +1687,16 @@ routesPractitioner(app, Practitioner);
 routesPractitionerRole(app, PractitionerRole);
 routesHealthcareService(app, HealthcareService);
 
+routesImmunization(app, Immunization);
+routesImmunizationRecommendation(app, ImmunizationRecommendation);
+routesMedication(app, Medication);
+routesMedicationAdministration(app, MedicationAdministration);
+
+routesAdverseEvent(app, AdverseEvent);
+routesAllergyIntolerance(app,AllergyIntolerance);
+routesCarePlan(app,CarePlan);
+routesCareTeam(app,CareTeam);
+routesClinicalImpression(app,ClinicalImpression);
 
 var server = app.listen(port, host, function () {
   console.log("Server running at http://%s:%s", host, port);

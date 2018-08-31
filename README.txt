@@ -243,7 +243,7 @@ by HCS
 			    ]
 			}	
 			
-4. bed-location-status
+4. bed-status
 	a. Get all data
 		Method : GET
 		URL Format : host:port/{apikey}/bed-status
@@ -829,10 +829,11 @@ by HCS
 		URL Format : host:port/{apikey}/days-of-week	
 		Example : 192.168.15.134:2008/f188bfb0a60c976b39a1e9dbbc94360d/days-of-week	
 		Request :
-			"code": "mon",
-			"display": "Monday",
-			"definition": "Monday"
-
+			{
+				"code": "mon",
+				"display": "Monday",
+				"definition": "Monday"
+			}
 		Response : 
 			{
 					"err_code": 0,
@@ -1148,8 +1149,9 @@ by HCS
 		Example : 192.168.15.134:2008/f188bfb0a60c976b39a1e9dbbc94360d/service-referral-method	
 		Request :
 			{
-				"code": "C",
-								"description": "Closed"
+				"code": "fax",
+				"display": "Fax",
+				"definition": "eferrals may be accepted by fax."
 			}
 
 		Response : 
