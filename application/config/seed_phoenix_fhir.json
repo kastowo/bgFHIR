@@ -1116,6 +1116,192 @@
 			"reasonMedicationNotTakenCodesCode":{
 				"location": "%(apikey)s/reason-medication-not-taken-codes/code/%(code)s"
 			}
+			
+			,
+			"observationCategory":{
+				"location": "%(apikey)s/observation-category/%(_id)d"
+			},
+			"observationCategoryCode":{
+				"location": "%(apikey)s/observation-category/code/%(code)s"
+			},
+			"observationValueabsentreason":{
+				"location": "%(apikey)s/observation-valueabsentreason/%(_id)d"
+			},
+			"observationValueabsentreasonCode":{
+				"location": "%(apikey)s/observation-valueabsentreason/code/%(code)s"
+			},
+			"observationInterpretation":{
+				"location": "%(apikey)s/observation-interpretation/%(_id)d"
+			},
+			"observationInterpretationCode":{
+				"location": "%(apikey)s/observation-interpretation/code/%(code)s"
+			},
+			"observationMethods":{
+				"location": "%(apikey)s/observation-methods/%(_id)d"
+			},
+			"observationMethodsCode":{
+				"location": "%(apikey)s/observation-methods/code/%(code)s"
+			},
+			"referencerangeMeaning":{
+				"location": "%(apikey)s/referencerange-meaning/%(_id)d"
+			},
+			"referencerangeMeaningCode":{
+				"location": "%(apikey)s/referencerange-meaning/code/%(code)s"
+			},
+			"referencerangeAppliesto":{
+				"location": "%(apikey)s/referencerange-appliesto/%(_id)d"
+			},
+			"referencerangeAppliestoCode":{
+				"location": "%(apikey)s/referencerange-appliesto/code/%(code)s"
+			},
+			"observationRelationshiptypes":{
+				"location": "%(apikey)s/observation-relationshiptypes/%(_id)d"
+			},
+			"observationRelationshiptypesCode":{
+				"location": "%(apikey)s/observation-relationshiptypes/code/%(code)s"
+			}
+			
+			,
+			"diagnosticReportStatus":{
+				"location": "%(apikey)s/diagnostic-report-status/%(_id)d"
+			},
+			"diagnosticReportStatusCode":{
+				"location": "%(apikey)s/diagnostic-report-status/code/%(code)s"
+			},
+			"diagnosticServiceSections":{
+				"location": "%(apikey)s/diagnostic-service-sections/%(_id)d"
+			},
+			"diagnosticServiceSectionsCode":{
+				"location": "%(apikey)s/diagnostic-service-sections/code/%(code)s"
+			},
+			"reportCodes":{
+				"location": "%(apikey)s/report-codes/%(_id)d"
+			},
+			"reportCodesCode":{
+				"location": "%(apikey)s/report-codes/code/%(code)s"
+			}
+			
+			,
+			"requestStatus":{
+				"location": "%(apikey)s/request-status/%(_id)d"
+			},
+			"requestStatusCode":{
+				"location": "%(apikey)s/request-status/code/%(code)s"
+			},
+			"requestIntent":{
+				"location": "%(apikey)s/request-intent/%(_id)d"
+			},
+			"requestIntentCode":{
+				"location": "%(apikey)s/request-intent/code/%(code)s"
+			},
+			"requestPriority":{
+				"location": "%(apikey)s/request-priority/%(_id)d"
+			},
+			"requestPriorityCode":{
+				"location": "%(apikey)s/request-priority/code/%(code)s"
+			},
+			"medicationAsNeededReason":{
+				"location": "%(apikey)s/medication-as-needed-reason/%(_id)d"
+			},
+			"medicationAsNeededReasonCode":{
+				"location": "%(apikey)s/medication-as-needed-reason/code/%(code)s"
+			}
+			
+			,
+			"instanceAvailability":{
+				"location": "%(apikey)s/instance-availability/%(_id)d"
+			},
+			"instanceAvailabilityCode":{
+				"location": "%(apikey)s/instance-availability/code/%(code)s"
+			},
+			"dicomCid29":{
+				"location": "%(apikey)s/dicom-cid29/%(_id)d"
+			},
+			"dicomCid29Code":{
+				"location": "%(apikey)s/dicom-cid29/code/%(code)s"
+			},
+			"bodysiteLaterality":{
+				"location": "%(apikey)s/bodysite-laterality/%(_id)d"
+			},
+			"bodysiteLateralityCode":{
+				"location": "%(apikey)s/bodysite-laterality/code/%(code)s"
+			}
+			
+			,
+			"sequenceType":{
+				"location": "%(apikey)s/sequence-type/%(_id)d"
+			},
+			"sequenceTypeCode":{
+				"location": "%(apikey)s/sequence-type/code/%(code)s"
+			},
+			"sequenceReferenceSeq":{
+				"location": "%(apikey)s/sequence-referenceSeq/%(_id)d"
+			},
+			"sequenceReferenceSeqCode":{
+				"location": "%(apikey)s/sequence-referenceSeq/code/%(code)s"
+			},
+			"qualityType":{
+				"location": "%(apikey)s/quality-type/%(_id)d"
+			},
+			"qualityTypeCode":{
+				"location": "%(apikey)s/quality-type/code/%(code)s"
+			},
+			"repositoryType":{
+				"location": "%(apikey)s/repository-type/%(_id)d"
+			},
+			"repositoryTypeCode":{
+				"location": "%(apikey)s/repository-type/code/%(code)s"
+			},
+			"chromosomeHuman":{
+				"location": "%(apikey)s/chromosome-human/%(_id)d"
+			},
+			"chromosomeHumanCode":{
+				"location": "%(apikey)s/chromosome-human/code/%(code)s"
+			}
+			
+			,
+			"specimenStatus":{
+				"location": "%(apikey)s/specimen-status/%(_id)d"
+			},
+			"specimenStatusCode":{
+				"location": "%(apikey)s/specimen-status/code/%(code)s"
+			},
+			"specimenProcessingProcedure":{
+				"location": "%(apikey)s/specimen-processing-procedure/%(_id)d"
+			},
+			"specimenProcessingProcedureCode":{
+				"location": "%(apikey)s/specimen-processing-procedure/code/%(code)s"
+			},
+			"specimenContainerType":{
+				"location": "%(apikey)s/specimen-container-type/%(_id)d"
+			},
+			"specimenContainerTypeCode":{
+				"location": "%(apikey)s/specimen-container-type/code/%(code)s"
+			},
+			"specimenCollectionMethod":{
+				"location": "%(apikey)s/specimen-collection-method/%(_id)d"
+			},
+			"specimenCollectionMethodCode":{
+				"location": "%(apikey)s/specimen-collection-method/code/%(code)s"
+			},
+			"bodysiteRelativeLocation":{
+				"location": "%(apikey)s/bodysite-relative-location/%(_id)d"
+			},
+			"bodysiteRelativeLocationCode":{
+				"location": "%(apikey)s/bodysite-relative-location/code/%(code)s"
+			},
+			"specimenType":{
+				"location": "%(apikey)s/specimen-type/%(_id)d"
+			},
+			"specimenTypeCode":{
+				"location": "%(apikey)s/specimen-type/code/%(code)s"
+			},
+			"preservative":{
+				"location": "%(apikey)s/preservative/%(_id)d"
+			},
+			"preservativeCode":{
+				"location": "%(apikey)s/preservative/code/%(code)s"
+			}
 		},
 		"POST": {
 			"identityAssuranceLevel": {
@@ -1806,6 +1992,105 @@
 			"reasonMedicationNotTakenCodes":{
 				"location": "%(apikey)s/reason-medication-not-taken-codes"
 			}
+			
+			,
+			"observationCategory":{
+				"location": "%(apikey)s/observation-category"
+			},
+			"observationValueabsentreason":{
+				"location": "%(apikey)s/observation-valueabsentreason"
+			},
+			"observationInterpretation":{
+				"location": "%(apikey)s/observation-interpretation"
+			},
+			"observationMethods":{
+				"location": "%(apikey)s/observation-methods"
+			},
+			"referencerangeMeaning":{
+				"location": "%(apikey)s/referencerange-meaning"
+			},
+			"referencerangeAppliesto":{
+				"location": "%(apikey)s/referencerange-appliesto"
+			},
+			"observationRelationshiptypes":{
+				"location": "%(apikey)s/observation-relationshiptypes"
+			}
+			
+			,
+			"diagnosticReportStatus":{
+				"location": "%(apikey)s/diagnostic-report-status"
+			},
+			"diagnosticServiceSections":{
+				"location": "%(apikey)s/diagnostic-service-sections"
+			},
+			"reportCodes":{
+				"location": "%(apikey)s/report-codes"
+			}
+			
+			,
+			"requestStatus":{
+				"location": "%(apikey)s/request-status"
+			},
+			"requestIntent":{
+				"location": "%(apikey)s/request-intent"
+			},
+			"requestPriority":{
+				"location": "%(apikey)s/request-priority"
+			},
+			"medicationAsNeededReason":{
+				"location": "%(apikey)s/medication-as-needed-reason"
+			}
+			
+			,
+			"instanceAvailability":{
+				"location": "%(apikey)s/instance-availability"
+			},
+			"dicomCid29":{
+				"location": "%(apikey)s/dicom-cid29"
+			},
+			"bodysiteLaterality":{
+				"location": "%(apikey)s/bodysite-laterality"
+			}
+			
+			,
+			"sequenceType":{
+				"location": "%(apikey)s/sequence-type"
+			},
+			"sequenceReferenceSeq":{
+				"location": "%(apikey)s/sequence-referenceSeq"
+			},
+			"qualityType":{
+				"location": "%(apikey)s/quality-type"
+			},
+			"repositoryType":{
+				"location": "%(apikey)s/repository-type"
+			},
+			"chromosomeHuman":{
+				"location": "%(apikey)s/chromosome-human"
+			}
+			
+			,
+			"specimenStatus":{
+				"location": "%(apikey)s/specimen-status"
+			},
+			"specimenProcessingProcedure":{
+				"location": "%(apikey)s/specimen-processing-procedure"
+			},
+			"specimenContainerType":{
+				"location": "%(apikey)s/specimen-container-type"
+			},
+			"specimenCollectionMethod":{
+				"location": "%(apikey)s/specimen-collection-method"
+			},
+			"bodysiteRelativeLocation":{
+				"location": "%(apikey)s/bodysite-relative-location"
+			},
+			"specimenType":{
+				"location": "%(apikey)s/specimen-type"
+			},
+			"preservative":{
+				"location": "%(apikey)s/preservative"
+			}
 		},
 		"PUT": {
 			"identityAssuranceLevel": {
@@ -2479,6 +2764,105 @@
 			},
 			"reasonMedicationNotTakenCodes":{
 				"location": "%(apikey)s/reason-medication-not-taken-codes/%(_id)d"
+			}
+			
+			,
+			"observationCategory":{
+				"location": "%(apikey)s/observation-category/%(_id)d"
+			},
+			"observationValueabsentreason":{
+				"location": "%(apikey)s/observation-valueabsentreason/%(_id)d"
+			},
+			"observationInterpretation":{
+				"location": "%(apikey)s/observation-interpretation/%(_id)d"
+			},
+			"observationMethods":{
+				"location": "%(apikey)s/observation-methods/%(_id)d"
+			},
+			"referencerangeMeaning":{
+				"location": "%(apikey)s/referencerange-meaning/%(_id)d"
+			},
+			"referencerangeAppliesto":{
+				"location": "%(apikey)s/referencerange-appliesto/%(_id)d"
+			},
+			"observationRelationshiptypes":{
+				"location": "%(apikey)s/observation-relationshiptypes/%(_id)d"
+			}
+			
+			,
+			"diagnosticReportStatus":{
+				"location": "%(apikey)s/diagnostic-report-status/%(_id)d"
+			},
+			"diagnosticServiceSections":{
+				"location": "%(apikey)s/diagnostic-service-sections/%(_id)d"
+			},
+			"reportCodes":{
+				"location": "%(apikey)s/report-codes/%(_id)d"
+			}
+			
+			,
+			"requestStatus":{
+				"location": "%(apikey)s/request-status/%(_id)d"
+			},
+			"requestIntent":{
+				"location": "%(apikey)s/request-intent/%(_id)d"
+			},
+			"requestPriority":{
+				"location": "%(apikey)s/request-priority/%(_id)d"
+			},
+			"medicationAsNeededReason":{
+				"location": "%(apikey)s/medication-as-needed-reason/%(_id)d"
+			}
+			
+			,
+			"instanceAvailability":{
+				"location": "%(apikey)s/instance-availability/%(_id)d"
+			},
+			"dicomCid29":{
+				"location": "%(apikey)s/dicom-cid29/%(_id)d"
+			},
+			"bodysiteLaterality":{
+				"location": "%(apikey)s/bodysite-laterality/%(_id)d"
+			}
+			
+			,
+			"sequenceType":{
+				"location": "%(apikey)s/sequence-type/%(_id)d"
+			},
+			"sequenceReferenceSeq":{
+				"location": "%(apikey)s/sequence-referenceSeq/%(_id)d"
+			},
+			"qualityType":{
+				"location": "%(apikey)s/quality-type/%(_id)d"
+			},
+			"repositoryType":{
+				"location": "%(apikey)s/repository-type/%(_id)d"
+			},
+			"chromosomeHuman":{
+				"location": "%(apikey)s/chromosome-human/%(_id)d"
+			}
+			
+			,
+			"specimenStatus":{
+				"location": "%(apikey)s/specimen-status/%(_id)d"
+			},
+			"specimenProcessingProcedure":{
+				"location": "%(apikey)s/specimen-processing-procedure/%(_id)d"
+			},
+			"specimenContainerType":{
+				"location": "%(apikey)s/specimen-container-type/%(_id)d"
+			},
+			"specimenCollectionMethod":{
+				"location": "%(apikey)s/specimen-collection-method/%(_id)d"
+			},
+			"bodysiteRelativeLocation":{
+				"location": "%(apikey)s/bodysite-relative-location/%(_id)d"
+			},
+			"specimenType":{
+				"location": "%(apikey)s/specimen-type/%(_id)d"
+			},
+			"preservative":{
+				"location": "%(apikey)s/preservative/%(_id)d"
 			}
 		}
 	}

@@ -385,6 +385,71 @@ var routesDefaultFHIR = function(app, DefaultFHIR){
 	app.get('/:apikey/medication-statement-taken/code/:code?', DefaultFHIR.get.medicationStatementTakenCode);
 	app.get('/:apikey/reason-medication-not-taken-codes/:_id?', DefaultFHIR.get.reasonMedicationNotTakenCodes);
 	app.get('/:apikey/reason-medication-not-taken-codes/code/:code?', DefaultFHIR.get.reasonMedicationNotTakenCodesCode);
+	
+	
+	app.get('/:apikey/observation-category/:_id?', DefaultFHIR.get.observationCategory);
+	app.get('/:apikey/observation-category/code/:code?', DefaultFHIR.get.observationCategoryCode);
+	app.get('/:apikey/observation-valueabsentreason/:_id?', DefaultFHIR.get.observationValueabsentreason);
+	app.get('/:apikey/observation-valueabsentreason/code/:code?', DefaultFHIR.get.observationValueabsentreasonCode);
+	app.get('/:apikey/observation-interpretation/:_id?', DefaultFHIR.get.observationInterpretation);
+	app.get('/:apikey/observation-interpretation/code/:code?', DefaultFHIR.get.observationInterpretationCode);
+	app.get('/:apikey/observation-methods/:_id?', DefaultFHIR.get.observationMethods);
+	app.get('/:apikey/observation-methods/code/:code?', DefaultFHIR.get.observationMethodsCode);
+	app.get('/:apikey/referencerange-meaning/:_id?', DefaultFHIR.get.referencerangeMeaning);
+	app.get('/:apikey/referencerange-meaning/code/:code?', DefaultFHIR.get.referencerangeMeaningCode);
+	app.get('/:apikey/referencerange-appliesto/:_id?', DefaultFHIR.get.referencerangeAppliesto);
+	app.get('/:apikey/referencerange-appliesto/code/:code?', DefaultFHIR.get.referencerangeAppliestoCode);
+	app.get('/:apikey/observation-relationshiptypes/:_id?', DefaultFHIR.get.observationRelationshiptypes);
+	app.get('/:apikey/observation-relationshiptypes/code/:code?', DefaultFHIR.get.observationRelationshiptypesCode);
+	
+	app.get('/:apikey/diagnostic-report-status/:_id?', DefaultFHIR.get.diagnosticReportStatus);
+	app.get('/:apikey/diagnostic-report-status/code/:code?', DefaultFHIR.get.diagnosticReportStatusCode);
+	app.get('/:apikey/diagnostic-service-sections/:_id?', DefaultFHIR.get.diagnosticServiceSections);
+	app.get('/:apikey/diagnostic-service-sections/code/:code?', DefaultFHIR.get.diagnosticServiceSectionsCode);
+	app.get('/:apikey/report-codes/:_id?', DefaultFHIR.get.reportCodes);
+	app.get('/:apikey/report-codes/code/:code?', DefaultFHIR.get.reportCodesCode);
+	
+	app.get('/:apikey/request-status/:_id?', DefaultFHIR.get.requestStatus);
+	app.get('/:apikey/request-status/code/:code?', DefaultFHIR.get.requestStatusCode);
+	app.get('/:apikey/request-intent/:_id?', DefaultFHIR.get.requestIntent);
+	app.get('/:apikey/request-intent/code/:code?', DefaultFHIR.get.requestIntentCode);
+	app.get('/:apikey/request-priority/:_id?', DefaultFHIR.get.requestPriority);
+	app.get('/:apikey/request-priority/code/:code?', DefaultFHIR.get.requestPriorityCode);
+	app.get('/:apikey/medication-as-needed-reason/:_id?', DefaultFHIR.get.medicationAsNeededReason);
+	app.get('/:apikey/medication-as-needed-reason/code/:code?', DefaultFHIR.get.medicationAsNeededReasonCode);
+	
+	app.get('/:apikey/instance-availability/:_id?', DefaultFHIR.get.instanceAvailability);
+	app.get('/:apikey/instance-availability/code/:code?', DefaultFHIR.get.instanceAvailabilityCode);
+	app.get('/:apikey/dicom-cid29/:_id?', DefaultFHIR.get.dicomCid29);
+	app.get('/:apikey/dicom-cid29/code/:code?', DefaultFHIR.get.dicomCid29Code);
+	app.get('/:apikey/bodysite-laterality/:_id?', DefaultFHIR.get.bodysiteLaterality);
+	app.get('/:apikey/bodysite-laterality/code/:code?', DefaultFHIR.get.bodysiteLateralityCode);
+	
+	app.get('/:apikey/sequence-type/:_id?', DefaultFHIR.get.sequenceType);
+	app.get('/:apikey/sequence-type/code/:code?', DefaultFHIR.get.sequenceTypeCode);
+	app.get('/:apikey/sequence-referenceSeq/:_id?', DefaultFHIR.get.sequenceReferenceSeq);
+	app.get('/:apikey/sequence-referenceSeq/code/:code?', DefaultFHIR.get.sequenceReferenceSeqCode);
+	app.get('/:apikey/quality-type/:_id?', DefaultFHIR.get.qualityType);
+	app.get('/:apikey/quality-type/code/:code?', DefaultFHIR.get.qualityTypeCode);
+	app.get('/:apikey/repository-type/:_id?', DefaultFHIR.get.repositoryType);
+	app.get('/:apikey/repository-type/code/:code?', DefaultFHIR.get.repositoryTypeCode);
+	app.get('/:apikey/chromosome-human/:_id?', DefaultFHIR.get.chromosomeHuman);
+	app.get('/:apikey/chromosome-human/code/:code?', DefaultFHIR.get.chromosomeHumanCode);
+	
+	app.get('/:apikey/specimen-status/:_id?', DefaultFHIR.get.specimenStatus);
+	app.get('/:apikey/specimen-status/code/:code?', DefaultFHIR.get.specimenStatusCode);
+	app.get('/:apikey/specimen-processing-procedure/:_id?', DefaultFHIR.get.specimenProcessingProcedure);
+	app.get('/:apikey/specimen-processing-procedure/code/:code?', DefaultFHIR.get.specimenProcessingProcedureCode);
+	app.get('/:apikey/specimen-container-type/:_id?', DefaultFHIR.get.specimenContainerType);
+	app.get('/:apikey/specimen-container-type/code/:code?', DefaultFHIR.get.specimenContainerTypeCode);
+	app.get('/:apikey/specimen-collection-method/:_id?', DefaultFHIR.get.specimenCollectionMethod);
+	app.get('/:apikey/specimen-collection-method/code/:code?', DefaultFHIR.get.specimenCollectionMethodCode);
+	app.get('/:apikey/bodysite-relative-location/:_id?', DefaultFHIR.get.bodysiteRelativeLocation);
+	app.get('/:apikey/bodysite-relative-location/code/:code?', DefaultFHIR.get.bodysiteRelativeLocationCode);
+	app.get('/:apikey/specimen-type/:_id?', DefaultFHIR.get.specimenType);
+	app.get('/:apikey/specimen-type/code/:code?', DefaultFHIR.get.specimenTypeCode);
+	app.get('/:apikey/preservative/:_id?', DefaultFHIR.get.preservative);
+	app.get('/:apikey/preservative/code/:code?', DefaultFHIR.get.preservativeCode);
 	//post
 	app.post('/:apikey/identity-AssuranceLevel', DefaultFHIR.post.identityAssuranceLevel);
 	app.post('/:apikey/administrative-gender', DefaultFHIR.post.administrativeGender);
@@ -583,6 +648,42 @@ var routesDefaultFHIR = function(app, DefaultFHIR){
 	app.post('/:apikey/medication-statement-category', DefaultFHIR.post.medicationStatementCategory);
 	app.post('/:apikey/medication-statement-taken', DefaultFHIR.post.medicationStatementTaken);
 	app.post('/:apikey/reason-medication-not-taken-codes', DefaultFHIR.post.reasonMedicationNotTakenCodes);
+	
+	app.post('/:apikey/observation-category', DefaultFHIR.post.observationCategory);
+	app.post('/:apikey/observation-valueabsentreason', DefaultFHIR.post.observationValueabsentreason);
+	app.post('/:apikey/observation-interpretation', DefaultFHIR.post.observationInterpretation);
+	app.post('/:apikey/observation-methods', DefaultFHIR.post.observationMethods);
+	app.post('/:apikey/referencerange-meaning', DefaultFHIR.post.referencerangeMeaning);
+	app.post('/:apikey/referencerange-appliesto', DefaultFHIR.post.referencerangeAppliesto);
+	app.post('/:apikey/observation-relationshiptypes', DefaultFHIR.post.observationRelationshiptypes);
+	
+	app.post('/:apikey/diagnostic-report-status', DefaultFHIR.post.diagnosticReportStatus);
+	app.post('/:apikey/diagnostic-service-sections', DefaultFHIR.post.diagnosticServiceSections);
+	app.post('/:apikey/report-codes', DefaultFHIR.post.reportCodes);
+	
+	app.post('/:apikey/request-status', DefaultFHIR.post.requestStatus);
+	app.post('/:apikey/request-intent', DefaultFHIR.post.requestIntent);
+	app.post('/:apikey/request-priority', DefaultFHIR.post.requestPriority);
+	app.post('/:apikey/medication-as-needed-reason', DefaultFHIR.post.medicationAsNeededReason);
+	
+	app.post('/:apikey/instance-availability', DefaultFHIR.post.instanceAvailability);
+	app.post('/:apikey/dicom-cid29', DefaultFHIR.post.dicomCid29);
+	app.post('/:apikey/bodysite-laterality', DefaultFHIR.post.bodysiteLaterality);
+	
+	app.post('/:apikey/sequence-type', DefaultFHIR.post.sequenceType);
+	app.post('/:apikey/sequence-referenceSeq', DefaultFHIR.post.sequenceReferenceSeq);
+	app.post('/:apikey/quality-type', DefaultFHIR.post.qualityType);
+	app.post('/:apikey/repository-type', DefaultFHIR.post.repositoryType);
+	app.post('/:apikey/chromosome-human', DefaultFHIR.post.chromosomeHuman);
+	
+	app.post('/:apikey/specimen-status', DefaultFHIR.post.specimenStatus);
+	app.post('/:apikey/specimen-processing-procedure', DefaultFHIR.post.specimenProcessingProcedure);
+	app.post('/:apikey/specimen-container-type', DefaultFHIR.post.specimenContainerType);
+	app.post('/:apikey/specimen-collection-method', DefaultFHIR.post.specimenCollectionMethod);
+	app.post('/:apikey/bodysite-relative-location', DefaultFHIR.post.bodysiteRelativeLocation);
+	app.post('/:apikey/specimen-type', DefaultFHIR.post.specimenType);
+	app.post('/:apikey/preservative', DefaultFHIR.post.preservative);
+	
 	//put
 	app.put('/:apikey/identity-AssuranceLevel/:_id', DefaultFHIR.put.identityAssuranceLevel);
 	app.put('/:apikey/administrative-gender/:_id', DefaultFHIR.put.administrativeGender);
@@ -781,5 +882,39 @@ var routesDefaultFHIR = function(app, DefaultFHIR){
 	app.put('/:apikey/medication-statement-taken/:_id', DefaultFHIR.put.medicationStatementTaken);
 	app.put('/:apikey/reason-medication-not-taken-codes/:_id', DefaultFHIR.put.reasonMedicationNotTakenCodes);
 	
+	app.put('/:apikey/observation-category/:_id', DefaultFHIR.put.observationCategory);
+	app.put('/:apikey/observation-valueabsentreason/:_id', DefaultFHIR.put.observationValueabsentreason);
+	app.put('/:apikey/observation-interpretation/:_id', DefaultFHIR.put.observationInterpretation);
+	app.put('/:apikey/observation-methods/:_id', DefaultFHIR.put.observationMethods);
+	app.put('/:apikey/referencerange-meaning/:_id', DefaultFHIR.put.referencerangeMeaning);
+	app.put('/:apikey/referencerange-appliesto/:_id', DefaultFHIR.put.referencerangeAppliesto);
+	app.put('/:apikey/observation-relationshiptypes/:_id', DefaultFHIR.put.observationRelationshiptypes);
+	
+	app.put('/:apikey/diagnostic-report-status/:_id', DefaultFHIR.put.diagnosticReportStatus);
+	app.put('/:apikey/diagnostic-service-sections/:_id', DefaultFHIR.put.diagnosticServiceSections);
+	app.put('/:apikey/report-codes/:_id', DefaultFHIR.put.reportCodes);
+	
+	app.put('/:apikey/request-status/:_id', DefaultFHIR.put.requestStatus);
+	app.put('/:apikey/request-intent/:_id', DefaultFHIR.put.requestIntent);
+	app.put('/:apikey/request-priority/:_id', DefaultFHIR.put.requestPriority);
+	app.put('/:apikey/medication-as-needed-reason/:_id', DefaultFHIR.put.medicationAsNeededReason);
+	
+	app.put('/:apikey/instance-availability/:_id', DefaultFHIR.put.instanceAvailability);
+	app.put('/:apikey/dicom-cid29/:_id', DefaultFHIR.put.dicomCid29);
+	app.put('/:apikey/bodysite-laterality/:_id', DefaultFHIR.put.bodysiteLaterality);
+	
+	app.put('/:apikey/sequence-type/:_id', DefaultFHIR.put.sequenceType);
+	app.put('/:apikey/sequence-referenceSeq/:_id', DefaultFHIR.put.sequenceReferenceSeq);
+	app.put('/:apikey/quality-type/:_id', DefaultFHIR.put.qualityType);
+	app.put('/:apikey/repository-type/:_id', DefaultFHIR.put.repositoryType);
+	app.put('/:apikey/chromosome-human/:_id', DefaultFHIR.put.chromosomeHuman);
+	
+	app.put('/:apikey/specimen-status/:_id', DefaultFHIR.put.specimenStatus);
+	app.put('/:apikey/specimen-processing-procedure/:_id', DefaultFHIR.put.specimenProcessingProcedure);
+	app.put('/:apikey/specimen-container-type/:_id', DefaultFHIR.put.specimenContainerType);
+	app.put('/:apikey/specimen-collection-method/:_id', DefaultFHIR.put.specimenCollectionMethod);
+	app.put('/:apikey/bodysite-relative-location/:_id', DefaultFHIR.put.bodysiteRelativeLocation);
+	app.put('/:apikey/specimen-type/:_id', DefaultFHIR.put.specimenType);
+	app.put('/:apikey/preservative/:_id', DefaultFHIR.put.preservative);
 }
 module.exports = routesDefaultFHIR;

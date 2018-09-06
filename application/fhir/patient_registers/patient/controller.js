@@ -532,9 +532,9 @@ var controller = {
 																															for(k=0; k < patientContact.data.length; k++){
 																																contactTeleponJoin = contactTeleponJoin.concat(patientContact.data[k].telecom);
 																															}
-																															if(typeof patientContact.data[0].telecom !== 'undefined'){
+																															/*if(typeof patientContact.data[0].telecom !== 'undefined'){
 																																patientContact.data[0].telecom = removeDuplicates(contactTeleponJoin); // set ke ke data pertama karena sudah digabung
-																															}
+																															}*/
 																															
 																															objectPatient.contact = patientContact.data;
 																															objectPatient.animal = patient.animal;
