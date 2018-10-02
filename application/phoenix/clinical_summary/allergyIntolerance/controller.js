@@ -149,6 +149,39 @@ var controller = {
         rez = lowercaseObject(dataJson);
 				for(i = 0; i < rez.length; i++){
           var AllergyIntolerance = {};
+					var arrRecorder = [];
+					var Recorder = {};
+					if(rez[i].recorder_practitioner != "null"){
+						Recorder.practitioner = hostFHIR + ':' + portFHIR + '/' + apikey + '/Practitioner?_id=' +  rez[i].recorder_practitioner;
+					} else {
+						Recorder.practitioner = "";
+					}
+					if(rez[i].recorder_patient != "null"){
+						Recorder.patient = hostFHIR + ':' + portFHIR + '/' + apikey + '/Patient?_id=' +  rez[i].recorder_patient;
+					} else {
+						Recorder.patient = "";
+					}
+					arrRecorder[i] = Recorder;
+					
+					var arrAsserter = [];
+					var Asserter = {};
+					if(rez[i].asserter_patient != "null"){
+						Asserter.patient = hostFHIR + ':' + portFHIR + '/' + apikey + '/Patient?_id=' +  rez[i].asserter_patient;
+					} else {
+						Asserter.patient = "";
+					}
+					if(rez[i].asserter_related_person != "null"){
+						Asserter.relatedPerson = hostFHIR + ':' + portFHIR + '/' + apikey + '/RelatedPerson?_id=' +  rez[i].asserter_related_person;
+					} else {
+						Asserter.relatedPerson = "";
+					}
+					if(rez[i].asserter_practitioner != "null"){
+						Asserter.practitioner = hostFHIR + ':' + portFHIR + '/' + apikey + '/Practitioner?_id=' +  rez[i].asserter_practitioner;
+					} else {
+						Asserter.practitioner = "";
+					}
+					arrAsserter[i] = Asserter;
+
 					AllergyIntolerance.resourceType = "Allergy Intolerance";
           AllergyIntolerance.id = rez[i].allergy_intolerance_id;
 					AllergyIntolerance.clinicalStatus = rez[i].clinical_status;
@@ -157,31 +190,44 @@ var controller = {
 					AllergyIntolerance.category = rez[i].category;
 					AllergyIntolerance.criticality = rez[i].criticality;
 					AllergyIntolerance.code = rez[i].code;
-					AllergyIntolerance.patient = rez[i].patient;
-					AllergyIntolerance.onset.onsetDateTime = rez[i].onset_date_time;
+					if(rez[i].patient != "null"){
+						AllergyIntolerance.patient = hostFHIR + ':' + portFHIR + '/' + apikey + '/Patient?_id=' +  rez[i].patient;
+					} else {
+						AllergyIntolerance.patient = "";
+					}
+					if(rez[i].onset_date_time == null){
+						AllergyIntolerance.onset.onsetDateTime = formatDate(rez[i].onset_date_time);
+					}else{
+						AllergyIntolerance.onset.onsetDateTime = rez[i].onset_date_time;
+					}
 					AllergyIntolerance.onset.onsetAge = rez[i].onset_age;
-					AllergyIntolerance.onset.onsetPeriod = rez[i].onset_period_start + ' to ' + rez[i].onset_period_end;
+					var onsetperiod_start,onsetperiod_end;
+					if(rez[i].onset_period_start == null){
+						onsetperiod_start = formatDate(rez[i].onset_period_start);  
+					}else{
+						onsetperiod_start = rez[i].onset_period_start;  
+					}
+					if(rez[i].onset_period_end == null){
+						onsetperiod_end = formatDate(rez[i].onset_period_end);  
+					}else{
+						onsetperiod_end = rez[i].onset_period_end;  
+					}
+					AllergyIntolerance.onset.onsetPeriod = onsetperiod_start + ' to ' + onset_period_end;
 					AllergyIntolerance.onset.onsetRange = rez[i].onset_range_low + ' to ' + rez[i].onset_range_high;
 					AllergyIntolerance.onset.onsetString = rez[i].onset_string;
-					AllergyIntolerance.assertedDate = rez[i].asserted_date;
-					if (rez[i].recorder_practitioner !== 'null') {
-						AllergyIntolerance.recorder = hostFHIR + ':' + portFHIR + '/' + apikey + '/Practitioner?_id=' +  rez[i].recorder_practitioner;
-					} else if (rez[i].recorder_patient !== 'null') {
-						AllergyIntolerance.recorder = hostFHIR + ':' + portFHIR + '/' + apikey + '/Patient?_id=' +  rez[i].recorder_patient;
-					} else {
-						AllergyIntolerance.recorder = "";
+					if(rez[i].asserted_date == null){
+						AllergyIntolerance.assertedDate = formatDate(rez[i].asserted_date);
+					}else{
+						AllergyIntolerance.assertedDate = rez[i].asserted_date;
 					}
-					if (rez[i].asserter_patient !== 'null') {
-						AllergyIntolerance.asserter = hostFHIR + ':' + portFHIR + '/' + apikey + '/Patient?_id=' +  rez[i].asserter_patient;
-					} else if (rez[i].asserter_related_person !== 'null') {
-						AllergyIntolerance.asserter = hostFHIR + ':' + portFHIR + '/' + apikey + '/RelatedPerson?_id=' +  rez[i].asserter_related_person;
-					} else if (rez[i].asserter_practitioner !== 'null') {
-						AllergyIntolerance.asserter = hostFHIR + ':' + portFHIR + '/' + apikey + '/Practitioner?_id=' +  rez[i].asserter_practitioner;
-					} else {
-						AllergyIntolerance.asserter = "";
+					AllergyIntolerance.recorder = arrRecorder;
+					AllergyIntolerance.asserter = arrAsserter;
+					AllergyIntolerance.onset.onsetString = rez[i].onset_string;
+					if(rez[i].last_occurrence == null){
+						AllergyIntolerance.lastOccurrence = formatDate(rez[i].last_occurrence);
+					}else{
+						AllergyIntolerance.lastOccurrence = rez[i].last_occurrence;
 					}
-					
-					AllergyIntolerance.lastOccurrence = rez[i].last_occurrence;
 					AllergyIntolerance.note = rez[i].location;
 					
           arrAllergyIntolerance[i] = AllergyIntolerance;
@@ -227,7 +273,11 @@ var controller = {
           reaction.substance = rez[i].substance;
 					reaction.manifestation = rez[i].manifestation;
 					reaction.description = rez[i].description;
-					reaction.onset = rez[i].onset;
+					if(rez[i].onset == null){
+						reaction.onset = formatDate(rez[i].onset);
+					}else{
+						reaction.onset = rez[i].onset;
+					}
 					reaction.severity = rez[i].severity;
 					reaction.exposureRoute = rez[i].exposureroute;
           arrReaction[i] = reaction;
@@ -310,7 +360,7 @@ var controller = {
 			if (typeof onset_date_time !== 'undefined' && onset_date_time !== "") {
         column += 'onset_date_time,';
         //values += "'" + date + "',";
-				values += "to_date('"+ onset_date_time + "', 'yyyy-MM-dd'),";
+				values += "to_date('"+ onset_date_time + "', 'yyyy-MM-dd HH:mm'),";
       }
 			
 			if (typeof onset_age !== 'undefined' && onset_age !== "") {
@@ -348,7 +398,7 @@ var controller = {
 			if (typeof asserted_date !== 'undefined' && asserted_date !== "") {
         column += 'asserted_date,';
         //values += "'" + date + "',";
-				values += "to_date('"+ asserted_date + "', 'yyyy-MM-dd'),";
+				values += "to_date('"+ asserted_date + "', 'yyyy-MM-dd  HH:mm'),";
       }
 			
 			if (typeof recorder_practitioner !== 'undefined' && recorder_practitioner !== "") {
@@ -379,7 +429,7 @@ var controller = {
 			if (typeof last_occurrence !== 'undefined' && last_occurrence !== "") {
         column += 'last_occurrence,';
         //values += "'" + date + "',";
-				values += "to_date('"+ last_occurrence + "', 'yyyy-MM-dd'),";
+				values += "to_date('"+ last_occurrence + "', 'yyyy-MM-dd HH:mm'),";
       }
 			
 			if (typeof family_member_history_id !== 'undefined' && family_member_history_id !== "") {
@@ -446,7 +496,7 @@ var controller = {
 			if (typeof onset !== 'undefined' && onset !== "") {
         column += 'onset,';
         //values += "'" + date + "',";
-				values += "to_date('"+ onset + "', 'yyyy-MM-dd'),";
+				values += "to_date('"+ onset + "', 'yyyy-MM-dd  HH:mm'),";
       }
 			
 			if (typeof severity !== 'undefined' && severity !== "") {
@@ -555,7 +605,7 @@ var controller = {
 			if (typeof onset_date_time !== 'undefined' && onset_date_time !== "") {
         column += 'onset_date_time,';
         //values += "'" + date + "',";
-				values += "to_date('"+ onset_date_time + "', 'yyyy-MM-dd'),";
+				values += "to_date('"+ onset_date_time + "', 'yyyy-MM-dd  HH:mm'),";
       }
 			
 			if (typeof onset_age !== 'undefined' && onset_age !== "") {
@@ -593,7 +643,7 @@ var controller = {
 			if (typeof asserted_date !== 'undefined' && asserted_date !== "") {
         column += 'asserted_date,';
         //values += "'" + date + "',";
-				values += "to_date('"+ asserted_date + "', 'yyyy-MM-dd'),";
+				values += "to_date('"+ asserted_date + "', 'yyyy-MM-dd HH:mm'),";
       }
 			
 			if (typeof recorder_practitioner !== 'undefined' && recorder_practitioner !== "") {
@@ -624,7 +674,7 @@ var controller = {
 			if (typeof last_occurrence !== 'undefined' && last_occurrence !== "") {
         column += 'last_occurrence,';
         //values += "'" + date + "',";
-				values += "to_date('"+ last_occurrence + "', 'yyyy-MM-dd'),";
+				values += "to_date('"+ last_occurrence + "', 'yyyy-MM-dd HH:mm'),";
       }
 			
 			if (typeof family_member_history_id !== 'undefined' && family_member_history_id !== "") {
@@ -697,7 +747,7 @@ var controller = {
 			if (typeof onset !== 'undefined' && onset !== "") {
         column += 'onset,';
         //values += "'" + date + "',";
-				values += "to_date('"+ onset + "', 'yyyy-MM-dd'),";
+				values += "to_date('"+ onset + "', 'yyyy-MM-dd HH:mm'),";
       }
 			
 			if (typeof severity !== 'undefined' && severity !== "") {

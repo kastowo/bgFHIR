@@ -44,7 +44,7 @@ var controller = {
       }
 			
 			if(typeof code !== 'undefined' && code !== ""){
-				condition += "m.CODE = " + code + " AND,";  
+				condition += "m.CODE = '" + code + "' AND,";  
       }
 			
 			if(typeof container !== 'undefined' && container !== ""){
@@ -113,7 +113,11 @@ var controller = {
 					Medication.status = rez[i].status;
 					Medication.isBrand = rez[i].is_brand;
 					Medication.isOverTheCounter = rez[i].is_over_the_counter;
-					Medication.manufacturer = rez[i].manufacturer;
+					if(rez[i].manufacturer != "null"){
+						Medication.manufacturer = hostFHIR + ':' + portFHIR + '/' + apikey + '/Organization?_id=' +  rez[i].manufacturer;
+					} else {
+						Medication.manufacturer = "";
+					}
 					Medication.form = rez[i].form;
 					
           arrMedication[i] = Medication;
@@ -153,15 +157,22 @@ var controller = {
 				rez = lowercaseObject(dataJson);
 				for (i = 0; i < rez.length; i++) {
 					var MedicationIngredient = {};
-					MedicationIngredient.id = rez[i].practitioner_id;
+					MedicationIngredient.id = rez[i].ingredient_id;
 					MedicationIngredient.item.itemCodeableConcept = rez[i].item_codeable_concept;
-					if (rez[i].item_reference_substance !== 'null') {
-						MedicationIngredient.item.itemReference = hostFHIR + ':' + portFHIR + '/' + apikey + '/Subtance?_id=' +  rez[i].item_reference_substance;
-					} else if (rez[i].item_reference_medication !== 'null') {
-						MedicationIngredient.item.itemReference  = hostFHIR + ':' + portFHIR + '/' + apikey + '/Medication?_id=' +  rez[i].item_reference_medication;
+					var arrItemReference = [];
+					var ItemReference = {};
+					if(rez[i].item_reference_substance != "null"){
+						ItemReference.substance = hostFHIR + ':' + portFHIR + '/' + apikey + '/Substance?_id=' +  rez[i].item_reference_substance;
 					} else {
-						MedicationIngredient.item.itemReference  = "";
+						ItemReference.substance = "";
 					}
+					if(rez[i].item_reference_medication != "null"){
+						ItemReference.medication = hostFHIR + ':' + portFHIR + '/' + apikey + '/Medication?_id=' +  rez[i].item_reference_medication;
+					} else {
+						ItemReference.medication = "";
+					}
+					arrItemReference[i] = ItemReference;
+					MedicationIngredient.item.itemReference  = arrItemReference;
 					MedicationIngredient.isActive = rez[i].is_active;
 					MedicationIngredient.amount.amountNumerator = rez[i].amount_numerator;
 					MedicationIngredient.amount.amountDenominator = rez[i].amount_denominator;
@@ -258,8 +269,14 @@ var controller = {
 				rez = lowercaseObject(dataJson);
 				for (i = 0; i < rez.length; i++) {
 					var MedicationPackageContent = {};
-					MedicationPackageContent.id = rez[i].PackageContent_id;
-					MedicationPackageContent.container = rez[i].container;
+					MedicationPackageContent.id = rez[i].content_id;
+					MedicationPackageContent.item.itemCodeableConcept = rez[i].item_codeable_concept;
+					if(rez[i].item_reference != "null"){
+						MedicationPackageContent.item.itemReference = hostFHIR + ':' + portFHIR + '/' + apikey + '/Medication?_id=' +  rez[i].item_reference;
+					} else {
+						MedicationPackageContent.item.itemReference = "";
+					}
+					MedicationPackageContent.amount = rez[i].amount;
 					arrMedicationPackageContent[i] = MedicationPackageContent;
 				}
 				res.json({
@@ -305,8 +322,13 @@ var controller = {
 				rez = lowercaseObject(dataJson);
 				for (i = 0; i < rez.length; i++) {
 					var MedicationPackageBatch = {};
-					MedicationPackageBatch.id = rez[i].PackageBatch_id;
-					MedicationPackageBatch.container = rez[i].container;
+					MedicationPackageBatch.id = rez[i].batch_id;
+					MedicationPackageBatch.iotNumber = rez[i].iot_number;
+					if(rez[i].expiration_date == null){
+						MedicationPackageBatch.expirationDate = formatDate(rez[i].expiration_date);
+					}else{
+						MedicationPackageBatch.expirationDate = rez[i].expiration_date;
+					}
 					arrMedicationPackageBatch[i] = MedicationPackageBatch;
 				}
 				res.json({
@@ -321,7 +343,7 @@ var controller = {
 					"function": "getMedicationPackageBatch"
 				});
 			});
-		},
+		s},
   },
 	post: {
 		medication: function addMedication(req, res) {
@@ -554,7 +576,7 @@ var controller = {
 			if (typeof expiration_date !== 'undefined' && expiration_date !== "") {
         column += 'expiration_date,';
         //values += "'" + date + "',";
-				values += "to_date('"+ expiration_date + "', 'yyyy-MM-dd'),";
+				values += "to_date('"+ expiration_date + "', 'yyyy-MM-dd HH:mm'),";
       }
 			
 			if (typeof package_id !== 'undefined' && package_id !== "") {
@@ -832,7 +854,7 @@ var controller = {
 			if (typeof expiration_date !== 'undefined' && expiration_date !== "") {
         column += 'expiration_date,';
         //values += "'" + date + "',";
-				values += "to_date('"+ expiration_date + "', 'yyyy-MM-dd'),";
+				values += "to_date('"+ expiration_date + "', 'yyyy-MM-dd HH:mm'),";
       }
 			
 			if (typeof package_id !== 'undefined' && package_id !== "") {

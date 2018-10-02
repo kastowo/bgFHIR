@@ -92,8 +92,16 @@ var controller = {
           FamilyMemberHistory.id = rez[i].care_team_id;
 					FamilyMemberHistory.notDone = rez[i].not_done;
 					FamilyMemberHistory.notDoneReason = rez[i].not_done_reason;
-					FamilyMemberHistory.patient = rez[i].patient;
-					FamilyMemberHistory.date = rez[i].date;
+					if(rez[i].patient != "null"){
+						FamilyMemberHistory.patient = hostFHIR + ':' + portFHIR + '/' + apikey + '/Patient?_id=' +  rez[i].patient;
+					} else {
+						FamilyMemberHistory.patient = "";
+					}
+					if(rez[i].date == null){
+						FamilyMemberHistory.date = formatDate(rez[i].date);
+					}else{
+						FamilyMemberHistory.date = rez[i].date;
+					}
 					FamilyMemberHistory.name = rez[i].name;
 					FamilyMemberHistory.relationship = rez[i].relationship;
 					FamilyMemberHistory.gender = rez[i].patientgender;
@@ -232,7 +240,7 @@ var controller = {
 			if (typeof date !== 'undefined' && date !== "") {
         column += 'date,';
         //values += "'" + date + "',";
-				values += "to_date('"+ date + "', 'yyyy-MM-dd'),";
+				values += "to_date('"+ date + "', 'yyyy-MM-dd HH:mm'),";
       }
 			
 			if (typeof name !== 'undefined' && name !== "") {
@@ -483,7 +491,7 @@ var controller = {
 			if (typeof date !== 'undefined' && date !== "") {
         column += 'date,';
         //values += "'" + date + "',";
-				values += "to_date('"+ date + "', 'yyyy-MM-dd'),";
+				values += "to_date('"+ date + "', 'yyyy-MM-dd HH:mm'),";
       }
 			
 			if (typeof name !== 'undefined' && name !== "") {

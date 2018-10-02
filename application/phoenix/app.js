@@ -1619,12 +1619,21 @@ var Immunization = require("./medication/immunization/controller");
 var ImmunizationRecommendation = require("./medication/immunizationRecommendation/controller");
 var Medication = require("./medication/medication/controller");
 var MedicationAdministration = require("./medication/medicationAdministration/controller");
+var MedicationDispense = require("./medication/medicationDispense/controller");
+var MedicationRequest = require("./medication/medicationRequest/controller");
+var MedicationStatement = require("./medication/medicationStatement/controller");
 
 var AdverseEvent = require("./clinical_summary/adverseEvent/controller");
 var AllergyIntolerance = require("./clinical_summary/allergyIntolerance/controller");
 var CarePlan = require("./clinical_summary/carePlan/controller");
 var CareTeam = require("./clinical_summary/careTeam/controller");
 var ClinicalImpression = require("./clinical_summary/clinicalImpression/controller");
+var Condition = require("./clinical_summary/condition/controller");
+var DetectedIssue = require("./clinical_summary/detectedIssue/controller");
+var FamilyMemberHistory = require("./clinical_summary/familyMemberHistory/controller");
+var Goal = require("./clinical_summary/goal/controller");
+var Procedure = require("./clinical_summary/procedure/controller");
+var RiskAssessment = require("./clinical_summary/riskAssessment/controller");
 
 //import routes
 var routesDefaultFHIR    = require('./default_fhir/routes');  
@@ -1655,12 +1664,21 @@ var routesImmunization = require('./medication/immunization/routes');
 var routesImmunizationRecommendation = require('./medication/immunizationRecommendation/routes');
 var routesMedication = require('./medication/medication/routes');
 var routesMedicationAdministration = require('./medication/medicationAdministration/routes');
+var routesMedicationDispense = require('./medication/medicationDispense/routes');
+var routesMedicationRequest = require('./medication/medicationRequest/routes');
+var routesMedicationStatement = require('./medication/medicationStatement/routes');
 
 var routesAdverseEvent = require('./clinical_summary/adverseEvent/routes');
 var routesAllergyIntolerance = require('./clinical_summary/allergyIntolerance/routes');
 var routesCarePlan = require('./clinical_summary/carePlan/routes');
 var routesCareTeam = require('./clinical_summary/careTeam/routes');
 var routesClinicalImpression = require('./clinical_summary/clinicalImpression/routes');
+var routesCondition = require('./clinical_summary/condition/routes');
+var routesDetectedIssue = require('./clinical_summary/detectedIssue/routes');
+var routesFamilyMemberHistory = require('./clinical_summary/familyMemberHistory/routes');
+var routesGoal = require('./clinical_summary/goal/routes');
+var routesProcedure = require('./clinical_summary/procedure/routes');
+var routesRiskAssessment = require('./clinical_summary/riskAssessment/routes');
 
 //setrouting
 routesDefaultFHIR(app, DefaultFHIR);
@@ -1691,12 +1709,21 @@ routesImmunization(app, Immunization);
 routesImmunizationRecommendation(app, ImmunizationRecommendation);
 routesMedication(app, Medication);
 routesMedicationAdministration(app, MedicationAdministration);
+routesMedicationDispense(app, MedicationDispense);
+routesMedicationRequest(app, MedicationRequest);
+routesMedicationStatement(app, MedicationStatement);
 
 routesAdverseEvent(app, AdverseEvent);
 routesAllergyIntolerance(app,AllergyIntolerance);
 routesCarePlan(app,CarePlan);
 routesCareTeam(app,CareTeam);
 routesClinicalImpression(app,ClinicalImpression);
+routesCondition(app,Condition);
+routesDetectedIssue(app,DetectedIssue);
+routesFamilyMemberHistory(app,FamilyMemberHistory);
+routesGoal(app,Goal);
+routesProcedure(app,Procedure);
+routesRiskAssessment(app,RiskAssessment);
 
 var server = app.listen(port, host, function () {
   console.log("Server running at http://%s:%s", host, port);

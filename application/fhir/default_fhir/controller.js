@@ -23580,6 +23580,3084 @@ var controller = {
 				});
 			}				
 		},
+		
+		usageContextType: function getUsageContextType(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var _id = req.params._id;
+			checkApikey(apikey, ipAddres, function(result){
+				if(result.err_code == 0){
+					if(_id == "" || typeof _id == 'undefined'){
+						//method, endpoint, params, options, callback
+						ApiFHIR.get('usageContextType', {"apikey": apikey, "_id": 0}, {}, function(error, response, body){
+							if(error){
+							  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "usageContextType"});
+							  }else{
+							  	//cek apakah ada error atau tidak
+							  	var usageContextType = JSON.parse(body); 
+							  	
+							  	//cek apakah ada error atau tidak
+							  	if(usageContextType.err_code == 0){
+								  	//cek jumdata dulu
+								  	if(usageContextType.data.length > 0){
+								  		res.json({"err_code": 0, "data":usageContextType.data});
+								  	}else{
+							  			res.json({"err_code": 2, "err_msg": "Usage Context Type is not found"});	
+								  	}
+							  	}else{
+							  		res.json({"err_code": 3, "err_msg": usageContextType.error, "application": "Api FHIR", "function": "getUsageContextType"});
+							  	}
+							  }
+						})	
+					}else{
+						if(validator.isInt(_id)){
+							ApiFHIR.get('usageContextType', {"apikey": apikey, "_id": _id}, {}, function(error, response, body){
+								if(error){
+								  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "getUsageContextType"});
+								  }else{
+								  	//cek apakah ada error atau tidak
+								  	var usageContextType = JSON.parse(body); 
+								  	
+								  	//cek apakah ada error atau tidak
+								  	if(usageContextType.err_code == 0){
+									  	//cek jumdata dulu
+									  	if(usageContextType.data.length > 0){
+									  		res.json({"err_code": 0, "data":usageContextType.data});
+									  	}else{
+								  			res.json({"err_code": 2, "err_msg": "Usage Context Type is not found"});	
+									  	}
+								  	}else{
+								  		res.json({"err_code": 3, "err_msg": usageContextType.error, "application": "Api FHIR", "function": "getUsageContextType"});
+								  	}
+								  }
+							})
+						}else{
+							res.json({"err_code": 4, "err_msg": "Id must be a number."});
+						}
+						
+					}
+				}else{
+					result.err_code = 500;
+					res.json(result);
+				}	
+			});
+		},
+		usageContextTypeCode: function getUsageContextTypeCode(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var code = req.params.code.trim().toLowerCase();
+			//var code = req.params.code.replace(/[^\w\s ,]/gi, '').trim();
+
+			if(code == "" || typeof code == 'undefined'){
+				res.json({"err_code": 4, "err_msg": "Code is required."});
+			}else{
+				checkApikey(apikey, ipAddres, function(result){
+					if(result.err_code == 0){	
+						ApiFHIR.get('usageContextTypeCode', {"apikey": apikey, "code": code}, {}, function(error, response, body){
+							if(error){
+							  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "getUsageContextTypeCode"});
+							  }else{
+							  	//cek apakah ada error atau tidak
+							  	var usageContextType = JSON.parse(body); 
+							  	
+							  	//cek apakah ada error atau tidak
+							  	if(usageContextType.err_code == 0){
+								  	//cek jumdata dulu
+								  	if(usageContextType.data.length > 0){
+								  		res.json({"err_code": 0, "data":usageContextType.data});
+								  	}else{
+							  			res.json({"err_code": 2, "err_msg": "Usage Context Type Code is not found"});	
+								  	}
+							  	}else{
+							  		res.json({"err_code": 3, "err_msg": usageContextType.error, "application": "Api FHIR", "function": "getUsageContextTypeCode"});
+							  	}
+							  }
+						})
+					}else{
+						result.err_code = 500;
+						res.json(result);
+					}	
+				});
+			}				
+		},
+		usageContext: function getUsageContext(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var _id = req.params._id;
+			checkApikey(apikey, ipAddres, function(result){
+				if(result.err_code == 0){
+					if(_id == "" || typeof _id == 'undefined'){
+						//method, endpoint, params, options, callback
+						ApiFHIR.get('usageContext', {"apikey": apikey, "_id": 0}, {}, function(error, response, body){
+							if(error){
+							  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "usageContext"});
+							  }else{
+							  	//cek apakah ada error atau tidak
+							  	var usageContext = JSON.parse(body); 
+							  	
+							  	//cek apakah ada error atau tidak
+							  	if(usageContext.err_code == 0){
+								  	//cek jumdata dulu
+								  	if(usageContext.data.length > 0){
+								  		res.json({"err_code": 0, "data":usageContext.data});
+								  	}else{
+							  			res.json({"err_code": 2, "err_msg": "Usage Context is not found"});	
+								  	}
+							  	}else{
+							  		res.json({"err_code": 3, "err_msg": usageContext.error, "application": "Api FHIR", "function": "getUsageContext"});
+							  	}
+							  }
+						})	
+					}else{
+						if(validator.isInt(_id)){
+							ApiFHIR.get('usageContext', {"apikey": apikey, "_id": _id}, {}, function(error, response, body){
+								if(error){
+								  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "getUsageContext"});
+								  }else{
+								  	//cek apakah ada error atau tidak
+								  	var usageContext = JSON.parse(body); 
+								  	
+								  	//cek apakah ada error atau tidak
+								  	if(usageContext.err_code == 0){
+									  	//cek jumdata dulu
+									  	if(usageContext.data.length > 0){
+									  		res.json({"err_code": 0, "data":usageContext.data});
+									  	}else{
+								  			res.json({"err_code": 2, "err_msg": "Usage Context is not found"});	
+									  	}
+								  	}else{
+								  		res.json({"err_code": 3, "err_msg": usageContext.error, "application": "Api FHIR", "function": "getUsageContext"});
+								  	}
+								  }
+							})
+						}else{
+							res.json({"err_code": 4, "err_msg": "Id must be a number."});
+						}
+						
+					}
+				}else{
+					result.err_code = 500;
+					res.json(result);
+				}	
+			});
+		},
+		usageContextCode: function getUsageContextCode(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var code = req.params.code.trim().toUpperCase();
+			//var code = req.params.code.replace(/[^\w\s ,]/gi, '').trim();
+
+			if(code == "" || typeof code == 'undefined'){
+				res.json({"err_code": 4, "err_msg": "Code is required."});
+			}else{
+				checkApikey(apikey, ipAddres, function(result){
+					if(result.err_code == 0){	
+						ApiFHIR.get('usageContextCode', {"apikey": apikey, "code": code}, {}, function(error, response, body){
+							if(error){
+							  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "getUsageContextCode"});
+							  }else{
+							  	//cek apakah ada error atau tidak
+							  	var usageContext = JSON.parse(body); 
+							  	
+							  	//cek apakah ada error atau tidak
+							  	if(usageContext.err_code == 0){
+								  	//cek jumdata dulu
+								  	if(usageContext.data.length > 0){
+								  		res.json({"err_code": 0, "data":usageContext.data});
+								  	}else{
+							  			res.json({"err_code": 2, "err_msg": "Usage Context Code is not found"});	
+								  	}
+							  	}else{
+							  		res.json({"err_code": 3, "err_msg": usageContext.error, "application": "Api FHIR", "function": "getUsageContextCode"});
+							  	}
+							  }
+						})
+					}else{
+						result.err_code = 500;
+						res.json(result);
+					}	
+				});
+			}				
+		},
+		quantityComparator: function getQuantityComparator(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var _id = req.params._id;
+			checkApikey(apikey, ipAddres, function(result){
+				if(result.err_code == 0){
+					if(_id == "" || typeof _id == 'undefined'){
+						//method, endpoint, params, options, callback
+						ApiFHIR.get('quantityComparator', {"apikey": apikey, "_id": 0}, {}, function(error, response, body){
+							if(error){
+							  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "quantityComparator"});
+							  }else{
+							  	//cek apakah ada error atau tidak
+							  	var quantityComparator = JSON.parse(body); 
+							  	
+							  	//cek apakah ada error atau tidak
+							  	if(quantityComparator.err_code == 0){
+								  	//cek jumdata dulu
+								  	if(quantityComparator.data.length > 0){
+								  		res.json({"err_code": 0, "data":quantityComparator.data});
+								  	}else{
+							  			res.json({"err_code": 2, "err_msg": "Quantity Comparator is not found"});	
+								  	}
+							  	}else{
+							  		res.json({"err_code": 3, "err_msg": quantityComparator.error, "application": "Api FHIR", "function": "getQuantityComparator"});
+							  	}
+							  }
+						})	
+					}else{
+						if(validator.isInt(_id)){
+							ApiFHIR.get('quantityComparator', {"apikey": apikey, "_id": _id}, {}, function(error, response, body){
+								if(error){
+								  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "getQuantityComparator"});
+								  }else{
+								  	//cek apakah ada error atau tidak
+								  	var quantityComparator = JSON.parse(body); 
+								  	
+								  	//cek apakah ada error atau tidak
+								  	if(quantityComparator.err_code == 0){
+									  	//cek jumdata dulu
+									  	if(quantityComparator.data.length > 0){
+									  		res.json({"err_code": 0, "data":quantityComparator.data});
+									  	}else{
+								  			res.json({"err_code": 2, "err_msg": "Quantity Comparator is not found"});	
+									  	}
+								  	}else{
+								  		res.json({"err_code": 3, "err_msg": quantityComparator.error, "application": "Api FHIR", "function": "getQuantityComparator"});
+								  	}
+								  }
+							})
+						}else{
+							res.json({"err_code": 4, "err_msg": "Id must be a number."});
+						}
+						
+					}
+				}else{
+					result.err_code = 500;
+					res.json(result);
+				}	
+			});
+		},
+		quantityComparatorCode: function getQuantityComparatorCode(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var code = req.params.code.trim().toLowerCase();
+			//var code = req.params.code.replace(/[^\w\s ,]/gi, '').trim();
+
+			if(code == "" || typeof code == 'undefined'){
+				res.json({"err_code": 4, "err_msg": "Code is required."});
+			}else{
+				checkApikey(apikey, ipAddres, function(result){
+					if(result.err_code == 0){	
+						ApiFHIR.get('quantityComparatorCode', {"apikey": apikey, "code": code}, {}, function(error, response, body){
+							if(error){
+							  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "getQuantityComparatorCode"});
+							  }else{
+							  	//cek apakah ada error atau tidak
+							  	var quantityComparator = JSON.parse(body); 
+							  	
+							  	//cek apakah ada error atau tidak
+							  	if(quantityComparator.err_code == 0){
+								  	//cek jumdata dulu
+								  	if(quantityComparator.data.length > 0){
+								  		res.json({"err_code": 0, "data":quantityComparator.data});
+								  	}else{
+							  			res.json({"err_code": 2, "err_msg": "Quantity Comparator Code is not found"});	
+								  	}
+							  	}else{
+							  		res.json({"err_code": 3, "err_msg": quantityComparator.error, "application": "Api FHIR", "function": "getQuantityComparatorCode"});
+							  	}
+							  }
+						})
+					}else{
+						result.err_code = 500;
+						res.json(result);
+					}	
+				});
+			}				
+		},
+		
+		allTypes: function getAllTypes(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var _id = req.params._id;
+			checkApikey(apikey, ipAddres, function(result){
+				if(result.err_code == 0){
+					if(_id == "" || typeof _id == 'undefined'){
+						//method, endpoint, params, options, callback
+						ApiFHIR.get('allTypes', {"apikey": apikey, "_id": 0}, {}, function(error, response, body){
+							if(error){
+							  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "allTypes"});
+							  }else{
+							  	//cek apakah ada error atau tidak
+							  	var allTypes = JSON.parse(body); 
+							  	
+							  	//cek apakah ada error atau tidak
+							  	if(allTypes.err_code == 0){
+								  	//cek jumdata dulu
+								  	if(allTypes.data.length > 0){
+								  		res.json({"err_code": 0, "data":allTypes.data});
+								  	}else{
+							  			res.json({"err_code": 2, "err_msg": "All Types is not found"});	
+								  	}
+							  	}else{
+							  		res.json({"err_code": 3, "err_msg": allTypes.error, "application": "Api FHIR", "function": "getAllTypes"});
+							  	}
+							  }
+						})	
+					}else{
+						if(validator.isInt(_id)){
+							ApiFHIR.get('allTypes', {"apikey": apikey, "_id": _id}, {}, function(error, response, body){
+								if(error){
+								  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "getAllTypes"});
+								  }else{
+								  	//cek apakah ada error atau tidak
+								  	var allTypes = JSON.parse(body); 
+								  	
+								  	//cek apakah ada error atau tidak
+								  	if(allTypes.err_code == 0){
+									  	//cek jumdata dulu
+									  	if(allTypes.data.length > 0){
+									  		res.json({"err_code": 0, "data":allTypes.data});
+									  	}else{
+								  			res.json({"err_code": 2, "err_msg": "All Types is not found"});	
+									  	}
+								  	}else{
+								  		res.json({"err_code": 3, "err_msg": allTypes.error, "application": "Api FHIR", "function": "getAllTypes"});
+								  	}
+								  }
+							})
+						}else{
+							res.json({"err_code": 4, "err_msg": "Id must be a number."});
+						}
+						
+					}
+				}else{
+					result.err_code = 500;
+					res.json(result);
+				}	
+			});
+		},
+		allTypesCode: function getAllTypesCode(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var code = req.params.code.trim();
+			//var code = req.params.code.replace(/[^\w\s ,]/gi, '').trim();
+
+			if(code == "" || typeof code == 'undefined'){
+				res.json({"err_code": 4, "err_msg": "Code is required."});
+			}else{
+				checkApikey(apikey, ipAddres, function(result){
+					if(result.err_code == 0){	
+						ApiFHIR.get('allTypesCode', {"apikey": apikey, "code": code}, {}, function(error, response, body){
+							if(error){
+							  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "getAllTypesCode"});
+							  }else{
+							  	//cek apakah ada error atau tidak
+							  	var allTypes = JSON.parse(body); 
+							  	
+							  	//cek apakah ada error atau tidak
+							  	if(allTypes.err_code == 0){
+								  	//cek jumdata dulu
+								  	if(allTypes.data.length > 0){
+								  		res.json({"err_code": 0, "data":allTypes.data});
+								  	}else{
+							  			res.json({"err_code": 2, "err_msg": "All Types Code is not found"});	
+								  	}
+							  	}else{
+							  		res.json({"err_code": 3, "err_msg": allTypes.error, "application": "Api FHIR", "function": "getAllTypesCode"});
+							  	}
+							  }
+						})
+					}else{
+						result.err_code = 500;
+						res.json(result);
+					}	
+				});
+			}				
+		},
+		
+		relatedArtifactType: function getRelatedArtifactType(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var _id = req.params._id;
+			checkApikey(apikey, ipAddres, function(result){
+				if(result.err_code == 0){
+					if(_id == "" || typeof _id == 'undefined'){
+						//method, endpoint, params, options, callback
+						ApiFHIR.get('relatedArtifactType', {"apikey": apikey, "_id": 0}, {}, function(error, response, body){
+							if(error){
+							  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "relatedArtifactType"});
+							  }else{
+							  	//cek apakah ada error atau tidak
+							  	var relatedArtifactType = JSON.parse(body); 
+							  	
+							  	//cek apakah ada error atau tidak
+							  	if(relatedArtifactType.err_code == 0){
+								  	//cek jumdata dulu
+								  	if(relatedArtifactType.data.length > 0){
+								  		res.json({"err_code": 0, "data":relatedArtifactType.data});
+								  	}else{
+							  			res.json({"err_code": 2, "err_msg": "Related Artifact Type is not found"});	
+								  	}
+							  	}else{
+							  		res.json({"err_code": 3, "err_msg": relatedArtifactType.error, "application": "Api FHIR", "function": "getRelatedArtifactType"});
+							  	}
+							  }
+						})	
+					}else{
+						if(validator.isInt(_id)){
+							ApiFHIR.get('relatedArtifactType', {"apikey": apikey, "_id": _id}, {}, function(error, response, body){
+								if(error){
+								  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "getRelatedArtifactType"});
+								  }else{
+								  	//cek apakah ada error atau tidak
+								  	var relatedArtifactType = JSON.parse(body); 
+								  	
+								  	//cek apakah ada error atau tidak
+								  	if(relatedArtifactType.err_code == 0){
+									  	//cek jumdata dulu
+									  	if(relatedArtifactType.data.length > 0){
+									  		res.json({"err_code": 0, "data":relatedArtifactType.data});
+									  	}else{
+								  			res.json({"err_code": 2, "err_msg": "Related Artifact Type is not found"});	
+									  	}
+								  	}else{
+								  		res.json({"err_code": 3, "err_msg": relatedArtifactType.error, "application": "Api FHIR", "function": "getRelatedArtifactType"});
+								  	}
+								  }
+							})
+						}else{
+							res.json({"err_code": 4, "err_msg": "Id must be a number."});
+						}
+						
+					}
+				}else{
+					result.err_code = 500;
+					res.json(result);
+				}	
+			});
+		},
+		relatedArtifactTypeCode: function getRelatedArtifactTypeCode(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var code = req.params.code.trim().toLowerCase();
+			//var code = req.params.code.replace(/[^\w\s ,]/gi, '').trim();
+
+			if(code == "" || typeof code == 'undefined'){
+				res.json({"err_code": 4, "err_msg": "Code is required."});
+			}else{
+				checkApikey(apikey, ipAddres, function(result){
+					if(result.err_code == 0){	
+						ApiFHIR.get('relatedArtifactTypeCode', {"apikey": apikey, "code": code}, {}, function(error, response, body){
+							if(error){
+							  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "getRelatedArtifactTypeCode"});
+							  }else{
+							  	//cek apakah ada error atau tidak
+							  	var relatedArtifactType = JSON.parse(body); 
+							  	
+							  	//cek apakah ada error atau tidak
+							  	if(relatedArtifactType.err_code == 0){
+								  	//cek jumdata dulu
+								  	if(relatedArtifactType.data.length > 0){
+								  		res.json({"err_code": 0, "data":relatedArtifactType.data});
+								  	}else{
+							  			res.json({"err_code": 2, "err_msg": "Related Artifact Type Code is not found"});	
+								  	}
+							  	}else{
+							  		res.json({"err_code": 3, "err_msg": relatedArtifactType.error, "application": "Api FHIR", "function": "getRelatedArtifactTypeCode"});
+							  	}
+							  }
+						})
+					}else{
+						result.err_code = 500;
+						res.json(result);
+					}	
+				});
+			}				
+		},
+		triggerType: function getTriggerType(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var _id = req.params._id;
+			checkApikey(apikey, ipAddres, function(result){
+				if(result.err_code == 0){
+					if(_id == "" || typeof _id == 'undefined'){
+						//method, endpoint, params, options, callback
+						ApiFHIR.get('triggerType', {"apikey": apikey, "_id": 0}, {}, function(error, response, body){
+							if(error){
+							  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "triggerType"});
+							  }else{
+							  	//cek apakah ada error atau tidak
+							  	var triggerType = JSON.parse(body); 
+							  	
+							  	//cek apakah ada error atau tidak
+							  	if(triggerType.err_code == 0){
+								  	//cek jumdata dulu
+								  	if(triggerType.data.length > 0){
+								  		res.json({"err_code": 0, "data":triggerType.data});
+								  	}else{
+							  			res.json({"err_code": 2, "err_msg": "Trigger Type is not found"});	
+								  	}
+							  	}else{
+							  		res.json({"err_code": 3, "err_msg": triggerType.error, "application": "Api FHIR", "function": "getTriggerType"});
+							  	}
+							  }
+						})	
+					}else{
+						if(validator.isInt(_id)){
+							ApiFHIR.get('triggerType', {"apikey": apikey, "_id": _id}, {}, function(error, response, body){
+								if(error){
+								  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "getTriggerType"});
+								  }else{
+								  	//cek apakah ada error atau tidak
+								  	var triggerType = JSON.parse(body); 
+								  	
+								  	//cek apakah ada error atau tidak
+								  	if(triggerType.err_code == 0){
+									  	//cek jumdata dulu
+									  	if(triggerType.data.length > 0){
+									  		res.json({"err_code": 0, "data":triggerType.data});
+									  	}else{
+								  			res.json({"err_code": 2, "err_msg": "Trigger Type is not found"});	
+									  	}
+								  	}else{
+								  		res.json({"err_code": 3, "err_msg": triggerType.error, "application": "Api FHIR", "function": "getTriggerType"});
+								  	}
+								  }
+							})
+						}else{
+							res.json({"err_code": 4, "err_msg": "Id must be a number."});
+						}
+						
+					}
+				}else{
+					result.err_code = 500;
+					res.json(result);
+				}	
+			});
+		},
+		triggerTypeCode: function getTriggerTypeCode(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var code = req.params.code.trim().toLowerCase();
+			//var code = req.params.code.replace(/[^\w\s ,]/gi, '').trim();
+
+			if(code == "" || typeof code == 'undefined'){
+				res.json({"err_code": 4, "err_msg": "Code is required."});
+			}else{
+				checkApikey(apikey, ipAddres, function(result){
+					if(result.err_code == 0){	
+						ApiFHIR.get('triggerTypeCode', {"apikey": apikey, "code": code}, {}, function(error, response, body){
+							if(error){
+							  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "getTriggerTypeCode"});
+							  }else{
+							  	//cek apakah ada error atau tidak
+							  	var triggerType = JSON.parse(body); 
+							  	
+							  	//cek apakah ada error atau tidak
+							  	if(triggerType.err_code == 0){
+								  	//cek jumdata dulu
+								  	if(triggerType.data.length > 0){
+								  		res.json({"err_code": 0, "data":triggerType.data});
+								  	}else{
+							  			res.json({"err_code": 2, "err_msg": "Trigger Type Code is not found"});	
+								  	}
+							  	}else{
+							  		res.json({"err_code": 3, "err_msg": triggerType.error, "application": "Api FHIR", "function": "getTriggerTypeCode"});
+							  	}
+							  }
+						})
+					}else{
+						result.err_code = 500;
+						res.json(result);
+					}	
+				});
+			}				
+		},
+		
+		actionParticipantType: function getActionParticipantType(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var _id = req.params._id;
+			checkApikey(apikey, ipAddres, function(result){
+				if(result.err_code == 0){
+					if(_id == "" || typeof _id == 'undefined'){
+						//method, endpoint, params, options, callback
+						ApiFHIR.get('actionParticipantType', {"apikey": apikey, "_id": 0}, {}, function(error, response, body){
+							if(error){
+							  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "actionParticipantType"});
+							  }else{
+							  	//cek apakah ada error atau tidak
+							  	var actionParticipantType = JSON.parse(body); 
+							  	
+							  	//cek apakah ada error atau tidak
+							  	if(actionParticipantType.err_code == 0){
+								  	//cek jumdata dulu
+								  	if(actionParticipantType.data.length > 0){
+								  		res.json({"err_code": 0, "data":actionParticipantType.data});
+								  	}else{
+							  			res.json({"err_code": 2, "err_msg": "Action Participant Type is not found"});	
+								  	}
+							  	}else{
+							  		res.json({"err_code": 3, "err_msg": actionParticipantType.error, "application": "Api FHIR", "function": "getActionParticipantType"});
+							  	}
+							  }
+						})	
+					}else{
+						if(validator.isInt(_id)){
+							ApiFHIR.get('actionParticipantType', {"apikey": apikey, "_id": _id}, {}, function(error, response, body){
+								if(error){
+								  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "getActionParticipantType"});
+								  }else{
+								  	//cek apakah ada error atau tidak
+								  	var actionParticipantType = JSON.parse(body); 
+								  	
+								  	//cek apakah ada error atau tidak
+								  	if(actionParticipantType.err_code == 0){
+									  	//cek jumdata dulu
+									  	if(actionParticipantType.data.length > 0){
+									  		res.json({"err_code": 0, "data":actionParticipantType.data});
+									  	}else{
+								  			res.json({"err_code": 2, "err_msg": "Action Participant Type is not found"});	
+									  	}
+								  	}else{
+								  		res.json({"err_code": 3, "err_msg": actionParticipantType.error, "application": "Api FHIR", "function": "getActionParticipantType"});
+								  	}
+								  }
+							})
+						}else{
+							res.json({"err_code": 4, "err_msg": "Id must be a number."});
+						}
+						
+					}
+				}else{
+					result.err_code = 500;
+					res.json(result);
+				}	
+			});
+		},
+		actionParticipantTypeCode: function getActionParticipantTypeCode(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var code = req.params.code.trim().toLowerCase();
+			//var code = req.params.code.replace(/[^\w\s ,]/gi, '').trim();
+
+			if(code == "" || typeof code == 'undefined'){
+				res.json({"err_code": 4, "err_msg": "Code is required."});
+			}else{
+				checkApikey(apikey, ipAddres, function(result){
+					if(result.err_code == 0){	
+						ApiFHIR.get('actionParticipantTypeCode', {"apikey": apikey, "code": code}, {}, function(error, response, body){
+							if(error){
+							  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "getActionParticipantTypeCode"});
+							  }else{
+							  	//cek apakah ada error atau tidak
+							  	var actionParticipantType = JSON.parse(body); 
+							  	
+							  	//cek apakah ada error atau tidak
+							  	if(actionParticipantType.err_code == 0){
+								  	//cek jumdata dulu
+								  	if(actionParticipantType.data.length > 0){
+								  		res.json({"err_code": 0, "data":actionParticipantType.data});
+								  	}else{
+							  			res.json({"err_code": 2, "err_msg": "Action Participant Type Code is not found"});	
+								  	}
+							  	}else{
+							  		res.json({"err_code": 3, "err_msg": actionParticipantType.error, "application": "Api FHIR", "function": "getActionParticipantTypeCode"});
+							  	}
+							  }
+						})
+					}else{
+						result.err_code = 500;
+						res.json(result);
+					}	
+				});
+			}				
+		},
+		planDefinitionType: function getPlanDefinitionType(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var _id = req.params._id;
+			checkApikey(apikey, ipAddres, function(result){
+				if(result.err_code == 0){
+					if(_id == "" || typeof _id == 'undefined'){
+						//method, endpoint, params, options, callback
+						ApiFHIR.get('planDefinitionType', {"apikey": apikey, "_id": 0}, {}, function(error, response, body){
+							if(error){
+							  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "planDefinitionType"});
+							  }else{
+							  	//cek apakah ada error atau tidak
+							  	var planDefinitionType = JSON.parse(body); 
+							  	
+							  	//cek apakah ada error atau tidak
+							  	if(planDefinitionType.err_code == 0){
+								  	//cek jumdata dulu
+								  	if(planDefinitionType.data.length > 0){
+								  		res.json({"err_code": 0, "data":planDefinitionType.data});
+								  	}else{
+							  			res.json({"err_code": 2, "err_msg": "Plan Definition Type is not found"});	
+								  	}
+							  	}else{
+							  		res.json({"err_code": 3, "err_msg": planDefinitionType.error, "application": "Api FHIR", "function": "getPlanDefinitionType"});
+							  	}
+							  }
+						})	
+					}else{
+						if(validator.isInt(_id)){
+							ApiFHIR.get('planDefinitionType', {"apikey": apikey, "_id": _id}, {}, function(error, response, body){
+								if(error){
+								  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "getPlanDefinitionType"});
+								  }else{
+								  	//cek apakah ada error atau tidak
+								  	var planDefinitionType = JSON.parse(body); 
+								  	
+								  	//cek apakah ada error atau tidak
+								  	if(planDefinitionType.err_code == 0){
+									  	//cek jumdata dulu
+									  	if(planDefinitionType.data.length > 0){
+									  		res.json({"err_code": 0, "data":planDefinitionType.data});
+									  	}else{
+								  			res.json({"err_code": 2, "err_msg": "Plan Definition Type is not found"});	
+									  	}
+								  	}else{
+								  		res.json({"err_code": 3, "err_msg": planDefinitionType.error, "application": "Api FHIR", "function": "getPlanDefinitionType"});
+								  	}
+								  }
+							})
+						}else{
+							res.json({"err_code": 4, "err_msg": "Id must be a number."});
+						}
+						
+					}
+				}else{
+					result.err_code = 500;
+					res.json(result);
+				}	
+			});
+		},
+		planDefinitionTypeCode: function getPlanDefinitionTypeCode(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var code = req.params.code.trim().toLowerCase();
+			//var code = req.params.code.replace(/[^\w\s ,]/gi, '').trim();
+
+			if(code == "" || typeof code == 'undefined'){
+				res.json({"err_code": 4, "err_msg": "Code is required."});
+			}else{
+				checkApikey(apikey, ipAddres, function(result){
+					if(result.err_code == 0){	
+						ApiFHIR.get('planDefinitionTypeCode', {"apikey": apikey, "code": code}, {}, function(error, response, body){
+							if(error){
+							  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "getPlanDefinitionTypeCode"});
+							  }else{
+							  	//cek apakah ada error atau tidak
+							  	var planDefinitionType = JSON.parse(body); 
+							  	
+							  	//cek apakah ada error atau tidak
+							  	if(planDefinitionType.err_code == 0){
+								  	//cek jumdata dulu
+								  	if(planDefinitionType.data.length > 0){
+								  		res.json({"err_code": 0, "data":planDefinitionType.data});
+								  	}else{
+							  			res.json({"err_code": 2, "err_msg": "Plan Definition Type Code is not found"});	
+								  	}
+							  	}else{
+							  		res.json({"err_code": 3, "err_msg": planDefinitionType.error, "application": "Api FHIR", "function": "getPlanDefinitionTypeCode"});
+							  	}
+							  }
+						})
+					}else{
+						result.err_code = 500;
+						res.json(result);
+					}	
+				});
+			}				
+		},
+		publicationStatus: function getPublicationStatus(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var _id = req.params._id;
+			checkApikey(apikey, ipAddres, function(result){
+				if(result.err_code == 0){
+					if(_id == "" || typeof _id == 'undefined'){
+						//method, endpoint, params, options, callback
+						ApiFHIR.get('publicationStatus', {"apikey": apikey, "_id": 0}, {}, function(error, response, body){
+							if(error){
+							  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "publicationStatus"});
+							  }else{
+							  	//cek apakah ada error atau tidak
+							  	var publicationStatus = JSON.parse(body); 
+							  	
+							  	//cek apakah ada error atau tidak
+							  	if(publicationStatus.err_code == 0){
+								  	//cek jumdata dulu
+								  	if(publicationStatus.data.length > 0){
+								  		res.json({"err_code": 0, "data":publicationStatus.data});
+								  	}else{
+							  			res.json({"err_code": 2, "err_msg": "Publication Status is not found"});	
+								  	}
+							  	}else{
+							  		res.json({"err_code": 3, "err_msg": publicationStatus.error, "application": "Api FHIR", "function": "getPublicationStatus"});
+							  	}
+							  }
+						})	
+					}else{
+						if(validator.isInt(_id)){
+							ApiFHIR.get('publicationStatus', {"apikey": apikey, "_id": _id}, {}, function(error, response, body){
+								if(error){
+								  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "getPublicationStatus"});
+								  }else{
+								  	//cek apakah ada error atau tidak
+								  	var publicationStatus = JSON.parse(body); 
+								  	
+								  	//cek apakah ada error atau tidak
+								  	if(publicationStatus.err_code == 0){
+									  	//cek jumdata dulu
+									  	if(publicationStatus.data.length > 0){
+									  		res.json({"err_code": 0, "data":publicationStatus.data});
+									  	}else{
+								  			res.json({"err_code": 2, "err_msg": "Publication Status is not found"});	
+									  	}
+								  	}else{
+								  		res.json({"err_code": 3, "err_msg": publicationStatus.error, "application": "Api FHIR", "function": "getPublicationStatus"});
+								  	}
+								  }
+							})
+						}else{
+							res.json({"err_code": 4, "err_msg": "Id must be a number."});
+						}
+						
+					}
+				}else{
+					result.err_code = 500;
+					res.json(result);
+				}	
+			});
+		},
+		publicationStatusCode: function getPublicationStatusCode(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var code = req.params.code.trim().toLowerCase();
+			//var code = req.params.code.replace(/[^\w\s ,]/gi, '').trim();
+
+			if(code == "" || typeof code == 'undefined'){
+				res.json({"err_code": 4, "err_msg": "Code is required."});
+			}else{
+				checkApikey(apikey, ipAddres, function(result){
+					if(result.err_code == 0){	
+						ApiFHIR.get('publicationStatusCode', {"apikey": apikey, "code": code}, {}, function(error, response, body){
+							if(error){
+							  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "getPublicationStatusCode"});
+							  }else{
+							  	//cek apakah ada error atau tidak
+							  	var publicationStatus = JSON.parse(body); 
+							  	
+							  	//cek apakah ada error atau tidak
+							  	if(publicationStatus.err_code == 0){
+								  	//cek jumdata dulu
+								  	if(publicationStatus.data.length > 0){
+								  		res.json({"err_code": 0, "data":publicationStatus.data});
+								  	}else{
+							  			res.json({"err_code": 2, "err_msg": "Publication Status Code is not found"});	
+								  	}
+							  	}else{
+							  		res.json({"err_code": 3, "err_msg": publicationStatus.error, "application": "Api FHIR", "function": "getPublicationStatusCode"});
+							  	}
+							  }
+						})
+					}else{
+						result.err_code = 500;
+						res.json(result);
+					}	
+				});
+			}				
+		},
+		definitionTopic: function getDefinitionTopic(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var _id = req.params._id;
+			checkApikey(apikey, ipAddres, function(result){
+				if(result.err_code == 0){
+					if(_id == "" || typeof _id == 'undefined'){
+						//method, endpoint, params, options, callback
+						ApiFHIR.get('definitionTopic', {"apikey": apikey, "_id": 0}, {}, function(error, response, body){
+							if(error){
+							  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "definitionTopic"});
+							  }else{
+							  	//cek apakah ada error atau tidak
+							  	var definitionTopic = JSON.parse(body); 
+							  	
+							  	//cek apakah ada error atau tidak
+							  	if(definitionTopic.err_code == 0){
+								  	//cek jumdata dulu
+								  	if(definitionTopic.data.length > 0){
+								  		res.json({"err_code": 0, "data":definitionTopic.data});
+								  	}else{
+							  			res.json({"err_code": 2, "err_msg": "Definition Topic is not found"});	
+								  	}
+							  	}else{
+							  		res.json({"err_code": 3, "err_msg": definitionTopic.error, "application": "Api FHIR", "function": "getDefinitionTopic"});
+							  	}
+							  }
+						})	
+					}else{
+						if(validator.isInt(_id)){
+							ApiFHIR.get('definitionTopic', {"apikey": apikey, "_id": _id}, {}, function(error, response, body){
+								if(error){
+								  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "getDefinitionTopic"});
+								  }else{
+								  	//cek apakah ada error atau tidak
+								  	var definitionTopic = JSON.parse(body); 
+								  	
+								  	//cek apakah ada error atau tidak
+								  	if(definitionTopic.err_code == 0){
+									  	//cek jumdata dulu
+									  	if(definitionTopic.data.length > 0){
+									  		res.json({"err_code": 0, "data":definitionTopic.data});
+									  	}else{
+								  			res.json({"err_code": 2, "err_msg": "Definition Topic is not found"});	
+									  	}
+								  	}else{
+								  		res.json({"err_code": 3, "err_msg": definitionTopic.error, "application": "Api FHIR", "function": "getDefinitionTopic"});
+								  	}
+								  }
+							})
+						}else{
+							res.json({"err_code": 4, "err_msg": "Id must be a number."});
+						}
+						
+					}
+				}else{
+					result.err_code = 500;
+					res.json(result);
+				}	
+			});
+		},
+		definitionTopicCode: function getDefinitionTopicCode(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var code = req.params.code.trim().toLowerCase();
+			//var code = req.params.code.replace(/[^\w\s ,]/gi, '').trim();
+
+			if(code == "" || typeof code == 'undefined'){
+				res.json({"err_code": 4, "err_msg": "Code is required."});
+			}else{
+				checkApikey(apikey, ipAddres, function(result){
+					if(result.err_code == 0){	
+						ApiFHIR.get('definitionTopicCode', {"apikey": apikey, "code": code}, {}, function(error, response, body){
+							if(error){
+							  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "getDefinitionTopicCode"});
+							  }else{
+							  	//cek apakah ada error atau tidak
+							  	var definitionTopic = JSON.parse(body); 
+							  	
+							  	//cek apakah ada error atau tidak
+							  	if(definitionTopic.err_code == 0){
+								  	//cek jumdata dulu
+								  	if(definitionTopic.data.length > 0){
+								  		res.json({"err_code": 0, "data":definitionTopic.data});
+								  	}else{
+							  			res.json({"err_code": 2, "err_msg": "Definition Topic Code is not found"});	
+								  	}
+							  	}else{
+							  		res.json({"err_code": 3, "err_msg": definitionTopic.error, "application": "Api FHIR", "function": "getDefinitionTopicCode"});
+							  	}
+							  }
+						})
+					}else{
+						result.err_code = 500;
+						res.json(result);
+					}	
+				});
+			}				
+		},
+		
+		actionConditionKind: function getActionConditionKind(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var _id = req.params._id;
+			checkApikey(apikey, ipAddres, function(result){
+				if(result.err_code == 0){
+					if(_id == "" || typeof _id == 'undefined'){
+						//method, endpoint, params, options, callback
+						ApiFHIR.get('actionConditionKind', {"apikey": apikey, "_id": 0}, {}, function(error, response, body){
+							if(error){
+							  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "actionConditionKind"});
+							  }else{
+							  	//cek apakah ada error atau tidak
+							  	var actionConditionKind = JSON.parse(body); 
+							  	
+							  	//cek apakah ada error atau tidak
+							  	if(actionConditionKind.err_code == 0){
+								  	//cek jumdata dulu
+								  	if(actionConditionKind.data.length > 0){
+								  		res.json({"err_code": 0, "data":actionConditionKind.data});
+								  	}else{
+							  			res.json({"err_code": 2, "err_msg": "Action Condition Kind is not found"});	
+								  	}
+							  	}else{
+							  		res.json({"err_code": 3, "err_msg": actionConditionKind.error, "application": "Api FHIR", "function": "getActionConditionKind"});
+							  	}
+							  }
+						})	
+					}else{
+						if(validator.isInt(_id)){
+							ApiFHIR.get('actionConditionKind', {"apikey": apikey, "_id": _id}, {}, function(error, response, body){
+								if(error){
+								  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "getActionConditionKind"});
+								  }else{
+								  	//cek apakah ada error atau tidak
+								  	var actionConditionKind = JSON.parse(body); 
+								  	
+								  	//cek apakah ada error atau tidak
+								  	if(actionConditionKind.err_code == 0){
+									  	//cek jumdata dulu
+									  	if(actionConditionKind.data.length > 0){
+									  		res.json({"err_code": 0, "data":actionConditionKind.data});
+									  	}else{
+								  			res.json({"err_code": 2, "err_msg": "Action Condition Kind is not found"});	
+									  	}
+								  	}else{
+								  		res.json({"err_code": 3, "err_msg": actionConditionKind.error, "application": "Api FHIR", "function": "getActionConditionKind"});
+								  	}
+								  }
+							})
+						}else{
+							res.json({"err_code": 4, "err_msg": "Id must be a number."});
+						}
+						
+					}
+				}else{
+					result.err_code = 500;
+					res.json(result);
+				}	
+			});
+		},
+		actionConditionKindCode: function getActionConditionKindCode(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var code = req.params.code.trim().toLowerCase();
+			//var code = req.params.code.replace(/[^\w\s ,]/gi, '').trim();
+
+			if(code == "" || typeof code == 'undefined'){
+				res.json({"err_code": 4, "err_msg": "Code is required."});
+			}else{
+				checkApikey(apikey, ipAddres, function(result){
+					if(result.err_code == 0){	
+						ApiFHIR.get('actionConditionKindCode', {"apikey": apikey, "code": code}, {}, function(error, response, body){
+							if(error){
+							  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "getActionConditionKindCode"});
+							  }else{
+							  	//cek apakah ada error atau tidak
+							  	var actionConditionKind = JSON.parse(body); 
+							  	
+							  	//cek apakah ada error atau tidak
+							  	if(actionConditionKind.err_code == 0){
+								  	//cek jumdata dulu
+								  	if(actionConditionKind.data.length > 0){
+								  		res.json({"err_code": 0, "data":actionConditionKind.data});
+								  	}else{
+							  			res.json({"err_code": 2, "err_msg": "Action Condition Kind Code is not found"});	
+								  	}
+							  	}else{
+							  		res.json({"err_code": 3, "err_msg": actionConditionKind.error, "application": "Api FHIR", "function": "getActionConditionKindCode"});
+							  	}
+							  }
+						})
+					}else{
+						result.err_code = 500;
+						res.json(result);
+					}	
+				});
+			}				
+		},
+		actionRelationshipType: function getActionRelationshipType(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var _id = req.params._id;
+			checkApikey(apikey, ipAddres, function(result){
+				if(result.err_code == 0){
+					if(_id == "" || typeof _id == 'undefined'){
+						//method, endpoint, params, options, callback
+						ApiFHIR.get('actionRelationshipType', {"apikey": apikey, "_id": 0}, {}, function(error, response, body){
+							if(error){
+							  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "actionRelationshipType"});
+							  }else{
+							  	//cek apakah ada error atau tidak
+							  	var actionRelationshipType = JSON.parse(body); 
+							  	
+							  	//cek apakah ada error atau tidak
+							  	if(actionRelationshipType.err_code == 0){
+								  	//cek jumdata dulu
+								  	if(actionRelationshipType.data.length > 0){
+								  		res.json({"err_code": 0, "data":actionRelationshipType.data});
+								  	}else{
+							  			res.json({"err_code": 2, "err_msg": "Action Relationship Type is not found"});	
+								  	}
+							  	}else{
+							  		res.json({"err_code": 3, "err_msg": actionRelationshipType.error, "application": "Api FHIR", "function": "getActionRelationshipType"});
+							  	}
+							  }
+						})	
+					}else{
+						if(validator.isInt(_id)){
+							ApiFHIR.get('actionRelationshipType', {"apikey": apikey, "_id": _id}, {}, function(error, response, body){
+								if(error){
+								  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "getActionRelationshipType"});
+								  }else{
+								  	//cek apakah ada error atau tidak
+								  	var actionRelationshipType = JSON.parse(body); 
+								  	
+								  	//cek apakah ada error atau tidak
+								  	if(actionRelationshipType.err_code == 0){
+									  	//cek jumdata dulu
+									  	if(actionRelationshipType.data.length > 0){
+									  		res.json({"err_code": 0, "data":actionRelationshipType.data});
+									  	}else{
+								  			res.json({"err_code": 2, "err_msg": "Action Relationship Type is not found"});	
+									  	}
+								  	}else{
+								  		res.json({"err_code": 3, "err_msg": actionRelationshipType.error, "application": "Api FHIR", "function": "getActionRelationshipType"});
+								  	}
+								  }
+							})
+						}else{
+							res.json({"err_code": 4, "err_msg": "Id must be a number."});
+						}
+						
+					}
+				}else{
+					result.err_code = 500;
+					res.json(result);
+				}	
+			});
+		},
+		actionRelationshipTypeCode: function getActionRelationshipTypeCode(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var code = req.params.code.trim().toLowerCase();
+			//var code = req.params.code.replace(/[^\w\s ,]/gi, '').trim();
+
+			if(code == "" || typeof code == 'undefined'){
+				res.json({"err_code": 4, "err_msg": "Code is required."});
+			}else{
+				checkApikey(apikey, ipAddres, function(result){
+					if(result.err_code == 0){	
+						ApiFHIR.get('actionRelationshipTypeCode', {"apikey": apikey, "code": code}, {}, function(error, response, body){
+							if(error){
+							  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "getActionRelationshipTypeCode"});
+							  }else{
+							  	//cek apakah ada error atau tidak
+							  	var actionRelationshipType = JSON.parse(body); 
+							  	
+							  	//cek apakah ada error atau tidak
+							  	if(actionRelationshipType.err_code == 0){
+								  	//cek jumdata dulu
+								  	if(actionRelationshipType.data.length > 0){
+								  		res.json({"err_code": 0, "data":actionRelationshipType.data});
+								  	}else{
+							  			res.json({"err_code": 2, "err_msg": "Action Relationship Type Code is not found"});	
+								  	}
+							  	}else{
+							  		res.json({"err_code": 3, "err_msg": actionRelationshipType.error, "application": "Api FHIR", "function": "getActionRelationshipTypeCode"});
+							  	}
+							  }
+						})
+					}else{
+						result.err_code = 500;
+						res.json(result);
+					}	
+				});
+			}				
+		},
+		actionType: function getActionType(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var _id = req.params._id;
+			checkApikey(apikey, ipAddres, function(result){
+				if(result.err_code == 0){
+					if(_id == "" || typeof _id == 'undefined'){
+						//method, endpoint, params, options, callback
+						ApiFHIR.get('actionType', {"apikey": apikey, "_id": 0}, {}, function(error, response, body){
+							if(error){
+							  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "actionType"});
+							  }else{
+							  	//cek apakah ada error atau tidak
+							  	var actionType = JSON.parse(body); 
+							  	
+							  	//cek apakah ada error atau tidak
+							  	if(actionType.err_code == 0){
+								  	//cek jumdata dulu
+								  	if(actionType.data.length > 0){
+								  		res.json({"err_code": 0, "data":actionType.data});
+								  	}else{
+							  			res.json({"err_code": 2, "err_msg": "Action Type is not found"});	
+								  	}
+							  	}else{
+							  		res.json({"err_code": 3, "err_msg": actionType.error, "application": "Api FHIR", "function": "getActionType"});
+							  	}
+							  }
+						})	
+					}else{
+						if(validator.isInt(_id)){
+							ApiFHIR.get('actionType', {"apikey": apikey, "_id": _id}, {}, function(error, response, body){
+								if(error){
+								  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "getActionType"});
+								  }else{
+								  	//cek apakah ada error atau tidak
+								  	var actionType = JSON.parse(body); 
+								  	
+								  	//cek apakah ada error atau tidak
+								  	if(actionType.err_code == 0){
+									  	//cek jumdata dulu
+									  	if(actionType.data.length > 0){
+									  		res.json({"err_code": 0, "data":actionType.data});
+									  	}else{
+								  			res.json({"err_code": 2, "err_msg": "Action Type is not found"});	
+									  	}
+								  	}else{
+								  		res.json({"err_code": 3, "err_msg": actionType.error, "application": "Api FHIR", "function": "getActionType"});
+								  	}
+								  }
+							})
+						}else{
+							res.json({"err_code": 4, "err_msg": "Id must be a number."});
+						}
+						
+					}
+				}else{
+					result.err_code = 500;
+					res.json(result);
+				}	
+			});
+		},
+		actionTypeCode: function getActionTypeCode(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var code = req.params.code.trim().toLowerCase();
+			//var code = req.params.code.replace(/[^\w\s ,]/gi, '').trim();
+
+			if(code == "" || typeof code == 'undefined'){
+				res.json({"err_code": 4, "err_msg": "Code is required."});
+			}else{
+				checkApikey(apikey, ipAddres, function(result){
+					if(result.err_code == 0){	
+						ApiFHIR.get('actionTypeCode', {"apikey": apikey, "code": code}, {}, function(error, response, body){
+							if(error){
+							  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "getActionTypeCode"});
+							  }else{
+							  	//cek apakah ada error atau tidak
+							  	var actionType = JSON.parse(body); 
+							  	
+							  	//cek apakah ada error atau tidak
+							  	if(actionType.err_code == 0){
+								  	//cek jumdata dulu
+								  	if(actionType.data.length > 0){
+								  		res.json({"err_code": 0, "data":actionType.data});
+								  	}else{
+							  			res.json({"err_code": 2, "err_msg": "Action Type Code is not found"});	
+								  	}
+							  	}else{
+							  		res.json({"err_code": 3, "err_msg": actionType.error, "application": "Api FHIR", "function": "getActionTypeCode"});
+							  	}
+							  }
+						})
+					}else{
+						result.err_code = 500;
+						res.json(result);
+					}	
+				});
+			}				
+		},
+		actionGroupingBehavior: function getActionGroupingBehavior(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var _id = req.params._id;
+			checkApikey(apikey, ipAddres, function(result){
+				if(result.err_code == 0){
+					if(_id == "" || typeof _id == 'undefined'){
+						//method, endpoint, params, options, callback
+						ApiFHIR.get('actionGroupingBehavior', {"apikey": apikey, "_id": 0}, {}, function(error, response, body){
+							if(error){
+							  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "actionGroupingBehavior"});
+							  }else{
+							  	//cek apakah ada error atau tidak
+							  	var actionGroupingBehavior = JSON.parse(body); 
+							  	
+							  	//cek apakah ada error atau tidak
+							  	if(actionGroupingBehavior.err_code == 0){
+								  	//cek jumdata dulu
+								  	if(actionGroupingBehavior.data.length > 0){
+								  		res.json({"err_code": 0, "data":actionGroupingBehavior.data});
+								  	}else{
+							  			res.json({"err_code": 2, "err_msg": "Action Grouping Behavior is not found"});	
+								  	}
+							  	}else{
+							  		res.json({"err_code": 3, "err_msg": actionGroupingBehavior.error, "application": "Api FHIR", "function": "getActionGroupingBehavior"});
+							  	}
+							  }
+						})	
+					}else{
+						if(validator.isInt(_id)){
+							ApiFHIR.get('actionGroupingBehavior', {"apikey": apikey, "_id": _id}, {}, function(error, response, body){
+								if(error){
+								  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "getActionGroupingBehavior"});
+								  }else{
+								  	//cek apakah ada error atau tidak
+								  	var actionGroupingBehavior = JSON.parse(body); 
+								  	
+								  	//cek apakah ada error atau tidak
+								  	if(actionGroupingBehavior.err_code == 0){
+									  	//cek jumdata dulu
+									  	if(actionGroupingBehavior.data.length > 0){
+									  		res.json({"err_code": 0, "data":actionGroupingBehavior.data});
+									  	}else{
+								  			res.json({"err_code": 2, "err_msg": "Action Grouping Behavior is not found"});	
+									  	}
+								  	}else{
+								  		res.json({"err_code": 3, "err_msg": actionGroupingBehavior.error, "application": "Api FHIR", "function": "getActionGroupingBehavior"});
+								  	}
+								  }
+							})
+						}else{
+							res.json({"err_code": 4, "err_msg": "Id must be a number."});
+						}
+						
+					}
+				}else{
+					result.err_code = 500;
+					res.json(result);
+				}	
+			});
+		},
+		actionGroupingBehaviorCode: function getActionGroupingBehaviorCode(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var code = req.params.code.trim().toLowerCase();
+			//var code = req.params.code.replace(/[^\w\s ,]/gi, '').trim();
+
+			if(code == "" || typeof code == 'undefined'){
+				res.json({"err_code": 4, "err_msg": "Code is required."});
+			}else{
+				checkApikey(apikey, ipAddres, function(result){
+					if(result.err_code == 0){	
+						ApiFHIR.get('actionGroupingBehaviorCode', {"apikey": apikey, "code": code}, {}, function(error, response, body){
+							if(error){
+							  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "getActionGroupingBehaviorCode"});
+							  }else{
+							  	//cek apakah ada error atau tidak
+							  	var actionGroupingBehavior = JSON.parse(body); 
+							  	
+							  	//cek apakah ada error atau tidak
+							  	if(actionGroupingBehavior.err_code == 0){
+								  	//cek jumdata dulu
+								  	if(actionGroupingBehavior.data.length > 0){
+								  		res.json({"err_code": 0, "data":actionGroupingBehavior.data});
+								  	}else{
+							  			res.json({"err_code": 2, "err_msg": "Action Grouping Behavior Code is not found"});	
+								  	}
+							  	}else{
+							  		res.json({"err_code": 3, "err_msg": actionGroupingBehavior.error, "application": "Api FHIR", "function": "getActionGroupingBehaviorCode"});
+							  	}
+							  }
+						})
+					}else{
+						result.err_code = 500;
+						res.json(result);
+					}	
+				});
+			}				
+		},
+		actionSelectionBehavior: function getActionSelectionBehavior(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var _id = req.params._id;
+			checkApikey(apikey, ipAddres, function(result){
+				if(result.err_code == 0){
+					if(_id == "" || typeof _id == 'undefined'){
+						//method, endpoint, params, options, callback
+						ApiFHIR.get('actionSelectionBehavior', {"apikey": apikey, "_id": 0}, {}, function(error, response, body){
+							if(error){
+							  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "actionSelectionBehavior"});
+							  }else{
+							  	//cek apakah ada error atau tidak
+							  	var actionSelectionBehavior = JSON.parse(body); 
+							  	
+							  	//cek apakah ada error atau tidak
+							  	if(actionSelectionBehavior.err_code == 0){
+								  	//cek jumdata dulu
+								  	if(actionSelectionBehavior.data.length > 0){
+								  		res.json({"err_code": 0, "data":actionSelectionBehavior.data});
+								  	}else{
+							  			res.json({"err_code": 2, "err_msg": "Action Selection Behavior is not found"});	
+								  	}
+							  	}else{
+							  		res.json({"err_code": 3, "err_msg": actionSelectionBehavior.error, "application": "Api FHIR", "function": "getActionSelectionBehavior"});
+							  	}
+							  }
+						})	
+					}else{
+						if(validator.isInt(_id)){
+							ApiFHIR.get('actionSelectionBehavior', {"apikey": apikey, "_id": _id}, {}, function(error, response, body){
+								if(error){
+								  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "getActionSelectionBehavior"});
+								  }else{
+								  	//cek apakah ada error atau tidak
+								  	var actionSelectionBehavior = JSON.parse(body); 
+								  	
+								  	//cek apakah ada error atau tidak
+								  	if(actionSelectionBehavior.err_code == 0){
+									  	//cek jumdata dulu
+									  	if(actionSelectionBehavior.data.length > 0){
+									  		res.json({"err_code": 0, "data":actionSelectionBehavior.data});
+									  	}else{
+								  			res.json({"err_code": 2, "err_msg": "Action Selection Behavior is not found"});	
+									  	}
+								  	}else{
+								  		res.json({"err_code": 3, "err_msg": actionSelectionBehavior.error, "application": "Api FHIR", "function": "getActionSelectionBehavior"});
+								  	}
+								  }
+							})
+						}else{
+							res.json({"err_code": 4, "err_msg": "Id must be a number."});
+						}
+						
+					}
+				}else{
+					result.err_code = 500;
+					res.json(result);
+				}	
+			});
+		},
+		actionSelectionBehaviorCode: function getActionSelectionBehaviorCode(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var code = req.params.code.trim().toLowerCase();
+			//var code = req.params.code.replace(/[^\w\s ,]/gi, '').trim();
+
+			if(code == "" || typeof code == 'undefined'){
+				res.json({"err_code": 4, "err_msg": "Code is required."});
+			}else{
+				checkApikey(apikey, ipAddres, function(result){
+					if(result.err_code == 0){	
+						ApiFHIR.get('actionSelectionBehaviorCode', {"apikey": apikey, "code": code}, {}, function(error, response, body){
+							if(error){
+							  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "getActionSelectionBehaviorCode"});
+							  }else{
+							  	//cek apakah ada error atau tidak
+							  	var actionSelectionBehavior = JSON.parse(body); 
+							  	
+							  	//cek apakah ada error atau tidak
+							  	if(actionSelectionBehavior.err_code == 0){
+								  	//cek jumdata dulu
+								  	if(actionSelectionBehavior.data.length > 0){
+								  		res.json({"err_code": 0, "data":actionSelectionBehavior.data});
+								  	}else{
+							  			res.json({"err_code": 2, "err_msg": "Action Selection Behavior Code is not found"});	
+								  	}
+							  	}else{
+							  		res.json({"err_code": 3, "err_msg": actionSelectionBehavior.error, "application": "Api FHIR", "function": "getActionSelectionBehaviorCode"});
+							  	}
+							  }
+						})
+					}else{
+						result.err_code = 500;
+						res.json(result);
+					}	
+				});
+			}				
+		},
+		actionRequiredBehavior: function getActionRequiredBehavior(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var _id = req.params._id;
+			checkApikey(apikey, ipAddres, function(result){
+				if(result.err_code == 0){
+					if(_id == "" || typeof _id == 'undefined'){
+						//method, endpoint, params, options, callback
+						ApiFHIR.get('actionRequiredBehavior', {"apikey": apikey, "_id": 0}, {}, function(error, response, body){
+							if(error){
+							  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "actionRequiredBehavior"});
+							  }else{
+							  	//cek apakah ada error atau tidak
+							  	var actionRequiredBehavior = JSON.parse(body); 
+							  	
+							  	//cek apakah ada error atau tidak
+							  	if(actionRequiredBehavior.err_code == 0){
+								  	//cek jumdata dulu
+								  	if(actionRequiredBehavior.data.length > 0){
+								  		res.json({"err_code": 0, "data":actionRequiredBehavior.data});
+								  	}else{
+							  			res.json({"err_code": 2, "err_msg": "Action Required Behavior is not found"});	
+								  	}
+							  	}else{
+							  		res.json({"err_code": 3, "err_msg": actionRequiredBehavior.error, "application": "Api FHIR", "function": "getActionRequiredBehavior"});
+							  	}
+							  }
+						})	
+					}else{
+						if(validator.isInt(_id)){
+							ApiFHIR.get('actionRequiredBehavior', {"apikey": apikey, "_id": _id}, {}, function(error, response, body){
+								if(error){
+								  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "getActionRequiredBehavior"});
+								  }else{
+								  	//cek apakah ada error atau tidak
+								  	var actionRequiredBehavior = JSON.parse(body); 
+								  	
+								  	//cek apakah ada error atau tidak
+								  	if(actionRequiredBehavior.err_code == 0){
+									  	//cek jumdata dulu
+									  	if(actionRequiredBehavior.data.length > 0){
+									  		res.json({"err_code": 0, "data":actionRequiredBehavior.data});
+									  	}else{
+								  			res.json({"err_code": 2, "err_msg": "Action Required Behavior is not found"});	
+									  	}
+								  	}else{
+								  		res.json({"err_code": 3, "err_msg": actionRequiredBehavior.error, "application": "Api FHIR", "function": "getActionRequiredBehavior"});
+								  	}
+								  }
+							})
+						}else{
+							res.json({"err_code": 4, "err_msg": "Id must be a number."});
+						}
+						
+					}
+				}else{
+					result.err_code = 500;
+					res.json(result);
+				}	
+			});
+		},
+		actionRequiredBehaviorCode: function getActionRequiredBehaviorCode(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var code = req.params.code.trim().toLowerCase();
+			//var code = req.params.code.replace(/[^\w\s ,]/gi, '').trim();
+
+			if(code == "" || typeof code == 'undefined'){
+				res.json({"err_code": 4, "err_msg": "Code is required."});
+			}else{
+				checkApikey(apikey, ipAddres, function(result){
+					if(result.err_code == 0){	
+						ApiFHIR.get('actionRequiredBehaviorCode', {"apikey": apikey, "code": code}, {}, function(error, response, body){
+							if(error){
+							  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "getActionRequiredBehaviorCode"});
+							  }else{
+							  	//cek apakah ada error atau tidak
+							  	var actionRequiredBehavior = JSON.parse(body); 
+							  	
+							  	//cek apakah ada error atau tidak
+							  	if(actionRequiredBehavior.err_code == 0){
+								  	//cek jumdata dulu
+								  	if(actionRequiredBehavior.data.length > 0){
+								  		res.json({"err_code": 0, "data":actionRequiredBehavior.data});
+								  	}else{
+							  			res.json({"err_code": 2, "err_msg": "Action Required Behavior Code is not found"});	
+								  	}
+							  	}else{
+							  		res.json({"err_code": 3, "err_msg": actionRequiredBehavior.error, "application": "Api FHIR", "function": "getActionRequiredBehaviorCode"});
+							  	}
+							  }
+						})
+					}else{
+						result.err_code = 500;
+						res.json(result);
+					}	
+				});
+			}				
+		},
+		actionPrecheckBehavior: function getActionPrecheckBehavior(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var _id = req.params._id;
+			checkApikey(apikey, ipAddres, function(result){
+				if(result.err_code == 0){
+					if(_id == "" || typeof _id == 'undefined'){
+						//method, endpoint, params, options, callback
+						ApiFHIR.get('actionPrecheckBehavior', {"apikey": apikey, "_id": 0}, {}, function(error, response, body){
+							if(error){
+							  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "actionPrecheckBehavior"});
+							  }else{
+							  	//cek apakah ada error atau tidak
+							  	var actionPrecheckBehavior = JSON.parse(body); 
+							  	
+							  	//cek apakah ada error atau tidak
+							  	if(actionPrecheckBehavior.err_code == 0){
+								  	//cek jumdata dulu
+								  	if(actionPrecheckBehavior.data.length > 0){
+								  		res.json({"err_code": 0, "data":actionPrecheckBehavior.data});
+								  	}else{
+							  			res.json({"err_code": 2, "err_msg": "Action Precheck Behavior is not found"});	
+								  	}
+							  	}else{
+							  		res.json({"err_code": 3, "err_msg": actionPrecheckBehavior.error, "application": "Api FHIR", "function": "getActionPrecheckBehavior"});
+							  	}
+							  }
+						})	
+					}else{
+						if(validator.isInt(_id)){
+							ApiFHIR.get('actionPrecheckBehavior', {"apikey": apikey, "_id": _id}, {}, function(error, response, body){
+								if(error){
+								  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "getActionPrecheckBehavior"});
+								  }else{
+								  	//cek apakah ada error atau tidak
+								  	var actionPrecheckBehavior = JSON.parse(body); 
+								  	
+								  	//cek apakah ada error atau tidak
+								  	if(actionPrecheckBehavior.err_code == 0){
+									  	//cek jumdata dulu
+									  	if(actionPrecheckBehavior.data.length > 0){
+									  		res.json({"err_code": 0, "data":actionPrecheckBehavior.data});
+									  	}else{
+								  			res.json({"err_code": 2, "err_msg": "Action Precheck Behavior is not found"});	
+									  	}
+								  	}else{
+								  		res.json({"err_code": 3, "err_msg": actionPrecheckBehavior.error, "application": "Api FHIR", "function": "getActionPrecheckBehavior"});
+								  	}
+								  }
+							})
+						}else{
+							res.json({"err_code": 4, "err_msg": "Id must be a number."});
+						}
+						
+					}
+				}else{
+					result.err_code = 500;
+					res.json(result);
+				}	
+			});
+		},
+		actionPrecheckBehaviorCode: function getActionPrecheckBehaviorCode(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var code = req.params.code.trim().toLowerCase();
+			//var code = req.params.code.replace(/[^\w\s ,]/gi, '').trim();
+
+			if(code == "" || typeof code == 'undefined'){
+				res.json({"err_code": 4, "err_msg": "Code is Precheck."});
+			}else{
+				checkApikey(apikey, ipAddres, function(result){
+					if(result.err_code == 0){	
+						ApiFHIR.get('actionPrecheckBehaviorCode', {"apikey": apikey, "code": code}, {}, function(error, response, body){
+							if(error){
+							  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "getActionPrecheckBehaviorCode"});
+							  }else{
+							  	//cek apakah ada error atau tidak
+							  	var actionPrecheckBehavior = JSON.parse(body); 
+							  	
+							  	//cek apakah ada error atau tidak
+							  	if(actionPrecheckBehavior.err_code == 0){
+								  	//cek jumdata dulu
+								  	if(actionPrecheckBehavior.data.length > 0){
+								  		res.json({"err_code": 0, "data":actionPrecheckBehavior.data});
+								  	}else{
+							  			res.json({"err_code": 2, "err_msg": "Action Precheck Behavior Code is not found"});	
+								  	}
+							  	}else{
+							  		res.json({"err_code": 3, "err_msg": actionPrecheckBehavior.error, "application": "Api FHIR", "function": "getActionPrecheckBehaviorCode"});
+							  	}
+							  }
+						})
+					}else{
+						result.err_code = 500;
+						res.json(result);
+					}	
+				});
+			}				
+		},
+		actionCardinalityBehavior: function getActionCardinalityBehavior(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var _id = req.params._id;
+			checkApikey(apikey, ipAddres, function(result){
+				if(result.err_code == 0){
+					if(_id == "" || typeof _id == 'undefined'){
+						//method, endpoint, params, options, callback
+						ApiFHIR.get('actionCardinalityBehavior', {"apikey": apikey, "_id": 0}, {}, function(error, response, body){
+							if(error){
+							  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "actionCardinalityBehavior"});
+							  }else{
+							  	//cek apakah ada error atau tidak
+							  	var actionCardinalityBehavior = JSON.parse(body); 
+							  	
+							  	//cek apakah ada error atau tidak
+							  	if(actionCardinalityBehavior.err_code == 0){
+								  	//cek jumdata dulu
+								  	if(actionCardinalityBehavior.data.length > 0){
+								  		res.json({"err_code": 0, "data":actionCardinalityBehavior.data});
+								  	}else{
+							  			res.json({"err_code": 2, "err_msg": "Action Cardinality Behavior is not found"});	
+								  	}
+							  	}else{
+							  		res.json({"err_code": 3, "err_msg": actionCardinalityBehavior.error, "application": "Api FHIR", "function": "getActionCardinalityBehavior"});
+							  	}
+							  }
+						})	
+					}else{
+						if(validator.isInt(_id)){
+							ApiFHIR.get('actionCardinalityBehavior', {"apikey": apikey, "_id": _id}, {}, function(error, response, body){
+								if(error){
+								  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "getActionCardinalityBehavior"});
+								  }else{
+								  	//cek apakah ada error atau tidak
+								  	var actionCardinalityBehavior = JSON.parse(body); 
+								  	
+								  	//cek apakah ada error atau tidak
+								  	if(actionCardinalityBehavior.err_code == 0){
+									  	//cek jumdata dulu
+									  	if(actionCardinalityBehavior.data.length > 0){
+									  		res.json({"err_code": 0, "data":actionCardinalityBehavior.data});
+									  	}else{
+								  			res.json({"err_code": 2, "err_msg": "Action Cardinality Behavior is not found"});	
+									  	}
+								  	}else{
+								  		res.json({"err_code": 3, "err_msg": actionCardinalityBehavior.error, "application": "Api FHIR", "function": "getActionCardinalityBehavior"});
+								  	}
+								  }
+							})
+						}else{
+							res.json({"err_code": 4, "err_msg": "Id must be a number."});
+						}
+						
+					}
+				}else{
+					result.err_code = 500;
+					res.json(result);
+				}	
+			});
+		},
+		actionCardinalityBehaviorCode: function getActionCardinalityBehaviorCode(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var code = req.params.code.trim().toLowerCase();
+			//var code = req.params.code.replace(/[^\w\s ,]/gi, '').trim();
+
+			if(code == "" || typeof code == 'undefined'){
+				res.json({"err_code": 4, "err_msg": "Code is Cardinality."});
+			}else{
+				checkApikey(apikey, ipAddres, function(result){
+					if(result.err_code == 0){	
+						ApiFHIR.get('actionCardinalityBehaviorCode', {"apikey": apikey, "code": code}, {}, function(error, response, body){
+							if(error){
+							  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "getActionCardinalityBehaviorCode"});
+							  }else{
+							  	//cek apakah ada error atau tidak
+							  	var actionCardinalityBehavior = JSON.parse(body); 
+							  	
+							  	//cek apakah ada error atau tidak
+							  	if(actionCardinalityBehavior.err_code == 0){
+								  	//cek jumdata dulu
+								  	if(actionCardinalityBehavior.data.length > 0){
+								  		res.json({"err_code": 0, "data":actionCardinalityBehavior.data});
+								  	}else{
+							  			res.json({"err_code": 2, "err_msg": "Action Cardinality Behavior Code is not found"});	
+								  	}
+							  	}else{
+							  		res.json({"err_code": 3, "err_msg": actionCardinalityBehavior.error, "application": "Api FHIR", "function": "getActionCardinalityBehaviorCode"});
+							  	}
+							  }
+						})
+					}else{
+						result.err_code = 500;
+						res.json(result);
+					}	
+				});
+			}				
+		},
+		actionlist: function getActionlist(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var _id = req.params._id;
+			checkApikey(apikey, ipAddres, function(result){
+				if(result.err_code == 0){
+					if(_id == "" || typeof _id == 'undefined'){
+						//method, endpoint, params, options, callback
+						ApiFHIR.get('actionlist', {"apikey": apikey, "_id": 0}, {}, function(error, response, body){
+							if(error){
+							  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "actionlist"});
+							  }else{
+							  	//cek apakah ada error atau tidak
+							  	var actionlist = JSON.parse(body); 
+							  	
+							  	//cek apakah ada error atau tidak
+							  	if(actionlist.err_code == 0){
+								  	//cek jumdata dulu
+								  	if(actionlist.data.length > 0){
+								  		res.json({"err_code": 0, "data":actionlist.data});
+								  	}else{
+							  			res.json({"err_code": 2, "err_msg": "Actionlist is not found"});	
+								  	}
+							  	}else{
+							  		res.json({"err_code": 3, "err_msg": actionlist.error, "application": "Api FHIR", "function": "getActionlist"});
+							  	}
+							  }
+						})	
+					}else{
+						if(validator.isInt(_id)){
+							ApiFHIR.get('actionlist', {"apikey": apikey, "_id": _id}, {}, function(error, response, body){
+								if(error){
+								  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "getActionlist"});
+								  }else{
+								  	//cek apakah ada error atau tidak
+								  	var actionlist = JSON.parse(body); 
+								  	
+								  	//cek apakah ada error atau tidak
+								  	if(actionlist.err_code == 0){
+									  	//cek jumdata dulu
+									  	if(actionlist.data.length > 0){
+									  		res.json({"err_code": 0, "data":actionlist.data});
+									  	}else{
+								  			res.json({"err_code": 2, "err_msg": "Actionlist is not found"});	
+									  	}
+								  	}else{
+								  		res.json({"err_code": 3, "err_msg": actionlist.error, "application": "Api FHIR", "function": "getActionlist"});
+								  	}
+								  }
+							})
+						}else{
+							res.json({"err_code": 4, "err_msg": "Id must be a number."});
+						}
+						
+					}
+				}else{
+					result.err_code = 500;
+					res.json(result);
+				}	
+			});
+		},
+		actionlistCode: function getActionlistCode(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var code = req.params.code.trim().toLowerCase();
+			//var code = req.params.code.replace(/[^\w\s ,]/gi, '').trim();
+
+			if(code == "" || typeof code == 'undefined'){
+				res.json({"err_code": 4, "err_msg": "Code is Cardinality."});
+			}else{
+				checkApikey(apikey, ipAddres, function(result){
+					if(result.err_code == 0){	
+						ApiFHIR.get('actionlistCode', {"apikey": apikey, "code": code}, {}, function(error, response, body){
+							if(error){
+							  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "getActionlistCode"});
+							  }else{
+							  	//cek apakah ada error atau tidak
+							  	var actionlist = JSON.parse(body); 
+							  	
+							  	//cek apakah ada error atau tidak
+							  	if(actionlist.err_code == 0){
+								  	//cek jumdata dulu
+								  	if(actionlist.data.length > 0){
+								  		res.json({"err_code": 0, "data":actionlist.data});
+								  	}else{
+							  			res.json({"err_code": 2, "err_msg": "Actionlist Code is not found"});	
+								  	}
+							  	}else{
+							  		res.json({"err_code": 3, "err_msg": actionlist.error, "application": "Api FHIR", "function": "getActionlistCode"});
+							  	}
+							  }
+						})
+					}else{
+						result.err_code = 500;
+						res.json(result);
+					}	
+				});
+			}				
+		},
+		
+		processOutcome: function getProcessOutcome(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var _id = req.params._id;
+			checkApikey(apikey, ipAddres, function(result){
+				if(result.err_code == 0){
+					if(_id == "" || typeof _id == 'undefined'){
+						//method, endpoint, params, options, callback
+						ApiFHIR.get('processOutcome', {"apikey": apikey, "_id": 0}, {}, function(error, response, body){
+							if(error){
+							  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "processOutcome"});
+							  }else{
+							  	//cek apakah ada error atau tidak
+							  	var processOutcome = JSON.parse(body); 
+							  	
+							  	//cek apakah ada error atau tidak
+							  	if(processOutcome.err_code == 0){
+								  	//cek jumdata dulu
+								  	if(processOutcome.data.length > 0){
+								  		res.json({"err_code": 0, "data":processOutcome.data});
+								  	}else{
+							  			res.json({"err_code": 2, "err_msg": "Process Outcome is not found"});	
+								  	}
+							  	}else{
+							  		res.json({"err_code": 3, "err_msg": processOutcome.error, "application": "Api FHIR", "function": "getProcessOutcome"});
+							  	}
+							  }
+						})	
+					}else{
+						if(validator.isInt(_id)){
+							ApiFHIR.get('processOutcome', {"apikey": apikey, "_id": _id}, {}, function(error, response, body){
+								if(error){
+								  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "getProcessOutcome"});
+								  }else{
+								  	//cek apakah ada error atau tidak
+								  	var processOutcome = JSON.parse(body); 
+								  	
+								  	//cek apakah ada error atau tidak
+								  	if(processOutcome.err_code == 0){
+									  	//cek jumdata dulu
+									  	if(processOutcome.data.length > 0){
+									  		res.json({"err_code": 0, "data":processOutcome.data});
+									  	}else{
+								  			res.json({"err_code": 2, "err_msg": "Process Outcome is not found"});	
+									  	}
+								  	}else{
+								  		res.json({"err_code": 3, "err_msg": processOutcome.error, "application": "Api FHIR", "function": "getProcessOutcome"});
+								  	}
+								  }
+							})
+						}else{
+							res.json({"err_code": 4, "err_msg": "Id must be a number."});
+						}
+						
+					}
+				}else{
+					result.err_code = 500;
+					res.json(result);
+				}	
+			});
+		},
+		processOutcomeCode: function getProcessOutcomeCode(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var code = req.params.code.trim().toLowerCase();
+			//var code = req.params.code.replace(/[^\w\s ,]/gi, '').trim();
+
+			if(code == "" || typeof code == 'undefined'){
+				res.json({"err_code": 4, "err_msg": "Code is required."});
+			}else{
+				checkApikey(apikey, ipAddres, function(result){
+					if(result.err_code == 0){	
+						ApiFHIR.get('processOutcomeCode', {"apikey": apikey, "code": code}, {}, function(error, response, body){
+							if(error){
+							  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "getProcessOutcomeCode"});
+							  }else{
+							  	//cek apakah ada error atau tidak
+							  	var processOutcome = JSON.parse(body); 
+							  	
+							  	//cek apakah ada error atau tidak
+							  	if(processOutcome.err_code == 0){
+								  	//cek jumdata dulu
+								  	if(processOutcome.data.length > 0){
+								  		res.json({"err_code": 0, "data":processOutcome.data});
+								  	}else{
+							  			res.json({"err_code": 2, "err_msg": "Process Outcome Code is not found"});	
+								  	}
+							  	}else{
+							  		res.json({"err_code": 3, "err_msg": processOutcome.error, "application": "Api FHIR", "function": "getProcessOutcomeCode"});
+							  	}
+							  }
+						})
+					}else{
+						result.err_code = 500;
+						res.json(result);
+					}	
+				});
+			}				
+		},
+		noteType: function getNoteType(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var _id = req.params._id;
+			checkApikey(apikey, ipAddres, function(result){
+				if(result.err_code == 0){
+					if(_id == "" || typeof _id == 'undefined'){
+						//method, endpoint, params, options, callback
+						ApiFHIR.get('noteType', {"apikey": apikey, "_id": 0}, {}, function(error, response, body){
+							if(error){
+							  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "noteType"});
+							  }else{
+							  	//cek apakah ada error atau tidak
+							  	var noteType = JSON.parse(body); 
+							  	
+							  	//cek apakah ada error atau tidak
+							  	if(noteType.err_code == 0){
+								  	//cek jumdata dulu
+								  	if(noteType.data.length > 0){
+								  		res.json({"err_code": 0, "data":noteType.data});
+								  	}else{
+							  			res.json({"err_code": 2, "err_msg": "Note Type is not found"});	
+								  	}
+							  	}else{
+							  		res.json({"err_code": 3, "err_msg": noteType.error, "application": "Api FHIR", "function": "getNoteType"});
+							  	}
+							  }
+						})	
+					}else{
+						if(validator.isInt(_id)){
+							ApiFHIR.get('noteType', {"apikey": apikey, "_id": _id}, {}, function(error, response, body){
+								if(error){
+								  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "getNoteType"});
+								  }else{
+								  	//cek apakah ada error atau tidak
+								  	var noteType = JSON.parse(body); 
+								  	
+								  	//cek apakah ada error atau tidak
+								  	if(noteType.err_code == 0){
+									  	//cek jumdata dulu
+									  	if(noteType.data.length > 0){
+									  		res.json({"err_code": 0, "data":noteType.data});
+									  	}else{
+								  			res.json({"err_code": 2, "err_msg": "Note Type is not found"});	
+									  	}
+								  	}else{
+								  		res.json({"err_code": 3, "err_msg": noteType.error, "application": "Api FHIR", "function": "getNoteType"});
+								  	}
+								  }
+							})
+						}else{
+							res.json({"err_code": 4, "err_msg": "Id must be a number."});
+						}
+						
+					}
+				}else{
+					result.err_code = 500;
+					res.json(result);
+				}	
+			});
+		},
+		noteTypeCode: function getNoteTypeCode(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var code = req.params.code.trim().toLowerCase();
+			//var code = req.params.code.replace(/[^\w\s ,]/gi, '').trim();
+
+			if(code == "" || typeof code == 'undefined'){
+				res.json({"err_code": 4, "err_msg": "Code is required."});
+			}else{
+				checkApikey(apikey, ipAddres, function(result){
+					if(result.err_code == 0){	
+						ApiFHIR.get('noteTypeCode', {"apikey": apikey, "code": code}, {}, function(error, response, body){
+							if(error){
+							  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "getNoteTypeCode"});
+							  }else{
+							  	//cek apakah ada error atau tidak
+							  	var noteType = JSON.parse(body); 
+							  	
+							  	//cek apakah ada error atau tidak
+							  	if(noteType.err_code == 0){
+								  	//cek jumdata dulu
+								  	if(noteType.data.length > 0){
+								  		res.json({"err_code": 0, "data":noteType.data});
+								  	}else{
+							  			res.json({"err_code": 2, "err_msg": "Note Type Code is not found"});	
+								  	}
+							  	}else{
+							  		res.json({"err_code": 3, "err_msg": noteType.error, "application": "Api FHIR", "function": "getNoteTypeCode"});
+							  	}
+							  }
+						})
+					}else{
+						result.err_code = 500;
+						res.json(result);
+					}	
+				});
+			}				
+		},
+		adjudicationError: function getAdjudicationError(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var _id = req.params._id;
+			checkApikey(apikey, ipAddres, function(result){
+				if(result.err_code == 0){
+					if(_id == "" || typeof _id == 'undefined'){
+						//method, endpoint, params, options, callback
+						ApiFHIR.get('adjudicationError', {"apikey": apikey, "_id": 0}, {}, function(error, response, body){
+							if(error){
+							  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "adjudicationError"});
+							  }else{
+							  	//cek apakah ada error atau tidak
+							  	var adjudicationError = JSON.parse(body); 
+							  	
+							  	//cek apakah ada error atau tidak
+							  	if(adjudicationError.err_code == 0){
+								  	//cek jumdata dulu
+								  	if(adjudicationError.data.length > 0){
+								  		res.json({"err_code": 0, "data":adjudicationError.data});
+								  	}else{
+							  			res.json({"err_code": 2, "err_msg": "Adjudication Error is not found"});	
+								  	}
+							  	}else{
+							  		res.json({"err_code": 3, "err_msg": adjudicationError.error, "application": "Api FHIR", "function": "getAdjudicationError"});
+							  	}
+							  }
+						})	
+					}else{
+						if(validator.isInt(_id)){
+							ApiFHIR.get('adjudicationError', {"apikey": apikey, "_id": _id}, {}, function(error, response, body){
+								if(error){
+								  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "getAdjudicationError"});
+								  }else{
+								  	//cek apakah ada error atau tidak
+								  	var adjudicationError = JSON.parse(body); 
+								  	
+								  	//cek apakah ada error atau tidak
+								  	if(adjudicationError.err_code == 0){
+									  	//cek jumdata dulu
+									  	if(adjudicationError.data.length > 0){
+									  		res.json({"err_code": 0, "data":adjudicationError.data});
+									  	}else{
+								  			res.json({"err_code": 2, "err_msg": "Adjudication Error is not found"});	
+									  	}
+								  	}else{
+								  		res.json({"err_code": 3, "err_msg": adjudicationError.error, "application": "Api FHIR", "function": "getAdjudicationError"});
+								  	}
+								  }
+							})
+						}else{
+							res.json({"err_code": 4, "err_msg": "Id must be a number."});
+						}
+						
+					}
+				}else{
+					result.err_code = 500;
+					res.json(result);
+				}	
+			});
+		},
+		adjudicationErrorCode: function getAdjudicationErrorCode(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var code = req.params.code.trim().toLowerCase();
+			//var code = req.params.code.replace(/[^\w\s ,]/gi, '').trim();
+
+			if(code == "" || typeof code == 'undefined'){
+				res.json({"err_code": 4, "err_msg": "Code is required."});
+			}else{
+				checkApikey(apikey, ipAddres, function(result){
+					if(result.err_code == 0){	
+						ApiFHIR.get('adjudicationErrorCode', {"apikey": apikey, "code": code}, {}, function(error, response, body){
+							if(error){
+							  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "getAdjudicationErrorCode"});
+							  }else{
+							  	//cek apakah ada error atau tidak
+							  	var adjudicationError = JSON.parse(body); 
+							  	
+							  	//cek apakah ada error atau tidak
+							  	if(adjudicationError.err_code == 0){
+								  	//cek jumdata dulu
+								  	if(adjudicationError.data.length > 0){
+								  		res.json({"err_code": 0, "data":adjudicationError.data});
+								  	}else{
+							  			res.json({"err_code": 2, "err_msg": "Adjudication Error Code is not found"});	
+								  	}
+							  	}else{
+							  		res.json({"err_code": 3, "err_msg": adjudicationError.error, "application": "Api FHIR", "function": "getAdjudicationErrorCode"});
+							  	}
+							  }
+						})
+					}else{
+						result.err_code = 500;
+						res.json(result);
+					}	
+				});
+			}				
+		},
+		deviceStatementStatus: function getDeviceStatementStatus(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var _id = req.params._id;
+			checkApikey(apikey, ipAddres, function(result){
+				if(result.err_code == 0){
+					if(_id == "" || typeof _id == 'undefined'){
+						//method, endpoint, params, options, callback
+						ApiFHIR.get('deviceStatementStatus', {"apikey": apikey, "_id": 0}, {}, function(error, response, body){
+							if(error){
+							  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "deviceStatementStatus"});
+							  }else{
+							  	//cek apakah ada error atau tidak
+							  	var deviceStatementStatus = JSON.parse(body); 
+							  	
+							  	//cek apakah ada error atau tidak
+							  	if(deviceStatementStatus.err_code == 0){
+								  	//cek jumdata dulu
+								  	if(deviceStatementStatus.data.length > 0){
+								  		res.json({"err_code": 0, "data":deviceStatementStatus.data});
+								  	}else{
+							  			res.json({"err_code": 2, "err_msg": "Device Statement Status is not found"});	
+								  	}
+							  	}else{
+							  		res.json({"err_code": 3, "err_msg": deviceStatementStatus.error, "application": "Api FHIR", "function": "getDeviceStatementStatus"});
+							  	}
+							  }
+						})	
+					}else{
+						if(validator.isInt(_id)){
+							ApiFHIR.get('deviceStatementStatus', {"apikey": apikey, "_id": _id}, {}, function(error, response, body){
+								if(error){
+								  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "getDeviceStatementStatus"});
+								  }else{
+								  	//cek apakah ada error atau tidak
+								  	var deviceStatementStatus = JSON.parse(body); 
+								  	
+								  	//cek apakah ada error atau tidak
+								  	if(deviceStatementStatus.err_code == 0){
+									  	//cek jumdata dulu
+									  	if(deviceStatementStatus.data.length > 0){
+									  		res.json({"err_code": 0, "data":deviceStatementStatus.data});
+									  	}else{
+								  			res.json({"err_code": 2, "err_msg": "Device Statement Status is not found"});	
+									  	}
+								  	}else{
+								  		res.json({"err_code": 3, "err_msg": deviceStatementStatus.error, "application": "Api FHIR", "function": "getDeviceStatementStatus"});
+								  	}
+								  }
+							})
+						}else{
+							res.json({"err_code": 4, "err_msg": "Id must be a number."});
+						}
+						
+					}
+				}else{
+					result.err_code = 500;
+					res.json(result);
+				}	
+			});
+		},
+		deviceStatementStatusCode: function getDeviceStatementStatusCode(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var code = req.params.code.trim().toLowerCase();
+			//var code = req.params.code.replace(/[^\w\s ,]/gi, '').trim();
+
+			if(code == "" || typeof code == 'undefined'){
+				res.json({"err_code": 4, "err_msg": "Code is required."});
+			}else{
+				checkApikey(apikey, ipAddres, function(result){
+					if(result.err_code == 0){	
+						ApiFHIR.get('deviceStatementStatusCode', {"apikey": apikey, "code": code}, {}, function(error, response, body){
+							if(error){
+							  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "getDeviceStatementStatusCode"});
+							  }else{
+							  	//cek apakah ada error atau tidak
+							  	var deviceStatementStatus = JSON.parse(body); 
+							  	
+							  	//cek apakah ada error atau tidak
+							  	if(deviceStatementStatus.err_code == 0){
+								  	//cek jumdata dulu
+								  	if(deviceStatementStatus.data.length > 0){
+								  		res.json({"err_code": 0, "data":deviceStatementStatus.data});
+								  	}else{
+							  			res.json({"err_code": 2, "err_msg": "Device Statement Status Code is not found"});	
+								  	}
+							  	}else{
+							  		res.json({"err_code": 3, "err_msg": deviceStatementStatus.error, "application": "Api FHIR", "function": "getDeviceStatementStatusCode"});
+							  	}
+							  }
+						})
+					}else{
+						result.err_code = 500;
+						res.json(result);
+					}	
+				});
+			}				
+		},
+		supplyrequestStatus: function getSupplyrequestStatus(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var _id = req.params._id;
+			checkApikey(apikey, ipAddres, function(result){
+				if(result.err_code == 0){
+					if(_id == "" || typeof _id == 'undefined'){
+						//method, endpoint, params, options, callback
+						ApiFHIR.get('supplyrequestStatus', {"apikey": apikey, "_id": 0}, {}, function(error, response, body){
+							if(error){
+							  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "supplyrequestStatus"});
+							  }else{
+							  	//cek apakah ada error atau tidak
+							  	var supplyrequestStatus = JSON.parse(body); 
+							  	
+							  	//cek apakah ada error atau tidak
+							  	if(supplyrequestStatus.err_code == 0){
+								  	//cek jumdata dulu
+								  	if(supplyrequestStatus.data.length > 0){
+								  		res.json({"err_code": 0, "data":supplyrequestStatus.data});
+								  	}else{
+							  			res.json({"err_code": 2, "err_msg": "Supplyrequest Status is not found"});	
+								  	}
+							  	}else{
+							  		res.json({"err_code": 3, "err_msg": supplyrequestStatus.error, "application": "Api FHIR", "function": "getSupplyrequestStatus"});
+							  	}
+							  }
+						})	
+					}else{
+						if(validator.isInt(_id)){
+							ApiFHIR.get('supplyrequestStatus', {"apikey": apikey, "_id": _id}, {}, function(error, response, body){
+								if(error){
+								  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "getSupplyrequestStatus"});
+								  }else{
+								  	//cek apakah ada error atau tidak
+								  	var supplyrequestStatus = JSON.parse(body); 
+								  	
+								  	//cek apakah ada error atau tidak
+								  	if(supplyrequestStatus.err_code == 0){
+									  	//cek jumdata dulu
+									  	if(supplyrequestStatus.data.length > 0){
+									  		res.json({"err_code": 0, "data":supplyrequestStatus.data});
+									  	}else{
+								  			res.json({"err_code": 2, "err_msg": "Supplyrequest Status is not found"});	
+									  	}
+								  	}else{
+								  		res.json({"err_code": 3, "err_msg": supplyrequestStatus.error, "application": "Api FHIR", "function": "getSupplyrequestStatus"});
+								  	}
+								  }
+							})
+						}else{
+							res.json({"err_code": 4, "err_msg": "Id must be a number."});
+						}
+						
+					}
+				}else{
+					result.err_code = 500;
+					res.json(result);
+				}	
+			});
+		},
+		supplyrequestStatusCode: function getSupplyrequestStatusCode(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var code = req.params.code.trim().toLowerCase();
+			//var code = req.params.code.replace(/[^\w\s ,]/gi, '').trim();
+
+			if(code == "" || typeof code == 'undefined'){
+				res.json({"err_code": 4, "err_msg": "Code is required."});
+			}else{
+				checkApikey(apikey, ipAddres, function(result){
+					if(result.err_code == 0){	
+						ApiFHIR.get('supplyrequestStatusCode', {"apikey": apikey, "code": code}, {}, function(error, response, body){
+							if(error){
+							  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "getSupplyrequestStatusCode"});
+							  }else{
+							  	//cek apakah ada error atau tidak
+							  	var supplyrequestStatus = JSON.parse(body); 
+							  	
+							  	//cek apakah ada error atau tidak
+							  	if(supplyrequestStatus.err_code == 0){
+								  	//cek jumdata dulu
+								  	if(supplyrequestStatus.data.length > 0){
+								  		res.json({"err_code": 0, "data":supplyrequestStatus.data});
+								  	}else{
+							  			res.json({"err_code": 2, "err_msg": "Supplyrequest Status Code is not found"});	
+								  	}
+							  	}else{
+							  		res.json({"err_code": 3, "err_msg": supplyrequestStatus.error, "application": "Api FHIR", "function": "getSupplyrequestStatusCode"});
+							  	}
+							  }
+						})
+					}else{
+						result.err_code = 500;
+						res.json(result);
+					}	
+				});
+			}				
+		},
+		supplyrequestReason: function getSupplyrequestReason(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var _id = req.params._id;
+			checkApikey(apikey, ipAddres, function(result){
+				if(result.err_code == 0){
+					if(_id == "" || typeof _id == 'undefined'){
+						//method, endpoint, params, options, callback
+						ApiFHIR.get('supplyrequestReason', {"apikey": apikey, "_id": 0}, {}, function(error, response, body){
+							if(error){
+							  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "supplyrequestReason"});
+							  }else{
+							  	//cek apakah ada error atau tidak
+							  	var supplyrequestReason = JSON.parse(body); 
+							  	
+							  	//cek apakah ada error atau tidak
+							  	if(supplyrequestReason.err_code == 0){
+								  	//cek jumdata dulu
+								  	if(supplyrequestReason.data.length > 0){
+								  		res.json({"err_code": 0, "data":supplyrequestReason.data});
+								  	}else{
+							  			res.json({"err_code": 2, "err_msg": "Supplyrequest Reason is not found"});	
+								  	}
+							  	}else{
+							  		res.json({"err_code": 3, "err_msg": supplyrequestReason.error, "application": "Api FHIR", "function": "getSupplyrequestReason"});
+							  	}
+							  }
+						})	
+					}else{
+						if(validator.isInt(_id)){
+							ApiFHIR.get('supplyrequestReason', {"apikey": apikey, "_id": _id}, {}, function(error, response, body){
+								if(error){
+								  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "getSupplyrequestReason"});
+								  }else{
+								  	//cek apakah ada error atau tidak
+								  	var supplyrequestReason = JSON.parse(body); 
+								  	
+								  	//cek apakah ada error atau tidak
+								  	if(supplyrequestReason.err_code == 0){
+									  	//cek jumdata dulu
+									  	if(supplyrequestReason.data.length > 0){
+									  		res.json({"err_code": 0, "data":supplyrequestReason.data});
+									  	}else{
+								  			res.json({"err_code": 2, "err_msg": "Supplyrequest Reason is not found"});	
+									  	}
+								  	}else{
+								  		res.json({"err_code": 3, "err_msg": supplyrequestReason.error, "application": "Api FHIR", "function": "getSupplyrequestReason"});
+								  	}
+								  }
+							})
+						}else{
+							res.json({"err_code": 4, "err_msg": "Id must be a number."});
+						}
+						
+					}
+				}else{
+					result.err_code = 500;
+					res.json(result);
+				}	
+			});
+		},
+		supplyrequestReasonCode: function getSupplyrequestReasonCode(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var code = req.params.code.trim().toLowerCase();
+			//var code = req.params.code.replace(/[^\w\s ,]/gi, '').trim();
+
+			if(code == "" || typeof code == 'undefined'){
+				res.json({"err_code": 4, "err_msg": "Code is required."});
+			}else{
+				checkApikey(apikey, ipAddres, function(result){
+					if(result.err_code == 0){	
+						ApiFHIR.get('supplyrequestReasonCode', {"apikey": apikey, "code": code}, {}, function(error, response, body){
+							if(error){
+							  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "getSupplyrequestReasonCode"});
+							  }else{
+							  	//cek apakah ada error atau tidak
+							  	var supplyrequestReason = JSON.parse(body); 
+							  	
+							  	//cek apakah ada error atau tidak
+							  	if(supplyrequestReason.err_code == 0){
+								  	//cek jumdata dulu
+								  	if(supplyrequestReason.data.length > 0){
+								  		res.json({"err_code": 0, "data":supplyrequestReason.data});
+								  	}else{
+							  			res.json({"err_code": 2, "err_msg": "Supplyrequest Reason Code is not found"});	
+								  	}
+							  	}else{
+							  		res.json({"err_code": 3, "err_msg": supplyrequestReason.error, "application": "Api FHIR", "function": "getSupplyrequestReasonCode"});
+							  	}
+							  }
+						})
+					}else{
+						result.err_code = 500;
+						res.json(result);
+					}	
+				});
+			}				
+		},
+		supplydeliveryStatus: function getSupplydeliveryStatus(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var _id = req.params._id;
+			checkApikey(apikey, ipAddres, function(result){
+				if(result.err_code == 0){
+					if(_id == "" || typeof _id == 'undefined'){
+						//method, endpoint, params, options, callback
+						ApiFHIR.get('supplydeliveryStatus', {"apikey": apikey, "_id": 0}, {}, function(error, response, body){
+							if(error){
+							  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "supplydeliveryStatus"});
+							  }else{
+							  	//cek apakah ada error atau tidak
+							  	var supplydeliveryStatus = JSON.parse(body); 
+							  	
+							  	//cek apakah ada error atau tidak
+							  	if(supplydeliveryStatus.err_code == 0){
+								  	//cek jumdata dulu
+								  	if(supplydeliveryStatus.data.length > 0){
+								  		res.json({"err_code": 0, "data":supplydeliveryStatus.data});
+								  	}else{
+							  			res.json({"err_code": 2, "err_msg": "Supplydelivery Status is not found"});	
+								  	}
+							  	}else{
+							  		res.json({"err_code": 3, "err_msg": supplydeliveryStatus.error, "application": "Api FHIR", "function": "getSupplydeliveryStatus"});
+							  	}
+							  }
+						})	
+					}else{
+						if(validator.isInt(_id)){
+							ApiFHIR.get('supplydeliveryStatus', {"apikey": apikey, "_id": _id}, {}, function(error, response, body){
+								if(error){
+								  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "getSupplydeliveryStatus"});
+								  }else{
+								  	//cek apakah ada error atau tidak
+								  	var supplydeliveryStatus = JSON.parse(body); 
+								  	
+								  	//cek apakah ada error atau tidak
+								  	if(supplydeliveryStatus.err_code == 0){
+									  	//cek jumdata dulu
+									  	if(supplydeliveryStatus.data.length > 0){
+									  		res.json({"err_code": 0, "data":supplydeliveryStatus.data});
+									  	}else{
+								  			res.json({"err_code": 2, "err_msg": "Supplydelivery Status is not found"});	
+									  	}
+								  	}else{
+								  		res.json({"err_code": 3, "err_msg": supplydeliveryStatus.error, "application": "Api FHIR", "function": "getSupplydeliveryStatus"});
+								  	}
+								  }
+							})
+						}else{
+							res.json({"err_code": 4, "err_msg": "Id must be a number."});
+						}
+						
+					}
+				}else{
+					result.err_code = 500;
+					res.json(result);
+				}	
+			});
+		},
+		supplydeliveryStatusCode: function getSupplydeliveryStatusCode(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var code = req.params.code.trim().toLowerCase();
+			//var code = req.params.code.replace(/[^\w\s ,]/gi, '').trim();
+
+			if(code == "" || typeof code == 'undefined'){
+				res.json({"err_code": 4, "err_msg": "Code is required."});
+			}else{
+				checkApikey(apikey, ipAddres, function(result){
+					if(result.err_code == 0){	
+						ApiFHIR.get('supplydeliveryStatusCode', {"apikey": apikey, "code": code}, {}, function(error, response, body){
+							if(error){
+							  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "getSupplydeliveryStatusCode"});
+							  }else{
+							  	//cek apakah ada error atau tidak
+							  	var supplydeliveryStatus = JSON.parse(body); 
+							  	
+							  	//cek apakah ada error atau tidak
+							  	if(supplydeliveryStatus.err_code == 0){
+								  	//cek jumdata dulu
+								  	if(supplydeliveryStatus.data.length > 0){
+								  		res.json({"err_code": 0, "data":supplydeliveryStatus.data});
+								  	}else{
+							  			res.json({"err_code": 2, "err_msg": "Supplydelivery Status Code is not found"});	
+								  	}
+							  	}else{
+							  		res.json({"err_code": 3, "err_msg": supplydeliveryStatus.error, "application": "Api FHIR", "function": "getSupplydeliveryStatusCode"});
+							  	}
+							  }
+						})
+					}else{
+						result.err_code = 500;
+						res.json(result);
+					}	
+				});
+			}				
+		},
+		supplydeliveryType: function getSupplydeliveryType(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var _id = req.params._id;
+			checkApikey(apikey, ipAddres, function(result){
+				if(result.err_code == 0){
+					if(_id == "" || typeof _id == 'undefined'){
+						//method, endpoint, params, options, callback
+						ApiFHIR.get('supplydeliveryType', {"apikey": apikey, "_id": 0}, {}, function(error, response, body){
+							if(error){
+							  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "supplydeliveryType"});
+							  }else{
+							  	//cek apakah ada error atau tidak
+							  	var supplydeliveryType = JSON.parse(body); 
+							  	
+							  	//cek apakah ada error atau tidak
+							  	if(supplydeliveryType.err_code == 0){
+								  	//cek jumdata dulu
+								  	if(supplydeliveryType.data.length > 0){
+								  		res.json({"err_code": 0, "data":supplydeliveryType.data});
+								  	}else{
+							  			res.json({"err_code": 2, "err_msg": "Supplydelivery Type is not found"});	
+								  	}
+							  	}else{
+							  		res.json({"err_code": 3, "err_msg": supplydeliveryType.error, "application": "Api FHIR", "function": "getSupplydeliveryType"});
+							  	}
+							  }
+						})	
+					}else{
+						if(validator.isInt(_id)){
+							ApiFHIR.get('supplydeliveryType', {"apikey": apikey, "_id": _id}, {}, function(error, response, body){
+								if(error){
+								  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "getSupplydeliveryType"});
+								  }else{
+								  	//cek apakah ada error atau tidak
+								  	var supplydeliveryType = JSON.parse(body); 
+								  	
+								  	//cek apakah ada error atau tidak
+								  	if(supplydeliveryType.err_code == 0){
+									  	//cek jumdata dulu
+									  	if(supplydeliveryType.data.length > 0){
+									  		res.json({"err_code": 0, "data":supplydeliveryType.data});
+									  	}else{
+								  			res.json({"err_code": 2, "err_msg": "Supplydelivery Type is not found"});	
+									  	}
+								  	}else{
+								  		res.json({"err_code": 3, "err_msg": supplydeliveryType.error, "application": "Api FHIR", "function": "getSupplydeliveryType"});
+								  	}
+								  }
+							})
+						}else{
+							res.json({"err_code": 4, "err_msg": "Id must be a number."});
+						}
+						
+					}
+				}else{
+					result.err_code = 500;
+					res.json(result);
+				}	
+			});
+		},
+		supplydeliveryTypeCode: function getSupplydeliveryTypeCode(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var code = req.params.code.trim().toLowerCase();
+			//var code = req.params.code.replace(/[^\w\s ,]/gi, '').trim();
+
+			if(code == "" || typeof code == 'undefined'){
+				res.json({"err_code": 4, "err_msg": "Code is required."});
+			}else{
+				checkApikey(apikey, ipAddres, function(result){
+					if(result.err_code == 0){	
+						ApiFHIR.get('supplydeliveryTypeCode', {"apikey": apikey, "code": code}, {}, function(error, response, body){
+							if(error){
+							  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "getSupplydeliveryTypeCode"});
+							  }else{
+							  	//cek apakah ada error atau tidak
+							  	var supplydeliveryType = JSON.parse(body); 
+							  	
+							  	//cek apakah ada error atau tidak
+							  	if(supplydeliveryType.err_code == 0){
+								  	//cek jumdata dulu
+								  	if(supplydeliveryType.data.length > 0){
+								  		res.json({"err_code": 0, "data":supplydeliveryType.data});
+								  	}else{
+							  			res.json({"err_code": 2, "err_msg": "Supplydelivery Type Code is not found"});	
+								  	}
+							  	}else{
+							  		res.json({"err_code": 3, "err_msg": supplydeliveryType.error, "application": "Api FHIR", "function": "getSupplydeliveryTypeCode"});
+							  	}
+							  }
+						})
+					}else{
+						result.err_code = 500;
+						res.json(result);
+					}	
+				});
+			}				
+		},
+		
+		taskStatus: function getTaskStatus(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var _id = req.params._id;
+			checkApikey(apikey, ipAddres, function(result){
+				if(result.err_code == 0){
+					if(_id == "" || typeof _id == 'undefined'){
+						//method, endpoint, params, options, callback
+						ApiFHIR.get('taskStatus', {"apikey": apikey, "_id": 0}, {}, function(error, response, body){
+							if(error){
+							  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "taskStatus"});
+							  }else{
+							  	//cek apakah ada error atau tidak
+							  	var taskStatus = JSON.parse(body); 
+							  	
+							  	//cek apakah ada error atau tidak
+							  	if(taskStatus.err_code == 0){
+								  	//cek jumdata dulu
+								  	if(taskStatus.data.length > 0){
+								  		res.json({"err_code": 0, "data":taskStatus.data});
+								  	}else{
+							  			res.json({"err_code": 2, "err_msg": "Task Status is not found"});	
+								  	}
+							  	}else{
+							  		res.json({"err_code": 3, "err_msg": taskStatus.error, "application": "Api FHIR", "function": "getTaskStatus"});
+							  	}
+							  }
+						})	
+					}else{
+						if(validator.isInt(_id)){
+							ApiFHIR.get('taskStatus', {"apikey": apikey, "_id": _id}, {}, function(error, response, body){
+								if(error){
+								  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "getTaskStatus"});
+								  }else{
+								  	//cek apakah ada error atau tidak
+								  	var taskStatus = JSON.parse(body); 
+								  	
+								  	//cek apakah ada error atau tidak
+								  	if(taskStatus.err_code == 0){
+									  	//cek jumdata dulu
+									  	if(taskStatus.data.length > 0){
+									  		res.json({"err_code": 0, "data":taskStatus.data});
+									  	}else{
+								  			res.json({"err_code": 2, "err_msg": "Task Status is not found"});	
+									  	}
+								  	}else{
+								  		res.json({"err_code": 3, "err_msg": taskStatus.error, "application": "Api FHIR", "function": "getTaskStatus"});
+								  	}
+								  }
+							})
+						}else{
+							res.json({"err_code": 4, "err_msg": "Id must be a number."});
+						}
+						
+					}
+				}else{
+					result.err_code = 500;
+					res.json(result);
+				}	
+			});
+		},
+		taskStatusCode: function getTaskStatusCode(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var code = req.params.code.trim().toLowerCase();
+			//var code = req.params.code.replace(/[^\w\s ,]/gi, '').trim();
+
+			if(code == "" || typeof code == 'undefined'){
+				res.json({"err_code": 4, "err_msg": "Code is required."});
+			}else{
+				checkApikey(apikey, ipAddres, function(result){
+					if(result.err_code == 0){	
+						ApiFHIR.get('taskStatusCode', {"apikey": apikey, "code": code}, {}, function(error, response, body){
+							if(error){
+							  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "getTaskStatusCode"});
+							  }else{
+							  	//cek apakah ada error atau tidak
+							  	var taskStatus = JSON.parse(body); 
+							  	
+							  	//cek apakah ada error atau tidak
+							  	if(taskStatus.err_code == 0){
+								  	//cek jumdata dulu
+								  	if(taskStatus.data.length > 0){
+								  		res.json({"err_code": 0, "data":taskStatus.data});
+								  	}else{
+							  			res.json({"err_code": 2, "err_msg": "Task Status Code is not found"});	
+								  	}
+							  	}else{
+							  		res.json({"err_code": 3, "err_msg": taskStatus.error, "application": "Api FHIR", "function": "getTaskStatusCode"});
+							  	}
+							  }
+						})
+					}else{
+						result.err_code = 500;
+						res.json(result);
+					}	
+				});
+			}				
+		},
+		taskPerformerType: function getTaskPerformerType(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var _id = req.params._id;
+			checkApikey(apikey, ipAddres, function(result){
+				if(result.err_code == 0){
+					if(_id == "" || typeof _id == 'undefined'){
+						//method, endpoint, params, options, callback
+						ApiFHIR.get('taskPerformerType', {"apikey": apikey, "_id": 0}, {}, function(error, response, body){
+							if(error){
+							  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "taskPerformerType"});
+							  }else{
+							  	//cek apakah ada error atau tidak
+							  	var taskPerformerType = JSON.parse(body); 
+							  	
+							  	//cek apakah ada error atau tidak
+							  	if(taskPerformerType.err_code == 0){
+								  	//cek jumdata dulu
+								  	if(taskPerformerType.data.length > 0){
+								  		res.json({"err_code": 0, "data":taskPerformerType.data});
+								  	}else{
+							  			res.json({"err_code": 2, "err_msg": "Task Performer Type is not found"});	
+								  	}
+							  	}else{
+							  		res.json({"err_code": 3, "err_msg": taskPerformerType.error, "application": "Api FHIR", "function": "getTaskPerformerType"});
+							  	}
+							  }
+						})	
+					}else{
+						if(validator.isInt(_id)){
+							ApiFHIR.get('taskPerformerType', {"apikey": apikey, "_id": _id}, {}, function(error, response, body){
+								if(error){
+								  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "getTaskPerformerType"});
+								  }else{
+								  	//cek apakah ada error atau tidak
+								  	var taskPerformerType = JSON.parse(body); 
+								  	
+								  	//cek apakah ada error atau tidak
+								  	if(taskPerformerType.err_code == 0){
+									  	//cek jumdata dulu
+									  	if(taskPerformerType.data.length > 0){
+									  		res.json({"err_code": 0, "data":taskPerformerType.data});
+									  	}else{
+								  			res.json({"err_code": 2, "err_msg": "Task Performer Type is not found"});	
+									  	}
+								  	}else{
+								  		res.json({"err_code": 3, "err_msg": taskPerformerType.error, "application": "Api FHIR", "function": "getTaskPerformerType"});
+								  	}
+								  }
+							})
+						}else{
+							res.json({"err_code": 4, "err_msg": "Id must be a number."});
+						}
+						
+					}
+				}else{
+					result.err_code = 500;
+					res.json(result);
+				}	
+			});
+		},
+		taskPerformerTypeCode: function getTaskPerformerTypeCode(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var code = req.params.code.trim().toLowerCase();
+			//var code = req.params.code.replace(/[^\w\s ,]/gi, '').trim();
+
+			if(code == "" || typeof code == 'undefined'){
+				res.json({"err_code": 4, "err_msg": "Code is required."});
+			}else{
+				checkApikey(apikey, ipAddres, function(result){
+					if(result.err_code == 0){	
+						ApiFHIR.get('taskPerformerTypeCode', {"apikey": apikey, "code": code}, {}, function(error, response, body){
+							if(error){
+							  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "getTaskPerformerTypeCode"});
+							  }else{
+							  	//cek apakah ada error atau tidak
+							  	var taskPerformerType = JSON.parse(body); 
+							  	
+							  	//cek apakah ada error atau tidak
+							  	if(taskPerformerType.err_code == 0){
+								  	//cek jumdata dulu
+								  	if(taskPerformerType.data.length > 0){
+								  		res.json({"err_code": 0, "data":taskPerformerType.data});
+								  	}else{
+							  			res.json({"err_code": 2, "err_msg": "Task Performer Type Code is not found"});	
+								  	}
+							  	}else{
+							  		res.json({"err_code": 3, "err_msg": taskPerformerType.error, "application": "Api FHIR", "function": "getTaskPerformerTypeCode"});
+							  	}
+							  }
+						})
+					}else{
+						result.err_code = 500;
+						res.json(result);
+					}	
+				});
+			}				
+		},
+		
+		forms: function getForms(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var _id = req.params._id;
+			checkApikey(apikey, ipAddres, function(result){
+				if(result.err_code == 0){
+					if(_id == "" || typeof _id == 'undefined'){
+						//method, endpoint, params, options, callback
+						ApiFHIR.get('forms', {"apikey": apikey, "_id": 0}, {}, function(error, response, body){
+							if(error){
+							  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "forms"});
+							  }else{
+							  	//cek apakah ada error atau tidak
+							  	var forms = JSON.parse(body); 
+							  	
+							  	//cek apakah ada error atau tidak
+							  	if(forms.err_code == 0){
+								  	//cek jumdata dulu
+								  	if(forms.data.length > 0){
+								  		res.json({"err_code": 0, "data":forms.data});
+								  	}else{
+							  			res.json({"err_code": 2, "err_msg": "Forms is not found"});	
+								  	}
+							  	}else{
+							  		res.json({"err_code": 3, "err_msg": forms.error, "application": "Api FHIR", "function": "getForms"});
+							  	}
+							  }
+						})	
+					}else{
+						if(validator.isInt(_id)){
+							ApiFHIR.get('forms', {"apikey": apikey, "_id": _id}, {}, function(error, response, body){
+								if(error){
+								  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "getForms"});
+								  }else{
+								  	//cek apakah ada error atau tidak
+								  	var forms = JSON.parse(body); 
+								  	
+								  	//cek apakah ada error atau tidak
+								  	if(forms.err_code == 0){
+									  	//cek jumdata dulu
+									  	if(forms.data.length > 0){
+									  		res.json({"err_code": 0, "data":forms.data});
+									  	}else{
+								  			res.json({"err_code": 2, "err_msg": "Forms is not found"});	
+									  	}
+								  	}else{
+								  		res.json({"err_code": 3, "err_msg": forms.error, "application": "Api FHIR", "function": "getForms"});
+								  	}
+								  }
+							})
+						}else{
+							res.json({"err_code": 4, "err_msg": "Id must be a number."});
+						}
+						
+					}
+				}else{
+					result.err_code = 500;
+					res.json(result);
+				}	
+			});
+		},
+		formsCode: function getFormsCode(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var code = req.params.code.trim().toLowerCase();
+			//var code = req.params.code.replace(/[^\w\s ,]/gi, '').trim();
+
+			if(code == "" || typeof code == 'undefined'){
+				res.json({"err_code": 4, "err_msg": "Code is required."});
+			}else{
+				checkApikey(apikey, ipAddres, function(result){
+					if(result.err_code == 0){	
+						ApiFHIR.get('formsCode', {"apikey": apikey, "code": code}, {}, function(error, response, body){
+							if(error){
+							  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "getFormsCode"});
+							  }else{
+							  	//cek apakah ada error atau tidak
+							  	var forms = JSON.parse(body); 
+							  	
+							  	//cek apakah ada error atau tidak
+							  	if(forms.err_code == 0){
+								  	//cek jumdata dulu
+								  	if(forms.data.length > 0){
+								  		res.json({"err_code": 0, "data":forms.data});
+								  	}else{
+							  			res.json({"err_code": 2, "err_msg": "Forms Code is not found"});	
+								  	}
+							  	}else{
+							  		res.json({"err_code": 3, "err_msg": forms.error, "application": "Api FHIR", "function": "getFormsCode"});
+							  	}
+							  }
+						})
+					}else{
+						result.err_code = 500;
+						res.json(result);
+					}	
+				});
+			}				
+		},
+		supplyItem: function getSupplyItem(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var _id = req.params._id;
+			checkApikey(apikey, ipAddres, function(result){
+				if(result.err_code == 0){
+					if(_id == "" || typeof _id == 'undefined'){
+						//method, endpoint, params, options, callback
+						ApiFHIR.get('supplyItem', {"apikey": apikey, "_id": 0}, {}, function(error, response, body){
+							if(error){
+							  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "supplyItem"});
+							  }else{
+							  	//cek apakah ada error atau tidak
+							  	var supplyItem = JSON.parse(body); 
+							  	
+							  	//cek apakah ada error atau tidak
+							  	if(supplyItem.err_code == 0){
+								  	//cek jumdata dulu
+								  	if(supplyItem.data.length > 0){
+								  		res.json({"err_code": 0, "data":supplyItem.data});
+								  	}else{
+							  			res.json({"err_code": 2, "err_msg": "Supply Item is not found"});	
+								  	}
+							  	}else{
+							  		res.json({"err_code": 3, "err_msg": supplyItem.error, "application": "Api FHIR", "function": "getSupplyItem"});
+							  	}
+							  }
+						})	
+					}else{
+						if(validator.isInt(_id)){
+							ApiFHIR.get('supplyItem', {"apikey": apikey, "_id": _id}, {}, function(error, response, body){
+								if(error){
+								  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "getSupplyItem"});
+								  }else{
+								  	//cek apakah ada error atau tidak
+								  	var supplyItem = JSON.parse(body); 
+								  	
+								  	//cek apakah ada error atau tidak
+								  	if(supplyItem.err_code == 0){
+									  	//cek jumdata dulu
+									  	if(supplyItem.data.length > 0){
+									  		res.json({"err_code": 0, "data":supplyItem.data});
+									  	}else{
+								  			res.json({"err_code": 2, "err_msg": "Supply Item is not found"});	
+									  	}
+								  	}else{
+								  		res.json({"err_code": 3, "err_msg": supplyItem.error, "application": "Api FHIR", "function": "getSupplyItem"});
+								  	}
+								  }
+							})
+						}else{
+							res.json({"err_code": 4, "err_msg": "Id must be a number."});
+						}
+						
+					}
+				}else{
+					result.err_code = 500;
+					res.json(result);
+				}	
+			});
+		},
+		supplyItemCode: function getSupplyItemCode(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var code = req.params.code.trim().toLowerCase();
+			//var code = req.params.code.replace(/[^\w\s ,]/gi, '').trim();
+
+			if(code == "" || typeof code == 'undefined'){
+				res.json({"err_code": 4, "err_msg": "Code is required."});
+			}else{
+				checkApikey(apikey, ipAddres, function(result){
+					if(result.err_code == 0){	
+						ApiFHIR.get('supplyItemCode', {"apikey": apikey, "code": code}, {}, function(error, response, body){
+							if(error){
+							  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "getSupplyItemCode"});
+							  }else{
+							  	//cek apakah ada error atau tidak
+							  	var supplyItem = JSON.parse(body); 
+							  	
+							  	//cek apakah ada error atau tidak
+							  	if(supplyItem.err_code == 0){
+								  	//cek jumdata dulu
+								  	if(supplyItem.data.length > 0){
+								  		res.json({"err_code": 0, "data":supplyItem.data});
+								  	}else{
+							  			res.json({"err_code": 2, "err_msg": "Supply Item Code is not found"});	
+								  	}
+							  	}else{
+							  		res.json({"err_code": 3, "err_msg": supplyItem.error, "application": "Api FHIR", "function": "getSupplyItemCode"});
+							  	}
+							  }
+						})
+					}else{
+						result.err_code = 500;
+						res.json(result);
+					}	
+				});
+			}				
+		},
+		
 
 	},
 	post: {
@@ -26486,8 +29564,9 @@ var controller = {
 			}
 
 			if (validator.isEmpty(definition)) {
-				err_code = 2;
-				err_msg = "Definition is required";
+				/*err_code = 2;
+				err_msg = "Definition is required";*/
+				definition = ""
 			}
 
 			if (err_code == 0) {
@@ -38892,6 +41971,2145 @@ var controller = {
 										  	res.json({"err_code": 0, "err_msg": "Preservative has been add.", "data":preservative.data});
 									  	}else{
 									  		res.json({"err_code": 3, "err_msg": preservative.error, "application": "Api FHIR", "function": "addPreservative"});
+									  	}
+									  }
+								})
+							}else{
+								res.json(resultCode);
+							}
+						})
+					}else{
+						result.err_code = 500;
+						res.json(result);
+					}	
+				});
+			}else{
+				res.json({"err_code": err_code, "err_msg": err_msg});
+			}
+		},
+		
+		usageContextType: function addUsageContextType(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			
+			var code = req.body.code.trim().toLowerCase();
+			var display = req.body.display;
+			//var definition = req.body.definition.replace(/[^\w\s , ( ) / .]/gi, '');
+			var definition = req.body.definition.replace(/[^\w\s , ( ) / . -]/gi, '');
+			
+			var err_code = 0;
+			var err_msg = '';
+			
+			//input checking
+			if(validator.isEmpty(code)){
+				err_code = 1;
+				err_msg = "Code is required";
+			}
+
+			if(validator.isEmpty(display)){
+				err_code = 2;
+				err_msg = "Display is required";
+			}
+
+			if(validator.isEmpty(definition)){
+				err_code = 3;
+				err_msg = "Definition is required";
+			}
+			
+			if(err_code == 0){
+				checkApikey(apikey, ipAddres, function(result){
+					if(result.err_code == 0){
+						checkCode(apikey, code, 'usage_context_type', function(resultCode){
+							if(resultCode.err_code == 0){
+								//susun body
+								var data = {
+													"code": code,	
+													"display": display,
+													"definition": definition
+												};
+							
+								//method, endpoint, params, options, callback
+								ApiFHIR.post('usageContextType', {"apikey": apikey}, {body: data, json:true}, function(error, response, body){
+									if(error){
+									  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "addUsageContextType"});
+									  }else{
+									  	//cek apakah ada error atau tidak
+									  	var usageContextType = body; //object
+									  	//cek apakah ada error atau tidak
+									  	if(usageContextType.err_code == 0){
+										  	res.json({"err_code": 0, "err_msg": "Usage Context Type has been add.", "data":usageContextType.data});
+									  	}else{
+									  		res.json({"err_code": 3, "err_msg": usageContextType.error, "application": "Api FHIR", "function": "addUsageContextType"});
+									  	}
+									  }
+								})
+							}else{
+								res.json(resultCode);
+							}
+						})
+					}else{
+						result.err_code = 500;
+						res.json(result);
+					}	
+				});
+			}else{
+				res.json({"err_code": err_code, "err_msg": err_msg});
+			}
+		},
+		usageContext: function addUsageContext(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			
+			var code = req.body.code.trim().toUpperCase();
+			var system = req.body.system;
+			var display = req.body.display;
+			//var definition = req.body.definition.replace(/[^\w\s , ( ) / .]/gi, '');
+			var definition = req.body.definition.replace(/[^\w\s , ( ) / . -]/gi, '');
+			
+			var err_code = 0;
+			var err_msg = '';
+			
+			//input checking
+			if(validator.isEmpty(code)){
+				err_code = 1;
+				err_msg = "Code is required";
+			}
+
+			if(validator.isEmpty(system)){
+				err_code = 2;
+				err_msg = "System is required";
+			}
+			
+			if(validator.isEmpty(display)){
+				err_code = 3;
+				err_msg = "Display is required";
+			}
+
+			if(validator.isEmpty(definition)){
+				definition : "";
+			}
+			
+			if(err_code == 0){
+				checkApikey(apikey, ipAddres, function(result){
+					if(result.err_code == 0){
+						checkCode(apikey, code, 'use_context', function(resultCode){
+							if(resultCode.err_code == 0){
+								//susun body
+								var data = {
+													"code": code,	
+													"system": system,	
+													"display": display,
+													"definition": definition
+												};
+							
+								//method, endpoint, params, options, callback
+								ApiFHIR.post('usageContext', {"apikey": apikey}, {body: data, json:true}, function(error, response, body){
+									if(error){
+									  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "addUsageContext"});
+									  }else{
+									  	//cek apakah ada error atau tidak
+									  	var usageContext = body; //object
+									  	//cek apakah ada error atau tidak
+									  	if(usageContext.err_code == 0){
+										  	res.json({"err_code": 0, "err_msg": "Usage Context has been add.", "data":usageContext.data});
+									  	}else{
+									  		res.json({"err_code": 3, "err_msg": usageContext.error, "application": "Api FHIR", "function": "addUsageContext"});
+									  	}
+									  }
+								})
+							}else{
+								res.json(resultCode);
+							}
+						})
+					}else{
+						result.err_code = 500;
+						res.json(result);
+					}	
+				});
+			}else{
+				res.json({"err_code": err_code, "err_msg": err_msg});
+			}
+		},
+		quantityComparator: function addQuantityComparator(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			
+			var code = req.body.code.trim().toLowerCase();
+			var display = req.body.display;
+			//var definition = req.body.definition.replace(/[^\w\s , ( ) / .]/gi, '');
+			var definition = req.body.definition.replace(/[^\w\s , ( ) / . -]/gi, '');
+			
+			var err_code = 0;
+			var err_msg = '';
+			
+			//input checking
+			if(validator.isEmpty(code)){
+				err_code = 1;
+				err_msg = "Code is required";
+			}
+
+			if(validator.isEmpty(display)){
+				err_code = 2;
+				err_msg = "Display is required";
+			}
+
+			if(validator.isEmpty(definition)){
+				err_code = 3;
+				err_msg = "Definition is required";
+			}
+			
+			if(err_code == 0){
+				checkApikey(apikey, ipAddres, function(result){
+					if(result.err_code == 0){
+						checkCode(apikey, code, 'quantity_comparator', function(resultCode){
+							if(resultCode.err_code == 0){
+								//susun body
+								var data = {
+													"code": code,	
+													"display": display,
+													"definition": definition
+												};
+							
+								//method, endpoint, params, options, callback
+								ApiFHIR.post('quantityComparator', {"apikey": apikey}, {body: data, json:true}, function(error, response, body){
+									if(error){
+									  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "addQuantityComparator"});
+									  }else{
+									  	//cek apakah ada error atau tidak
+									  	var quantityComparator = body; //object
+									  	//cek apakah ada error atau tidak
+									  	if(quantityComparator.err_code == 0){
+										  	res.json({"err_code": 0, "err_msg": "Quantity Comparator has been add.", "data":quantityComparator.data});
+									  	}else{
+									  		res.json({"err_code": 3, "err_msg": quantityComparator.error, "application": "Api FHIR", "function": "addQuantityComparator"});
+									  	}
+									  }
+								})
+							}else{
+								res.json(resultCode);
+							}
+						})
+					}else{
+						result.err_code = 500;
+						res.json(result);
+					}	
+				});
+			}else{
+				res.json({"err_code": err_code, "err_msg": err_msg});
+			}
+		},
+		
+		allTypes: function addAllTypes(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			
+			var code = req.body.code.trim();
+			var system = req.body.system;
+			var display = req.body.display;
+			//var definition = req.body.definition.replace(/[^\w\s , ( ) / .]/gi, '');
+			var definition = req.body.definition.replace(/[^\w\s , ( ) / . -]/gi, '');
+			
+			var err_code = 0;
+			var err_msg = '';
+			
+			//input checking
+			if(validator.isEmpty(code)){
+				err_code = 1;
+				err_msg = "Code is required";
+			}
+
+			if(validator.isEmpty(system)){
+				err_code = 2;
+				err_msg = "System is required";
+			}
+			
+			if(validator.isEmpty(display)){
+				err_code = 3;
+				err_msg = "Display is required";
+			}
+
+			if(validator.isEmpty(definition)){
+				definition : "";
+			}
+			
+			if(err_code == 0){
+				checkApikey(apikey, ipAddres, function(result){
+					if(result.err_code == 0){
+						checkCode(apikey, code, 'all_types', function(resultCode){
+							if(resultCode.err_code == 0){
+								//susun body
+								var data = {
+													"code": code,	
+													"system": system,	
+													"display": display,
+													"definition": definition
+												};
+							
+								//method, endpoint, params, options, callback
+								ApiFHIR.post('allTypes', {"apikey": apikey}, {body: data, json:true}, function(error, response, body){
+									if(error){
+									  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "addAllTypes"});
+									  }else{
+									  	//cek apakah ada error atau tidak
+									  	var allTypes = body; //object
+									  	//cek apakah ada error atau tidak
+									  	if(allTypes.err_code == 0){
+										  	res.json({"err_code": 0, "err_msg": "All Types has been add.", "data":allTypes.data});
+									  	}else{
+									  		res.json({"err_code": 3, "err_msg": allTypes.error, "application": "Api FHIR", "function": "addAllTypes"});
+									  	}
+									  }
+								})
+							}else{
+								res.json(resultCode);
+							}
+						})
+					}else{
+						result.err_code = 500;
+						res.json(result);
+					}	
+				});
+			}else{
+				res.json({"err_code": err_code, "err_msg": err_msg});
+			}
+		},
+		
+		relatedArtifactType: function addRelatedArtifactType(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			
+			var code = req.body.code.trim().toLowerCase();
+			var display = req.body.display;
+			//var definition = req.body.definition.replace(/[^\w\s , ( ) / .]/gi, '');
+			var definition = req.body.definition.replace(/[^\w\s , ( ) / . -]/gi, '');
+			
+			var err_code = 0;
+			var err_msg = '';
+			
+			//input checking
+			if(validator.isEmpty(code)){
+				err_code = 1;
+				err_msg = "Code is required";
+			}
+
+			if(validator.isEmpty(display)){
+				err_code = 2;
+				err_msg = "Display is required";
+			}
+
+			if(validator.isEmpty(definition)){
+				err_code = 3;
+				err_msg = "Definition is required";
+			}
+			
+			if(err_code == 0){
+				checkApikey(apikey, ipAddres, function(result){
+					if(result.err_code == 0){
+						checkCode(apikey, code, 'related_artifact_type', function(resultCode){
+							if(resultCode.err_code == 0){
+								//susun body
+								var data = {
+													"code": code,	
+													"display": display,
+													"definition": definition
+												};
+							
+								//method, endpoint, params, options, callback
+								ApiFHIR.post('relatedArtifactType', {"apikey": apikey}, {body: data, json:true}, function(error, response, body){
+									if(error){
+									  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "addRelatedArtifactType"});
+									  }else{
+									  	//cek apakah ada error atau tidak
+									  	var relatedArtifactType = body; //object
+									  	//cek apakah ada error atau tidak
+									  	if(relatedArtifactType.err_code == 0){
+										  	res.json({"err_code": 0, "err_msg": "Related Artifact Type has been add.", "data":relatedArtifactType.data});
+									  	}else{
+									  		res.json({"err_code": 3, "err_msg": relatedArtifactType.error, "application": "Api FHIR", "function": "addRelatedArtifactType"});
+									  	}
+									  }
+								})
+							}else{
+								res.json(resultCode);
+							}
+						})
+					}else{
+						result.err_code = 500;
+						res.json(result);
+					}	
+				});
+			}else{
+				res.json({"err_code": err_code, "err_msg": err_msg});
+			}
+		},
+		triggerType: function addTriggerType(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			
+			var code = req.body.code.trim().toLowerCase();
+			var display = req.body.display;
+			//var definition = req.body.definition.replace(/[^\w\s , ( ) / .]/gi, '');
+			var definition = req.body.definition.replace(/[^\w\s , ( ) / . -]/gi, '');
+			
+			var err_code = 0;
+			var err_msg = '';
+			
+			//input checking
+			if(validator.isEmpty(code)){
+				err_code = 1;
+				err_msg = "Code is required";
+			}
+
+			if(validator.isEmpty(display)){
+				err_code = 2;
+				err_msg = "Display is required";
+			}
+
+			if(validator.isEmpty(definition)){
+				err_code = 3;
+				err_msg = "Definition is required";
+			}
+			
+			if(err_code == 0){
+				checkApikey(apikey, ipAddres, function(result){
+					if(result.err_code == 0){
+						checkCode(apikey, code, 'trigger_type', function(resultCode){
+							if(resultCode.err_code == 0){
+								//susun body
+								var data = {
+													"code": code,	
+													"display": display,
+													"definition": definition
+												};
+							
+								//method, endpoint, params, options, callback
+								ApiFHIR.post('triggerType', {"apikey": apikey}, {body: data, json:true}, function(error, response, body){
+									if(error){
+									  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "addTriggerType"});
+									  }else{
+									  	//cek apakah ada error atau tidak
+									  	var triggerType = body; //object
+									  	//cek apakah ada error atau tidak
+									  	if(triggerType.err_code == 0){
+										  	res.json({"err_code": 0, "err_msg": "Trigger Type has been add.", "data":triggerType.data});
+									  	}else{
+									  		res.json({"err_code": 3, "err_msg": triggerType.error, "application": "Api FHIR", "function": "addTriggerType"});
+									  	}
+									  }
+								})
+							}else{
+								res.json(resultCode);
+							}
+						})
+					}else{
+						result.err_code = 500;
+						res.json(result);
+					}	
+				});
+			}else{
+				res.json({"err_code": err_code, "err_msg": err_msg});
+			}
+		},
+		
+		actionParticipantType: function addActionParticipantType(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			
+			var code = req.body.code.trim().toLowerCase();
+			var display = req.body.display;
+			//var definition = req.body.definition.replace(/[^\w\s , ( ) / .]/gi, '');
+			var definition = req.body.definition.replace(/[^\w\s , ( ) / . -]/gi, '');
+			
+			var err_code = 0;
+			var err_msg = '';
+			
+			//input checking
+			if(validator.isEmpty(code)){
+				err_code = 1;
+				err_msg = "Code is required";
+			}
+
+			if(validator.isEmpty(display)){
+				err_code = 2;
+				err_msg = "Display is required";
+			}
+
+			if(validator.isEmpty(definition)){
+				err_code = 3;
+				err_msg = "Definition is required";
+			}
+			
+			if(err_code == 0){
+				checkApikey(apikey, ipAddres, function(result){
+					if(result.err_code == 0){
+						checkCode(apikey, code, 'action_participant_type', function(resultCode){
+							if(resultCode.err_code == 0){
+								//susun body
+								var data = {
+													"code": code,	
+													"display": display,
+													"definition": definition
+												};
+							
+								//method, endpoint, params, options, callback
+								ApiFHIR.post('actionParticipantType', {"apikey": apikey}, {body: data, json:true}, function(error, response, body){
+									if(error){
+									  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "addActionParticipantType"});
+									  }else{
+									  	//cek apakah ada error atau tidak
+									  	var actionParticipantType = body; //object
+									  	//cek apakah ada error atau tidak
+									  	if(actionParticipantType.err_code == 0){
+										  	res.json({"err_code": 0, "err_msg": "Action Participant Type has been add.", "data":actionParticipantType.data});
+									  	}else{
+									  		res.json({"err_code": 3, "err_msg": actionParticipantType.error, "application": "Api FHIR", "function": "addActionParticipantType"});
+									  	}
+									  }
+								})
+							}else{
+								res.json(resultCode);
+							}
+						})
+					}else{
+						result.err_code = 500;
+						res.json(result);
+					}	
+				});
+			}else{
+				res.json({"err_code": err_code, "err_msg": err_msg});
+			}
+		},
+		planDefinitionType: function addPlanDefinitionType(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			
+			var code = req.body.code.trim().toLowerCase();
+			var display = req.body.display;
+			//var definition = req.body.definition.replace(/[^\w\s , ( ) / .]/gi, '');
+			var definition = req.body.definition.replace(/[^\w\s , ( ) / . -]/gi, '');
+			
+			var err_code = 0;
+			var err_msg = '';
+			
+			//input checking
+			if(validator.isEmpty(code)){
+				err_code = 1;
+				err_msg = "Code is required";
+			}
+
+			if(validator.isEmpty(display)){
+				err_code = 2;
+				err_msg = "Display is required";
+			}
+
+			if(validator.isEmpty(definition)){
+				err_code = 3;
+				err_msg = "Definition is required";
+			}
+			
+			if(err_code == 0){
+				checkApikey(apikey, ipAddres, function(result){
+					if(result.err_code == 0){
+						checkCode(apikey, code, 'plan_definition_type', function(resultCode){
+							if(resultCode.err_code == 0){
+								//susun body
+								var data = {
+													"code": code,	
+													"display": display,
+													"definition": definition
+												};
+							
+								//method, endpoint, params, options, callback
+								ApiFHIR.post('planDefinitionType', {"apikey": apikey}, {body: data, json:true}, function(error, response, body){
+									if(error){
+									  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "addPlanDefinitionType"});
+									  }else{
+									  	//cek apakah ada error atau tidak
+									  	var planDefinitionType = body; //object
+									  	//cek apakah ada error atau tidak
+									  	if(planDefinitionType.err_code == 0){
+										  	res.json({"err_code": 0, "err_msg": "Plan Definition Type has been add.", "data":planDefinitionType.data});
+									  	}else{
+									  		res.json({"err_code": 3, "err_msg": planDefinitionType.error, "application": "Api FHIR", "function": "addPlanDefinitionType"});
+									  	}
+									  }
+								})
+							}else{
+								res.json(resultCode);
+							}
+						})
+					}else{
+						result.err_code = 500;
+						res.json(result);
+					}	
+				});
+			}else{
+				res.json({"err_code": err_code, "err_msg": err_msg});
+			}
+		},
+		publicationStatus: function addPublicationStatus(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			
+			var code = req.body.code.trim().toLowerCase();
+			var display = req.body.display;
+			//var definition = req.body.definition.replace(/[^\w\s , ( ) / .]/gi, '');
+			var definition = req.body.definition.replace(/[^\w\s , ( ) / . -]/gi, '');
+			
+			var err_code = 0;
+			var err_msg = '';
+			
+			//input checking
+			if(validator.isEmpty(code)){
+				err_code = 1;
+				err_msg = "Code is required";
+			}
+
+			if(validator.isEmpty(display)){
+				err_code = 2;
+				err_msg = "Display is required";
+			}
+
+			if(validator.isEmpty(definition)){
+				err_code = 3;
+				err_msg = "Definition is required";
+			}
+			
+			if(err_code == 0){
+				checkApikey(apikey, ipAddres, function(result){
+					if(result.err_code == 0){
+						checkCode(apikey, code, 'publication_status', function(resultCode){
+							if(resultCode.err_code == 0){
+								//susun body
+								var data = {
+													"code": code,	
+													"display": display,
+													"definition": definition
+												};
+							
+								//method, endpoint, params, options, callback
+								ApiFHIR.post('publicationStatus', {"apikey": apikey}, {body: data, json:true}, function(error, response, body){
+									if(error){
+									  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "addPublicationStatus"});
+									  }else{
+									  	//cek apakah ada error atau tidak
+									  	var publicationStatus = body; //object
+									  	//cek apakah ada error atau tidak
+									  	if(publicationStatus.err_code == 0){
+										  	res.json({"err_code": 0, "err_msg": "Publication Status has been add.", "data":publicationStatus.data});
+									  	}else{
+									  		res.json({"err_code": 3, "err_msg": publicationStatus.error, "application": "Api FHIR", "function": "addPublicationStatus"});
+									  	}
+									  }
+								})
+							}else{
+								res.json(resultCode);
+							}
+						})
+					}else{
+						result.err_code = 500;
+						res.json(result);
+					}	
+				});
+			}else{
+				res.json({"err_code": err_code, "err_msg": err_msg});
+			}
+		},
+		definitionTopic: function addDefinitionTopic(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			
+			var code = req.body.code.trim().toLowerCase();
+			var display = req.body.display;
+			//var definition = req.body.definition.replace(/[^\w\s , ( ) / .]/gi, '');
+			var definition = req.body.definition.replace(/[^\w\s , ( ) / . -]/gi, '');
+			
+			var err_code = 0;
+			var err_msg = '';
+			
+			//input checking
+			if(validator.isEmpty(code)){
+				err_code = 1;
+				err_msg = "Code is required";
+			}
+
+			if(validator.isEmpty(display)){
+				err_code = 2;
+				err_msg = "Display is required";
+			}
+
+			if(validator.isEmpty(definition)){
+				err_code = 3;
+				err_msg = "Definition is required";
+			}
+			
+			if(err_code == 0){
+				checkApikey(apikey, ipAddres, function(result){
+					if(result.err_code == 0){
+						checkCode(apikey, code, 'definition_topic', function(resultCode){
+							if(resultCode.err_code == 0){
+								//susun body
+								var data = {
+													"code": code,	
+													"display": display,
+													"definition": definition
+												};
+							
+								//method, endpoint, params, options, callback
+								ApiFHIR.post('definitionTopic', {"apikey": apikey}, {body: data, json:true}, function(error, response, body){
+									if(error){
+									  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "addDefinitionTopic"});
+									  }else{
+									  	//cek apakah ada error atau tidak
+									  	var definitionTopic = body; //object
+									  	//cek apakah ada error atau tidak
+									  	if(definitionTopic.err_code == 0){
+										  	res.json({"err_code": 0, "err_msg": "Definition Topic has been add.", "data":definitionTopic.data});
+									  	}else{
+									  		res.json({"err_code": 3, "err_msg": definitionTopic.error, "application": "Api FHIR", "function": "addDefinitionTopic"});
+									  	}
+									  }
+								})
+							}else{
+								res.json(resultCode);
+							}
+						})
+					}else{
+						result.err_code = 500;
+						res.json(result);
+					}	
+				});
+			}else{
+				res.json({"err_code": err_code, "err_msg": err_msg});
+			}
+		},
+		
+		actionConditionKind: function addActionConditionKind(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			
+			var code = req.body.code.trim().toLowerCase();
+			var display = req.body.display;
+			//var definition = req.body.definition.replace(/[^\w\s , ( ) / .]/gi, '');
+			var definition = req.body.definition.replace(/[^\w\s , ( ) / . -]/gi, '');
+			
+			var err_code = 0;
+			var err_msg = '';
+			
+			//input checking
+			if(validator.isEmpty(code)){
+				err_code = 1;
+				err_msg = "Code is required";
+			}
+
+			if(validator.isEmpty(display)){
+				err_code = 2;
+				err_msg = "Display is required";
+			}
+
+			if(validator.isEmpty(definition)){
+				err_code = 3;
+				err_msg = "Definition is required";
+			}
+			
+			if(err_code == 0){
+				checkApikey(apikey, ipAddres, function(result){
+					if(result.err_code == 0){
+						checkCode(apikey, code, 'action_condition_kind', function(resultCode){
+							if(resultCode.err_code == 0){
+								//susun body
+								var data = {
+													"code": code,	
+													"display": display,
+													"definition": definition
+												};
+							
+								//method, endpoint, params, options, callback
+								ApiFHIR.post('actionConditionKind', {"apikey": apikey}, {body: data, json:true}, function(error, response, body){
+									if(error){
+									  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "addActionConditionKind"});
+									  }else{
+									  	//cek apakah ada error atau tidak
+									  	var actionConditionKind = body; //object
+									  	//cek apakah ada error atau tidak
+									  	if(actionConditionKind.err_code == 0){
+										  	res.json({"err_code": 0, "err_msg": "Action Condition Kind has been add.", "data":actionConditionKind.data});
+									  	}else{
+									  		res.json({"err_code": 3, "err_msg": actionConditionKind.error, "application": "Api FHIR", "function": "addActionConditionKind"});
+									  	}
+									  }
+								})
+							}else{
+								res.json(resultCode);
+							}
+						})
+					}else{
+						result.err_code = 500;
+						res.json(result);
+					}	
+				});
+			}else{
+				res.json({"err_code": err_code, "err_msg": err_msg});
+			}
+		},
+		actionRelationshipType: function addActionRelationshipType(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			
+			var code = req.body.code.trim().toLowerCase();
+			var display = req.body.display;
+			//var definition = req.body.definition.replace(/[^\w\s , ( ) / .]/gi, '');
+			var definition = req.body.definition.replace(/[^\w\s , ( ) / . -]/gi, '');
+			
+			var err_code = 0;
+			var err_msg = '';
+			
+			//input checking
+			if(validator.isEmpty(code)){
+				err_code = 1;
+				err_msg = "Code is required";
+			}
+
+			if(validator.isEmpty(display)){
+				err_code = 2;
+				err_msg = "Display is required";
+			}
+
+			if(validator.isEmpty(definition)){
+				err_code = 3;
+				err_msg = "Definition is required";
+			}
+			
+			if(err_code == 0){
+				checkApikey(apikey, ipAddres, function(result){
+					if(result.err_code == 0){
+						checkCode(apikey, code, 'action_relationship_type', function(resultCode){
+							if(resultCode.err_code == 0){
+								//susun body
+								var data = {
+													"code": code,	
+													"display": display,
+													"definition": definition
+												};
+							
+								//method, endpoint, params, options, callback
+								ApiFHIR.post('actionRelationshipType', {"apikey": apikey}, {body: data, json:true}, function(error, response, body){
+									if(error){
+									  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "addActionRelationshipType"});
+									  }else{
+									  	//cek apakah ada error atau tidak
+									  	var actionRelationshipType = body; //object
+									  	//cek apakah ada error atau tidak
+									  	if(actionRelationshipType.err_code == 0){
+										  	res.json({"err_code": 0, "err_msg": "Action Relationship Type has been add.", "data":actionRelationshipType.data});
+									  	}else{
+									  		res.json({"err_code": 3, "err_msg": actionRelationshipType.error, "application": "Api FHIR", "function": "addActionRelationshipType"});
+									  	}
+									  }
+								})
+							}else{
+								res.json(resultCode);
+							}
+						})
+					}else{
+						result.err_code = 500;
+						res.json(result);
+					}	
+				});
+			}else{
+				res.json({"err_code": err_code, "err_msg": err_msg});
+			}
+		},
+		actionType: function addActionType(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			
+			var code = req.body.code.trim().toLowerCase();
+			var display = req.body.display;
+			//var definition = req.body.definition.replace(/[^\w\s , ( ) / .]/gi, '');
+			var definition = req.body.definition.replace(/[^\w\s , ( ) / . -]/gi, '');
+			
+			var err_code = 0;
+			var err_msg = '';
+			
+			//input checking
+			if(validator.isEmpty(code)){
+				err_code = 1;
+				err_msg = "Code is required";
+			}
+
+			if(validator.isEmpty(display)){
+				err_code = 2;
+				err_msg = "Display is required";
+			}
+
+			if(validator.isEmpty(definition)){
+				err_code = 3;
+				err_msg = "Definition is required";
+			}
+			
+			if(err_code == 0){
+				checkApikey(apikey, ipAddres, function(result){
+					if(result.err_code == 0){
+						checkCode(apikey, code, 'action_type', function(resultCode){
+							if(resultCode.err_code == 0){
+								//susun body
+								var data = {
+													"code": code,	
+													"display": display,
+													"definition": definition
+												};
+							
+								//method, endpoint, params, options, callback
+								ApiFHIR.post('actionType', {"apikey": apikey}, {body: data, json:true}, function(error, response, body){
+									if(error){
+									  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "addActionType"});
+									  }else{
+									  	//cek apakah ada error atau tidak
+									  	var actionType = body; //object
+									  	//cek apakah ada error atau tidak
+									  	if(actionType.err_code == 0){
+										  	res.json({"err_code": 0, "err_msg": "Action Type has been add.", "data":actionType.data});
+									  	}else{
+									  		res.json({"err_code": 3, "err_msg": actionType.error, "application": "Api FHIR", "function": "addActionType"});
+									  	}
+									  }
+								})
+							}else{
+								res.json(resultCode);
+							}
+						})
+					}else{
+						result.err_code = 500;
+						res.json(result);
+					}	
+				});
+			}else{
+				res.json({"err_code": err_code, "err_msg": err_msg});
+			}
+		},
+		actionGroupingBehavior: function addActionGroupingBehavior(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			
+			var code = req.body.code.trim().toLowerCase();
+			var display = req.body.display;
+			//var definition = req.body.definition.replace(/[^\w\s , ( ) / .]/gi, '');
+			var definition = req.body.definition.replace(/[^\w\s , ( ) / . -]/gi, '');
+			
+			var err_code = 0;
+			var err_msg = '';
+			
+			//input checking
+			if(validator.isEmpty(code)){
+				err_code = 1;
+				err_msg = "Code is required";
+			}
+
+			if(validator.isEmpty(display)){
+				err_code = 2;
+				err_msg = "Display is required";
+			}
+
+			if(validator.isEmpty(definition)){
+				err_code = 3;
+				err_msg = "Definition is required";
+			}
+			
+			if(err_code == 0){
+				checkApikey(apikey, ipAddres, function(result){
+					if(result.err_code == 0){
+						checkCode(apikey, code, 'action_grouping_behavior', function(resultCode){
+							if(resultCode.err_code == 0){
+								//susun body
+								var data = {
+													"code": code,	
+													"display": display,
+													"definition": definition
+												};
+							
+								//method, endpoint, params, options, callback
+								ApiFHIR.post('actionGroupingBehavior', {"apikey": apikey}, {body: data, json:true}, function(error, response, body){
+									if(error){
+									  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "addActionGroupingBehavior"});
+									  }else{
+									  	//cek apakah ada error atau tidak
+									  	var actionGroupingBehavior = body; //object
+									  	//cek apakah ada error atau tidak
+									  	if(actionGroupingBehavior.err_code == 0){
+										  	res.json({"err_code": 0, "err_msg": "Action Grouping Behavior has been add.", "data":actionGroupingBehavior.data});
+									  	}else{
+									  		res.json({"err_code": 3, "err_msg": actionGroupingBehavior.error, "application": "Api FHIR", "function": "addActionGroupingBehavior"});
+									  	}
+									  }
+								})
+							}else{
+								res.json(resultCode);
+							}
+						})
+					}else{
+						result.err_code = 500;
+						res.json(result);
+					}	
+				});
+			}else{
+				res.json({"err_code": err_code, "err_msg": err_msg});
+			}
+		},
+		actionSelectionBehavior: function addActionSelectionBehavior(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			
+			var code = req.body.code.trim().toLowerCase();
+			var display = req.body.display;
+			//var definition = req.body.definition.replace(/[^\w\s , ( ) / .]/gi, '');
+			var definition = req.body.definition.replace(/[^\w\s , ( ) / . -]/gi, '');
+			
+			var err_code = 0;
+			var err_msg = '';
+			
+			//input checking
+			if(validator.isEmpty(code)){
+				err_code = 1;
+				err_msg = "Code is required";
+			}
+
+			if(validator.isEmpty(display)){
+				err_code = 2;
+				err_msg = "Display is required";
+			}
+
+			if(validator.isEmpty(definition)){
+				err_code = 3;
+				err_msg = "Definition is required";
+			}
+			
+			if(err_code == 0){
+				checkApikey(apikey, ipAddres, function(result){
+					if(result.err_code == 0){
+						checkCode(apikey, code, 'action_selection_behavior', function(resultCode){
+							if(resultCode.err_code == 0){
+								//susun body
+								var data = {
+													"code": code,	
+													"display": display,
+													"definition": definition
+												};
+							
+								//method, endpoint, params, options, callback
+								ApiFHIR.post('actionSelectionBehavior', {"apikey": apikey}, {body: data, json:true}, function(error, response, body){
+									if(error){
+									  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "addActionSelectionBehavior"});
+									  }else{
+									  	//cek apakah ada error atau tidak
+									  	var actionSelectionBehavior = body; //object
+									  	//cek apakah ada error atau tidak
+									  	if(actionSelectionBehavior.err_code == 0){
+										  	res.json({"err_code": 0, "err_msg": "Action Selection Behavior has been add.", "data":actionSelectionBehavior.data});
+									  	}else{
+									  		res.json({"err_code": 3, "err_msg": actionSelectionBehavior.error, "application": "Api FHIR", "function": "addActionSelectionBehavior"});
+									  	}
+									  }
+								})
+							}else{
+								res.json(resultCode);
+							}
+						})
+					}else{
+						result.err_code = 500;
+						res.json(result);
+					}	
+				});
+			}else{
+				res.json({"err_code": err_code, "err_msg": err_msg});
+			}
+		},
+		actionRequiredBehavior: function addActionRequiredBehavior(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			
+			var code = req.body.code.trim().toLowerCase();
+			var display = req.body.display;
+			//var definition = req.body.definition.replace(/[^\w\s , ( ) / .]/gi, '');
+			var definition = req.body.definition.replace(/[^\w\s , ( ) / . -]/gi, '');
+			
+			var err_code = 0;
+			var err_msg = '';
+			
+			//input checking
+			if(validator.isEmpty(code)){
+				err_code = 1;
+				err_msg = "Code is required";
+			}
+
+			if(validator.isEmpty(display)){
+				err_code = 2;
+				err_msg = "Display is required";
+			}
+
+			if(validator.isEmpty(definition)){
+				err_code = 3;
+				err_msg = "Definition is required";
+			}
+			
+			if(err_code == 0){
+				checkApikey(apikey, ipAddres, function(result){
+					if(result.err_code == 0){
+						checkCode(apikey, code, 'action_required_behavior', function(resultCode){
+							if(resultCode.err_code == 0){
+								//susun body
+								var data = {
+													"code": code,	
+													"display": display,
+													"definition": definition
+												};
+							
+								//method, endpoint, params, options, callback
+								ApiFHIR.post('actionRequiredBehavior', {"apikey": apikey}, {body: data, json:true}, function(error, response, body){
+									if(error){
+									  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "addActionRequiredBehavior"});
+									  }else{
+									  	//cek apakah ada error atau tidak
+									  	var actionRequiredBehavior = body; //object
+									  	//cek apakah ada error atau tidak
+									  	if(actionRequiredBehavior.err_code == 0){
+										  	res.json({"err_code": 0, "err_msg": "Action Required Behavior has been add.", "data":actionRequiredBehavior.data});
+									  	}else{
+									  		res.json({"err_code": 3, "err_msg": actionRequiredBehavior.error, "application": "Api FHIR", "function": "addActionRequiredBehavior"});
+									  	}
+									  }
+								})
+							}else{
+								res.json(resultCode);
+							}
+						})
+					}else{
+						result.err_code = 500;
+						res.json(result);
+					}	
+				});
+			}else{
+				res.json({"err_code": err_code, "err_msg": err_msg});
+			}
+		},
+		actionPrecheckBehavior: function addActionPrecheckBehavior(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			
+			var code = req.body.code.trim().toLowerCase();
+			var display = req.body.display;
+			//var definition = req.body.definition.replace(/[^\w\s , ( ) / .]/gi, '');
+			var definition = req.body.definition.replace(/[^\w\s , ( ) / . -]/gi, '');
+			
+			var err_code = 0;
+			var err_msg = '';
+			
+			//input checking
+			if(validator.isEmpty(code)){
+				err_code = 1;
+				err_msg = "Code is Precheck";
+			}
+
+			if(validator.isEmpty(display)){
+				err_code = 2;
+				err_msg = "Display is Precheck";
+			}
+
+			if(validator.isEmpty(definition)){
+				err_code = 3;
+				err_msg = "Definition is Precheck";
+			}
+			
+			if(err_code == 0){
+				checkApikey(apikey, ipAddres, function(result){
+					if(result.err_code == 0){
+						checkCode(apikey, code, 'action_precheck_behavior', function(resultCode){
+							if(resultCode.err_code == 0){
+								//susun body
+								var data = {
+													"code": code,	
+													"display": display,
+													"definition": definition
+												};
+							
+								//method, endpoint, params, options, callback
+								ApiFHIR.post('actionPrecheckBehavior', {"apikey": apikey}, {body: data, json:true}, function(error, response, body){
+									if(error){
+									  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "addActionPrecheckBehavior"});
+									  }else{
+									  	//cek apakah ada error atau tidak
+									  	var actionPrecheckBehavior = body; //object
+									  	//cek apakah ada error atau tidak
+									  	if(actionPrecheckBehavior.err_code == 0){
+										  	res.json({"err_code": 0, "err_msg": "Action Precheck Behavior has been add.", "data":actionPrecheckBehavior.data});
+									  	}else{
+									  		res.json({"err_code": 3, "err_msg": actionPrecheckBehavior.error, "application": "Api FHIR", "function": "addActionPrecheckBehavior"});
+									  	}
+									  }
+								})
+							}else{
+								res.json(resultCode);
+							}
+						})
+					}else{
+						result.err_code = 500;
+						res.json(result);
+					}	
+				});
+			}else{
+				res.json({"err_code": err_code, "err_msg": err_msg});
+			}
+		},
+		actionCardinalityBehavior: function addActionCardinalityBehavior(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			
+			var code = req.body.code.trim().toLowerCase();
+			var display = req.body.display;
+			//var definition = req.body.definition.replace(/[^\w\s , ( ) / .]/gi, '');
+			var definition = req.body.definition.replace(/[^\w\s , ( ) / . -]/gi, '');
+			
+			var err_code = 0;
+			var err_msg = '';
+			
+			//input checking
+			if(validator.isEmpty(code)){
+				err_code = 1;
+				err_msg = "Code is Cardinality";
+			}
+
+			if(validator.isEmpty(display)){
+				err_code = 2;
+				err_msg = "Display is Cardinality";
+			}
+
+			if(validator.isEmpty(definition)){
+				err_code = 3;
+				err_msg = "Definition is Cardinality";
+			}
+			
+			if(err_code == 0){
+				checkApikey(apikey, ipAddres, function(result){
+					if(result.err_code == 0){
+						checkCode(apikey, code, 'action_cardinality_behavior', function(resultCode){
+							if(resultCode.err_code == 0){
+								//susun body
+								var data = {
+													"code": code,	
+													"display": display,
+													"definition": definition
+												};
+							
+								//method, endpoint, params, options, callback
+								ApiFHIR.post('actionCardinalityBehavior', {"apikey": apikey}, {body: data, json:true}, function(error, response, body){
+									if(error){
+									  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "addActionCardinalityBehavior"});
+									  }else{
+									  	//cek apakah ada error atau tidak
+									  	var actionCardinalityBehavior = body; //object
+									  	//cek apakah ada error atau tidak
+									  	if(actionCardinalityBehavior.err_code == 0){
+										  	res.json({"err_code": 0, "err_msg": "Action Cardinality Behavior has been add.", "data":actionCardinalityBehavior.data});
+									  	}else{
+									  		res.json({"err_code": 3, "err_msg": actionCardinalityBehavior.error, "application": "Api FHIR", "function": "addActionCardinalityBehavior"});
+									  	}
+									  }
+								})
+							}else{
+								res.json(resultCode);
+							}
+						})
+					}else{
+						result.err_code = 500;
+						res.json(result);
+					}	
+				});
+			}else{
+				res.json({"err_code": err_code, "err_msg": err_msg});
+			}
+		},
+		actionlist: function addActionlist(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			
+			var code = req.body.code.trim().toLowerCase();
+			var display = req.body.display;
+			//var definition = req.body.definition.replace(/[^\w\s , ( ) / .]/gi, '');
+			var definition = req.body.definition.replace(/[^\w\s , ( ) / . -]/gi, '');
+			
+			var err_code = 0;
+			var err_msg = '';
+			
+			//input checking
+			if(validator.isEmpty(code)){
+				err_code = 1;
+				err_msg = "Code is Cardinality";
+			}
+
+			if(validator.isEmpty(display)){
+				err_code = 2;
+				err_msg = "Display is Cardinality";
+			}
+
+			if(validator.isEmpty(definition)){
+				err_code = 3;
+				err_msg = "Definition is Cardinality";
+			}
+			
+			if(err_code == 0){
+				checkApikey(apikey, ipAddres, function(result){
+					if(result.err_code == 0){
+						checkCode(apikey, code, 'actionlist', function(resultCode){
+							if(resultCode.err_code == 0){
+								//susun body
+								var data = {
+													"code": code,	
+													"display": display,
+													"definition": definition
+												};
+							
+								//method, endpoint, params, options, callback
+								ApiFHIR.post('actionlist', {"apikey": apikey}, {body: data, json:true}, function(error, response, body){
+									if(error){
+									  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "addActionlist"});
+									  }else{
+									  	//cek apakah ada error atau tidak
+									  	var actionlist = body; //object
+									  	//cek apakah ada error atau tidak
+									  	if(actionlist.err_code == 0){
+										  	res.json({"err_code": 0, "err_msg": "Actionlist has been add.", "data":actionlist.data});
+									  	}else{
+									  		res.json({"err_code": 3, "err_msg": actionlist.error, "application": "Api FHIR", "function": "addActionlist"});
+									  	}
+									  }
+								})
+							}else{
+								res.json(resultCode);
+							}
+						})
+					}else{
+						result.err_code = 500;
+						res.json(result);
+					}	
+				});
+			}else{
+				res.json({"err_code": err_code, "err_msg": err_msg});
+			}
+		},
+		
+		processOutcome: function addProcessOutcome(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			
+			var code = req.body.code.trim().toLowerCase();
+			var display = req.body.display;
+			//var definition = req.body.definition.replace(/[^\w\s , ( ) / .]/gi, '');
+			var definition = req.body.definition.replace(/[^\w\s , ( ) / . -]/gi, '');
+			
+			var err_code = 0;
+			var err_msg = '';
+			
+			//input checking
+			if(validator.isEmpty(code)){
+				err_code = 1;
+				err_msg = "Code is required";
+			}
+
+			if(validator.isEmpty(display)){
+				err_code = 2;
+				err_msg = "Display is required";
+			}
+
+			if(validator.isEmpty(definition)){
+				err_code = 3;
+				err_msg = "Definition is required";
+			}
+			
+			if(err_code == 0){
+				checkApikey(apikey, ipAddres, function(result){
+					if(result.err_code == 0){
+						checkCode(apikey, code, 'process_outcome', function(resultCode){
+							if(resultCode.err_code == 0){
+								//susun body
+								var data = {
+													"code": code,	
+													"display": display,
+													"definition": definition
+												};
+							
+								//method, endpoint, params, options, callback
+								ApiFHIR.post('processOutcome', {"apikey": apikey}, {body: data, json:true}, function(error, response, body){
+									if(error){
+									  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "addProcessOutcome"});
+									  }else{
+									  	//cek apakah ada error atau tidak
+									  	var processOutcome = body; //object
+									  	//cek apakah ada error atau tidak
+									  	if(processOutcome.err_code == 0){
+										  	res.json({"err_code": 0, "err_msg": "Process Outcome has been add.", "data":processOutcome.data});
+									  	}else{
+									  		res.json({"err_code": 3, "err_msg": processOutcome.error, "application": "Api FHIR", "function": "addProcessOutcome"});
+									  	}
+									  }
+								})
+							}else{
+								res.json(resultCode);
+							}
+						})
+					}else{
+						result.err_code = 500;
+						res.json(result);
+					}	
+				});
+			}else{
+				res.json({"err_code": err_code, "err_msg": err_msg});
+			}
+		},
+		noteType: function addNoteType(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			
+			var code = req.body.code.trim().toLowerCase();
+			var display = req.body.display;
+			//var definition = req.body.definition.replace(/[^\w\s , ( ) / .]/gi, '');
+			var definition = req.body.definition.replace(/[^\w\s , ( ) / . -]/gi, '');
+			
+			var err_code = 0;
+			var err_msg = '';
+			
+			//input checking
+			if(validator.isEmpty(code)){
+				err_code = 1;
+				err_msg = "Code is required";
+			}
+
+			if(validator.isEmpty(display)){
+				err_code = 2;
+				err_msg = "Display is required";
+			}
+
+			if(validator.isEmpty(definition)){
+				err_code = 3;
+				err_msg = "Definition is required";
+			}
+			
+			if(err_code == 0){
+				checkApikey(apikey, ipAddres, function(result){
+					if(result.err_code == 0){
+						checkCode(apikey, code, 'note_type', function(resultCode){
+							if(resultCode.err_code == 0){
+								//susun body
+								var data = {
+													"code": code,	
+													"display": display,
+													"definition": definition
+												};
+							
+								//method, endpoint, params, options, callback
+								ApiFHIR.post('noteType', {"apikey": apikey}, {body: data, json:true}, function(error, response, body){
+									if(error){
+									  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "addNoteType"});
+									  }else{
+									  	//cek apakah ada error atau tidak
+									  	var noteType = body; //object
+									  	//cek apakah ada error atau tidak
+									  	if(noteType.err_code == 0){
+										  	res.json({"err_code": 0, "err_msg": "Note Type has been add.", "data":noteType.data});
+									  	}else{
+									  		res.json({"err_code": 3, "err_msg": noteType.error, "application": "Api FHIR", "function": "addNoteType"});
+									  	}
+									  }
+								})
+							}else{
+								res.json(resultCode);
+							}
+						})
+					}else{
+						result.err_code = 500;
+						res.json(result);
+					}	
+				});
+			}else{
+				res.json({"err_code": err_code, "err_msg": err_msg});
+			}
+		},
+		adjudicationError: function addAdjudicationError(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			
+			var code = req.body.code.trim().toLowerCase();
+			var display = req.body.display;
+			//var definition = req.body.definition.replace(/[^\w\s , ( ) / .]/gi, '');
+			var definition = req.body.definition.replace(/[^\w\s , ( ) / . -]/gi, '');
+			
+			var err_code = 0;
+			var err_msg = '';
+			
+			//input checking
+			if(validator.isEmpty(code)){
+				err_code = 1;
+				err_msg = "Code is required";
+			}
+
+			if(validator.isEmpty(display)){
+				err_code = 2;
+				err_msg = "Display is required";
+			}
+
+			if(validator.isEmpty(definition)){
+				err_code = 3;
+				err_msg = "Definition is required";
+			}
+			
+			if(err_code == 0){
+				checkApikey(apikey, ipAddres, function(result){
+					if(result.err_code == 0){
+						checkCode(apikey, code, 'adjudication_error', function(resultCode){
+							if(resultCode.err_code == 0){
+								//susun body
+								var data = {
+													"code": code,	
+													"display": display,
+													"definition": definition
+												};
+							
+								//method, endpoint, params, options, callback
+								ApiFHIR.post('adjudicationError', {"apikey": apikey}, {body: data, json:true}, function(error, response, body){
+									if(error){
+									  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "addAdjudicationError"});
+									  }else{
+									  	//cek apakah ada error atau tidak
+									  	var adjudicationError = body; //object
+									  	//cek apakah ada error atau tidak
+									  	if(adjudicationError.err_code == 0){
+										  	res.json({"err_code": 0, "err_msg": "Adjudication Error has been add.", "data":adjudicationError.data});
+									  	}else{
+									  		res.json({"err_code": 3, "err_msg": adjudicationError.error, "application": "Api FHIR", "function": "addAdjudicationError"});
+									  	}
+									  }
+								})
+							}else{
+								res.json(resultCode);
+							}
+						})
+					}else{
+						result.err_code = 500;
+						res.json(result);
+					}	
+				});
+			}else{
+				res.json({"err_code": err_code, "err_msg": err_msg});
+			}
+		},
+		deviceStatementStatus: function addDeviceStatementStatus(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			
+			var code = req.body.code.trim().toLowerCase();
+			var display = req.body.display;
+			//var definition = req.body.definition.replace(/[^\w\s , ( ) / .]/gi, '');
+			var definition = req.body.definition.replace(/[^\w\s , ( ) / . -]/gi, '');
+			
+			var err_code = 0;
+			var err_msg = '';
+			
+			//input checking
+			if(validator.isEmpty(code)){
+				err_code = 1;
+				err_msg = "Code is required";
+			}
+
+			if(validator.isEmpty(display)){
+				err_code = 2;
+				err_msg = "Display is required";
+			}
+
+			if(validator.isEmpty(definition)){
+				err_code = 3;
+				err_msg = "Definition is required";
+			}
+			
+			if(err_code == 0){
+				checkApikey(apikey, ipAddres, function(result){
+					if(result.err_code == 0){
+						checkCode(apikey, code, 'device_statement_status', function(resultCode){
+							if(resultCode.err_code == 0){
+								//susun body
+								var data = {
+													"code": code,	
+													"display": display,
+													"definition": definition
+												};
+							
+								//method, endpoint, params, options, callback
+								ApiFHIR.post('deviceStatementStatus', {"apikey": apikey}, {body: data, json:true}, function(error, response, body){
+									if(error){
+									  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "addDeviceStatementStatus"});
+									  }else{
+									  	//cek apakah ada error atau tidak
+									  	var deviceStatementStatus = body; //object
+									  	//cek apakah ada error atau tidak
+									  	if(deviceStatementStatus.err_code == 0){
+										  	res.json({"err_code": 0, "err_msg": "Device Statement Status has been add.", "data":deviceStatementStatus.data});
+									  	}else{
+									  		res.json({"err_code": 3, "err_msg": deviceStatementStatus.error, "application": "Api FHIR", "function": "addDeviceStatementStatus"});
+									  	}
+									  }
+								})
+							}else{
+								res.json(resultCode);
+							}
+						})
+					}else{
+						result.err_code = 500;
+						res.json(result);
+					}	
+				});
+			}else{
+				res.json({"err_code": err_code, "err_msg": err_msg});
+			}
+		},
+		supplyrequestStatus: function addSupplyrequestStatus(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			
+			var code = req.body.code.trim().toLowerCase();
+			var display = req.body.display;
+			//var definition = req.body.definition.replace(/[^\w\s , ( ) / .]/gi, '');
+			var definition = req.body.definition.replace(/[^\w\s , ( ) / . -]/gi, '');
+			
+			var err_code = 0;
+			var err_msg = '';
+			
+			//input checking
+			if(validator.isEmpty(code)){
+				err_code = 1;
+				err_msg = "Code is required";
+			}
+
+			if(validator.isEmpty(display)){
+				err_code = 2;
+				err_msg = "Display is required";
+			}
+
+			if(validator.isEmpty(definition)){
+				err_code = 3;
+				err_msg = "Definition is required";
+			}
+			
+			if(err_code == 0){
+				checkApikey(apikey, ipAddres, function(result){
+					if(result.err_code == 0){
+						checkCode(apikey, code, 'supplyrequest_status', function(resultCode){
+							if(resultCode.err_code == 0){
+								//susun body
+								var data = {
+													"code": code,	
+													"display": display,
+													"definition": definition
+												};
+							
+								//method, endpoint, params, options, callback
+								ApiFHIR.post('supplyrequestStatus', {"apikey": apikey}, {body: data, json:true}, function(error, response, body){
+									if(error){
+									  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "addSupplyrequestStatus"});
+									  }else{
+									  	//cek apakah ada error atau tidak
+									  	var supplyrequestStatus = body; //object
+									  	//cek apakah ada error atau tidak
+									  	if(supplyrequestStatus.err_code == 0){
+										  	res.json({"err_code": 0, "err_msg": "Supplyrequest Status has been add.", "data":supplyrequestStatus.data});
+									  	}else{
+									  		res.json({"err_code": 3, "err_msg": supplyrequestStatus.error, "application": "Api FHIR", "function": "addSupplyrequestStatus"});
+									  	}
+									  }
+								})
+							}else{
+								res.json(resultCode);
+							}
+						})
+					}else{
+						result.err_code = 500;
+						res.json(result);
+					}	
+				});
+			}else{
+				res.json({"err_code": err_code, "err_msg": err_msg});
+			}
+		},
+		supplyrequestReason: function addSupplyrequestReason(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			
+			var code = req.body.code.trim().toLowerCase();
+			var display = req.body.display;
+			//var definition = req.body.definition.replace(/[^\w\s , ( ) / .]/gi, '');
+			var definition = req.body.definition.replace(/[^\w\s , ( ) / . -]/gi, '');
+			
+			var err_code = 0;
+			var err_msg = '';
+			
+			//input checking
+			if(validator.isEmpty(code)){
+				err_code = 1;
+				err_msg = "Code is required";
+			}
+
+			if(validator.isEmpty(display)){
+				err_code = 2;
+				err_msg = "Display is required";
+			}
+
+			if(validator.isEmpty(definition)){
+				err_code = 3;
+				err_msg = "Definition is required";
+			}
+			
+			if(err_code == 0){
+				checkApikey(apikey, ipAddres, function(result){
+					if(result.err_code == 0){
+						checkCode(apikey, code, 'supplyrequest_reason', function(resultCode){
+							if(resultCode.err_code == 0){
+								//susun body
+								var data = {
+													"code": code,	
+													"display": display,
+													"definition": definition
+												};
+							
+								//method, endpoint, params, options, callback
+								ApiFHIR.post('supplyrequestReason', {"apikey": apikey}, {body: data, json:true}, function(error, response, body){
+									if(error){
+									  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "addSupplyrequestReason"});
+									  }else{
+									  	//cek apakah ada error atau tidak
+									  	var supplyrequestReason = body; //object
+									  	//cek apakah ada error atau tidak
+									  	if(supplyrequestReason.err_code == 0){
+										  	res.json({"err_code": 0, "err_msg": "Supplyrequest Reason has been add.", "data":supplyrequestReason.data});
+									  	}else{
+									  		res.json({"err_code": 3, "err_msg": supplyrequestReason.error, "application": "Api FHIR", "function": "addSupplyrequestReason"});
+									  	}
+									  }
+								})
+							}else{
+								res.json(resultCode);
+							}
+						})
+					}else{
+						result.err_code = 500;
+						res.json(result);
+					}	
+				});
+			}else{
+				res.json({"err_code": err_code, "err_msg": err_msg});
+			}
+		},
+		supplydeliveryStatus: function addSupplydeliveryStatus(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			
+			var code = req.body.code.trim().toLowerCase();
+			var display = req.body.display;
+			//var definition = req.body.definition.replace(/[^\w\s , ( ) / .]/gi, '');
+			var definition = req.body.definition.replace(/[^\w\s , ( ) / . -]/gi, '');
+			
+			var err_code = 0;
+			var err_msg = '';
+			
+			//input checking
+			if(validator.isEmpty(code)){
+				err_code = 1;
+				err_msg = "Code is required";
+			}
+
+			if(validator.isEmpty(display)){
+				err_code = 2;
+				err_msg = "Display is required";
+			}
+
+			if(validator.isEmpty(definition)){
+				err_code = 3;
+				err_msg = "Definition is required";
+			}
+			
+			if(err_code == 0){
+				checkApikey(apikey, ipAddres, function(result){
+					if(result.err_code == 0){
+						checkCode(apikey, code, 'supplydelivery_status', function(resultCode){
+							if(resultCode.err_code == 0){
+								//susun body
+								var data = {
+													"code": code,	
+													"display": display,
+													"definition": definition
+												};
+							
+								//method, endpoint, params, options, callback
+								ApiFHIR.post('supplydeliveryStatus', {"apikey": apikey}, {body: data, json:true}, function(error, response, body){
+									if(error){
+									  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "addSupplydeliveryStatus"});
+									  }else{
+									  	//cek apakah ada error atau tidak
+									  	var supplydeliveryStatus = body; //object
+									  	//cek apakah ada error atau tidak
+									  	if(supplydeliveryStatus.err_code == 0){
+										  	res.json({"err_code": 0, "err_msg": "Supplydelivery Status has been add.", "data":supplydeliveryStatus.data});
+									  	}else{
+									  		res.json({"err_code": 3, "err_msg": supplydeliveryStatus.error, "application": "Api FHIR", "function": "addSupplydeliveryStatus"});
+									  	}
+									  }
+								})
+							}else{
+								res.json(resultCode);
+							}
+						})
+					}else{
+						result.err_code = 500;
+						res.json(result);
+					}	
+				});
+			}else{
+				res.json({"err_code": err_code, "err_msg": err_msg});
+			}
+		},
+		supplydeliveryType: function addSupplydeliveryType(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			
+			var code = req.body.code.trim().toLowerCase();
+			var display = req.body.display;
+			//var definition = req.body.definition.replace(/[^\w\s , ( ) / .]/gi, '');
+			var definition = req.body.definition.replace(/[^\w\s , ( ) / . -]/gi, '');
+			
+			var err_code = 0;
+			var err_msg = '';
+			
+			//input checking
+			if(validator.isEmpty(code)){
+				err_code = 1;
+				err_msg = "Code is required";
+			}
+
+			if(validator.isEmpty(display)){
+				err_code = 2;
+				err_msg = "Display is required";
+			}
+
+			if(validator.isEmpty(definition)){
+				err_code = 3;
+				err_msg = "Definition is required";
+			}
+			
+			if(err_code == 0){
+				checkApikey(apikey, ipAddres, function(result){
+					if(result.err_code == 0){
+						checkCode(apikey, code, 'supplydelivery_type', function(resultCode){
+							if(resultCode.err_code == 0){
+								//susun body
+								var data = {
+													"code": code,	
+													"display": display,
+													"definition": definition
+												};
+							
+								//method, endpoint, params, options, callback
+								ApiFHIR.post('supplydeliveryType', {"apikey": apikey}, {body: data, json:true}, function(error, response, body){
+									if(error){
+									  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "addSupplydeliveryType"});
+									  }else{
+									  	//cek apakah ada error atau tidak
+									  	var supplydeliveryType = body; //object
+									  	//cek apakah ada error atau tidak
+									  	if(supplydeliveryType.err_code == 0){
+										  	res.json({"err_code": 0, "err_msg": "Supplydelivery Type has been add.", "data":supplydeliveryType.data});
+									  	}else{
+									  		res.json({"err_code": 3, "err_msg": supplydeliveryType.error, "application": "Api FHIR", "function": "addSupplydeliveryType"});
+									  	}
+									  }
+								})
+							}else{
+								res.json(resultCode);
+							}
+						})
+					}else{
+						result.err_code = 500;
+						res.json(result);
+					}	
+				});
+			}else{
+				res.json({"err_code": err_code, "err_msg": err_msg});
+			}
+		},
+		
+		taskStatus: function addTaskStatus(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			
+			var code = req.body.code.trim().toLowerCase();
+			var display = req.body.display;
+			//var definition = req.body.definition.replace(/[^\w\s , ( ) / .]/gi, '');
+			var definition = req.body.definition.replace(/[^\w\s , ( ) / . -]/gi, '');
+			
+			var err_code = 0;
+			var err_msg = '';
+			
+			//input checking
+			if(validator.isEmpty(code)){
+				err_code = 1;
+				err_msg = "Code is required";
+			}
+
+			if(validator.isEmpty(display)){
+				err_code = 2;
+				err_msg = "Display is required";
+			}
+
+			if(validator.isEmpty(definition)){
+				err_code = 3;
+				err_msg = "Definition is required";
+			}
+			
+			if(err_code == 0){
+				checkApikey(apikey, ipAddres, function(result){
+					if(result.err_code == 0){
+						checkCode(apikey, code, 'task_status', function(resultCode){
+							if(resultCode.err_code == 0){
+								//susun body
+								var data = {
+													"code": code,	
+													"display": display,
+													"definition": definition
+												};
+							
+								//method, endpoint, params, options, callback
+								ApiFHIR.post('taskStatus', {"apikey": apikey}, {body: data, json:true}, function(error, response, body){
+									if(error){
+									  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "addTaskStatus"});
+									  }else{
+									  	//cek apakah ada error atau tidak
+									  	var taskStatus = body; //object
+									  	//cek apakah ada error atau tidak
+									  	if(taskStatus.err_code == 0){
+										  	res.json({"err_code": 0, "err_msg": "Task Status has been add.", "data":taskStatus.data});
+									  	}else{
+									  		res.json({"err_code": 3, "err_msg": taskStatus.error, "application": "Api FHIR", "function": "addTaskStatus"});
+									  	}
+									  }
+								})
+							}else{
+								res.json(resultCode);
+							}
+						})
+					}else{
+						result.err_code = 500;
+						res.json(result);
+					}	
+				});
+			}else{
+				res.json({"err_code": err_code, "err_msg": err_msg});
+			}
+		},
+		taskPerformerType: function addTaskPerformerType(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			
+			var code = req.body.code.trim().toLowerCase();
+			var display = req.body.display;
+			//var definition = req.body.definition.replace(/[^\w\s , ( ) / .]/gi, '');
+			var definition = req.body.definition.replace(/[^\w\s , ( ) / . -]/gi, '');
+			
+			var err_code = 0;
+			var err_msg = '';
+			
+			//input checking
+			if(validator.isEmpty(code)){
+				err_code = 1;
+				err_msg = "Code is required";
+			}
+
+			if(validator.isEmpty(display)){
+				err_code = 2;
+				err_msg = "Display is required";
+			}
+
+			if(validator.isEmpty(definition)){
+				err_code = 3;
+				err_msg = "Definition is required";
+			}
+			
+			if(err_code == 0){
+				checkApikey(apikey, ipAddres, function(result){
+					if(result.err_code == 0){
+						checkCode(apikey, code, 'task_performer_type', function(resultCode){
+							if(resultCode.err_code == 0){
+								//susun body
+								var data = {
+													"code": code,	
+													"display": display,
+													"definition": definition
+												};
+							
+								//method, endpoint, params, options, callback
+								ApiFHIR.post('taskPerformerType', {"apikey": apikey}, {body: data, json:true}, function(error, response, body){
+									if(error){
+									  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "addTaskPerformerType"});
+									  }else{
+									  	//cek apakah ada error atau tidak
+									  	var taskPerformerType = body; //object
+									  	//cek apakah ada error atau tidak
+									  	if(taskPerformerType.err_code == 0){
+										  	res.json({"err_code": 0, "err_msg": "Task Performer Type has been add.", "data":taskPerformerType.data});
+									  	}else{
+									  		res.json({"err_code": 3, "err_msg": taskPerformerType.error, "application": "Api FHIR", "function": "addTaskPerformerType"});
+									  	}
+									  }
+								})
+							}else{
+								res.json(resultCode);
+							}
+						})
+					}else{
+						result.err_code = 500;
+						res.json(result);
+					}	
+				});
+			}else{
+				res.json({"err_code": err_code, "err_msg": err_msg});
+			}
+		},
+		
+		forms: function addForms(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			
+			var code = req.body.code.trim().toLowerCase();
+			var display = req.body.display;
+			//var definition = req.body.definition.replace(/[^\w\s , ( ) / .]/gi, '');
+			var definition = req.body.definition.replace(/[^\w\s , ( ) / . -]/gi, '');
+			
+			var err_code = 0;
+			var err_msg = '';
+			
+			//input checking
+			if(validator.isEmpty(code)){
+				err_code = 1;
+				err_msg = "Code is required";
+			}
+
+			if(validator.isEmpty(display)){
+				err_code = 2;
+				err_msg = "Display is required";
+			}
+
+			if(validator.isEmpty(definition)){
+				err_code = 3;
+				err_msg = "Definition is required";
+			}
+			
+			//if (typeof code != "number") {
+			if (isNaN(code)) {	
+				err_code = 4;
+				err_msg = "Code is not number";
+			}
+
+			if(err_code == 0){
+				checkApikey(apikey, ipAddres, function(result){
+					if(result.err_code == 0){
+						checkCode(apikey, code, 'forms', function(resultCode){
+							if(resultCode.err_code == 0){
+								//susun body
+								var data = {
+													"code": code,	
+													"display": display,
+													"definition": definition
+												};
+							
+								//method, endpoint, params, options, callback
+								ApiFHIR.post('forms', {"apikey": apikey}, {body: data, json:true}, function(error, response, body){
+									if(error){
+									  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "addForms"});
+									  }else{
+									  	//cek apakah ada error atau tidak
+									  	var forms = body; //object
+									  	//cek apakah ada error atau tidak
+									  	if(forms.err_code == 0){
+										  	res.json({"err_code": 0, "err_msg": "Forms has been add.", "data":forms.data});
+									  	}else{
+									  		res.json({"err_code": 3, "err_msg": forms.error, "application": "Api FHIR", "function": "addForms"});
+									  	}
+									  }
+								})
+							}else{
+								res.json(resultCode);
+							}
+						})
+					}else{
+						result.err_code = 500;
+						res.json(result);
+					}	
+				});
+			}else{
+				res.json({"err_code": err_code, "err_msg": err_msg});
+			}
+		},
+		supplyItem: function addSupplyItem(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			
+			var code = req.body.code.trim().toLowerCase();
+			var display = req.body.display;
+			//var definition = req.body.definition.replace(/[^\w\s , ( ) / .]/gi, '');
+			var definition = req.body.definition.replace(/[^\w\s , ( ) / . -]/gi, '');
+			
+			var err_code = 0;
+			var err_msg = '';
+			
+			//input checking
+			if(validator.isEmpty(code)){
+				err_code = 1;
+				err_msg = "Code is required";
+			}
+
+			if(validator.isEmpty(display)){
+				err_code = 2;
+				err_msg = "Display is required";
+			}
+
+			if(validator.isEmpty(definition)){
+				definition = "";
+			}
+			
+			//if (typeof code != "number") {
+			if (isNaN(code)) {	
+				err_code = 4;
+				err_msg = "Code is not number";
+			}
+
+			if(err_code == 0){
+				checkApikey(apikey, ipAddres, function(result){
+					if(result.err_code == 0){
+						checkCode(apikey, code, 'supply_item', function(resultCode){
+							if(resultCode.err_code == 0){
+								//susun body
+								var data = {
+													"code": code,	
+													"display": display,
+													"definition": definition
+												};
+							
+								//method, endpoint, params, options, callback
+								ApiFHIR.post('supplyItem', {"apikey": apikey}, {body: data, json:true}, function(error, response, body){
+									if(error){
+									  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "addSupplyItem"});
+									  }else{
+									  	//cek apakah ada error atau tidak
+									  	var supplyItem = body; //object
+									  	//cek apakah ada error atau tidak
+									  	if(supplyItem.err_code == 0){
+										  	res.json({"err_code": 0, "err_msg": "Supply Item has been add.", "data":supplyItem.data});
+									  	}else{
+									  		res.json({"err_code": 3, "err_msg": supplyItem.error, "application": "Api FHIR", "function": "addSupplyItem"});
 									  	}
 									  }
 								})
@@ -58594,6 +63812,2602 @@ var controller = {
 			}
 		},
 		
+		usageContextType: function updateUsageContextType(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var _id = req.params._id;
+
+			var datausageContextType = {};
+
+			if(typeof req.body.code !== 'undefined'){
+				var code = req.body.code.trim().toLowerCase();
+				datausageContextType.code = code;
+			}
+
+			if(typeof req.body.display !== 'undefined'){
+				display = req.body.display;
+				datausageContextType.display = display;
+			}
+
+			if(typeof req.body.definition !== 'undefined'){
+				var definition = req.body.definition.replace(/[^\w\s , ( ) / . -]/gi, '');
+				datausageContextType.definition = definition;
+			}
+
+			if(_id == "" || typeof _id == 'undefined'){
+				res.json({"err_code": 5, "err_msg": "Id is required."});	
+			}else{
+				if(validator.isInt(_id)){
+					checkApikey(apikey, ipAddres, function(result){
+						if(result.err_code == 0){
+							checkId(apikey, _id, 'usage_context_type', function(resultCheckId){
+								if(resultCheckId.err_code == 0){
+									if(typeof req.body.code !== 'undefined'){
+										checkCode(apikey, code, 'usage_context_type', function(resultCode){
+											if(resultCode.err_code == 0){
+												//method, endpoint, params, options, callback
+												ApiFHIR.put('usageContextType', {"apikey": apikey, "_id": _id}, {body: datausageContextType, json: true}, function(error, response, body){
+													if(error){
+												  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "updateUsageContextType"});
+												  }else{
+												  	//cek apakah ada error atau tidak
+												  	var usageContextType = body; 
+												  	//cek apakah ada error atau tidak
+												  	if(usageContextType.err_code == 0){
+													  	res.json({"err_code": 0, "err_msg": "Usage Context Type has been update.","data":usageContextType.data});
+												  	}else{
+												  		res.json(usageContextType);
+												  	}
+												  }
+												})
+											}else{
+												res.json(resultCode);
+											}
+										})
+									}else{
+										//method, endpoint, params, options, callback
+										ApiFHIR.put('usageContextType', {"apikey": apikey, "_id": _id}, {body: datausageContextType, json: true}, function(error, response, body){
+											if(error){
+										  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "updateUsageContextType"});
+										  }else{
+										  	//cek apakah ada error atau tidak
+										  	var usageContextType = body; 
+										  	//cek apakah ada error atau tidak
+										  	if(usageContextType.err_code == 0){
+											  	res.json({"err_code": 0, "err_msg": "Usage Context Type has been update.","data":usageContextType.data});
+										  	}else{
+										  		res.json(usageContextType);
+										  	}
+										  }
+										})
+									}
+								}else{
+									res.json(resultCheckId);
+								}
+							})
+						}else{
+							result.err_code = 500;
+							res.json(result);
+						}	
+					});
+				}else{
+					res.json({"err_code": 4, "err_msg": "Id must be a number."});	
+				}
+			}
+		},
+		usageContext: function updateUsageContext(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var _id = req.params._id;
+
+			var datausageContext = {};
+
+			if(typeof req.body.code !== 'undefined'){
+				var code = req.body.code.trim().toUpperCase();
+				datausageContext.code = code;
+			}
+
+			if(typeof req.body.system !== 'undefined'){
+				system = req.body.system;
+				datausageContext.system = system;
+			}
+			if(typeof req.body.display !== 'undefined'){
+				display = req.body.display;
+				datausageContext.display = display;
+			}
+
+			if(typeof req.body.definition !== 'undefined'){
+				var definition = req.body.definition.replace(/[^\w\s , ( ) / . -]/gi, '');
+				datausageContext.definition = definition;
+			}
+
+			if(_id == "" || typeof _id == 'undefined'){
+				res.json({"err_code": 5, "err_msg": "Id is required."});	
+			}else{
+				if(validator.isInt(_id)){
+					checkApikey(apikey, ipAddres, function(result){
+						if(result.err_code == 0){
+							checkId(apikey, _id, 'use_context', function(resultCheckId){
+								if(resultCheckId.err_code == 0){
+									if(typeof req.body.code !== 'undefined'){
+										checkCode(apikey, code, 'use_context', function(resultCode){
+											if(resultCode.err_code == 0){
+												//method, endpoint, params, options, callback
+												ApiFHIR.put('usageContext', {"apikey": apikey, "_id": _id}, {body: datausageContext, json: true}, function(error, response, body){
+													if(error){
+												  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "updateUsageContext"});
+												  }else{
+												  	//cek apakah ada error atau tidak
+												  	var usageContext = body; 
+												  	//cek apakah ada error atau tidak
+												  	if(usageContext.err_code == 0){
+													  	res.json({"err_code": 0, "err_msg": "Usage Context has been update.","data":usageContext.data});
+												  	}else{
+												  		res.json(usageContext);
+												  	}
+												  }
+												})
+											}else{
+												res.json(resultCode);
+											}
+										})
+									}else{
+										//method, endpoint, params, options, callback
+										ApiFHIR.put('usageContext', {"apikey": apikey, "_id": _id}, {body: datausageContext, json: true}, function(error, response, body){
+											if(error){
+										  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "updateUsageContext"});
+										  }else{
+										  	//cek apakah ada error atau tidak
+										  	var usageContext = body; 
+										  	//cek apakah ada error atau tidak
+										  	if(usageContext.err_code == 0){
+											  	res.json({"err_code": 0, "err_msg": "Usage Context has been update.","data":usageContext.data});
+										  	}else{
+										  		res.json(usageContext);
+										  	}
+										  }
+										})
+									}
+								}else{
+									res.json(resultCheckId);
+								}
+							})
+						}else{
+							result.err_code = 500;
+							res.json(result);
+						}	
+					});
+				}else{
+					res.json({"err_code": 4, "err_msg": "Id must be a number."});	
+				}
+			}
+		},
+		quantityComparator: function updateQuantityComparator(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var _id = req.params._id;
+
+			var dataquantityComparator = {};
+
+			if(typeof req.body.code !== 'undefined'){
+				var code = req.body.code.trim().toLowerCase();
+				dataquantityComparator.code = code;
+			}
+
+			if(typeof req.body.display !== 'undefined'){
+				display = req.body.display;
+				dataquantityComparator.display = display;
+			}
+
+			if(typeof req.body.definition !== 'undefined'){
+				var definition = req.body.definition.replace(/[^\w\s , ( ) / . -]/gi, '');
+				dataquantityComparator.definition = definition;
+			}
+
+			if(_id == "" || typeof _id == 'undefined'){
+				res.json({"err_code": 5, "err_msg": "Id is required."});	
+			}else{
+				if(validator.isInt(_id)){
+					checkApikey(apikey, ipAddres, function(result){
+						if(result.err_code == 0){
+							checkId(apikey, _id, 'quantity_comparator', function(resultCheckId){
+								if(resultCheckId.err_code == 0){
+									if(typeof req.body.code !== 'undefined'){
+										checkCode(apikey, code, 'quantity_comparator', function(resultCode){
+											if(resultCode.err_code == 0){
+												//method, endpoint, params, options, callback
+												ApiFHIR.put('quantityComparator', {"apikey": apikey, "_id": _id}, {body: dataquantityComparator, json: true}, function(error, response, body){
+													if(error){
+												  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "updateQuantityComparator"});
+												  }else{
+												  	//cek apakah ada error atau tidak
+												  	var quantityComparator = body; 
+												  	//cek apakah ada error atau tidak
+												  	if(quantityComparator.err_code == 0){
+													  	res.json({"err_code": 0, "err_msg": "Quantity Comparator has been update.","data":quantityComparator.data});
+												  	}else{
+												  		res.json(quantityComparator);
+												  	}
+												  }
+												})
+											}else{
+												res.json(resultCode);
+											}
+										})
+									}else{
+										//method, endpoint, params, options, callback
+										ApiFHIR.put('quantityComparator', {"apikey": apikey, "_id": _id}, {body: dataquantityComparator, json: true}, function(error, response, body){
+											if(error){
+										  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "updateQuantityComparator"});
+										  }else{
+										  	//cek apakah ada error atau tidak
+										  	var quantityComparator = body; 
+										  	//cek apakah ada error atau tidak
+										  	if(quantityComparator.err_code == 0){
+											  	res.json({"err_code": 0, "err_msg": "Quantity Comparator has been update.","data":quantityComparator.data});
+										  	}else{
+										  		res.json(quantityComparator);
+										  	}
+										  }
+										})
+									}
+								}else{
+									res.json(resultCheckId);
+								}
+							})
+						}else{
+							result.err_code = 500;
+							res.json(result);
+						}	
+					});
+				}else{
+					res.json({"err_code": 4, "err_msg": "Id must be a number."});	
+				}
+			}
+		},
+		
+		allTypes: function updateAllTypes(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var _id = req.params._id;
+
+			var dataallTypes = {};
+
+			if(typeof req.body.code !== 'undefined'){
+				var code = req.body.code.trim();
+				dataallTypes.code = code;
+			}
+
+			if(typeof req.body.system !== 'undefined'){
+				system = req.body.system;
+				dataallTypes.system = system;
+			}
+			if(typeof req.body.display !== 'undefined'){
+				display = req.body.display;
+				dataallTypes.display = display;
+			}
+
+			if(typeof req.body.definition !== 'undefined'){
+				var definition = req.body.definition.replace(/[^\w\s , ( ) / . -]/gi, '');
+				dataallTypes.definition = definition;
+			}
+
+			if(_id == "" || typeof _id == 'undefined'){
+				res.json({"err_code": 5, "err_msg": "Id is required."});	
+			}else{
+				if(validator.isInt(_id)){
+					checkApikey(apikey, ipAddres, function(result){
+						if(result.err_code == 0){
+							checkId(apikey, _id, 'all_types', function(resultCheckId){
+								if(resultCheckId.err_code == 0){
+									if(typeof req.body.code !== 'undefined'){
+										checkCode(apikey, code, 'all_types', function(resultCode){
+											if(resultCode.err_code == 0){
+												//method, endpoint, params, options, callback
+												ApiFHIR.put('allTypes', {"apikey": apikey, "_id": _id}, {body: dataallTypes, json: true}, function(error, response, body){
+													if(error){
+												  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "updateAllTypes"});
+												  }else{
+												  	//cek apakah ada error atau tidak
+												  	var allTypes = body; 
+												  	//cek apakah ada error atau tidak
+												  	if(allTypes.err_code == 0){
+													  	res.json({"err_code": 0, "err_msg": "All Types has been update.","data":allTypes.data});
+												  	}else{
+												  		res.json(allTypes);
+												  	}
+												  }
+												})
+											}else{
+												res.json(resultCode);
+											}
+										})
+									}else{
+										//method, endpoint, params, options, callback
+										ApiFHIR.put('allTypes', {"apikey": apikey, "_id": _id}, {body: dataallTypes, json: true}, function(error, response, body){
+											if(error){
+										  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "updateAllTypes"});
+										  }else{
+										  	//cek apakah ada error atau tidak
+										  	var allTypes = body; 
+										  	//cek apakah ada error atau tidak
+										  	if(allTypes.err_code == 0){
+											  	res.json({"err_code": 0, "err_msg": "All Types has been update.","data":allTypes.data});
+										  	}else{
+										  		res.json(allTypes);
+										  	}
+										  }
+										})
+									}
+								}else{
+									res.json(resultCheckId);
+								}
+							})
+						}else{
+							result.err_code = 500;
+							res.json(result);
+						}	
+					});
+				}else{
+					res.json({"err_code": 4, "err_msg": "Id must be a number."});	
+				}
+			}
+		},
+		
+		relatedArtifactType: function updateRelatedArtifactType(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var _id = req.params._id;
+
+			var datarelatedArtifactType = {};
+
+			if(typeof req.body.code !== 'undefined'){
+				var code = req.body.code.trim().toLowerCase();
+				datarelatedArtifactType.code = code;
+			}
+
+			if(typeof req.body.display !== 'undefined'){
+				display = req.body.display;
+				datarelatedArtifactType.display = display;
+			}
+
+			if(typeof req.body.definition !== 'undefined'){
+				var definition = req.body.definition.replace(/[^\w\s , ( ) / . -]/gi, '');
+				datarelatedArtifactType.definition = definition;
+			}
+
+			if(_id == "" || typeof _id == 'undefined'){
+				res.json({"err_code": 5, "err_msg": "Id is required."});	
+			}else{
+				if(validator.isInt(_id)){
+					checkApikey(apikey, ipAddres, function(result){
+						if(result.err_code == 0){
+							checkId(apikey, _id, 'related_artifact_type', function(resultCheckId){
+								if(resultCheckId.err_code == 0){
+									if(typeof req.body.code !== 'undefined'){
+										checkCode(apikey, code, 'related_artifact_type', function(resultCode){
+											if(resultCode.err_code == 0){
+												//method, endpoint, params, options, callback
+												ApiFHIR.put('relatedArtifactType', {"apikey": apikey, "_id": _id}, {body: datarelatedArtifactType, json: true}, function(error, response, body){
+													if(error){
+												  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "updateRelatedArtifactType"});
+												  }else{
+												  	//cek apakah ada error atau tidak
+												  	var relatedArtifactType = body; 
+												  	//cek apakah ada error atau tidak
+												  	if(relatedArtifactType.err_code == 0){
+													  	res.json({"err_code": 0, "err_msg": "Related Artifact Type has been update.","data":relatedArtifactType.data});
+												  	}else{
+												  		res.json(relatedArtifactType);
+												  	}
+												  }
+												})
+											}else{
+												res.json(resultCode);
+											}
+										})
+									}else{
+										//method, endpoint, params, options, callback
+										ApiFHIR.put('relatedArtifactType', {"apikey": apikey, "_id": _id}, {body: datarelatedArtifactType, json: true}, function(error, response, body){
+											if(error){
+										  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "updateRelatedArtifactType"});
+										  }else{
+										  	//cek apakah ada error atau tidak
+										  	var relatedArtifactType = body; 
+										  	//cek apakah ada error atau tidak
+										  	if(relatedArtifactType.err_code == 0){
+											  	res.json({"err_code": 0, "err_msg": "Related Artifact Type has been update.","data":relatedArtifactType.data});
+										  	}else{
+										  		res.json(relatedArtifactType);
+										  	}
+										  }
+										})
+									}
+								}else{
+									res.json(resultCheckId);
+								}
+							})
+						}else{
+							result.err_code = 500;
+							res.json(result);
+						}	
+					});
+				}else{
+					res.json({"err_code": 4, "err_msg": "Id must be a number."});	
+				}
+			}
+		},
+		triggerType: function updateTriggerType(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var _id = req.params._id;
+
+			var datatriggerType = {};
+
+			if(typeof req.body.code !== 'undefined'){
+				var code = req.body.code.trim().toLowerCase();
+				datatriggerType.code = code;
+			}
+
+			if(typeof req.body.display !== 'undefined'){
+				display = req.body.display;
+				datatriggerType.display = display;
+			}
+
+			if(typeof req.body.definition !== 'undefined'){
+				var definition = req.body.definition.replace(/[^\w\s , ( ) / . -]/gi, '');
+				datatriggerType.definition = definition;
+			}
+
+			if(_id == "" || typeof _id == 'undefined'){
+				res.json({"err_code": 5, "err_msg": "Id is required."});	
+			}else{
+				if(validator.isInt(_id)){
+					checkApikey(apikey, ipAddres, function(result){
+						if(result.err_code == 0){
+							checkId(apikey, _id, 'trigger_type', function(resultCheckId){
+								if(resultCheckId.err_code == 0){
+									if(typeof req.body.code !== 'undefined'){
+										checkCode(apikey, code, 'trigger_type', function(resultCode){
+											if(resultCode.err_code == 0){
+												//method, endpoint, params, options, callback
+												ApiFHIR.put('triggerType', {"apikey": apikey, "_id": _id}, {body: datatriggerType, json: true}, function(error, response, body){
+													if(error){
+												  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "updateTriggerType"});
+												  }else{
+												  	//cek apakah ada error atau tidak
+												  	var triggerType = body; 
+												  	//cek apakah ada error atau tidak
+												  	if(triggerType.err_code == 0){
+													  	res.json({"err_code": 0, "err_msg": "Trigger Type has been update.","data":triggerType.data});
+												  	}else{
+												  		res.json(triggerType);
+												  	}
+												  }
+												})
+											}else{
+												res.json(resultCode);
+											}
+										})
+									}else{
+										//method, endpoint, params, options, callback
+										ApiFHIR.put('triggerType', {"apikey": apikey, "_id": _id}, {body: datatriggerType, json: true}, function(error, response, body){
+											if(error){
+										  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "updateTriggerType"});
+										  }else{
+										  	//cek apakah ada error atau tidak
+										  	var triggerType = body; 
+										  	//cek apakah ada error atau tidak
+										  	if(triggerType.err_code == 0){
+											  	res.json({"err_code": 0, "err_msg": "Trigger Type has been update.","data":triggerType.data});
+										  	}else{
+										  		res.json(triggerType);
+										  	}
+										  }
+										})
+									}
+								}else{
+									res.json(resultCheckId);
+								}
+							})
+						}else{
+							result.err_code = 500;
+							res.json(result);
+						}	
+					});
+				}else{
+					res.json({"err_code": 4, "err_msg": "Id must be a number."});	
+				}
+			}
+		},
+		
+		actionParticipantType: function updateActionParticipantType(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var _id = req.params._id;
+
+			var dataactionParticipantType = {};
+
+			if(typeof req.body.code !== 'undefined'){
+				var code = req.body.code.trim().toLowerCase();
+				dataactionParticipantType.code = code;
+			}
+
+			if(typeof req.body.display !== 'undefined'){
+				display = req.body.display;
+				dataactionParticipantType.display = display;
+			}
+
+			if(typeof req.body.definition !== 'undefined'){
+				var definition = req.body.definition.replace(/[^\w\s , ( ) / . -]/gi, '');
+				dataactionParticipantType.definition = definition;
+			}
+
+			if(_id == "" || typeof _id == 'undefined'){
+				res.json({"err_code": 5, "err_msg": "Id is required."});	
+			}else{
+				if(validator.isInt(_id)){
+					checkApikey(apikey, ipAddres, function(result){
+						if(result.err_code == 0){
+							checkId(apikey, _id, 'action_participant_type', function(resultCheckId){
+								if(resultCheckId.err_code == 0){
+									if(typeof req.body.code !== 'undefined'){
+										checkCode(apikey, code, 'action_participant_type', function(resultCode){
+											if(resultCode.err_code == 0){
+												//method, endpoint, params, options, callback
+												ApiFHIR.put('actionParticipantType', {"apikey": apikey, "_id": _id}, {body: dataactionParticipantType, json: true}, function(error, response, body){
+													if(error){
+												  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "updateActionParticipantType"});
+												  }else{
+												  	//cek apakah ada error atau tidak
+												  	var actionParticipantType = body; 
+												  	//cek apakah ada error atau tidak
+												  	if(actionParticipantType.err_code == 0){
+													  	res.json({"err_code": 0, "err_msg": "Action Participant Type has been update.","data":actionParticipantType.data});
+												  	}else{
+												  		res.json(actionParticipantType);
+												  	}
+												  }
+												})
+											}else{
+												res.json(resultCode);
+											}
+										})
+									}else{
+										//method, endpoint, params, options, callback
+										ApiFHIR.put('actionParticipantType', {"apikey": apikey, "_id": _id}, {body: dataactionParticipantType, json: true}, function(error, response, body){
+											if(error){
+										  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "updateActionParticipantType"});
+										  }else{
+										  	//cek apakah ada error atau tidak
+										  	var actionParticipantType = body; 
+										  	//cek apakah ada error atau tidak
+										  	if(actionParticipantType.err_code == 0){
+											  	res.json({"err_code": 0, "err_msg": "Action Participant Type has been update.","data":actionParticipantType.data});
+										  	}else{
+										  		res.json(actionParticipantType);
+										  	}
+										  }
+										})
+									}
+								}else{
+									res.json(resultCheckId);
+								}
+							})
+						}else{
+							result.err_code = 500;
+							res.json(result);
+						}	
+					});
+				}else{
+					res.json({"err_code": 4, "err_msg": "Id must be a number."});	
+				}
+			}
+		},
+		planDefinitionType: function updatePlanDefinitionType(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var _id = req.params._id;
+
+			var dataplanDefinitionType = {};
+
+			if(typeof req.body.code !== 'undefined'){
+				var code = req.body.code.trim().toLowerCase();
+				dataplanDefinitionType.code = code;
+			}
+
+			if(typeof req.body.display !== 'undefined'){
+				display = req.body.display;
+				dataplanDefinitionType.display = display;
+			}
+
+			if(typeof req.body.definition !== 'undefined'){
+				var definition = req.body.definition.replace(/[^\w\s , ( ) / . -]/gi, '');
+				dataplanDefinitionType.definition = definition;
+			}
+
+			if(_id == "" || typeof _id == 'undefined'){
+				res.json({"err_code": 5, "err_msg": "Id is required."});	
+			}else{
+				if(validator.isInt(_id)){
+					checkApikey(apikey, ipAddres, function(result){
+						if(result.err_code == 0){
+							checkId(apikey, _id, 'plan_definition_type', function(resultCheckId){
+								if(resultCheckId.err_code == 0){
+									if(typeof req.body.code !== 'undefined'){
+										checkCode(apikey, code, 'plan_definition_type', function(resultCode){
+											if(resultCode.err_code == 0){
+												//method, endpoint, params, options, callback
+												ApiFHIR.put('planDefinitionType', {"apikey": apikey, "_id": _id}, {body: dataplanDefinitionType, json: true}, function(error, response, body){
+													if(error){
+												  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "updatePlanDefinitionType"});
+												  }else{
+												  	//cek apakah ada error atau tidak
+												  	var planDefinitionType = body; 
+												  	//cek apakah ada error atau tidak
+												  	if(planDefinitionType.err_code == 0){
+													  	res.json({"err_code": 0, "err_msg": "Plan Definition Type has been update.","data":planDefinitionType.data});
+												  	}else{
+												  		res.json(planDefinitionType);
+												  	}
+												  }
+												})
+											}else{
+												res.json(resultCode);
+											}
+										})
+									}else{
+										//method, endpoint, params, options, callback
+										ApiFHIR.put('planDefinitionType', {"apikey": apikey, "_id": _id}, {body: dataplanDefinitionType, json: true}, function(error, response, body){
+											if(error){
+										  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "updatePlanDefinitionType"});
+										  }else{
+										  	//cek apakah ada error atau tidak
+										  	var planDefinitionType = body; 
+										  	//cek apakah ada error atau tidak
+										  	if(planDefinitionType.err_code == 0){
+											  	res.json({"err_code": 0, "err_msg": "Plan Definition Type has been update.","data":planDefinitionType.data});
+										  	}else{
+										  		res.json(planDefinitionType);
+										  	}
+										  }
+										})
+									}
+								}else{
+									res.json(resultCheckId);
+								}
+							})
+						}else{
+							result.err_code = 500;
+							res.json(result);
+						}	
+					});
+				}else{
+					res.json({"err_code": 4, "err_msg": "Id must be a number."});	
+				}
+			}
+		},
+		publicationStatus: function updatePublicationStatus(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var _id = req.params._id;
+
+			var datapublicationStatus = {};
+
+			if(typeof req.body.code !== 'undefined'){
+				var code = req.body.code.trim().toLowerCase();
+				datapublicationStatus.code = code;
+			}
+
+			if(typeof req.body.display !== 'undefined'){
+				display = req.body.display;
+				datapublicationStatus.display = display;
+			}
+
+			if(typeof req.body.definition !== 'undefined'){
+				var definition = req.body.definition.replace(/[^\w\s , ( ) / . -]/gi, '');
+				datapublicationStatus.definition = definition;
+			}
+
+			if(_id == "" || typeof _id == 'undefined'){
+				res.json({"err_code": 5, "err_msg": "Id is required."});	
+			}else{
+				if(validator.isInt(_id)){
+					checkApikey(apikey, ipAddres, function(result){
+						if(result.err_code == 0){
+							checkId(apikey, _id, 'publication_status', function(resultCheckId){
+								if(resultCheckId.err_code == 0){
+									if(typeof req.body.code !== 'undefined'){
+										checkCode(apikey, code, 'publication_status', function(resultCode){
+											if(resultCode.err_code == 0){
+												//method, endpoint, params, options, callback
+												ApiFHIR.put('publicationStatus', {"apikey": apikey, "_id": _id}, {body: datapublicationStatus, json: true}, function(error, response, body){
+													if(error){
+												  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "updatePublicationStatus"});
+												  }else{
+												  	//cek apakah ada error atau tidak
+												  	var publicationStatus = body; 
+												  	//cek apakah ada error atau tidak
+												  	if(publicationStatus.err_code == 0){
+													  	res.json({"err_code": 0, "err_msg": "Publication Status has been update.","data":publicationStatus.data});
+												  	}else{
+												  		res.json(publicationStatus);
+												  	}
+												  }
+												})
+											}else{
+												res.json(resultCode);
+											}
+										})
+									}else{
+										//method, endpoint, params, options, callback
+										ApiFHIR.put('publicationStatus', {"apikey": apikey, "_id": _id}, {body: datapublicationStatus, json: true}, function(error, response, body){
+											if(error){
+										  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "updatePublicationStatus"});
+										  }else{
+										  	//cek apakah ada error atau tidak
+										  	var publicationStatus = body; 
+										  	//cek apakah ada error atau tidak
+										  	if(publicationStatus.err_code == 0){
+											  	res.json({"err_code": 0, "err_msg": "Publication Status has been update.","data":publicationStatus.data});
+										  	}else{
+										  		res.json(publicationStatus);
+										  	}
+										  }
+										})
+									}
+								}else{
+									res.json(resultCheckId);
+								}
+							})
+						}else{
+							result.err_code = 500;
+							res.json(result);
+						}	
+					});
+				}else{
+					res.json({"err_code": 4, "err_msg": "Id must be a number."});	
+				}
+			}
+		},
+		definitionTopic: function updateDefinitionTopic(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var _id = req.params._id;
+
+			var datadefinitionTopic = {};
+
+			if(typeof req.body.code !== 'undefined'){
+				var code = req.body.code.trim().toLowerCase();
+				datadefinitionTopic.code = code;
+			}
+
+			if(typeof req.body.display !== 'undefined'){
+				display = req.body.display;
+				datadefinitionTopic.display = display;
+			}
+
+			if(typeof req.body.definition !== 'undefined'){
+				var definition = req.body.definition.replace(/[^\w\s , ( ) / . -]/gi, '');
+				datadefinitionTopic.definition = definition;
+			}
+
+			if(_id == "" || typeof _id == 'undefined'){
+				res.json({"err_code": 5, "err_msg": "Id is required."});	
+			}else{
+				if(validator.isInt(_id)){
+					checkApikey(apikey, ipAddres, function(result){
+						if(result.err_code == 0){
+							checkId(apikey, _id, 'definition_topic', function(resultCheckId){
+								if(resultCheckId.err_code == 0){
+									if(typeof req.body.code !== 'undefined'){
+										checkCode(apikey, code, 'definition_topic', function(resultCode){
+											if(resultCode.err_code == 0){
+												//method, endpoint, params, options, callback
+												ApiFHIR.put('definitionTopic', {"apikey": apikey, "_id": _id}, {body: datadefinitionTopic, json: true}, function(error, response, body){
+													if(error){
+												  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "updateDefinitionTopic"});
+												  }else{
+												  	//cek apakah ada error atau tidak
+												  	var definitionTopic = body; 
+												  	//cek apakah ada error atau tidak
+												  	if(definitionTopic.err_code == 0){
+													  	res.json({"err_code": 0, "err_msg": "Definition Topic has been update.","data":definitionTopic.data});
+												  	}else{
+												  		res.json(definitionTopic);
+												  	}
+												  }
+												})
+											}else{
+												res.json(resultCode);
+											}
+										})
+									}else{
+										//method, endpoint, params, options, callback
+										ApiFHIR.put('definitionTopic', {"apikey": apikey, "_id": _id}, {body: datadefinitionTopic, json: true}, function(error, response, body){
+											if(error){
+										  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "updateDefinitionTopic"});
+										  }else{
+										  	//cek apakah ada error atau tidak
+										  	var definitionTopic = body; 
+										  	//cek apakah ada error atau tidak
+										  	if(definitionTopic.err_code == 0){
+											  	res.json({"err_code": 0, "err_msg": "Definition Topic has been update.","data":definitionTopic.data});
+										  	}else{
+										  		res.json(definitionTopic);
+										  	}
+										  }
+										})
+									}
+								}else{
+									res.json(resultCheckId);
+								}
+							})
+						}else{
+							result.err_code = 500;
+							res.json(result);
+						}	
+					});
+				}else{
+					res.json({"err_code": 4, "err_msg": "Id must be a number."});	
+				}
+			}
+		},
+		
+		actionConditionKind: function updateActionConditionKind(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var _id = req.params._id;
+
+			var dataactionConditionKind = {};
+
+			if(typeof req.body.code !== 'undefined'){
+				var code = req.body.code.trim().toLowerCase();
+				dataactionConditionKind.code = code;
+			}
+
+			if(typeof req.body.display !== 'undefined'){
+				display = req.body.display;
+				dataactionConditionKind.display = display;
+			}
+
+			if(typeof req.body.definition !== 'undefined'){
+				var definition = req.body.definition.replace(/[^\w\s , ( ) / . -]/gi, '');
+				dataactionConditionKind.definition = definition;
+			}
+
+			if(_id == "" || typeof _id == 'undefined'){
+				res.json({"err_code": 5, "err_msg": "Id is required."});	
+			}else{
+				if(validator.isInt(_id)){
+					checkApikey(apikey, ipAddres, function(result){
+						if(result.err_code == 0){
+							checkId(apikey, _id, 'action_condition_kind', function(resultCheckId){
+								if(resultCheckId.err_code == 0){
+									if(typeof req.body.code !== 'undefined'){
+										checkCode(apikey, code, 'action_condition_kind', function(resultCode){
+											if(resultCode.err_code == 0){
+												//method, endpoint, params, options, callback
+												ApiFHIR.put('actionConditionKind', {"apikey": apikey, "_id": _id}, {body: dataactionConditionKind, json: true}, function(error, response, body){
+													if(error){
+												  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "updateActionConditionKind"});
+												  }else{
+												  	//cek apakah ada error atau tidak
+												  	var actionConditionKind = body; 
+												  	//cek apakah ada error atau tidak
+												  	if(actionConditionKind.err_code == 0){
+													  	res.json({"err_code": 0, "err_msg": "Action Condition Kind has been update.","data":actionConditionKind.data});
+												  	}else{
+												  		res.json(actionConditionKind);
+												  	}
+												  }
+												})
+											}else{
+												res.json(resultCode);
+											}
+										})
+									}else{
+										//method, endpoint, params, options, callback
+										ApiFHIR.put('actionConditionKind', {"apikey": apikey, "_id": _id}, {body: dataactionConditionKind, json: true}, function(error, response, body){
+											if(error){
+										  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "updateActionConditionKind"});
+										  }else{
+										  	//cek apakah ada error atau tidak
+										  	var actionConditionKind = body; 
+										  	//cek apakah ada error atau tidak
+										  	if(actionConditionKind.err_code == 0){
+											  	res.json({"err_code": 0, "err_msg": "Action Condition Kind has been update.","data":actionConditionKind.data});
+										  	}else{
+										  		res.json(actionConditionKind);
+										  	}
+										  }
+										})
+									}
+								}else{
+									res.json(resultCheckId);
+								}
+							})
+						}else{
+							result.err_code = 500;
+							res.json(result);
+						}	
+					});
+				}else{
+					res.json({"err_code": 4, "err_msg": "Id must be a number."});	
+				}
+			}
+		},
+		actionRelationshipType: function updateActionRelationshipType(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var _id = req.params._id;
+
+			var dataactionRelationshipType = {};
+
+			if(typeof req.body.code !== 'undefined'){
+				var code = req.body.code.trim().toLowerCase();
+				dataactionRelationshipType.code = code;
+			}
+
+			if(typeof req.body.display !== 'undefined'){
+				display = req.body.display;
+				dataactionRelationshipType.display = display;
+			}
+
+			if(typeof req.body.definition !== 'undefined'){
+				var definition = req.body.definition.replace(/[^\w\s , ( ) / . -]/gi, '');
+				dataactionRelationshipType.definition = definition;
+			}
+
+			if(_id == "" || typeof _id == 'undefined'){
+				res.json({"err_code": 5, "err_msg": "Id is required."});	
+			}else{
+				if(validator.isInt(_id)){
+					checkApikey(apikey, ipAddres, function(result){
+						if(result.err_code == 0){
+							checkId(apikey, _id, 'action_relationship_type', function(resultCheckId){
+								if(resultCheckId.err_code == 0){
+									if(typeof req.body.code !== 'undefined'){
+										checkCode(apikey, code, 'action_relationship_type', function(resultCode){
+											if(resultCode.err_code == 0){
+												//method, endpoint, params, options, callback
+												ApiFHIR.put('actionRelationshipType', {"apikey": apikey, "_id": _id}, {body: dataactionRelationshipType, json: true}, function(error, response, body){
+													if(error){
+												  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "updateActionRelationshipType"});
+												  }else{
+												  	//cek apakah ada error atau tidak
+												  	var actionRelationshipType = body; 
+												  	//cek apakah ada error atau tidak
+												  	if(actionRelationshipType.err_code == 0){
+													  	res.json({"err_code": 0, "err_msg": "Action Relationship Type has been update.","data":actionRelationshipType.data});
+												  	}else{
+												  		res.json(actionRelationshipType);
+												  	}
+												  }
+												})
+											}else{
+												res.json(resultCode);
+											}
+										})
+									}else{
+										//method, endpoint, params, options, callback
+										ApiFHIR.put('actionRelationshipType', {"apikey": apikey, "_id": _id}, {body: dataactionRelationshipType, json: true}, function(error, response, body){
+											if(error){
+										  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "updateActionRelationshipType"});
+										  }else{
+										  	//cek apakah ada error atau tidak
+										  	var actionRelationshipType = body; 
+										  	//cek apakah ada error atau tidak
+										  	if(actionRelationshipType.err_code == 0){
+											  	res.json({"err_code": 0, "err_msg": "Action Relationship Type has been update.","data":actionRelationshipType.data});
+										  	}else{
+										  		res.json(actionRelationshipType);
+										  	}
+										  }
+										})
+									}
+								}else{
+									res.json(resultCheckId);
+								}
+							})
+						}else{
+							result.err_code = 500;
+							res.json(result);
+						}	
+					});
+				}else{
+					res.json({"err_code": 4, "err_msg": "Id must be a number."});	
+				}
+			}
+		},
+		actionType: function updateActionType(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var _id = req.params._id;
+
+			var dataactionType = {};
+
+			if(typeof req.body.code !== 'undefined'){
+				var code = req.body.code.trim().toLowerCase();
+				dataactionType.code = code;
+			}
+
+			if(typeof req.body.display !== 'undefined'){
+				display = req.body.display;
+				dataactionType.display = display;
+			}
+
+			if(typeof req.body.definition !== 'undefined'){
+				var definition = req.body.definition.replace(/[^\w\s , ( ) / . -]/gi, '');
+				dataactionType.definition = definition;
+			}
+
+			if(_id == "" || typeof _id == 'undefined'){
+				res.json({"err_code": 5, "err_msg": "Id is required."});	
+			}else{
+				if(validator.isInt(_id)){
+					checkApikey(apikey, ipAddres, function(result){
+						if(result.err_code == 0){
+							checkId(apikey, _id, 'action_type', function(resultCheckId){
+								if(resultCheckId.err_code == 0){
+									if(typeof req.body.code !== 'undefined'){
+										checkCode(apikey, code, 'action_type', function(resultCode){
+											if(resultCode.err_code == 0){
+												//method, endpoint, params, options, callback
+												ApiFHIR.put('actionType', {"apikey": apikey, "_id": _id}, {body: dataactionType, json: true}, function(error, response, body){
+													if(error){
+												  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "updateActionType"});
+												  }else{
+												  	//cek apakah ada error atau tidak
+												  	var actionType = body; 
+												  	//cek apakah ada error atau tidak
+												  	if(actionType.err_code == 0){
+													  	res.json({"err_code": 0, "err_msg": "Action Type has been update.","data":actionType.data});
+												  	}else{
+												  		res.json(actionType);
+												  	}
+												  }
+												})
+											}else{
+												res.json(resultCode);
+											}
+										})
+									}else{
+										//method, endpoint, params, options, callback
+										ApiFHIR.put('actionType', {"apikey": apikey, "_id": _id}, {body: dataactionType, json: true}, function(error, response, body){
+											if(error){
+										  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "updateActionType"});
+										  }else{
+										  	//cek apakah ada error atau tidak
+										  	var actionType = body; 
+										  	//cek apakah ada error atau tidak
+										  	if(actionType.err_code == 0){
+											  	res.json({"err_code": 0, "err_msg": "Action Type has been update.","data":actionType.data});
+										  	}else{
+										  		res.json(actionType);
+										  	}
+										  }
+										})
+									}
+								}else{
+									res.json(resultCheckId);
+								}
+							})
+						}else{
+							result.err_code = 500;
+							res.json(result);
+						}	
+					});
+				}else{
+					res.json({"err_code": 4, "err_msg": "Id must be a number."});	
+				}
+			}
+		},
+		actionGroupingBehavior: function updateActionGroupingBehavior(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var _id = req.params._id;
+
+			var dataactionGroupingBehavior = {};
+
+			if(typeof req.body.code !== 'undefined'){
+				var code = req.body.code.trim().toLowerCase();
+				dataactionGroupingBehavior.code = code;
+			}
+
+			if(typeof req.body.display !== 'undefined'){
+				display = req.body.display;
+				dataactionGroupingBehavior.display = display;
+			}
+
+			if(typeof req.body.definition !== 'undefined'){
+				var definition = req.body.definition.replace(/[^\w\s , ( ) / . -]/gi, '');
+				dataactionGroupingBehavior.definition = definition;
+			}
+
+			if(_id == "" || typeof _id == 'undefined'){
+				res.json({"err_code": 5, "err_msg": "Id is required."});	
+			}else{
+				if(validator.isInt(_id)){
+					checkApikey(apikey, ipAddres, function(result){
+						if(result.err_code == 0){
+							checkId(apikey, _id, 'action_grouping_behavior', function(resultCheckId){
+								if(resultCheckId.err_code == 0){
+									if(typeof req.body.code !== 'undefined'){
+										checkCode(apikey, code, 'action_grouping_behavior', function(resultCode){
+											if(resultCode.err_code == 0){
+												//method, endpoint, params, options, callback
+												ApiFHIR.put('actionGroupingBehavior', {"apikey": apikey, "_id": _id}, {body: dataactionGroupingBehavior, json: true}, function(error, response, body){
+													if(error){
+												  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "updateActionGroupingBehavior"});
+												  }else{
+												  	//cek apakah ada error atau tidak
+												  	var actionGroupingBehavior = body; 
+												  	//cek apakah ada error atau tidak
+												  	if(actionGroupingBehavior.err_code == 0){
+													  	res.json({"err_code": 0, "err_msg": "Action Grouping Behavior has been update.","data":actionGroupingBehavior.data});
+												  	}else{
+												  		res.json(actionGroupingBehavior);
+												  	}
+												  }
+												})
+											}else{
+												res.json(resultCode);
+											}
+										})
+									}else{
+										//method, endpoint, params, options, callback
+										ApiFHIR.put('actionGroupingBehavior', {"apikey": apikey, "_id": _id}, {body: dataactionGroupingBehavior, json: true}, function(error, response, body){
+											if(error){
+										  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "updateActionGroupingBehavior"});
+										  }else{
+										  	//cek apakah ada error atau tidak
+										  	var actionGroupingBehavior = body; 
+										  	//cek apakah ada error atau tidak
+										  	if(actionGroupingBehavior.err_code == 0){
+											  	res.json({"err_code": 0, "err_msg": "Action Grouping Behavior has been update.","data":actionGroupingBehavior.data});
+										  	}else{
+										  		res.json(actionGroupingBehavior);
+										  	}
+										  }
+										})
+									}
+								}else{
+									res.json(resultCheckId);
+								}
+							})
+						}else{
+							result.err_code = 500;
+							res.json(result);
+						}	
+					});
+				}else{
+					res.json({"err_code": 4, "err_msg": "Id must be a number."});	
+				}
+			}
+		},
+		actionSelectionBehavior: function updateActionSelectionBehavior(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var _id = req.params._id;
+
+			var dataactionSelectionBehavior = {};
+
+			if(typeof req.body.code !== 'undefined'){
+				var code = req.body.code.trim().toLowerCase();
+				dataactionSelectionBehavior.code = code;
+			}
+
+			if(typeof req.body.display !== 'undefined'){
+				display = req.body.display;
+				dataactionSelectionBehavior.display = display;
+			}
+
+			if(typeof req.body.definition !== 'undefined'){
+				var definition = req.body.definition.replace(/[^\w\s , ( ) / . -]/gi, '');
+				dataactionSelectionBehavior.definition = definition;
+			}
+
+			if(_id == "" || typeof _id == 'undefined'){
+				res.json({"err_code": 5, "err_msg": "Id is required."});	
+			}else{
+				if(validator.isInt(_id)){
+					checkApikey(apikey, ipAddres, function(result){
+						if(result.err_code == 0){
+							checkId(apikey, _id, 'action_selection_behavior', function(resultCheckId){
+								if(resultCheckId.err_code == 0){
+									if(typeof req.body.code !== 'undefined'){
+										checkCode(apikey, code, 'action_selection_behavior', function(resultCode){
+											if(resultCode.err_code == 0){
+												//method, endpoint, params, options, callback
+												ApiFHIR.put('actionSelectionBehavior', {"apikey": apikey, "_id": _id}, {body: dataactionSelectionBehavior, json: true}, function(error, response, body){
+													if(error){
+												  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "updateActionSelectionBehavior"});
+												  }else{
+												  	//cek apakah ada error atau tidak
+												  	var actionSelectionBehavior = body; 
+												  	//cek apakah ada error atau tidak
+												  	if(actionSelectionBehavior.err_code == 0){
+													  	res.json({"err_code": 0, "err_msg": "Action Selection Behavior has been update.","data":actionSelectionBehavior.data});
+												  	}else{
+												  		res.json(actionSelectionBehavior);
+												  	}
+												  }
+												})
+											}else{
+												res.json(resultCode);
+											}
+										})
+									}else{
+										//method, endpoint, params, options, callback
+										ApiFHIR.put('actionSelectionBehavior', {"apikey": apikey, "_id": _id}, {body: dataactionSelectionBehavior, json: true}, function(error, response, body){
+											if(error){
+										  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "updateActionSelectionBehavior"});
+										  }else{
+										  	//cek apakah ada error atau tidak
+										  	var actionSelectionBehavior = body; 
+										  	//cek apakah ada error atau tidak
+										  	if(actionSelectionBehavior.err_code == 0){
+											  	res.json({"err_code": 0, "err_msg": "Action Selection Behavior has been update.","data":actionSelectionBehavior.data});
+										  	}else{
+										  		res.json(actionSelectionBehavior);
+										  	}
+										  }
+										})
+									}
+								}else{
+									res.json(resultCheckId);
+								}
+							})
+						}else{
+							result.err_code = 500;
+							res.json(result);
+						}	
+					});
+				}else{
+					res.json({"err_code": 4, "err_msg": "Id must be a number."});	
+				}
+			}
+		},
+		actionRequiredBehavior: function updateActionRequiredBehavior(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var _id = req.params._id;
+
+			var dataactionRequiredBehavior = {};
+
+			if(typeof req.body.code !== 'undefined'){
+				var code = req.body.code.trim().toLowerCase();
+				dataactionRequiredBehavior.code = code;
+			}
+
+			if(typeof req.body.display !== 'undefined'){
+				display = req.body.display;
+				dataactionRequiredBehavior.display = display;
+			}
+
+			if(typeof req.body.definition !== 'undefined'){
+				var definition = req.body.definition.replace(/[^\w\s , ( ) / . -]/gi, '');
+				dataactionRequiredBehavior.definition = definition;
+			}
+
+			if(_id == "" || typeof _id == 'undefined'){
+				res.json({"err_code": 5, "err_msg": "Id is required."});	
+			}else{
+				if(validator.isInt(_id)){
+					checkApikey(apikey, ipAddres, function(result){
+						if(result.err_code == 0){
+							checkId(apikey, _id, 'action_required_behavior', function(resultCheckId){
+								if(resultCheckId.err_code == 0){
+									if(typeof req.body.code !== 'undefined'){
+										checkCode(apikey, code, 'action_required_behavior', function(resultCode){
+											if(resultCode.err_code == 0){
+												//method, endpoint, params, options, callback
+												ApiFHIR.put('actionRequiredBehavior', {"apikey": apikey, "_id": _id}, {body: dataactionRequiredBehavior, json: true}, function(error, response, body){
+													if(error){
+												  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "updateActionRequiredBehavior"});
+												  }else{
+												  	//cek apakah ada error atau tidak
+												  	var actionRequiredBehavior = body; 
+												  	//cek apakah ada error atau tidak
+												  	if(actionRequiredBehavior.err_code == 0){
+													  	res.json({"err_code": 0, "err_msg": "Action Required Behavior has been update.","data":actionRequiredBehavior.data});
+												  	}else{
+												  		res.json(actionRequiredBehavior);
+												  	}
+												  }
+												})
+											}else{
+												res.json(resultCode);
+											}
+										})
+									}else{
+										//method, endpoint, params, options, callback
+										ApiFHIR.put('actionRequiredBehavior', {"apikey": apikey, "_id": _id}, {body: dataactionRequiredBehavior, json: true}, function(error, response, body){
+											if(error){
+										  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "updateActionRequiredBehavior"});
+										  }else{
+										  	//cek apakah ada error atau tidak
+										  	var actionRequiredBehavior = body; 
+										  	//cek apakah ada error atau tidak
+										  	if(actionRequiredBehavior.err_code == 0){
+											  	res.json({"err_code": 0, "err_msg": "Action Required Behavior has been update.","data":actionRequiredBehavior.data});
+										  	}else{
+										  		res.json(actionRequiredBehavior);
+										  	}
+										  }
+										})
+									}
+								}else{
+									res.json(resultCheckId);
+								}
+							})
+						}else{
+							result.err_code = 500;
+							res.json(result);
+						}	
+					});
+				}else{
+					res.json({"err_code": 4, "err_msg": "Id must be a number."});	
+				}
+			}
+		},
+		actionPrecheckBehavior: function updateActionPrecheckBehavior(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var _id = req.params._id;
+
+			var dataactionPrecheckBehavior = {};
+
+			if(typeof req.body.code !== 'undefined'){
+				var code = req.body.code.trim().toLowerCase();
+				dataactionPrecheckBehavior.code = code;
+			}
+
+			if(typeof req.body.display !== 'undefined'){
+				display = req.body.display;
+				dataactionPrecheckBehavior.display = display;
+			}
+
+			if(typeof req.body.definition !== 'undefined'){
+				var definition = req.body.definition.replace(/[^\w\s , ( ) / . -]/gi, '');
+				dataactionPrecheckBehavior.definition = definition;
+			}
+
+			if(_id == "" || typeof _id == 'undefined'){
+				res.json({"err_code": 5, "err_msg": "Id is Precheck."});	
+			}else{
+				if(validator.isInt(_id)){
+					checkApikey(apikey, ipAddres, function(result){
+						if(result.err_code == 0){
+							checkId(apikey, _id, 'action_precheck_behavior', function(resultCheckId){
+								if(resultCheckId.err_code == 0){
+									if(typeof req.body.code !== 'undefined'){
+										checkCode(apikey, code, 'action_precheck_behavior', function(resultCode){
+											if(resultCode.err_code == 0){
+												//method, endpoint, params, options, callback
+												ApiFHIR.put('actionPrecheckBehavior', {"apikey": apikey, "_id": _id}, {body: dataactionPrecheckBehavior, json: true}, function(error, response, body){
+													if(error){
+												  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "updateActionPrecheckBehavior"});
+												  }else{
+												  	//cek apakah ada error atau tidak
+												  	var actionPrecheckBehavior = body; 
+												  	//cek apakah ada error atau tidak
+												  	if(actionPrecheckBehavior.err_code == 0){
+													  	res.json({"err_code": 0, "err_msg": "Action Precheck Behavior has been update.","data":actionPrecheckBehavior.data});
+												  	}else{
+												  		res.json(actionPrecheckBehavior);
+												  	}
+												  }
+												})
+											}else{
+												res.json(resultCode);
+											}
+										})
+									}else{
+										//method, endpoint, params, options, callback
+										ApiFHIR.put('actionPrecheckBehavior', {"apikey": apikey, "_id": _id}, {body: dataactionPrecheckBehavior, json: true}, function(error, response, body){
+											if(error){
+										  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "updateActionPrecheckBehavior"});
+										  }else{
+										  	//cek apakah ada error atau tidak
+										  	var actionPrecheckBehavior = body; 
+										  	//cek apakah ada error atau tidak
+										  	if(actionPrecheckBehavior.err_code == 0){
+											  	res.json({"err_code": 0, "err_msg": "Action Precheck Behavior has been update.","data":actionPrecheckBehavior.data});
+										  	}else{
+										  		res.json(actionPrecheckBehavior);
+										  	}
+										  }
+										})
+									}
+								}else{
+									res.json(resultCheckId);
+								}
+							})
+						}else{
+							result.err_code = 500;
+							res.json(result);
+						}	
+					});
+				}else{
+					res.json({"err_code": 4, "err_msg": "Id must be a number."});	
+				}
+			}
+		},
+		actionCardinalityBehavior: function updateActionCardinalityBehavior(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var _id = req.params._id;
+
+			var dataactionCardinalityBehavior = {};
+
+			if(typeof req.body.code !== 'undefined'){
+				var code = req.body.code.trim().toLowerCase();
+				dataactionCardinalityBehavior.code = code;
+			}
+
+			if(typeof req.body.display !== 'undefined'){
+				display = req.body.display;
+				dataactionCardinalityBehavior.display = display;
+			}
+
+			if(typeof req.body.definition !== 'undefined'){
+				var definition = req.body.definition.replace(/[^\w\s , ( ) / . -]/gi, '');
+				dataactionCardinalityBehavior.definition = definition;
+			}
+
+			if(_id == "" || typeof _id == 'undefined'){
+				res.json({"err_code": 5, "err_msg": "Id is Cardinality."});	
+			}else{
+				if(validator.isInt(_id)){
+					checkApikey(apikey, ipAddres, function(result){
+						if(result.err_code == 0){
+							checkId(apikey, _id, 'action_cardinality_behavior', function(resultCheckId){
+								if(resultCheckId.err_code == 0){
+									if(typeof req.body.code !== 'undefined'){
+										checkCode(apikey, code, 'action_cardinality_behavior', function(resultCode){
+											if(resultCode.err_code == 0){
+												//method, endpoint, params, options, callback
+												ApiFHIR.put('actionCardinalityBehavior', {"apikey": apikey, "_id": _id}, {body: dataactionCardinalityBehavior, json: true}, function(error, response, body){
+													if(error){
+												  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "updateActionCardinalityBehavior"});
+												  }else{
+												  	//cek apakah ada error atau tidak
+												  	var actionCardinalityBehavior = body; 
+												  	//cek apakah ada error atau tidak
+												  	if(actionCardinalityBehavior.err_code == 0){
+													  	res.json({"err_code": 0, "err_msg": "Action Cardinality Behavior has been update.","data":actionCardinalityBehavior.data});
+												  	}else{
+												  		res.json(actionCardinalityBehavior);
+												  	}
+												  }
+												})
+											}else{
+												res.json(resultCode);
+											}
+										})
+									}else{
+										//method, endpoint, params, options, callback
+										ApiFHIR.put('actionCardinalityBehavior', {"apikey": apikey, "_id": _id}, {body: dataactionCardinalityBehavior, json: true}, function(error, response, body){
+											if(error){
+										  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "updateActionCardinalityBehavior"});
+										  }else{
+										  	//cek apakah ada error atau tidak
+										  	var actionCardinalityBehavior = body; 
+										  	//cek apakah ada error atau tidak
+										  	if(actionCardinalityBehavior.err_code == 0){
+											  	res.json({"err_code": 0, "err_msg": "Action Cardinality Behavior has been update.","data":actionCardinalityBehavior.data});
+										  	}else{
+										  		res.json(actionCardinalityBehavior);
+										  	}
+										  }
+										})
+									}
+								}else{
+									res.json(resultCheckId);
+								}
+							})
+						}else{
+							result.err_code = 500;
+							res.json(result);
+						}	
+					});
+				}else{
+					res.json({"err_code": 4, "err_msg": "Id must be a number."});	
+				}
+			}
+		},
+		actionlist: function updateActionlist(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var _id = req.params._id;
+
+			var dataactionlist = {};
+
+			if(typeof req.body.code !== 'undefined'){
+				var code = req.body.code.trim().toLowerCase();
+				dataactionlist.code = code;
+			}
+
+			if(typeof req.body.display !== 'undefined'){
+				display = req.body.display;
+				dataactionlist.display = display;
+			}
+
+			if(typeof req.body.definition !== 'undefined'){
+				var definition = req.body.definition.replace(/[^\w\s , ( ) / . -]/gi, '');
+				dataactionlist.definition = definition;
+			}
+
+			if(_id == "" || typeof _id == 'undefined'){
+				res.json({"err_code": 5, "err_msg": "Id is Cardinality."});	
+			}else{
+				if(validator.isInt(_id)){
+					checkApikey(apikey, ipAddres, function(result){
+						if(result.err_code == 0){
+							checkId(apikey, _id, 'actionlist', function(resultCheckId){
+								if(resultCheckId.err_code == 0){
+									if(typeof req.body.code !== 'undefined'){
+										checkCode(apikey, code, 'actionlist', function(resultCode){
+											if(resultCode.err_code == 0){
+												//method, endpoint, params, options, callback
+												ApiFHIR.put('actionlist', {"apikey": apikey, "_id": _id}, {body: dataactionlist, json: true}, function(error, response, body){
+													if(error){
+												  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "updateActionlist"});
+												  }else{
+												  	//cek apakah ada error atau tidak
+												  	var actionlist = body; 
+												  	//cek apakah ada error atau tidak
+												  	if(actionlist.err_code == 0){
+													  	res.json({"err_code": 0, "err_msg": "Actionlist has been update.","data":actionlist.data});
+												  	}else{
+												  		res.json(actionlist);
+												  	}
+												  }
+												})
+											}else{
+												res.json(resultCode);
+											}
+										})
+									}else{
+										//method, endpoint, params, options, callback
+										ApiFHIR.put('actionlist', {"apikey": apikey, "_id": _id}, {body: dataactionlist, json: true}, function(error, response, body){
+											if(error){
+										  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "updateActionlist"});
+										  }else{
+										  	//cek apakah ada error atau tidak
+										  	var actionlist = body; 
+										  	//cek apakah ada error atau tidak
+										  	if(actionlist.err_code == 0){
+											  	res.json({"err_code": 0, "err_msg": "Actionlist has been update.","data":actionlist.data});
+										  	}else{
+										  		res.json(actionlist);
+										  	}
+										  }
+										})
+									}
+								}else{
+									res.json(resultCheckId);
+								}
+							})
+						}else{
+							result.err_code = 500;
+							res.json(result);
+						}	
+					});
+				}else{
+					res.json({"err_code": 4, "err_msg": "Id must be a number."});	
+				}
+			}
+		},
+		
+		processOutcome: function updateProcessOutcome(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var _id = req.params._id;
+
+			var dataprocessOutcome = {};
+
+			if(typeof req.body.code !== 'undefined'){
+				var code = req.body.code.trim().toLowerCase();
+				dataprocessOutcome.code = code;
+			}
+
+			if(typeof req.body.display !== 'undefined'){
+				display = req.body.display;
+				dataprocessOutcome.display = display;
+			}
+
+			if(typeof req.body.definition !== 'undefined'){
+				var definition = req.body.definition.replace(/[^\w\s , ( ) / . -]/gi, '');
+				dataprocessOutcome.definition = definition;
+			}
+
+			if(_id == "" || typeof _id == 'undefined'){
+				res.json({"err_code": 5, "err_msg": "Id is required."});	
+			}else{
+				if(validator.isInt(_id)){
+					checkApikey(apikey, ipAddres, function(result){
+						if(result.err_code == 0){
+							checkId(apikey, _id, 'process_outcome', function(resultCheckId){
+								if(resultCheckId.err_code == 0){
+									if(typeof req.body.code !== 'undefined'){
+										checkCode(apikey, code, 'process_outcome', function(resultCode){
+											if(resultCode.err_code == 0){
+												//method, endpoint, params, options, callback
+												ApiFHIR.put('processOutcome', {"apikey": apikey, "_id": _id}, {body: dataprocessOutcome, json: true}, function(error, response, body){
+													if(error){
+												  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "updateProcessOutcome"});
+												  }else{
+												  	//cek apakah ada error atau tidak
+												  	var processOutcome = body; 
+												  	//cek apakah ada error atau tidak
+												  	if(processOutcome.err_code == 0){
+													  	res.json({"err_code": 0, "err_msg": "Process Outcome has been update.","data":processOutcome.data});
+												  	}else{
+												  		res.json(processOutcome);
+												  	}
+												  }
+												})
+											}else{
+												res.json(resultCode);
+											}
+										})
+									}else{
+										//method, endpoint, params, options, callback
+										ApiFHIR.put('processOutcome', {"apikey": apikey, "_id": _id}, {body: dataprocessOutcome, json: true}, function(error, response, body){
+											if(error){
+										  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "updateProcessOutcome"});
+										  }else{
+										  	//cek apakah ada error atau tidak
+										  	var processOutcome = body; 
+										  	//cek apakah ada error atau tidak
+										  	if(processOutcome.err_code == 0){
+											  	res.json({"err_code": 0, "err_msg": "Process Outcome has been update.","data":processOutcome.data});
+										  	}else{
+										  		res.json(processOutcome);
+										  	}
+										  }
+										})
+									}
+								}else{
+									res.json(resultCheckId);
+								}
+							})
+						}else{
+							result.err_code = 500;
+							res.json(result);
+						}	
+					});
+				}else{
+					res.json({"err_code": 4, "err_msg": "Id must be a number."});	
+				}
+			}
+		},
+		noteType: function updateNoteType(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var _id = req.params._id;
+
+			var datanoteType = {};
+
+			if(typeof req.body.code !== 'undefined'){
+				var code = req.body.code.trim().toLowerCase();
+				datanoteType.code = code;
+			}
+
+			if(typeof req.body.display !== 'undefined'){
+				display = req.body.display;
+				datanoteType.display = display;
+			}
+
+			if(typeof req.body.definition !== 'undefined'){
+				var definition = req.body.definition.replace(/[^\w\s , ( ) / . -]/gi, '');
+				datanoteType.definition = definition;
+			}
+
+			if(_id == "" || typeof _id == 'undefined'){
+				res.json({"err_code": 5, "err_msg": "Id is required."});	
+			}else{
+				if(validator.isInt(_id)){
+					checkApikey(apikey, ipAddres, function(result){
+						if(result.err_code == 0){
+							checkId(apikey, _id, 'note_type', function(resultCheckId){
+								if(resultCheckId.err_code == 0){
+									if(typeof req.body.code !== 'undefined'){
+										checkCode(apikey, code, 'note_type', function(resultCode){
+											if(resultCode.err_code == 0){
+												//method, endpoint, params, options, callback
+												ApiFHIR.put('noteType', {"apikey": apikey, "_id": _id}, {body: datanoteType, json: true}, function(error, response, body){
+													if(error){
+												  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "updateNoteType"});
+												  }else{
+												  	//cek apakah ada error atau tidak
+												  	var noteType = body; 
+												  	//cek apakah ada error atau tidak
+												  	if(noteType.err_code == 0){
+													  	res.json({"err_code": 0, "err_msg": "Note Type has been update.","data":noteType.data});
+												  	}else{
+												  		res.json(noteType);
+												  	}
+												  }
+												})
+											}else{
+												res.json(resultCode);
+											}
+										})
+									}else{
+										//method, endpoint, params, options, callback
+										ApiFHIR.put('noteType', {"apikey": apikey, "_id": _id}, {body: datanoteType, json: true}, function(error, response, body){
+											if(error){
+										  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "updateNoteType"});
+										  }else{
+										  	//cek apakah ada error atau tidak
+										  	var noteType = body; 
+										  	//cek apakah ada error atau tidak
+										  	if(noteType.err_code == 0){
+											  	res.json({"err_code": 0, "err_msg": "Note Type has been update.","data":noteType.data});
+										  	}else{
+										  		res.json(noteType);
+										  	}
+										  }
+										})
+									}
+								}else{
+									res.json(resultCheckId);
+								}
+							})
+						}else{
+							result.err_code = 500;
+							res.json(result);
+						}	
+					});
+				}else{
+					res.json({"err_code": 4, "err_msg": "Id must be a number."});	
+				}
+			}
+		},
+		adjudicationError: function updateAdjudicationError(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var _id = req.params._id;
+
+			var dataadjudicationError = {};
+
+			if(typeof req.body.code !== 'undefined'){
+				var code = req.body.code.trim().toLowerCase();
+				dataadjudicationError.code = code;
+			}
+
+			if(typeof req.body.display !== 'undefined'){
+				display = req.body.display;
+				dataadjudicationError.display = display;
+			}
+
+			if(typeof req.body.definition !== 'undefined'){
+				var definition = req.body.definition.replace(/[^\w\s , ( ) / . -]/gi, '');
+				dataadjudicationError.definition = definition;
+			}
+
+			if(_id == "" || typeof _id == 'undefined'){
+				res.json({"err_code": 5, "err_msg": "Id is required."});	
+			}else{
+				if(validator.isInt(_id)){
+					checkApikey(apikey, ipAddres, function(result){
+						if(result.err_code == 0){
+							checkId(apikey, _id, 'adjudication_error', function(resultCheckId){
+								if(resultCheckId.err_code == 0){
+									if(typeof req.body.code !== 'undefined'){
+										checkCode(apikey, code, 'adjudication_error', function(resultCode){
+											if(resultCode.err_code == 0){
+												//method, endpoint, params, options, callback
+												ApiFHIR.put('adjudicationError', {"apikey": apikey, "_id": _id}, {body: dataadjudicationError, json: true}, function(error, response, body){
+													if(error){
+												  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "updateAdjudicationError"});
+												  }else{
+												  	//cek apakah ada error atau tidak
+												  	var adjudicationError = body; 
+												  	//cek apakah ada error atau tidak
+												  	if(adjudicationError.err_code == 0){
+													  	res.json({"err_code": 0, "err_msg": "Adjudication Error has been update.","data":adjudicationError.data});
+												  	}else{
+												  		res.json(adjudicationError);
+												  	}
+												  }
+												})
+											}else{
+												res.json(resultCode);
+											}
+										})
+									}else{
+										//method, endpoint, params, options, callback
+										ApiFHIR.put('adjudicationError', {"apikey": apikey, "_id": _id}, {body: dataadjudicationError, json: true}, function(error, response, body){
+											if(error){
+										  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "updateAdjudicationError"});
+										  }else{
+										  	//cek apakah ada error atau tidak
+										  	var adjudicationError = body; 
+										  	//cek apakah ada error atau tidak
+										  	if(adjudicationError.err_code == 0){
+											  	res.json({"err_code": 0, "err_msg": "Adjudication Error has been update.","data":adjudicationError.data});
+										  	}else{
+										  		res.json(adjudicationError);
+										  	}
+										  }
+										})
+									}
+								}else{
+									res.json(resultCheckId);
+								}
+							})
+						}else{
+							result.err_code = 500;
+							res.json(result);
+						}	
+					});
+				}else{
+					res.json({"err_code": 4, "err_msg": "Id must be a number."});	
+				}
+			}
+		},
+		deviceStatementStatus: function updateDeviceStatementStatus(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var _id = req.params._id;
+
+			var datadeviceStatementStatus = {};
+
+			if(typeof req.body.code !== 'undefined'){
+				var code = req.body.code.trim().toLowerCase();
+				datadeviceStatementStatus.code = code;
+			}
+
+			if(typeof req.body.display !== 'undefined'){
+				display = req.body.display;
+				datadeviceStatementStatus.display = display;
+			}
+
+			if(typeof req.body.definition !== 'undefined'){
+				var definition = req.body.definition.replace(/[^\w\s , ( ) / . -]/gi, '');
+				datadeviceStatementStatus.definition = definition;
+			}
+
+			if(_id == "" || typeof _id == 'undefined'){
+				res.json({"err_code": 5, "err_msg": "Id is required."});	
+			}else{
+				if(validator.isInt(_id)){
+					checkApikey(apikey, ipAddres, function(result){
+						if(result.err_code == 0){
+							checkId(apikey, _id, 'device_statement_status', function(resultCheckId){
+								if(resultCheckId.err_code == 0){
+									if(typeof req.body.code !== 'undefined'){
+										checkCode(apikey, code, 'device_statement_status', function(resultCode){
+											if(resultCode.err_code == 0){
+												//method, endpoint, params, options, callback
+												ApiFHIR.put('deviceStatementStatus', {"apikey": apikey, "_id": _id}, {body: datadeviceStatementStatus, json: true}, function(error, response, body){
+													if(error){
+												  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "updateDeviceStatementStatus"});
+												  }else{
+												  	//cek apakah ada error atau tidak
+												  	var deviceStatementStatus = body; 
+												  	//cek apakah ada error atau tidak
+												  	if(deviceStatementStatus.err_code == 0){
+													  	res.json({"err_code": 0, "err_msg": "Device Statement Status has been update.","data":deviceStatementStatus.data});
+												  	}else{
+												  		res.json(deviceStatementStatus);
+												  	}
+												  }
+												})
+											}else{
+												res.json(resultCode);
+											}
+										})
+									}else{
+										//method, endpoint, params, options, callback
+										ApiFHIR.put('deviceStatementStatus', {"apikey": apikey, "_id": _id}, {body: datadeviceStatementStatus, json: true}, function(error, response, body){
+											if(error){
+										  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "updateDeviceStatementStatus"});
+										  }else{
+										  	//cek apakah ada error atau tidak
+										  	var deviceStatementStatus = body; 
+										  	//cek apakah ada error atau tidak
+										  	if(deviceStatementStatus.err_code == 0){
+											  	res.json({"err_code": 0, "err_msg": "Device Statement Status has been update.","data":deviceStatementStatus.data});
+										  	}else{
+										  		res.json(deviceStatementStatus);
+										  	}
+										  }
+										})
+									}
+								}else{
+									res.json(resultCheckId);
+								}
+							})
+						}else{
+							result.err_code = 500;
+							res.json(result);
+						}	
+					});
+				}else{
+					res.json({"err_code": 4, "err_msg": "Id must be a number."});	
+				}
+			}
+		},
+		supplyrequestStatus: function updateSupplyrequestStatus(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var _id = req.params._id;
+
+			var datasupplyrequestStatus = {};
+
+			if(typeof req.body.code !== 'undefined'){
+				var code = req.body.code.trim().toLowerCase();
+				datasupplyrequestStatus.code = code;
+			}
+
+			if(typeof req.body.display !== 'undefined'){
+				display = req.body.display;
+				datasupplyrequestStatus.display = display;
+			}
+
+			if(typeof req.body.definition !== 'undefined'){
+				var definition = req.body.definition.replace(/[^\w\s , ( ) / . -]/gi, '');
+				datasupplyrequestStatus.definition = definition;
+			}
+
+			if(_id == "" || typeof _id == 'undefined'){
+				res.json({"err_code": 5, "err_msg": "Id is required."});	
+			}else{
+				if(validator.isInt(_id)){
+					checkApikey(apikey, ipAddres, function(result){
+						if(result.err_code == 0){
+							checkId(apikey, _id, 'supplyrequest_status', function(resultCheckId){
+								if(resultCheckId.err_code == 0){
+									if(typeof req.body.code !== 'undefined'){
+										checkCode(apikey, code, 'supplyrequest_status', function(resultCode){
+											if(resultCode.err_code == 0){
+												//method, endpoint, params, options, callback
+												ApiFHIR.put('supplyrequestStatus', {"apikey": apikey, "_id": _id}, {body: datasupplyrequestStatus, json: true}, function(error, response, body){
+													if(error){
+												  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "updateSupplyrequestStatus"});
+												  }else{
+												  	//cek apakah ada error atau tidak
+												  	var supplyrequestStatus = body; 
+												  	//cek apakah ada error atau tidak
+												  	if(supplyrequestStatus.err_code == 0){
+													  	res.json({"err_code": 0, "err_msg": "Supplyrequest Status has been update.","data":supplyrequestStatus.data});
+												  	}else{
+												  		res.json(supplyrequestStatus);
+												  	}
+												  }
+												})
+											}else{
+												res.json(resultCode);
+											}
+										})
+									}else{
+										//method, endpoint, params, options, callback
+										ApiFHIR.put('supplyrequestStatus', {"apikey": apikey, "_id": _id}, {body: datasupplyrequestStatus, json: true}, function(error, response, body){
+											if(error){
+										  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "updateSupplyrequestStatus"});
+										  }else{
+										  	//cek apakah ada error atau tidak
+										  	var supplyrequestStatus = body; 
+										  	//cek apakah ada error atau tidak
+										  	if(supplyrequestStatus.err_code == 0){
+											  	res.json({"err_code": 0, "err_msg": "Supplyrequest Status has been update.","data":supplyrequestStatus.data});
+										  	}else{
+										  		res.json(supplyrequestStatus);
+										  	}
+										  }
+										})
+									}
+								}else{
+									res.json(resultCheckId);
+								}
+							})
+						}else{
+							result.err_code = 500;
+							res.json(result);
+						}	
+					});
+				}else{
+					res.json({"err_code": 4, "err_msg": "Id must be a number."});	
+				}
+			}
+		},
+		supplyrequestReason: function updateSupplyrequestReason(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var _id = req.params._id;
+
+			var datasupplyrequestReason = {};
+
+			if(typeof req.body.code !== 'undefined'){
+				var code = req.body.code.trim().toLowerCase();
+				datasupplyrequestReason.code = code;
+			}
+
+			if(typeof req.body.display !== 'undefined'){
+				display = req.body.display;
+				datasupplyrequestReason.display = display;
+			}
+
+			if(typeof req.body.definition !== 'undefined'){
+				var definition = req.body.definition.replace(/[^\w\s , ( ) / . -]/gi, '');
+				datasupplyrequestReason.definition = definition;
+			}
+
+			if(_id == "" || typeof _id == 'undefined'){
+				res.json({"err_code": 5, "err_msg": "Id is required."});	
+			}else{
+				if(validator.isInt(_id)){
+					checkApikey(apikey, ipAddres, function(result){
+						if(result.err_code == 0){
+							checkId(apikey, _id, 'supplyrequest_reason', function(resultCheckId){
+								if(resultCheckId.err_code == 0){
+									if(typeof req.body.code !== 'undefined'){
+										checkCode(apikey, code, 'supplyrequest_reason', function(resultCode){
+											if(resultCode.err_code == 0){
+												//method, endpoint, params, options, callback
+												ApiFHIR.put('supplyrequestReason', {"apikey": apikey, "_id": _id}, {body: datasupplyrequestReason, json: true}, function(error, response, body){
+													if(error){
+												  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "updateSupplyrequestReason"});
+												  }else{
+												  	//cek apakah ada error atau tidak
+												  	var supplyrequestReason = body; 
+												  	//cek apakah ada error atau tidak
+												  	if(supplyrequestReason.err_code == 0){
+													  	res.json({"err_code": 0, "err_msg": "Supplyrequest Reason has been update.","data":supplyrequestReason.data});
+												  	}else{
+												  		res.json(supplyrequestReason);
+												  	}
+												  }
+												})
+											}else{
+												res.json(resultCode);
+											}
+										})
+									}else{
+										//method, endpoint, params, options, callback
+										ApiFHIR.put('supplyrequestReason', {"apikey": apikey, "_id": _id}, {body: datasupplyrequestReason, json: true}, function(error, response, body){
+											if(error){
+										  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "updateSupplyrequestReason"});
+										  }else{
+										  	//cek apakah ada error atau tidak
+										  	var supplyrequestReason = body; 
+										  	//cek apakah ada error atau tidak
+										  	if(supplyrequestReason.err_code == 0){
+											  	res.json({"err_code": 0, "err_msg": "Supplyrequest Reason has been update.","data":supplyrequestReason.data});
+										  	}else{
+										  		res.json(supplyrequestReason);
+										  	}
+										  }
+										})
+									}
+								}else{
+									res.json(resultCheckId);
+								}
+							})
+						}else{
+							result.err_code = 500;
+							res.json(result);
+						}	
+					});
+				}else{
+					res.json({"err_code": 4, "err_msg": "Id must be a number."});	
+				}
+			}
+		},
+		supplydeliveryStatus: function updateSupplydeliveryStatus(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var _id = req.params._id;
+
+			var datasupplydeliveryStatus = {};
+
+			if(typeof req.body.code !== 'undefined'){
+				var code = req.body.code.trim().toLowerCase();
+				datasupplydeliveryStatus.code = code;
+			}
+
+			if(typeof req.body.display !== 'undefined'){
+				display = req.body.display;
+				datasupplydeliveryStatus.display = display;
+			}
+
+			if(typeof req.body.definition !== 'undefined'){
+				var definition = req.body.definition.replace(/[^\w\s , ( ) / . -]/gi, '');
+				datasupplydeliveryStatus.definition = definition;
+			}
+
+			if(_id == "" || typeof _id == 'undefined'){
+				res.json({"err_code": 5, "err_msg": "Id is required."});	
+			}else{
+				if(validator.isInt(_id)){
+					checkApikey(apikey, ipAddres, function(result){
+						if(result.err_code == 0){
+							checkId(apikey, _id, 'supplydelivery_status', function(resultCheckId){
+								if(resultCheckId.err_code == 0){
+									if(typeof req.body.code !== 'undefined'){
+										checkCode(apikey, code, 'supplydelivery_status', function(resultCode){
+											if(resultCode.err_code == 0){
+												//method, endpoint, params, options, callback
+												ApiFHIR.put('supplydeliveryStatus', {"apikey": apikey, "_id": _id}, {body: datasupplydeliveryStatus, json: true}, function(error, response, body){
+													if(error){
+												  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "updateSupplydeliveryStatus"});
+												  }else{
+												  	//cek apakah ada error atau tidak
+												  	var supplydeliveryStatus = body; 
+												  	//cek apakah ada error atau tidak
+												  	if(supplydeliveryStatus.err_code == 0){
+													  	res.json({"err_code": 0, "err_msg": "Supplydelivery Status has been update.","data":supplydeliveryStatus.data});
+												  	}else{
+												  		res.json(supplydeliveryStatus);
+												  	}
+												  }
+												})
+											}else{
+												res.json(resultCode);
+											}
+										})
+									}else{
+										//method, endpoint, params, options, callback
+										ApiFHIR.put('supplydeliveryStatus', {"apikey": apikey, "_id": _id}, {body: datasupplydeliveryStatus, json: true}, function(error, response, body){
+											if(error){
+										  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "updateSupplydeliveryStatus"});
+										  }else{
+										  	//cek apakah ada error atau tidak
+										  	var supplydeliveryStatus = body; 
+										  	//cek apakah ada error atau tidak
+										  	if(supplydeliveryStatus.err_code == 0){
+											  	res.json({"err_code": 0, "err_msg": "Supplydelivery Status has been update.","data":supplydeliveryStatus.data});
+										  	}else{
+										  		res.json(supplydeliveryStatus);
+										  	}
+										  }
+										})
+									}
+								}else{
+									res.json(resultCheckId);
+								}
+							})
+						}else{
+							result.err_code = 500;
+							res.json(result);
+						}	
+					});
+				}else{
+					res.json({"err_code": 4, "err_msg": "Id must be a number."});	
+				}
+			}
+		},
+		supplydeliveryType: function updateSupplydeliveryType(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var _id = req.params._id;
+
+			var datasupplydeliveryType = {};
+
+			if(typeof req.body.code !== 'undefined'){
+				var code = req.body.code.trim().toLowerCase();
+				datasupplydeliveryType.code = code;
+			}
+
+			if(typeof req.body.display !== 'undefined'){
+				display = req.body.display;
+				datasupplydeliveryType.display = display;
+			}
+
+			if(typeof req.body.definition !== 'undefined'){
+				var definition = req.body.definition.replace(/[^\w\s , ( ) / . -]/gi, '');
+				datasupplydeliveryType.definition = definition;
+			}
+
+			if(_id == "" || typeof _id == 'undefined'){
+				res.json({"err_code": 5, "err_msg": "Id is required."});	
+			}else{
+				if(validator.isInt(_id)){
+					checkApikey(apikey, ipAddres, function(result){
+						if(result.err_code == 0){
+							checkId(apikey, _id, 'supplydelivery_type', function(resultCheckId){
+								if(resultCheckId.err_code == 0){
+									if(typeof req.body.code !== 'undefined'){
+										checkCode(apikey, code, 'supplydelivery_type', function(resultCode){
+											if(resultCode.err_code == 0){
+												//method, endpoint, params, options, callback
+												ApiFHIR.put('supplydeliveryType', {"apikey": apikey, "_id": _id}, {body: datasupplydeliveryType, json: true}, function(error, response, body){
+													if(error){
+												  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "updateSupplydeliveryType"});
+												  }else{
+												  	//cek apakah ada error atau tidak
+												  	var supplydeliveryType = body; 
+												  	//cek apakah ada error atau tidak
+												  	if(supplydeliveryType.err_code == 0){
+													  	res.json({"err_code": 0, "err_msg": "Supplydelivery Type has been update.","data":supplydeliveryType.data});
+												  	}else{
+												  		res.json(supplydeliveryType);
+												  	}
+												  }
+												})
+											}else{
+												res.json(resultCode);
+											}
+										})
+									}else{
+										//method, endpoint, params, options, callback
+										ApiFHIR.put('supplydeliveryType', {"apikey": apikey, "_id": _id}, {body: datasupplydeliveryType, json: true}, function(error, response, body){
+											if(error){
+										  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "updateSupplydeliveryType"});
+										  }else{
+										  	//cek apakah ada error atau tidak
+										  	var supplydeliveryType = body; 
+										  	//cek apakah ada error atau tidak
+										  	if(supplydeliveryType.err_code == 0){
+											  	res.json({"err_code": 0, "err_msg": "Supplydelivery Type has been update.","data":supplydeliveryType.data});
+										  	}else{
+										  		res.json(supplydeliveryType);
+										  	}
+										  }
+										})
+									}
+								}else{
+									res.json(resultCheckId);
+								}
+							})
+						}else{
+							result.err_code = 500;
+							res.json(result);
+						}	
+					});
+				}else{
+					res.json({"err_code": 4, "err_msg": "Id must be a number."});	
+				}
+			}
+		},
+		
+		taskStatus: function updateTaskStatus(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var _id = req.params._id;
+
+			var datataskStatus = {};
+
+			if(typeof req.body.code !== 'undefined'){
+				var code = req.body.code.trim().toLowerCase();
+				datataskStatus.code = code;
+			}
+
+			if(typeof req.body.display !== 'undefined'){
+				display = req.body.display;
+				datataskStatus.display = display;
+			}
+
+			if(typeof req.body.definition !== 'undefined'){
+				var definition = req.body.definition.replace(/[^\w\s , ( ) / . -]/gi, '');
+				datataskStatus.definition = definition;
+			}
+
+			if(_id == "" || typeof _id == 'undefined'){
+				res.json({"err_code": 5, "err_msg": "Id is required."});	
+			}else{
+				if(validator.isInt(_id)){
+					checkApikey(apikey, ipAddres, function(result){
+						if(result.err_code == 0){
+							checkId(apikey, _id, 'task_status', function(resultCheckId){
+								if(resultCheckId.err_code == 0){
+									if(typeof req.body.code !== 'undefined'){
+										checkCode(apikey, code, 'task_status', function(resultCode){
+											if(resultCode.err_code == 0){
+												//method, endpoint, params, options, callback
+												ApiFHIR.put('taskStatus', {"apikey": apikey, "_id": _id}, {body: datataskStatus, json: true}, function(error, response, body){
+													if(error){
+												  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "updateTaskStatus"});
+												  }else{
+												  	//cek apakah ada error atau tidak
+												  	var taskStatus = body; 
+												  	//cek apakah ada error atau tidak
+												  	if(taskStatus.err_code == 0){
+													  	res.json({"err_code": 0, "err_msg": "Task Status has been update.","data":taskStatus.data});
+												  	}else{
+												  		res.json(taskStatus);
+												  	}
+												  }
+												})
+											}else{
+												res.json(resultCode);
+											}
+										})
+									}else{
+										//method, endpoint, params, options, callback
+										ApiFHIR.put('taskStatus', {"apikey": apikey, "_id": _id}, {body: datataskStatus, json: true}, function(error, response, body){
+											if(error){
+										  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "updateTaskStatus"});
+										  }else{
+										  	//cek apakah ada error atau tidak
+										  	var taskStatus = body; 
+										  	//cek apakah ada error atau tidak
+										  	if(taskStatus.err_code == 0){
+											  	res.json({"err_code": 0, "err_msg": "Task Status has been update.","data":taskStatus.data});
+										  	}else{
+										  		res.json(taskStatus);
+										  	}
+										  }
+										})
+									}
+								}else{
+									res.json(resultCheckId);
+								}
+							})
+						}else{
+							result.err_code = 500;
+							res.json(result);
+						}	
+					});
+				}else{
+					res.json({"err_code": 4, "err_msg": "Id must be a number."});	
+				}
+			}
+		},
+		taskPerformerType: function updateTaskPerformerType(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var _id = req.params._id;
+
+			var datataskPerformerType = {};
+
+			if(typeof req.body.code !== 'undefined'){
+				var code = req.body.code.trim().toLowerCase();
+				datataskPerformerType.code = code;
+			}
+
+			if(typeof req.body.display !== 'undefined'){
+				display = req.body.display;
+				datataskPerformerType.display = display;
+			}
+
+			if(typeof req.body.definition !== 'undefined'){
+				var definition = req.body.definition.replace(/[^\w\s , ( ) / . -]/gi, '');
+				datataskPerformerType.definition = definition;
+			}
+
+			if(_id == "" || typeof _id == 'undefined'){
+				res.json({"err_code": 5, "err_msg": "Id is required."});	
+			}else{
+				if(validator.isInt(_id)){
+					checkApikey(apikey, ipAddres, function(result){
+						if(result.err_code == 0){
+							checkId(apikey, _id, 'task_performer_type', function(resultCheckId){
+								if(resultCheckId.err_code == 0){
+									if(typeof req.body.code !== 'undefined'){
+										checkCode(apikey, code, 'task_performer_type', function(resultCode){
+											if(resultCode.err_code == 0){
+												//method, endpoint, params, options, callback
+												ApiFHIR.put('taskPerformerType', {"apikey": apikey, "_id": _id}, {body: datataskPerformerType, json: true}, function(error, response, body){
+													if(error){
+												  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "updateTaskPerformerType"});
+												  }else{
+												  	//cek apakah ada error atau tidak
+												  	var taskPerformerType = body; 
+												  	//cek apakah ada error atau tidak
+												  	if(taskPerformerType.err_code == 0){
+													  	res.json({"err_code": 0, "err_msg": "Task Performer Type has been update.","data":taskPerformerType.data});
+												  	}else{
+												  		res.json(taskPerformerType);
+												  	}
+												  }
+												})
+											}else{
+												res.json(resultCode);
+											}
+										})
+									}else{
+										//method, endpoint, params, options, callback
+										ApiFHIR.put('taskPerformerType', {"apikey": apikey, "_id": _id}, {body: datataskPerformerType, json: true}, function(error, response, body){
+											if(error){
+										  	res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "updateTaskPerformerType"});
+										  }else{
+										  	//cek apakah ada error atau tidak
+										  	var taskPerformerType = body; 
+										  	//cek apakah ada error atau tidak
+										  	if(taskPerformerType.err_code == 0){
+											  	res.json({"err_code": 0, "err_msg": "Task Performer Type has been update.","data":taskPerformerType.data});
+										  	}else{
+										  		res.json(taskPerformerType);
+										  	}
+										  }
+										})
+									}
+								}else{
+									res.json(resultCheckId);
+								}
+							})
+						}else{
+							result.err_code = 500;
+							res.json(result);
+						}	
+					});
+				}else{
+					res.json({"err_code": 4, "err_msg": "Id must be a number."});	
+				}
+			}
+		},
+		
+		forms: function updateForms(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var _id = req.params._id;
+
+			var data = {};
+
+			if(typeof req.body.code !== 'undefined'){
+				var code = req.body.code.trim().toLowerCase();
+				data.code = code;
+			}
+			if(typeof req.body.display !== 'undefined'){
+				var display = req.body.display;
+				data.display = display;
+			}
+			if(typeof req.body.definition !== 'undefined'){
+				var definition = req.body.definition.replace(/[^\w\s ,]/gi, '');
+				data.definition = definition;
+			}
+
+			if(isNaN(code) && typeof code !== 'undefined'){
+				res.json({"err_code": 6, "err_msg": "Code is not number"});
+			}else{
+				if(_id == "" || typeof _id == 'undefined'){
+					res.json({"err_code": 5, "err_msg": "Id is required."});	
+				}else{
+					if(validator.isInt(_id)){
+						checkApikey(apikey, ipAddres, function(result){
+							if(result.err_code == 0){
+								checkId(apikey, _id, 'forms', function(resultCheckId){
+									if(resultCheckId.err_code == 0){
+										if(typeof req.body.code !== 'undefined'){
+											checkCode(apikey, code, 'forms', function(resultCode){
+												if(resultCode.err_code == 0){
+													//Result, endpoint, params, options, callback
+													ApiFHIR.put('forms', {"apikey": apikey, "_id": _id}, {body: data, json: true}, function(error, response, body){
+														if(error){
+																res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "updateForms"});
+															}else{
+																//cek apakah ada error atau tidak
+																var forms = body; 
+
+																//cek apakah ada error atau tidak
+																if(forms.err_code == 0){
+																	res.json({"err_code": 0, "err_msg": "Forms has been update.","data":forms.data});
+																}else{
+																	res.json({"err_code": 3, "err_msg": forms.error, "application": "Api FHIR", "function": "updateForms"});
+																}
+															}
+													})
+												}else{
+													res.json(resultCode);
+												}
+											})
+										}else{
+											//method, endpoint, params, options, callback
+											ApiFHIR.put('forms', {"apikey": apikey, "_id": _id}, {body: data, json: true}, function(error, response, body){
+												if(error){
+														res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "updateForms"});
+													}else{
+														//cek apakah ada error atau tidak
+														var forms = body; 
+
+														//cek apakah ada error atau tidak
+														if(forms.err_code == 0){
+															res.json({"err_code": 0, "err_msg": "Forms has been update.","data":forms.data});
+														}else{
+															res.json({"err_code": 3, "err_msg": forms.error, "application": "Api FHIR", "function": "updateForms"});
+														}
+													}
+											})
+										}
+									}else{
+										res.json(resultCheckId);
+									}
+								})
+							}else{
+								result.err_code = 500;
+								res.json(result);
+							}	
+						});
+					}else{
+						res.json({"err_code": 4, "err_msg": "Id must be a number."});	
+					}
+				}
+			}
+		},
+		supplyItem: function updateSupplyItem(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var _id = req.params._id;
+
+			var data = {};
+
+			if(typeof req.body.code !== 'undefined'){
+				var code = req.body.code.trim().toLowerCase();
+				data.code = code;
+			}
+			if(typeof req.body.display !== 'undefined'){
+				var display = req.body.display;
+				data.display = display;
+			}
+			if(typeof req.body.definition !== 'undefined'){
+				var definition = req.body.definition.replace(/[^\w\s ,]/gi, '');
+				data.definition = definition;
+			}
+
+			if(isNaN(code) && typeof code !== 'undefined'){
+				res.json({"err_code": 6, "err_msg": "Code is not number"});
+			}else{
+				if(_id == "" || typeof _id == 'undefined'){
+					res.json({"err_code": 5, "err_msg": "Id is required."});	
+				}else{
+					if(validator.isInt(_id)){
+						checkApikey(apikey, ipAddres, function(result){
+							if(result.err_code == 0){
+								checkId(apikey, _id, 'supply_item', function(resultCheckId){
+									if(resultCheckId.err_code == 0){
+										if(typeof req.body.code !== 'undefined'){
+											checkCode(apikey, code, 'supply_item', function(resultCode){
+												if(resultCode.err_code == 0){
+													//Result, endpoint, params, options, callback
+													ApiFHIR.put('supplyItem', {"apikey": apikey, "_id": _id}, {body: data, json: true}, function(error, response, body){
+														if(error){
+																res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "updateSupplyItem"});
+															}else{
+																//cek apakah ada error atau tidak
+																var supplyItem = body; 
+
+																//cek apakah ada error atau tidak
+																if(supplyItem.err_code == 0){
+																	res.json({"err_code": 0, "err_msg": "Supply Item has been update.","data":supplyItem.data});
+																}else{
+																	res.json({"err_code": 3, "err_msg": supplyItem.error, "application": "Api FHIR", "function": "updateSupplyItem"});
+																}
+															}
+													})
+												}else{
+													res.json(resultCode);
+												}
+											})
+										}else{
+											//method, endpoint, params, options, callback
+											ApiFHIR.put('supplyItem', {"apikey": apikey, "_id": _id}, {body: data, json: true}, function(error, response, body){
+												if(error){
+														res.json({"err_code": 1, "err_msg": error, "application": "Api FHIR", "function": "updateSupplyItem"});
+													}else{
+														//cek apakah ada error atau tidak
+														var supplyItem = body; 
+
+														//cek apakah ada error atau tidak
+														if(supplyItem.err_code == 0){
+															res.json({"err_code": 0, "err_msg": "Supply Item has been update.","data":supplyItem.data});
+														}else{
+															res.json({"err_code": 3, "err_msg": supplyItem.error, "application": "Api FHIR", "function": "updateSupplyItem"});
+														}
+													}
+											})
+										}
+									}else{
+										res.json(resultCheckId);
+									}
+								})
+							}else{
+								result.err_code = 500;
+								res.json(result);
+							}	
+						});
+					}else{
+						res.json({"err_code": 4, "err_msg": "Id must be a number."});	
+					}
+				}
+			}
+		},
 	}
 }
 

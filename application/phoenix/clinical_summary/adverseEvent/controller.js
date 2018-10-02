@@ -77,41 +77,56 @@ var controller = {
       }
 			      
       var arrAdverseEvent = [];
-      var query = "SELECT ad.adverse_event_id as adverse_event_id, identifier_id, category, type, subject_patient, subject_research_subject,  subject_medication, subject_device, date, location, seriousness, outcome, recorder_patient, recorder_practitioner, recorder_related_person, event_participant_practitioner, event_participant_device, description  FROM BACIRO_FHIR.ADVERSE_EVENT ad " + fixCondition;
+      var query = "SELECT ad.adverse_event_id as adverse_event_id, ad.identifier_id as identifier_id, ad.category as category, ad.type as type, ad.subject_patient as subject_patient, ad.subject_research_subject as subject_research_subject, ad.subject_medication as subject_medication, ad.subject_device as subject_device, ad.date as date, ad.location as location, ad.seriousness as seriousness, ad.outcome as outcome, ad.recorder_patient as recorder_patient, ad.recorder_practitioner as recorder_practitioner, ad.recorder_related_person as recorder_related_person, ad.event_participant_practitioner as event_participant_practitioner, ad.event_participant_device as event_participant_device, ad.description as description FROM BACIRO_FHIR.ADVERSE_EVENT ad " + fixCondition;
 			//console.log(query);
       db.query(query,function(dataJson){
         rez = lowercaseObject(dataJson);
 				for(i = 0; i < rez.length; i++){
           var AdverseEvent = {};
-					AdverseEvent.resourceType = "Adverse Event";
-          AdverseEvent.id = rez[i].adverse_event_id;
-          AdverseEvent.identifier_id = rez[i].identifier_id;
-					AdverseEvent.category = rez[i].category;
-					AdverseEvent.type = rez[i].type;
-					if (rez[i].subject_patient !== 'null') {
-						AdverseEvent.subject = hostFHIR + ':' + portFHIR + '/' + apikey + '/Patient?_id=' +  rez[i].subject_patient;
-					} else if (rez[i].subject_research_subject !== 'null') {
-						AdverseEvent.subject = hostFHIR + ':' + portFHIR + '/' + apikey + '/ResearchSubject?_id=' +  rez[i].subject_research_subject;
-					} else if (rez[i].subject_medication !== 'null') {
-						AdverseEvent.subject = hostFHIR + ':' + portFHIR + '/' + apikey + '/Medication?_id=' +  rez[i].subject_medication;
-					} else if (rez[i].subject_device !== 'null') {
-						AdverseEvent.subject = hostFHIR + ':' + portFHIR + '/' + apikey + '/Device?_id=' +  rez[i].subject_device;
+					
+					var arrSubject = [];
+					var Subject = {};
+					if(rez[i].subject_medication != "null"){
+						Subject.medication = hostFHIR + ':' + portFHIR + '/' + apikey + '/Dedication?_id=' +  rez[i].subject_medication;
 					} else {
-						AdverseEvent.subject = "";
+						Subject.medication = "";
 					}
-					AdverseEvent.date = rez[i].date;
-					AdverseEvent.location = rez[i].location;
-					AdverseEvent.seriousness = rez[i].seriousness;
-					AdverseEvent.outcome = rez[i].outcome;
-					if (rez[i].recorder_patient !== 'null') {
-						AdverseEvent.recorder = hostFHIR + ':' + portFHIR + '/' + apikey + '/Patient?_id=' +  rez[i].recorder_patient;
-					} else if (rez[i].recorder_practitioner !== 'null') {
-						AdverseEvent.recorder = hostFHIR + ':' + portFHIR + '/' + apikey + '/Practitioner?_id=' +  rez[i].recorder_practitioner;
-					} else if (rez[i].recorder_related_person !== 'null') {
-						AdverseEvent.recorder = hostFHIR + ':' + portFHIR + '/' + apikey + '/RelatedPerson?_id=' +  rez[i].recorder_related_person;
+					if(rez[i].subject_patient != "null"){
+						Subject.patient = hostFHIR + ':' + portFHIR + '/' + apikey + '/Patient?_id=' +  rez[i].subject_patient;
 					} else {
-						AdverseEvent.recorder = "";
+						Subject.patient = "";
 					}
+					if(rez[i].subject_device != "null"){
+						Subject.device = hostFHIR + ':' + portFHIR + '/' + apikey + '/Device?_id=' +  rez[i].subject_device;
+					} else {
+						Subject.device = "";
+					}
+					if(rez[i].subject_research_subject != "null"){
+						Subject.researchSubject = hostFHIR + ':' + portFHIR + '/' + apikey + '/ResearchSubject?_id=' +  rez[i].subject_research_subject;
+					} else {
+						Subject.researchSubject = "";
+					}
+					arrSubject[i] = Subject;
+					
+					var arrRecorder = [];
+					var Recorder = {};
+					if(rez[i].recorder_patient != "null"){
+						Recorder.patient = hostFHIR + ':' + portFHIR + '/' + apikey + '/Patient?_id=' +  rez[i].recorder_patient;
+					} else {
+						Recorder.patient = "";
+					}
+					if(rez[i].recorder_practitioner != "null"){
+						Recorder.practitioner = hostFHIR + ':' + portFHIR + '/' + apikey + '/Practitioner?_id=' +  rez[i].recorder_practitioner;
+					} else {
+						Recorder.practitioner = "";
+					}
+					if(rez[i].recorder_related_person != "null"){
+						Recorder.relatedPerson = hostFHIR + ':' + portFHIR + '/' + apikey + '/RelatedPerson?_id=' +  rez[i].recorder_related_person;
+					} else {
+						Recorder.relatedPerson = "";
+					}
+					arrRecorder[i] = Recorder;
+					
 					if (rez[i].event_participant_practitioner !== 'null') {
 						AdverseEvent.eventParticipant = hostFHIR + ':' + portFHIR + '/' + apikey + '/Practitioner?_id=' +  rez[i].event_participant_practitioner;
 					} else if (rez[i].event_participant_device !== 'null') {
@@ -119,6 +134,41 @@ var controller = {
 					} else {
 						AdverseEvent.eventParticipant = "";
 					}
+					
+					var arrEventParticipant = [];
+					var EventParticipant = {};
+					if(rez[i].event_participant_practitioner != "null"){
+						EventParticipant.practitioner = hostFHIR + ':' + portFHIR + '/' + apikey + '/Practitioner?_id=' +  rez[i].event_participant_practitioner;
+					} else {
+						EventParticipant.practitioner = "";
+					}
+					if(rez[i].event_participant_device != "null"){
+						EventParticipant.device = hostFHIR + ':' + portFHIR + '/' + apikey + '/Device?_id=' +  rez[i].event_participant_device;
+					} else {
+						EventParticipant.device = "";
+					}
+					arrEventParticipant[i] = EventParticipant;
+					
+					AdverseEvent.resourceType = "Adverse Event";
+          AdverseEvent.id = rez[i].adverse_event_id;
+          AdverseEvent.identifierId = rez[i].identifier_id;
+					AdverseEvent.category = rez[i].category;
+					AdverseEvent.type = rez[i].type;
+					AdverseEvent.subject = arrSubject;
+					if(rez[i].date == null){
+						AdverseEvent.date = formatDate(rez[i].date);
+					}else{
+						AdverseEvent.date = rez[i].date;
+					}
+					if(rez[i].location != "null"){
+						AdverseEvent.location = hostFHIR + ':' + portFHIR + '/' + apikey + '/Location?_id=' +  rez[i].location;
+					} else {
+						AdverseEvent.location = "";
+					}
+					AdverseEvent.seriousness = rez[i].seriousness;
+					AdverseEvent.outcome = rez[i].outcome;
+					AdverseEvent.recorder = arrRecorder;
+					AdverseEvent.eventParticipant = arrEventParticipant;
 					AdverseEvent.description = rez[i].description;
           arrAdverseEvent[i] = AdverseEvent;
         }
@@ -159,33 +209,59 @@ var controller = {
           index = i;
           countSuspectEntity = rez.length;
           var suspectEntity = {};
+					
+					var arrInstance = [];
+					var Instance = {};
+					if(rez[i].instance_substance != "null"){
+						Instance.substance = hostFHIR + ':' + portFHIR + '/' + apikey + '/Substance?_id=' +  rez[i].instance_substance;
+					} else {
+						Instance.substance = "";
+					}
+					if(rez[i].instance_medication != "null"){
+						Instance.medication = hostFHIR + ':' + portFHIR + '/' + apikey + '/Medication?_id=' +  rez[i].instance_medication;
+					} else {
+						Instance.medication = "";
+					}
+					if(rez[i].instance_medication_administration != "null"){
+						Instance.medicationAdministration = hostFHIR + ':' + portFHIR + '/' + apikey + '/MedicationAdministration?_id=' +  rez[i].instance_medication_administration;
+					} else {
+						Instance.medicationAdministration = "";
+					}
+					if(rez[i].instance_medication_statement != "null"){
+						Instance.medicationStatement = hostFHIR + ':' + portFHIR + '/' + apikey + '/MedicationStatement?_id=' +  rez[i].instance_medication_statement;
+					} else {
+						Instance.medicationStatement = "";
+					}
+					if(rez[i].instance_device != "null"){
+						Instance.device = hostFHIR + ':' + portFHIR + '/' + apikey + '/Device?_id=' +  rez[i].instance_device;
+					} else {
+						Instance.device = "";
+					}
+					arrInstance[i] = Instance;
+					
+					var arrCausalityAuthor = [];
+					var CausalityAuthor = {};
+					if(rez[i].causality_author_practitioner != "null"){
+						CausalityAuthor.practitioner = hostFHIR + ':' + portFHIR + '/' + apikey + '/Practitioner?_id=' +  rez[i].causality_author_practitioner;
+					} else {
+						CausalityAuthor.practitioner = "";
+					}
+					if(rez[i].causality_author_practitioner_role != "null"){
+						CausalityAuthor.practitionerRole = hostFHIR + ':' + portFHIR + '/' + apikey + '/PractitionerRole?_id=' +  rez[i].causality_author_practitioner_role;
+					} else {
+						CausalityAuthor.practitionerRole = "";
+					}
+					arrCausalityAuthor[i] = CausalityAuthor;
+					
           // var 
           suspectEntity.id = rez[i].organization_contact_id;
-          if (rez[i].instance_substance !== 'null') {
-						suspectEntity.instance = rez[i].instance_substance;
-					} else if (rez[i].instance_medication !== 'null') {
-						suspectEntity.instance = rez[i].instance_medication;
-					} else if (rez[i].instance_medication_administration !== 'null') {
-						suspectEntity.instance = rez[i].instance_medication_administration;
-					} else if (rez[i].instance_medication_statement !== 'null') {
-						suspectEntity.instance = rez[i].instance_medication_statement;
-					} else if (rez[i].instance_device !== 'null') {
-						suspectEntity.instance = rez[i].instance_device;
-					} else {
-						suspectEntity.instance = "";
-					}
+					suspectEntity.instance = arrInstance;
           suspectEntity.causality = rez[i].causality;
-					suspectEntity.causality_assessment = rez[i].causality_assessment;
-					suspectEntity.causality_product_relatedness = rez[i].causality_product_relatedness;
-					suspectEntity.causality_method = rez[i].causality_method;
-					if (rez[i].causality_author_practitioner !== 'null') {
-						suspectEntity.causalityAuthor = rez[i].causality_author_practitioner;
-					} else if (rez[i].causality_author_practitioner_role !== 'null') {
-						suspectEntity.causalityAuthor = rez[i].causality_author_practitioner_role;
-					} else {
-						suspectEntity.causalityAuthor = "";
-					}
-					suspectEntity.causality_result = rez[i].causality_result;
+					suspectEntity.causalityAssessment = rez[i].causality_assessment;
+					suspectEntity.causalityProductRelatedness = rez[i].causality_product_relatedness;
+					suspectEntity.causalityMethod = rez[i].causality_method;
+					suspectEntity.causalityAuthor = arrCausalityAuthor;
+					suspectEntity.causalityResult = rez[i].causality_result;
 
           arrSuspectEntity[i] = suspectEntity;
         }
@@ -251,7 +327,7 @@ var controller = {
 			if (typeof date !== 'undefined' && date !== "") {
         column += 'date,';
         //values += "'" + date + "',";
-				values += "to_date('"+ date + "', 'yyyy-MM-dd'),";
+				values += "to_date('"+ date + "', 'yyyy-MM-dd HH:mm'),";
       }
 			if (typeof location !== 'undefined' && location !== "") {
         column += 'location,';
@@ -469,7 +545,7 @@ var controller = {
 			if (typeof date !== 'undefined' && date !== "") {
         column += 'date,';
         //values += "'" + date + "',";
-				values += "to_date('"+ date + "', 'yyyy-MM-dd'),";
+				values += "to_date('"+ date + "', 'yyyy-MM-dd HH:mm'),";
       }
 			if (typeof location !== 'undefined' && location !== "") {
         column += 'location,';

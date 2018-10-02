@@ -110,30 +110,74 @@ var controller = {
         rez = lowercaseObject(dataJson);
 				for(i = 0; i < rez.length; i++){
           var ClinicalImpression = {};
+					var arrSubject = [];
+					var Subject = {};
+					if(rez[i].subject_group != "null"){
+						Subject.group = hostFHIR + ':' + portFHIR + '/' + apikey + '/Group?_id=' +  rez[i].subject_group;
+					} else {
+						Subject.group = "";
+					}
+					if(rez[i].subject_patient != "null"){
+						Subject.patient = hostFHIR + ':' + portFHIR + '/' + apikey + '/Patient?_id=' +  rez[i].subject_patient;
+					} else {
+						Subject.patient = "";
+					}
+					arrSubject[i] = Subject;
+					
+					var arrContext = [];
+					var Context = {};
+					if(rez[i].context_encounter != "null"){
+						Context.encounter = hostFHIR + ':' + portFHIR + '/' + apikey + '/Encounter?_id=' +  rez[i].context_encounter;
+					} else {
+						Context.encounter = "";
+					}
+					if(rez[i].context_episode_of_care != "null"){
+						Context.episodeOfCare = hostFHIR + ':' + portFHIR + '/' + apikey + '/EpisodeOfCare?_id=' +  rez[i].context_episode_of_care;
+					} else {
+						Context.episodeOfCare = "";
+					}
+					arrContext[i] = Context;
+					
 					ClinicalImpression.resourceType = "ClinicalImpression";
           ClinicalImpression.id = rez[i].clinical_impression_id;
 					ClinicalImpression.status = rez[i].status;
 					ClinicalImpression.code = rez[i].code;
 					ClinicalImpression.description = rez[i].description;
-					if (rez[i].subject_group !== 'null') {
-						ClinicalImpression.subject = hostFHIR + ':' + portFHIR + '/' + apikey + '/Group?_id=' +  rez[i].subject_group;
-					} else if (rez[i].subject_patient !== 'null') {
-						ClinicalImpression.subject = hostFHIR + ':' + portFHIR + '/' + apikey + '/Patient?_id=' +  rez[i].subject_patient;
-					} else {
-						ClinicalImpression.subject = "";
+					
+					ClinicalImpression.subject = arrSubject;
+					ClinicalImpression.context = arrContext;
+					if(rez[i].effective_date_time == null){
+						ClinicalImpression.effective.date = formatDate(rez[i].effective_date_time);
+					}else{
+						ClinicalImpression.effective.date = rez[i].effective_date_time;
 					}
-					if (rez[i].context_encounter !== 'null') {
-						ClinicalImpression.context = hostFHIR + ':' + portFHIR + '/' + apikey + '/Encounter?_id=' +  rez[i].context_encounter;
-					} else if (rez[i].context_episode_of_care !== 'null') {
-						ClinicalImpression.context = hostFHIR + ':' + portFHIR + '/' + apikey + '/EpisodeOfCare?_id=' +  rez[i].context_episode_of_care;
-					} else {
-						ClinicalImpression.context = "";
+					var effectiveperiod_start,effectiveperiod_end;
+					if(rez[i].effective_period_start == null){
+						effectiveperiod_start = formatDate(rez[i].effective_period_start);  
+					}else{
+						effectiveperiod_start = rez[i].effective_period_start;  
 					}
-					ClinicalImpression.effective.date = rez[i].effective_date_time;
-					ClinicalImpression.effective.period = rez[i].effective_period_start + ' to ' + rez[i].effective_period_end;
-					ClinicalImpression.date = rez[i].date;
-					ClinicalImpression.assessor = rez[i].assessor;
-					ClinicalImpression.previous = rez[i].previous;
+					if(rez[i].effective_period_end == null){
+						effectiveperiod_end = formatDate(rez[i].effective_period_end);  
+					}else{
+						effectiveperiod_end = rez[i].effective_period_end;  
+					}
+					ClinicalImpression.effective.period = effectiveperiod_start + ' to ' + effectiveperiod_end;
+					if(rez[i].date == null){
+						ClinicalImpression.date = formatDate(rez[i].date);
+					}else{
+						ClinicalImpression.date = rez[i].date;
+					}
+					if(rez[i].assessor != "null"){
+						ClinicalImpression.assessor = hostFHIR + ':' + portFHIR + '/' + apikey + '/Practitioner?_id=' +  rez[i].assessor;
+					} else {
+						ClinicalImpression.assessor = "";
+					}
+					if(rez[i].previous != "null"){
+						ClinicalImpression.previous = hostFHIR + ':' + portFHIR + '/' + apikey + '/Clinicalimpression?_id=' +  rez[i].previous;
+					} else {
+						ClinicalImpression.previous = "";
+					}
 					ClinicalImpression.protocol = rez[i].protocol;
 					ClinicalImpression.summary = rez[i].summary;
 					ClinicalImpression.prognosisCodeableConcept = rez[i].prognosis_codeable_concept;
@@ -225,13 +269,20 @@ var controller = {
 					var ClinicalImpressionFinding = {};
 					ClinicalImpressionFinding.id = rez[i].participant_id;
 					ClinicalImpressionFinding.itemCodeableConcept = rez[i].item_codeable_concept;
-					if (rez[i].item_reference_condition == null) {
-						ClinicalImpressionFinding.itemReference = hostFHIR + ':' + portFHIR + '/' + apikey + '/Condition?_id=' + rez[i].item_reference_condition;
-					} else if (rez[i].item_reference_observation == null) {
-						ClinicalImpressionFinding.itemReference = hostFHIR + ':' + portFHIR + '/' + apikey + '/Observation?_id=' + rez[i].item_reference_observation;
+					var arrItemReference = [];
+					var ItemReference = {};
+					if(rez[i].item_reference_condition != "null"){
+						ItemReference.condition = hostFHIR + ':' + portFHIR + '/' + apikey + '/Condition?_id=' +  rez[i].item_reference_condition;
 					} else {
-						ClinicalImpressionFinding.member = "";
+						ItemReference.condition = "";
 					}
+					if(rez[i].item_reference_observation != "null"){
+						ItemReference.observation = hostFHIR + ':' + portFHIR + '/' + apikey + '/Observation?_id=' +  rez[i].item_reference_observation;
+					} else {
+						ItemReference.observation = "";
+					}
+					arrItemReference[i] = ItemReference;
+					ClinicalImpressionFinding.itemReference = ItemReference;
 					ClinicalImpressionFinding.basis = rez[i].basis;
 					
 					arrClinicalImpressionFinding[i] = ClinicalImpressionFinding;
@@ -315,7 +366,7 @@ var controller = {
 			if (typeof effective_date_time !== 'undefined' && effective_date_time !== "") {
         column += 'effective_date_time,';
         //values += "'" + date + "',";
-				values += "to_date('"+ effective_date_time + "', 'yyyy-MM-dd'),";
+				values += "to_date('"+ effective_date_time + "', 'yyyy-MM-dd HH:mm'),";
       }
 			
 			if (typeof effective_period_start !== 'undefined' && effective_period_start !== "") {
@@ -333,7 +384,7 @@ var controller = {
 			if (typeof date !== 'undefined' && date !== "") {
         column += 'date,';
         //values += "'" + date + "',";
-				values += "to_date('"+ date + "', 'yyyy-MM-dd'),";
+				values += "to_date('"+ date + "', 'yyyy-MM-dd HH:mm'),";
       }
 			
 			if (typeof assessor !== 'undefined' && assessor !== "") {
@@ -542,7 +593,7 @@ var controller = {
 			if (typeof effective_date_time !== 'undefined' && effective_date_time !== "") {
         column += 'effective_date_time,';
         //values += "'" + date + "',";
-				values += "to_date('"+ effective_date_time + "', 'yyyy-MM-dd'),";
+				values += "to_date('"+ effective_date_time + "', 'yyyy-MM-dd HH:mm'),";
       }
 			
 			if (typeof effective_period_start !== 'undefined' && effective_period_start !== "") {
@@ -560,7 +611,7 @@ var controller = {
 			if (typeof date !== 'undefined' && date !== "") {
         column += 'date,';
         //values += "'" + date + "',";
-				values += "to_date('"+ date + "', 'yyyy-MM-dd'),";
+				values += "to_date('"+ date + "', 'yyyy-MM-dd HH:mm'),";
       }
 			
 			if (typeof assessor !== 'undefined' && assessor !== "") {

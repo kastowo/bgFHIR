@@ -150,7 +150,11 @@ var controller = {
           Practitioner.id = rez[i].practitioner_id;
           Practitioner.active = rez[i].practitioner_active;
 					Practitioner.gender = rez[i].practitioner_gender;
-					Practitioner.birthdate = rez[i].practitioner_birthdate;
+					if(rez[i].practitioner_birthdate == null){
+						Practitioner.birthdate = formatDate(rez[i].practitioner_birthdate);
+					}else{
+						Practitioner.birthdate = rez[i].practitioner_birthdate;
+					}
           arrPractitioner[i] = Practitioner;
         }
         res.json({"err_code":0,"data": arrPractitioner});

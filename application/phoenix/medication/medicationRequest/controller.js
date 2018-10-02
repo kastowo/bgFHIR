@@ -77,7 +77,7 @@ var controller = {
 			
 			if(typeof identifier !== 'undefined' && identifier !== ""){
 				join += " LEFT JOIN BACIRO_FHIR.identifier i on mr.MEDICATION_REQUEST_ID = i.MEDICATION_REQUEST_ID ";
-        condition += "i.IDENTIFIER_ID = '" + identifier + "' AND,";  
+        condition += "i.identifier_value = '" + identifier + "' AND,";  
       }
 			
 			if(typeof intent !== 'undefined' && intent !== ""){
@@ -132,25 +132,52 @@ var controller = {
 					MedicationRequest.priority = rez[i].priority;
 					MedicationRequest.medication.medicationCodeableConcept = rez[i].medication_codeable_concept;
 					MedicationRequest.medication.medicationReference = rez[i].medication_reference;
-					if (rez[i].subject_group !== 'null') {
-						MedicationRequest.subject = hostFHIR + ':' + portFHIR + '/' + apikey + '/Group?_id=' +  rez[i].subject_group;
-					} else if (rez[i].subject_patient !== 'null') {
-						MedicationRequest.subject = hostFHIR + ':' + portFHIR + '/' + apikey + '/Patient?_id=' +  rez[i].subject_patient;
+					var arrSubject = [];
+					var Subject = {};
+					if(rez[i].subject_group != "null"){
+						Subject.group = hostFHIR + ':' + portFHIR + '/' + apikey + '/Group?_id=' +  rez[i].subject_group;
 					} else {
-						MedicationRequest.subject = "";
+						Subject.group = "";
 					}
-					if (rez[i].context_encounter !== 'null') {
-						MedicationRequest.context = hostFHIR + ':' + portFHIR + '/' + apikey + '/Encounter?_id=' +  rez[i].context_encounter;
-					} else if (rez[i].context_episode_of_care !== 'null') {
-						MedicationRequest.context = hostFHIR + ':' + portFHIR + '/' + apikey + '/EpisodeOfCare?_id=' +  rez[i].context_episode_of_care;
+					if(rez[i].subject_patient != "null"){
+						Subject.patient = hostFHIR + ':' + portFHIR + '/' + apikey + '/Patient?_id=' +  rez[i].subject_patient;
 					} else {
-						MedicationRequest.context = "";
+						Subject.patient = "";
 					}
+					arrSubject[i] = Subject;
+					
+					var arrContext = [];
+					var Context = {};
+					if(rez[i].context_encounter != "null"){
+						Context.encounter = hostFHIR + ':' + portFHIR + '/' + apikey + '/Encounter?_id=' +  rez[i].context_encounter;
+					} else {
+						Context.encounter = "";
+					}
+					if(rez[i].context_episode_of_care != "null"){
+						Context.episodeOfCare = hostFHIR + ':' + portFHIR + '/' + apikey + '/EpisodeOfCare?_id=' +  rez[i].context_episode_of_care;
+					} else {
+						Context.episodeOfCare = "";
+					}
+					arrContext[i] = Context;
+					MedicationRequest.subject = arrSubject;
+					MedicationRequest.context = arrContext;
 					MedicationRequest.supportingInformation = rez[i].supporting_information;
-					MedicationRequest.authoredOn = rez[i].authored_on;
-					MedicationRequest.recorder = rez[i].recorder;
+					if(rez[i].authored_on == null){
+						MedicationRequest.authoredOn = formatDate(rez[i].authored_on);
+					}else{
+						MedicationRequest.authoredOn = rez[i].authored_on;
+					}
+					if(rez[i].recorder != "null"){
+						MedicationRequest.recorder = hostFHIR + ':' + portFHIR + '/' + apikey + '/Practitioner?_id=' +  rez[i].recorder;
+					} else {
+						MedicationRequest.recorder = "";
+					}
 					MedicationRequest.reasonCode = rez[i].reason_code;
-					MedicationRequest.priorPrescription = rez[i].prior_prescription;
+					if(rez[i].prior_prescription != "null"){
+						MedicationRequest.priorPrescription = hostFHIR + ':' + portFHIR + '/' + apikey + '/MedicationRequest?_id=' +  rez[i].prior_prescription;
+					} else {
+						MedicationRequest.priorPrescription = "";
+					}
 					
           arrMedicationRequest[i] = MedicationRequest;
         }
@@ -190,20 +217,41 @@ var controller = {
 				for (i = 0; i < rez.length; i++) {
 					var MedicationRequestRequester = {};
 					MedicationRequestRequester.id = rez[i].requester_id;
-					if (rez[i].agent_practitioner !== 'null') {
-						MedicationRequestRequester.agent = hostFHIR + ':' + portFHIR + '/' + apikey + '/Partitioner?_id=' +  rez[i].agent_practitioner;
-					} else if (rez[i].agent_organization !== 'null') {
-						MedicationRequestRequester.agent  = hostFHIR + ':' + portFHIR + '/' + apikey + '/Organization?_id=' +  rez[i].agent_organization;
-					} else if (rez[i].agent_patient !== 'null') {
-						MedicationRequestRequester.agent  = hostFHIR + ':' + portFHIR + '/' + apikey + '/Patient?_id=' +  rez[i].agent_patient;
-					} else if (rez[i].agent_related_person !== 'null') {
-						MedicationRequestRequester.agent  = hostFHIR + ':' + portFHIR + '/' + apikey + '/RelatedPerson?_id=' +  rez[i].agent_related_person;
-					} else if (rez[i].agent_device !== 'null') {
-						MedicationRequestRequester.agent  = hostFHIR + ':' + portFHIR + '/' + apikey + '/Device?_id=' +  rez[i].agent_device;
+					var arrAgent = [];
+					var Agent = {};
+					if(rez[i].agent_practitioner != "null"){
+						Agent.practitioner = hostFHIR + ':' + portFHIR + '/' + apikey + '/Practitioner?_id=' +  rez[i].agent_practitioner;
 					} else {
-						MedicationRequestRequester.agent  = "";
+						Agent.practitioner = "";
 					}
-					MedicationRequestRequester.onBehalfOf = rez[i].on_behalf_of;
+					if(rez[i].agent_organization != "null"){
+						Agent.organization = hostFHIR + ':' + portFHIR + '/' + apikey + '/Organization?_id=' +  rez[i].agent_organization;
+					} else {
+						Agent.organization = "";
+					}
+					if(rez[i].agent_patient != "null"){
+						Agent.patient = hostFHIR + ':' + portFHIR + '/' + apikey + '/Patient?_id=' +  rez[i].agent_patient;
+					} else {
+						Agent.patient = "";
+					}
+					if(rez[i].agent_related_person != "null"){
+						Agent.relatedPerson = hostFHIR + ':' + portFHIR + '/' + apikey + '/RelatedPerson?_id=' +  rez[i].agent_related_person;
+					} else {
+						Agent.relatedPerson = "";
+					}
+					if(rez[i].agent_device != "null"){
+						Agent.device = hostFHIR + ':' + portFHIR + '/' + apikey + '/Device?_id=' +  rez[i].agent_device;
+					} else {
+						Agent.device = "";
+					}
+					arrAgent[i] = Agent;
+					MedicationRequestRequester.agent  = arrAgent;
+					
+					if (rez[i].on_behalf_of !== 'null') {
+						MedicationRequestRequester.onBehalfOf  = hostFHIR + ':' + portFHIR + '/' + apikey + '/Organization?_id=' +  rez[i].on_behalf_of;
+					} else {
+						MedicationRequestRequester.onBehalfOf  = "";
+					}
 					
 					arrMedicationRequestRequester[i] = MedicationRequestRequester;
 				}
@@ -298,14 +346,27 @@ var controller = {
 				rez = lowercaseObject(dataJson);
 				for (i = 0; i < rez.length; i++) {
 					var MedicationRequestDispenseRequest = {};
-					MedicationRequestDispenseRequest.id = rez[i].dispenseRequest_id;
-					MedicationRequestDispenseRequest.text = rez[i].text;
-					MedicationRequestDispenseRequest.site = rez[i].site;
-					MedicationRequestDispenseRequest.route = rez[i].route;
-					MedicationRequestDispenseRequest.method = rez[i].method;
-					MedicationRequestDispenseRequest.dose = rez[i].dose;
-					MedicationRequestDispenseRequest.rate.rateRatio = rez[i].rate_ratio;
-					MedicationRequestDispenseRequest.rate.rateQuality = rez[i].rate_quality;
+					MedicationRequestDispenseRequest.id = rez[i].dispence_request_id;
+					var validityperiod_start,validityperiod_end;
+					if(rez[i].validity_period_start == null){
+						validityperiod_start = formatDate(rez[i].validity_period_start);  
+					}else{
+						validityperiod_start = rez[i].validity_period_start;  
+					}
+					if(rez[i].validity_period_end == null){
+						validityperiod_end = formatDate(rez[i].validity_period_end);  
+					}else{
+						validityperiod_end = rez[i].validity_period_end;  
+					}
+					MedicationRequestDispenseRequest.validityPeriod = validityperiod_start + ' to ' + validityperiod_end;
+					MedicationRequestDispenseRequest.numberOfRepeatsAllowed = rez[i].number_of_repeats_allowed;
+					MedicationRequestDispenseRequest.quantity = rez[i].quantity;
+					MedicationRequestDispenseRequest.expectedSupplyDuration = rez[i].expected_supply_duration;
+					if(rez[i].performer != "null"){
+						MedicationRequestDispenseRequest.performer = hostFHIR + ':' + portFHIR + '/' + apikey + '/Organization?_id=' +  rez[i].performer;
+					} else {
+						MedicationRequestDispenseRequest.performer = "";
+					}
 					arrMedicationRequestDispenseRequest[i] = MedicationRequestDispenseRequest;
 				}
 				res.json({
@@ -415,7 +476,7 @@ var controller = {
 			
 			if (typeof authored_on !== 'undefined' && authored_on !== "") {
         column += 'authored_on,';
-				values += "to_date('"+ authored_on + "', 'yyyy-MM-dd'),";
+				values += "to_date('"+ authored_on + "', 'yyyy-MM-dd HH:mm'),";
       }
 			
 			if (typeof recorder !== 'undefined' && recorder !== "") {
@@ -716,7 +777,7 @@ var controller = {
 			
 			if (typeof authored_on !== 'undefined' && authored_on !== "") {
         column += 'authored_on,';
-				values += "to_date('"+ authored_on + "', 'yyyy-MM-dd'),";
+				values += "to_date('"+ authored_on + "', 'yyyy-MM-dd HH:mm'),";
       }
 			
 			if (typeof recorder !== 'undefined' && recorder !== "") {

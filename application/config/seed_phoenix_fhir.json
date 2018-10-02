@@ -1301,6 +1301,196 @@
 			},
 			"preservativeCode":{
 				"location": "%(apikey)s/preservative/code/%(code)s"
+			},
+			"usageContextType":{
+				"location": "%(apikey)s/usage-context-type/%(_id)d"
+			},
+			"usageContextTypeCode":{
+				"location": "%(apikey)s/usage-context-type/code/%(code)s"
+			},
+			"usageContext":{
+				"location": "%(apikey)s/usage-context/%(_id)d"
+			},
+			"usageContextCode":{
+				"location": "%(apikey)s/usage-context/code/%(code)s"
+			},
+			"quantityComparator":{
+				"location": "%(apikey)s/quantity-comparator/%(_id)d"
+			},
+			"quantityComparatorCode":{
+				"location": "%(apikey)s/quantity-comparator/code/%(code)s"
+			},
+			"allTypes":{
+				"location": "%(apikey)s/all-types/%(_id)d"
+			},
+			"allTypesCode":{
+				"location": "%(apikey)s/all-types/code/%(code)s"
+			}
+			
+			,
+			"relatedArtifactType":{
+				"location": "%(apikey)s/related-artifact-type/%(_id)d"
+			},
+			"relatedArtifactTypeCode":{
+				"location": "%(apikey)s/related-artifact-type/code/%(code)s"
+			},
+			"triggerType":{
+				"location": "%(apikey)s/trigger-type/%(_id)d"
+			},
+			"triggerTypeCode":{
+				"location": "%(apikey)s/trigger-type/code/%(code)s"
+			}
+			
+			,
+			"actionParticipantType":{
+				"location": "%(apikey)s/action-participant-type/%(_id)d"
+			},
+			"actionParticipantTypeCode":{
+				"location": "%(apikey)s/action-participant-type/code/%(code)s"
+			},
+			"planDefinitionType":{
+				"location": "%(apikey)s/plan-definition-type/%(_id)d"
+			},
+			"planDefinitionTypeCode":{
+				"location": "%(apikey)s/plan-definition-type/code/%(code)s"
+			},
+			"publicationStatus":{
+				"location": "%(apikey)s/publication-status/%(_id)d"
+			},
+			"publicationStatusCode":{
+				"location": "%(apikey)s/publication-status/code/%(code)s"
+			},
+			"definitionTopic":{
+				"location": "%(apikey)s/definition-topic/%(_id)d"
+			},
+			"definitionTopicCode":{
+				"location": "%(apikey)s/definition-topic/code/%(code)s"
+			},
+			"actionConditionKind":{
+				"location": "%(apikey)s/action-condition-kind/%(_id)d"
+			},
+			"actionConditionKindCode":{
+				"location": "%(apikey)s/action-condition-kind/code/%(code)s"
+			},
+			"actionRelationshipType":{
+				"location": "%(apikey)s/action-relationship-type/%(_id)d"
+			},
+			"actionRelationshipTypeCode":{
+				"location": "%(apikey)s/action-relationship-type/code/%(code)s"
+			},
+			"actionType":{
+				"location": "%(apikey)s/action-type/%(_id)d"
+			},
+			"actionTypeCode":{
+				"location": "%(apikey)s/action-type/code/%(code)s"
+			},
+			"actionGroupingBehavior":{
+				"location": "%(apikey)s/action-grouping-behavior/%(_id)d"
+			},
+			"actionGroupingBehaviorCode":{
+				"location": "%(apikey)s/action-grouping-behavior/code/%(code)s"
+			},
+			"actionSelectionBehavior":{
+				"location": "%(apikey)s/action-selection-behavior/%(_id)d"
+			},
+			"actionSelectionBehaviorCode":{
+				"location": "%(apikey)s/action-selection-behavior/code/%(code)s"
+			},
+			"actionRequiredBehavior":{
+				"location": "%(apikey)s/action-required-behavior/%(_id)d"
+			},
+			"actionRequiredBehaviorCode":{
+				"location": "%(apikey)s/action-required-behavior/code/%(code)s"
+			},
+			"actionPrecheckBehavior":{
+				"location": "%(apikey)s/action-precheck-behavior/%(_id)d"
+			},
+			"actionPrecheckBehaviorCode":{
+				"location": "%(apikey)s/action-precheck-behavior/code/%(code)s"
+			},
+			"actionCardinalityBehavior":{
+				"location": "%(apikey)s/action-cardinality-behavior/%(_id)d"
+			},
+			"actionCardinalityBehaviorCode":{
+				"location": "%(apikey)s/action-cardinality-behavior/code/%(code)s"
+			},
+			"actionlist":{
+				"location": "%(apikey)s/actionlist/%(_id)d"
+			},
+			"actionlistCode":{
+				"location": "%(apikey)s/actionlist/code/%(code)s"
+			},
+			"processOutcome":{
+				"location": "%(apikey)s/process-outcome/%(_id)d"
+			},
+			"processOutcomeCode":{
+				"location": "%(apikey)s/process-outcome/code/%(code)s"
+			},
+			"noteType":{
+				"location": "%(apikey)s/note-type/%(_id)d"
+			},
+			"noteTypeCode":{
+				"location": "%(apikey)s/note-type/code/%(code)s"
+			},
+			"adjudicationError":{
+				"location": "%(apikey)s/adjudication-error/%(_id)d"
+			},
+			"adjudicationErrorCode":{
+				"location": "%(apikey)s/adjudication-error/code/%(code)s"
+			},
+			"deviceStatementStatus":{
+				"location": "%(apikey)s/device-statement-status/%(_id)d"
+			},
+			"deviceStatementStatusCode":{
+				"location": "%(apikey)s/device-statement-status/code/%(code)s"
+			},
+			"supplyrequestStatus":{
+				"location": "%(apikey)s/supplyrequest-status/%(_id)d"
+			},
+			"supplyrequestStatusCode":{
+				"location": "%(apikey)s/supplyrequest-status/code/%(code)s"
+			},
+			"supplyrequestReason":{
+				"location": "%(apikey)s/supplyrequest-reason/%(_id)d"
+			},
+			"supplyrequestReasonCode":{
+				"location": "%(apikey)s/supplyrequest-reason/code/%(code)s"
+			},
+			"supplydeliveryStatus":{
+				"location": "%(apikey)s/supplydelivery-status/%(_id)d"
+			},
+			"supplydeliveryStatusCode":{
+				"location": "%(apikey)s/supplydelivery-status/code/%(code)s"
+			},
+			"supplydeliveryType":{
+				"location": "%(apikey)s/supplydelivery-type/%(_id)d"
+			},
+			"supplydeliveryTypeCode":{
+				"location": "%(apikey)s/supplydelivery-type/code/%(code)s"
+			},
+			"taskStatus":{
+				"location": "%(apikey)s/task-status/%(_id)d"
+			},
+			"taskStatusCode":{
+				"location": "%(apikey)s/task-status/code/%(code)s"
+			},
+			"taskPerformerType":{
+				"location": "%(apikey)s/task-performer-type/%(_id)d"
+			},
+			"taskPerformerTypeCode":{
+				"location": "%(apikey)s/task-performer-type/code/%(code)s"
+			},
+			"forms":{
+				"location": "%(apikey)s/forms/%(_id)d"
+			},
+			"formsCode":{
+				"location": "%(apikey)s/forms/code/%(code)s"
+			},
+			"supplyItem":{
+				"location": "%(apikey)s/supply-item/%(_id)d"
+			},
+			"supplyItemCode":{
+				"location": "%(apikey)s/supply-item/code/%(code)s"
 			}
 		},
 		"POST": {
@@ -1670,6 +1860,28 @@
 			"notAvailable":{
 				"location": "%(apikey)s/NotAvailable"
 			},
+			"timing":{
+				"location": "%(apikey)s/Timing"
+			}
+			
+			,
+			"dataRequirement":{
+				"location": "%(apikey)s/DataRequirement"
+			},
+			"codeFilter":{
+				"location": "%(apikey)s/CodeFilter"
+			},
+			"dateFilter":{
+				"location": "%(apikey)s/DateFilter"
+			},
+			"relatedArtifact":{
+				"location": "%(apikey)s/RelatedArtifact"
+			},
+			"triggerDefinition":{
+				"location": "%(apikey)s/TriggerDefinition"
+			}
+			
+			,
 			"healthcareService":{
 				"location": "%(apikey)s/HealthcareService"
 			},
@@ -2090,6 +2302,102 @@
 			},
 			"preservative":{
 				"location": "%(apikey)s/preservative"
+			},
+			"usageContextType":{
+				"location": "%(apikey)s/usage-context-type"
+			},
+			"usageContext":{
+				"location": "%(apikey)s/usage-context"
+			},
+			"quantityComparator":{
+				"location": "%(apikey)s/quantity-comparator"
+			},
+			"allTypes":{
+				"location": "%(apikey)s/all-types"
+			}
+			,
+			"relatedArtifactType":{
+				"location": "%(apikey)s/related-artifact-type"
+			},
+			"triggerType":{
+				"location": "%(apikey)s/trigger-type"
+			}
+			
+			,
+			"actionParticipantType":{
+				"location": "%(apikey)s/action-participant-type"
+			},
+			"planDefinitionType":{
+				"location": "%(apikey)s/plan-definition-type"
+			},
+			"publicationStatus":{
+				"location": "%(apikey)s/publication-status"
+			},
+			"definitionTopic":{
+				"location": "%(apikey)s/definition-topic"
+			},
+			"actionConditionKind":{
+				"location": "%(apikey)s/action-condition-kind"
+			},
+			"actionRelationshipType":{
+				"location": "%(apikey)s/action-relationship-type"
+			},
+			"actionType":{
+				"location": "%(apikey)s/action-type"
+			},
+			"actionGroupingBehavior":{
+				"location": "%(apikey)s/action-grouping-behavior"
+			},
+			"actionSelectionBehavior":{
+				"location": "%(apikey)s/action-selection-behavior"
+			},
+			"actionRequiredBehavior":{
+				"location": "%(apikey)s/action-required-behavior"
+			},
+			"actionPrecheckBehavior":{
+				"location": "%(apikey)s/action-precheck-behavior"
+			},
+			"actionCardinalityBehavior":{
+				"location": "%(apikey)s/action-cardinality-behavior"
+			},
+			"actionlist":{
+				"location": "%(apikey)s/actionlist"
+			},
+			"processOutcome":{
+				"location": "%(apikey)s/process-outcome"
+			},
+			"noteType":{
+				"location": "%(apikey)s/note-type"
+			},
+			"adjudicationError":{
+				"location": "%(apikey)s/adjudication-error"
+			},
+			"deviceStatementStatus":{
+				"location": "%(apikey)s/device-statement-status"
+			},
+			"supplyrequestStatus":{
+				"location": "%(apikey)s/supplyrequest-status"
+			},
+			"supplyrequestReason":{
+				"location": "%(apikey)s/supplyrequest-reason"
+			},
+			"supplydeliveryStatus":{
+				"location": "%(apikey)s/supplydelivery-status"
+			},
+			"supplydeliveryType":{
+				"location": "%(apikey)s/supplydelivery-type"
+			},
+			"taskStatus":{
+				"location": "%(apikey)s/task-status"
+			},
+			"taskPerformerType":{
+				"location": "%(apikey)s/task-performer-type"
+			},
+			"forms":{
+				"location": "%(apikey)s/forms"
+			},
+			"supplyItem":{
+				"location": "%(apikey)s/supply-item"
 			}
 		},
 		"PUT": {
@@ -2450,6 +2758,27 @@
 			"notAvailable":{
 				"location": "%(apikey)s/NotAvailable/%(_id)s/%(dr)s"
 			},
+			"timing":{
+				"location": "%(apikey)s/Timing/%(_id)s/%(dr)s"
+			}
+			
+			,
+			"dataRequirement":{
+				"location": "%(apikey)s/DataRequirement/%(_id)s/%(dr)s"
+			},
+			"codeFilter":{
+				"location": "%(apikey)s/CodeFilter/%(_id)s/%(dr)s"
+			},
+			"dateFilter":{
+				"location": "%(apikey)s/DateFilter/%(_id)s/%(dr)s"
+			},
+			"relatedArtifact":{
+				"location": "%(apikey)s/RelatedArtifact/%(_id)s/%(dr)s"
+			},
+			"triggerDefinition":{
+				"location": "%(apikey)s/TriggerDefinition/%(_id)s/%(dr)s"
+			}
+			,
 			"healthcareService":{
 				"location": "%(apikey)s/HealthcareService/%(_id)s"
 			},
@@ -2863,6 +3192,103 @@
 			},
 			"preservative":{
 				"location": "%(apikey)s/preservative/%(_id)d"
+			},
+			"usageContextType":{
+				"location": "%(apikey)s/usage-context-type/%(_id)d"
+			},
+			"usageContext":{
+				"location": "%(apikey)s/usage-context/%(_id)d"
+			},
+			"quantityComparator":{
+				"location": "%(apikey)s/quantity-comparator/%(_id)d"
+			},
+			"allTypes":{
+				"location": "%(apikey)s/all-types/%(_id)d"
+			}
+			
+			,
+			"relatedArtifactType":{
+				"location": "%(apikey)s/related-artifact-type/%(_id)d"
+			},
+			"triggerType":{
+				"location": "%(apikey)s/trigger-type/%(_id)d"
+			}
+			
+			,
+			"actionParticipantType":{
+				"location": "%(apikey)s/action-participant-type/%(_id)d"
+			},
+			"planDefinitionType":{
+				"location": "%(apikey)s/plan-definition-type/%(_id)d"
+			},
+			"publicationStatus":{
+				"location": "%(apikey)s/publication-status/%(_id)d"
+			},
+			"definitionTopic":{
+				"location": "%(apikey)s/definition-topic/%(_id)d"
+			},
+			"actionConditionKind":{
+				"location": "%(apikey)s/action-condition-kind/%(_id)d"
+			},
+			"actionRelationshipType":{
+				"location": "%(apikey)s/action-relationship-type/%(_id)d"
+			},
+			"actionType":{
+				"location": "%(apikey)s/action-type/%(_id)d"
+			},
+			"actionGroupingBehavior":{
+				"location": "%(apikey)s/action-grouping-behavior/%(_id)d"
+			},
+			"actionSelectionBehavior":{
+				"location": "%(apikey)s/action-selection-behavior/%(_id)d"
+			},
+			"actionRequiredBehavior":{
+				"location": "%(apikey)s/action-required-behavior/%(_id)d"
+			},
+			"actionPrecheckBehavior":{
+				"location": "%(apikey)s/action-precheck-behavior/%(_id)d"
+			},
+			"actionCardinalityBehavior":{
+				"location": "%(apikey)s/action-cardinality-behavior/%(_id)d"
+			},
+			"actionlist":{
+				"location": "%(apikey)s/actionlist/%(_id)d"
+			},
+			"processOutcome":{
+				"location": "%(apikey)s/process-outcome/%(_id)d"
+			},
+			"noteType":{
+				"location": "%(apikey)s/note-type/%(_id)d"
+			},
+			"adjudicationError":{
+				"location": "%(apikey)s/adjudication-error/%(_id)d"
+			},
+			"deviceStatementStatus":{
+				"location": "%(apikey)s/device-statement-status/%(_id)d"
+			},
+			"supplyrequestStatus":{
+				"location": "%(apikey)s/supplyrequest-status/%(_id)d"
+			},
+			"supplyrequestReason":{
+				"location": "%(apikey)s/supplyrequest-reason/%(_id)d"
+			},
+			"supplydeliveryStatus":{
+				"location": "%(apikey)s/supplydelivery-status/%(_id)d"
+			},
+			"supplydeliveryType":{
+				"location": "%(apikey)s/supplydelivery-type/%(_id)d"
+			},
+			"taskStatus":{
+				"location": "%(apikey)s/task-status/%(_id)d"
+			},
+			"taskPerformerType":{
+				"location": "%(apikey)s/task-performer-type/%(_id)d"
+			},
+			"forms":{
+				"location": "%(apikey)s/forms/%(_id)d"
+			},
+			"supplyItem":{
+				"location": "%(apikey)s/supply-item/%(_id)d"
 			}
 		}
 	}

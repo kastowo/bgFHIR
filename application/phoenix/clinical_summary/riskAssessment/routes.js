@@ -1,12 +1,12 @@
-var routesProcedure = function(app, Procedure){
-	app.get('/:apikey/Procedure', Procedure.get.procedure);
-	app.get('/:apikey/ProcedurePrediction', Procedure.get.procedurePrediction);
+var routesRiskAssessment = function(app, RiskAssessment){
+	app.get('/:apikey/RiskAssessment', RiskAssessment.get.riskAssessment);
+	app.get('/:apikey/RiskAssessmentPrediction', RiskAssessment.get.riskAssessmentPrediction);
 	
-	app.post('/:apikey/Procedure', Procedure.post.procedure);
-	app.post('/:apikey/ProcedurePrediction', Procedure.post.procedurePrediction);
+	app.post('/:apikey/RiskAssessment', RiskAssessment.post.riskAssessment);
+	app.post('/:apikey/RiskAssessmentPrediction', RiskAssessment.post.riskAssessmentPrediction);
 	
-	app.put('/:apikey/Procedure/:risk_assessment_id', Procedure.put.procedure);
-	app.put('/:apikey/ProcedurePrediction/:prediction_id', Procedure.put.procedurePrediction);
+	app.put('/:apikey/RiskAssessment/:risk_assessment_id', RiskAssessment.put.riskAssessment);
+	app.put('/:apikey/RiskAssessmentPrediction/:prediction_id', RiskAssessment.put.riskAssessmentPrediction);
 	
 }
-module.exports = routesProcedure;
+module.exports = routesRiskAssessment;

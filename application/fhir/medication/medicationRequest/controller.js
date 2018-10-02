@@ -802,9 +802,9 @@ var controller = {
 					MedicationRequestPerformer
 					//set uniqe id
 					var unicId = uniqid.time();
-					var medicationRequestId = 'mad' + unicId;
-					var medicationRequestPerformerId = 'map' + unicId;
-					var medicationRequestDosageId = 'mad' + unicId;
+					var medicationRequestId = 'mer' + unicId;
+					var medicationRequestPerformerId = 'mrp' + unicId;
+					var medicationRequestDosageId = 'mrd' + unicId;
 					var identifierId = 'ide' + unicId;
 
 					dataMedicationRequest = {

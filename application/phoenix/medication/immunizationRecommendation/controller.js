@@ -74,12 +74,24 @@ var controller = {
 			
 			if(typeof identifier !== 'undefined' && identifier !== ""){
 				join += " LEFT JOIN BACIRO_FHIR.identifier i on ir.IMMUNIZATION_RECOMMENDATION_ID = i.IMMUNIZATION_RECOMMENDATION_ID ";
-        condition += "i.IDENTIFIER_ID = '" + identifier + "' AND,";  
+        condition += "i.identifier_value = '" + identifier + "' AND,";  
       }
 			
-			/*if(typeof information !== 'undefined' && information !== ""){
+			if(typeof information !== 'undefined' && information !== ""){
         condition += "xx.information = '" + information + "' AND,";  
-      }*/
+      }
+			
+			if((typeof information !== 'undefined' && information !== "")){ 
+			 var res = information.substring(0, 3);
+				if(res == 'ali'){
+					join += " LEFT JOIN BACIRO_FHIR.ALLERGY_INTOLERANCE ai ON ir.IMMUNIZATION_RECOMMENDATION_ID = ai.IMMUNIZATION_RECOMMENDATION_ID ";
+          condition += "ALLERGY_INTOLERANCE_ID = '" + information + "' AND ";       
+				} 
+				if(res == 'obs') {
+					join += " LEFT JOIN BACIRO_FHIR.OBSERVATION o ON iri.IMMUNIZATION_RECOMMENDATION_ID = o.IMMUNIZATION_RECOMMENDATION_ID ";
+          condition += "OBSERVATION_ID = '" + information + "' AND ";       
+				}
+      }
 			
 			if(typeof patient !== 'undefined' && patient !== ""){
         condition += "ir.PATIENT = '" + patient + "' AND,";  
@@ -104,8 +116,11 @@ var controller = {
           var ImmunizationRecommendation = {};
 					ImmunizationRecommendation.resourceType = "immunizationRecommendation";
           ImmunizationRecommendation.id = rez[i].immunization_recommendation_id;
-					ImmunizationRecommendation.patient = rez[i].patient;
-					
+					if(rez[i].patient != "null"){
+						ImmunizationRecommendation.patient = hostFHIR + ':' + portFHIR + '/' + apikey + '/Patient?_id=' +  rez[i].patient;
+					} else {
+						ImmunizationRecommendation.patient = "";
+					}
           arrImmunizationRecommendation[i] = ImmunizationRecommendation;
         }
         res.json({"err_code":0,"data": arrImmunizationRecommendation});
@@ -144,14 +159,22 @@ var controller = {
 				for (i = 0; i < rez.length; i++) {
 					var ImmunizationRecommendationRecommendation = {};
 					ImmunizationRecommendationRecommendation.id = rez[i].recommendation__id;
-					ImmunizationRecommendationRecommendation.date = rez[i].date;
+					if(rez[i].date == null){
+						ImmunizationRecommendationRecommendation.date = formatDate(rez[i].date);
+					}else{
+						ImmunizationRecommendationRecommendation.date = rez[i].date;
+					}
 					ImmunizationRecommendationRecommendation.vaccine_code = rez[i].vaccine_code;
 					ImmunizationRecommendationRecommendation.target_disease = rez[i].target_disease;
 					ImmunizationRecommendationRecommendation.dose_number = rez[i].dose_number;
 					ImmunizationRecommendationRecommendation.forecast_status = rez[i].forecast_status;
 					ImmunizationRecommendationRecommendation.protocol.doseSequence = rez[i].protocol_dose_sequence;
 					ImmunizationRecommendationRecommendation.protocol.description = rez[i].protocol_description;
-					ImmunizationRecommendationRecommendation.protocol.authority = rez[i].protocol_authority;
+					if(rez[i].protocol_authority != "null"){
+						ImmunizationRecommendationRecommendation.protocol.authority = hostFHIR + ':' + portFHIR + '/' + apikey + '/Encounter?_id=' +  rez[i].protocol_authority;
+					} else {
+						ImmunizationRecommendationRecommendation.protocol.authority = "";
+					}
 					ImmunizationRecommendationRecommendation.protocol.series = rez[i].protocol_series;
 					
 					arrImmunizationRecommendationRecommendation[i] = ImmunizationRecommendationRecommendation;
@@ -269,7 +292,7 @@ var controller = {
 			if (typeof date !== 'undefined' && date !== "") {
         column += 'date,';
         //values += "'" + date + "',";
-				values += "to_date('"+ date + "', 'yyyy-MM-dd'),";
+				values += "to_date('"+ date + "', 'yyyy-MM-dd HH:mm'),";
       }
 			
 			if (typeof vaccine_code !== 'undefined' && vaccine_code !== "") {
@@ -348,7 +371,7 @@ var controller = {
 			if (typeof value !== 'undefined' && value !== "") {
         column += '"value",';
         //values += "'" + date + "',";
-				values += 'to_date("'+ value + '", "yyyy-MM-dd"),';
+				values += 'to_date("'+ value + '", "yyyy-MM-dd HH:mm"),';
       }
 			
 			if (typeof date_creation_id !== 'undefined' && date_creation_id !== "") {
@@ -443,7 +466,7 @@ var controller = {
 			if (typeof date !== 'undefined' && date !== "") {
         column += 'date,';
         //values += "'" + date + "',";
-				values += "to_date('"+ date + "', 'yyyy-MM-dd'),";
+				values += "to_date('"+ date + "', 'yyyy-MM-dd HH:mm'),";
       }
 			
 			if (typeof vaccine_code !== 'undefined' && vaccine_code !== "") {
@@ -527,7 +550,7 @@ var controller = {
 			if (typeof value !== 'undefined' && value !== "") {
         column += '"value",';
         //values += "'" + date + "',";
-				values += 'to_date("'+ value + '", "yyyy-MM-dd"),';
+				values += 'to_date("'+ value + '", "yyyy-MM-dd HH:mm"),';
       }
 			
 			if (typeof date_creation_id !== 'undefined' && date_creation_id !== "") {

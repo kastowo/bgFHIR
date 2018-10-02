@@ -95,26 +95,53 @@ var controller = {
         rez = lowercaseObject(dataJson);
 				for(i = 0; i < rez.length; i++){
           var CareTeam = {};
+					var arrSubject = [];
+					var Subject = {};
+					if(rez[i].subject_group != "null"){
+						Subject.group = hostFHIR + ':' + portFHIR + '/' + apikey + '/Group?_id=' +  rez[i].subject_group;
+					} else {
+						Subject.group = "";
+					}
+					if(rez[i].subject_patient != "null"){
+						Subject.patient = hostFHIR + ':' + portFHIR + '/' + apikey + '/Patient?_id=' +  rez[i].subject_patient;
+					} else {
+						Subject.patient = "";
+					}
+					arrSubject[i] = Subject;
+					
+					var arrContext = [];
+					var Context = {};
+					if(rez[i].context_encounter != "null"){
+						Context.encounter = hostFHIR + ':' + portFHIR + '/' + apikey + '/Encounter?_id=' +  rez[i].context_encounter;
+					} else {
+						Context.encounter = "";
+					}
+					if(rez[i].context_episode_of_care != "null"){
+						Context.episodeOfCare = hostFHIR + ':' + portFHIR + '/' + apikey + '/EpisodeOfCare?_id=' +  rez[i].context_episode_of_care;
+					} else {
+						Context.episodeOfCare = "";
+					}
+					arrContext[i] = Context;
+					
 					CareTeam.resourceType = "CareTeam";
           CareTeam.id = rez[i].care_team_id;
 					CareTeam.status = rez[i].status;
 					CareTeam.category = rez[i].category;
 					CareTeam.name = rez[i].name;
-					if (rez[i].subject_group !== 'null') {
-						CareTeam.subject = hostFHIR + ':' + portFHIR + '/' + apikey + '/Group?_id=' +  rez[i].subject_group;
-					} else if (rez[i].subject_patient !== 'null') {
-						CareTeam.subject = hostFHIR + ':' + portFHIR + '/' + apikey + '/Patient?_id=' +  rez[i].subject_patient;
-					} else {
-						CareTeam.subject = "";
+					CareTeam.subject = arrSubject;
+					CareTeam.context = arrContext;
+					var period_start,period_end;
+					if(rez[i].period_start == null){
+						period_start = formatDate(rez[i].period_start);  
+					}else{
+						period_start = rez[i].time_period_start;  
 					}
-					if (rez[i].context_encounter !== 'null') {
-						CareTeam.context = hostFHIR + ':' + portFHIR + '/' + apikey + '/Encounter?_id=' +  rez[i].context_encounter;
-					} else if (rez[i].context_episode_of_care !== 'null') {
-						CareTeam.context = hostFHIR + ':' + portFHIR + '/' + apikey + '/EpisodeOfCare?_id=' +  rez[i].context_episode_of_care;
-					} else {
-						CareTeam.context = "";
+					if(rez[i].period_end == null){
+						period_end = formatDate(rez[i].period_end);  
+					}else{
+						period_end = rez[i].period_end;  
 					}
-					CareTeam.period = rez[i].period_start + ' to ' + rez[i].period_end;
+					CareTeam.period = period_start + ' to ' + period_end;
 					CareTeam.reasonCode = rez[i].reason_code;
 					
           arrCareTeam[i] = CareTeam;
@@ -156,21 +183,52 @@ var controller = {
 					var CareTeamParticipant = {};
 					CareTeamParticipant.id = rez[i].participant_id;
 					CareTeamParticipant.role = rez[i].role;
-					if (rez[i].member_practitioner == null) {
-						CareTeamParticipant.member = hostFHIR + ':' + portFHIR + '/' + apikey + '/Practitioner?_id=' +  rez[i].member_practitioner;
-					} else if (rez[i].member_related_person == null) {
-						CareTeamParticipant.member = hostFHIR + ':' + portFHIR + '/' + apikey + '/Person?_id=' + rez[i].member_related_person;
-					} else if (rez[i].member_patient == null) {
-						CareTeamParticipant.member =  hostFHIR + ':' + portFHIR + '/' + apikey + '/Patient?_id=' +rez[i].member_patient;
-					} else if (rez[i].member_organization == null) {
-						CareTeamParticipant.member =  hostFHIR + ':' + portFHIR + '/' + apikey + '/Organization?_id=' + rez[i].member_organization;
-					} else if (rez[i].member_care_team == null) {
-						CareTeamParticipant.member =  hostFHIR + ':' + portFHIR + '/' + apikey + '/CareTeam?_id=' + rez[i].member_care_team;
+					var arrMember = [];
+					var Member = {};
+					if(rez[i].member_practitioner != "null"){
+						Member.practitioner = hostFHIR + ':' + portFHIR + '/' + apikey + '/Practitioner?_id=' +  rez[i].member_practitioner;
 					} else {
-						CareTeamParticipant.member = "";
+						Member.practitioner = "";
 					}
-					CareTeamParticipant.onBehalfOf = rez[i].on_behalf_of;
-					CareTeamParticipant.period = formatDate(rez[i].period_start) + " to " + formatDate(rez[i].period_end);
+					if(rez[i].member_related_person != "null"){
+						Member.relatedPerson = hostFHIR + ':' + portFHIR + '/' + apikey + '/RelatedPerson?_id=' +  rez[i].member_related_person;
+					} else {
+						Member.relatedPerson = "";
+					}
+					if(rez[i].member_patient != "null"){
+						Member.patient = hostFHIR + ':' + portFHIR + '/' + apikey + '/Patient?_id=' +  rez[i].member_patient;
+					} else {
+						Member.patient = "";
+					}
+					if(rez[i].member_organization != "null"){
+						Member.organization = hostFHIR + ':' + portFHIR + '/' + apikey + '/Organization?_id=' +  rez[i].member_organization;
+					} else {
+						Member.organization = "";
+					}
+					if(rez[i].member_care_team != "null"){
+						Member.careTeam = hostFHIR + ':' + portFHIR + '/' + apikey + '/CareTeam?_id=' +  rez[i].member_care_team;
+					} else {
+						Member.careTeam = "";
+					}
+					arrMember[i] = Member;
+					CareTeamParticipant.member = arrMember;
+					if(rez[i].on_behalf_of != "null"){
+						CareTeamParticipant.onBehalfOf = hostFHIR + ':' + portFHIR + '/' + apikey + '/Organization?_id=' +  rez[i].on_behalf_of;
+					} else {
+						CareTeamParticipant.onBehalfOf = "";
+					}
+					var period_start,period_end;
+					if(rez[i].period_start == null){
+						period_start = formatDate(rez[i].period_start);  
+					}else{
+						period_start = rez[i].time_period_start;  
+					}
+					if(rez[i].period_end == null){
+						period_end = formatDate(rez[i].period_end);  
+					}else{
+						period_end = rez[i].period_end;  
+					}
+					CareTeamParticipant.period = period_start + " to " +period_end;
 					
 					
 					arrCareTeamParticipant[i] = CareTeamParticipant;

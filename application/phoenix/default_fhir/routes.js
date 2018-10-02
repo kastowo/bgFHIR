@@ -170,6 +170,14 @@ var routesDefaultFHIR = function(app, DefaultFHIR){
 	app.get('/:apikey/endpoint-payload-type/code/:code?', DefaultFHIR.get.endpointPayloadTypeCode);
 	app.get('/:apikey/AvailableTime', DefaultFHIR.get.availableTime);
 	app.get('/:apikey/NotAvailable', DefaultFHIR.get.notAvailable);
+	app.get('/:apikey/Timing', DefaultFHIR.get.timing);
+	
+	app.get('/:apikey/DataRequirement', DefaultFHIR.get.dataRequirement);
+	app.get('/:apikey/CodeFilter', DefaultFHIR.get.codeFilter);
+	app.get('/:apikey/DateFilter', DefaultFHIR.get.dateFilter);
+	app.get('/:apikey/RelatedArtifact', DefaultFHIR.get.relatedArtifact);
+	app.get('/:apikey/TriggerDefinition', DefaultFHIR.get.triggerDefinition);
+	
 	app.get('/:apikey/adverse-event-category/:_id?', DefaultFHIR.get.adverseEventCategory);
 	app.get('/:apikey/adverse-event-category/code/:code?', DefaultFHIR.get.adverseEventCategoryCode);
 	app.get('/:apikey/adverse-event-type/:_id?', DefaultFHIR.get.adverseEventType);
@@ -450,6 +458,76 @@ var routesDefaultFHIR = function(app, DefaultFHIR){
 	app.get('/:apikey/specimen-type/code/:code?', DefaultFHIR.get.specimenTypeCode);
 	app.get('/:apikey/preservative/:_id?', DefaultFHIR.get.preservative);
 	app.get('/:apikey/preservative/code/:code?', DefaultFHIR.get.preservativeCode);
+	
+	app.get('/:apikey/usage-context-type/:_id?', DefaultFHIR.get.usageContextType);
+	app.get('/:apikey/usage-context-type/code/:code?', DefaultFHIR.get.usageContextTypeCode);
+	app.get('/:apikey/usage-context/:_id?', DefaultFHIR.get.usageContext);
+	app.get('/:apikey/usage-context/code/:code?', DefaultFHIR.get.usageContextCode);
+	app.get('/:apikey/quantity-comparator/:_id?', DefaultFHIR.get.quantityComparator);
+	app.get('/:apikey/quantity-comparator/code/:code?', DefaultFHIR.get.quantityComparatorCode);
+	
+	app.get('/:apikey/all-types/:_id?', DefaultFHIR.get.allTypes);
+	app.get('/:apikey/all-types/code/:code?', DefaultFHIR.get.allTypesCode);
+	
+	app.get('/:apikey/related-artifact-type/:_id?', DefaultFHIR.get.relatedArtifactType);
+	app.get('/:apikey/related-artifact-type/code/:code?', DefaultFHIR.get.relatedArtifactTypeCode);
+	app.get('/:apikey/trigger-type/:_id?', DefaultFHIR.get.triggerType);
+	app.get('/:apikey/trigger-type/code/:code?', DefaultFHIR.get.triggerTypeCode);
+	
+	app.get('/:apikey/action-participant-type/:_id?', DefaultFHIR.get.actionParticipantType);
+	app.get('/:apikey/action-participant-type/code/:code?', DefaultFHIR.get.actionParticipantTypeCode);
+	app.get('/:apikey/plan-definition-type/:_id?', DefaultFHIR.get.planDefinitionType);
+	app.get('/:apikey/plan-definition-type/code/:code?', DefaultFHIR.get.planDefinitionTypeCode);
+	app.get('/:apikey/publication-status/:_id?', DefaultFHIR.get.publicationStatus);
+	app.get('/:apikey/publication-status/code/:code?', DefaultFHIR.get.publicationStatusCode);
+	app.get('/:apikey/definition-topic/:_id?', DefaultFHIR.get.definitionTopic);
+	app.get('/:apikey/definition-topic/code/:code?', DefaultFHIR.get.definitionTopicCode);
+	
+	app.get('/:apikey/action-condition-kind/:_id?', DefaultFHIR.get.actionConditionKind);
+	app.get('/:apikey/action-condition-kind/code/:code?', DefaultFHIR.get.actionConditionKindCode);
+	app.get('/:apikey/action-relationship-type/:_id?', DefaultFHIR.get.actionRelationshipType);
+	app.get('/:apikey/action-relationship-type/code/:code?', DefaultFHIR.get.actionRelationshipTypeCode);
+	app.get('/:apikey/action-type/:_id?', DefaultFHIR.get.actionType);
+	app.get('/:apikey/action-type/code/:code?', DefaultFHIR.get.actionTypeCode);
+	app.get('/:apikey/action-grouping-behavior/:_id?', DefaultFHIR.get.actionGroupingBehavior);
+	app.get('/:apikey/action-grouping-behavior/code/:code?', DefaultFHIR.get.actionGroupingBehaviorCode);
+	app.get('/:apikey/action-selection-behavior/:_id?', DefaultFHIR.get.actionSelectionBehavior);
+	app.get('/:apikey/action-selection-behavior/code/:code?', DefaultFHIR.get.actionSelectionBehaviorCode);
+	app.get('/:apikey/action-required-behavior/:_id?', DefaultFHIR.get.actionRequiredBehavior);
+	app.get('/:apikey/action-required-behavior/code/:code?', DefaultFHIR.get.actionRequiredBehaviorCode);
+	app.get('/:apikey/action-precheck-behavior/:_id?', DefaultFHIR.get.actionPrecheckBehavior);
+	app.get('/:apikey/action-precheck-behavior/code/:code?', DefaultFHIR.get.actionPrecheckBehaviorCode);
+	app.get('/:apikey/action-cardinality-behavior/:_id?', DefaultFHIR.get.actionCardinalityBehavior);
+	app.get('/:apikey/action-cardinality-behavior/code/:code?', DefaultFHIR.get.actionCardinalityBehaviorCode);
+	app.get('/:apikey/actionlist/:_id?', DefaultFHIR.get.actionlist);
+	app.get('/:apikey/actionlist/code/:code?', DefaultFHIR.get.actionlistCode);
+	
+	app.get('/:apikey/process-outcome/:_id?', DefaultFHIR.get.processOutcome);
+	app.get('/:apikey/process-outcome/code/:code?', DefaultFHIR.get.processOutcomeCode);
+	app.get('/:apikey/note-type/:_id?', DefaultFHIR.get.noteType);
+	app.get('/:apikey/note-type/code/:code?', DefaultFHIR.get.noteTypeCode);
+	app.get('/:apikey/adjudication-error/:_id?', DefaultFHIR.get.adjudicationError);
+	app.get('/:apikey/adjudication-error/code/:code?', DefaultFHIR.get.adjudicationErrorCode);
+	app.get('/:apikey/device-statement-status/:_id?', DefaultFHIR.get.deviceStatementStatus);
+	app.get('/:apikey/device-statement-status/code/:code?', DefaultFHIR.get.deviceStatementStatusCode);
+	app.get('/:apikey/supplyrequest-status/:_id?', DefaultFHIR.get.supplyrequestStatus);
+	app.get('/:apikey/supplyrequest-status/code/:code?', DefaultFHIR.get.supplyrequestStatusCode);
+	app.get('/:apikey/supplyrequest-reason/:_id?', DefaultFHIR.get.supplyrequestReason);
+	app.get('/:apikey/supplyrequest-reason/code/:code?', DefaultFHIR.get.supplyrequestReasonCode);
+	app.get('/:apikey/supplydelivery-status/:_id?', DefaultFHIR.get.supplydeliveryStatus);
+	app.get('/:apikey/supplydelivery-status/code/:code?', DefaultFHIR.get.supplydeliveryStatusCode);
+	app.get('/:apikey/supplydelivery-type/:_id?', DefaultFHIR.get.supplydeliveryType);
+	app.get('/:apikey/supplydelivery-type/code/:code?', DefaultFHIR.get.supplydeliveryTypeCode);
+	
+	app.get('/:apikey/task-status/:_id?', DefaultFHIR.get.taskStatus);
+	app.get('/:apikey/task-status/code/:code?', DefaultFHIR.get.taskStatusCode);
+	app.get('/:apikey/task-performer-type/:_id?', DefaultFHIR.get.taskPerformerType);
+	app.get('/:apikey/task-performer-type/code/:code?', DefaultFHIR.get.taskPerformerTypeCode);
+	app.get('/:apikey/forms/:_id?', DefaultFHIR.get.forms);
+	app.get('/:apikey/forms/code/:code?', DefaultFHIR.get.formsCode);
+	app.get('/:apikey/supply-item/:_id?', DefaultFHIR.get.supplyItem);
+	app.get('/:apikey/supply-item/code/:code?', DefaultFHIR.get.supplyItemCode);
+	
 	//post
 	app.post('/:apikey/identity-AssuranceLevel', DefaultFHIR.post.identityAssuranceLevel);
 	app.post('/:apikey/administrative-gender', DefaultFHIR.post.administrativeGender);
@@ -536,6 +614,14 @@ var routesDefaultFHIR = function(app, DefaultFHIR){
 	app.post('/:apikey/endpoint-payload-type', DefaultFHIR.post.endpointPayloadType);
 	app.post('/:apikey/AvailableTime', DefaultFHIR.post.availableTime);
 	app.post('/:apikey/NotAvailable', DefaultFHIR.post.notAvailable);
+	app.post('/:apikey/Timing', DefaultFHIR.post.timing);
+	
+	app.post('/:apikey/DataRequirement', DefaultFHIR.post.dataRequirement);
+	app.post('/:apikey/CodeFilter', DefaultFHIR.post.codeFilter);
+	app.post('/:apikey/DateFilter', DefaultFHIR.post.dateFilter);
+	app.post('/:apikey/RelatedArtifact', DefaultFHIR.post.relatedArtifact);
+	app.post('/:apikey/TriggerDefinition', DefaultFHIR.post.triggerDefinition);
+	
 	app.post('/:apikey/adverse-event-category', DefaultFHIR.post.adverseEventCategory);
 	app.post('/:apikey/adverse-event-type', DefaultFHIR.post.adverseEventType);
 	app.post('/:apikey/adverse-event-seriousness', DefaultFHIR.post.adverseEventSeriousness);
@@ -684,6 +770,43 @@ var routesDefaultFHIR = function(app, DefaultFHIR){
 	app.post('/:apikey/specimen-type', DefaultFHIR.post.specimenType);
 	app.post('/:apikey/preservative', DefaultFHIR.post.preservative);
 	
+	app.post('/:apikey/usage-context-type', DefaultFHIR.post.usageContextType);
+	app.post('/:apikey/usage-context', DefaultFHIR.post.usageContext);
+	app.post('/:apikey/quantity-comparator', DefaultFHIR.post.quantityComparator);
+	
+	app.post('/:apikey/all-types', DefaultFHIR.post.allTypes);
+	
+	app.post('/:apikey/related-artifact-type', DefaultFHIR.post.relatedArtifactType);
+	app.post('/:apikey/trigger-type', DefaultFHIR.post.triggerType);
+	
+	app.post('/:apikey/action-participant-type', DefaultFHIR.post.actionParticipantType);
+	app.post('/:apikey/plan-definition-type', DefaultFHIR.post.planDefinitionType);
+	app.post('/:apikey/publication-status', DefaultFHIR.post.publicationStatus);
+	app.post('/:apikey/definition-topic', DefaultFHIR.post.definitionTopic);
+	
+	app.post('/:apikey/action-condition-kind', DefaultFHIR.post.actionConditionKind);
+	app.post('/:apikey/action-relationship-type', DefaultFHIR.post.actionRelationshipType);
+	app.post('/:apikey/action-type', DefaultFHIR.post.actionType);
+	app.post('/:apikey/action-grouping-behavior', DefaultFHIR.post.actionGroupingBehavior);
+	app.post('/:apikey/action-selection-behavior', DefaultFHIR.post.actionSelectionBehavior);
+	app.post('/:apikey/action-required-behavior', DefaultFHIR.post.actionRequiredBehavior);
+	app.post('/:apikey/action-precheck-behavior', DefaultFHIR.post.actionPrecheckBehavior);
+	app.post('/:apikey/action-cardinality-behavior', DefaultFHIR.post.actionCardinalityBehavior);
+	app.post('/:apikey/actionlist', DefaultFHIR.post.actionlist);
+	
+	app.post('/:apikey/process-outcome', DefaultFHIR.post.processOutcome);
+	app.post('/:apikey/note-type', DefaultFHIR.post.noteType);
+	app.post('/:apikey/adjudication-error', DefaultFHIR.post.adjudicationError);
+	app.post('/:apikey/device-statement-status', DefaultFHIR.post.deviceStatementStatus);
+	app.post('/:apikey/supplyrequest-status', DefaultFHIR.post.supplyrequestStatus);
+	app.post('/:apikey/supplyrequest-reason', DefaultFHIR.post.supplyrequestReason);
+	app.post('/:apikey/supplydelivery-status', DefaultFHIR.post.supplydeliveryStatus);
+	app.post('/:apikey/supplydelivery-type', DefaultFHIR.post.supplydeliveryType);
+	
+	app.post('/:apikey/task-status', DefaultFHIR.post.taskStatus);
+	app.post('/:apikey/task-performer-type', DefaultFHIR.post.taskPerformerType);
+	app.post('/:apikey/forms', DefaultFHIR.post.forms);
+	app.post('/:apikey/supply-item', DefaultFHIR.post.supplyItem);
 	//put
 	app.put('/:apikey/identity-AssuranceLevel/:_id', DefaultFHIR.put.identityAssuranceLevel);
 	app.put('/:apikey/administrative-gender/:_id', DefaultFHIR.put.administrativeGender);
@@ -772,6 +895,15 @@ var routesDefaultFHIR = function(app, DefaultFHIR){
 	app.put('/:apikey/endpoint-payload-type/:_id', DefaultFHIR.put.endpointPayloadType);
 	app.put('/:apikey/AvailableTime/:_id?/:dr?', DefaultFHIR.put.availableTime);
 	app.put('/:apikey/NotAvailable/:_id?/:dr?', DefaultFHIR.put.notAvailable);
+	app.put('/:apikey/Timing/:_id?/:dr?', DefaultFHIR.put.timing);
+	
+	app.put('/:apikey/DataRequirement/:_id?/:dr?', DefaultFHIR.put.dataRequirement);
+	app.put('/:apikey/CodeFilter/:_id?/:dr?', DefaultFHIR.put.codeFilter);
+	app.put('/:apikey/DateFilter/:_id?/:dr?', DefaultFHIR.put.dateFilter);
+	app.put('/:apikey/RelatedArtifact/:_id?/:dr?', DefaultFHIR.put.relatedArtifact);
+	app.put('/:apikey/TriggerDefinition/:_id?/:dr?', DefaultFHIR.put.triggerDefinition);
+	
+	
 	app.put('/:apikey/adverse-event-category/:_id', DefaultFHIR.put.adverseEventCategory);
 	app.put('/:apikey/adverse-event-type/:_id', DefaultFHIR.put.adverseEventType);
 	app.put('/:apikey/adverse-event-seriousness/:_id', DefaultFHIR.put.adverseEventSeriousness);
@@ -916,5 +1048,43 @@ var routesDefaultFHIR = function(app, DefaultFHIR){
 	app.put('/:apikey/bodysite-relative-location/:_id', DefaultFHIR.put.bodysiteRelativeLocation);
 	app.put('/:apikey/specimen-type/:_id', DefaultFHIR.put.specimenType);
 	app.put('/:apikey/preservative/:_id', DefaultFHIR.put.preservative);
+	
+	app.put('/:apikey/usage-context-type/:_id', DefaultFHIR.put.usageContextType);
+	app.put('/:apikey/usage-context/:_id', DefaultFHIR.put.usageContext);
+	app.put('/:apikey/quantity-comparator/:_id', DefaultFHIR.put.quantityComparator);
+	
+	app.put('/:apikey/all-types/:_id', DefaultFHIR.put.allTypes);
+	
+	app.put('/:apikey/related-artifact-type/:_id', DefaultFHIR.put.relatedArtifactType);
+	app.put('/:apikey/trigger-type/:_id', DefaultFHIR.put.triggerType);
+	
+	app.put('/:apikey/action-participant-type/:_id', DefaultFHIR.put.actionParticipantType);
+	app.put('/:apikey/plan-definition-type/:_id', DefaultFHIR.put.planDefinitionType);
+	app.put('/:apikey/publication-status/:_id', DefaultFHIR.put.publicationStatus);
+	app.put('/:apikey/definition-topic/:_id', DefaultFHIR.put.definitionTopic);
+	
+	app.put('/:apikey/action-condition-kind/:_id', DefaultFHIR.put.actionConditionKind);
+	app.put('/:apikey/action-relationship-type/:_id', DefaultFHIR.put.actionRelationshipType);
+	app.put('/:apikey/action-type/:_id', DefaultFHIR.put.actionType);
+	app.put('/:apikey/action-grouping-behavior/:_id', DefaultFHIR.put.actionGroupingBehavior);
+	app.put('/:apikey/action-selection-behavior/:_id', DefaultFHIR.put.actionSelectionBehavior);
+	app.put('/:apikey/action-required-behavior/:_id', DefaultFHIR.put.actionRequiredBehavior);
+	app.put('/:apikey/action-precheck-behavior/:_id', DefaultFHIR.put.actionPrecheckBehavior);
+	app.put('/:apikey/action-cardinality-behavior/:_id', DefaultFHIR.put.actionCardinalityBehavior);
+	app.put('/:apikey/actionlist/:_id', DefaultFHIR.put.actionlist);
+	
+	app.put('/:apikey/process-outcome/:_id', DefaultFHIR.put.processOutcome);
+	app.put('/:apikey/note-type/:_id', DefaultFHIR.put.noteType);
+	app.put('/:apikey/adjudication-error/:_id', DefaultFHIR.put.adjudicationError);
+	app.put('/:apikey/device-statement-status/:_id', DefaultFHIR.put.deviceStatementStatus);
+	app.put('/:apikey/supplyrequest-status/:_id', DefaultFHIR.put.supplyrequestStatus);
+	app.put('/:apikey/supplyrequest-reason/:_id', DefaultFHIR.put.supplyrequestReason);
+	app.put('/:apikey/supplydelivery-status/:_id', DefaultFHIR.put.supplydeliveryStatus);
+	app.put('/:apikey/supplydelivery-type/:_id', DefaultFHIR.put.supplydeliveryType);
+	
+	app.put('/:apikey/task-status/:_id', DefaultFHIR.put.taskStatus);
+	app.put('/:apikey/task-performer-type/:_id', DefaultFHIR.put.taskPerformerType);
+	app.put('/:apikey/forms/:_id', DefaultFHIR.put.forms);
+	app.put('/:apikey/supply-item/:_id', DefaultFHIR.put.supplyItem);
 }
 module.exports = routesDefaultFHIR;

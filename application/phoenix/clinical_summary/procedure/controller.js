@@ -142,34 +142,67 @@ var controller = {
           Procedure.id = rez[i].procedure_id;
 					Procedure.partOf = rez[i].part_of_procedure;
 					Procedure.status = rez[i].status;
-					Procedure.not_done = rez[i].not_done;
-					Procedure.not_done_reason = rez[i].not_done_reason;
+					Procedure.notDone = rez[i].not_done;
+					Procedure.notDoneReason = rez[i].not_done_reason;
 					Procedure.category = rez[i].category;
 					Procedure.code = rez[i].code;
-					if (rez[i].subject_group !== 'null') {
-						Procedure.subject = hostFHIR + ':' + portFHIR + '/' + apikey + '/Group?_id=' +  rez[i].subject_group;
-					} else if (rez[i].subject_patient !== 'null') {
-						Procedure.subject = hostFHIR + ':' + portFHIR + '/' + apikey + '/Patient?_id=' +  rez[i].subject_patient;
+					var arrSubject = [];
+					var Subject = {};
+					if(rez[i].subject_group != "null"){
+						Subject.group = hostFHIR + ':' + portFHIR + '/' + apikey + '/Group?_id=' +  rez[i].subject_group;
 					} else {
-						Procedure.subject = "";
+						Subject.group = "";
 					}
-					if (rez[i].context_encounter !== 'null') {
-						Procedure.context = hostFHIR + ':' + portFHIR + '/' + apikey + '/Encounter?_id=' +  rez[i].context_encounter;
-					} else if (rez[i].context_episode_of_care !== 'null') {
-						Procedure.context = hostFHIR + ':' + portFHIR + '/' + apikey + '/EpisodeOfCare?_id=' +  rez[i].context_episode_of_care;
+					if(rez[i].subject_patient != "null"){
+						Subject.patient = hostFHIR + ':' + portFHIR + '/' + apikey + '/Patient?_id=' +  rez[i].subject_patient;
 					} else {
-						Procedure.context = "";
+						Subject.patient = "";
 					}
-					Procedure.performed.performedDateTime = rez[i].performed_date_time;
-					Procedure.performed.performedPeriod = rez[i].performed_period_start + ' to ' + rez[i].performed_period_end;
-					Procedure.location = rez[i].location;
-					Procedure.reasonCode = rez[i].reason_code;
+					arrSubject[i] = Subject;
 					
+					var arrContext = [];
+					var Context = {};
+					if(rez[i].context_encounter != "null"){
+						Context.encounter = hostFHIR + ':' + portFHIR + '/' + apikey + '/Encounter?_id=' +  rez[i].context_encounter;
+					} else {
+						Context.encounter = "";
+					}
+					if(rez[i].context_episode_of_care != "null"){
+						Context.episodeOfCare = hostFHIR + ':' + portFHIR + '/' + apikey + '/EpisodeOfCare?_id=' +  rez[i].context_episode_of_care;
+					} else {
+						Context.episodeOfCare = "";
+					}
+					arrContext[i] = Context;
+					Procedure.subject = arrSubject;
+					Procedure.context = arrContext;
+					if(rez[i].performed_date_time == null){
+						Procedure.performed.performedDateTime = formatDate(rez[i].performed_date_time);
+					}else{
+						Procedure.performed.performedDateTime = rez[i].performed_date_time;
+					}
+					var performedperiod_start,performedperiod_end;
+					if(rez[i].performed_period_start == null){
+						performedperiod_start = formatDate(rez[i].performed_period_start);  
+					}else{
+						performedperiod_start = rez[i].performed_period_start;  
+					}
+					if(rez[i].performed_period_end == null){
+						performedperiod_end = formatDate(rez[i].performed_period_end);  
+					}else{
+						performedperiod_end = rez[i].performed_period_end;  
+					}
+					Procedure.performed.performedPeriod = performedperiod_start + ' to ' + performedperiod_end;
+					if(rez[i].location != "null"){
+						Procedure.location = hostFHIR + ':' + portFHIR + '/' + apikey + '/Location?_id=' +  rez[i].location;
+					} else {
+						Procedure.location = "";
+					}
+					Procedure.reasonCode = rez[i].reason_code;
 					Procedure.bodySite = rez[i].body_site;
 					Procedure.outcome = rez[i].outcome;
 					Procedure.complication = rez[i].complication;
 					Procedure.follow_up = rez[i].follow_up;
-					Procedure.used_code = rez[i].used_code;
+					Procedure.usedCode = rez[i].used_code;
 					
           arrProcedure[i] = Procedure;
         }
@@ -210,20 +243,40 @@ var controller = {
 					var ProcedurePerformer = {};
 					ProcedurePerformer.id = rez[i].participant_id;
 					ProcedurePerformer.role = rez[i].role;
-					if (rez[i].actor_practitioner == null) {
-						ProcedurePerformer.actor = hostFHIR + ':' + portFHIR + '/' + apikey + '/Practitioner?_id=' +  rez[i].actor_practitioner;
-					} else if (rez[i].actor_organization == null) {
-						ProcedurePerformer.actor = hostFHIR + ':' + portFHIR + '/' + apikey + '/Organization?_id=' + rez[i].actor_organization;
-					} else if (rez[i].actor_patient == null) {
-						ProcedurePerformer.actor =  hostFHIR + ':' + portFHIR + '/' + apikey + '/Patient?_id=' +rez[i].actor_patient;
-					} else if (rez[i].actor_related_person == null) {
-						ProcedurePerformer.actor =  hostFHIR + ':' + portFHIR + '/' + apikey + '/RelatedPerson?_id=' + rez[i].actor_related_person;
-					} else if (rez[i].actor_device == null) {
-						ProcedurePerformer.actor =  hostFHIR + ':' + portFHIR + '/' + apikey + '/Device?_id=' + rez[i].actor_device;
+					var arrActor = [];
+					var Actor = {};
+					if(rez[i].actor_practitioner != "null"){
+						Actor.practitioner = hostFHIR + ':' + portFHIR + '/' + apikey + '/Practitioner?_id=' +  rez[i].actor_practitioner;
 					} else {
-						ProcedurePerformer.actor = "";
+						Actor.practitioner = "";
 					}
-					ProcedurePerformer.onBehalfOf = rez[i].on_behalf_of;
+					if(rez[i].actor_organization != "null"){
+						Actor.organization = hostFHIR + ':' + portFHIR + '/' + apikey + '/Organization?_id=' +  rez[i].actor_organization;
+					} else {
+						Actor.organization = "";
+					}
+					if(rez[i].actor_patient != "null"){
+						Actor.patient = hostFHIR + ':' + portFHIR + '/' + apikey + '/Patient?_id=' +  rez[i].actor_patient;
+					} else {
+						Actor.patient = "";
+					}
+					if(rez[i].actor_related_person != "null"){
+						Actor.relatedPerson = hostFHIR + ':' + portFHIR + '/' + apikey + '/RelatedPerson?_id=' +  rez[i].actor_related_person;
+					} else {
+						Actor.relatedPerson = "";
+					}
+					if(rez[i].actor_device != "null"){
+						Actor.device = hostFHIR + ':' + portFHIR + '/' + apikey + '/Device?_id=' +  rez[i].actor_device;
+					} else {
+						Actor.device = "";
+					}
+					arrActor[i] = Actor;
+					ProcedurePerformer.actor = arrActor;
+					if(rez[i].on_behalf_of != "null"){
+						ProcedurePerformer.onBehalfOf = hostFHIR + ':' + portFHIR + '/' + apikey + '/Organization?_id=' +  rez[i].on_behalf_of;
+					} else {
+						ProcedurePerformer.onBehalfOf = "";
+					}
 					
 					arrProcedurePerformer[i] = ProcedurePerformer;
 				}
@@ -325,7 +378,7 @@ var controller = {
 			if (typeof performed_date_time !== 'undefined' && performed_date_time !== "") {
         column += 'performed_date_time,';
         //values += "'" + date + "',";
-				values += "to_date('"+ performed_date_time + "', 'yyyy-MM-dd'),";
+				values += "to_date('"+ performed_date_time + "', 'yyyy-MM-dd HH:mm'),";
       }
 			
 			if (typeof performed_period_start !== 'undefined' && performed_period_start !== "") {
@@ -553,7 +606,7 @@ var controller = {
 			if (typeof performed_date_time !== 'undefined' && performed_date_time !== "") {
         column += 'performed_date_time,';
         //values += "'" + date + "',";
-				values += "to_date('"+ performed_date_time + "', 'yyyy-MM-dd'),";
+				values += "to_date('"+ performed_date_time + "', 'yyyy-MM-dd HH:mm'),";
       }
 			
 			if (typeof performed_period_start !== 'undefined' && performed_period_start !== "") {

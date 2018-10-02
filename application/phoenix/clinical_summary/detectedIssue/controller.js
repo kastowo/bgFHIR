@@ -82,15 +82,30 @@ var controller = {
 					DetectedIssue.status = rez[i].status;
 					DetectedIssue.category = rez[i].category;
 					DetectedIssue.severity = rez[i].severity;
-					DetectedIssue.patient = rez[i].patient;
-					DetectedIssue.date = rez[i].date;
-					if (rez[i].author_practitioner !== 'null') {
-						DetectedIssue.author = hostFHIR + ':' + portFHIR + '/' + apikey + '/Practitioner?_id=' +  rez[i].author_practitioner;
-					} else if (rez[i].author_device !== 'null') {
-						DetectedIssue.author = hostFHIR + ':' + portFHIR + '/' + apikey + '/Device?_id=' +  rez[i].author_device;
+					if(rez[i].patient != "null"){
+						DetectedIssue.patient = hostFHIR + ':' + portFHIR + '/' + apikey + '/Patient?_id=' +  rez[i].patient;
 					} else {
-						DetectedIssue.author = "";
+						DetectedIssue.patient = "";
 					}
+					if(rez[i].date == null){
+						DetectedIssue.date = formatDate(rez[i].date);
+					}else{
+						DetectedIssue.date = rez[i].date;
+					}
+					var arrAuthor = [];
+					var Author = {};
+					if(rez[i].author_practitioner != "null"){
+						Author.practitioner = hostFHIR + ':' + portFHIR + '/' + apikey + '/Practitioner?_id=' +  rez[i].author_practitioner;
+					} else {
+						Author.practitioner = "";
+					}
+					if(rez[i].author_device != "null"){
+						Author.device = hostFHIR + ':' + portFHIR + '/' + apikey + '/Device?_id=' +  rez[i].author_device;
+					} else {
+						Author.device = "";
+					}
+					arrAuthor[i] = Author;
+					DetectedIssue.author = arrAuthor;
 					DetectedIssue.implicated = rez[i].implicated;
 					DetectedIssue.detail = rez[i].detail;
 					DetectedIssue.reference = rez[i].reference;
@@ -133,8 +148,16 @@ var controller = {
 					var DetectedIssueMitigation = {};
 					DetectedIssueMitigation.id = rez[i].mitigation_id;
 					DetectedIssueMitigation.action = rez[i].action;
-					DetectedIssueMitigation.date = formatDate(rez[i].date);
-					DetectedIssueMitigation.author = rez[i].author;
+					if(rez[i].date == null){
+						DetectedIssueMitigation.date = formatDate(rez[i].date);
+					}else{
+						DetectedIssueMitigation.date = rez[i].date;
+					}
+					if(rez[i].author != "null"){
+						DetectedIssueMitigation.author = hostFHIR + ':' + portFHIR + '/' + apikey + '/Practitioner?_id=' +  rez[i].author;
+					} else {
+						DetectedIssueMitigation.author = "";
+					}
 					arrDetectedIssueMitigation[i] = DetectedIssueMitigation;
 				}
 				res.json({
@@ -208,7 +231,7 @@ var controller = {
 			if (typeof date !== 'undefined' && date !== "") {
         column += 'date,';
         //values += "'" + date + "',";
-				values += "to_date('"+ date + "', 'yyyy-MM-dd'),";
+				values += "to_date('"+ date + "', 'yyyy-MM-dd HH:mm'),";
       }
 			
 			if (typeof detail !== 'undefined' && detail !== "") {
@@ -262,7 +285,7 @@ var controller = {
 			if (typeof date !== 'undefined' && date !== "") {
         column += 'date,';
         //values += "'" + date + "',";
-				values += "to_date('"+ date + "', 'yyyy-MM-dd'),";
+				values += "to_date('"+ date + "', 'yyyy-MM-dd HH:mm'),";
       }
 			
 			if (typeof detected_issue_id !== 'undefined' && detected_issue_id !== "") {
@@ -345,7 +368,7 @@ var controller = {
 			if (typeof date !== 'undefined' && date !== "") {
         column += 'date,';
         //values += "'" + date + "',";
-				values += "to_date('"+ date + "', 'yyyy-MM-dd'),";
+				values += "to_date('"+ date + "', 'yyyy-MM-dd HH:mm'),";
       }
 			
 			if (typeof detail !== 'undefined' && detail !== "") {
@@ -405,7 +428,7 @@ var controller = {
 			if (typeof date !== 'undefined' && date !== "") {
         column += 'date,';
         //values += "'" + date + "',";
-				values += "to_date('"+ date + "', 'yyyy-MM-dd'),";
+				values += "to_date('"+ date + "', 'yyyy-MM-dd HH:mm'),";
       }
 			
 			if (typeof detected_issue_id !== 'undefined' && detected_issue_id !== "") {

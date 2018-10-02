@@ -87,29 +87,57 @@ var controller = {
 					Goal.status = rez[i].status;
 					Goal.category = rez[i].category;
 					Goal.priority = rez[i].priority;
-					Goal.description = rez[i].description;			
-					if (rez[i].subject_group !== 'null') {
-						Goal.subject = hostFHIR + ':' + portFHIR + '/' + apikey + '/Group?_id=' +  rez[i].subject_group;
-					} else if (rez[i].subject_patient !== 'null') {
-						Goal.subject = hostFHIR + ':' + portFHIR + '/' + apikey + '/Patient?_id=' +  rez[i].subject_patient;
-					} else if (rez[i].subject_organization !== 'null') {
-						Goal.subject = hostFHIR + ':' + portFHIR + '/' + apikey + '/Organization?_id=' +  rez[i].subject_organization;
+					Goal.description = rez[i].description;
+					var arrSubject = [];
+					var Subject = {};
+					if(rez[i].subject_group != "null"){
+						Subject.group = hostFHIR + ':' + portFHIR + '/' + apikey + '/Group?_id=' +  rez[i].subject_group;
 					} else {
-						Goal.subject = "";
+						Subject.group = "";
 					}
-					Goal.start.startDate = rez[i].start_date;
+					if(rez[i].subject_patient != "null"){
+						Subject.patient = hostFHIR + ':' + portFHIR + '/' + apikey + '/Patient?_id=' +  rez[i].subject_patient;
+					} else {
+						Subject.patient = "";
+					}
+					if(rez[i].subject_organization != "null"){
+						Subject.organization = hostFHIR + ':' + portFHIR + '/' + apikey + '/Organization?_id=' +  rez[i].subject_organization;
+					} else {
+						Subject.organization = "";
+					}
+					arrSubject[i] = Subject;
+					Goal.subject = arrSubject;
+					if(rez[i].start_date == null){
+						Goal.start.startDate = formatDate(rez[i].start_date);
+					}else{
+						Goal.start.startDate = rez[i].start_date;
+					}
 					Goal.start.startCodeableConcept = rez[i].start_codeable_concept;
-					Goal.statusDate = rez[i].status_date;
-					Goal.statusReason = rez[i].status_reason;
-					if (rez[i].expressed_by_practitioner !== 'null') {
-						Goal.expressedBy = hostFHIR + ':' + portFHIR + '/' + apikey + '/Practitioner?_id=' +  rez[i].expressed_by_practitioner;
-					} else if (rez[i].expressed_by_patient !== 'null') {
-						Goal.expressedBy = hostFHIR + ':' + portFHIR + '/' + apikey + '/Patient?_id=' +  rez[i].expressed_by_patient;
-					} else if (rez[i].expressed_by_related_person !== 'null') {
-						Goal.expressedBy = hostFHIR + ':' + portFHIR + '/' + apikey + '/RelatedPerson?_id=' +  rez[i].expressed_by_related_person;
-					} else {
-						Goal.expressedBy = "";
+					if(rez[i].status_date == null){
+						Goal.statusDate = formatDate(rez[i].status_date);
+					}else{
+						Goal.statusDate = rez[i].status_date;
 					}
+					Goal.statusReason = rez[i].status_reason;var arrSubject = [];
+					var arrExpressedBy = [];
+					var ExpressedBy = {};
+					if(rez[i].expressed_by_practitioner != "null"){
+						ExpressedBy.practitioner = hostFHIR + ':' + portFHIR + '/' + apikey + '/Practitioner?_id=' +  rez[i].expressed_by_practitioner;
+					} else {
+						ExpressedBy.practitioner = "";
+					}
+					if(rez[i].expressed_by_patient != "null"){
+						ExpressedBy.patient = hostFHIR + ':' + portFHIR + '/' + apikey + '/Patient?_id=' +  rez[i].expressed_by_patient;
+					} else {
+						ExpressedBy.patient = "";
+					}
+					if(rez[i].expressed_by_related_person != "null"){
+						ExpressedBy.relatedPerson = hostFHIR + ':' + portFHIR + '/' + apikey + '/RelatedPerson?_id=' +  rez[i].expressed_by_related_person;
+					} else {
+						ExpressedBy.relatedPerson = "";
+					}
+					arrExpressedBy[i] = ExpressedBy;
+					Goal.expressedBy = arrExpressedBy;
 					Goal.outcomeCode = rez[i].outcome_code;
 					
 					
@@ -156,8 +184,12 @@ var controller = {
 					GoalTarget.detail.detailQuantity = rez[i].quantity;
 					GoalTarget.detail.detailRange = rez[i].detail_range_low + " to " + rez[i].detail_range_high;
 					GoalTarget.detail.detailCodeableConcept = rez[i].detail_codeable_concept;
-					GoalTarget.due.dueDate = formatDate(rez[i].due_date);
-					GoalTarget.due.dueDuration = formatDate(rez[i].due_duration);
+					if(rez[i].due_date == null){
+						GoalTarget.due.dueDate = formatDate(rez[i].due_date);
+					}else{
+						GoalTarget.due.dueDate = rez[i].due_date;
+					}
+					GoalTarget.due.dueDuration = rez[i].due_duration;
 					arrGoalTarget[i] = GoalTarget;
 				}
 				res.json({

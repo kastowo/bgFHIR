@@ -58,7 +58,7 @@ var controller = {
 			
 			if(typeof identifier !== 'undefined' && identifier !== ""){
 				join += " LEFT JOIN BACIRO_FHIR.identifier i on im.IMMUNIZATION_ID = i.IMMUNIZATION_ID ";
-        condition += "i.IDENTIFIER_ID = '" + identifier + "' AND,";  
+        condition += "i.identifier_value = '" + identifier + "' AND,";  
       }
 			
 			if(typeof location !== 'undefined' && location !== ""){
@@ -131,9 +131,23 @@ var controller = {
 					Immunization.status = rez[i].status;
 					Immunization.notGiven = rez[i].not_given;
 					Immunization.veccineCode = rez[i].veccine_code;
-					Immunization.patient = hostFHIR + ':' + portFHIR + '/' + apikey + '/Patient?_id=' + rez[i].patient;
-					Immunization.encounter = hostFHIR + ':' + portFHIR + '/' + apikey + '/Encounter?_id=' + rez[i].encounter;
-					Immunization.date = rez[i].date;
+					
+					if (rez[i].patient !== 'null') {
+						Immunization.patient = hostFHIR + ':' + portFHIR + '/' + apikey + '/Patient?_id=' + rez[i].patient;
+					} else {
+						Immunization.patient = "";
+					}
+					if (rez[i].encounter !== 'null') {
+						Immunization.encounter = hostFHIR + ':' + portFHIR + '/' + apikey + '/Encounter?_id=' + rez[i].encounter;
+					} else {
+						Immunization.encounter = "";
+					}
+					if(rez[i].date == null){
+						Immunization.date = formatDate(rez[i].date);
+					}else{
+						Immunization.date = rez[i].date;
+					}
+					
 					Immunization.primarySource = rez[i].primary_source;
 					Immunization.reportOrigin = rez[i].report_origin;
 					if (rez[i].location !== 'null') {
@@ -147,7 +161,12 @@ var controller = {
 						Immunization.manufacturer = "";
 					}
 					Immunization.iotNumber = rez[i].iot_number;
-					Immunization.expirationDate = rez[i].expiration_date;
+					if(rez[i].expiration_date == null){
+						Immunization.expirationDate = formatDate(rez[i].expiration_date);
+					}else{
+						Immunization.expirationDate = rez[i].expiration_date;
+					}
+					
 					Immunization.site = rez[i].site;
 					Immunization.route = rez[i].route;
 					Immunization.doseQuantity = rez[i].dose_quantity;
@@ -244,7 +263,11 @@ var controller = {
 				for (i = 0; i < rez.length; i++) {
 					var ImmunizationReaction = {};
 					ImmunizationReaction.id = rez[i].reaction_id;
-					ImmunizationReaction.date = rez[i].date;
+					if(rez[i].date == null){
+						ImmunizationReaction.date = formatDate(rez[i].date);
+					}else{
+						ImmunizationReaction.date = rez[i].date;
+					}
 					if (rez[i].detail !== 'null') {
 						ImmunizationReaction.detail = hostFHIR + ':' + portFHIR + '/' + apikey + '/Observation?_id=' + rez[i].detail;
 					} else {
@@ -297,14 +320,18 @@ var controller = {
 				for (i = 0; i < rez.length; i++) {
 					var ImmunizationVaccinationProtocol = {};
 					ImmunizationVaccinationProtocol.id = rez[i].vaccination_protocol_id;
-					ImmunizationVaccinationProtocol.dose_sequence = rez[i].dose_sequence;
+					ImmunizationVaccinationProtocol.doseSequence = rez[i].dose_sequence;
 					ImmunizationVaccinationProtocol.description = rez[i].description;
-					ImmunizationVaccinationProtocol.authority = rez[i].authority;
+					if(rez[i].authority != "null"){
+						ImmunizationVaccinationProtocol.authority = hostFHIR + ':' + portFHIR + '/' + apikey + '/Organization?_id=' +  rez[i].authority;
+					} else {
+						ImmunizationVaccinationProtocol.authority = "";
+					}
 					ImmunizationVaccinationProtocol.series = rez[i].series;
-					ImmunizationVaccinationProtocol.series_doses = rez[i].series_doses;
-					ImmunizationVaccinationProtocol.target_disease = rez[i].target_disease;
-					ImmunizationVaccinationProtocol.dose_status = rez[i].dose_status;
-					ImmunizationVaccinationProtocol.dose_status_reason = rez[i].dose_status_reason;
+					ImmunizationVaccinationProtocol.seriesDoses = rez[i].series_doses;
+					ImmunizationVaccinationProtocol.targetDisease = rez[i].target_disease;
+					ImmunizationVaccinationProtocol.doseStatus = rez[i].dose_status;
+					ImmunizationVaccinationProtocol.doseStatusReason = rez[i].dose_status_reason;
 					
 					arrImmunizationVaccinationProtocol[i] = ImmunizationVaccinationProtocol;
 				}
@@ -375,7 +402,7 @@ var controller = {
 			if (typeof date !== 'undefined' && date !== "") {
         column += 'date,';
         //values += "'" + date + "',";
-				values += "to_date('"+ date + "', 'yyyy-MM-dd'),";
+				values += "to_date('"+ date + "', 'yyyy-MM-dd HH:mm'),";
       }
 			
 			if (typeof primary_source !== 'undefined' && primary_source !== "") {
@@ -507,7 +534,7 @@ var controller = {
 			if (typeof date !== 'undefined' && date !== "") {
         column += 'date,';
         //values += "'" + date + "',";
-				values += "to_date('"+ date + "', 'yyyy-MM-dd'),";
+				values += "to_date('"+ date + "', 'yyyy-MM-dd HH:mm'),";
       }
 			
 			if (typeof detail !== 'undefined' && detail !== "") {
@@ -707,7 +734,7 @@ var controller = {
 			if (typeof expiration_date !== 'undefined' && expiration_date !== "") {
         column += 'expiration_date,';
         //values += "'" + date + "',";
-				values += "to_date('"+ expiration_date + "', 'yyyy-MM-dd'),";
+				values += "to_date('"+ expiration_date + "', 'yyyy-MM-dd HH:mm'),";
       }
 			
 			if (typeof site !== 'undefined' && site !== "") {
@@ -817,7 +844,7 @@ var controller = {
 			if (typeof date !== 'undefined' && date !== "") {
         column += 'date,';
         //values += "'" + date + "',";
-				values += "to_date('"+ date + "', 'yyyy-MM-dd'),";
+				values += "to_date('"+ date + "', 'yyyy-MM-dd HH:mm'),";
       }
 			
 			if (typeof detail !== 'undefined' && detail !== "") {

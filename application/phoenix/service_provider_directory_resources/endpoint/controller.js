@@ -85,7 +85,18 @@ var controller = {
 					Endpoint.name = rez[i].endpoint_name;
 					//Endpoint.managingOrganization = rez[i].endpoint_managing_organization;
 					Endpoint.managingOrganization = rez[i].organization_id;
-					Endpoint.period = rez[i].endpoint_period_start + " to " + rez[i].endpoint_period_end;
+					var endpointperiod_start,endpointperiod_end;
+					if(rez[i].endpoint_period_start == null){
+						endpointperiod_start = formatDate(rez[i].endpoint_period_start);  
+					}else{
+						endpointperiod_start = rez[i].endpoint_period_start;  
+					}
+					if(rez[i].endpoint_period_end == null){
+						endpointperiod_end = formatDate(rez[i].endpoint_period_end);  
+					}else{
+						endpointperiod_end = rez[i].endpoint_period_end;  
+					}
+					Endpoint.period = endpointperiod_start + ' to ' + endpointperiod_end;
 					Endpoint.payloadType = rez[i].endpoint_payload_type;
 					Endpoint.payloadMimeType = rez[i].endpoint_payload_mime_type;
 					Endpoint.address = rez[i].endpoint_address;
@@ -140,7 +151,7 @@ var controller = {
         if(endpoint_period_start == ""){
           endpoint_period_start = null;
         }else{
-          endpoint_period_start = "to_date('"+endpoint_period_start+ "', 'yyyy-MM-dd')";
+          endpoint_period_start = "to_date('"+endpoint_period_start+ "', 'yyyy-MM-dd HH:mm')";
         }
 
         column += 'endpoint_period_start,';
@@ -151,7 +162,7 @@ var controller = {
         if(endpoint_period_end == ""){
           endpoint_period_end = null;
         }else{
-          endpoint_period_end = "to_date('"+endpoint_period_end+ "', 'yyyy-MM-dd')";
+          endpoint_period_end = "to_date('"+endpoint_period_end+ "', 'yyyy-MM-dd HH:mm')";
         }
 
         column += 'endpoint_period_end,';
@@ -240,7 +251,7 @@ var controller = {
         if(endpoint_period_start == ""){
           endpoint_period_start = null;
         }else{
-          endpoint_period_start = "to_date('"+endpoint_period_start+ "', 'yyyy-MM-dd')";
+          endpoint_period_start = "to_date('"+endpoint_period_start+ "', 'yyyy-MM-dd HH:mm')";
         }
 
         column += 'endpoint_period_start,';
@@ -251,7 +262,7 @@ var controller = {
         if(endpoint_period_end == ""){
           endpoint_period_end = null;
         }else{
-          endpoint_period_end = "to_date('"+endpoint_period_end+ "', 'yyyy-MM-dd')";
+          endpoint_period_end = "to_date('"+endpoint_period_end+ "', 'yyyy-MM-dd HH:mm')";
         }
 
         column += 'endpoint_period_end,';

@@ -298,7 +298,7 @@ var controller = {
 
       var query = "UPSERT INTO BACIRO_FHIR.APPOINTMENT(" + column.slice(0, -1) + ")"+
         " VALUES ("+ values.slice(0, -1) +")";
-      
+      console.log(query);
       db.upsert(query,function(succes){
         res.json({"err_code": 0, "err_msg": "Appointment has been add."});
       },function(e){

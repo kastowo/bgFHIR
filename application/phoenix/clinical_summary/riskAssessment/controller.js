@@ -107,35 +107,75 @@ var controller = {
 					RiskAssessment.status = rez[i].status;
 					RiskAssessment.method = rez[i].method;
 					RiskAssessment.code = rez[i].code;
-					if (rez[i].subject_group !== 'null') {
-						RiskAssessment.subject = hostFHIR + ':' + portFHIR + '/' + apikey + '/Group?_id=' +  rez[i].subject_group;
-					} else if (rez[i].subject_patient !== 'null') {
-						RiskAssessment.subject = hostFHIR + ':' + portFHIR + '/' + apikey + '/Patient?_id=' +  rez[i].subject_patient;
+					var arrSubject = [];
+					var Subject = {};
+					if(rez[i].subject_group != "null"){
+						Subject.group = hostFHIR + ':' + portFHIR + '/' + apikey + '/Group?_id=' +  rez[i].subject_group;
 					} else {
-						RiskAssessment.subject = "";
+						Subject.group = "";
 					}
-					if (rez[i].context_encounter !== 'null') {
-						RiskAssessment.context = hostFHIR + ':' + portFHIR + '/' + apikey + '/Encounter?_id=' +  rez[i].context_encounter;
-					} else if (rez[i].context_episode_of_care !== 'null') {
-						RiskAssessment.context = hostFHIR + ':' + portFHIR + '/' + apikey + '/EpisodeOfCare?_id=' +  rez[i].context_episode_of_care;
+					if(rez[i].subject_patient != "null"){
+						Subject.patient = hostFHIR + ':' + portFHIR + '/' + apikey + '/Patient?_id=' +  rez[i].subject_patient;
 					} else {
-						RiskAssessment.context = "";
+						Subject.patient = "";
 					}
-					RiskAssessment.occurrence.occurrenceDateTime = rez[i].occurrence_date_time;
-					RiskAssessment.occurrence.occurrencePeriod = rez[i].occurrence_period_start + ' to ' + rez[i].occurrence_period_end;
-					RiskAssessment.condition = rez[i].condition;
-					if (rez[i].performer_practitioner !== 'null') {
-						RiskAssessment.performer = hostFHIR + ':' + portFHIR + '/' + apikey + '/Practitioner?_id=' +  rez[i].performer_practitioner;
-					} else if (rez[i].performer_device !== 'null') {
-						RiskAssessment.performer = hostFHIR + ':' + portFHIR + '/' + apikey + '/Device?_id=' +  rez[i].performer_device;
+					arrSubject[i] = Subject;
+					
+					var arrContext = [];
+					var Context = {};
+					if(rez[i].context_encounter != "null"){
+						Context.encounter = hostFHIR + ':' + portFHIR + '/' + apikey + '/Encounter?_id=' +  rez[i].context_encounter;
 					} else {
-						RiskAssessment.performer = "";
+						Context.encounter = "";
 					}
+					if(rez[i].context_episode_of_care != "null"){
+						Context.episodeOfCare = hostFHIR + ':' + portFHIR + '/' + apikey + '/EpisodeOfCare?_id=' +  rez[i].context_episode_of_care;
+					} else {
+						Context.episodeOfCare = "";
+					}
+					arrContext[i] = Context;
+					RiskAssessment.subject = arrContext;
+					RiskAssessment.context = arrContext;
+					if(rez[i].occurrence_date_time == null){
+						RiskAssessment.occurrence.occurrenceDateTime = formatDate(rez[i].occurrence_date_time);
+					}else{
+						RiskAssessment.occurrence.occurrenceDateTime = rez[i].occurrence_date_time;
+					}
+					var occurrenceperiod_start,occurrenceperiod_end;
+					if(rez[i].occurrence_period_start == null){
+						occurrenceperiod_start = formatDate(rez[i].occurrence_period_start);  
+					}else{
+						occurrenceperiod_start = rez[i].occurrence_period_start;  
+					}
+					if(rez[i].occurrence_period_end == null){
+						occurrenceperiod_end = formatDate(rez[i].occurrence_period_end);  
+					}else{
+						occurrenceperiod_end = rez[i].occurrence_period_end;  
+					}
+					RiskAssessment.occurrence.occurrencePeriod = occurrenceperiod_start + ' to ' + occurrenceperiod_end;
+					if(rez[i].condition != "null"){
+						Performer.condition = hostFHIR + ':' + portFHIR + '/' + apikey + '/Condition?_id=' +  rez[i].condition;
+					} else {
+						RiskAssessment.condition = "";
+					}
+					
+					var arrPerformer = [];
+					var Performer = {};
+					if(rez[i].performer_practitioner != "null"){
+						Performer.practitioner = hostFHIR + ':' + portFHIR + '/' + apikey + '/Practitioner?_id=' +  rez[i].performer_practitioner;
+					} else {
+						Performer.practitioner = "";
+					}
+					if(rez[i].performer_device != "null"){
+						Performer.device = hostFHIR + ':' + portFHIR + '/' + apikey + '/Device?_id=' +  rez[i].performer_device;
+					} else {
+						Performer.device = "";
+					}
+					arrPerformer[i] = Performer;
+					RiskAssessment.performer = arrPerformer;
 					RiskAssessment.reason.reasonCodeableConcept = rez[i].reason_codeable_concept;
 					RiskAssessment.reason.reasonReference = rez[i].reason_reference;
-					
 					RiskAssessment.basis = rez[i].basis;
-					
 					RiskAssessment.mitigation = rez[i].mitigation;
 					RiskAssessment.comment = rez[i].comment;
           arrRiskAssessment[i] = RiskAssessment;
@@ -182,7 +222,18 @@ var controller = {
 					RiskAssessmentPrediction.probability.probabilityRange = rez[i].probability_range_low + ' to ' + rez[i].probability_range_high;
 					RiskAssessmentPrediction.qualitative_risk = rez[i].qualitative_risk;
 					RiskAssessmentPrediction.relative_risk = rez[i].relative_risk;
-					RiskAssessmentPrediction.when.whenPeriod = rez[i].when_period_start + ' to ' + rez[i].when_period_end;
+					var whenperiod_start,whenperiod_end;
+					if(rez[i].when_period_start == null){
+						whenperiod_start = formatDate(rez[i].when_period_start);  
+					}else{
+						whenperiod_start = rez[i].when_period_start;  
+					}
+					if(rez[i].when_period_end == null){
+						whenperiod_end = formatDate(rez[i].when_period_end);  
+					}else{
+						whenperiod_end = rez[i].when_period_end;  
+					}
+					RiskAssessmentPrediction.when.whenPeriod = whenperiod_start + ' to ' + whenperiod_end;
 					RiskAssessmentPrediction.when.whenRange = rez[i].when_range_low + ' to ' + rez[i].when_range_high;
 					RiskAssessmentPrediction.rationale = rez[i].rationale;
 					
@@ -280,7 +331,7 @@ var controller = {
 			if (typeof occurrence_date_time !== 'undefined' && occurrence_date_time !== "") {
         column += 'occurrence_date_time,';
         //values += "'" + date + "',";
-				values += "to_date('"+ occurrence_date_time + "', 'yyyy-MM-dd'),";
+				values += "to_date('"+ occurrence_date_time + "', 'yyyy-MM-dd HH:mm'),";
       }
 			
 			if (typeof occurrence_period_start !== 'undefined' && occurrence_period_start !== "") {
@@ -528,7 +579,7 @@ var controller = {
 			if (typeof occurrence_date_time !== 'undefined' && occurrence_date_time !== "") {
         column += 'occurrence_date_time,';
         //values += "'" + date + "',";
-				values += "to_date('"+ occurrence_date_time + "', 'yyyy-MM-dd'),";
+				values += "to_date('"+ occurrence_date_time + "', 'yyyy-MM-dd HH:mm'),";
       }
 			
 			if (typeof occurrence_period_start !== 'undefined' && occurrence_period_start !== "") {

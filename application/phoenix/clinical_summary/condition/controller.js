@@ -150,7 +150,7 @@ var controller = {
       }
 			
 			if(typeof subject !== 'subject' && subject !== ""){
-				condition += "(ct.SUBJECT_PATIENT = '" + subject + "' OR ct.SUBJECT_GROUP = '" + subject + "') AND,";  
+				condition += "(cd.SUBJECT_PATIENT = '" + subject + "' OR cd.SUBJECT_GROUP = '" + subject + "') AND,";  
 			}
 			
 			
@@ -167,6 +167,34 @@ var controller = {
         rez = lowercaseObject(dataJson);
 				for(i = 0; i < rez.length; i++){
           var Condition = {};
+					var arrSubject = [];
+					var Subject = {};
+					if(rez[i].subject_group != "null"){
+						Subject.group = hostFHIR + ':' + portFHIR + '/' + apikey + '/Group?_id=' +  rez[i].subject_group;
+					} else {
+						Subject.group = "";
+					}
+					if(rez[i].subject_patient != "null"){
+						Subject.patient = hostFHIR + ':' + portFHIR + '/' + apikey + '/Patient?_id=' +  rez[i].subject_patient;
+					} else {
+						Subject.patient = "";
+					}
+					arrSubject[i] = Subject;
+					
+					var arrContext = [];
+					var Context = {};
+					if(rez[i].context_encounter != "null"){
+						Context.encounter = hostFHIR + ':' + portFHIR + '/' + apikey + '/Encounter?_id=' +  rez[i].context_encounter;
+					} else {
+						Context.encounter = "";
+					}
+					if(rez[i].context_episode_of_care != "null"){
+						Context.episodeOfCare = hostFHIR + ':' + portFHIR + '/' + apikey + '/EpisodeOfCare?_id=' +  rez[i].context_episode_of_care;
+					} else {
+						Context.episodeOfCare = "";
+					}
+					arrContext[i] = Context;
+					
 					Condition.resourceType = "Condition";
           Condition.id = rez[i].condition_id;
 					Condition.clinicalStatus = rez[i].clinical_status;
@@ -175,43 +203,76 @@ var controller = {
 					Condition.severity = rez[i].severity;
 					Condition.code = rez[i].code;
 					Condition.body_site = rez[i].body_site;
-					if (rez[i].subject_group !== 'null') {
-						Condition.subject = hostFHIR + ':' + portFHIR + '/' + apikey + '/Group?_id=' +  rez[i].subject_group;
-					} else if (rez[i].subject_patient !== 'null') {
-						Condition.subject = hostFHIR + ':' + portFHIR + '/' + apikey + '/Patient?_id=' +  rez[i].subject_patient;
-					} else {
-						Condition.subject = "";
-					}
-					if (rez[i].context_encounter !== 'null') {
-						Condition.context = hostFHIR + ':' + portFHIR + '/' + apikey + '/Encounter?_id=' +  rez[i].context_encounter;
-					} else if (rez[i].context_episode_of_care !== 'null') {
-						Condition.context = hostFHIR + ':' + portFHIR + '/' + apikey + '/EpisodeOfCare?_id=' +  rez[i].context_episode_of_care;
-					} else {
-						Condition.context = "";
+					
+					Condition.subject = arrSubject;
+					Condition.context = arrContext;
+					if(rez[i].onset_date_time == null){
+						Condition.onset.onsetDateTime = formatDate(rez[i].onset_date_time);
+					}else{
+						Condition.onset.onsetDateTime = rez[i].onset_date_time;
 					}
 					
-					Condition.onset.onsetDateTime = rez[i].onset_date_time;
 					Condition.onset.onsetAge = rez[i].onset_age;
-					Condition.onset.onsetPeriod = rez[i].onset_period_start + ' to ' + rez[i].onset_period_end;
+					var onsetperiod_start,onsetperiod_end;
+					if(rez[i].onset_period_start == null){
+						onsetperiod_start = formatDate(rez[i].onset_period_start);  
+					}else{
+						onsetperiod_start = rez[i].onset_period_start;  
+					}
+					if(rez[i].onset_period_end == null){
+						onsetperiod_end = formatDate(rez[i].onset_period_end);  
+					}else{
+						onsetperiod_end = rez[i].onset_period_end;  
+					}
+					Condition.onset.onsetPeriod = onsetperiod_start + ' to ' + onsetperiod_end;
 					Condition.onset.onsetRange = rez[i].onset_range_low + ' to ' + rez[i].onset_range_high;
 					Condition.onset.onsetString = rez[i].onset_string;
+					if(rez[i].abatement_date_time == null){
+						Condition.abatement.abatementDateTime = formatDate(rez[i].abatement_date_time);
+					}else{
+						Condition.abatement.abatementDateTime = rez[i].abatement_date_time;
+					}
 					
-					Condition.abatement.abatementDateTime = rez[i].abatement_date_time;
 					Condition.abatement.abatementAge = rez[i].abatement_age;
 					Condition.abatement.abatementBoolean = rez[i].abatement_boolean;
-					Condition.abatement.abatementPeriod = rez[i].abatement_period_start + ' to ' + rez[i].abatement_period_end;
+					var abatementperiod_start,abatementperiod_end;
+					if(rez[i].abatement_period_start == null){
+						abatementperiod_start = formatDate(rez[i].abatement_period_start);  
+					}else{
+						abatementperiod_start = rez[i].abatement_period_start;  
+					}
+					if(rez[i].abatement_period_end == null){
+						abatementperiod_end = formatDate(rez[i].abatement_period_end);  
+					}else{
+						abatementperiod_end = rez[i].abatement_period_end;  
+					}
+					Condition.abatement.abatementPeriod = abatementperiod_start + ' to ' + abatementperiod_end;
 					Condition.abatement.abatementRange = rez[i].abatement_range_low + ' to ' + rez[i].abatement_range_high;
 					Condition.abatement.abatementString = rez[i].abatement_string;
-					Condition.assertedDate = rez[i].asserted_date;
-					if (rez[i].asserter_practitioner !== 'null') {
-						Condition.asserter = hostFHIR + ':' + portFHIR + '/' + apikey + '/Practitioner?_id=' +  rez[i].asserter_practitioner;
-					} else if (rez[i].asserter_patient !== 'null') {
-						Condition.asserter = hostFHIR + ':' + portFHIR + '/' + apikey + '/Patient?_id=' +  rez[i].asserter_patient;
-					} else if (rez[i].asserter_related_person !== 'null') {
-						Condition.asserter = hostFHIR + ':' + portFHIR + '/' + apikey + '/RelatedPerson?_id=' +  rez[i].asserter_related_person;
-					} else {
-						Condition.asserter = "";
+					if(rez[i].asserted_date == null){
+						Condition.assertedDate = formatDate(rez[i].asserted_date);
+					}else{
+						Condition.assertedDate = rez[i].asserted_date;
 					}
+					var arrAsserter = [];
+					var Asserter = {};
+					if(rez[i].asserter_practitioner != "null"){
+						Asserter.practitioner = hostFHIR + ':' + portFHIR + '/' + apikey + '/Practitioner?_id=' +  rez[i].asserter_practitioner;
+					} else {
+						Asserter.practitioner = "";
+					}
+					if(rez[i].asserter_patient != "null"){
+						Asserter.patient = hostFHIR + ':' + portFHIR + '/' + apikey + '/Patient?_id=' +  rez[i].asserter_patient;
+					} else {
+						Asserter.patient = "";
+					}
+					if(rez[i].asserter_related_person != "null"){
+						Asserter.relatedPerson = hostFHIR + ':' + portFHIR + '/' + apikey + '/RelatedPerson?_id=' +  rez[i].asserter_related_person;
+					} else {
+						Asserter.relatedPerson = "";
+					}
+					arrAsserter[i] = Asserter;
+					Condition.asserter = arrAsserter;
           arrCondition[i] = Condition;
         }
         res.json({"err_code":0,"data": arrCondition});
@@ -313,6 +374,7 @@ var controller = {
 				rez = lowercaseObject(dataJson);
 				for (i = 0; i < rez.length; i++) {
 					var ConditionStages = {};
+					ConditionStages.id = rez[i].stage_id;
 					if (rez[i].clinical_impression_id == null) {
 						ConditionStages.assessment = hostFHIR + ':' + portFHIR + '/' + apikey + '/ClinicalImpression?_id=' +  rez[i].clinical_impression_id;
 					} else if (rez[i].diagnostic_report_id == null) {
@@ -488,7 +550,7 @@ var controller = {
 			if (typeof onset_date_time !== 'undefined' && onset_date_time !== "") {
         column += 'onset_date_time,';
         //values += "'" + date + "',";
-				values += "to_date('"+ onset_date_time + "', 'yyyy-MM-dd'),";
+				values += "to_date('"+ onset_date_time + "', 'yyyy-MM-dd HH:mm'),";
       }
 			
 			if (typeof onset_age !== 'undefined' && onset_age !== "") {
@@ -526,7 +588,7 @@ var controller = {
 			if (typeof abatement_date_time !== 'undefined' && abatement_date_time !== "") {
         column += 'abatement_date_time,';
         //values += "'" + date + "',";
-				values += "to_date('"+ abatement_date_time + "', 'yyyy-MM-dd'),";
+				values += "to_date('"+ abatement_date_time + "', 'yyyy-MM-dd HH:mm'),";
       }
 			
 			if (typeof abatement_age !== 'undefined' && abatement_age !== "") {
@@ -569,7 +631,7 @@ var controller = {
 			if (typeof asserted_date !== 'undefined' && asserted_date !== "") {
         column += 'asserted_date,';
         //values += "'" + date + "',";
-				values += "to_date('"+ asserted_date + "', 'yyyy-MM-dd'),";
+				values += "to_date('"+ asserted_date + "', 'yyyy-MM-dd HH:mm'),";
       }
 			
 			if (typeof asserter_practitioner !== 'undefined' && asserter_practitioner !== "") {
@@ -832,7 +894,7 @@ var controller = {
 			if (typeof onset_date_time !== 'undefined' && onset_date_time !== "") {
         column += 'onset_date_time,';
         //values += "'" + date + "',";
-				values += "to_date('"+ onset_date_time + "', 'yyyy-MM-dd'),";
+				values += "to_date('"+ onset_date_time + "', 'yyyy-MM-dd HH:mm'),";
       }
 			
 			if (typeof onset_age !== 'undefined' && onset_age !== "") {
@@ -870,7 +932,7 @@ var controller = {
 			if (typeof abatement_date_time !== 'undefined' && abatement_date_time !== "") {
         column += 'abatement_date_time,';
         //values += "'" + date + "',";
-				values += "to_date('"+ abatement_date_time + "', 'yyyy-MM-dd'),";
+				values += "to_date('"+ abatement_date_time + "', 'yyyy-MM-dd HH:mm'),";
       }
 			
 			if (typeof abatement_age !== 'undefined' && abatement_age !== "") {
@@ -913,7 +975,7 @@ var controller = {
 			if (typeof asserted_date !== 'undefined' && asserted_date !== "") {
         column += 'asserted_date,';
         //values += "'" + date + "',";
-				values += "to_date('"+ asserted_date + "', 'yyyy-MM-dd'),";
+				values += "to_date('"+ asserted_date + "', 'yyyy-MM-dd HH:mm'),";
       }
 			
 			if (typeof asserter_practitioner !== 'undefined' && asserter_practitioner !== "") {
