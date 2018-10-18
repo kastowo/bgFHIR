@@ -320,7 +320,17 @@ var controller = {
 			var complication = req.body.complication;
 			var follow_up = req.body.follow_up;
 			var used_code = req.body.used_code;
+			
+			var adverse_event_id = req.body.adverse_event_id;
+			var appointment_id = req.body.appointment_id;
+			var charge_item_id = req.body.charge_item_id;
 			var clinical_impression_id = req.body.clinical_impression_id;
+			var imaging_study_based_on_id = req.body.imaging_study_based_on_id;
+			var imaging_study_procedure_reference_id = req.body.imaging_study_procedure_reference_id;
+			var medication_administration_id = req.body.medication_administration_id;
+			var medication_dispense_id = req.body.medication_dispense_id;
+			var medication_statement_id = req.body.medication_statement_id;
+			var questionnaire_response_id = req.body.questionnaire_response_id;
 			
 			var column = "";
       var values = "";
@@ -431,7 +441,52 @@ var controller = {
 			if (typeof clinical_impression_id !== 'undefined' && clinical_impression_id !== "") {
         column += 'clinical_impression_id,';
         values += "'" + clinical_impression_id + "',";
-      }	
+      }
+			
+			if (typeof adverse_event_id !== 'undefined' && adverse_event_id !== "") {
+        column += 'adverse_event_id,';
+        values += "'" + adverse_event_id + "',";
+      }
+			
+			if (typeof appointment_id !== 'undefined' && appointment_id !== "") {
+        column += 'appointment_id,';
+        values += "'" + appointment_id + "',";
+      }
+			
+			if (typeof charge_item_id !== 'undefined' && charge_item_id !== "") {
+        column += 'charge_item_id,';
+        values += "'" + charge_item_id + "',";
+      }
+			
+			if (typeof imaging_study_based_on_id !== 'undefined' && imaging_study_based_on_id !== "") {
+        column += 'imaging_study_based_on_id,';
+        values += "'" + imaging_study_based_on_id + "',";
+      }
+			
+			if (typeof imaging_study_procedure_reference_id !== 'undefined' && imaging_study_procedure_reference_id !== "") {
+        column += 'imaging_study_procedure_reference_id,';
+        values += "'" + imaging_study_procedure_reference_id + "',";
+      }
+			
+			if (typeof medication_administration_id !== 'undefined' && medication_administration_id !== "") {
+        column += 'medication_administration_id,';
+        values += "'" + medication_administration_id + "',";
+      }
+			
+			if (typeof medication_dispense_id !== 'undefined' && medication_dispense_id !== "") {
+        column += 'medication_dispense_id,';
+        values += "'" + medication_dispense_id + "',";
+      }
+			
+			if (typeof medication_statement_id !== 'undefined' && medication_statement_id !== "") {
+        column += 'medication_statement_id,';
+        values += "'" + medication_statement_id + "',";
+      }
+			
+			if (typeof questionnaire_response_id !== 'undefined' && questionnaire_response_id !== "") {
+        column += 'questionnaire_response_id,';
+        values += "'" + questionnaire_response_id + "',";
+      }
 
       var query = "UPSERT INTO BACIRO_FHIR.PROCEDURE(procedure_id, " + column.slice(0, -1) + ")"+
         " VALUES ('"+procedure_id+"', " + values.slice(0, -1) + ")";
@@ -549,6 +604,15 @@ var controller = {
 			var follow_up = req.body.follow_up;
 			var used_code = req.body.used_code;
 			var clinical_impression_id = req.body.clinical_impression_id;
+			var adverse_event_id = req.body.adverse_event_id;
+			var appointment_id = req.body.appointment_id;
+			var charge_item_id = req.body.charge_item_id;
+			var imaging_study_based_on_id = req.body.imaging_study_based_on_id;
+			var imaging_study_procedure_reference_id = req.body.imaging_study_procedure_reference_id;
+			var medication_administration_id = req.body.medication_administration_id;
+			var medication_dispense_id = req.body.medication_dispense_id;
+			var medication_statement_id = req.body.medication_statement_id;
+			var questionnaire_response_id = req.body.questionnaire_response_id;
 			
 			var column = "";
       var values = "";
@@ -659,7 +723,52 @@ var controller = {
 			if (typeof clinical_impression_id !== 'undefined' && clinical_impression_id !== "") {
         column += 'clinical_impression_id,';
         values += "'" + clinical_impression_id + "',";
-      }		
+      }
+			
+			if (typeof adverse_event_id !== 'undefined' && adverse_event_id !== "") {
+        column += 'adverse_event_id,';
+        values += "'" + adverse_event_id + "',";
+      }
+			
+			if (typeof appointment_id !== 'undefined' && appointment_id !== "") {
+        column += 'appointment_id,';
+        values += "'" + appointment_id + "',";
+      }
+			
+			if (typeof charge_item_id !== 'undefined' && charge_item_id !== "") {
+        column += 'charge_item_id,';
+        values += "'" + charge_item_id + "',";
+      }
+			
+			if (typeof imaging_study_based_on_id !== 'undefined' && imaging_study_based_on_id !== "") {
+        column += 'imaging_study_based_on_id,';
+        values += "'" + imaging_study_based_on_id + "',";
+      }
+			
+			if (typeof imaging_study_procedure_reference_id !== 'undefined' && imaging_study_procedure_reference_id !== "") {
+        column += 'imaging_study_procedure_reference_id,';
+        values += "'" + imaging_study_procedure_reference_id + "',";
+      }
+			
+			if (typeof medication_administration_id !== 'undefined' && medication_administration_id !== "") {
+        column += 'medication_administration_id,';
+        values += "'" + medication_administration_id + "',";
+      }
+			
+			if (typeof medication_dispense_id !== 'undefined' && medication_dispense_id !== "") {
+        column += 'medication_dispense_id,';
+        values += "'" + medication_dispense_id + "',";
+      }
+			
+			if (typeof medication_statement_id !== 'undefined' && medication_statement_id !== "") {
+        column += 'medication_statement_id,';
+        values += "'" + medication_statement_id + "',";
+      }
+			
+			if (typeof questionnaire_response_id !== 'undefined' && questionnaire_response_id !== "") {
+        column += 'questionnaire_response_id,';
+        values += "'" + questionnaire_response_id + "',";
+      }
 			
 			var domainResource = req.params.dr;
 			var arrResource = domainResource.split('|');

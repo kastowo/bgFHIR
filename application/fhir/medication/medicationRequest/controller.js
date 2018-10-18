@@ -32,172 +32,108 @@ var ApiFHIR  = new Apiclient(seedPhoenixFHIR);
 
 var controller = {
 	get: {
-		medicationRequest : function getMedicationRequest(req, res){
+		immunizationRecommendation : function getImmunizationRecommendation(req, res){
 			var ipAddres = req.connection.remoteAddress;
 			var apikey = req.params.apikey;
 			var regex = new RegExp("([0-9]{4}[-](0[1-9]|1[0-2])[-]([0-2]{1}[0-9]{1}|3[0-1]{1})|([0-2]{1}[0-9]{1}|3[0-1]{1})[-](0[1-9]|1[0-2])[-][0-9]{4})");
+			var qString = {};
 
 			//params from query string
-			var medicationRequestId = req.query._id;
-			var authoredon = req.query.authoredon;
+			/*var immunizationRecommendationId = req.query._id;
 			var category = req.query.category;
-			var code = req.query.code;
-			var context = req.query.context;
-			var date = req.query.date;
-			var identifier = req.query.identifier;
-			var intended_dispenser = req.query.intendedDispenser;
-			var intent = req.query.intent;
-			var medication = req.query.medication;
-			var patient = req.query.patient;
-			var priority = req.query.priority;
-			var requester = req.query.requester;
-			var status = req.query.status;
-			var subject = req.query.subject;
-			
-			var qString = {};
-			if(typeof medicationRequestId !== 'undefined'){
-				if(!validator.isEmpty(medicationRequestId)){
-					qString._id = medicationRequestId; 
+			var date=req.query.date;
+			var location=req.query.location;
+			var reaction=req.query.reaction;
+			var recorder=req.query.recorder;
+			var seriousness=req.query.seriousness;			
+			var study=req.query.study;
+			var subject=req.query.subject;
+			var substance=req.query.substance;
+			var type=req.query.type;
+
+			if(typeof immunizationRecommendationId !== 'undefined'){
+				if(!validator.isEmpty(immunizationRecommendationId)){
+					qString.immunizationRecommendationId = immunizationRecommendationId; 
 				}else{
-					res.json({"err_code": 1, "err_msg": "medication request id is required."});
+					res.json({"err_code": 1, "err_msg": "Care Team Id is required."});
 				}
 			}
-			
-			if(typeof authoredon !== 'undefined') {
-        if (!validator.isEmpty(authoredon)) {
-          if (!regex.test(authoredon)) {
-            res.json({
-              "err_code": 1,
-              "err_msg": "Authoredon invalid format."
-            });
-          } else {
-            qString.authoredon = authoredon;
-          }
-        } else {
-          res.json({
-            "err_code": 1,
-            "err_msg": "Authoredon is empty."
-          });
-        }
-      }
-			
+
 			if(typeof category !== 'undefined'){
 				if(!validator.isEmpty(category)){
-					qString.category = category;
+					qString.category = category; 
 				}else{
-					res.json({"err_code": 1, "err_msg": "Category is empty."});
+					res.json({"err_code": 1, "err_msg": "Category is required."});
 				}
 			}
-			
-			if(typeof code !== 'undefined'){
-				if(!validator.isEmpty(code)){
-					qString.code = code;
+
+			if(typeof date !== 'undefined'){
+				if(!validator.isEmpty(date)){
+					qString.date = date; 
 				}else{
-					res.json({"err_code": 1, "err_msg": "Code is empty."});
+					res.json({"err_code": 1, "err_msg": "Date is empty."});
 				}
 			}
-			
-			if(typeof context !== 'undefined'){
-				if(!validator.isEmpty(context)){
-					qString.context = context; 
+
+			if(typeof location !== 'undefined'){
+				if(!validator.isEmpty(location)){
+					qString.location = location;
 				}else{
-					res.json({"err_code": 1, "err_msg": "Context is empty."});
+					res.json({"err_code": 1, "err_msg": "Location is empty."});
 				}
 			}
-			
-			if(typeof date !== 'undefined') {
-        if (!validator.isEmpty(date)) {
-          if (!regex.test(date)) {
-            res.json({
-              "err_code": 1,
-              "err_msg": "Date invalid format."
-            });
-          } else {
-            qString.date = date;
-          }
-        } else {
-          res.json({
-            "err_code": 1,
-            "err_msg": "Date is empty."
-          });
-        }
-      }
-			
-			if(typeof identifier !== 'undefined'){
-				if(!validator.isEmpty(identifier)){
-					qString.identifier = identifier; 
+
+			if(typeof reaction !== 'undefined'){
+				if(!validator.isEmpty(reaction)){
+					qString.reaction = reaction;
 				}else{
-					res.json({"err_code": 1, "err_msg": "Identifier is empty."});
+					res.json({"err_code": 1, "err_msg": "Reaction is empty."});
 				}
 			}
-			
-			if(typeof intended_dispenser !== 'undefined'){
-				if(!validator.isEmpty(intended_dispenser)){
-					qString.intended_dispenser = intended_dispenser; 
+
+			if(typeof seriousness !== 'undefined'){
+				if(!validator.isEmpty(seriousness)){
+					qString.seriousness = seriousness;
 				}else{
-					res.json({"err_code": 1, "err_msg": "Intended dispenser is empty."});
+					res.json({"err_code": 1, "err_msg": "Seriousness of is empty."});
+				}
+			}	
+
+			if(typeof study !== 'undefined'){
+				if(!validator.isEmpty(study)){
+					qString.study = study;
+				}else{
+					res.json({"err_code": 1, "err_msg": "Study of is empty."});
 				}
 			}
-			
-			if(typeof intent !== 'undefined'){
-				if(!validator.isEmpty(intent)){
-					qString.intent = intent; 
-				}else{
-					res.json({"err_code": 1, "err_msg": "Intent is empty."});
-				}
-			}			
-			
-			if(typeof medication !== 'undefined'){
-				if(!validator.isEmpty(medication)){
-					qString.medication = medication; 
-				}else{
-					res.json({"err_code": 1, "err_msg": "Medication is empty."});
-				}
-			}
-			
-			if(typeof patient !== 'undefined'){
-				if(!validator.isEmpty(patient)){
-					qString.patient = patient; 
-				}else{
-					res.json({"err_code": 1, "err_msg": "Patient is empty."});
-				}
-			}
-			
-			if(typeof priority !== 'undefined'){
-				if(!validator.isEmpty(priority)){
-					qString.priority = priority; 
-				}else{
-					res.json({"err_code": 1, "err_msg": "Priority is empty."});
-				}
-			}
-			
-			if(typeof requester !== 'undefined'){
-				if(!validator.isEmpty(requester)){
-					qString.requester = requester; 
-				}else{
-					res.json({"err_code": 1, "err_msg": "Requester is empty."});
-				}
-			}
-			
-			if(typeof status !== 'undefined'){
-				if(!validator.isEmpty(status)){
-					qString.status = status; 
-				}else{
-					res.json({"err_code": 1, "err_msg": "Status is empty."});
-				}
-			}
-			
+
 			if(typeof subject !== 'undefined'){
 				if(!validator.isEmpty(subject)){
-					qString.subject = subject; 
+					qString.subject = subject;
 				}else{
-					res.json({"err_code": 1, "err_msg": "Subject is empty."});
+					res.json({"err_code": 1, "err_msg": "Subject of is empty."});
 				}
 			}
-			
+
+			if(typeof substance !== 'undefined'){
+				if(!validator.isEmpty(substance)){
+					qString.substance = substance;
+				}else{
+					res.json({"err_code": 1, "err_msg": "Substance of is empty."});
+				}
+			}
+
+			if(typeof type !== 'undefined'){
+				if(!validator.isEmpty(type)){
+					qString.type = type;
+				}else{
+					res.json({"err_code": 1, "err_msg": "Type of is empty."});
+				}
+			}*/
+
 			seedPhoenixFHIR.path.GET = {
-				"MedicationRequest" : {
-					"location": "%(apikey)s/MedicationRequest",
+				"ImmunizationRecommendation" : {
+					"location": "%(apikey)s/ImmunizationRecommendation",
 					"query": qString
 				}
 			}
@@ -205,202 +141,269 @@ var controller = {
 
 			checkApikey(apikey, ipAddres, function(result){
 				if(result.err_code == 0){
-					ApiFHIR.get('MedicationRequest', {"apikey": apikey}, {}, function (error, response, body) {
+					ApiFHIR.get('ImmunizationRecommendation', {"apikey": apikey}, {}, function (error, response, body) {
 						if(error){
 							res.json(error);
 						}else{
-							var medicationRequest = JSON.parse(body); //object
+							var immunizationRecommendation = JSON.parse(body); //object
 							//cek apakah ada error atau tidak
-							if(medicationRequest.err_code == 0){
+							if(immunizationRecommendation.err_code == 0){
 								//cek jumdata dulu
-								if(medicationRequest.data.length > 0){
-									newMedicationRequest = [];
-									for(i=0; i < medicationRequest.data.length; i++){
-										myEmitter.once('getIdentifier', function(medicationRequest, index, newMedicationRequest, countMedicationRequest){
-												qString = {};
-												qString.medication_request_id = medicationRequest.id;
-												seedPhoenixFHIR.path.GET = {
-													"Identifier" : {
-														"location": "%(apikey)s/Identifier",
-														"query": qString
-													}
-												}
-
-												var ApiFHIR = new Apiclient(seedPhoenixFHIR);
-
-												ApiFHIR.get('Identifier', {"apikey": apikey}, {}, function(error, response, body){
-													identifier = JSON.parse(body);
-													if(identifier.err_code == 0){
-														var objectMedicationRequest = {};
-														objectMedicationRequest.resourceType = medicationRequest.resourceType;
-														objectMedicationRequest.id = medicationRequest.id;
-														objectMedicationRequest.identifier = identifier.data;
-														objectMedicationRequest.basedOn = medicationRequest.basedOn;
-														objectMedicationRequest.groupIdentifier = medicationRequest.groupIdentifier;
-														objectMedicationRequest.status = medicationRequest.status;
-														objectMedicationRequest.intent = medicationRequest.intent;
-														objectMedicationRequest.category = medicationRequest.category;
-														objectMedicationRequest.priority = medicationRequest.priority;
-														objectMedicationRequest.medication = medicationRequest.medication;
-														objectMedicationRequest.subject = medicationRequest.subject;
-														objectMedicationRequest.context = medicationRequest.context;
-														objectMedicationRequest.supportingInformation = medicationRequest.supportingInformation;
-														objectMedicationRequest.authoredOn = medicationRequest.authoredOn;
-														objectMedicationRequest.recorder = medicationRequest.recorder;
-														objectMedicationRequest.reasonCode = medicationRequest.reasonCode;
-														objectMedicationRequest.priorPrescription = medicationRequest.priorPrescription;
-														
-														newMedicationRequest[index] = objectMedicationRequest;
-
-														myEmitter.once('getMedicationRequestRequester', function(medicationRequest, index, newMedicationRequest, countMedicationRequest){
-															qString = {};
-															qString.medicationRequest_id = medicationRequest.id;
-															seedPhoenixFHIR.path.GET = {
-																"MedicationRequestRequester" : {
-																	"location": "%(apikey)s/MedicationRequestRequester",
-																	"query": qString
-																}
+								if(immunizationRecommendation.data.length > 0){
+									newImmunizationRecommendation = [];
+									for(i=0; i < immunizationRecommendation.data.length; i++){
+										myEmitter.once("getIdentifier", function(immunizationRecommendation, index, newImmunizationRecommendation, countImmunizationRecommendation){
+											/*console.log(immunizationRecommendation);*/
+														//get identifier
+														qString = {};
+														qString.immunization_recommendation_id = immunizationRecommendation.id;
+														seedPhoenixFHIR.path.GET = {
+															"Identifier" : {
+																"location": "%(apikey)s/Identifier",
+																"query": qString
 															}
-
-															var ApiFHIR = new Apiclient(seedPhoenixFHIR);
-
-															ApiFHIR.get('MedicationRequestRequester', {"apikey": apikey}, {}, function(error, response, body){
-																medicationRequestRequester = JSON.parse(body);
-
-																if(medicationRequestRequester.err_code == 0){
-																	var objectMedicationRequest = {};
-																	objectMedicationRequest.resourceType = medicationRequest.resourceType;
-																	objectMedicationRequest.id = medicationRequest.id;
-																	objectMedicationRequest.identifier = medicationRequest.identifier;
-																	objectMedicationRequest.basedOn = medicationRequest.basedOn;
-																	objectMedicationRequest.groupIdentifier = medicationRequest.groupIdentifier;
-																	objectMedicationRequest.status = medicationRequest.status;
-																	objectMedicationRequest.intent = medicationRequest.intent;
-																	objectMedicationRequest.category = medicationRequest.category;
-																	objectMedicationRequest.priority = medicationRequest.priority;
-																	objectMedicationRequest.medication = medicationRequest.medication;
-																	objectMedicationRequest.subject = medicationRequest.subject;
-																	objectMedicationRequest.context = medicationRequest.context;
-																	objectMedicationRequest.supportingInformation = medicationRequest.supportingInformation;
-																	objectMedicationRequest.authoredOn = medicationRequest.authoredOn;
-																	objectMedicationRequest.requester = medicationRequestRequester.data;
-																	objectMedicationRequest.recorder = medicationRequest.recorder;
-																	objectMedicationRequest.reasonCode = medicationRequest.reasonCode;
-																	objectMedicationRequest.priorPrescription = medicationRequest.priorPrescription;
-																	
-																	newMedicationRequest[index] = objectMedicationRequest;
-
-																	myEmitter.once('getMedicationRequestSubtitution', function(medicationRequest, index, newMedicationRequest, countMedicationRequest){
-																		qString = {};
-																		qString.medicationRequest_id = medicationRequest.id;
-																		seedPhoenixFHIR.path.GET = {
-																			"MedicationRequestSubtitution" : {
-																				"location": "%(apikey)s/MedicationRequestSubtitution",
-																				"query": qString
-																			}
-																		}
-
-																		var ApiFHIR = new Apiclient(seedPhoenixFHIR);
-
-																		ApiFHIR.get('MedicationRequestSubtitution', {"apikey": apikey}, {}, function(error, response, body){
-																			medicationRequestSubtitution = JSON.parse(body);
-
-																			if(medicationRequestSubtitution.err_code == 0){
-																				var objectMedicationRequest = {};
-																				objectMedicationRequest.resourceType = medicationRequest.resourceType;
-																				objectMedicationRequest.id = medicationRequest.id;
-																				objectMedicationRequest.identifier = medicationRequest.identifier;
-																				objectMedicationRequest.basedOn = medicationRequest.basedOn;
-																				objectMedicationRequest.groupIdentifier = medicationRequest.groupIdentifier;
-																				objectMedicationRequest.status = medicationRequest.status;
-																				objectMedicationRequest.intent = medicationRequest.intent;
-																				objectMedicationRequest.category = medicationRequest.category;
-																				objectMedicationRequest.priority = medicationRequest.priority;
-																				objectMedicationRequest.medication = medicationRequest.medication;
-																				objectMedicationRequest.subject = medicationRequest.subject;
-																				objectMedicationRequest.context = medicationRequest.context;
-																				objectMedicationRequest.supportingInformation = medicationRequest.supportingInformation;
-																				objectMedicationRequest.authoredOn = medicationRequest.authoredOn;
-																				objectMedicationRequest.requester = medicationRequest.requester;
-																				objectMedicationRequest.recorder = medicationRequest.recorder;
-																				objectMedicationRequest.reasonCode = medicationRequest.reasonCode;
-																				objectMedicationRequest.substitution = medicationRequestSubtitution.data;
-																				objectMedicationRequest.priorPrescription = medicationRequest.priorPrescription;
-																				newMedicationRequest[index] = objectMedicationRequest;
-
-																				myEmitter.once('getMedicationRequestDispenseRequest', function(medicationRequest, index, newMedicationRequest, countMedicationRequest){
-																					qString = {};
-																					qString.medicationRequest_id = medicationRequest.id;
-																					seedPhoenixFHIR.path.GET = {
-																						"MedicationRequestDispenseRequest" : {
-																							"location": "%(apikey)s/MedicationRequestDispenseRequest",
-																							"query": qString
-																						}
-																					}
-
-																					var ApiFHIR = new Apiclient(seedPhoenixFHIR);
-
-																					ApiFHIR.get('MedicationRequestDispenseRequest', {"apikey": apikey}, {}, function(error, response, body){
-																						medicationRequestDispenseRequest = JSON.parse(body);
-
-																						if(medicationRequestDispenseRequest.err_code == 0){
-																							var objectMedicationRequest = {};
-																							objectMedicationRequest.resourceType = medicationRequest.resourceType;
-																							objectMedicationRequest.id = medicationRequest.id;
-																							objectMedicationRequest.identifier = medicationRequest.identifier;
-																							objectMedicationRequest.basedOn = medicationRequest.basedOn;
-																							objectMedicationRequest.groupIdentifier = medicationRequest.groupIdentifier;
-																							objectMedicationRequest.status = medicationRequest.status;
-																							objectMedicationRequest.intent = medicationRequest.intent;
-																							objectMedicationRequest.category = medicationRequest.category;
-																							objectMedicationRequest.priority = medicationRequest.priority;
-																							objectMedicationRequest.medication = medicationRequest.medication;
-																							objectMedicationRequest.subject = medicationRequest.subject;
-																							objectMedicationRequest.context = medicationRequest.context;
-																							objectMedicationRequest.supportingInformation = medicationRequest.supportingInformation;
-																							objectMedicationRequest.authoredOn = medicationRequest.authoredOn;
-																							objectMedicationRequest.requester = medicationRequest.requester;
-																							objectMedicationRequest.recorder = medicationRequest.recorder;
-																							objectMedicationRequest.reasonCode = medicationRequest.reasonCode;
-																							objectMedicationRequest.dispenseRequest = medicationRequestDispenseRequest.data;
-																							objectMedicationRequest.substitution = medicationRequest.substitution;
-																							objectMedicationRequest.priorPrescription = medicationRequest.priorPrescription;
-
-																							newMedicationRequest[index] = objectMedicationRequest;
-
-																							if(index == countMedicationRequest -1 ){
-																								res.json({"err_code": 0, "data":newMedicationRequest});	
-																							}
-																						}else{
-																							res.json(medicationRequestDispenseRequest);			
-																						}
-																					})
-																				})
-																				myEmitter.emit('getMedicationRequestDispenseRequest', objectMedicationRequest, index, newMedicationRequest, countMedicationRequest);
-																			}else{
-																				res.json(medicationRequestSubtitution);			
-																			}
-																		})
-																	})
-																	myEmitter.emit('getMedicationRequestSubtitution', objectMedicationRequest, index, newMedicationRequest, countMedicationRequest);
-																}else{
-																	res.json(medicationRequestRequester);			
+														}
+														var ApiFHIR = new Apiclient(seedPhoenixFHIR);
+														ApiFHIR.get('Identifier', {"apikey": apikey}, {}, function(error, response, body){
+															identifier = JSON.parse(body);
+															if(identifier.err_code == 0){
+																var objectImmunizationRecommendation = {};
+																objectImmunizationRecommendation.resourceType = immunizationRecommendation.resourceType;
+																objectImmunizationRecommendation.id = immunizationRecommendation.id;
+																objectImmunizationRecommendation.identifier = identifier.data;
+																objectImmunizationRecommendation.patient = immunizationRecommendation.patient;
+																
+																newImmunizationRecommendation[index] = objectImmunizationRecommendation;
+																
+																/*if(index == countImmunizationRecommendation -1 ){
+																	res.json({"err_code": 0, "data":newImmunizationRecommendation});				
 																}
-															})
+*/
+																myEmitter.once('getImmunizationRecommendationRecommendation', function(immunizationRecommendation, index, newImmunizationRecommendation, countImmunizationRecommendation){
+																				qString = {};
+																				qString.immunization_recommendation_id = immunizationRecommendation.id;
+																				seedPhoenixFHIR.path.GET = {
+																					"ImmunizationRecommendationRecommendation" : {
+																						"location": "%(apikey)s/ImmunizationRecommendationRecommendation",
+																						"query": qString
+																					}
+																				}
+
+																				var ApiFHIR = new Apiclient(seedPhoenixFHIR);
+
+																				ApiFHIR.get('ImmunizationRecommendationRecommendation', {"apikey": apikey}, {}, function(error, response, body){
+																					immunizationRecommendationRecommendation = JSON.parse(body);
+																					if(immunizationRecommendationRecommendation.err_code == 0){
+																						var objectImmunizationRecommendation = {};
+																						objectImmunizationRecommendation.resourceType = immunizationRecommendation.resourceType;
+																						objectImmunizationRecommendation.id = immunizationRecommendation.id;
+																						objectImmunizationRecommendation.identifier = immunizationRecommendation.identifier;
+																						objectImmunizationRecommendation.patient = immunizationRecommendation.patient;
+																						objectImmunizationRecommendation.recommendation = immunizationRecommendationRecommendation.data;
+																						
+
+																						newImmunizationRecommendation[index] = objectImmunizationRecommendation;
+
+																						/*if(index == countImmunizationRecommendation -1 ){
+																							res.json({"err_code": 0, "data":newImmunizationRecommendation});				
+																						}*/
+																						myEmitter.once('getImmunizationRecommendationDateCriterion', function(immunizationRecommendation, index, newImmunizationRecommendation, countImmunizationRecommendation){
+																							qString = {};
+																							qString.recommendation_id = immunizationRecommendation.recommendation.id;
+																							seedPhoenixFHIR.path.GET = {
+																								"ImmunizationRecommendationDateCriterion" : {
+																									"location": "%(apikey)s/ImmunizationRecommendationDateCriterion",
+																									"query": qString
+																								}
+																							}
+
+																							var ApiFHIR = new Apiclient(seedPhoenixFHIR);
+
+																							ApiFHIR.get('ImmunizationRecommendationDateCriterion', {"apikey": apikey}, {}, function(error, response, body){
+																								immunizationRecommendationDateCriterion = JSON.parse(body);
+																								console.log(immunizationRecommendationDateCriterion);
+																								if(immunizationRecommendationDateCriterion.err_code == 0){
+																									var objectImmunizationRecommendation = {};
+																									objectImmunizationRecommendation.resourceType = immunizationRecommendation.resourceType;
+																									objectImmunizationRecommendation.id = immunizationRecommendation.id;
+																									objectImmunizationRecommendation.identifier = immunizationRecommendation.identifier;
+																									objectImmunizationRecommendation.patient = immunizationRecommendation.patient;
+																									var Recommendation = {};
+																									Recommendation.id = immunizationRecommendation.recommendation.id;
+																									Recommendation.date = immunizationRecommendation.recommendation.date;
+																									Recommendation.vaccineCode = immunizationRecommendation.recommendation.vaccine_code;
+																									Recommendation.targetDisease = immunizationRecommendation.recommendation.target_disease;
+																									Recommendation.doseNumber = immunizationRecommendation.recommendation.dose_number;
+																									Recommendation.forecastStatus = immunizationRecommendation.recommendation.forecast_status;
+																									Recommendation.dateCriterion = immunizationRecommendationDateCriterion.data;
+																									Recommendation.protocol = immunizationRecommendation.recommendation.protocol;										
+																									objectImmunizationRecommendation.recommendation = Recommendation;
+															
+																									newImmunizationRecommendation[index] = objectImmunizationRecommendation;
+																									
+																									/*if(index == countImmunizationRecommendation -1 ){
+																										res.json({"err_code": 0, "data":newImmunizationRecommendation});				
+																									}*/
+
+																									myEmitter.once('getSupportingImmunization', function(immunizationRecommendation, index, newImmunizationRecommendation, countImmunizationRecommendation){
+																										qString = {};
+																										qString.recommendation_id = immunizationRecommendation.recommendation.id;
+																										seedPhoenixFHIR.path.GET = {
+																											"SupportingImmunization" : {
+																												"location": "%(apikey)s/ImmunizationRecommendationSupportingImmunization",
+																												"query": qString
+																											}
+																										}	
+																										ApiFHIR.get('SupportingImmunization', {"apikey": apikey}, {}, function(error, response, body){
+																											supportingImmunization = JSON.parse(body);
+																											if(supportingImmunization.err_code == 0){
+																												var objectImmunizationRecommendation = {};
+objectImmunizationRecommendation.resourceType = immunizationRecommendation.resourceType;
+objectImmunizationRecommendation.id = immunizationRecommendation.id;
+objectImmunizationRecommendation.identifier = immunizationRecommendation.identifier;
+objectImmunizationRecommendation.patient = immunizationRecommendation.patient;
+var Recommendation = {};
+Recommendation.id = immunizationRecommendation.recommendation.id;
+Recommendation.date = immunizationRecommendation.recommendation.date;
+Recommendation.vaccineCode = immunizationRecommendation.recommendation.vaccine_code;
+Recommendation.targetDisease = immunizationRecommendation.recommendation.target_disease;
+Recommendation.doseNumber = immunizationRecommendation.recommendation.dose_number;
+Recommendation.forecastStatus = immunizationRecommendation.recommendation.forecast_status;
+Recommendation.dateCriterion = immunizationRecommendation.recommendation.dateCriterion;
+Recommendation.protocol = immunizationRecommendation.recommendation.protocol;	
+Recommendation.supportingImmunization = immunizationRecommendation.recommendation.supportingImmunization.data;
+objectImmunizationRecommendation.recommendation = Recommendation;
+																												
+
+																												newImmunizationRecommendation[index] = objectImmunizationRecommendation;
+
+																												myEmitter.once('getSupportingPatientInformationObservation', function(immunizationRecommendation, index, newImmunizationRecommendation, countImmunizationRecommendation){
+																													qString = {};
+																													qString.recommendation_id = immunizationRecommendation.recommendation.id;
+																													seedPhoenixFHIR.path.GET = {
+																														"InformationObservation" : {
+																															"location": "%(apikey)s/SupportingPatientInformationObservation",
+																															"query": qString
+																														}
+																													}
+
+																													var ApiFHIR = new Apiclient(seedPhoenixFHIR);
+
+																													ApiFHIR.get('InformationObservation', {"apikey": apikey}, {}, function(error, response, body){
+																														informationObservation = JSON.parse(body);
+																														if(informationObservation.err_code == 0){
+																															var objectImmunizationRecommendation = {};
+objectImmunizationRecommendation.resourceType = immunizationRecommendation.resourceType;
+objectImmunizationRecommendation.id = immunizationRecommendation.id;
+objectImmunizationRecommendation.identifier = immunizationRecommendation.identifier;
+objectImmunizationRecommendation.patient = immunizationRecommendation.patient;
+var Recommendation = {};
+Recommendation.id = immunizationRecommendation.recommendation.id;
+Recommendation.date = immunizationRecommendation.recommendation.date;
+Recommendation.vaccineCode = immunizationRecommendation.recommendation.vaccine_code;
+Recommendation.targetDisease = immunizationRecommendation.recommendation.target_disease;
+Recommendation.doseNumber = immunizationRecommendation.recommendation.dose_number;
+Recommendation.forecastStatus = immunizationRecommendation.recommendation.forecast_status;
+Recommendation.dateCriterion = immunizationRecommendation.recommendation.dateCriterion;
+Recommendation.protocol = immunizationRecommendation.recommendation.protocol;
+Recommendation.supportingImmunization = immunizationRecommendation.recommendation.supportingImmunization;	
+var SupportingPatientInformation = {};
+SupportingPatientInformation.observation = informationObservation.data;																
+Recommendation.supportingPatientInformation = SupportingPatientInformation;
+																															
+objectImmunizationRecommendation.recommendation = Recommendation;
+
+																															newImmunizationRecommendation[index] = objectImmunizationRecommendation;
+
+																															myEmitter.once('getSupportingPatientInformationAllergyIntolerance', function(immunizationRecommendation, index, newImmunizationRecommendation, countImmunizationRecommendation){
+																																qString = {};
+																																qString.recommendation_id = immunizationRecommendation.recommendation.id;
+																																seedPhoenixFHIR.path.GET = {
+																																	"InformationAllergyIntolerance" : {
+																																		"location": "%(apikey)s/SupportingPatientInformationAllergyIntolerance",
+																																		"query": qString
+																																	}
+																																}
+
+																																var ApiFHIR = new Apiclient(seedPhoenixFHIR);
+
+																																ApiFHIR.get('InformationAllergyIntolerance', {"apikey": apikey}, {}, function(error, response, body){
+																																	informationAllergyIntolerance = JSON.parse(body);
+																																	if(informationAllergyIntolerance.err_code == 0){
+																																		var objectImmunizationRecommendation = {};
+objectImmunizationRecommendation.resourceType = immunizationRecommendation.resourceType;
+objectImmunizationRecommendation.id = immunizationRecommendation.id;
+objectImmunizationRecommendation.identifier = immunizationRecommendation.identifier;
+objectImmunizationRecommendation.patient = immunizationRecommendation.patient;
+var Recommendation = {};
+Recommendation.id = immunizationRecommendation.recommendation.id;
+Recommendation.date = immunizationRecommendation.recommendation.date;
+Recommendation.vaccineCode = immunizationRecommendation.recommendation.vaccine_code;
+Recommendation.targetDisease = immunizationRecommendation.recommendation.target_disease;
+Recommendation.doseNumber = immunizationRecommendation.recommendation.dose_number;
+Recommendation.forecastStatus = immunizationRecommendation.recommendation.forecast_status;
+Recommendation.dateCriterion = immunizationRecommendation.recommendation.dateCriterion;
+Recommendation.protocol = immunizationRecommendation.recommendation.protocol;
+Recommendation.supportingImmunization = immunizationRecommendation.recommendation.supportingImmunization;	
+var SupportingPatientInformation = {};
+SupportingPatientInformation.observation = immunizationRecommendation.recommendation.supportingPatientInformation.observation;
+																																		
+SupportingPatientInformation.allergyIntolerance = informationAllergyIntolerance.data;
+Recommendation.supportingPatientInformation = SupportingPatientInformation;
+																																		
+objectImmunizationRecommendation.recommendation = Recommendation;
+
+																																		newImmunizationRecommendation[index] = objectImmunizationRecommendation;
+
+																																		if(index == countImmunizationRecommendation -1 ){
+																																			res.json({"err_code": 0, "data":newImmunizationRecommendation});				
+																																		}
+
+																																	}else{
+																																		res.json(informationAllergyIntolerance);			
+																																	}
+																																})
+																															})
+																															myEmitter.emit('getSupportingPatientInformationAllergyIntolerance', objectImmunizationRecommendation, index, newImmunizationRecommendation, countImmunizationRecommendation);
+
+																														}else{
+																															res.json(informationObservation);			
+																														}
+																													})
+																												})
+																												myEmitter.emit('getSupportingPatientInformationObservation', objectImmunizationRecommendation, index, newImmunizationRecommendation, countImmunizationRecommendation);			
+																											}else{
+																												res.json(supportingImmunization);			
+																											}
+																										})
+																									})
+																									myEmitter.emit('getSupportingImmunization', objectImmunizationRecommendation, index, newImmunizationRecommendation, countImmunizationRecommendation);			
+																								}else{
+																									res.json(immunizationRecommendationDateCriterion);			
+																								}
+																							})
+																						})
+																						myEmitter.emit('getImmunizationRecommendationDateCriterion', objectImmunizationRecommendation, index, newImmunizationRecommendation, countImmunizationRecommendation);
+																					}else{
+																						res.json(immunizationRecommendationRecommendation);			
+																					}
+																				})
+																			})
+																myEmitter.emit('getImmunizationRecommendationRecommendation', objectImmunizationRecommendation, index, newImmunizationRecommendation, countImmunizationRecommendation);
+															}else{
+																res.json(identifier);
+															}
 														})
-														myEmitter.emit('getMedicationRequestRequester', objectMedicationRequest, index, newMedicationRequest, countMedicationRequest);			
-													}else{
-														res.json(identifier);			
-													}
-												})
-											})				
-										myEmitter.emit("getIdentifier", medicationRequest.data[i], i, newMedicationRequest, medicationRequest.data.length);
+													})
+										myEmitter.emit("getIdentifier", immunizationRecommendation.data[i], i, newImmunizationRecommendation, immunizationRecommendation.data.length);
+										//res.json({"err_code": 0, "err_msg": "endpoint is not empty."});		
 									}
+									 //res.json({"err_code": 0, "data":organization.data});
 								}else{
-									res.json({"err_code": 2, "err_msg": "Medication Request is empty."});	
+									res.json({"err_code": 2, "err_msg": "Immunization Recommendation is empty."});	
 								}
 							}else{
-								res.json(medicationRequest);
+								res.json(immunizationRecommendation);
 							}
 						}
 					});
@@ -409,21 +412,20 @@ var controller = {
 					res.json(result);
 				}
 			});	
-		}
+		}		
 	},
 	post: {
-		medicationRequest: function postMedicationRequest(req, res){
-			//belum
+		immunizationRecommendation : function addImmunizationRecommendation(req, res){
 			var ipAddres = req.connection.remoteAddress;
-			var apikey = req.params.apikey;
-			var regex = new RegExp("([0-9]{4}[-](0[1-9]|1[0-2])[-]([0-2]{1}[0-9]{1}|3[0-1]{1})|([0-2]{1}[0-9]{1}|3[0-1]{1})[-](0[1-9]|1[0-2])[-][0-9]{4})");
+      var apikey = req.params.apikey;
+      var regex = new RegExp("([0-9]{4}[-](0[1-9]|1[0-2])[-]([0-2]{1}[0-9]{1}|3[0-1]{1})|([0-2]{1}[0-9]{1}|3[0-1]{1})[-](0[1-9]|1[0-2])[-][0-9]{4})");
+			//var isValid = new RegExp("^([0-1]?[0-9]|2[0-4]):([0-5][0-9])(:[0-5][0-9])?$");
 
-			var err_code = 0;
-			var err_msg = "";
-	//console.log(req.body);
-			//identifier
+      var err_code = 0;
+      var err_msg = "";
+			
 			if(typeof req.body.identifier.use !== 'undefined'){
-				var identifierUseCode =  req.body.identifier.use.trim().toLowerCase();
+				identifierUseCode =  req.body.identifier.use.trim().toLowerCase();
 				if(validator.isEmpty(identifierUseCode)){
 					err_code = 2;
 					err_msg = "Identifier Use is required";
@@ -435,7 +437,7 @@ var controller = {
 
 			//type code
 			if(typeof req.body.identifier.type !== 'undefined'){
-				var identifierTypeCode =  req.body.identifier.type.trim().toUpperCase();
+				identifierTypeCode =  req.body.identifier.type.trim().toUpperCase();
 				if(validator.isEmpty(identifierTypeCode)){
 					err_code = 2;
 					err_msg = "Identifier Type is required";
@@ -447,7 +449,7 @@ var controller = {
 
 			//identifier uniqe value
 			if(typeof req.body.identifier.value !== 'undefined'){
-				var identifierValue =  req.body.identifier.value.trim();
+				identifierValue =  req.body.identifier.value.trim();
 				if(validator.isEmpty(identifierValue)){
 					err_code = 2;
 					err_msg = "Identifier Value is required";
@@ -459,7 +461,7 @@ var controller = {
 
 			//identifier period start
 			if(typeof req.body.identifier.period !== 'undefined'){
-				var period = req.body.identifier.period;
+				period = req.body.identifier.period;
 				if(period.indexOf("to") > 0){
 					arrPeriod = period.split("to");
 					identifierPeriodStart = arrPeriod[0];
@@ -475,509 +477,474 @@ var controller = {
 				err_code = 1;
 				err_msg = "Please add key 'period' in json identifier request.";
 			}
-			
-			//medicationRequest status
-			if(typeof req.body.status !== 'undefined'){
-				var medicationRequestStatus =  req.body.status.trim().toLowerCase();
-				if(validator.isEmpty(medicationRequestStatus)){
-					err_code = 2;
-					err_msg = "Medication administration status is required";
-				}
-			}else{
-				err_code = 1;
-				err_msg = "Please add sub-key 'status' in json Medication administration request.";
-			}
-			
-			if(typeof req.body.category !== 'undefined'){
-				var medicationRequestCategory =  req.body.category.trim().toLowerCase();
-				if(validator.isEmpty(medicationRequestCategory)){
-					err_code = 2;
-					err_msg = "Medication administration category is required";
-				}
-			}else{
-				err_code = 1;
-				err_msg = "Please add sub-key 'category' in json Medication administration request.";
-			}
-			
-			if(typeof req.body.medication.medicationCodeableConcept !== 'undefined'){
-				var medicationRequestMedicationCodeableConcept =  req.body.medication.medicationCodeableConcept.trim().toLowerCase();
-				if(validator.isEmpty(medicationRequestMedicationCodeableConcept)){
-					err_code = 2;
-					err_msg = "Medication administration medication codeable concept is required";
-				}
-			}else{
-				err_code = 1;
-				err_msg = "Please add sub-key 'medication codeable concept' in json Medication administration request.";
-			}
-			
-			if(typeof req.body.medication.medicationReference !== 'undefined'){
-				var medicationRequestMedicationReference =  req.body.medication.medicationReference.trim().toLowerCase();
-				if(validator.isEmpty(medicationRequestMedicationReference)){
-					medicationRequestMedicationReference = "";
-				}
-			}else{
-				err_code = 1;
-				err_msg = "Please add sub-key 'medication reference' in json Medication administration request.";
-			}
-			
-			//subject
-			if(typeof req.body.subject !== 'undefined'){
-				subject =  req.body.subject.trim().toLowerCase();
-				if(validator.isEmpty(subject)){
-					subjectPatient = '';
-					subjectGroup = '';
-				} else {
-					var res = subject.substring(0, 3);
-					if(res == 'pat'){
-						subjectPatient = subject;
-						subjectGroup = '';
-					} else {
-						subjectPatient = '';
-						subjectGroup = subject;
-					}
-				}
-			}else{
-				err_code = 1;
-				err_msg = "Please add sub-key 'subject' in json Medication administration request.";
-			}
-			
-			//context
-			if(typeof req.body.context !== 'undefined'){
-				context =  req.body.context.trim().toLowerCase();
-				if(validator.isEmpty(context)){
-					contextEncounter = '';
-					contextEpisodeOfCare = '';
-				} else {
-					var res = context.substring(0, 3);
-					if(res == 'enc'){
-						contextEncounter = context;
-						contextEpisodeOfCare = '';
-					} else {
-						contextEncounter = '';
-						contextEpisodeOfCare = context;
-					}
-				}
-			}else{
-				err_code = 1;
-				err_msg = "Please add sub-key 'context' in json Medication administration request.";
-			}
-			
-			if(typeof req.body.supportingInformation !== 'undefined'){
-				var medicationRequestSupportingInformation
-				=  req.body.supportingInformation.trim().toLowerCase();
-				if(validator.isEmpty(medicationRequestSupportingInformation)){
-					medicationRequestSupportingInformation = "";
-				}
-			}else{
-				err_code = 1;
-				err_msg = "Please add sub-key 'supporting information' in json Medication administration request.";
-			}
-			
-			//date
-			if(typeof req.body.effective.effectiveDateTime !== 'undefined'){
-				var medicationEffectiveExpirationDate = req.body.effective.effectiveDateTime;
-				if(!regex.test(medicationEffectiveExpirationDate)){
-						err_code = 2;
-						err_msg = "Medication effective expiration date invalid date format.";
-					}	
-			}else{
-				medicationPackageBatchExpirationDate = "";
-			}
-			
-			if(typeof req.body.effective.effectivePeriod !== 'undefined'){
-				var period = req.body.effective.effectivePeriod;
-				if(period.indexOf("to") > 0){
-					arrPeriod = period.split("to");
-					effectivePeriodStart = arrPeriod[0];
-					effectivePeriodEnd = arrPeriod[1];
 
-					if(!regex.test(effectivePeriodStart) && !regex.test(effectivePeriodEnd)){
-						err_code = 2;
-						err_msg = "Effective Period invalid date format.";
-					}	
+/*
+patient|patient||
+recommendation.date|recommendationDate|date|nn
+recommendation.vaccineCode|recommendationVaccineCode||
+recommendation.targetDisease|recommendationTargetDisease||
+recommendation.doseNumber|recommendationDoseNumber|integer|
+recommendation.forecastStatus|recommendationForecastStatus||nn
+recommendation.dateCriterion.code|recommendationDateCriterionCode||nn
+recommendation.dateCriterion.value|recommendationDateCriterionValue|date|
+recommendation.protocol.doseSequence|recommendationProtocolDoseSequence|integer|
+recommendation.protocol.description|recommendationProtocolDescription||
+recommendation.protocol.authority|recommendationProtocolAuthority||
+recommendation.protocol.series|recommendationProtocolSeries||
+recommendation.supportingImmunization|recommendationSupportingImmunization||
+recommendation.supportingPatientInformation.observation|recommendationSupportingPatientInformationObservation||
+recommendation.supportingPatientInformation.allergyIntolerance|recommendationSupportingPatientInformationAllergyIntolerance||
+*/
+			if(typeof req.body.patient !== 'undefined'){
+				var patient =  req.body.patient.trim().toLowerCase();
+				if(validator.isEmpty(patient)){
+					patient = "";
 				}
+			}else{
+				err_code = 1;
+				err_msg = "Please add sub-key 'patient' in json Immunization request.";
+			}
 
-			}else{
-				err_code = 1;
-				err_msg = "Please add key 'period' in json effective request.";
-			}
-			
-			if(typeof req.body.notGiven !== 'undefined'){
-				var medicationRequestNotGiven =  req.body.notGiven.trim().toLowerCase();
-				if(medicationRequestNotGiven !== 'true' || medicationRequestNotGiven !== 'flase'){
-					err_code = 3;
-					err_msg = "Medication administration not given is't boolean";
-				}
-				if(validator.isEmpty(medicationRequestNotGiven)){
+			if(typeof req.body.recommendation.date !== 'undefined'){
+				var recommendationDate =  req.body.recommendation.date;
+				if(validator.isEmpty(recommendationDate)){
 					err_code = 2;
-					err_msg = "Medication administration not given is required";
-				}
-			}else{
-				err_code = 1;
-				err_msg = "Please add sub-key 'not given' in json Medication administration request.";
-			}
-			
-			//medicationRequest form
-			if(typeof req.body.reasonNotGiven !== 'undefined'){
-				var medicationRequestReasonNotGiven =  req.body.reasonNotGiven.trim().toLowerCase();
-				if(validator.isEmpty(medicationRequestReasonNotGiven)){
-					err_code = 2;
-					err_msg = "Medication administration reason not given is required";
-				}
-			}else{
-				err_code = 1;
-				err_msg = "Please add sub-key 'reason not given' in json Medication administration request.";
-			}
-			
-			if(typeof req.body.reasonCode !== 'undefined'){
-				var medicationRequestReasonCode =  req.body.reasonCode.trim().toLowerCase();
-				if(validator.isEmpty(medicationRequestReasonCode)){
-					err_code = 2;
-					err_msg = "Medication administration reason code is required";
-				}
-			}else{
-				err_code = 1;
-				err_msg = "Please add sub-key 'reason code' in json Medication administration request.";
-			}
-			
-			if(typeof req.body.prescription !== 'undefined'){
-				var medicationRequestPrescription =  req.body.prescription.trim().toLowerCase();
-				if(validator.isEmpty(medicationRequestPrescription)){
-					medicationRequestPrescription = "";
-				}
-			}else{
-				err_code = 1;
-				err_msg = "Please add sub-key 'prescription' in json Medication administration request.";
-			}
-			
-			if(typeof req.body.performer.onBehalfOf !== 'undefined'){
-				var medicationRequestPerformerOnBehalfOf =  req.body.performer.onBehalfOf.trim().toLowerCase();
-				if(validator.isEmpty(medicationRequestPerformerOnBehalfOf)){
-					medicationRequestPerformerOnBehalfOf = "";
-				}
-			}else{
-				err_code = 1;
-				err_msg = "Please add sub-key 'on be half of' in json Medication administration performer request.";
-			}
-			
-			if(typeof req.body.performer.actor !== 'undefined'){
-				var medicationRequestPerformerActor =  req.body.performer.actor.trim().toLowerCase();
-				if(validator.isEmpty(medicationRequestPerformerActor)){
-					medicationRequestPerformerActorPractitioner = '';
-					medicationRequestPerformerActorPatient  = '';
-					medicationRequestPerformerActorRelatedPerson  = '';
-					medicationRequestPerformerActorDevice  = '';
-				} else {
-					var res = medicationRequestPerformerActor.substring(0, 3);
-					if(res == 'pra'){
-						medicationRequestPerformerActorPractitioner = medicationRequestPerformerActor;
-						medicationRequestPerformerActorPatient  = '';
-						medicationRequestPerformerActorRelatedPerson  = '';
-						medicationRequestPerformerActorDevice  = '';
-					} else if(res == 'pat'){
-						medicationRequestPerformerActorPractitioner = '';
-						medicationRequestPerformerActorPatient  = medicationRequestPerformerActor;
-						medicationRequestPerformerActorRelatedPerson  = '';
-						medicationRequestPerformerActorDevice  = '';
-					} else if(res == 'dev'){
-						medicationRequestPerformerActorPractitioner = '';
-						medicationRequestPerformerActorPatient  = '';
-						medicationRequestPerformerActorRelatedPerson  = '';
-						medicationRequestPerformerActorDevice  = medicationRequestPerformerActor;
-					} else {
-						medicationRequestPerformerActorPractitioner = '';
-						medicationRequestPerformerActorPatient  = '';
-						medicationRequestPerformerActorRelatedPerson  = medicationRequestPerformerActor;
-						medicationRequestPerformerActorDevice  = '';
+					err_msg = "Immunization recommendation date is required.";
+				}else{
+					if(!regex.test(recommendationDate)){
+						err_code = 2;
+						err_msg = "Immunization recommendation date invalid date format.";	
 					}
 				}
 			}else{
 				err_code = 1;
-				err_msg = "Please add sub-key 'performer actor' in json Medication administration performer request.";
+				err_msg = "Please add sub-key 'recommendation date' in json Immunization request.";
 			}
-			
-			if(typeof req.body.dosage.text !== 'undefined'){
-				var medicationRequestDosageText =  req.body.dosage.text.trim().toLowerCase();
-				if(validator.isEmpty(medicationRequestDosageText)){
-					err_code = 2;
-					err_msg = "Medication administration text is required";
+
+			if(typeof req.body.recommendation.vaccineCode !== 'undefined'){
+				var recommendationVaccineCode =  req.body.recommendation.vaccineCode.trim().toLowerCase();
+				if(validator.isEmpty(recommendationVaccineCode)){
+					recommendationVaccineCode = "";
 				}
 			}else{
 				err_code = 1;
-				err_msg = "Please add sub-key 'text' in json Medication administration request.";
+				err_msg = "Please add sub-key 'recommendation vaccine code' in json Immunization request.";
 			}
-			
-			if(typeof req.body.dosage.site !== 'undefined'){
-				var medicationRequestDosageSite =  req.body.dosage.site.trim().toLowerCase();
-				if(validator.isEmpty(medicationRequestDosageSite)){
-					err_code = 2;
-					err_msg = "Medication administration site is required";
+
+			if(typeof req.body.recommendation.targetDisease !== 'undefined'){
+				var recommendationTargetDisease =  req.body.recommendation.targetDisease.trim().toLowerCase();
+				if(validator.isEmpty(recommendationTargetDisease)){
+					recommendationTargetDisease = "";
 				}
 			}else{
 				err_code = 1;
-				err_msg = "Please add sub-key 'site' in json Medication administration dosage request.";
+				err_msg = "Please add sub-key 'recommendation target disease' in json Immunization request.";
 			}
-			
-			if(typeof req.body.dosage.route !== 'undefined'){
-				var medicationRequestDosageRoute =  req.body.dosage.route.trim().toLowerCase();
-				if(validator.isEmpty(medicationRequestDosageRoute)){
-					err_code = 2;
-					err_msg = "Medication administration route is required";
+
+			if(typeof req.body.recommendation.doseNumber !== 'undefined'){
+				var recommendationDoseNumber =  req.body.recommendation.doseNumber;
+				if(validator.isEmpty(recommendationDoseNumber)){
+					recommendationDoseNumber = "";
+				}else{
+					if(validator.isInt(recommendationDoseNumber)){
+						err_code = 2;
+						err_msg = "Immunization recommendation dose number is must be number.";
+					}
 				}
 			}else{
 				err_code = 1;
-				err_msg = "Please add sub-key 'route' in json Medication administration dosage request.";
+				err_msg = "Please add sub-key 'recommendation dose number' in json Immunization request.";
 			}
-			
-			if(typeof req.body.dosage.method !== 'undefined'){
-				var medicationRequestDosageMethod =  req.body.dosage.method.trim().toLowerCase();
-				if(validator.isEmpty(medicationRequestDosageMethod)){
+
+			if(typeof req.body.recommendation.forecastStatus !== 'undefined'){
+				var recommendationForecastStatus =  req.body.recommendation.forecastStatus.trim().toLowerCase();
+				if(validator.isEmpty(recommendationForecastStatus)){
 					err_code = 2;
-					err_msg = "Medication administration method is required";
+					err_msg = "Immunization recommendation forecast status is required.";
 				}
 			}else{
 				err_code = 1;
-				err_msg = "Please add sub-key 'method' in json Medication administration dosage request.";
+				err_msg = "Please add sub-key 'recommendation forecast status' in json Immunization request.";
 			}
-			
-			if(typeof req.body.dosage.dose !== 'undefined'){
-				var medicationRequestDosageDose =  req.body.dosage.dose.trim().toLowerCase();
-				if(validator.isEmpty(medicationRequestDosageDose)){
+
+			if(typeof req.body.recommendation.dateCriterion.code !== 'undefined'){
+				var recommendationDateCriterionCode =  req.body.recommendation.dateCriterion.code.trim().toLowerCase();
+				if(validator.isEmpty(recommendationDateCriterionCode)){
 					err_code = 2;
-					err_msg = "Medication administration dose is required";
+					err_msg = "Immunization recommendation date criterion code is required.";
 				}
 			}else{
 				err_code = 1;
-				err_msg = "Please add sub-key 'dose' in json Medication administration dosage request.";
+				err_msg = "Please add sub-key 'recommendation date criterion code' in json Immunization request.";
 			}
-			
-			if(typeof req.body.dosage.rate.rateRatio !== 'undefined'){
-				var medicationRequestDosageRateRateRatio =  req.body.dosage.rate.rateRatio.trim().toLowerCase();
-				if(validator.isEmpty(medicationRequestDosageRateRateRatio)){
+
+			if(typeof req.body.recommendation.dateCriterion.value !== 'undefined'){
+				var recommendationDateCriterionValue =  req.body.recommendation.dateCriterion.value;
+				if(validator.isEmpty(recommendationDateCriterionValue)){
 					err_code = 2;
-					err_msg = "Medication administration rate rate ratio is required";
+					err_msg = "Immunization recommendation date criterion value is required.";
+				}else{
+					if(!regex.test(recommendationDateCriterionValue)){
+						err_code = 2;
+						err_msg = "Immunization recommendation date criterion value invalid date format.";	
+					}
 				}
 			}else{
 				err_code = 1;
-				err_msg = "Please add sub-key 'rate ratio' in json Medication administration dosage rate request.";
+				err_msg = "Please add sub-key 'recommendation date criterion value' in json Immunization request.";
 			}
-			
-			if(typeof req.body.dosage.rate.rateQuantity !== 'undefined'){
-				var medicationRequestDosageRateRateQuantity =  req.body.dosage.rate.rateQuantity.trim().toLowerCase();
-				if(validator.isEmpty(medicationRequestDosageRateRateQuantity)){
-					err_code = 2;
-					err_msg = "Medication administration rate rate quantity is required";
+
+			if(typeof req.body.recommendation.protocol.doseSequence !== 'undefined'){
+				var recommendationProtocolDoseSequence =  req.body.recommendation.protocol.doseSequence;
+				if(validator.isEmpty(recommendationProtocolDoseSequence)){
+					recommendationProtocolDoseSequence = "";
+				}else{
+					if(validator.isInt(recommendationProtocolDoseSequence)){
+						err_code = 2;
+						err_msg = "Immunization recommendation protocol dose sequence is must be number.";
+					}
 				}
 			}else{
 				err_code = 1;
-				err_msg = "Please add sub-key 'rate quantity' in json Medication administration dosage rate request.";
+				err_msg = "Please add sub-key 'recommendation protocol dose sequence' in json Immunization request.";
 			}
-			
+
+			if(typeof req.body.recommendation.protocol.description !== 'undefined'){
+				var recommendationProtocolDescription =  req.body.recommendation.protocol.description.trim().toLowerCase();
+				if(validator.isEmpty(recommendationProtocolDescription)){
+					recommendationProtocolDescription = "";
+				}
+			}else{
+				err_code = 1;
+				err_msg = "Please add sub-key 'recommendation protocol description' in json Immunization request.";
+			}
+
+			if(typeof req.body.recommendation.protocol.authority !== 'undefined'){
+				var recommendationProtocolAuthority =  req.body.recommendation.protocol.authority.trim().toLowerCase();
+				if(validator.isEmpty(recommendationProtocolAuthority)){
+					recommendationProtocolAuthority = "";
+				}
+			}else{
+				err_code = 1;
+				err_msg = "Please add sub-key 'recommendation protocol authority' in json Immunization request.";
+			}
+
+			if(typeof req.body.recommendation.protocol.series !== 'undefined'){
+				var recommendationProtocolSeries =  req.body.recommendation.protocol.series.trim().toLowerCase();
+				if(validator.isEmpty(recommendationProtocolSeries)){
+					recommendationProtocolSeries = "";
+				}
+			}else{
+				err_code = 1;
+				err_msg = "Please add sub-key 'recommendation protocol series' in json Immunization request.";
+			}
+
+			if(typeof req.body.recommendation.supportingImmunization !== 'undefined'){
+				var recommendationSupportingImmunization =  req.body.recommendation.supportingImmunization.trim().toLowerCase();
+				if(validator.isEmpty(recommendationSupportingImmunization)){
+					recommendationSupportingImmunization = "";
+				}
+			}else{
+				err_code = 1;
+				err_msg = "Please add sub-key 'recommendation supporting immunization' in json Immunization request.";
+			}
+
+			if(typeof req.body.recommendation.supportingPatientInformation.observation !== 'undefined'){
+				var recommendationSupportingPatientInformationObservation =  req.body.recommendation.supportingPatientInformation.observation.trim().toLowerCase();
+				if(validator.isEmpty(recommendationSupportingPatientInformationObservation)){
+					recommendationSupportingPatientInformationObservation = "";
+				}
+			}else{
+				err_code = 1;
+				err_msg = "Please add sub-key 'recommendation supporting patient information observation' in json Immunization request.";
+			}
+
+			if(typeof req.body.recommendation.supportingPatientInformation.allergyIntolerance !== 'undefined'){
+				var recommendationSupportingPatientInformationAllergyIntolerance =  req.body.recommendation.supportingPatientInformation.allergyIntolerance.trim().toLowerCase();
+				if(validator.isEmpty(recommendationSupportingPatientInformationAllergyIntolerance)){
+					recommendationSupportingPatientInformationAllergyIntolerance = "";
+				}
+			}else{
+				err_code = 1;
+				err_msg = "Please add sub-key 'recommendation supporting patient information allergy intolerance' in json Immunization request.";
+			}
 
 			if(err_code == 0){
 				//check apikey
 				checkApikey(apikey, ipAddres, function(result){
 					if(result.err_code == 0){	
-						checkCode(apikey, medicationRequestStatus, 'MEDICATION_ADMIN_STATUS', function(resMedicationRequestStatus){
-							if(resMedicationRequestStatus.err_code > 0){ //code harus lebih besar dari nol, ini menunjukan datanya valid
-								checkCode(apikey, medicationRequestCategory, 'MEDICATION_ADMIN_CATEGORY', function(resMedicationRequestCategory){
-									if(resMedicationRequestCategory.err_code > 0){ //code harus lebih besar dari nol, ini menunjukan datanya valid
-										checkCode(apikey, medicationRequestMedicationCodeableConcept, 'MEDICATION_CODES', function(resMedicationRequestMedicationCodeableConcept){
-											if(resMedicationRequestMedicationCodeableConcept.err_code > 0){ //code harus lebih besar dari nol, ini menunjukan datanya valid
-												checkCode(apikey, medicationRequestReasonNotGiven, 'REASON_MEDICATION_NOT_GIVEN_CODES', function(resMedicationRequestReasonNotGiven){
-													if(resMedicationRequestReasonNotGiven.err_code > 0){
-														checkCode(apikey, medicationRequestReasonCode, 'REASON_MEDICATION_GIVEN_CODES', function(resMedicationRequestReasonCode){
-															if(resMedicationRequestReasonCode.err_code > 0){
-																checkCode(apikey, medicationRequestDosageSite, 'APPROACH_SITE_CODES', function(resMedicationRequestDosageSite){
-																	if(resMedicationRequestDosageSite.err_code > 0){
-																		checkCode(apikey, medicationRequestDosageRoute, 'ROUTE_CODES', function(resMedicationRequestDosageRoute){
-																			if(resMedicationRequestDosageRoute.err_code > 0){
-																				checkCode(apikey, medicationRequestDosageMethod, 'ADMINISTRATION_METHOD_CODES', function(resMedicationRequestDosageMethod){
-																					if(resMedicationRequestDosageMethod.err_code > 0){
-																						checkUniqeValue(apikey, "IDENTIFIER_VALUE|" + identifierValue, 'IDENTIFIER', function(resUniqeValue){
-																							if(resUniqeValue.err_code == 0){
-																		
-				myEmitter.prependOnceListener('checkMedicationRequestId', function() {
-					//proses insert
-					MedicationRequestPerformer
-					//set uniqe id
-					var unicId = uniqid.time();
-					var medicationRequestId = 'mer' + unicId;
-					var medicationRequestPerformerId = 'mrp' + unicId;
-					var medicationRequestDosageId = 'mrd' + unicId;
-					var identifierId = 'ide' + unicId;
+						checkCode(apikey, identifierUseCode, 'IDENTIFIER_USE', function(resUseCode){
+							if(resUseCode.err_code > 0){ //code harus lebih besar dari nol, ini menunjukan datanya valid
+								checkCode(apikey, identifierTypeCode, 'IDENTIFIER_TYPE', function(resUseTypeCode){
+									if(resUseTypeCode.err_code > 0){ //code harus lebih besar dari nol, ini menunjukan datanya valid	
 
-					dataMedicationRequest = {
-						"medication_administration_id" : medicationRequestId,
-						"status" : medicationRequestStatus,
-						"category" : medicationRequestCategory, 
-						"medication_codeable_concept" : medicationRequestMedicationCodeableConcept,
-						"medication_reference" : medicationRequestMedicationReference,
-						"subject_patient" : subjectPatient,
-						"subject_group" : subjectGroup,
-						"context_encounter" : contextEncounter,
-						"context_episode_of_care" : contextEpisodeOfCare,
-						"supporting_information" : medicationRequestSupportingInformation,
-						"effective_date_time" : medicationEffectiveExpirationDate,
-						"effective_period_start" : effectivePeriodStart,
-						"effective_period_end" : effectivePeriodEnd,
-						"not_given" : medicationRequestNotGiven,
-						"reason_not_given" : medicationRequestReasonNotGiven,
-						"reason_code" : medicationRequestReasonCode,
-						"prescription" : medicationRequestPrescription
-					}
-					ApiFHIR.post('MedicationRequest', {"apikey": apikey}, {body: dataMedicationRequest, json: true}, function(error, response, body){
-						medicationRequest = body;
-						if(medicationRequest.err_code > 0){
-							res.json(medicationRequest);	
-						}
-					})
-					
-					dataMedicationRequestPerformer = {
-						"performer_id" : medicationRequestPerformerId,
-						"actor_practitioner" : medicationRequestPerformerActorPractitioner,
-						"actor_patient" : medicationRequestPerformerActorPatient,
-						"actor_related_person" : medicationRequestPerformerActorRelatedPerson,
-						"actor_device" : medicationRequestPerformerActorDevice,
-						"on_behalf_of" : medicationRequestPerformerOnBehalfOf,
-						"medication_administration_id" : medicationRequestId
-					}
-					ApiFHIR.post('MedicationRequestPerformer', {"apikey": apikey}, {body: dataMedicationRequestPerformer, json: true}, function(error, response, body){
-						medicationRequestPerformer = body;
-						if(medicationRequestPerformer.err_code > 0){
-							//console.log(medicationRequestPractitioner);
-							res.json(medicationRequestPerformer);	
-						}
-					})
+										//event emiter
+										myEmitter.prependOnceListener('checkIdentifierValue', function() {
 
-					dataMedicationRequestDosage = {
-						"dosage_id" : medicationRequestDosageId,
-						"text" : medicationRequestDosageText,
-						"site" : medicationRequestDosageSite,
-						"route" : medicationRequestDosageRoute,
-						"method" : medicationRequestDosageMethod,
-						"dose" : medicationRequestDosageDose,
-						"rate_ratio" : medicationRequestDosageRateRateRatio,
-						"rate_quality" : medicationRequestDosageRateRateQuantity,
-						"medication_administration_id" : medicationRequestId
-					}
-					ApiFHIR.post('MedicationRequestDosage', {"apikey": apikey}, {body: dataMedicationRequestDosage, json: true}, function(error, response, body){
-						medicationRequestDosage = body;
-						if(medicationRequestDosage.err_code > 0){
-							res.json(medicationRequestDosage);	
-						}
-					})
-					
-					var identifierSystem = identifierId;
-					dataIdentifier = {
-						"id": identifierId,
-						"use": identifierUseCode,
-						"type": identifierTypeCode,
-						//"system": identifierSystem,
-						"value": identifierValue,
-						"system": identifierSystem,
-						"period_start": identifierPeriodStart,
-						"period_end": identifierPeriodEnd,
-						"medication_administration_id" : medicationRequestId
-					}
+												checkUniqeValue(apikey, "IDENTIFIER_VALUE|" + identifierValue, 'IDENTIFIER', function(resUniqeValue){
+													if(resUniqeValue.err_code == 0){ //untuk ini nilai code harus sama dengan 0, menunjukan value tersebut belum ada
 
-					ApiFHIR.post('identifier', {"apikey": apikey}, {body: dataIdentifier, json: true}, function(error, response, body){
-						identifier = body;
-						if(identifier.err_code > 0){
-							res.json(identifier);	
-						}
-					})
+														//proses insert
 
-					res.json({"err_code": 0, "err_msg": "MedicationRequest has been add.", "data": [{"_id": medicationRequestId}]})
-				});
+														//set uniqe id
+														var unicId = uniqid.time();
+														var identifierId = 'ide' + unicId;
+														var immunizationRecommendationId = 'ire' + unicId;
+														var immunizationRecommendationRecommendationId = 'irr' + unicId;
+														var immunizationRecommendationDateCriterionId = 'ird' + unicId;
 
-				myEmitter.prependOnceListener('checkMedicationRequestManufacturerId', function(){
-					if(validator.isEmpty(medicationRequestManufacturer)){
-						myEmitter.emit('checkMedicationRequestId');
-					}else{
-						checkUniqeValue(apikey, "ORGANIZATION_ID|" + medicationRequestManufacturer, 'ORGANIZATION', function(resManufacturerID){
-							if(resManufacturerID.err_code > 0){ //code harus lebih besar dari nol, ini menunjukan datanya valid
-								myEmitter.emit('checkMedicationRequestId');
-							}else{
-								res.json({"err_code": 503, "err_msg": "Manufaturer id not found."});	
-							}
-						})
-					}
-				})
-																		
-				myEmitter.prependOnceListener('checkItemReferenceSubstanceId', function(){
-					if(validator.isEmpty(medicationRequestIngredientItemItemReferenceSubstance)){
-						myEmitter.emit('checkMedicationRequestManufacturerId');
-					}else{
-						checkUniqeValue(apikey, "SUBSTANCE_ID|" + medicationRequestIngredientItemItemReferenceSubstance, 'SUBSTANCE', function(resItemReferenceSubstanceId){
-							if(resItemReferenceSubstanceId.err_code > 0){ //code harus lebih besar dari nol, ini menunjukan datanya valid
-								myEmitter.emit('checkMedicationRequestManufacturerId');
-							}else{
-								res.json({"err_code": 503, "err_msg": "Substance id not found."});	
-							}
-						})
-					}
-				})
+														dataImmunizationRecommendation = {
+															"immunization_recommendation_id" : immunizationRecommendationId,
+															"patient" : patient
+														}
+														console.log(dataImmunizationRecommendation);
+														ApiFHIR.post('immunizationRecommendation', {"apikey": apikey}, {body: dataImmunizationRecommendation, json: true}, function(error, response, body){
+															immunizationRecommendation = body;
+															if(immunizationRecommendation.err_code > 0){
+																res.json(immunizationRecommendation);	
+																console.log("ok");
+															}
+														});
 
-				myEmitter.prependOnceListener('checkItemReferenceMedicationRequest', function(){
-					if(validator.isEmpty(medicationRequestIngredientItemItemReferenceMedicationRequest)){
-						myEmitter.emit('checkItemReferenceSubstanceId');
-					}else{
-						checkUniqeValue(apikey, "MEDICATION_ID|" + medicationRequestIngredientItemItemReferenceMedicationRequest, 'MEDICATION', function(resItemReferenceMedicationRequestId){
-							if(resItemReferenceMedicationRequestId.err_code > 0){ //code harus lebih besar dari nol, ini menunjukan datanya valid
-								myEmitter.emit('checkItemReferenceSubstanceId');
-							}else{
-								res.json({"err_code": 503, "err_msg": "Item Reference Substance id not found."});	
-							}
-						})
-					}
-				})
+														//identifier
+														var identifierSystem = identifierId;
+														dataIdentifier = {
+																							"id": identifierId,
+																							"use": identifierUseCode,
+																							"type": identifierTypeCode,
+																							"system": identifierSystem,
+																							"value": identifierValue,
+																							"period_start": identifierPeriodStart,
+																							"period_end": identifierPeriodEnd,
+																							"care_team_id": immunizationRecommendationId
+																						}
 
-				if(validator.isEmpty(medicationRequestPackageItemItemReference)){
-					myEmitter.emit('checkItemReferenceMedicationRequest');
-				}else{
-					checkUniqeValue(apikey, "MEDICATION_ID|" + medicationRequestPackageItemItemReference, 'MEDICATION', function(resPackageItemItemReference){
-						if(resPackageItemItemReference.err_code > 0){ //code harus lebih besar dari nol, ini menunjukan datanya valid
-							myEmitter.emit('checkItemReferenceMedicationRequest');
-						}else{
-							res.json({"err_code": 501, "err_msg": "Item Reference MedicationRequest id is not exist."});
-						}
-					})
-				}	
-																							}else{
-																								res.json({"err_code": 509, "err_msg": "Identifier value already exist."});
-																							}
-																						})
-																					}else{
-																						res.json({"err_code": 509, "err_msg": "Medication administration dosage method Code not found"});
-																					}
-																				})
-																			}else{
-																				res.json({"err_code": 509, "err_msg": "Medication administration dosage route Code not found"});
-																			}
-																		})
-																	}else{
-																		res.json({"err_code": 509, "err_msg": "Medication administration dosage site Code not found"});
-																	}
-																})
-															}else{
-																res.json({"err_code": 509, "err_msg": "Medication administration reason code not found"});
+														ApiFHIR.post('identifier', {"apikey": apikey}, {body: dataIdentifier, json: true}, function(error, response, body){
+															identifier = body;
+															if(identifier.err_code > 0){
+																res.json(identifier);	
 															}
 														})
+														
+														//ImmunizationRecommendationRecommendation
+														dataImmunizationRecommendationRecommendation = {
+															"recommendation_id" : immunizationRecommendationRecommendationId,
+															"date" : recommendationDate,
+															"vaccine_code" : recommendationVaccineCode,
+															"target_disease" : recommendationTargetDisease,
+															"dose_number" : recommendationDoseNumber,
+															"forecast_status" : recommendationForecastStatus,
+															"protocol_dose_sequence" : recommendationProtocolDoseSequence,
+															"protocol_description" : recommendationProtocolDescription,
+															"protocol_authority" : recommendationProtocolAuthority,
+															"protocol_series" : recommendationProtocolSeries,
+															"immunization_recommendation_id" : immunizationRecommendationId
+														}
+														ApiFHIR.post('immunizationRecommendationRecommendation', {"apikey": apikey}, {body: dataImmunizationRecommendationRecommendation, json: true}, function(error, response, body){
+															immunizationRecommendationRecommendation = body;
+															if(immunizationRecommendationRecommendation.err_code > 0){
+																res.json(immunizationRecommendationRecommendation);	
+																console.log("ok");
+															}
+														});
+														
+														//ImmunizationRecommendationDateCriterion
+														dataImmunizationRecommendationDateCriterion = {
+															"date_creation_id" : immunizationRecommendationDateCriterionId,
+															"code" : recommendationDateCriterionCode,
+															"value" : recommendationDateCriterionValue,
+															"recommendation_id" : immunizationRecommendationRecommendationId
+														}
+														ApiFHIR.post('immunizationRecommendationDateCriterion', {"apikey": apikey}, {body: dataImmunizationRecommendationDateCriterion, json: true}, function(error, response, body){
+															immunizationRecommendationDateCriterion = body;
+															if(immunizationRecommendationDateCriterion.err_code > 0){
+																res.json(immunizationRecommendationDateCriterion);	
+																console.log("ok");
+															}
+														});
+														
+														res.json({"err_code": 0, "err_msg": "Immunization Recommendation has been add.", "data": [{"_id": immunizationRecommendationId}]});
 													}else{
-														res.json({"err_code": 509, "err_msg": "Medication administration reason not given Code not found"});
+														res.json({"err_code": 528, "err_msg": "Identifier value already exist."});		
 													}
 												})
-											}else{
-												res.json({"err_code": 508, "err_msg": "Medication administration medication codeable concept code not found"});
+										});
+
+										//cek code
+										/*
+										recommendationVaccineCode|vaccine_code
+										recommendationTargetDisease|immunization_recommendation_target_disease
+										recommendationForecastStatus|immunization_recommendation_status
+										recommendationDateCriterionCode|immunization_recommendation_date_criterion
+										*/
+										myEmitter.prependOnceListener('checkRecommendationVaccineCode', function () {
+											if (!validator.isEmpty(recommendationVaccineCode)) {
+												checkCode(apikey, recommendationVaccineCode, 'VACCINE_CODE', function (resRecommendationVaccineCodeCode) {
+													if (resRecommendationVaccineCodeCode.err_code > 0) {
+														myEmitter.emit('checkIdentifierValue');
+													} else {
+														res.json({
+															"err_code": "500",
+															"err_msg": "Recommendation vaccine code code not found"
+														});
+													}
+												})
+											} else {
+												myEmitter.emit('checkIdentifierValue');
 											}
 										})
+
+										myEmitter.prependOnceListener('checkRecommendationTargetDisease', function () {
+											if (!validator.isEmpty(recommendationTargetDisease)) {
+												checkCode(apikey, recommendationTargetDisease, 'IMMUNIZATION_RECOMMENDATION_TARGET_DISEASE', function (resRecommendationTargetDiseaseCode) {
+													if (resRecommendationTargetDiseaseCode.err_code > 0) {
+														myEmitter.emit('checkRecommendationVaccineCode');
+													} else {
+														res.json({
+															"err_code": "500",
+															"err_msg": "Recommendation target disease code not found"
+														});
+													}
+												})
+											} else {
+												myEmitter.emit('checkRecommendationVaccineCode');
+											}
+										})
+
+										myEmitter.prependOnceListener('checkRecommendationForecastStatus', function () {
+											if (!validator.isEmpty(recommendationForecastStatus)) {
+												checkCode(apikey, recommendationForecastStatus, 'IMMUNIZATION_RECOMMENDATION_STATUS', function (resRecommendationForecastStatusCode) {
+													if (resRecommendationForecastStatusCode.err_code > 0) {
+														myEmitter.emit('checkRecommendationTargetDisease');
+													} else {
+														res.json({
+															"err_code": "500",
+															"err_msg": "Recommendation forecast status code not found"
+														});
+													}
+												})
+											} else {
+												myEmitter.emit('checkRecommendationTargetDisease');
+											}
+										})
+
+										myEmitter.prependOnceListener('checkRecommendationDateCriterionCode', function () {
+											if (!validator.isEmpty(recommendationDateCriterionCode)) {
+												checkCode(apikey, recommendationDateCriterionCode, 'IMMUNIZATION_RECOMMENDATION_DATE_CRITERION', function (resRecommendationDateCriterionCodeCode) {
+													if (resRecommendationDateCriterionCodeCode.err_code > 0) {
+														myEmitter.emit('checkRecommendationForecastStatus');
+													} else {
+														res.json({
+															"err_code": "500",
+															"err_msg": "Recommendation date criterion code code not found"
+														});
+													}
+												})
+											} else {
+												myEmitter.emit('checkRecommendationForecastStatus');
+											}
+										})
+
+										//cek value
+										/*
+										patient|Patient
+										recommendationProtocolAuthority|Organization
+										recommendationSupportingImmunization|Immunization
+										recommendationSupportingPatientInformationObservation|Observation
+										recommendationSupportingPatientInformationAllergyIntolerance|AllergyIntolerance
+
+										*/
+
+										myEmitter.prependOnceListener('checkPatient', function () {
+											if (!validator.isEmpty(patient)) {
+												checkUniqeValue(apikey, "PATIENT_ID|" + patient, 'PATIENT', function (resPatient) {
+													if (resPatient.err_code > 0) {
+														myEmitter.emit('checkRecommendationDateCriterionCode');
+													} else {
+														res.json({
+															"err_code": "500",
+															"err_msg": "Patient id not found"
+														});
+													}
+												})
+											} else {
+												myEmitter.emit('checkRecommendationDateCriterionCode');
+											}
+										})
+
+										myEmitter.prependOnceListener('checkRecommendationProtocolAuthority', function () {
+											if (!validator.isEmpty(recommendationProtocolAuthority)) {
+												checkUniqeValue(apikey, "ORGANIZATION_ID|" + recommendationProtocolAuthority, 'ORGANIZATION', function (resRecommendationProtocolAuthority) {
+													if (resRecommendationProtocolAuthority.err_code > 0) {
+														myEmitter.emit('checkPatient');
+													} else {
+														res.json({
+															"err_code": "500",
+															"err_msg": "Recommendation protocol authority id not found"
+														});
+													}
+												})
+											} else {
+												myEmitter.emit('checkPatient');
+											}
+										})
+
+										myEmitter.prependOnceListener('checkRecommendationSupportingImmunization', function () {
+											if (!validator.isEmpty(recommendationSupportingImmunization)) {
+												checkUniqeValue(apikey, "IMMUNIZATION_ID|" + recommendationSupportingImmunization, 'IMMUNIZATION', function (resRecommendationSupportingImmunization) {
+													if (resRecommendationSupportingImmunization.err_code > 0) {
+														myEmitter.emit('checkRecommendationProtocolAuthority');
+													} else {
+														res.json({
+															"err_code": "500",
+															"err_msg": "Recommendation supporting immunization id not found"
+														});
+													}
+												})
+											} else {
+												myEmitter.emit('checkRecommendationProtocolAuthority');
+											}
+										})
+
+										myEmitter.prependOnceListener('checkRecommendationSupportingPatientInformationObservation', function () {
+											if (!validator.isEmpty(recommendationSupportingPatientInformationObservation)) {
+												checkUniqeValue(apikey, "OBSERVATION_ID|" + recommendationSupportingPatientInformationObservation, 'OBSERVATION', function (resRecommendationSupportingPatientInformationObservation) {
+													if (resRecommendationSupportingPatientInformationObservation.err_code > 0) {
+														myEmitter.emit('checkRecommendationSupportingImmunization');
+													} else {
+														res.json({
+															"err_code": "500",
+															"err_msg": "Recommendation supporting patient information observation id not found"
+														});
+													}
+												})
+											} else {
+												myEmitter.emit('checkRecommendationSupportingImmunization');
+											}
+										})
+
+										if (!validator.isEmpty(recommendationSupportingPatientInformationAllergyIntolerance)) {
+											checkUniqeValue(apikey, "ALLERGYINTOLERANCE_ID|" + recommendationSupportingPatientInformationAllergyIntolerance, 'ALLERGYINTOLERANCE', function (resRecommendationSupportingPatientInformationAllergyIntolerance) {
+												if (resRecommendationSupportingPatientInformationAllergyIntolerance.err_code > 0) {
+													myEmitter.emit('checkRecommendationSupportingPatientInformationObservation');
+												} else {
+													res.json({
+														"err_code": "500",
+														"err_msg": "Recommendation supporting patient information allergy intolerance id not found"
+													});
+												}
+											})
+										} else {
+											myEmitter.emit('checkRecommendationSupportingPatientInformationObservation');
+										}
+
+
 									}else{
-										res.json({"err_code": 502, "err_msg": "Medication administration category code not found"});		
+										res.json({"err_code": 502, "err_msg": "Identifier type code not found"});		
 									}
 								})
 							}else{
-								res.json({"err_code": 501, "err_msg": "Medication administration status code not found"});
+								res.json({"err_code": 501, "err_msg": "Identifier use code not found"});
 							}
 						})
 					}else{
@@ -987,169 +954,281 @@ var controller = {
 				});
 			}else{
 				res.json({"err_code": err_code, "err_msg": err_msg});
-			}	
+			}
 		}
 	},
-	put:{
-		medicationRequest: function putMedicationRequest(req, res){
+	put: {
+		immunizationRecommendation : function putImmunizationRecommendation(req, res){
 			var ipAddres = req.connection.remoteAddress;
-			var apikey = req.params.apikey;
-			var regex = new RegExp("([0-9]{4}[-](0[1-9]|1[0-2])[-]([0-2]{1}[0-9]{1}|3[0-1]{1})|([0-2]{1}[0-9]{1}|3[0-1]{1})[-](0[1-9]|1[0-2])[-][0-9]{4})");
+      var apikey = req.params.apikey;
+      var regex = new RegExp("([0-9]{4}[-](0[1-9]|1[0-2])[-]([0-2]{1}[0-9]{1}|3[0-1]{1})|([0-2]{1}[0-9]{1}|3[0-1]{1})[-](0[1-9]|1[0-2])[-][0-9]{4})");
+			//var isValid = new RegExp("^([0-1]?[0-9]|2[0-4]):([0-5][0-9])(:[0-5][0-9])?$");
+			var immunizationRecommendationId = req.params.adverse_event_id;
 
-			
-			var medicationRequestId = req.params.medicationRequest_id;
-			var err_code = 0;
-			var err_msg = "";
+      var err_code = 0;
+      var err_msg = "";
+      var dataImmunizationRecommendation = {};
 
-			var dataMedicationRequest = {};
-			
-			//input check 
-			if(typeof medicationRequestId !== 'undefined'){
-				if(validator.isEmpty(medicationRequestId)){
+			if(typeof immunizationRecommendationId !== 'undefined'){
+				if(validator.isEmpty(immunizationRecommendationId)){
 					err_code = 2;
-					err_msg = "MedicationRequest id is required";
+					err_msg = "Care Team id is required";
 				}
 			}else{
 				err_code = 2;
-				err_msg = "MedicationRequest id is required";
+				err_msg = "Care Team id is required";
 			}
-			
-			if(typeof req.body.active !== 'undefined'){
-				active =  req.body.active.trim().toLowerCase();
-				if(validator.isEmpty(active)){
-					err_code = 2;
-					err_msg = "Active is required.";
-				}else{
-					dataMedicationRequest.active = active;
-				}
-			}else{
-				active = "";
-			}
-			
-			if(typeof req.body.type !== 'undefined'){
-				type =  req.body.type.trim().toLowerCase();
-				if(validator.isEmpty(type)){
-					err_code = 2;
-					err_msg = "Type is required.";
-				}else{
-					dataMedicationRequest.type = type;
-				}
-			}else{
-				type = "";
-			}
-			
-			if(typeof req.body.name !== 'undefined'){
-				name =  req.body.name.trim().toLowerCase();
-				if(validator.isEmpty(name)){
-					err_code = 2;
-					err_msg = "Name is required.";
-				}else{
-					dataMedicationRequest.name = name;
-				}
-			}else{
-				name = "";
-			}
-			
-			if(typeof req.body.alias !== 'undefined'){
-				alias =  req.body.alias.trim().toLowerCase();
-				if(validator.isEmpty(alias)){
-					err_code = 2;
-					err_msg = "Alias is required.";
-				}else{
-					dataMedicationRequest.alias = alias;
-				}
-			}else{
-				alias = "";
-			}			
-			
-			//Endpoint managingMedicationRequest
-			if(typeof req.body.partOf !== 'undefined'){
-				parentId =  req.body.partOf.trim().toLowerCase();
-				if(validator.isEmpty(parentId)){
-					err_code = 2;
-					err_msg = "Managing MedicationRequest is required.";
-				}else{
-					dataMedicationRequest.parentId = parentId;
-				}
-			}else{
-				parentId = "";
-			}
-			
-			//Endpoint managingMedicationRequest
-			if(typeof req.body.endpoint !== 'undefined'){
-				endpointId =  req.body.endpoint.trim().toLowerCase();
-				if(validator.isEmpty(endpointId)){
-					err_code = 2;
-					err_msg = "Endpoint is required.";
-				}else{
-					dataMedicationRequest.endpointId = endpointId;
-				}
-			}else{
-				endpointId = "";
-			}
-			
 
+			if(typeof req.body.patient !== 'undefined' && req.body.patient !== ""){
+				dataImmunization.patient =  req.body.patient.trim().toLowerCase();
+				if(validator.isEmpty(patient)){
+					err_code = 2;
+					err_msg = "Immunization patient is required.";
+				}else{
+					dataImmunization.patient = patient;
+				}
+			}else{
+				patient = "";
+			}
+
+			if(typeof req.body.recommendation.date !== 'undefined' && req.body.recommendation.date !== ""){
+				dataImmunization.recommendationDate =  req.body.recommendation.date;
+				if(validator.isEmpty(recommendationDate)){
+					err_code = 2;
+					err_msg = "immunization recommendation date is required.";
+				}else{
+					if(!regex.test(recommendationDate)){
+						err_code = 2;
+						err_msg = "immunization recommendation date invalid date format.";	
+					}
+				}
+			}else{
+				recommendationDate = "";
+			}
+
+			if(typeof req.body.recommendation.vaccineCode !== 'undefined' && req.body.recommendation.vaccineCode !== ""){
+				dataImmunization.recommendationVaccineCode =  req.body.recommendation.vaccineCode.trim().toLowerCase();
+				if(validator.isEmpty(recommendationVaccineCode)){
+					err_code = 2;
+					err_msg = "Immunization recommendation vaccine code is required.";
+				}else{
+					dataImmunization.recommendationVaccineCode = recommendationVaccineCode;
+				}
+			}else{
+				recommendationVaccineCode = "";
+			}
+
+			if(typeof req.body.recommendation.targetDisease !== 'undefined' && req.body.recommendation.targetDisease !== ""){
+				dataImmunization.recommendationTargetDisease =  req.body.recommendation.targetDisease.trim().toLowerCase();
+				if(validator.isEmpty(recommendationTargetDisease)){
+					err_code = 2;
+					err_msg = "Immunization recommendation target disease is required.";
+				}else{
+					dataImmunization.recommendationTargetDisease = recommendationTargetDisease;
+				}
+			}else{
+				recommendationTargetDisease = "";
+			}
+
+			if(typeof req.body.recommendation.doseNumber !== 'undefined' && req.body.recommendation.doseNumber !== ""){
+				dataImmunization.recommendationDoseNumber =  req.body.recommendation.doseNumber;
+				if(validator.isInt(recommendationDoseNumber)){
+					err_code = 2;
+					err_msg = "immunization recommendation dose number is must be number.";
+				}
+			}else{
+				recommendationDoseNumber = "";
+			}
+
+			if(typeof req.body.recommendation.forecastStatus !== 'undefined' && req.body.recommendation.forecastStatus !== ""){
+				dataImmunization.recommendationForecastStatus =  req.body.recommendation.forecastStatus.trim().toLowerCase();
+				if(validator.isEmpty(recommendationForecastStatus)){
+					err_code = 2;
+					err_msg = "Immunization recommendation forecast status is required.";
+				}else{
+					dataImmunization.recommendationForecastStatus = recommendationForecastStatus;
+				}
+			}else{
+				recommendationForecastStatus = "";
+			}
+
+			if(typeof req.body.recommendation.dateCriterion.code !== 'undefined' && req.body.recommendation.dateCriterion.code !== ""){
+				dataImmunization.recommendationDateCriterionCode =  req.body.recommendation.dateCriterion.code.trim().toLowerCase();
+				if(validator.isEmpty(recommendationDateCriterionCode)){
+					err_code = 2;
+					err_msg = "Immunization recommendation date criterion code is required.";
+				}else{
+					dataImmunization.recommendationDateCriterionCode = recommendationDateCriterionCode;
+				}
+			}else{
+				recommendationDateCriterionCode = "";
+			}
+
+			if(typeof req.body.recommendation.dateCriterion.value !== 'undefined' && req.body.recommendation.dateCriterion.value !== ""){
+				dataImmunization.recommendationDateCriterionValue =  req.body.recommendation.dateCriterion.value;
+				if(validator.isEmpty(recommendationDateCriterionValue)){
+					err_code = 2;
+					err_msg = "immunization recommendation date criterion value is required.";
+				}else{
+					if(!regex.test(recommendationDateCriterionValue)){
+						err_code = 2;
+						err_msg = "immunization recommendation date criterion value invalid date format.";	
+					}
+				}
+			}else{
+				recommendationDateCriterionValue = "";
+			}
+
+			if(typeof req.body.recommendation.protocol.doseSequence !== 'undefined' && req.body.recommendation.protocol.doseSequence !== ""){
+				dataImmunization.recommendationProtocolDoseSequence =  req.body.recommendation.protocol.doseSequence;
+				if(validator.isInt(recommendationProtocolDoseSequence)){
+					err_code = 2;
+					err_msg = "immunization recommendation protocol dose sequence is must be number.";
+				}
+			}else{
+				recommendationProtocolDoseSequence = "";
+			}
+
+			if(typeof req.body.recommendation.protocol.description !== 'undefined' && req.body.recommendation.protocol.description !== ""){
+				dataImmunization.recommendationProtocolDescription =  req.body.recommendation.protocol.description.trim().toLowerCase();
+				if(validator.isEmpty(recommendationProtocolDescription)){
+					err_code = 2;
+					err_msg = "Immunization recommendation protocol description is required.";
+				}else{
+					dataImmunization.recommendationProtocolDescription = recommendationProtocolDescription;
+				}
+			}else{
+				recommendationProtocolDescription = "";
+			}
+
+			if(typeof req.body.recommendation.protocol.authority !== 'undefined' && req.body.recommendation.protocol.authority !== ""){
+				dataImmunization.recommendationProtocolAuthority =  req.body.recommendation.protocol.authority.trim().toLowerCase();
+				if(validator.isEmpty(recommendationProtocolAuthority)){
+					err_code = 2;
+					err_msg = "Immunization recommendation protocol authority is required.";
+				}else{
+					dataImmunization.recommendationProtocolAuthority = recommendationProtocolAuthority;
+				}
+			}else{
+				recommendationProtocolAuthority = "";
+			}
+
+			if(typeof req.body.recommendation.protocol.series !== 'undefined' && req.body.recommendation.protocol.series !== ""){
+				dataImmunization.recommendationProtocolSeries =  req.body.recommendation.protocol.series.trim().toLowerCase();
+				if(validator.isEmpty(recommendationProtocolSeries)){
+					err_code = 2;
+					err_msg = "Immunization recommendation protocol series is required.";
+				}else{
+					dataImmunization.recommendationProtocolSeries = recommendationProtocolSeries;
+				}
+			}else{
+				recommendationProtocolSeries = "";
+			}
+
+			if(typeof req.body.recommendation.supportingImmunization !== 'undefined' && req.body.recommendation.supportingImmunization !== ""){
+				dataImmunization.recommendationSupportingImmunization =  req.body.recommendation.supportingImmunization.trim().toLowerCase();
+				if(validator.isEmpty(recommendationSupportingImmunization)){
+					err_code = 2;
+					err_msg = "Immunization recommendation supporting immunization is required.";
+				}else{
+					dataImmunization.recommendationSupportingImmunization = recommendationSupportingImmunization;
+				}
+			}else{
+				recommendationSupportingImmunization = "";
+			}
+
+			if(typeof req.body.recommendation.supportingPatientInformation.observation !== 'undefined' && req.body.recommendation.supportingPatientInformation.observation !== ""){
+				dataImmunization.recommendationSupportingPatientInformationObservation =  req.body.recommendation.supportingPatientInformation.observation.trim().toLowerCase();
+				if(validator.isEmpty(recommendationSupportingPatientInformationObservation)){
+					err_code = 2;
+					err_msg = "Immunization recommendation supporting patient information observation is required.";
+				}else{
+					dataImmunization.recommendationSupportingPatientInformationObservation = recommendationSupportingPatientInformationObservation;
+				}
+			}else{
+				recommendationSupportingPatientInformationObservation = "";
+			}
+
+			if(typeof req.body.recommendation.supportingPatientInformation.allergyIntolerance !== 'undefined' && req.body.recommendation.supportingPatientInformation.allergyIntolerance !== ""){
+				dataImmunization.recommendationSupportingPatientInformationAllergyIntolerance =  req.body.recommendation.supportingPatientInformation.allergyIntolerance.trim().toLowerCase();
+				if(validator.isEmpty(recommendationSupportingPatientInformationAllergyIntolerance)){
+					err_code = 2;
+					err_msg = "Immunization recommendation supporting patient information allergy intolerance is required.";
+				}else{
+					dataImmunization.recommendationSupportingPatientInformationAllergyIntolerance = recommendationSupportingPatientInformationAllergyIntolerance;
+				}
+			}else{
+				recommendationSupportingPatientInformationAllergyIntolerance = "";
+			}
+
+			
 			if(err_code == 0){
 				//check apikey
 				checkApikey(apikey, ipAddres, function(result){
-					if(result.err_code == 0){
-						myEmitter.prependOnceListener('checkMedicationRequestID', function(){
-							checkUniqeValue(apikey, "IMMUNIZATION_ID|" + medicationRequestId, 'IMMUNIZATION', function(resMedicationRequestID){
-								if(resMedicationRequestID.err_code > 0){
-									//console.log(dataEndpoint);
-										ApiFHIR.put('medicationRequest', {"apikey": apikey, "_id": medicationRequestId}, {body: dataMedicationRequest, json: true}, function(error, response, body){
-											medicationRequest = body;
-											if(medicationRequest.err_code > 0){
-												res.json(medicationRequest);	
-											}else{
-												res.json({"err_code": 0, "err_msg": "MedicationRequest has been update.", "data": [{"_id": medicationRequestId}]});
-											}
-										})
-								}else{
-									res.json({"err_code": 504, "err_msg": "MedicationRequest Id not found"});		
-								}
-							})
-						})
+					if(result.err_code == 0){	
 
-						myEmitter.prependOnceListener('checkType', function(){
-							if(validator.isEmpty(type)){
-								myEmitter.emit('checkMedicationRequestID');
-							}else{
-								checkCode(apikey, type, 'IMMUNIZATION_TYPE', function(resStatusCode){
-									if(resStatusCode.err_code > 0){
-										myEmitter.emit('checkMedicationRequestID');				
-									}else{
-										res.json({"err_code": 503, "err_msg": "Type Code not found."});	
-									}
-								})
-							}
-						})
+										//event emiter
+										myEmitter.prependOnceListener('checkEndpointId', function() {
+														//proses insert
+														//set uniqe id
+														var unicId = uniqid.time();
+														var identifierId = 'ide' + unicId;
+														var immunizationRecommendationId = 'ade' + unicId;
 
-						myEmitter.prependOnceListener('checkManagingMedicationRequest', function(){
-							if(validator.isEmpty(parentId)){
-								myEmitter.emit('checkType');
-							}else{
-								checkUniqeValue(apikey, "IMMUNIZATION_ID|" + parentId, 'IMMUNIZATION', function(resMedicationRequestID){
-									if(resMedicationRequestID.err_code > 0){
-										myEmitter.emit('checkType');				
-									}else{
-										res.json({"err_code": 503, "err_msg": "Parent Id MedicationRequest, medicationRequest id not found."});	
-									}
-								})
-							}
-						})
+														dataImmunizationRecommendation = {
+															"adverse_event_id" : immunizationRecommendationId,
+															"identifier_id" : identifierId,
+															"category" : category,
+															"type" : type,
+															"subject_patient" : subjectPatient,
+															"subject_research_subject" : subjectResearchSubject,
+															"subject_research_subject" : subjectResearchSubject,
+															"subject_device" : subjectDevice,
+															"date" : date,
+															"location" : location,
+															"seriousness" : seriousness,
+															"outcome" : outcome,
+															"recorder_patient" : recorderPatient,
+															"recorder_practitioner" : recorderPractitioner,
+															"recorder_related_person" : recorderRelatedPerson,
+															"event_participant_practitioner" : eventParticipantPractitioner,
+															"event_participant_device" :eventParticipantDevice,
+															"description" : description,
+														}
+														console.log(dataImmunizationRecommendation);
+														ApiFHIR.post('immunizationRecommendation', {"apikey": apikey}, {body: dataImmunizationRecommendation, json: true}, function(error, response, body){
+															immunizationRecommendation = body;
+															if(immunizationRecommendation.err_code > 0){
+																res.json(immunizationRecommendation);	
+																console.log("ok");
+															}
+														});
 
-						if(validator.isEmpty(endpointId)){
-							myEmitter.emit('checkManagingMedicationRequest');	
-						}else{
-							checkUniqeValue(apikey, "ENDPOINT_ID|" + endpointId, 'ENDPOINT', function(resEndpointID){
-								if(resEndpointID.err_code > 0){ //code harus lebih besar dari nol, ini menunjukan datanya valid
-									myEmitter.emit('checkManagingMedicationRequest');
-								}else{
-									res.json({"err_code": 501, "err_msg": "Endpoint id not found"});
-								}
-							})
-						}
+														//identifier
+														/*var identifierSystem = identifierId;
+														dataIdentifier = {
+																							"id": identifierId,
+																							"use": identifierUseCode,
+																							"type": identifierTypeCode,
+																							"system": identifierSystem,
+																							"value": identifierValue,
+																							"period_start": identifierPeriodStart,
+																							"period_end": identifierPeriodEnd,
+																							"adverse_event_id": immunizationRecommendationId
+																						}
+
+														ApiFHIR.post('identifier', {"apikey": apikey}, {body: dataIdentifier, json: true}, function(error, response, body){
+															identifier = body;
+															if(identifier.err_code > 0){
+																res.json(identifier);	
+															}
+														})*/
+
+														res.json({"err_code": 0, "err_msg": "Care Team has been update.", "data": [{"_id": immunizationRecommendationId}]});
+
+										});
+										myEmitter.emit('checkEndpointId');
+
 					}else{
 						result.err_code = 500;
 						res.json(result);
@@ -1158,6 +1237,7 @@ var controller = {
 			}else{
 				res.json({"err_code": err_code, "err_msg": err_msg});
 			}	
+			
 		}
 	}
 }

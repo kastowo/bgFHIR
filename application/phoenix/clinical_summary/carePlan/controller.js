@@ -175,7 +175,7 @@ var controller = {
 					} else {
 						Subject.patient = "";
 					}
-					arrSubject[i] = Subject;
+					arrSubject = Subject;
 					
 					var arrContext = [];
 					var Context = {};
@@ -189,7 +189,7 @@ var controller = {
 					} else {
 						Context.episodeOfCare = "";
 					}
-					arrContext[i] = Context;
+					arrContext = Context;
 					
 					CarePlan.resourceType = "CarePlan";
           CarePlan.id = rez[i].careplan_id;
@@ -206,10 +206,10 @@ var controller = {
 					if(rez[i].period_start == null){
 						period_start = formatDate(rez[i].period_start);  
 					}else{
-						period_start = rez[i].time_period_start;  
+						period_start = rez[i].period_start;  
 					}
 					if(rez[i].period_end == null){
-						period_end = formatDate(rez[i].timeperiod_end_period_end);  
+						period_end = formatDate(rez[i].period_end);  
 					}else{
 						period_end = rez[i].period_end;  
 					}
@@ -252,102 +252,115 @@ var controller = {
 			db.query(query, function (dataJson) {
 				rez = lowercaseObject(dataJson);
 				for (i = 0; i < rez.length; i++) {
-					var CarePlanActivity = {};
-					
-					if (rez[i].reference_vision_prescription == null) {
-						CarePlanActivity.reference = hostFHIR + ':' + portFHIR + '/' + apikey + '/VisionPrescription?_id=' + rez[i].reference_vision_prescription;
-					} else if (rez[i].reference_request_group == null) {
-						CarePlanActivity.reference = hostFHIR + ':' + portFHIR + '/' + apikey + '/RequestGroup?_id=' + rez[i].reference_request_group;
-					} else {
-						CarePlanActivity.reference = "";
-					}
+					var CarePlanActivity = { id : "", outcomeCodeableConcept : "", outcomeReference : "", progress : "", reference : "", detail : {} };
 					
 					var arrReference = [];
 					var Reference = {};
-					if(rez[i].reference_appointment != "null"){
+					if(rez[i].reference_appointment !== "null"){
 						Reference.appointment = hostFHIR + ':' + portFHIR + '/' + apikey + '/Appointment?_id=' +  rez[i].reference_appointment;
 					} else {
 						Reference.appointment = "";
 					}
-					if(rez[i].reference_communication_request != "null"){
+					if(rez[i].reference_communication_request !== "null"){
 						Reference.communicationRequest = hostFHIR + ':' + portFHIR + '/' + apikey + '/CommunicationRequest?_id=' +  rez[i].reference_communication_request;
 					} else {
 						Reference.communicationRequest = "";
 					}
-					if(rez[i].reference_device_request != "null"){
+					if(rez[i].reference_device_request !== "null"){
 						Reference.deviceRequest = hostFHIR + ':' + portFHIR + '/' + apikey + '/DeviceRequest?_id=' +  rez[i].reference_device_request;
 					} else {
 						Reference.deviceRequest = "";
 					}
-					if(rez[i].reference_medication_request != "null"){
+					if(rez[i].reference_medication_request !== "null"){
 						Reference.medicationRequest = hostFHIR + ':' + portFHIR + '/' + apikey + '/MedicationRequest?_id=' +  rez[i].reference_medication_request;
 					} else {
 						Reference.medicationRequest = "";
 					}
-					if(rez[i].reference_nutrition_order != "null"){
+					if(rez[i].reference_nutrition_order !== "null"){
 						Reference.nutritionOrder = hostFHIR + ':' + portFHIR + '/' + apikey + '/NutritionOrder?_id=' +  rez[i].reference_nutrition_order;
 					} else {
 						Reference.nutritionOrder = "";
 					}
-					if(rez[i].reference_task != "null"){
+					if(rez[i].reference_task !== "null"){
 						Reference.task = hostFHIR + ':' + portFHIR + '/' + apikey + '/Task?_id=' +  rez[i].reference_task;
 					} else {
 						Reference.task = "";
 					}
-					if(rez[i].reference_procedure_request != "null"){
+					if(rez[i].reference_procedure_request !== "null"){
 						Reference.procedureRequest = hostFHIR + ':' + portFHIR + '/' + apikey + '/ProcedureRequest?_id=' +  rez[i].reference_procedure_request;
 					} else {
 						Reference.procedureRequest = "";
 					}
-					if(rez[i].reference_referral_request != "null"){
+					if(rez[i].reference_referral_request !== "null"){
 						Reference.referralRequest = hostFHIR + ':' + portFHIR + '/' + apikey + '/ReferralRequest?_id=' +  rez[i].reference_referral_request;
 					} else {
 						Reference.referralRequest = "";
 					}
-					if(rez[i].reference_vision_prescription != "null"){
+					if(rez[i].reference_vision_prescription !== "null"){
 						Reference.visionPrescription = hostFHIR + ':' + portFHIR + '/' + apikey + '/VisionPrescription?_id=' +  rez[i].reference_vision_prescription;
 					} else {
 						Reference.visionPrescription = "";
 					}
-					if(rez[i].reference_request_group != "null"){
+					if(rez[i].reference_request_group !== "null"){
 						Reference.requestGroup = hostFHIR + ':' + portFHIR + '/' + apikey + '/RequestGroup?_id=' +  rez[i].reference_request_group;
 					} else {
 						Reference.requestGroup = "";
 					}
-					arrReference[i] = Reference;
+					arrReference = Reference;
 					
 					var arrDefinition = [];
 					var Definition = {};
-					if(rez[i].definition_plan_definition != "null"){
+					if(rez[i].definition_plan_definition !== "null"){
 						Definition.planDefinition = hostFHIR + ':' + portFHIR + '/' + apikey + '/PlanDefinition?_id=' +  rez[i].definition_plan_definition;
 					} else {
 						Definition.planDefinition = "";
 					}
-					if(rez[i].definition_activity_definition != "null"){
+					if(rez[i].definition_activity_definition !== "null"){
 						Definition.activityDefinition = hostFHIR + ':' + portFHIR + '/' + apikey + '/ActivityDefinition?_id=' +  rez[i].definition_activity_definition;
 					} else {
 						Definition.activityDefinition = "";
 					}
-					if(rez[i].definition_questionnaire != "null"){
+					if(rez[i].definition_questionnaire !== "null"){
 						Definition.questionnaire = hostFHIR + ':' + portFHIR + '/' + apikey + '/Questionnaire?_id=' +  rez[i].definition_questionnaire;
 					} else {
 						Definition.questionnaire = "";
 					}
-					arrDefinition[i] = Definition;
+					arrDefinition = Definition;
 					
 					var arrProductReference = [];
 					var ProductReference = {};
-					if(rez[i].product_reference_medication != "null"){
+					if(rez[i].product_reference_medication !== "null"){
 						ProductReference.medication = hostFHIR + ':' + portFHIR + '/' + apikey + '/Medication?_id=' +  rez[i].product_reference_medication;
 					} else {
 						ProductReference.medication = "";
 					}
-					if(rez[i].product_reference_substance != "null"){
+					if(rez[i].product_reference_substance !== "null"){
 						ProductReference.substance = hostFHIR + ':' + portFHIR + '/' + apikey + '/Substance?_id=' +  rez[i].product_reference_substance;
 					} else {
 						ProductReference.substance = "";
 					}
-					arrProductReference[i] = ProductReference;
+					arrProductReference = ProductReference;
+					
+					var Scheduled = {};
+					Scheduled.scheduledTiming = rez[i].scheduled_timing;
+					var scheduledperiod_start,scheduledperiod_end;
+					if(rez[i].scheduled_period_start !== "null"){
+						scheduledperiod_start = rez[i].scheduled_period_start;  
+					}else{
+						scheduledperiod_start = formatDate(rez[i].scheduled_period_start);  
+					}
+					if(rez[i].scheduled_period_end !== "null"){
+						scheduledperiod_end = rez[i].scheduled_period_end;  
+					}else{
+						scheduledperiod_end = formatDate(rez[i].scheduled_period_end);  
+					}
+					Scheduled.scheduledPeriod = scheduledperiod_start + " to " + scheduledperiod_end;
+					Scheduled.scheduledString = rez[i].scheduled_string;
+					
+					var Product = {};
+					Product.productCodeableConcept = rez[i].product_codeable_concept;
+					Product.productReference = arrProductReference;
+					/*-------------------*/
 					
 					CarePlanActivity.id = rez[i].careplan_activity_id;
 					CarePlanActivity.outcomeCodeableConcept = rez[i].outcome_codeable_concept;
@@ -362,33 +375,13 @@ var controller = {
 					CarePlanActivity.detail.status = rez[i].status;
 					CarePlanActivity.detail.statusReason = rez[i].status_reason;
 					CarePlanActivity.detail.prohibited = rez[i].prohibited;
-					CarePlanActivity.detail.scheduled.scheduledTiming = rez[i].scheduled_timing;
-					/*if(rez[i].scheduled_timing != "null"){
-						CarePlanActivity.detail.scheduled.scheduledTiming = hostFHIR + ':' + portFHIR + '/' + apikey + '/Timing?_id=' +  rez[i].scheduled_timing;
-					} else {
-						CarePlanActivity.detail.scheduled.scheduledTiming = "";
-					}*/
-					var scheduledperiod_start,scheduledperiod_end;
-					if(rez[i].scheduled_period_start == null){
-						scheduledperiod_start = formatDate(rez[i].scheduled_period_start);  
-					}else{
-						scheduledperiod_start = rez[i].scheduled_period_start;  
-					}
-					if(rez[i].scheduled_period_end == null){
-						scheduledperiod_end = formatDate(rez[i].scheduled_period_end);  
-					}else{
-						scheduledperiod_end = rez[i].scheduled_period_end;  
-					}
-					CarePlanActivity.detail.scheduled.scheduledPeriod = scheduledperiod_start + " to " + scheduledperiod_end;
-					CarePlanActivity.detail.scheduled.scheduledString = rez[i].scheduled_string;
-					if(rez[i].location != "null"){
+					CarePlanActivity.detail.scheduled = Scheduled;
+					if(rez[i].location !== "null"){
 						CarePlanActivity.detail.location = hostFHIR + ':' + portFHIR + '/' + apikey + '/Location?_id=' +  rez[i].location;
 					} else {
 						CarePlanActivity.detail.location = "";
 					}
-					// kurang performer, carePlanActivityDetail belum ada di tabel reference
-					CarePlanActivity.detail.product.productCodeableConcept = rez[i].product_codeable_concept;
-					CarePlanActivity.detail.product.productReference = arrProductReference;
+					CarePlanActivity.detail.product = Product;
 					CarePlanActivity.detail.dailyAmount = rez[i].daily_amount;
 					CarePlanActivity.detail.quantity = rez[i].quantity;
 					CarePlanActivity.detail.description = rez[i].description;
@@ -429,7 +422,16 @@ var controller = {
 			var period_start = req.body.period_start;
 			var period_end = req.body.period_end;
 			var supporting_info = req.body.supporting_info;
-			var procedure_id = req.body.procedure_id;
+			var procedure_id = req.body.procedure_id;			
+			var diagnostic_report_id = req.body.diagnostic_report_id;
+			var imaging_study_id = req.body.imaging_study_id;
+			var medication_request_id = req.body.medication_request_id;
+			var medication_statement_id = req.body.medication_statement_id;
+			var observation_id = req.body.observation_id;
+			var questionnaire_response_id = req.body.questionnaire_response_id;
+			var referral_request_id = req.body.referral_request_id;
+			
+			
 			
 			var column = "";
       var values = "";
@@ -516,6 +518,42 @@ var controller = {
         column += 'procedure_id,';
         values += "'" + procedure_id + "',";
       }	
+			
+			if (typeof diagnostic_report_id !== 'undefined' && diagnostic_report_id !== "") {
+        column += 'diagnostic_report_id,';
+        values += "'" + diagnostic_report_id + "',";
+      }
+			
+			if (typeof imaging_study_id !== 'undefined' && imaging_study_id !== "") {
+        column += 'imaging_study_id,';
+        values += "'" + imaging_study_id + "',";
+      }
+			
+			if (typeof medication_request_id !== 'undefined' && medication_request_id !== "") {
+        column += 'medication_request_id,';
+        values += "'" + medication_request_id + "',";
+      }
+			
+			if (typeof medication_statement_id !== 'undefined' && medication_statement_id !== "") {
+        column += 'medication_statement_id,';
+        values += "'" + medication_statement_id + "',";
+      }
+			
+			if (typeof observation_id !== 'undefined' && observation_id !== "") {
+        column += 'observation_id,';
+        values += "'" + observation_id + "',";
+      }
+			
+			if (typeof questionnaire_response_id !== 'undefined' && questionnaire_response_id !== "") {
+        column += 'questionnaire_response_id,';
+        values += "'" + questionnaire_response_id + "',";
+      }
+			
+			if (typeof referral_request_id !== 'undefined' && referral_request_id !== "") {
+        column += 'referral_request_id,';
+        values += "'" + referral_request_id + "',";
+      }
+			
 
       var query = "UPSERT INTO BACIRO_FHIR.CAREPLAN(careplan_id, " + column.slice(0, -1) + ")"+
         " VALUES ('"+careplan_id+"', " + values.slice(0, -1) + ")";
@@ -555,7 +593,7 @@ var controller = {
 			var column = "";
       var values = "";
 			
-			if (typeof outcome_codeable_concept !== 'undefined' && baoutcome_codeable_conceptsed_on !== "") {
+			if (typeof outcome_codeable_concept !== 'undefined' && outcome_codeable_concept !== "") {
         column += 'outcome_codeable_concept,';
         values += "'" + outcome_codeable_concept + "',";
       }
@@ -712,7 +750,7 @@ var controller = {
 			
 			if (typeof prohibited !== 'undefined' && prohibited !== "") {
         column += 'prohibited,';
-        values += "'" + prohibited + "',";
+        values += " " + prohibited + ",";
       }	
 			
 			/*if (typeof scheduled_timing !== 'undefined' && scheduled_timing !== "") {
@@ -821,6 +859,13 @@ var controller = {
 			var period_end = req.body.period_end;
 			var supporting_info = req.body.supporting_info;
 			var procedure_id = req.body.procedure_id;
+			var diagnostic_report_id = req.body.diagnostic_report_id;
+			var imaging_study_id = req.body.imaging_study_id;
+			var medication_request_id = req.body.medication_request_id;
+			var medication_statement_id = req.body.medication_statement_id;
+			var observation_id = req.body.observation_id;
+			var questionnaire_response_id = req.body.questionnaire_response_id;
+			var referral_request_id = req.body.referral_request_id;
 			
 			var column = "";
       var values = "";
@@ -907,6 +952,42 @@ var controller = {
         column += 'procedure_id,';
         values += "'" + procedure_id + "',";
       }	
+			
+			if (typeof diagnostic_report_id !== 'undefined' && diagnostic_report_id !== "") {
+        column += 'diagnostic_report_id,';
+        values += "'" + diagnostic_report_id + "',";
+      }
+			
+			if (typeof imaging_study_id !== 'undefined' && imaging_study_id !== "") {
+        column += 'imaging_study_id,';
+        values += "'" + imaging_study_id + "',";
+      }
+			
+			if (typeof medication_request_id !== 'undefined' && medication_request_id !== "") {
+        column += 'medication_request_id,';
+        values += "'" + medication_request_id + "',";
+      }
+			
+			if (typeof medication_statement_id !== 'undefined' && medication_statement_id !== "") {
+        column += 'medication_statement_id,';
+        values += "'" + medication_statement_id + "',";
+      }
+			
+			if (typeof observation_id !== 'undefined' && observation_id !== "") {
+        column += 'observation_id,';
+        values += "'" + observation_id + "',";
+      }
+			
+			if (typeof questionnaire_response_id !== 'undefined' && questionnaire_response_id !== "") {
+        column += 'questionnaire_response_id,';
+        values += "'" + questionnaire_response_id + "',";
+      }
+			
+			if (typeof referral_request_id !== 'undefined' && referral_request_id !== "") {
+        column += 'referral_request_id,';
+        values += "'" + referral_request_id + "',";
+      }
+			
 			
 			var domainResource = req.params.dr;
 			var arrResource = domainResource.split('|');

@@ -171,6 +171,7 @@ var routesDefaultFHIR = function(app, DefaultFHIR){
 	app.get('/:apikey/AvailableTime', DefaultFHIR.get.availableTime);
 	app.get('/:apikey/NotAvailable', DefaultFHIR.get.notAvailable);
 	app.get('/:apikey/Timing', DefaultFHIR.get.timing);
+	app.get('/:apikey/Annotation', DefaultFHIR.get.annotation);
 	
 	app.get('/:apikey/DataRequirement', DefaultFHIR.get.dataRequirement);
 	app.get('/:apikey/CodeFilter', DefaultFHIR.get.codeFilter);
@@ -528,6 +529,49 @@ var routesDefaultFHIR = function(app, DefaultFHIR){
 	app.get('/:apikey/supply-item/:_id?', DefaultFHIR.get.supplyItem);
 	app.get('/:apikey/supply-item/code/:code?', DefaultFHIR.get.supplyItemCode);
 	
+	app.get('/:apikey/referral-type/:_id?', DefaultFHIR.get.referralType);
+	app.get('/:apikey/referral-type/code/:code?', DefaultFHIR.get.referralTypeCode);
+	app.get('/:apikey/c80-practice-codes/:_id?', DefaultFHIR.get.c80PracticeCodes);
+	app.get('/:apikey/c80-practice-codes/code/:code?', DefaultFHIR.get.c80PracticeCodesCode);
+	app.get('/:apikey/practitioner-specialty/:_id?', DefaultFHIR.get.practitionerSpecialty);
+	app.get('/:apikey/practitioner-specialty/code/:code?', DefaultFHIR.get.practitionerSpecialtyCode);
+	app.get('/:apikey/nutrition-request-status/:_id?', DefaultFHIR.get.nutritionRequestStatus);
+	app.get('/:apikey/nutrition-request-status/code/:code?', DefaultFHIR.get.nutritionRequestStatusCode);
+	app.get('/:apikey/food-type/:_id?', DefaultFHIR.get.foodType);
+	app.get('/:apikey/food-type/code/:code?', DefaultFHIR.get.foodTypeCode);
+	app.get('/:apikey/diet-type/:_id?', DefaultFHIR.get.dietType);
+	app.get('/:apikey/diet-type/code/:code?', DefaultFHIR.get.dietTypeCode);
+	app.get('/:apikey/nutrient-code/:_id?', DefaultFHIR.get.nutrientCode);
+	app.get('/:apikey/nutrient-code/code/:code?', DefaultFHIR.get.nutrientCodeCode);
+	app.get('/:apikey/texture-code/:_id?', DefaultFHIR.get.textureCode);
+	app.get('/:apikey/texture-code/code/:code?', DefaultFHIR.get.textureCodeCode);
+	app.get('/:apikey/modified-foodtype/:_id?', DefaultFHIR.get.modifiedFoodtype);
+	app.get('/:apikey/modified-foodtype/code/:code?', DefaultFHIR.get.modifiedFoodtypeCode);
+	app.get('/:apikey/consistency-type/:_id?', DefaultFHIR.get.consistencyType);
+	app.get('/:apikey/consistency-type/code/:code?', DefaultFHIR.get.consistencyTypeCode);
+	app.get('/:apikey/supplement-type/:_id?', DefaultFHIR.get.supplementType);
+	app.get('/:apikey/supplement-type/code/:code?', DefaultFHIR.get.supplementTypeCode);
+	app.get('/:apikey/entformula-type/:_id?', DefaultFHIR.get.entformulaType);
+	app.get('/:apikey/entformula-type/code/:code?', DefaultFHIR.get.entformulaTypeCode);
+	app.get('/:apikey/entformula-additive/:_id?', DefaultFHIR.get.entformulaAdditive);
+	app.get('/:apikey/entformula-additive/code/:code?', DefaultFHIR.get.entformulaAdditiveCode);
+	app.get('/:apikey/enteral-route/:_id?', DefaultFHIR.get.enteralRoute);
+	app.get('/:apikey/enteral-route/code/:code?', DefaultFHIR.get.enteralRouteCode);
+	app.get('/:apikey/fm-status/:_id?', DefaultFHIR.get.fmStatus);
+	app.get('/:apikey/fm-status/code/:code?', DefaultFHIR.get.fmStatusCode);
+	app.get('/:apikey/vision-product/:_id?', DefaultFHIR.get.visionProduct);
+	app.get('/:apikey/vision-product/code/:code?', DefaultFHIR.get.visionProductCode);
+	app.get('/:apikey/vision-eye-codes/:_id?', DefaultFHIR.get.visionEyeCodes);
+	app.get('/:apikey/vision-eye-codes/code/:code?', DefaultFHIR.get.visionEyeCodesCode);
+	app.get('/:apikey/vision-base-codes/:_id?', DefaultFHIR.get.visionBaseCodes);
+	app.get('/:apikey/vision-base-codes/code/:code?', DefaultFHIR.get.visionBaseCodesCode);
+	app.get('/:apikey/publication-status/:_id?', DefaultFHIR.get.publicationStatus);
+	app.get('/:apikey/publication-status/code/:code?', DefaultFHIR.get.publicationStatusCode);
+	app.get('/:apikey/jurisdiction/:_id?', DefaultFHIR.get.jurisdiction);
+	app.get('/:apikey/jurisdiction/code/:code?', DefaultFHIR.get.jurisdictionCode);
+	app.get('/:apikey/resource-types/:_id?', DefaultFHIR.get.resourceTypes);
+	app.get('/:apikey/resource-types/code/:code?', DefaultFHIR.get.resourceTypesCode);
+	
 	//post
 	app.post('/:apikey/identity-AssuranceLevel', DefaultFHIR.post.identityAssuranceLevel);
 	app.post('/:apikey/administrative-gender', DefaultFHIR.post.administrativeGender);
@@ -615,6 +659,7 @@ var routesDefaultFHIR = function(app, DefaultFHIR){
 	app.post('/:apikey/AvailableTime', DefaultFHIR.post.availableTime);
 	app.post('/:apikey/NotAvailable', DefaultFHIR.post.notAvailable);
 	app.post('/:apikey/Timing', DefaultFHIR.post.timing);
+	app.post('/:apikey/Annotation', DefaultFHIR.post.annotation);
 	
 	app.post('/:apikey/DataRequirement', DefaultFHIR.post.dataRequirement);
 	app.post('/:apikey/CodeFilter', DefaultFHIR.post.codeFilter);
@@ -807,6 +852,29 @@ var routesDefaultFHIR = function(app, DefaultFHIR){
 	app.post('/:apikey/task-performer-type', DefaultFHIR.post.taskPerformerType);
 	app.post('/:apikey/forms', DefaultFHIR.post.forms);
 	app.post('/:apikey/supply-item', DefaultFHIR.post.supplyItem);
+	
+	app.post('/:apikey/referral-type', DefaultFHIR.post.referralType);
+  app.post('/:apikey/c80-practice-codes', DefaultFHIR.post.c80PracticeCodes);
+  app.post('/:apikey/practitioner-specialty', DefaultFHIR.post.practitionerSpecialty);
+  app.post('/:apikey/nutrition-request-status', DefaultFHIR.post.nutritionRequestStatus);
+  app.post('/:apikey/food-type', DefaultFHIR.post.foodType);
+  app.post('/:apikey/diet-type', DefaultFHIR.post.dietType);
+  app.post('/:apikey/nutrient-code', DefaultFHIR.post.nutrientCode);
+  app.post('/:apikey/texture-code', DefaultFHIR.post.textureCode);
+  app.post('/:apikey/modified-foodtype', DefaultFHIR.post.modifiedFoodtype);
+  app.post('/:apikey/consistency-type', DefaultFHIR.post.consistencyType);
+  app.post('/:apikey/supplement-type', DefaultFHIR.post.supplementType);
+  app.post('/:apikey/entformula-type', DefaultFHIR.post.entformulaType);
+  app.post('/:apikey/entformula-additive', DefaultFHIR.post.entformulaAdditive);
+  app.post('/:apikey/enteral-route', DefaultFHIR.post.enteralRoute);
+  app.post('/:apikey/fm-status', DefaultFHIR.post.fmStatus);
+  app.post('/:apikey/vision-product', DefaultFHIR.post.visionProduct);
+  app.post('/:apikey/vision-eye-codes', DefaultFHIR.post.visionEyeCodes);
+  app.post('/:apikey/vision-base-codes', DefaultFHIR.post.visionBaseCodes);
+  app.post('/:apikey/publication-status', DefaultFHIR.post.publicationStatus);
+  app.post('/:apikey/jurisdiction', DefaultFHIR.post.jurisdiction);
+  app.post('/:apikey/resource-types', DefaultFHIR.post.resourceTypes);
+	
 	//put
 	app.put('/:apikey/identity-AssuranceLevel/:_id', DefaultFHIR.put.identityAssuranceLevel);
 	app.put('/:apikey/administrative-gender/:_id', DefaultFHIR.put.administrativeGender);
@@ -896,6 +964,7 @@ var routesDefaultFHIR = function(app, DefaultFHIR){
 	app.put('/:apikey/AvailableTime/:_id?/:dr?', DefaultFHIR.put.availableTime);
 	app.put('/:apikey/NotAvailable/:_id?/:dr?', DefaultFHIR.put.notAvailable);
 	app.put('/:apikey/Timing/:_id?/:dr?', DefaultFHIR.put.timing);
+	app.put('/:apikey/Annotation/:_id?/:dr?', DefaultFHIR.put.annotation);
 	
 	app.put('/:apikey/DataRequirement/:_id?/:dr?', DefaultFHIR.put.dataRequirement);
 	app.put('/:apikey/CodeFilter/:_id?/:dr?', DefaultFHIR.put.codeFilter);
@@ -1086,5 +1155,27 @@ var routesDefaultFHIR = function(app, DefaultFHIR){
 	app.put('/:apikey/task-performer-type/:_id', DefaultFHIR.put.taskPerformerType);
 	app.put('/:apikey/forms/:_id', DefaultFHIR.put.forms);
 	app.put('/:apikey/supply-item/:_id', DefaultFHIR.put.supplyItem);
+	
+	app.put('/:apikey/referral-type/:_id', DefaultFHIR.put.referralType);
+	app.put('/:apikey/c80-practice-codes/:_id', DefaultFHIR.put.c80PracticeCodes);
+  app.put('/:apikey/practitioner-specialty/:_id', DefaultFHIR.put.practitionerSpecialty);
+  app.put('/:apikey/nutrition-request-status/:_id', DefaultFHIR.put.nutritionRequestStatus);
+  app.put('/:apikey/food-type/:_id', DefaultFHIR.put.foodType);
+  app.put('/:apikey/diet-type/:_id', DefaultFHIR.put.dietType);
+  app.put('/:apikey/nutrient-code/:_id', DefaultFHIR.put.nutrientCode);
+  app.put('/:apikey/texture-code/:_id', DefaultFHIR.put.textureCode);
+  app.put('/:apikey/modified-foodtype/:_id', DefaultFHIR.put.modifiedFoodtype);
+  app.put('/:apikey/consistency-type/:_id', DefaultFHIR.put.consistencyType);
+  app.put('/:apikey/supplement-type/:_id', DefaultFHIR.put.supplementType);
+  app.put('/:apikey/entformula-type/:_id', DefaultFHIR.put.entformulaType);
+  app.put('/:apikey/entformula-additive/:_id', DefaultFHIR.put.entformulaAdditive);
+  app.put('/:apikey/enteral-route/:_id', DefaultFHIR.put.enteralRoute);
+  app.put('/:apikey/fm-status/:_id', DefaultFHIR.put.fmStatus);
+  app.put('/:apikey/vision-product/:_id', DefaultFHIR.put.visionProduct);
+  app.put('/:apikey/vision-eye-codes/:_id', DefaultFHIR.put.visionEyeCodes);
+  app.put('/:apikey/vision-base-codes/:_id', DefaultFHIR.put.visionBaseCodes);
+  app.put('/:apikey/publication-status/:_id', DefaultFHIR.put.publicationStatus);
+  app.put('/:apikey/jurisdiction/:_id', DefaultFHIR.put.jurisdiction);
+  app.put('/:apikey/resource-types/:_id', DefaultFHIR.put.resourceTypes);
 }
 module.exports = routesDefaultFHIR;

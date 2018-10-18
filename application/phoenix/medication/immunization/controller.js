@@ -120,7 +120,7 @@ var controller = {
       }
 			      
       var arrImmunization = [];
-      var query = "select immunization_id, status, not_given, veccine_code, patient, encounter, date, primary_source, report_origin, location, manufacturer, iot_number, expiration_date, site, route, dose_quantity, explanation_reason, explanation_reason_not_given from BACIRO_FHIR.IMMUNIZATION im " + fixCondition;
+      var query = "select im.immunization_id as immunization_id, im.status as status, im.not_given as not_given, im.veccine_code as veccine_code, im.patient as patient, im.encounter as encounter, im.date as date, im.primary_source as primary_source, im.report_origin as report_origin, im.location as location, im.manufacturer as manufacturer, im.iot_number as iot_number, im.expiration_date as expiration_date, im.site as site, im.route as route, im.dose_quantity as dose_quantity, im.explanation_reason as explanation_reason, im.explanation_reason_not_given as explanation_reason_not_given from BACIRO_FHIR.IMMUNIZATION im " + fixCondition;
 			//console.log(query);
       db.query(query,function(dataJson){
         rez = lowercaseObject(dataJson);
@@ -170,8 +170,17 @@ var controller = {
 					Immunization.site = rez[i].site;
 					Immunization.route = rez[i].route;
 					Immunization.doseQuantity = rez[i].dose_quantity;
-					Immunization.explanation.reason = rez[i].explanation_reason;
-					Immunization.explanation.reasonNotGiven = rez[i].explanation_reason_not_given;
+					
+					/*------------------*/
+					var arrExplanation = [];
+					var Explanation = {};
+					Explanation.reason = rez[i].explanation_reason;
+					Explanation.reasonNotGiven = rez[i].explanation_reason_not_given;
+					arrExplanation = Explanation;
+					
+					/*Immunization.explanation.reason = rez[i].explanation_reason;
+					Immunization.explanation.reasonNotGiven = rez[i].explanation_reason_not_given;*/
+					Immunization.explanation = Explanation;
 					
           arrImmunization[i] = Immunization;
         }
@@ -370,6 +379,7 @@ var controller = {
 			var dose_quantity = req.body.dose_quantity;
 			var explanation_reason = req.body.explanation_reason;
 			var explanation_reason_not_given = req.body.explanation_reason_not_given;
+			var adverse_event_id = req.body.adverse_event_id;
 			
 			var column = "";
       var values = "";
@@ -460,6 +470,11 @@ var controller = {
         column += 'explanation_reason_not_given,';
         values += "'" + explanation_reason_not_given + "',";
       }
+			
+			if (typeof adverse_event_id !== 'undefined' && adverse_event_id !== "") {
+        column += 'adverse_event_id,';
+        values += "'" + adverse_event_id + "',";
+      }	
 
       var query = "UPSERT INTO BACIRO_FHIR.IMMUNIZATION(immunization_id, " + column.slice(0, -1) + ")"+
         " VALUES ('"+immunization_id+"', " + values.slice(0, -1) + ")";
@@ -671,6 +686,9 @@ var controller = {
 			var dose_quantity = req.body.dose_quantity;
 			var explanation_reason = req.body.explanation_reason;
 			var explanation_reason_not_given = req.body.explanation_reason_not_given;
+			var adverse_event_id = req.body.adverse_event_id;
+			var recommendation_id = req.body.recommendation_id;
+			
 			
 			var column = "";
       var values = "";
@@ -760,7 +778,18 @@ var controller = {
 			if (typeof explanation_reason_not_given !== 'undefined' && explanation_reason_not_given !== "") {
         column += 'explanation_reason_not_given,';
         values += "'" + explanation_reason_not_given + "',";
-      }		
+      }
+			
+			if (typeof adverse_event_id !== 'undefined' && adverse_event_id !== "") {
+        column += 'adverse_event_id,';
+        values += "'" + adverse_event_id + "',";
+      }
+			
+			if (typeof recommendation_id !== 'undefined' && recommendation_id !== "") {
+        column += 'recommendation_id,';
+        values += "'" + recommendation_id + "',";
+      }
+			
 			var domainResource = req.params.dr;
 			var arrResource = domainResource.split('|');
 			var fieldResource = arrResource[0];

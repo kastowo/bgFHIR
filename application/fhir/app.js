@@ -65,6 +65,9 @@ var ImmunizationRecommendation = require("./medication/immunizationRecommendatio
 var Medication = require("./medication/medication/controller");
 
 var AdverseEvent = require("./clinical_summary/adverseEvent/controller");
+var AllergyIntolerance = require("./clinical_summary/allergyIntolerance/controller");
+var CarePlan = require("./clinical_summary/carePlan/controller");
+var CareTeam = require("./clinical_summary/careTeam/controller");
 
 //import routes
 var routesDefaultFHIR	= require('./default_fhir/routes');
@@ -98,6 +101,9 @@ var routesImmunizationRecommendation = require('./medication/immunizationRecomme
 var routesMedication = require('./medication/medication/routes');
 
 var routesAdverseEvent = require('./clinical_summary/adverseEvent/routes');
+var routesAllergyIntolerance = require('./clinical_summary/allergyIntolerance/routes');
+var routesCarePlan = require('./clinical_summary/carePlan/routes');
+var routesCareTeam = require('./clinical_summary/careTeam/routes');
 
 //setrouting
 routesDefaultFHIR(app, DefaultFHIR);
@@ -130,6 +136,9 @@ routesImmunizationRecommendation(app, ImmunizationRecommendation);
 routesMedication(app, Medication);
 
 routesAdverseEvent(app, AdverseEvent);
+routesAllergyIntolerance(app, AllergyIntolerance);
+routesCarePlan(app, CarePlan);
+routesCareTeam(app, CareTeam);
 
 var server = app.listen(port, host, function () {
   console.log("Server running at http://%s:%s", host, port);

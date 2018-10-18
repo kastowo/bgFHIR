@@ -337,7 +337,7 @@ var controller = {
 			var charge_item_id  = req.body.charge_item_id;
 			var clinical_impression_investigation_id  = req.body.clinical_impression_investigation_id;
 			var diagnostic_report_id  = req.body.diagnostic_report_id;
-			var imaging_manifest_id  = req.body.imaging_manifest_id;
+			var imaging_manifest_study_id  = req.body.imaging_manifest_study_id;
 			var started  = req.body.started;
 			var number_of_series  = req.body.number_of_series;
 			var number_of_instances  = req.body.number_of_instances;
@@ -410,9 +410,9 @@ var controller = {
         values += "'" + diagnostic_report_id + "',";
       }		
 			
-			if (typeof imaging_manifest_id !== 'undefined' && imaging_manifest_id !== "") {
-        column += 'imaging_manifest_id,';
-        values += "'" + imaging_manifest_id + "',";
+			if (typeof imaging_manifest_study_id !== 'undefined' && imaging_manifest_study_id !== "") {
+        column += 'imaging_manifest_study_id,';
+        values += "'" + imaging_manifest_study_id + "',";
       }		
 			
 			if (typeof started !== 'undefined' && started !== "") {
@@ -603,7 +603,7 @@ var controller = {
 			var charge_item_id  = req.body.charge_item_id;
 			var clinical_impression_investigation_id  = req.body.clinical_impression_investigation_id;
 			var diagnostic_report_id  = req.body.diagnostic_report_id;
-			var imaging_manifest_id  = req.body.imaging_manifest_id;
+			var imaging_manifest_study_id  = req.body.imaging_manifest_study_id;
 			var started  = req.body.started;
 			var number_of_series  = req.body.number_of_series;
 			var number_of_instances  = req.body.number_of_instances;
@@ -676,9 +676,9 @@ var controller = {
         values += "'" + diagnostic_report_id + "',";
       }		
 			
-			if (typeof imaging_manifest_id !== 'undefined' && imaging_manifest_id !== "") {
-        column += 'imaging_manifest_id,';
-        values += "'" + imaging_manifest_id + "',";
+			if (typeof imaging_manifest_study_id !== 'undefined' && imaging_manifest_study_id !== "") {
+        column += 'imaging_manifest_study_id,';
+        values += "'" + imaging_manifest_study_id + "',";
       }		
 			
 			if (typeof started !== 'undefined' && started !== "") {

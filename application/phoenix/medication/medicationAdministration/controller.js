@@ -123,13 +123,15 @@ var controller = {
           MedicationAdministration.id = rez[i].medication_administration_id;
 					MedicationAdministration.status = rez[i].status;
 					MedicationAdministration.category = rez[i].category;
-					MedicationAdministration.medication.medicationCodeableConcept = rez[i].medication_codeable_concept;
-					if(rez[i].medication_reference != "null"){
-						MedicationAdministration.medication.medicationReference = hostFHIR + ':' + portFHIR + '/' + apikey + '/Medication?_id=' +  rez[i].medication_reference;
-					} else {
-						MedicationAdministration.medication.medicationReference = "";
-					}
 					
+					var Medication = {};
+					Medication.medicationCodeableConcept = rez[i].medication_codeable_concept;
+					if(rez[i].medication_reference != "null"){
+						Medication.medicationReference = hostFHIR + ':' + portFHIR + '/' + apikey + '/Medication?_id=' +  rez[i].medication_reference;
+					} else {
+						Medication.medicationReference = "";
+					}
+					MedicationAdministration.medication = Medication;
 					var arrSubject = [];
 					var Subject = {};
 					if(rez[i].subject_group != "null"){
@@ -160,12 +162,12 @@ var controller = {
 					MedicationAdministration.subject = arrSubject;
 					MedicationAdministration.context = arrContext;
 					MedicationAdministration.supportingInformation = rez[i].supporting_information;
+					var Effective = {};
 					if(rez[i].effective_date_time == null){
-						MedicationAdministration.effective.effectiveDateTime = formatDate(rez[i].effective_date_time);
+						Effective.effectiveDateTime = formatDate(rez[i].effective_date_time);
 					}else{
-						MedicationAdministration.effective.effectiveDateTime = rez[i].effective_date_time;
+						Effective.effectiveDateTime = rez[i].effective_date_time;
 					}
-
 					var effectiveperiod_start,effectiveperiod_end;
 					if(rez[i].effective_period_start == null){
 						effectiveperiod_start = formatDate(rez[i].effective_period_start);  
@@ -177,8 +179,8 @@ var controller = {
 					}else{
 						effectiveperiod_end = rez[i].effective_period_end;  
 					}
-					
-					MedicationAdministration.effective.effectivePeriod = effectiveperiod_start + ' to ' + effectiveperiod_end;
+					Effective.effectivePeriod = effectiveperiod_start + ' to ' + effectiveperiod_end;
+					MedicationAdministration.effective = Effective;
 					MedicationAdministration.notGiven = rez[i].not_given;
 					MedicationAdministration.reasonNotGiven = rez[i].reason_not_given;
 					MedicationAdministration.reasonCode = rez[i].reason_code;
@@ -306,8 +308,10 @@ var controller = {
 					MedicationAdministrationDosage.route = rez[i].route;
 					MedicationAdministrationDosage.method = rez[i].method;
 					MedicationAdministrationDosage.dose = rez[i].dose;
-					MedicationAdministrationDosage.rate.rateRatio = rez[i].rate_ratio;
-					MedicationAdministrationDosage.rate.rateQuality = rez[i].rate_quality;
+					var Rate = {};
+					Rate.rateRatio = rez[i].rate_ratio;
+					Rate.rateQuality = rez[i].rate_quality;
+					MedicationAdministrationDosage.rate = Rate;
 					arrMedicationAdministrationDosage[i] = MedicationAdministrationDosage;
 				}
 				res.json({

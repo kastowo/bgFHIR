@@ -280,6 +280,10 @@ var controller = {
 			var mitigation = req.body.mitigation;
 			var comment = req.body.comment;
 			
+			var clinical_impression_id = req.body.clinical_impression_id;
+			var clinical_impression_investigation_id = req.body.clinical_impression_investigation_id;
+			var goal_id = req.body.goal_id;
+
 			var column = "";
       var values = "";
 			
@@ -384,7 +388,22 @@ var controller = {
 			if (typeof comment !== 'undefined' && comment !== "") {
         column += 'comment,';
         values += "'" + comment + "',";
-      }	
+      }
+			
+			if (typeof clinical_impression_id !== 'undefined' && clinical_impression_id !== "") {
+        column += 'clinical_impression_id,';
+        values += "'" + clinical_impression_id + "',";
+      }
+			
+			if (typeof clinical_impression_investigation_id !== 'undefined' && clinical_impression_investigation_id !== "") {
+        column += 'clinical_impression_investigation_id,';
+        values += "'" + clinical_impression_investigation_id + "',";
+      }
+			
+			if (typeof goal_id !== 'undefined' && goal_id !== "") {
+        column += 'goal_id,';
+        values += "'" + goal_id + "',";
+      }
 
       var query = "UPSERT INTO BACIRO_FHIR.risk_assessment(risk_assessment_id, " + column.slice(0, -1) + ")"+
         " VALUES ('"+risk_assessment_id+"', " + values.slice(0, -1) + ")";
@@ -527,6 +546,9 @@ var controller = {
 			var basis = req.body.basis;
 			var mitigation = req.body.mitigation;
 			var comment = req.body.comment;
+			var clinical_impression_id = req.body.clinical_impression_id;
+			var clinical_impression_investigation_id = req.body.clinical_impression_investigation_id;
+			var goal_id = req.body.goal_id;
 			
 			var column = "";
       var values = "";
@@ -632,7 +654,22 @@ var controller = {
 			if (typeof comment !== 'undefined' && comment !== "") {
         column += 'comment,';
         values += "'" + comment + "',";
-      }			
+      }
+			
+			if (typeof clinical_impression_id !== 'undefined' && clinical_impression_id !== "") {
+        column += 'clinical_impression_id,';
+        values += "'" + clinical_impression_id + "',";
+      }
+			
+			if (typeof clinical_impression_investigation_id !== 'undefined' && clinical_impression_investigation_id !== "") {
+        column += 'clinical_impression_investigation_id,';
+        values += "'" + clinical_impression_investigation_id + "',";
+      }
+			
+			if (typeof goal_id !== 'undefined' && goal_id !== "") {
+        column += 'goal_id,';
+        values += "'" + goal_id + "',";
+      }
 			
 			var domainResource = req.params.dr;
 			var arrResource = domainResource.split('|');

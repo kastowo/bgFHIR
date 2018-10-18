@@ -1491,7 +1491,134 @@
 			},
 			"supplyItemCode":{
 				"location": "%(apikey)s/supply-item/code/%(code)s"
-			}
+			},
+			
+			"referralType": {
+        "location": "%(apikey)s/referral-type/%(_id)d"
+      },
+      "referralTypeCode": {
+        "location": "%(apikey)s/referral-type/code/%(code)s"
+      },
+      "c80PracticeCodes": {
+        "location": "%(apikey)s/c80-practice-codes/%(_id)d"
+      },
+      "c80PracticeCodesCode": {
+        "location": "%(apikey)s/c80-practice-codes/code/%(code)s"
+      },
+      "practitionerSpecialty": {
+        "location": "%(apikey)s/practitioner-specialty/%(_id)d"
+      },
+      "practitionerSpecialtyCode": {
+        "location": "%(apikey)s/practitioner-specialty/code/%(code)s"
+      },
+      "nutritionRequestStatus": {
+        "location": "%(apikey)s/nutrition-request-status/%(_id)d"
+      },
+      "nutritionRequestStatusCode": {
+        "location": "%(apikey)s/nutrition-request-status/code/%(code)s"
+      },
+      "foodType": {
+        "location": "%(apikey)s/food-type/%(_id)d"
+      },
+      "foodTypeCode": {
+        "location": "%(apikey)s/food-type/code/%(code)s"
+      },
+      "dietType": {
+        "location": "%(apikey)s/diet-type/%(_id)d"
+      },
+      "dietTypeCode": {
+        "location": "%(apikey)s/diet-type/code/%(code)s"
+      },
+      "nutrientCode": {
+        "location": "%(apikey)s/nutrient-code/%(_id)d"
+      },
+      "nutrientCodeCode": {
+        "location": "%(apikey)s/nutrient-code/code/%(code)s"
+      },
+      "textureCode": {
+        "location": "%(apikey)s/texture-code/%(_id)d"
+      },
+      "textureCodeCode": {
+        "location": "%(apikey)s/texture-code/code/%(code)s"
+      },
+      "modifiedFoodtype": {
+        "location": "%(apikey)s/modified-foodtype/%(_id)d"
+      },
+      "modifiedFoodtypeCode": {
+        "location": "%(apikey)s/modified-foodtype/code/%(code)s"
+      },
+      "consistencyType": {
+        "location": "%(apikey)s/consistency-type/%(_id)d"
+      },
+      "consistencyTypeCode": {
+        "location": "%(apikey)s/consistency-type/code/%(code)s"
+      },
+      "supplementType": {
+        "location": "%(apikey)s/supplement-type/%(_id)d"
+      },
+      "supplementTypeCode": {
+        "location": "%(apikey)s/supplement-type/code/%(code)s"
+      },
+      "entformulaType": {
+        "location": "%(apikey)s/entformula-type/%(_id)d"
+      },
+      "entformulaTypeCode": {
+        "location": "%(apikey)s/entformula-type/code/%(code)s"
+      },
+      "entformulaAdditive": {
+        "location": "%(apikey)s/entformula-additive/%(_id)d"
+      },
+      "entformulaAdditiveCode": {
+        "location": "%(apikey)s/entformula-additive/code/%(code)s"
+      },
+      "enteralRoute": {
+        "location": "%(apikey)s/enteral-route/%(_id)d"
+      },
+      "enteralRouteCode": {
+        "location": "%(apikey)s/enteral-route/code/%(code)s"
+      },
+      "fmStatus": {
+        "location": "%(apikey)s/fm-status/%(_id)d"
+      },
+      "fmStatusCode": {
+        "location": "%(apikey)s/fm-status/code/%(code)s"
+      },
+      "visionProduct": {
+        "location": "%(apikey)s/vision-product/%(_id)d"
+      },
+      "visionProductCode": {
+        "location": "%(apikey)s/vision-product/code/%(code)s"
+      },
+      "visionEyeCodes": {
+        "location": "%(apikey)s/vision-eye-codes/%(_id)d"
+      },
+      "visionEyeCodesCode": {
+        "location": "%(apikey)s/vision-eye-codes/code/%(code)s"
+      },
+      "visionBaseCodes": {
+        "location": "%(apikey)s/vision-base-codes/%(_id)d"
+      },
+      "visionBaseCodesCode": {
+        "location": "%(apikey)s/vision-base-codes/code/%(code)s"
+      },
+      "publicationStatus": {
+        "location": "%(apikey)s/publication-status/%(_id)d"
+      },
+      "publicationStatusCode": {
+        "location": "%(apikey)s/publication-status/code/%(code)s"
+      },
+      "jurisdiction": {
+        "location": "%(apikey)s/jurisdiction/%(_id)d"
+      },
+      "jurisdictionCode": {
+        "location": "%(apikey)s/jurisdiction/code/%(code)s"
+      },
+      "resourceTypes": {
+        "location": "%(apikey)s/resource-types/%(_id)d"
+      },
+      "resourceTypesCode": {
+        "location": "%(apikey)s/resource-types/code/%(code)s"
+      }
 		},
 		"POST": {
 			"identityAssuranceLevel": {
@@ -1862,6 +1989,9 @@
 			},
 			"timing":{
 				"location": "%(apikey)s/Timing"
+			},
+			"annotation":{
+				"location": "%(apikey)s/Annotation"
 			}
 			
 			,
@@ -2398,7 +2528,107 @@
 			},
 			"supplyItem":{
 				"location": "%(apikey)s/supply-item"
-			}
+			},
+			
+			"referralType": {
+        "location": "%(apikey)s/referral-type"
+      },
+      "c80PracticeCodes": {
+        "location": "%(apikey)s/c80-practice-codes"
+      },
+      "practitionerSpecialty": {
+        "location": "%(apikey)s/practitioner-specialty"
+      },
+      "nutritionRequestStatus": {
+        "location": "%(apikey)s/nutrition-request-status"
+      },
+      "foodType": {
+        "location": "%(apikey)s/food-type"
+      },
+      "dietType": {
+        "location": "%(apikey)s/diet-type"
+      },
+      "nutrientCode": {
+        "location": "%(apikey)s/nutrient-code"
+      },
+      "textureCode": {
+        "location": "%(apikey)s/texture-code"
+      },
+      "modifiedFoodtype": {
+        "location": "%(apikey)s/modified-foodtype"
+      },
+      "consistencyType": {
+        "location": "%(apikey)s/consistency-type"
+      },
+      "supplementType": {
+        "location": "%(apikey)s/supplement-type"
+      },
+      "entformulaType": {
+        "location": "%(apikey)s/entformula-type"
+      },
+      "entformulaAdditive": {
+        "location": "%(apikey)s/entformula-additive"
+      },
+      "enteralRoute": {
+        "location": "%(apikey)s/enteral-route"
+      },
+      "fmStatus": {
+        "location": "%(apikey)s/fm-status"
+      },
+      "visionProduct": {
+        "location": "%(apikey)s/vision-product"
+      },
+      "visionEyeCodes": {
+        "location": "%(apikey)s/vision-eye-codes"
+      },
+      "visionBaseCodes": {
+        "location": "%(apikey)s/vision-base-codes"
+      },
+      "publicationStatus": {
+        "location": "%(apikey)s/publication-status"
+      },
+      "jurisdiction": {
+        "location": "%(apikey)s/jurisdiction"
+      },
+      "resourceTypes": {
+        "location": "%(apikey)s/resource-types"
+      }
+			
+			,
+      "adverseEvent": {
+        "location": "%(apikey)s/AdverseEvent"
+      },
+      "adverseEventSuspectEntity": {
+        "location": "%(apikey)s/AdverseEventSuspectEntity"
+      }
+			
+			,
+      "allergyIntolerance": {
+        "location": "%(apikey)s/AllergyIntolerance"
+      },
+      "allergyIntoleranceReaction": {
+        "location": "%(apikey)s/AllergyIntoleranceReaction"
+      }
+			
+			,
+      "carePlan": {
+        "location": "%(apikey)s/CarePlan"
+      },
+      "carePlanActivity": {
+        "location": "%(apikey)s/CarePlanActivity"
+      },
+      "carePlanActivityDetail": {
+        "location": "%(apikey)s/CarePlanActivityDetail"
+      }
+			
+			,
+      "careTeam": {
+        "location": "%(apikey)s/CareTeam"
+      },
+      "careTeamParticipant": {
+        "location": "%(apikey)s/CareTeamParticipant"
+      }
+			
 		},
 		"PUT": {
 			"identityAssuranceLevel": {
@@ -2760,6 +2990,9 @@
 			},
 			"timing":{
 				"location": "%(apikey)s/Timing/%(_id)s/%(dr)s"
+			},
+			"annotation":{
+				"location": "%(apikey)s/Annotation/%(_id)s/%(dr)s"
 			}
 			
 			,
@@ -3289,7 +3522,98 @@
 			},
 			"supplyItem":{
 				"location": "%(apikey)s/supply-item/%(_id)d"
-			}
+			},
+			
+			"referralType": {
+        "location": "%(apikey)s/referral-type/%(_id)d"
+      },
+      "c80PracticeCodes": {
+        "location": "%(apikey)s/c80-practice-codes/%(_id)d"
+      },
+      "practitionerSpecialty": {
+        "location": "%(apikey)s/practitioner-specialty/%(_id)d"
+      },
+      "nutritionRequestStatus": {
+        "location": "%(apikey)s/nutrition-request-status/%(_id)d"
+      },
+      "foodType": {
+        "location": "%(apikey)s/food-type/%(_id)d"
+      },
+      "dietType": {
+        "location": "%(apikey)s/diet-type/%(_id)d"
+      },
+      "nutrientCode": {
+        "location": "%(apikey)s/nutrient-code/%(_id)d"
+      },
+      "textureCode": {
+        "location": "%(apikey)s/texture-code/%(_id)d"
+      },
+      "modifiedFoodtype": {
+        "location": "%(apikey)s/modified-foodtype/%(_id)d"
+      },
+      "consistencyType": {
+        "location": "%(apikey)s/consistency-type/%(_id)d"
+      },
+      "supplementType": {
+        "location": "%(apikey)s/supplement-type/%(_id)d"
+      },
+      "entformulaType": {
+        "location": "%(apikey)s/entformula-type/%(_id)d"
+      },
+      "entformulaAdditive": {
+        "location": "%(apikey)s/entformula-additive/%(_id)d"
+      },
+      "enteralRoute": {
+        "location": "%(apikey)s/enteral-route/%(_id)d"
+      },
+      "fmStatus": {
+        "location": "%(apikey)s/fm-status/%(_id)d"
+      },
+      "visionProduct": {
+        "location": "%(apikey)s/vision-product/%(_id)d"
+      },
+      "visionEyeCodes": {
+        "location": "%(apikey)s/vision-eye-codes/%(_id)d"
+      },
+      "visionBaseCodes": {
+        "location": "%(apikey)s/vision-base-codes/%(_id)d"
+      },
+      "publicationStatus": {
+        "location": "%(apikey)s/publication-status/%(_id)d"
+      },
+      "jurisdiction": {
+        "location": "%(apikey)s/jurisdiction/%(_id)d"
+      },
+      "resourceTypes": {
+        "location": "%(apikey)s/resource-types/%(_id)d"
+      }
+			
+			,
+      "adverseEvent": {
+        "location": "%(apikey)s/AdverseEvent/%(_id)s"
+      },
+      "adverseEventSuspectEntity": {
+        "location": "%(apikey)s/AdverseEventSuspectEntity/%(_id)s/%(dr)s"
+      }
+			
+			,
+      "allergyIntolerance": {
+        "location": "%(apikey)s/AllergyIntolerance/%(_id)s"
+      },
+      "allergyIntoleranceReaction": {
+        "location": "%(apikey)s/AllergyIntoleranceReaction/%(_id)s/%(dr)s"
+      }
+			
+			,
+      "carePlan": {
+        "location": "%(apikey)s/CarePlan/%(_id)s"
+      },
+      "carePlanActivity": {
+        "location": "%(apikey)s/CarePlanActivity/%(_id)s/%(dr)s"
+      },
+      "carePlanActivityDetail": {
+        "location": "%(apikey)s/CarePlanActivityDetail/%(_id)s/%(dr)s"
+      }
 		}
 	}
 }

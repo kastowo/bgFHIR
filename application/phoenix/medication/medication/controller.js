@@ -156,7 +156,7 @@ var controller = {
 			db.query(query, function (dataJson) {
 				rez = lowercaseObject(dataJson);
 				for (i = 0; i < rez.length; i++) {
-					var MedicationIngredient = {};
+					var MedicationIngredient = { id : "", item : {}, isActive : "", amaount : {}};
 					MedicationIngredient.id = rez[i].ingredient_id;
 					MedicationIngredient.item.itemCodeableConcept = rez[i].item_codeable_concept;
 					var arrItemReference = [];
@@ -268,7 +268,7 @@ var controller = {
 			db.query(query, function (dataJson) {
 				rez = lowercaseObject(dataJson);
 				for (i = 0; i < rez.length; i++) {
-					var MedicationPackageContent = {};
+					var MedicationPackageContent = {id : "", item : {}, amount : ""};
 					MedicationPackageContent.id = rez[i].content_id;
 					MedicationPackageContent.item.itemCodeableConcept = rez[i].item_codeable_concept;
 					if(rez[i].item_reference != "null"){

@@ -604,15 +604,20 @@ var controller = {
 			var condition_stage_id  = req.body.condition_stage_id;
 			var diagnostic_report_id  = req.body.diagnostic_report_id;
 			var family_member_history_id  = req.body.family_member_history_id;
-			var goal_id  = req.body.goal_id;
 			var immunization_recommendation_id  = req.body.immunization_recommendation_id;
 			var medication_administration_id  = req.body.medication_administration_id;
 			var medication_request_id  = req.body.medication_request_id;
-			var medication_statement_id  = req.body.medication_statement_id;
-			var procedure_id  = req.body.procedure_id;
 			var procedure_request_id  = req.body.procedure_request_id;
 			var questionnaire_response_id  = req.body.questionnaire_response_id;
 			var referral_request_id  = req.body.referral_request_id;
+			
+			var goal_addresses_id  = req.body.referral_request_id;
+			var goal_outcome_reference_id  = req.body.referral_request_id;
+			var medication_statement_part_of_id  = req.body.referral_request_id;
+			var medication_statement_reason_reference_id  = req.body.referral_request_id;
+			var procedure_part_of_id  = req.body.referral_request_id;
+			var procedure_part_reason_reference_id  = req.body.referral_request_id;
+
 
 			var column = "";
       var values = "";
@@ -812,11 +817,6 @@ var controller = {
         values += "'" + condition_stage_id + "',";
       }		
 			
-			if (typeof procedure_id !== 'undefined' && procedure_id !== "") {
-        column += 'procedure_id,';
-        values += "'" + procedure_id + "',";
-      }		
-			
 			if (typeof communication_id !== 'undefined' && communication_id !== "") {
         column += 'communication_id,';
         values += "'" + communication_id + "',";
@@ -837,11 +837,6 @@ var controller = {
         values += "'" + family_member_history_id + "',";
       }
 			
-			if (typeof goal_id !== 'undefined' && goal_id !== "") {
-        column += 'goal_id,';
-        values += "'" + goal_id + "',";
-      }		
-			
 			if (typeof immunization_recommendation_id !== 'undefined' && immunization_recommendation_id !== "") {
         column += 'immunization_recommendation_id,';
         values += "'" + immunization_recommendation_id + "',";
@@ -857,11 +852,6 @@ var controller = {
         values += "'" + medication_request_id + "',";
       }		
 
-			if (typeof medication_statement_id !== 'undefined' && medication_statement_id !== "") {
-        column += 'medication_statement_id,';
-        values += "'" + medication_statement_id + "',";
-      }		
-			
 			if (typeof procedure_request_id !== 'undefined' && procedure_request_id !== "") {
         column += 'procedure_request_id,';
         values += "'" + procedure_request_id + "',";
@@ -875,6 +865,36 @@ var controller = {
 			if (typeof referral_request_id !== 'undefined' && referral_request_id !== "") {
         column += 'referral_request_id,';
         values += "'" + referral_request_id + "',";
+      }		
+			
+			if (typeof goal_addresses_id !== 'undefined' && goal_addresses_id !== "") {
+        column += 'goal_addresses_id,';
+        values += "'" + goal_addresses_id + "',";
+      }		
+			
+			if (typeof goal_outcome_reference_id !== 'undefined' && goal_outcome_reference_id !== "") {
+        column += 'goal_outcome_reference_id,';
+        values += "'" + goal_outcome_reference_id + "',";
+      }		
+			
+			if (typeof medication_statement_part_of_id !== 'undefined' && medication_statement_part_of_id !== "") {
+        column += 'medication_statement_part_of_id,';
+        values += "'" + medication_statement_part_of_id + "',";
+      }		
+			
+			if (typeof medication_statement_reason_reference_id !== 'undefined' && medication_statement_reason_reference_id !== "") {
+        column += 'medication_statement_reason_reference_id,';
+        values += "'" + medication_statement_reason_reference_id + "',";
+      }		
+			
+			if (typeof procedure_part_of_id !== 'undefined' && procedure_part_of_id !== "") {
+        column += 'procedure_part_of_id,';
+        values += "'" + procedure_part_of_id + "',";
+      }		
+			
+			if (typeof procedure_part_reason_reference_id !== 'undefined' && procedure_part_reason_reference_id !== "") {
+        column += 'procedure_part_reason_reference_id,';
+        values += "'" + procedure_part_reason_reference_id + "',";
       }		
 			
 			var query = "UPSERT INTO BACIRO_FHIR.observation(observation_id, " + column.slice(0, -1) + ")"+
@@ -1280,16 +1300,20 @@ var controller = {
 			var condition_stage_id  = req.body.condition_stage_id;
 			var diagnostic_report_id  = req.body.diagnostic_report_id;
 			var family_member_history_id  = req.body.family_member_history_id;
-			var goal_id  = req.body.goal_id;
 			var immunization_recommendation_id  = req.body.immunization_recommendation_id;
 			var medication_administration_id  = req.body.medication_administration_id;
 			var medication_request_id  = req.body.medication_request_id;
-			var medication_statement_id  = req.body.medication_statement_id;
-			var procedure_id  = req.body.procedure_id;
 			var procedure_request_id  = req.body.procedure_request_id;
 			var questionnaire_response_id  = req.body.questionnaire_response_id;
 			var referral_request_id  = req.body.referral_request_id;
-
+			
+			var goal_addresses_id  = req.body.referral_request_id;
+			var goal_outcome_reference_id  = req.body.referral_request_id;
+			var medication_statement_part_of_id  = req.body.referral_request_id;
+			var medication_statement_reason_reference_id  = req.body.referral_request_id;
+			var procedure_part_of_id  = req.body.referral_request_id;
+			var procedure_part_reason_reference_id  = req.body.referral_request_id;
+			var recommendation_id = req.body.recommendation_id;
 			
 			var column = "";
       var values = "";
@@ -1489,11 +1513,6 @@ var controller = {
         values += "'" + condition_stage_id + "',";
       }		
 			
-			if (typeof procedure_id !== 'undefined' && procedure_id !== "") {
-        column += 'procedure_id,';
-        values += "'" + procedure_id + "',";
-      }		
-			
 			if (typeof communication_id !== 'undefined' && communication_id !== "") {
         column += 'communication_id,';
         values += "'" + communication_id + "',";
@@ -1514,11 +1533,6 @@ var controller = {
         values += "'" + family_member_history_id + "',";
       }
 			
-			if (typeof goal_id !== 'undefined' && goal_id !== "") {
-        column += 'goal_id,';
-        values += "'" + goal_id + "',";
-      }		
-			
 			if (typeof immunization_recommendation_id !== 'undefined' && immunization_recommendation_id !== "") {
         column += 'immunization_recommendation_id,';
         values += "'" + immunization_recommendation_id + "',";
@@ -1534,11 +1548,6 @@ var controller = {
         values += "'" + medication_request_id + "',";
       }		
 
-			if (typeof medication_statement_id !== 'undefined' && medication_statement_id !== "") {
-        column += 'medication_statement_id,';
-        values += "'" + medication_statement_id + "',";
-      }		
-			
 			if (typeof procedure_request_id !== 'undefined' && procedure_request_id !== "") {
         column += 'procedure_request_id,';
         values += "'" + procedure_request_id + "',";
@@ -1553,7 +1562,41 @@ var controller = {
         column += 'referral_request_id,';
         values += "'" + referral_request_id + "',";
       }		
-							
+			
+			if (typeof goal_addresses_id !== 'undefined' && goal_addresses_id !== "") {
+        column += 'goal_addresses_id,';
+        values += "'" + goal_addresses_id + "',";
+      }		
+			
+			if (typeof goal_outcome_reference_id !== 'undefined' && goal_outcome_reference_id !== "") {
+        column += 'goal_outcome_reference_id,';
+        values += "'" + goal_outcome_reference_id + "',";
+      }		
+			
+			if (typeof medication_statement_part_of_id !== 'undefined' && medication_statement_part_of_id !== "") {
+        column += 'medication_statement_part_of_id,';
+        values += "'" + medication_statement_part_of_id + "',";
+      }		
+			
+			if (typeof medication_statement_reason_reference_id !== 'undefined' && medication_statement_reason_reference_id !== "") {
+        column += 'medication_statement_reason_reference_id,';
+        values += "'" + medication_statement_reason_reference_id + "',";
+      }		
+			
+			if (typeof procedure_part_of_id !== 'undefined' && procedure_part_of_id !== "") {
+        column += 'procedure_part_of_id,';
+        values += "'" + procedure_part_of_id + "',";
+      }		
+			
+			if (typeof procedure_part_reason_reference_id !== 'undefined' && procedure_part_reason_reference_id !== "") {
+        column += 'procedure_part_reason_reference_id,';
+        values += "'" + procedure_part_reason_reference_id + "',";
+      }
+			
+			if (typeof recommendation_id !== 'undefined' && recommendation_id !== "") {
+        column += 'recommendation_id,';
+        values += "'" + recommendation_id + "',";
+      }
 			
 			var domainResource = req.params.dr;
 			var arrResource = domainResource.split('|');

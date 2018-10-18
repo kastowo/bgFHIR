@@ -190,6 +190,9 @@ var controller = {
 			var detail = req.body.detail;
 			var reference = req.body.reference;
 			
+			var medication_dispense_id = req.body.medication_dispense_id;
+			var medication_request_id = req.body.medication_request_id;
+			
 			var column = "";
       var values = "";
 			
@@ -242,7 +245,17 @@ var controller = {
 			if (typeof reference !== 'undefined' && reference !== "") {
         column += 'reference,';
         values += "'" + reference + "',";
-      }	
+      }
+			
+			if (typeof medication_dispense_id !== 'undefined' && medication_dispense_id !== "") {
+        column += 'medication_dispense_id,';
+        values += "'" + medication_dispense_id + "',";
+      }
+			
+			if (typeof medication_request_id !== 'undefined' && medication_request_id !== "") {
+        column += 'medication_request_id,';
+        values += "'" + medication_request_id + "',";
+      }
 
       var query = "UPSERT INTO BACIRO_FHIR.detected_issue(detected_issue_id, " + column.slice(0, -1) + ")"+
         " VALUES ('"+detected_issue_id+"', " + values.slice(0, -1) + ")";
@@ -326,7 +339,9 @@ var controller = {
 			var implicated = req.body.implicated;
 			var detail = req.body.detail;
 			var reference = req.body.reference;
-			
+			var medication_dispense_id = req.body.medication_dispense_id;
+			var medication_request_id = req.body.medication_request_id;
+      
 			var column = "";
       var values = "";
 			
@@ -380,7 +395,16 @@ var controller = {
         column += 'reference,';
         values += "'" + reference + "',";
       }	
-	
+			
+			if (typeof medication_dispense_id !== 'undefined' && medication_dispense_id !== "") {
+        column += 'medication_dispense_id,';
+        values += "'" + medication_dispense_id + "',";
+      }
+			
+			if (typeof medication_request_id !== 'undefined' && medication_request_id !== "") {
+        column += 'medication_request_id,';
+        values += "'" + medication_request_id + "',";
+      }
 			
 			var domainResource = req.params.dr;
 			var arrResource = domainResource.split('|');

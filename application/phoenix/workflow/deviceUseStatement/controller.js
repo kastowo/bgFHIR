@@ -376,7 +376,7 @@ var controller = {
 	put: {
 		deviceUseStatement: function updateDeviceUseStatement(req, res) {
 			console.log(req.body);
-			var device_use_statement_id  = req.body.device_use_statement_id;
+			var device_use_statement_id  = req.params.device_use_statement_id;
 			var status  = req.body.status;
 			var subject_patient  = req.body.subject_patient;
 			var subject_group  = req.body.subject_group;

@@ -325,7 +325,12 @@ var controller = {
 				////console.log(rez);
         for(i = 0; i < rez.length; i++){
 					var Endpoint = {};
-					Endpoint.id = hostfhir + ":" + portfhir + "/" + apikey + "/endpoint?_id=" + rez[i].endpoint_id;
+					if(rez[i].endpoint_id !== 'null'){
+						Endpoint.id = hostfhir + ":" + portfhir + "/" + apikey + "/endpoint?_id=" + rez[i].endpoint_id;
+					} else {
+						Endpoint.id = rez[i].endpoint_id;
+					}
+					
           ////console.log(Endpoint);
           arrEndpoint[i] = Endpoint;
         }

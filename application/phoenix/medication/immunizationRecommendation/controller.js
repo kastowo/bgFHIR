@@ -168,15 +168,26 @@ var controller = {
 					ImmunizationRecommendationRecommendation.target_disease = rez[i].target_disease;
 					ImmunizationRecommendationRecommendation.dose_number = rez[i].dose_number;
 					ImmunizationRecommendationRecommendation.forecast_status = rez[i].forecast_status;
-					ImmunizationRecommendationRecommendation.protocol.doseSequence = rez[i].protocol_dose_sequence;
+					
+					/*ImmunizationRecommendationRecommendation.protocol.doseSequence = rez[i].protocol_dose_sequence;
 					ImmunizationRecommendationRecommendation.protocol.description = rez[i].protocol_description;
 					if(rez[i].protocol_authority != "null"){
 						ImmunizationRecommendationRecommendation.protocol.authority = hostFHIR + ':' + portFHIR + '/' + apikey + '/Encounter?_id=' +  rez[i].protocol_authority;
 					} else {
 						ImmunizationRecommendationRecommendation.protocol.authority = "";
 					}
-					ImmunizationRecommendationRecommendation.protocol.series = rez[i].protocol_series;
+					ImmunizationRecommendationRecommendation.protocol.series = rez[i].protocol_series;*/
+					var Protocol = {};
+					Protocol.doseSequence = rez[i].protocol_dose_sequence;
+					Protocol.description = rez[i].protocol_description;
+					if(rez[i].protocol_authority != "null"){
+						Protocol.authority = hostFHIR + ':' + portFHIR + '/' + apikey + '/Encounter?_id=' +  rez[i].protocol_authority;
+					} else {
+						Protocol.authority = "";
+					}
+					Protocol.series = rez[i].protocol_series;
 					
+					ImmunizationRecommendationRecommendation.protocol = Protocol;
 					arrImmunizationRecommendationRecommendation[i] = ImmunizationRecommendationRecommendation;
 				}
 				res.json({
@@ -239,7 +250,161 @@ var controller = {
 					"function": "getImmunizationRecommendationDateCriterion"
 				});
 			});
+		},
+		immunizationRecommendationSupportingImmunization: function getImmunizationRecommendationSupportingImmunization(req, res) {
+			var apikey = req.params.apikey;
+			
+			var ImmunizationId = req.query._id;
+			var immunizationRecommendationId = req.query.recommendation_id;
+
+			//susun query
+			var condition = '';
+
+			if (typeof ImmunizationId !== 'undefined' && ImmunizationId !== "") {
+				condition += 'Immunization_ID = "' + ImmunizationId + '" AND ';
+			}
+
+			if (typeof immunizationRecommendationId !== 'undefined' && immunizationRecommendationId !== "") {
+				condition += 'recommendation_id = "' + immunizationRecommendationId + '" AND ';
+			}
+
+			if (condition == '') {
+				fixCondition = '';
+			} else {
+				fixCondition = ' WHERE ' + condition.slice(0, -4);
+			}
+
+			var arrImmunizationRecommendationSupportingImmunization = [];
+			var query = 'select immunization_id from BACIRO_FHIR.immunization ' + fixCondition;
+
+			db.query(query, function (dataJson) {
+				rez = lowercaseObject(dataJson);
+				for (i = 0; i < rez.length; i++) {
+					var immunizationRecommendationSupportingImmunization = {};
+					if(rez[i].immunization_id != "null"){
+						immunizationRecommendationSupportingImmunization.id = hostFHIR + ':' + portFHIR + '/' + apikey + '/Immunization?_id=' +  rez[i].immunization_id;
+					} else {
+						immunizationRecommendationSupportingImmunization.id = "";
+					}
+					
+					arrImmunizationRecommendationSupportingImmunization[i] = immunizationRecommendationSupportingImmunization;
+				}
+				res.json({
+					"err_code": 0,
+					"data": arrImmunizationRecommendationSupportingImmunization
+				});
+			}, function (e) {
+				res.json({
+					"err_code": 1,
+					"err_msg": e,
+					"application": "Api Phoenix",
+					"function": "getImmunizationRecommendationSupportingImmunization"
+				});
+			});
+		},
+		immunizationRecommendationSupportingPatientInformationObservation: function getImmunizationRecommendationSupportingPatientInformationObservation(req, res) {
+			var apikey = req.params.apikey;
+			
+			var ImmunizationId = req.query._id;
+			var immunizationRecommendationId = req.query.recommendation_id;
+
+			//susun query
+			var condition = '';
+
+			if (typeof ObservationId !== 'undefined' && ObservationId !== "") {
+				condition += 'Observation_ID = "' + ObservationId + '" AND ';
+			}
+
+			if (typeof immunizationRecommendationId !== 'undefined' && immunizationRecommendationId !== "") {
+				condition += 'recommendation_id = "' + immunizationRecommendationId + '" AND ';
+			}
+
+			if (condition == '') {
+				fixCondition = '';
+			} else {
+				fixCondition = ' WHERE ' + condition.slice(0, -4);
+			}
+
+			var arrImmunizationRecommendationSupportingPatientInformationObservation = [];
+			var query = 'select observation_id from BACIRO_FHIR.Observation ' + fixCondition;
+
+			db.query(query, function (dataJson) {
+				rez = lowercaseObject(dataJson);
+				for (i = 0; i < rez.length; i++) {
+					var immunizationRecommendationSupportingPatientInformationObservation = {};
+					if(rez[i].observation_id != "null"){
+						immunizationRecommendationSupportingPatientInformationObservation.id = hostFHIR + ':' + portFHIR + '/' + apikey + '/Observation?_id=' +  rez[i].observation_id;
+					} else {
+						immunizationRecommendationSupportingPatientInformationObservation.id = "";
+					}
+					
+					arrImmunizationRecommendationSupportingPatientInformationObservation[i] = immunizationRecommendationSupportingPatientInformationObservation;
+				}
+				res.json({
+					"err_code": 0,
+					"data": arrImmunizationRecommendationSupportingPatientInformationObservation
+				});
+			}, function (e) {
+				res.json({
+					"err_code": 1,
+					"err_msg": e,
+					"application": "Api Phoenix",
+					"function": "getImmunizationRecommendationSupportingPatientInformationObservation"
+				});
+			});
+		},
+		immunizationRecommendationSupportingPatientInformationAllergyIntolerance: function getImmunizationRecommendationSupportingPatientInformationAllergyIntolerance(req, res) {
+			var apikey = req.params.apikey;
+			
+			var ImmunizationId = req.query._id;
+			var immunizationRecommendationId = req.query.recommendation_id;
+
+			//susun query
+			var condition = '';
+
+			if (typeof AllergyIntoleranceId !== 'undefined' && AllergyIntoleranceId !== "") {
+				condition += 'AllergyIntolerance_ID = "' + AllergyIntoleranceId + '" AND ';
+			}
+
+			if (typeof immunizationRecommendationId !== 'undefined' && immunizationRecommendationId !== "") {
+				condition += 'recommendation_id = "' + immunizationRecommendationId + '" AND ';
+			}
+
+			if (condition == '') {
+				fixCondition = '';
+			} else {
+				fixCondition = ' WHERE ' + condition.slice(0, -4);
+			}
+
+			var arrImmunizationRecommendationSupportingPatientInformationAllergyIntolerance = [];
+			var query = 'select allergy_intolerance_id from BACIRO_FHIR.Allergy_Intolerance ' + fixCondition;
+
+			db.query(query, function (dataJson) {
+				rez = lowercaseObject(dataJson);
+				for (i = 0; i < rez.length; i++) {
+					var immunizationRecommendationSupportingPatientInformationAllergyIntolerance = {};
+					if(rez[i].allergy_intolerance_id != "null"){
+						immunizationRecommendationSupportingPatientInformationAllergyIntolerance.id = hostFHIR + ':' + portFHIR + '/' + apikey + '/AllergyIntolerance?_id=' +  rez[i].allergy_intolerance_id;
+					} else {
+						immunizationRecommendationSupportingPatientInformationAllergyIntolerance.id = "";
+					}
+					
+					arrImmunizationRecommendationSupportingPatientInformationAllergyIntolerance[i] = immunizationRecommendationSupportingPatientInformationAllergyIntolerance;
+				}
+				res.json({
+					"err_code": 0,
+					"data": arrImmunizationRecommendationSupportingPatientInformationAllergyIntolerance
+				});
+			}, function (e) {
+				res.json({
+					"err_code": 1,
+					"err_msg": e,
+					"application": "Api Phoenix",
+					"function": "getImmunizationRecommendationSupportingPatientInformationAllergyIntolerance"
+				});
+			});
 		}
+		
   },
 	post: {
 		immunizationRecommendation: function addImmunizationRecommendation(req, res) {

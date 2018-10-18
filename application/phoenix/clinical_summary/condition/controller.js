@@ -46,6 +46,8 @@ var controller = {
 			var stage = req.query.stage;
 			var subject = req.query.subject;
 			var verification_status = req.query.verification_status;
+			var adverse_event_subject_medical_history_id = req.query.adverse_event_subject_medical_history_id;
+			var care_team_id = req.query.care_team_id;
 			
       //susun query
       var condition = "";
@@ -149,9 +151,18 @@ var controller = {
 				condition += "cd.VERIFICATION_STATUS = '" + verification_status + "' AND,";  
       }
 			
-			if(typeof subject !== 'subject' && subject !== ""){
+			if(typeof subject !== 'undefined' && subject !== ""){
 				condition += "(cd.SUBJECT_PATIENT = '" + subject + "' OR cd.SUBJECT_GROUP = '" + subject + "') AND,";  
 			}
+			
+			if(typeof adverse_event_subject_medical_history_id !== 'undefined' && adverse_event_subject_medical_history_id !== ""){
+				condition += "(cd.adverse_event_subject_medical_history_id = '" + adverse_event_subject_medical_history_id + "' OR cd.adverse_event_subject_medical_history_id = '" + adverse_event_subject_medical_history_id + "') AND,";  
+			}
+			
+			if(typeof care_team_id !== 'undefined' && care_team_id !== ""){
+        condition += "cd.care_team_id = '" + care_team_id + "' AND,";  
+      }
+			
 			
 			
       if(condition == ""){
@@ -162,11 +173,12 @@ var controller = {
 			      
       var arrCondition = [];
       var query = "select  condition_id, clinical_status, verification_status, category, severity, code, body_site, subject_patient, subject_group, context_encounter, context_episode_of_care, onset_date_time, onset_age, onset_period_start, onset_period_end, onset_range_low, onset_range_high, onset_string, abatement_date_time, abatement_age, abatement_boolean, abatement_period_start, abatement_period_end, abatement_range_low, abatement_range_high, abatement_string, asserted_date, asserter_practitioner, asserter_patient, asserter_related_person from baciro_fhir.condition cd " + fixCondition;
-			//console.log(query);
+			console.log(query);
       db.query(query,function(dataJson){
         rez = lowercaseObject(dataJson);
 				for(i = 0; i < rez.length; i++){
-          var Condition = {};
+          var Condition = {id : "", clinicalStatus : "", verificationStatus : "", category : "", severity : "", code : "", body_site : "", subject : {}, context : {}, onset : {}, abatement : {}, assertedDate : "", asserter : "" };
+					
 					var arrSubject = [];
 					var Subject = {};
 					if(rez[i].subject_group != "null"){
@@ -179,7 +191,7 @@ var controller = {
 					} else {
 						Subject.patient = "";
 					}
-					arrSubject[i] = Subject;
+					arrSubject = Subject;
 					
 					var arrContext = [];
 					var Context = {};
@@ -193,7 +205,7 @@ var controller = {
 					} else {
 						Context.episodeOfCare = "";
 					}
-					arrContext[i] = Context;
+					arrContext = Context;
 					
 					Condition.resourceType = "Condition";
           Condition.id = rez[i].condition_id;
@@ -271,7 +283,7 @@ var controller = {
 					} else {
 						Asserter.relatedPerson = "";
 					}
-					arrAsserter[i] = Asserter;
+					arrAsserter = Asserter;
 					Condition.asserter = arrAsserter;
           arrCondition[i] = Condition;
         }
@@ -305,87 +317,14 @@ var controller = {
 
 			var arrConditionStages = [];
 			var query = "select stage_id, summary from baciro_fhir.condition_stages " + fixCondition;
-			/*var query = "select stage_id, summary from baciro_fhir.condition_stages cs left join baciro_fhir.CLINICAL_IMPRESSION ci on cs.CONDITION_ID = ci.CONDITION_ID left join baciro_fhir.DIAGNOSTIC_REPORT dr on cs.CONDITION_ID = dr.CONDITION_ID  " + fixCondition;*/
-
+			
 			db.query(query, function (dataJson) {
 				rez = lowercaseObject(dataJson);
 				for (i = 0; i < rez.length; i++) {
 					var ConditionStages = {};
 					ConditionStages.id = rez[i].stage_id;
 					ConditionStages.summary = rez[i].summary;
-					/*if (rez[i].member_practitioner == null) {
-						ConditionStages.member = hostFHIR + ':' + portFHIR + '/' + apikey + '/Practitioner?_id=' +  rez[i].member_practitioner;
-					} else if (rez[i].member_related_person == null) {
-						ConditionStages.member = hostFHIR + ':' + portFHIR + '/' + apikey + '/Person?_id=' + rez[i].member_related_person;
-					} else if (rez[i].member_patient == null) {
-						ConditionStages.member =  hostFHIR + ':' + portFHIR + '/' + apikey + '/Patient?_id=' +rez[i].member_patient;
-					} else if (rez[i].member_organization == null) {
-						ConditionStages.member =  hostFHIR + ':' + portFHIR + '/' + apikey + '/Organization?_id=' + rez[i].member_organization;
-					} else if (rez[i].member_care_team == null) {
-						ConditionStages.member =  hostFHIR + ':' + portFHIR + '/' + apikey + '/Condition?_id=' + rez[i].member_care_team;
-					} else {
-						ConditionStages.member = "";
-					}*/
-					
-					
-					arrConditionStages[i] = ConditionStages;
-				}
-				res.json({
-					"err_code": 0,
-					"data": arrConditionStages
-				});
-			}, function (e) {
-				res.json({
-					"err_code": 1,
-					"err_msg": e,
-					"application": "Api Phoenix",
-					"function": "getConditionStages"
-				});
-			});
-		},
-		conditionStagesAssessment: function getConditionStagesAssessment(req, res) {
-			var apikey = req.params.apikey;
-			
-			var conditionStagesId = req.query._id;
-			var conditionId = req.query.condition_id;
-
-			//susun query
-			var condition = "";
-
-			if (typeof conditionStagesId !== 'undefined' && conditionStagesId !== "") {
-				condition += "STAGE_ID = '" + conditionStagesId + "' AND ";
-			}
-
-			if (typeof conditionId !== 'undefined' && conditionId !== "") {
-				condition += "CONDITION_ID = '" + conditionId + "' AND ";
-			}
-
-			if (condition == "") {
-				fixCondition = "";
-			} else {
-				fixCondition = " WHERE " + condition.slice(0, -4);
-			}
-
-			var arrConditionStages = [];
-			/*var query = "select stage_id, cs.CONDITION_ID from baciro_fhir.condition_stages " + fixCondition;*/
-			var query = "select stage_id, cs.condition_id as condition_id, ci.clinical_impression_id as clinical_impression_id, dr.diagnostic_report_id as diagnostic_report_id, ob.observation_id as observation_id  from baciro_fhir.condition_stages cs left join baciro_fhir.clinical_impression ci on cs.condition_id = ci.condition_id left join baciro_fhir.diagnostic_report dr on cs.condition_id = dr.condition_id left join baciro_fhir.observation ob dr on cs.condition_id = ob.condition_id  " + fixCondition;
-
-			db.query(query, function (dataJson) {
-				rez = lowercaseObject(dataJson);
-				for (i = 0; i < rez.length; i++) {
-					var ConditionStages = {};
-					ConditionStages.id = rez[i].stage_id;
-					if (rez[i].clinical_impression_id == null) {
-						ConditionStages.assessment = hostFHIR + ':' + portFHIR + '/' + apikey + '/ClinicalImpression?_id=' +  rez[i].clinical_impression_id;
-					} else if (rez[i].diagnostic_report_id == null) {
-						ConditionStages.assessment = hostFHIR + ':' + portFHIR + '/' + apikey + '/DiagnosticReport?_id=' + rez[i].diagnostic_report_id;
-					} else if (rez[i].observation_id == null) {
-						ConditionStages.assessment =  hostFHIR + ':' + portFHIR + '/' + apikey + '/Observation?_id=' +rez[i].observation_id;
-					} else {
-						ConditionStages.assessment = "";
-					}
-					
-					
+				
 					arrConditionStages[i] = ConditionStages;
 				}
 				res.json({
@@ -485,14 +424,27 @@ var controller = {
 			var asserter_practitioner = req.body.asserter_practitioner;
 			var asserter_patient = req.body.asserter_patient;
 			var asserter_related_person = req.body.asserter_related_person;
-			var procedure_id = req.body.procedure_id;
+			
 			var family_member_history_id = req.body.family_member_history_id;
 			var care_plan_id = req.body.care_plan_id;
-			var care_plan_activity_id = req.body.care_plan_activity_id;
-			var goal_id = req.body.goal_id;
+			var care_plan_activity_detail_id = req.body.care_plan_activity_detail_id;
+			var adverse_event_id = req.body.adverse_event_id;
+			var adverse_event_reaction_id = req.body.adverse_event_reaction_id;
+			var adverse_event_subject_medical_history_id = req.body.adverse_event_subject_medical_history_id;
+			var appointment_id = req.body.appointment_id;
 			var care_team_id = req.body.care_team_id;
 			var clinical_impression_id = req.body.clinical_impression_id;
-			var adverse_event_id = req.body.adverse_event_id;
+			var communication_id = req.body.communication_id;
+			var communication_request_id = req.body.communication_request_id;
+			var goal_id = req.body.goal_id;
+			var medication_administration_id = req.body.medication_administration_id;
+			var medication_request_id = req.body.medication_request_id;
+			var medication_statement_id = req.body.medication_statement_id;
+			var procedure_reason_reference_id = req.body.procedure_reason_reference_id;
+			var procedure_complication_detail_id = req.body.procedure_complication_detail_id;
+			var procedure_request_id = req.body.procedure_request_id;
+			var referral_request_id = req.body.referral_request_id;
+
 			
 			var column = "";
       var values = "";
@@ -649,11 +601,6 @@ var controller = {
         values += "'" + asserter_related_person + "',";
       }	
 			
-			if (typeof procedure_id !== 'undefined' && procedure_id !== "") {
-        column += 'procedure_id,';
-        values += "'" + procedure_id + "',";
-      }	
-			
 			if (typeof family_member_history_id !== 'undefined' && family_member_history_id !== "") {
         column += 'family_member_history_id,';
         values += "'" + family_member_history_id + "',";
@@ -662,32 +609,95 @@ var controller = {
 			if (typeof care_plan_id !== 'undefined' && care_plan_id !== "") {
         column += 'care_plan_id,';
         values += "'" + care_plan_id + "',";
-      }	
+      }
 			
-			if (typeof care_plan_activity_id !== 'undefined' && care_plan_activity_id !== "") {
-        column += 'care_plan_activity_id,';
-        values += "'" + care_plan_activity_id + "',";
-      }	
-			
-			if (typeof goal_id !== 'undefined' && goal_id !== "") {
-        column += 'goal_id,';
-        values += "'" + goal_id + "',";
-      }	
-			
-			if (typeof care_team_id !== 'undefined' && care_team_id !== "") {
-        column += 'care_team_id,';
-        values += "'" + care_team_id + "',";
-      }	
-			
-			if (typeof clinical_impression_id !== 'undefined' && clinical_impression_id !== "") {
-        column += 'clinical_impression_id,';
-        values += "'" + clinical_impression_id + "',";
+			if (typeof care_plan_activity_detail_id !== 'undefined' && care_plan_activity_detail_id !== "") {
+        column += 'care_plan_activity_detail_id,';
+        values += "'" + care_plan_activity_detail_id + "',";
       }	
 			
 			if (typeof adverse_event_id !== 'undefined' && adverse_event_id !== "") {
         column += 'adverse_event_id,';
         values += "'" + adverse_event_id + "',";
       }	
+			
+			if (typeof adverse_event_reaction_id !== 'undefined' && adverse_event_reaction_id !== "") {
+        column += 'adverse_event_reaction_id,';
+        values += "'" + adverse_event_reaction_id + "',";
+      }	
+			
+			if (typeof adverse_event_subject_medical_history_id !== 'undefined' && adverse_event_subject_medical_history_id !== "") {
+        column += 'adverse_event_subject_medical_history_id,';
+        values += "'" + adverse_event_subject_medical_history_id + "',";
+      }	
+			
+			if (typeof appointment_id !== 'undefined' && appointment_id !== "") {
+        column += 'appointment_id,';
+        values += "'" + appointment_id + "',";
+      }	
+			
+			if (typeof care_team_id !== 'undefined' && care_team_id !== "") {
+        column += 'care_team_id,';
+        values += "'" + care_team_id + "',";
+      }
+			
+			if (typeof clinical_impression_id !== 'undefined' && clinical_impression_id !== "") {
+        column += 'clinical_impression_id,';
+        values += "'" + clinical_impression_id + "',";
+      }
+			
+			if (typeof communication_id !== 'undefined' && communication_id !== "") {
+        column += 'communication_id,';
+        values += "'" + communication_id + "',";
+      }
+			
+			if (typeof communication_request_id !== 'undefined' && communication_request_id !== "") {
+        column += 'communication_request_id,';
+        values += "'" + communication_request_id + "',";
+      }
+			
+			if (typeof goal_id !== 'undefined' && goal_id !== "") {
+        column += 'goal_id,';
+        values += "'" + goal_id + "',";
+      }
+			
+			if (typeof medication_administration_id !== 'undefined' && medication_administration_id !== "") {
+        column += 'medication_administration_id,';
+        values += "'" + medication_administration_id + "',";
+      }
+			
+			if (typeof medication_request_id !== 'undefined' && medication_request_id !== "") {
+        column += 'medication_request_id,';
+        values += "'" + medication_request_id + "',";
+      }
+			
+			if (typeof medication_statement_id !== 'undefined' && medication_statement_id !== "") {
+        column += 'medication_statement_id,';
+        values += "'" + medication_statement_id + "',";
+      }
+			
+			if (typeof procedure_reason_reference_id !== 'undefined' && procedure_reason_reference_id !== "") {
+        column += 'procedure_reason_reference_id,';
+        values += "'" + procedure_reason_reference_id + "',";
+      }
+			
+			if (typeof procedure_complication_detail_id !== 'undefined' && procedure_complication_detail_id !== "") {
+        column += 'procedure_complication_detail_id,';
+        values += "'" + procedure_complication_detail_id + "',";
+      }
+			
+			if (typeof procedure_request_id !== 'undefined' && procedure_request_id !== "") {
+        column += 'procedure_request_id,';
+        values += "'" + procedure_request_id + "',";
+      }
+			
+			if (typeof referral_request_id !== 'undefined' && referral_request_id !== "") {
+        column += 'referral_request_id,';
+        values += "'" + referral_request_id + "',";
+      }
+			
+			
+			
 
       var query = "UPSERT INTO BACIRO_FHIR.condition(condition_id, " + column.slice(0, -1) + ")"+
         " VALUES ('"+condition_id+"', " + values.slice(0, -1) + ")";
@@ -829,14 +839,26 @@ var controller = {
 			var asserter_practitioner = req.body.asserter_practitioner;
 			var asserter_patient = req.body.asserter_patient;
 			var asserter_related_person = req.body.asserter_related_person;
-			var procedure_id = req.body.procedure_id;
 			var family_member_history_id = req.body.family_member_history_id;
 			var care_plan_id = req.body.care_plan_id;
-			var care_plan_activity_id = req.body.care_plan_activity_id;
-			var goal_id = req.body.goal_id;
+			var care_plan_activity_detail_id = req.body.care_plan_activity_detail_id;
+			var adverse_event_id = req.body.adverse_event_id;
+			var adverse_event_reaction_id = req.body.adverse_event_reaction_id;
+			var adverse_event_subject_medical_history_id = req.body.adverse_event_subject_medical_history_id;
+			var appointment_id = req.body.appointment_id;
 			var care_team_id = req.body.care_team_id;
 			var clinical_impression_id = req.body.clinical_impression_id;
-			var adverse_event_id = req.body.adverse_event_id;
+			var communication_id = req.body.communication_id;
+			var communication_request_id = req.body.communication_request_id;
+			var goal_id = req.body.goal_id;
+			var medication_administration_id = req.body.medication_administration_id;
+			var medication_request_id = req.body.medication_request_id;
+			var medication_statement_id = req.body.medication_statement_id;
+			var procedure_reason_reference_id = req.body.procedure_reason_reference_id;
+			var procedure_complication_detail_id = req.body.procedure_complication_detail_id;
+			var procedure_request_id = req.body.procedure_request_id;
+			var referral_request_id = req.body.referral_request_id;
+			
 			
 			var column = "";
       var values = "";
@@ -993,11 +1015,6 @@ var controller = {
         values += "'" + asserter_related_person + "',";
       }	
 			
-			if (typeof procedure_id !== 'undefined' && procedure_id !== "") {
-        column += 'procedure_id,';
-        values += "'" + procedure_id + "',";
-      }	
-			
 			if (typeof family_member_history_id !== 'undefined' && family_member_history_id !== "") {
         column += 'family_member_history_id,';
         values += "'" + family_member_history_id + "',";
@@ -1006,32 +1023,93 @@ var controller = {
 			if (typeof care_plan_id !== 'undefined' && care_plan_id !== "") {
         column += 'care_plan_id,';
         values += "'" + care_plan_id + "',";
-      }	
+      }
 			
-			if (typeof care_plan_activity_id !== 'undefined' && care_plan_activity_id !== "") {
-        column += 'care_plan_activity_id,';
-        values += "'" + care_plan_activity_id + "',";
-      }	
-			
-			if (typeof goal_id !== 'undefined' && goal_id !== "") {
-        column += 'goal_id,';
-        values += "'" + goal_id + "',";
-      }	
-			
-			if (typeof care_team_id !== 'undefined' && care_team_id !== "") {
-        column += 'care_team_id,';
-        values += "'" + care_team_id + "',";
-      }	
-			
-			if (typeof clinical_impression_id !== 'undefined' && clinical_impression_id !== "") {
-        column += 'clinical_impression_id,';
-        values += "'" + clinical_impression_id + "',";
+			if (typeof care_plan_activity_detail_id !== 'undefined' && care_plan_activity_detail_id !== "") {
+        column += 'care_plan_activity_detail_id,';
+        values += "'" + care_plan_activity_detail_id + "',";
       }	
 			
 			if (typeof adverse_event_id !== 'undefined' && adverse_event_id !== "") {
         column += 'adverse_event_id,';
         values += "'" + adverse_event_id + "',";
       }	
+			
+			if (typeof adverse_event_reaction_id !== 'undefined' && adverse_event_reaction_id !== "") {
+        column += 'adverse_event_reaction_id,';
+        values += "'" + adverse_event_reaction_id + "',";
+      }	
+			
+			if (typeof adverse_event_subject_medical_history_id !== 'undefined' && adverse_event_subject_medical_history_id !== "") {
+        column += 'adverse_event_subject_medical_history_id,';
+        values += "'" + adverse_event_subject_medical_history_id + "',";
+      }	
+			
+			if (typeof appointment_id !== 'undefined' && appointment_id !== "") {
+        column += 'appointment_id,';
+        values += "'" + appointment_id + "',";
+      }	
+			
+			if (typeof care_team_id !== 'undefined' && care_team_id !== "") {
+        column += 'care_team_id,';
+        values += "'" + care_team_id + "',";
+      }
+			
+			if (typeof clinical_impression_id !== 'undefined' && clinical_impression_id !== "") {
+        column += 'clinical_impression_id,';
+        values += "'" + clinical_impression_id + "',";
+      }
+			
+			if (typeof communication_id !== 'undefined' && communication_id !== "") {
+        column += 'communication_id,';
+        values += "'" + communication_id + "',";
+      }
+			
+			if (typeof communication_request_id !== 'undefined' && communication_request_id !== "") {
+        column += 'communication_request_id,';
+        values += "'" + communication_request_id + "',";
+      }
+			
+			if (typeof goal_id !== 'undefined' && goal_id !== "") {
+        column += 'goal_id,';
+        values += "'" + goal_id + "',";
+      }
+			
+			if (typeof medication_administration_id !== 'undefined' && medication_administration_id !== "") {
+        column += 'medication_administration_id,';
+        values += "'" + medication_administration_id + "',";
+      }
+			
+			if (typeof medication_request_id !== 'undefined' && medication_request_id !== "") {
+        column += 'medication_request_id,';
+        values += "'" + medication_request_id + "',";
+      }
+			
+			if (typeof medication_statement_id !== 'undefined' && medication_statement_id !== "") {
+        column += 'medication_statement_id,';
+        values += "'" + medication_statement_id + "',";
+      }
+			
+			if (typeof procedure_reason_reference_id !== 'undefined' && procedure_reason_reference_id !== "") {
+        column += 'procedure_reason_reference_id,';
+        values += "'" + procedure_reason_reference_id + "',";
+      }
+			
+			if (typeof procedure_complication_detail_id !== 'undefined' && procedure_complication_detail_id !== "") {
+        column += 'procedure_complication_detail_id,';
+        values += "'" + procedure_complication_detail_id + "',";
+      }
+			
+			if (typeof procedure_request_id !== 'undefined' && procedure_request_id !== "") {
+        column += 'procedure_request_id,';
+        values += "'" + procedure_request_id + "',";
+      }
+			
+			if (typeof referral_request_id !== 'undefined' && referral_request_id !== "") {
+        column += 'referral_request_id,';
+        values += "'" + referral_request_id + "',";
+      }
+				
 			
 			var domainResource = req.params.dr;
 			var arrResource = domainResource.split('|');

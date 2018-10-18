@@ -122,7 +122,7 @@ var controller = {
 					} else {
 						Subject.patient = "";
 					}
-					arrSubject[i] = Subject;
+					arrSubject = Subject;
 					
 					var arrContext = [];
 					var Context = {};
@@ -136,7 +136,7 @@ var controller = {
 					} else {
 						Context.episodeOfCare = "";
 					}
-					arrContext[i] = Context;
+					arrContext = Context;
 					
 					ClinicalImpression.resourceType = "ClinicalImpression";
           ClinicalImpression.id = rez[i].clinical_impression_id;
@@ -281,7 +281,7 @@ var controller = {
 					} else {
 						ItemReference.observation = "";
 					}
-					arrItemReference[i] = ItemReference;
+					arrItemReference = ItemReference;
 					ClinicalImpressionFinding.itemReference = ItemReference;
 					ClinicalImpressionFinding.basis = rez[i].basis;
 					

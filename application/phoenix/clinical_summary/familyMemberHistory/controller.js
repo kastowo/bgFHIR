@@ -213,7 +213,9 @@ var controller = {
 			var deceased_date = req.body.deceased_date;
 			var deceased_string = req.body.deceased_string;
 			var reason_code = req.body.reason_code;
-			
+			var adverse_event_id = req.body.adverse_event_id;
+			var clinical_impression_id = req.body.clinical_impression_id;
+
 			var column = "";
       var values = "";
 			
@@ -335,6 +337,16 @@ var controller = {
 			if (typeof reason_code !== 'undefined' && reason_code !== "") {
         column += 'reason_code,';
         values += "'" + reason_code + "',";
+      }
+			
+			if (typeof adverse_event_id !== 'undefined' && adverse_event_id !== "") {
+        column += 'adverse_event_id,';
+        values += "'" + adverse_event_id + "',";
+      }
+			
+			if (typeof clinical_impression_id !== 'undefined' && clinical_impression_id !== "") {
+        column += 'clinical_impression_id,';
+        values += "'" + clinical_impression_id + "',";
       }
 
       var query = "UPSERT INTO BACIRO_FHIR.family_member_history(care_team_id, " + column.slice(0, -1) + ")"+
@@ -464,6 +476,8 @@ var controller = {
 			var deceased_date = req.body.deceased_date;
 			var deceased_string = req.body.deceased_string;
 			var reason_code = req.body.reason_code;
+			var adverse_event_id = req.body.adverse_event_id;
+			var clinical_impression_id = req.body.clinical_impression_id;
 			
 			var column = "";
       var values = "";
@@ -586,7 +600,17 @@ var controller = {
 			if (typeof reason_code !== 'undefined' && reason_code !== "") {
         column += 'reason_code,';
         values += "'" + reason_code + "',";
-      }	
+      }
+			
+			if (typeof adverse_event_id !== 'undefined' && adverse_event_id !== "") {
+        column += 'adverse_event_id,';
+        values += "'" + adverse_event_id + "',";
+      }
+			
+			if (typeof clinical_impression_id !== 'undefined' && clinical_impression_id !== "") {
+        column += 'clinical_impression_id,';
+        values += "'" + clinical_impression_id + "',";
+      }
 			
 			var domainResource = req.params.dr;
 			var arrResource = domainResource.split('|');

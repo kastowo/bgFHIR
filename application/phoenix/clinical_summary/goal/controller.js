@@ -227,7 +227,9 @@ var controller = {
 			var expressed_by_practitioner = req.body.expressed_by_practitioner;
 			var expressed_by_related_person = req.body.expressed_by_related_person;
 			var outcome_code = req.body.outcome_code;
-			
+			var care_plan_id = req.body.care_plan_id;
+			var care_plan_activity_detail_id = req.body.care_plan_activity_detail_id;
+
 			var column = "";
       var values = "";
 			
@@ -301,6 +303,16 @@ var controller = {
 			if (typeof outcome_code !== 'undefined' && outcome_code !== "") {
         column += 'outcome_code,';
         values += "'" + outcome_code + "',";
+      }	
+			
+			if (typeof care_plan_id !== 'undefined' && care_plan_id !== "") {
+        column += 'care_plan_id,';
+        values += "'" + care_plan_id + "',";
+      }	
+			
+			if (typeof care_plan_activity_detail_id !== 'undefined' && care_plan_activity_detail_id !== "") {
+        column += 'care_plan_activity_detail_id,';
+        values += "'" + care_plan_activity_detail_id + "',";
       }	
 
       var query = "UPSERT INTO BACIRO_FHIR.GOAL(goal_id, " + column.slice(0, -1) + ")"+
@@ -415,6 +427,9 @@ var controller = {
 			var expressed_by_practitioner = req.body.expressed_by_practitioner;
 			var expressed_by_related_person = req.body.expressed_by_related_person;
 			var outcome_code = req.body.outcome_code;
+			var care_plan_id = req.body.care_plan_id;
+			var care_plan_activity_detail_id = req.body.care_plan_activity_detail_id;
+			
 			
 			var column = "";
       var values = "";
@@ -490,6 +505,16 @@ var controller = {
         column += 'outcome_code,';
         values += "'" + outcome_code + "',";
       }	
+			
+			if (typeof care_plan_id !== 'undefined' && care_plan_id !== "") {
+        column += 'care_plan_id,';
+        values += "'" + care_plan_id + "',";
+      }	
+			
+			if (typeof care_plan_activity_detail_id !== 'undefined' && care_plan_activity_detail_id !== "") {
+        column += 'care_plan_activity_detail_id,';
+        values += "'" + care_plan_activity_detail_id + "',";
+      }
 
       var query = "UPSERT INTO BACIRO_FHIR.GOAL(goal_id, " + column.slice(0, -1) + ")"+
         " VALUES ('"+goal_id+"', " + values.slice(0, -1) + ")";

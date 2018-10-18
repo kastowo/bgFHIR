@@ -154,9 +154,10 @@ var controller = {
 									newAdverseEvent = [];
 									for(i=0; i < adverseEvent.data.length; i++){
 										myEmitter.once("getIdentifier", function(adverseEvent, index, newAdverseEvent, countAdverseEvent){
+											console.log(adverseEvent);
 														//get identifier
 														qString = {};
-														qString._id = adverseEvent.identifier_id;
+														qString._id = adverseEvent.identifierId;
 														seedPhoenixFHIR.path.GET = {
 															"Identifier" : {
 																"location": "%(apikey)s/Identifier",
@@ -192,7 +193,7 @@ var controller = {
 																				qString.adverse_event_id = adverseEvent.id;
 																				seedPhoenixFHIR.path.GET = {
 																					"SuspectEntity" : {
-																						"location": "%(apikey)s/SuspectEntity",
+																						"location": "%(apikey)s/AdverseEventSuspectEntity",
 																						"query": qString
 																					}
 																				}
@@ -205,7 +206,7 @@ var controller = {
 																						var objectAdverseEvent = {};
 																						objectAdverseEvent.resourceType = adverseEvent.resourceType;
 																						objectAdverseEvent.id = adverseEvent.id;
-																						objectAdverseEvent.identifier = identifier.data;
+																						objectAdverseEvent.identifier = adverseEvent.identifier;
 																						objectAdverseEvent.category = adverseEvent.category;
 																						objectAdverseEvent.type = adverseEvent.type;
 																						objectAdverseEvent.subject = adverseEvent.subject;
@@ -219,11 +220,335 @@ var controller = {
 
 																						newAdverseEvent[index] = objectAdverseEvent;
 
-																						if(index == countAdverseEvent -1 ){
+																						/*if(index == countAdverseEvent -1 ){
 																							res.json({"err_code": 0, "data":newAdverseEvent});				
-																						}			
+																						}*/
+																						myEmitter.once('getReaction', function(adverseEvent, index, newAdverseEvent, countAdverseEvent){
+																							qString = {};
+																							qString.adverse_event_reaction_id = adverseEvent.id;
+																							seedPhoenixFHIR.path.GET = {
+																								"AdverseEventReaction" : {
+																									"location": "%(apikey)s/AdverseEventReaction",
+																									"query": qString
+																								}
+																							}
+
+																							var ApiFHIR = new Apiclient(seedPhoenixFHIR);
+
+																							ApiFHIR.get('AdverseEventReaction', {"apikey": apikey}, {}, function(error, response, body){
+																								adverseEventReaction = JSON.parse(body);
+																								if(adverseEventReaction.err_code == 0){
+																									var objectAdverseEvent = {};
+																									objectAdverseEvent.resourceType = adverseEvent.resourceType;
+																									objectAdverseEvent.id = adverseEvent.id;
+																									objectAdverseEvent.identifier = adverseEvent.identifier;
+																									objectAdverseEvent.category = adverseEvent.category;
+																									objectAdverseEvent.type = adverseEvent.type;
+																									objectAdverseEvent.subject = adverseEvent.subject;
+																									objectAdverseEvent.date = adverseEvent.date;
+																									objectAdverseEvent.reaction = adverseEventReaction.data;
+																									objectAdverseEvent.location = adverseEvent.location;
+																									objectAdverseEvent.seriousness = adverseEvent.seriousness;
+																									objectAdverseEvent.outcome = adverseEvent.outcome;
+																									objectAdverseEvent.eventParticipant = adverseEvent.eventParticipant;
+																									objectAdverseEvent.description = adverseEvent.description;
+																									objectAdverseEvent.suspectEntity = adverseEvent.suspectEntity;
+
+																									newAdverseEvent[index] = objectAdverseEvent;
+
+																									myEmitter.once('getSubjectMedicalHistoryCondition', function(adverseEvent, index, newAdverseEvent, countAdverseEvent){
+																										qString = {};
+																										qString.adverse_event_subject_medical_history_id = adverseEvent.id;
+																										seedPhoenixFHIR.path.GET = {
+																											"SubjectMedicalHistoryCondition" : {
+																												"location": "%(apikey)s/SubjectMedicalHistoryCondition",
+																												"query": qString
+																											}
+																										}
+
+																										var ApiFHIR = new Apiclient(seedPhoenixFHIR);
+
+																										ApiFHIR.get('SubjectMedicalHistoryCondition', {"apikey": apikey}, {}, function(error, response, body){
+																											subjectMedicalHistoryCondition = JSON.parse(body);
+																											console.log(subjectMedicalHistoryCondition.data.id);
+																											if(subjectMedicalHistoryCondition.err_code == 0){
+																												var objectAdverseEvent = {};
+																												var objectSubjectMedicalHistoryCondition = {};
+																												objectAdverseEvent.resourceType = adverseEvent.resourceType;
+																												objectAdverseEvent.id = adverseEvent.id;
+																												objectAdverseEvent.identifier = adverseEvent.identifier;
+																												objectAdverseEvent.category = adverseEvent.category;
+																												objectAdverseEvent.type = adverseEvent.type;
+																												objectAdverseEvent.subject = adverseEvent.subject;
+																												objectAdverseEvent.date = adverseEvent.date;
+																												objectAdverseEvent.reaction = adverseEvent.reaction;
+																												objectAdverseEvent.location = adverseEvent.location;
+																												objectAdverseEvent.seriousness = adverseEvent.seriousness;
+																												objectAdverseEvent.outcome = adverseEvent.outcome;
+																												objectAdverseEvent.eventParticipant = adverseEvent.eventParticipant;
+																												objectAdverseEvent.description = adverseEvent.description;
+																												objectAdverseEvent.suspectEntity = adverseEvent.suspectEntity;
+																												var condition;
+																												condition = subjectMedicalHistoryCondition.data;
+																												objectSubjectMedicalHistoryCondition.condition = condition;
+																												objectAdverseEvent.subjectMedicalHistory = objectSubjectMedicalHistoryCondition;
+
+																												newAdverseEvent[index] = objectAdverseEvent;
+
+																												myEmitter.once('getSubjectMedicalHistoryObservation', function(adverseEvent, index, newAdverseEvent, countAdverseEvent){
+																													qString = {};
+																													qString.adverse_event_subject_medical_history_id = adverseEvent.id;
+																													seedPhoenixFHIR.path.GET = {
+																														"SubjectMedicalHistoryObservation" : {
+																															"location": "%(apikey)s/SubjectMedicalHistoryObservation",
+																															"query": qString
+																														}
+																													}
+
+																													var ApiFHIR = new Apiclient(seedPhoenixFHIR);
+
+																													ApiFHIR.get('SubjectMedicalHistoryObservation', {"apikey": apikey}, {}, function(error, response, body){
+																														subjectMedicalHistoryObservation = JSON.parse(body);
+																														console.log(subjectMedicalHistoryObservation.data.id);
+																														if(subjectMedicalHistoryObservation.err_code == 0){
+																															var objectAdverseEvent = {};
+																															var objectSubjectMedicalHistory = {};
+																															objectAdverseEvent.resourceType = adverseEvent.resourceType;
+																															objectAdverseEvent.id = adverseEvent.id;
+																															objectAdverseEvent.identifier = adverseEvent.identifier;
+																															objectAdverseEvent.category = adverseEvent.category;
+																															objectAdverseEvent.type = adverseEvent.type;
+																															objectAdverseEvent.subject = adverseEvent.subject;
+																															objectAdverseEvent.date = adverseEvent.date;
+																															objectAdverseEvent.reaction = adverseEvent.reaction;
+																															objectAdverseEvent.location = adverseEvent.location;
+																															objectAdverseEvent.seriousness = adverseEvent.seriousness;
+																															objectAdverseEvent.outcome = adverseEvent.outcome;
+																															objectAdverseEvent.eventParticipant = adverseEvent.eventParticipant;
+																															objectAdverseEvent.description = adverseEvent.description;
+																															objectAdverseEvent.suspectEntity = adverseEvent.suspectEntity;
+																															var observation;
+																															observation = subjectMedicalHistoryObservation.data;
+																															objectSubjectMedicalHistory.condition = adverseEvent.subjectMedicalHistory.condition;
+																															objectSubjectMedicalHistory.observation = observation;
+																															objectAdverseEvent.subjectMedicalHistory = objectSubjectMedicalHistory;
+
+																															newAdverseEvent[index] = objectAdverseEvent;
+
+																															myEmitter.once('getSubjectMedicalHistoryAllergyIntolerance', function(adverseEvent, index, newAdverseEvent, countAdverseEvent){
+																																qString = {};
+																																qString.adverse_event_subject_medical_history_id = adverseEvent.id;
+																																seedPhoenixFHIR.path.GET = {
+																																	"SubjectMedicalHistoryAllergyIntolerance" : {
+																																		"location": "%(apikey)s/SubjectMedicalHistoryAllergyIntolerance",
+																																		"query": qString
+																																	}
+																																}
+
+																																var ApiFHIR = new Apiclient(seedPhoenixFHIR);
+
+																																ApiFHIR.get('SubjectMedicalHistoryAllergyIntolerance', {"apikey": apikey}, {}, function(error, response, body){
+																																	subjectMedicalHistoryAllergyIntolerance = JSON.parse(body);
+																																	if(subjectMedicalHistoryAllergyIntolerance.err_code == 0){
+																																		var objectAdverseEvent = {};
+																																		var objectSubjectMedicalHistory = {};
+																																		objectAdverseEvent.resourceType = adverseEvent.resourceType;
+																																		objectAdverseEvent.id = adverseEvent.id;
+																																		objectAdverseEvent.identifier = adverseEvent.identifier;
+																																		objectAdverseEvent.category = adverseEvent.category;
+																																		objectAdverseEvent.type = adverseEvent.type;
+																																		objectAdverseEvent.subject = adverseEvent.subject;
+																																		objectAdverseEvent.date = adverseEvent.date;
+																																		objectAdverseEvent.reaction = adverseEvent.reaction;
+																																		objectAdverseEvent.location = adverseEvent.location;
+																																		objectAdverseEvent.seriousness = adverseEvent.seriousness;
+																																		objectAdverseEvent.outcome = adverseEvent.outcome;
+																																		objectAdverseEvent.eventParticipant = adverseEvent.eventParticipant;
+																																		objectAdverseEvent.description = adverseEvent.description;
+																																		objectAdverseEvent.suspectEntity = adverseEvent.suspectEntity;
+																																		var allergyIntolerance;
+																																		allergyIntolerance = subjectMedicalHistoryAllergyIntolerance.data;
+																																		objectSubjectMedicalHistory.condition = adverseEvent.subjectMedicalHistory.condition;
+																																		objectSubjectMedicalHistory.observation = adverseEvent.subjectMedicalHistory.observation;
+																																		objectSubjectMedicalHistory.allergyIntolerance = allergyIntolerance;
+																																		objectAdverseEvent.subjectMedicalHistory = objectSubjectMedicalHistory;
+
+																																		newAdverseEvent[index] = objectAdverseEvent;
+
+																																		myEmitter.once('getSubjectMedicalHistoryFamilyMemberHistory', function(adverseEvent, index, newAdverseEvent, countAdverseEvent){
+																																			qString = {};
+																																			qString.adverse_event_subject_medical_history_id = adverseEvent.id;
+																																			seedPhoenixFHIR.path.GET = {
+																																				"SubjectMedicalHistoryFamilyMemberHistory" : {
+																																					"location": "%(apikey)s/SubjectMedicalHistoryFamilyMemberHistory",
+																																					"query": qString
+																																				}
+																																			}
+
+																																			var ApiFHIR = new Apiclient(seedPhoenixFHIR);
+
+																																			ApiFHIR.get('SubjectMedicalHistoryFamilyMemberHistory', {"apikey": apikey}, {}, function(error, response, body){
+																																				subjectMedicalHistoryFamilyMemberHistory = JSON.parse(body);
+																																				if(subjectMedicalHistoryFamilyMemberHistory.err_code == 0){
+																																					var objectAdverseEvent = {};
+																																					var objectSubjectMedicalHistory = {};
+																																					objectAdverseEvent.resourceType = adverseEvent.resourceType;
+																																					objectAdverseEvent.id = adverseEvent.id;
+																																					objectAdverseEvent.identifier = adverseEvent.identifier;
+																																					objectAdverseEvent.category = adverseEvent.category;
+																																					objectAdverseEvent.type = adverseEvent.type;
+																																					objectAdverseEvent.subject = adverseEvent.subject;
+																																					objectAdverseEvent.date = adverseEvent.date;
+																																					objectAdverseEvent.reaction = adverseEvent.reaction;
+																																					objectAdverseEvent.location = adverseEvent.location;
+																																					objectAdverseEvent.seriousness = adverseEvent.seriousness;
+																																					objectAdverseEvent.outcome = adverseEvent.outcome;
+																																					objectAdverseEvent.eventParticipant = adverseEvent.eventParticipant;
+																																					objectAdverseEvent.description = adverseEvent.description;
+																																					objectAdverseEvent.suspectEntity = adverseEvent.suspectEntity;
+																																					var familyMemberHistory;
+																																					familyMemberHistory = subjectMedicalHistoryFamilyMemberHistory.data;
+																																					objectSubjectMedicalHistory.condition = adverseEvent.subjectMedicalHistory.condition;
+																																					objectSubjectMedicalHistory.observation = adverseEvent.subjectMedicalHistory.observation;
+																																					objectSubjectMedicalHistory.allergyIntolerance = adverseEvent.subjectMedicalHistory.allergyIntolerance;
+																																					objectSubjectMedicalHistory.familyMemberHistory = familyMemberHistory;
+																																					objectAdverseEvent.subjectMedicalHistory = objectSubjectMedicalHistory;
+
+																																					newAdverseEvent[index] = objectAdverseEvent;
+
+																																					myEmitter.once('getSubjectMedicalHistoryImmunization', function(adverseEvent, index, newAdverseEvent, countAdverseEvent){
+																																						qString = {};
+																																						qString.adverse_event_subject_medical_history_id = adverseEvent.id;
+																																						seedPhoenixFHIR.path.GET = {
+																																							"SubjectMedicalHistoryImmunization" : {
+																																								"location": "%(apikey)s/SubjectMedicalHistoryImmunization",
+																																								"query": qString
+																																							}
+																																						}
+
+																																						var ApiFHIR = new Apiclient(seedPhoenixFHIR);
+
+																																						ApiFHIR.get('SubjectMedicalHistoryImmunization', {"apikey": apikey}, {}, function(error, response, body){
+																																							subjectMedicalHistoryImmunization = JSON.parse(body);
+																																							if(subjectMedicalHistoryImmunization.err_code == 0){
+																																								var objectAdverseEvent = {};
+																																								var objectSubjectMedicalHistory = {};
+																																								objectAdverseEvent.resourceType = adverseEvent.resourceType;
+																																								objectAdverseEvent.id = adverseEvent.id;
+																																								objectAdverseEvent.identifier = adverseEvent.identifier;
+																																								objectAdverseEvent.category = adverseEvent.category;
+																																								objectAdverseEvent.type = adverseEvent.type;
+																																								objectAdverseEvent.subject = adverseEvent.subject;
+																																								objectAdverseEvent.date = adverseEvent.date;
+																																								objectAdverseEvent.reaction = adverseEvent.reaction;
+																																								objectAdverseEvent.location = adverseEvent.location;
+																																								objectAdverseEvent.seriousness = adverseEvent.seriousness;
+																																								objectAdverseEvent.outcome = adverseEvent.outcome;
+																																								objectAdverseEvent.eventParticipant = adverseEvent.eventParticipant;
+																																								objectAdverseEvent.description = adverseEvent.description;
+																																								objectAdverseEvent.suspectEntity = adverseEvent.suspectEntity;
+																																								var immunization;
+																																								immunization = subjectMedicalHistoryImmunization.data;
+																																								objectSubjectMedicalHistory.condition = adverseEvent.subjectMedicalHistory.condition;
+																																								objectSubjectMedicalHistory.observation = adverseEvent.subjectMedicalHistory.observation;
+																																								objectSubjectMedicalHistory.allergyIntolerance = adverseEvent.subjectMedicalHistory.allergyIntolerance;
+																																								objectSubjectMedicalHistory.familyMemberHistory = adverseEvent.subjectMedicalHistory.familyMemberHistory;
+																																								objectSubjectMedicalHistory.immunization = immunization;
+																																								objectAdverseEvent.subjectMedicalHistory = objectSubjectMedicalHistory;
+
+																																								newAdverseEvent[index] = objectAdverseEvent;
+
+																																								myEmitter.once('getSubjectMedicalHistoryProcedure', function(adverseEvent, index, newAdverseEvent, countAdverseEvent){
+																																									qString = {};
+																																									qString.adverse_event_subject_medical_history_id = adverseEvent.id;
+																																									seedPhoenixFHIR.path.GET = {
+																																										"SubjectMedicalHistoryProcedure" : {
+																																											"location": "%(apikey)s/SubjectMedicalHistoryProcedure",
+																																											"query": qString
+																																										}
+																																									}
+
+																																									var ApiFHIR = new Apiclient(seedPhoenixFHIR);
+
+																																									ApiFHIR.get('SubjectMedicalHistoryProcedure', {"apikey": apikey}, {}, function(error, response, body){
+																																										subjectMedicalHistoryProcedure = JSON.parse(body);
+																																										if(subjectMedicalHistoryProcedure.err_code == 0){
+																																											var objectAdverseEvent = {};
+																																											var objectSubjectMedicalHistory = {};
+																																											objectAdverseEvent.resourceType = adverseEvent.resourceType;
+																																											objectAdverseEvent.id = adverseEvent.id;
+																																											objectAdverseEvent.identifier = adverseEvent.identifier;
+																																											objectAdverseEvent.category = adverseEvent.category;
+																																											objectAdverseEvent.type = adverseEvent.type;
+																																											objectAdverseEvent.subject = adverseEvent.subject;
+																																											objectAdverseEvent.date = adverseEvent.date;
+																																											objectAdverseEvent.reaction = adverseEvent.reaction;
+																																											objectAdverseEvent.location = adverseEvent.location;
+																																											objectAdverseEvent.seriousness = adverseEvent.seriousness;
+																																											objectAdverseEvent.outcome = adverseEvent.outcome;
+																																											objectAdverseEvent.eventParticipant = adverseEvent.eventParticipant;
+																																											objectAdverseEvent.description = adverseEvent.description;
+																																											objectAdverseEvent.suspectEntity = adverseEvent.suspectEntity;
+																																											var procedure;
+																																											procedure = subjectMedicalHistoryProcedure.data;
+																																											objectSubjectMedicalHistory.condition = adverseEvent.subjectMedicalHistory.condition;
+																																											objectSubjectMedicalHistory.observation = adverseEvent.subjectMedicalHistory.observation;
+																																											objectSubjectMedicalHistory.allergyIntolerance = adverseEvent.subjectMedicalHistory.allergyIntolerance;
+																																											objectSubjectMedicalHistory.familyMemberHistory = adverseEvent.subjectMedicalHistory.familyMemberHistory;
+																																											objectSubjectMedicalHistory.immunization = adverseEvent.subjectMedicalHistory.immunization;
+																																											objectSubjectMedicalHistory.procedure = procedure;
+																																											objectAdverseEvent.subjectMedicalHistory = objectSubjectMedicalHistory;
+
+																																											newAdverseEvent[index] = objectAdverseEvent;
+
+																																											if(index == countAdverseEvent -1 ){
+																																												res.json({"err_code": 0, "data":newAdverseEvent});				
+																																											}			
+																																										}else{
+																																											res.json(subjectMedicalHistoryProcedure);			
+																																										}
+																																									})
+																																								})
+																																								myEmitter.emit('getSubjectMedicalHistoryProcedure', objectAdverseEvent, index, newAdverseEvent, countAdverseEvent);			
+																																							}else{
+																																								res.json(subjectMedicalHistoryImmunization);			
+																																							}
+																																						})
+																																					})
+																																					myEmitter.emit('getSubjectMedicalHistoryImmunization', objectAdverseEvent, index, newAdverseEvent, countAdverseEvent);				
+																																				}else{
+																																					res.json(subjectMedicalHistoryFamilyMemberHistory);			
+																																				}
+																																			})
+																																		})
+																																		myEmitter.emit('getSubjectMedicalHistoryFamilyMemberHistory', objectAdverseEvent, index, newAdverseEvent, countAdverseEvent);			
+																																	}else{
+																																		res.json(subjectMedicalHistoryAllergyIntolerance);			
+																																	}
+																																})
+																															})
+																															myEmitter.emit('getSubjectMedicalHistoryAllergyIntolerance', objectAdverseEvent, index, newAdverseEvent, countAdverseEvent);
+
+																														}else{
+																															res.json(subjectMedicalHistoryObservation);			
+																														}
+																													})
+																												})
+																												myEmitter.emit('getSubjectMedicalHistoryObservation', objectAdverseEvent, index, newAdverseEvent, countAdverseEvent);			
+																											}else{
+																												res.json(subjectMedicalHistoryCondition);			
+																											}
+																										})
+																									})
+																									myEmitter.emit('getSubjectMedicalHistoryCondition', objectAdverseEvent, index, newAdverseEvent, countAdverseEvent);			
+																								}else{
+																									res.json(adverseEventReaction);			
+																								}
+																							})
+																						})
+																						myEmitter.emit('getReaction', objectAdverseEvent, index, newAdverseEvent, countAdverseEvent);
 																					}else{
-																						res.json(contactPoint);			
+																						res.json(suspectEntity);			
 																					}
 																				})
 																			})
@@ -315,314 +640,420 @@ var controller = {
 				err_code = 1;
 				err_msg = "Please add key 'period' in json identifier request.";
 			}
-			
+
+/*category|category|
+type|type|
+subject.patient|subjectPatient|
+subject.researchSubject|subjectResearchSubject|
+subject.medication|subjectMedication|
+subject.device|subjectDevice|
+date|date|date
+reaction|reaction|
+location|location|
+seriousness|seriousness|
+outcome|outcome|
+recorder.patient|recorderPatient|
+recorder.practitioner|recorderPractitioner|
+recorder.relatedPerson|recorderRelatedPerson|
+eventParticipant.practitioner|eventParticipantPractitioner|
+eventParticipant.device|eventParticipantDevice|
+description|description|
+suspectEntity.instance.substance|suspectEntityInstanceSubstance|
+suspectEntity.instance.medication|suspectEntityInstanceMedication|
+suspectEntity.instance.medicationAdministration|suspectEntityInstanceMedicationAdministration|
+suspectEntity.instance.medicationStatement|suspectEntityInstanceMedicationStatement|
+suspectEntity.instance.device|suspectEntityInstanceDevice|
+suspectEntity.causality|suspectEntityCausality|
+suspectEntity.causalityAssessment|suspectEntityCausalityAssessment|
+suspectEntity.causalityProductRelatedness|suspectEntityCausalityProductRelatedness|
+suspectEntity.causalityMethod|suspectEntityCausalityMethod|
+suspectEntity.causalityAuthor.practitioner|suspectEntityCausalityAuthorPractitioner|
+suspectEntity.causalityAuthor.practitionerRole|suspectEntityCausalityAuthorPractitionerRole|
+suspectEntity.causalityResult|suspectEntityCausalityResult|
+subjectMedicalHistory.condition|subjectMedicalHistoryCondition|
+subjectMedicalHistory.observation|subjectMedicalHistoryObservation|
+subjectMedicalHistory.allergyIntolerance|subjectMedicalHistoryAllergyIntolerance|
+subjectMedicalHistory.familyMemberHistory|subjectMedicalHistoryFamilyMemberHistory|
+subjectMedicalHistory.immunization|subjectMedicalHistoryImmunization|
+subjectMedicalHistory.procedure|subjectMedicalHistoryProcedure|
+referenceDocument|referenceDocument|
+study|study|*/
 			
 			if(typeof req.body.category !== 'undefined'){
-				category =  req.body.category.trim().toLowerCase();
+				var category =  req.body.category.trim().toUpperCase();
 				if(validator.isEmpty(category)){
-					err_code = 2;
-					err_msg = "Adverse Event category is required";
+					category = "";
 				}
 			}else{
 				err_code = 1;
-				err_msg = "Please add sub-key 'category' in json Adverse Event request.";
+				err_msg = "Please add sub-key 'category' in json Allergy Intolerance request.";
 			}
-			
+
 			if(typeof req.body.type !== 'undefined'){
-				type =  req.body.type.trim().toLowerCase();
+				var type =  req.body.type.trim().toLowerCase();
 				if(validator.isEmpty(type)){
-					err_code = 2;
-					err_msg = "Adverse Event type is required";
+					type = "";
 				}
 			}else{
 				err_code = 1;
-				err_msg = "Please add sub-key 'type' in json Adverse Event request.";
+				err_msg = "Please add sub-key 'type' in json Allergy Intolerance request.";
 			}
-			
-			//subject
-			if(typeof req.body.subject !== 'undefined'){
-				subject =  req.body.subject.trim().toLowerCase();
-				if(validator.isEmpty(subject)){
-					/*err_code = 2;
-					err_msg = "Adverse Event subject is required";*/
-					subjectPatient = '';
-					subjectResearchSubject  = '';
-					subjectMedication = '';
-					subjectDevice = '';
-				} else {
-					var res = subject.substring(0, 3);
-					if(res == 'pat'){
-						subjectPatient = subject;
-						subjectResearchSubject  = '';
-						subjectMedication = '';
-						subjectDevice = '';
-					} else if (res == 'dev'){
-						subjectPatient = '';
-						subjectResearchSubject  = '';
-						subjectMedication = '';
-						subjectDevice = subject;
-					} else if (res == 'med'){
-						subjectPatient = '';
-						subjectResearchSubject  = '';
-						subjectMedication = subject;
-						subjectDevice = '';
-					} else {
-						subjectPatient = '';
-						subjectResearchSubject  = subject;
-						subjectMedication = '';
-						subjectDevice = '';
-					}
+
+			if(typeof req.body.subject.patient !== 'undefined'){
+				var subjectPatient =  req.body.subject.patient.trim().toLowerCase();
+				if(validator.isEmpty(subjectPatient)){
+					subjectPatient = "";
 				}
 			}else{
 				err_code = 1;
-				err_msg = "Please add sub-key 'subject' in json Adverse Event request.";
+				err_msg = "Please add sub-key 'subject patient' in json Allergy Intolerance request.";
 			}
-			
+
+			if(typeof req.body.subject.researchSubject !== 'undefined'){
+				var subjectResearchSubject =  req.body.subject.researchSubject.trim().toLowerCase();
+				if(validator.isEmpty(subjectResearchSubject)){
+					subjectResearchSubject = "";
+				}
+			}else{
+				err_code = 1;
+				err_msg = "Please add sub-key 'subject research subject' in json Allergy Intolerance request.";
+			}
+
+			if(typeof req.body.subject.medication !== 'undefined'){
+				var subjectMedication =  req.body.subject.medication.trim().toLowerCase();
+				if(validator.isEmpty(subjectMedication)){
+					subjectMedication = "";
+				}
+			}else{
+				err_code = 1;
+				err_msg = "Please add sub-key 'subject medication' in json Allergy Intolerance request.";
+			}
+
+			if(typeof req.body.subject.device !== 'undefined'){
+				var subjectDevice =  req.body.subject.device.trim().toLowerCase();
+				if(validator.isEmpty(subjectDevice)){
+					subjectDevice = "";
+				}
+			}else{
+				err_code = 1;
+				err_msg = "Please add sub-key 'subject device' in json Allergy Intolerance request.";
+			}
+
 			if(typeof req.body.date !== 'undefined'){
-				date =  req.body.date.trim().toLowerCase();
+				var date =  req.body.date;
 				if(validator.isEmpty(date)){
-					err_code = 2;
-					err_msg = "Adverse Event date is required";
+					date = "";
+				}else{
+					if(!regex.test(date)){
+						err_code = 2;
+						err_msg = "Allergy Intolerance date invalid date format.";	
+					}
 				}
 			}else{
 				err_code = 1;
-				err_msg = "Please add sub-key 'date' in json Adverse Event request.";
+				err_msg = "Please add sub-key 'date' in json Allergy Intolerance request.";
 			}
-			
+
 			if(typeof req.body.reaction !== 'undefined'){
-				reaction =  req.body.reaction.trim().toLowerCase();
+				var reaction =  req.body.reaction.trim().toLowerCase();
 				if(validator.isEmpty(reaction)){
-					err_code = 2;
-					err_msg = "Adverse Event reaction is required";
+					reaction = "";
 				}
 			}else{
 				err_code = 1;
-				err_msg = "Please add sub-key 'reaction' in json Adverse Event request.";
+				err_msg = "Please add sub-key 'reaction' in json Allergy Intolerance request.";
 			}
-			
+
 			if(typeof req.body.location !== 'undefined'){
-				location =  req.body.location.trim().toLowerCase();
+				var location =  req.body.location.trim().toLowerCase();
 				if(validator.isEmpty(location)){
-					err_code = 2;
-					err_msg = "Adverse Event location is required";
+					location = "";
 				}
 			}else{
 				err_code = 1;
-				err_msg = "Please add sub-key 'location' in json Adverse Event request.";
+				err_msg = "Please add sub-key 'location' in json Allergy Intolerance request.";
 			}
-			
+
 			if(typeof req.body.seriousness !== 'undefined'){
-				seriousness =  req.body.seriousness.trim().toLowerCase();
+				var seriousness =  req.body.seriousness.trim();
 				if(validator.isEmpty(seriousness)){
-					err_code = 2;
-					err_msg = "Adverse Event seriousness is required";
+					seriousness = "";
 				}
 			}else{
 				err_code = 1;
-				err_msg = "Please add sub-key 'seriousness' in json Adverse Event request.";
+				err_msg = "Please add sub-key 'seriousness' in json Allergy Intolerance request.";
 			}
-			
+
 			if(typeof req.body.outcome !== 'undefined'){
-				outcome =  req.body.outcome.trim().toLowerCase();
+				var outcome =  req.body.outcome.trim().toLowerCase();
 				if(validator.isEmpty(outcome)){
-					err_code = 2;
-					err_msg = "Adverse Event outcome is required";
+					outcome = "";
 				}
 			}else{
 				err_code = 1;
-				err_msg = "Please add sub-key 'outcome' in json Adverse Event request.";
+				err_msg = "Please add sub-key 'outcome' in json Allergy Intolerance request.";
 			}
-			
-			//recorder
-			if(typeof req.body.recorder !== 'undefined'){
-				recorder =  req.body.recorder.trim().toLowerCase();
-				if(validator.isEmpty(recorder)){
-					/*err_code = 2;
-					err_msg = "Adverse Event recorder is required";*/
-					recorderPatient = '';
-					recorderPractitioner  = '';
-					recorderRelatedPerson = '';
-				} else {
-					var res = recorder.substring(0, 3);
-					if(res == 'pat'){
-						recorderPatient = recorder;
-						recorderPractitioner  = '';
-						recorderRelatedPerson = '';
-					} else if (res == 'pra'){
-						recorderPatient = '';
-						recorderPractitioner  = recorder;
-						recorderRelatedPerson = '';
-					} else {
-						recorderPatient = '';
-						recorderPractitioner  = '';
-						recorderRelatedPerson = recorder;
-					}
+
+			if(typeof req.body.recorder.patient !== 'undefined'){
+				var recorderPatient =  req.body.recorder.patient.trim().toLowerCase();
+				if(validator.isEmpty(recorderPatient)){
+					recorderPatient = "";
 				}
 			}else{
 				err_code = 1;
-				err_msg = "Please add sub-key 'recorder' in json Adverse Event request.";
+				err_msg = "Please add sub-key 'recorder patient' in json Allergy Intolerance request.";
 			}
-			
-			//eventParticipant
-			if(typeof req.body.eventParticipant !== 'undefined'){
-				eventParticipant =  req.body.eventParticipant.trim().toLowerCase();
-				if(validator.isEmpty(eventParticipant)){
-					/*err_code = 2;
-					err_msg = "Adverse Event event participant is required";*/
-					eventParticipantPractitioner  = '';
-					eventParticipantDevice = '';
-				} else {
-					var res = eventParticipant.substring(0, 3);
-					if (res == 'pra'){
-						eventParticipantPractitioner  = eventParticipant;
-						eventParticipantDevice = '';
-					} else {
-						eventParticipantPractitioner  = '';
-						eventParticipantDevice = eventParticipant;
-					}
+
+			if(typeof req.body.recorder.practitioner !== 'undefined'){
+				var recorderPractitioner =  req.body.recorder.practitioner.trim().toLowerCase();
+				if(validator.isEmpty(recorderPractitioner)){
+					recorderPractitioner = "";
 				}
 			}else{
 				err_code = 1;
-				err_msg = "Please add sub-key 'eventParticipant' in json Adverse Event request.";
+				err_msg = "Please add sub-key 'recorder practitioner' in json Allergy Intolerance request.";
 			}
-			
+
+			if(typeof req.body.recorder.relatedPerson !== 'undefined'){
+				var recorderRelatedPerson =  req.body.recorder.relatedPerson.trim().toLowerCase();
+				if(validator.isEmpty(recorderRelatedPerson)){
+					recorderRelatedPerson = "";
+				}
+			}else{
+				err_code = 1;
+				err_msg = "Please add sub-key 'recorder related person' in json Allergy Intolerance request.";
+			}
+
+			if(typeof req.body.eventParticipant.practitioner !== 'undefined'){
+				var eventParticipantPractitioner =  req.body.eventParticipant.practitioner.trim().toLowerCase();
+				if(validator.isEmpty(eventParticipantPractitioner)){
+					eventParticipantPractitioner = "";
+				}
+			}else{
+				err_code = 1;
+				err_msg = "Please add sub-key 'event participant practitioner' in json Allergy Intolerance request.";
+			}
+
+			if(typeof req.body.eventParticipant.device !== 'undefined'){
+				var eventParticipantDevice =  req.body.eventParticipant.device.trim().toLowerCase();
+				if(validator.isEmpty(eventParticipantDevice)){
+					eventParticipantDevice = "";
+				}
+			}else{
+				err_code = 1;
+				err_msg = "Please add sub-key 'event participant device' in json Allergy Intolerance request.";
+			}
+
 			if(typeof req.body.description !== 'undefined'){
-				description =  req.body.description.trim().toLowerCase();
+				var description =  req.body.description.trim().toLowerCase();
 				if(validator.isEmpty(description)){
-					err_code = 2;
-					err_msg = "Adverse Event description is required";
+					description = "";
 				}
 			}else{
 				err_code = 1;
-				err_msg = "Please add sub-key 'description' in json Adverse Event request.";
+				err_msg = "Please add sub-key 'description' in json Allergy Intolerance request.";
 			}
-			
-			if(typeof req.body.suspectEntity.instance !== 'undefined'){
-				instance =  req.body.suspectEntity.instance.trim().toLowerCase();
-				if(validator.isEmpty(instance)){
-					/*err_code = 2;
-					err_msg = "Adverse Event recorder is required";*/
-					instanceDevice = '';
-					instanceMedication  = '';
-					instanceSubstance = '';
-					instanceMedicationAdministration  = '';
-					instanceMedicationStatement = '';
-				} else {
-					var res = instance.substring(0, 3);
-					if(res == 'dev'){
-						instanceDevice = instance;
-						instanceMedication  = '';
-						instanceSubstance = '';
-						instanceMedicationAdministration  = '';
-						instanceMedicationStatement = '';
-					} else if (res == 'med'){
-						instanceDevice = '';
-						instanceMedication  = instance;
-						instanceSubstance = '';
-						instanceMedicationAdministration  = '';
-						instanceMedicationStatement = '';
-					} else if (res == 'sub'){
-						instanceDevice = '';
-						instanceMedication  = '';
-						instanceSubstance = instance;
-						instanceMedicationAdministration  = '';
-						instanceMedicationStatement = '';
-					} else if (res == 'mea'){
-						instanceDevice = '';
-						instanceMedication  = '';
-						instanceSubstance = '';
-						instanceMedicationAdministration  = instance;
-						instanceMedicationStatement = '';
-					} else {
-						instanceDevice = '';
-						instanceMedication  = '';
-						instanceSubstance = '';
-						instanceMedicationAdministration  = '';
-						instanceMedicationStatement = instance;
-					}
+
+			if(typeof req.body.suspectEntity.instance.substance !== 'undefined'){
+				var suspectEntityInstanceSubstance =  req.body.suspectEntity.instance.substance.trim().toLowerCase();
+				if(validator.isEmpty(suspectEntityInstanceSubstance)){
+					suspectEntityInstanceSubstance = "";
 				}
 			}else{
 				err_code = 1;
-				err_msg = "Please add sub-key 'suspect entity instance' in json Adverse Event request.";
+				err_msg = "Please add sub-key 'suspect entity instance substance' in json Allergy Intolerance request.";
 			}
-			
+
+			if(typeof req.body.suspectEntity.instance.medication !== 'undefined'){
+				var suspectEntityInstanceMedication =  req.body.suspectEntity.instance.medication.trim().toLowerCase();
+				if(validator.isEmpty(suspectEntityInstanceMedication)){
+					suspectEntityInstanceMedication = "";
+				}
+			}else{
+				err_code = 1;
+				err_msg = "Please add sub-key 'suspect entity instance medication' in json Allergy Intolerance request.";
+			}
+
+			if(typeof req.body.suspectEntity.instance.medicationAdministration !== 'undefined'){
+				var suspectEntityInstanceMedicationAdministration =  req.body.suspectEntity.instance.medicationAdministration.trim().toLowerCase();
+				if(validator.isEmpty(suspectEntityInstanceMedicationAdministration)){
+					suspectEntityInstanceMedicationAdministration = "";
+				}
+			}else{
+				err_code = 1;
+				err_msg = "Please add sub-key 'suspect entity instance medication administration' in json Allergy Intolerance request.";
+			}
+
+			if(typeof req.body.suspectEntity.instance.medicationStatement !== 'undefined'){
+				var suspectEntityInstanceMedicationStatement =  req.body.suspectEntity.instance.medicationStatement.trim().toLowerCase();
+				if(validator.isEmpty(suspectEntityInstanceMedicationStatement)){
+					suspectEntityInstanceMedicationStatement = "";
+				}
+			}else{
+				err_code = 1;
+				err_msg = "Please add sub-key 'suspect entity instance medication statement' in json Allergy Intolerance request.";
+			}
+
+			if(typeof req.body.suspectEntity.instance.device !== 'undefined'){
+				var suspectEntityInstanceDevice =  req.body.suspectEntity.instance.device.trim().toLowerCase();
+				if(validator.isEmpty(suspectEntityInstanceDevice)){
+					suspectEntityInstanceDevice = "";
+				}
+			}else{
+				err_code = 1;
+				err_msg = "Please add sub-key 'suspect entity instance device' in json Allergy Intolerance request.";
+			}
+
 			if(typeof req.body.suspectEntity.causality !== 'undefined'){
-				causality =  req.body.suspectEntity.causality.trim().toLowerCase();
-				if(validator.isEmpty(causality)){
-					err_code = 2;
-					err_msg = "Adverse Event suspect entity causality is required";
+				var suspectEntityCausality =  req.body.suspectEntity.causality.trim().toLowerCase();
+				if(validator.isEmpty(suspectEntityCausality)){
+					suspectEntityCausality = "";
 				}
 			}else{
 				err_code = 1;
-				err_msg = "Please add sub-key 'suspect entity causality' in json Adverse Event request.";
+				err_msg = "Please add sub-key 'suspect entity causality' in json Allergy Intolerance request.";
 			}
-			
+
 			if(typeof req.body.suspectEntity.causalityAssessment !== 'undefined'){
-				causalityAssessment =  req.body.suspectEntity.causalityAssessment.trim().toLowerCase();
-				if(validator.isEmpty(causalityAssessment)){
-					err_code = 2;
-					err_msg = "Adverse Event suspect entity causality assessment is required";
+				var suspectEntityCausalityAssessment =  req.body.suspectEntity.causalityAssessment.trim().toLowerCase();
+				if(validator.isEmpty(suspectEntityCausalityAssessment)){
+					suspectEntityCausalityAssessment = "";
 				}
 			}else{
 				err_code = 1;
-				err_msg = "Please add sub-key 'suspect entity causality assessment' in json Adverse Event request.";
+				err_msg = "Please add sub-key 'suspect entity causality assessment' in json Allergy Intolerance request.";
 			}
-			
+
 			if(typeof req.body.suspectEntity.causalityProductRelatedness !== 'undefined'){
-				causalityProductRelatedness =  req.body.suspectEntity.causalityProductRelatedness.trim().toLowerCase();
-				if(validator.isEmpty(causalityProductRelatedness)){
-					err_code = 2;
-					err_msg = "Adverse Event suspect entity causality product relatedness is required";
+				var suspectEntityCausalityProductRelatedness =  req.body.suspectEntity.causalityProductRelatedness.trim().toLowerCase();
+				if(validator.isEmpty(suspectEntityCausalityProductRelatedness)){
+					suspectEntityCausalityProductRelatedness = "";
 				}
 			}else{
 				err_code = 1;
-				err_msg = "Please add sub-key 'suspect entity causality product relatedness' in json Adverse Event request.";
+				err_msg = "Please add sub-key 'suspect entity causality product relatedness' in json Allergy Intolerance request.";
 			}
-			
+
 			if(typeof req.body.suspectEntity.causalityMethod !== 'undefined'){
-				causalityMethod =  req.body.suspectEntity.causalityMethod.trim().toLowerCase();
-				if(validator.isEmpty(causalityMethod)){
-					err_code = 2;
-					err_msg = "Adverse Event suspect entity causality method is required";
+				var suspectEntityCausalityMethod =  req.body.suspectEntity.causalityMethod.trim().toLowerCase();
+				if(validator.isEmpty(suspectEntityCausalityMethod)){
+					suspectEntityCausalityMethod = "";
 				}
 			}else{
 				err_code = 1;
-				err_msg = "Please add sub-key 'suspect entity causality method' in json Adverse Event request.";
+				err_msg = "Please add sub-key 'suspect entity causality method' in json Allergy Intolerance request.";
 			}
-			
-			if(typeof req.body.suspectEntity.causalityAuthor !== 'undefined'){
-				causalityAuthor =  req.body.suspectEntity.causalityAuthor.trim().toLowerCase();
-				if(validator.isEmpty(causalityAuthor)){
-					/*err_code = 2;
-					err_msg = "Adverse Event event participant is required";*/
-					causalityAuthorPractitioner  = '';
-					causalityAuthorPractitionerRole = '';
-				} else {
-					var res = eventParticipant.substring(0, 3);
-					if (res == 'pra'){
-						causalityAuthorPractitioner  = causalityAuthor;
-						causalityAuthorPractitionerRole = '';
-					} else {
-						causalityAuthorPractitioner  = '';
-						causalityAuthorPractitionerRole = causalityAuthor;
-					}
+
+			if(typeof req.body.suspectEntity.causalityAuthor.practitioner !== 'undefined'){
+				var suspectEntityCausalityAuthorPractitioner =  req.body.suspectEntity.causalityAuthor.practitioner.trim().toLowerCase();
+				if(validator.isEmpty(suspectEntityCausalityAuthorPractitioner)){
+					suspectEntityCausalityAuthorPractitioner = "";
 				}
 			}else{
 				err_code = 1;
-				err_msg = "Please add sub-key 'suspect entity causality author' in json Adverse Event request.";
+				err_msg = "Please add sub-key 'suspect entity causality author practitioner' in json Allergy Intolerance request.";
 			}
-			
+
+			if(typeof req.body.suspectEntity.causalityAuthor.practitionerRole !== 'undefined'){
+				var suspectEntityCausalityAuthorPractitionerRole =  req.body.suspectEntity.causalityAuthor.practitionerRole.trim().toLowerCase();
+				if(validator.isEmpty(suspectEntityCausalityAuthorPractitionerRole)){
+					suspectEntityCausalityAuthorPractitionerRole = "";
+				}
+			}else{
+				err_code = 1;
+				err_msg = "Please add sub-key 'suspect entity causality author practitioner role' in json Allergy Intolerance request.";
+			}
+
 			if(typeof req.body.suspectEntity.causalityResult !== 'undefined'){
-				causalityResult =  req.body.suspectEntity.causalityResult.trim().toLowerCase();
-				if(validator.isEmpty(causalityResult)){
-					err_code = 2;
-					err_msg = "Adverse Event suspect entity causality result is required";
+				var suspectEntityCausalityResult =  req.body.suspectEntity.causalityResult.trim().toLowerCase();
+				if(validator.isEmpty(suspectEntityCausalityResult)){
+					suspectEntityCausalityResult = "";
 				}
 			}else{
 				err_code = 1;
-				err_msg = "Please add sub-key 'suspect entity causality result' in json Adverse Event request.";
+				err_msg = "Please add sub-key 'suspect entity causality result' in json Allergy Intolerance request.";
 			}
-			
+
+			if(typeof req.body.subjectMedicalHistory.condition !== 'undefined'){
+				var subjectMedicalHistoryCondition =  req.body.subjectMedicalHistory.condition.trim().toLowerCase();
+				if(validator.isEmpty(subjectMedicalHistoryCondition)){
+					subjectMedicalHistoryCondition = "";
+				}
+			}else{
+				err_code = 1;
+				err_msg = "Please add sub-key 'subject medical history condition' in json Allergy Intolerance request.";
+			}
+
+			if(typeof req.body.subjectMedicalHistory.observation !== 'undefined'){
+				var subjectMedicalHistoryObservation =  req.body.subjectMedicalHistory.observation.trim().toLowerCase();
+				if(validator.isEmpty(subjectMedicalHistoryObservation)){
+					subjectMedicalHistoryObservation = "";
+				}
+			}else{
+				err_code = 1;
+				err_msg = "Please add sub-key 'subject medical history observation' in json Allergy Intolerance request.";
+			}
+
+			if(typeof req.body.subjectMedicalHistory.allergyIntolerance !== 'undefined'){
+				var subjectMedicalHistoryAllergyIntolerance =  req.body.subjectMedicalHistory.allergyIntolerance.trim().toLowerCase();
+				if(validator.isEmpty(subjectMedicalHistoryAllergyIntolerance)){
+					subjectMedicalHistoryAllergyIntolerance = "";
+				}
+			}else{
+				err_code = 1;
+				err_msg = "Please add sub-key 'subject medical history allergy intolerance' in json Allergy Intolerance request.";
+			}
+
+			if(typeof req.body.subjectMedicalHistory.familyMemberHistory !== 'undefined'){
+				var subjectMedicalHistoryFamilyMemberHistory =  req.body.subjectMedicalHistory.familyMemberHistory.trim().toLowerCase();
+				if(validator.isEmpty(subjectMedicalHistoryFamilyMemberHistory)){
+					subjectMedicalHistoryFamilyMemberHistory = "";
+				}
+			}else{
+				err_code = 1;
+				err_msg = "Please add sub-key 'subject medical history family member history' in json Allergy Intolerance request.";
+			}
+
+			if(typeof req.body.subjectMedicalHistory.immunization !== 'undefined'){
+				var subjectMedicalHistoryImmunization =  req.body.subjectMedicalHistory.immunization.trim().toLowerCase();
+				if(validator.isEmpty(subjectMedicalHistoryImmunization)){
+					subjectMedicalHistoryImmunization = "";
+				}
+			}else{
+				err_code = 1;
+				err_msg = "Please add sub-key 'subject medical history immunization' in json Allergy Intolerance request.";
+			}
+
+			if(typeof req.body.subjectMedicalHistory.procedure !== 'undefined'){
+				var subjectMedicalHistoryProcedure =  req.body.subjectMedicalHistory.procedure.trim().toLowerCase();
+				if(validator.isEmpty(subjectMedicalHistoryProcedure)){
+					subjectMedicalHistoryProcedure = "";
+				}
+			}else{
+				err_code = 1;
+				err_msg = "Please add sub-key 'subject medical history procedure' in json Allergy Intolerance request.";
+			}
+
+			if(typeof req.body.referenceDocument !== 'undefined'){
+				var referenceDocument =  req.body.referenceDocument.trim().toLowerCase();
+				if(validator.isEmpty(referenceDocument)){
+					referenceDocument = "";
+				}
+			}else{
+				err_code = 1;
+				err_msg = "Please add sub-key 'reference document' in json Allergy Intolerance request.";
+			}
+
+			if(typeof req.body.study !== 'undefined'){
+				var study =  req.body.study.trim().toLowerCase();
+				if(validator.isEmpty(study)){
+					study = "";
+				}
+			}else{
+				err_code = 1;
+				err_msg = "Please add sub-key 'study' in json Allergy Intolerance request.";
+			}
+
 			if(err_code == 0){
 			//check apikey
 			checkApikey(apikey, ipAddres, function(result){
@@ -631,6 +1062,20 @@ var controller = {
 						if(resUseCode.err_code > 0){ //code harus lebih besar dari nol, ini menunjukan datanya valid
 							checkCode(apikey, identifierTypeCode, 'IDENTIFIER_TYPE', function(resUseTypeCode){
 								if(resUseTypeCode.err_code > 0){ //code harus lebih besar dari nol, ini menunjukan datanya valid	
+
+
+
+
+/* kurang refrence
+subjectMedicalHistory.Condition|subjectMedicalHistoryCondition
+subjectMedicalHistory.Observation|subjectMedicalHistoryObservation
+subjectMedicalHistory.AllergyIntolerance|subjectMedicalHistoryAllergyIntolerance
+subjectMedicalHistory.FamilyMemberHistory|subjectMedicalHistoryFamilyMemberHistory
+subjectMedicalHistory.Immunization|subjectMedicalHistoryImmunization
+subjectMedicalHistory.Procedure|subjectMedicalHistoryProcedure
+referenceDocument|referenceDocument
+study|study									
+*/
 									//event emiter
 									myEmitter.prependOnceListener('checkIdentifierValue', function() {
 										
@@ -643,9 +1088,8 @@ var controller = {
 													var unicId = uniqid.time();
 													var identifierId = 'ide' + unicId;
 													var adverseEventId = 'ade' + unicId;
-													var adverseEventId = 'ade' + unicId;
 													var suspectEntityId = 'sue' + unicId;
-													
+
 													dataAdverseEvent = {
 														"adverse_event_id" : adverseEventId,
 														"identifier_id" : identifierId,
@@ -653,7 +1097,7 @@ var controller = {
 														"type" : type,
 														"subject_patient" : subjectPatient,
 														"subject_research_subject" : subjectResearchSubject,
-														"subject_research_subject" : subjectResearchSubject,
+														"subject_medication" : subjectMedication,
 														"subject_device" : subjectDevice,
 														"date" : date,
 														"location" : location,
@@ -663,8 +1107,8 @@ var controller = {
 														"recorder_practitioner" : recorderPractitioner,
 														"recorder_related_person" : recorderRelatedPerson,
 														"event_participant_practitioner" : eventParticipantPractitioner,
-														"event_participant_device" :eventParticipantDevice,
-														"description" : description,
+														"event_participant_device" : eventParticipantDevice,
+														"description" : description
 													}
 													console.log(dataAdverseEvent);
 													ApiFHIR.post('adverseEvent', {"apikey": apikey}, {body: dataAdverseEvent, json: true}, function(error, response, body){
@@ -694,22 +1138,23 @@ var controller = {
 															res.json(identifier);	
 														}
 													})
+
 													
 													//suspectEntity
 													 dataSuspectEntity = {
 														"suspect_entity_id" : suspectEntityId, 
-														"instance_substance" : instanceSubstance, 
-														"instance_medication" : instanceMedication, 
-														"instance_medication_administration" : instanceMedicationAdministration,  
-														"instance_medication_statement" : instanceMedicationStatement, 
-														"instance_device" : instanceDevice, 
-														"causality" : causality, 
-														"causality_assessment" : causalityAssessment, 
-														"causality_product_relatedness" : causalityProductRelatedness, 
-														"causality_method" : causalityMethod, 
-														"causality_author_practitioner" : causalityAuthorPractitioner, 
-														"causality_author_practitioner_role" : causalityAuthorPractitionerRole, 
-														"causality_result" : causalityResult, 
+														"instance_substance" : suspectEntityInstanceSubstance, 
+														"instance_medication" : suspectEntityInstanceMedication, 
+														"instance_medication_administration" : suspectEntityInstanceMedicationAdministration,  
+														"instance_medication_statement" : suspectEntityInstanceMedicationStatement, 
+														"instance_device" : suspectEntityInstanceDevice, 
+														"causality" : suspectEntityCausality, 
+														"causality_assessment" : suspectEntityCausalityAssessment, 
+														"causality_product_relatedness" : suspectEntityCausalityProductRelatedness, 
+														"causality_method" : suspectEntityCausalityMethod, 
+														"causality_author_practitioner" : suspectEntityCausalityAuthorPractitioner, 
+														"causality_author_practitioner_role" : suspectEntityCausalityAuthorPractitionerRole, 
+														"causality_result" : suspectEntityCausalityResult, 
 														"adverse_event_id" : adverseEventId
 													}
 													ApiFHIR.post('adverseEventSuspectEntity', {"apikey": apikey}, {body: dataSuspectEntity, json: true}, function(error, response, body){
@@ -719,28 +1164,188 @@ var controller = {
 															console.log("ok");
 														}
 													});
+													
+													
+													/*if(validator.isEmpty(reaction)){
+														//reaction Reference(Condition);
+														 dataCondition = {
+															"condition_id" : reaction,
+															"adverse_event_id" : adverseEventId
+														}
+														ApiFHIR.post('condition', {"apikey": apikey}, {body: dataCondition, json: true}, function(error, response, body){
+															condition = body;
+															if(condition.err_code > 0){
+																res.json(condition);	
+																console.log("ok");
+															}
+														});
+													}
+													
+													if(validator.isEmpty(subjectMedicalHistoryCondition)){
+														//reaction Reference(Condition);
+														 dataCondition = {
+															"condition_id" : subjectMedicalHistoryCondition,
+															"adverse_event_id" : adverseEventId
+														}
+														ApiFHIR.post('condition', {"apikey": apikey}, {body: dataCondition, json: true}, function(error, response, body){
+															condition = body;
+															if(condition.err_code > 0){
+																res.json(condition);	
+																console.log("ok");
+															}
+														});
+													}
+													
+													
+subjectMedicalHistory.Condition|
+subjectMedicalHistory.Observation|subjectMedicalHistoryObservation
+subjectMedicalHistory.AllergyIntolerance|subjectMedicalHistoryAllergyIntolerance
+subjectMedicalHistory.FamilyMemberHistory|subjectMedicalHistoryFamilyMemberHistory
+subjectMedicalHistory.Immunization|subjectMedicalHistoryImmunization
+subjectMedicalHistory.Procedure|subjectMedicalHistoryProcedure
+referenceDocument|referenceDocument
+study|study													*/
 
 													res.json({"err_code": 0, "err_msg": "Adverse Event has been add.", "data": [{"_id": adverseEventId}]});
 												}else{
-													res.json({"err_code": 508, "err_msg": "Identifier value already exist."});		
+													res.json({"err_code": 528, "err_msg": "Identifier value already exist."});		
 												}
 											})
 									});
 									
-									myEmitter.prependOnceListener('checkSubjectPatient', function () {
-										if (!validator.isEmpty(subjectPatient)) {
-											checkUniqeValue(apikey, "PATIENT_ID|" + subjectPatient, 'PATIENT', function (resSubjectPatient) {
-												if (resSubjectPatient.err_code > 0) {
+									myEmitter.prependOnceListener('checkSuspectEntityCausalityResult', function () {
+										if (!validator.isEmpty(suspectEntityCausalityResult)) {
+											checkCode(apikey, suspectEntityCausalityResult, 'ADVERSE_EVENT_SERIOUSNESS', function (resSuspectEntityCausalityResultCode) {
+												if (resSuspectEntityCausalityResultCode.err_code > 0) {
 													myEmitter.emit('checkIdentifierValue');
 												} else {
 													res.json({
 														"err_code": "527",
-														"err_msg": "Subject patient id not found"
+														"err_msg": "SuspectEntityCausalityResult code not found"
 													});
 												}
 											})
 										} else {
 											myEmitter.emit('checkIdentifierValue');
+										}
+									})
+									
+									myEmitter.prependOnceListener('checkSuspectEntityCausalityMethod', function () {
+										if (!validator.isEmpty(suspectEntityCausalityMethod)) {
+											checkCode(apikey, suspectEntityCausalityMethod, 'ADVERSE_EVENT_Causality_Method', function (resSuspectEntityCausalityMethodCode) {
+												if (resSuspectEntityCausalityMethodCode.err_code > 0) {
+													myEmitter.emit('checkSuspectEntityCausalityResult');
+												} else {
+													res.json({
+														"err_code": "526",
+														"err_msg": "Suspect Entity Causality Method code not found"
+													});
+												}
+											})
+										} else {
+											myEmitter.emit('checkSuspectEntityCausalityResult');
+										}
+									})
+									
+									myEmitter.prependOnceListener('checkSuspectEntityCausalityAssessment', function () {
+										if (!validator.isEmpty(suspectEntityCausalityAssessment)) {
+											checkCode(apikey, suspectEntityCausalityAssessment, 'ADVERSE_EVENT_Causality_Assess', function (resSuspectEntityCausalityAssessmentCode) {
+												if (resSuspectEntityCausalityAssessmentCode.err_code > 0) {
+													myEmitter.emit('checkSuspectEntityCausalityMethod');
+												} else {
+													res.json({
+														"err_code": "525",
+														"err_msg": "Suspect Entity Causality Assessment code not found"
+													});
+												}
+											})
+										} else {
+											myEmitter.emit('checkSuspectEntityCausalityMethod');
+										}
+									})
+									
+									myEmitter.prependOnceListener('checkSuspectEntityCausality', function () {
+										if (!validator.isEmpty(suspectEntityCausality)) {
+											checkCode(apikey, suspectEntityCausality, 'ADVERSE_EVENT_Causality', function (resSuspectEntityCausalityCode) {
+												if (resSuspectEntityCausalityCode.err_code > 0) {
+													myEmitter.emit('checkSuspectEntityCausalityAssessment');
+												} else {
+													res.json({
+														"err_code": "524",
+														"err_msg": "Suspect Entity Causality code not found"
+													});
+												}
+											})
+										} else {
+											myEmitter.emit('checkSuspectEntityCausalityAssessment');
+										}
+									})
+									
+									myEmitter.prependOnceListener('checkSeriousness', function () {
+										if (!validator.isEmpty(seriousness)) {
+											checkCode(apikey, seriousness, 'ADVERSE_EVENT_SERIOUSNESS', function (resSeriousnessCode) {
+												if (resSeriousnessCode.err_code > 0) {
+													myEmitter.emit('checkSuspectEntityCausality');
+												} else {
+													res.json({
+														"err_code": "523",
+														"err_msg": "Seriousness code not found"
+													});
+												}
+											})
+										} else {
+											myEmitter.emit('checkSuspectEntityCausality');
+										}
+									})
+									
+									myEmitter.prependOnceListener('checkType', function () {
+										if (!validator.isEmpty(type)) {
+											checkCode(apikey, type, 'ADVERSE_EVENT_TYPE', function (resTypeCode) {
+												if (resTypeCode.err_code > 0) {
+													myEmitter.emit('checkSeriousness');
+												} else {
+													res.json({
+														"err_code": "522",
+														"err_msg": "Type code not found"
+													});
+												}
+											})
+										} else {
+											myEmitter.emit('checkSeriousness');
+										}
+									})
+									
+									myEmitter.prependOnceListener('checkCategory', function () {
+										if (!validator.isEmpty(category)) {
+											checkCode(apikey, category, 'ADVERSE_EVENT_CATEGORY', function (resCategoryCode) {
+												if (resCategoryCode.err_code > 0) {
+													myEmitter.emit('checkType');
+												} else {
+													res.json({
+														"err_code": "521",
+														"err_msg": "Category code not found"
+													});
+												}
+											})
+										} else {
+											myEmitter.emit('checkType');
+										}
+									})
+									
+									myEmitter.prependOnceListener('checkSubjectPatient', function () {
+										if (!validator.isEmpty(subjectPatient)) {
+											checkUniqeValue(apikey, "PATIENT_ID|" + subjectPatient, 'PATIENT', function (resSubjectPatient) {
+												if (resSubjectPatient.err_code > 0) {
+													myEmitter.emit('checkCategory');
+												} else {
+													res.json({
+														"err_code": "520",
+														"err_msg": "Subject patient id not found"
+													});
+												}
+											})
+										} else {
+											myEmitter.emit('checkCategory');
 										}
 									})
 									
@@ -751,7 +1356,7 @@ var controller = {
 													myEmitter.emit('checkSubjectPatient');
 												} else {
 													res.json({
-														"err_code": "527",
+														"err_code": "519",
 														"err_msg": "Subject research subject id not found"
 													});
 												}
@@ -768,7 +1373,7 @@ var controller = {
 													myEmitter.emit('checkSubjectResearchSubject');
 												} else {
 													res.json({
-														"err_code": "527",
+														"err_code": "518",
 														"err_msg": "Subject medication id not found"
 													});
 												}
@@ -785,7 +1390,7 @@ var controller = {
 													myEmitter.emit('checkSubjectMedication');
 												} else {
 													res.json({
-														"err_code": "527",
+														"err_code": "517",
 														"err_msg": "Subject device id not found"
 													});
 												}
@@ -802,7 +1407,7 @@ var controller = {
 													myEmitter.emit('checkSubjectDevice');
 												} else {
 													res.json({
-														"err_code": "527",
+														"err_code": "516",
 														"err_msg": "Reaction id not found"
 													});
 												}
@@ -819,7 +1424,7 @@ var controller = {
 													myEmitter.emit('checkReaction');
 												} else {
 													res.json({
-														"err_code": "527",
+														"err_code": "515",
 														"err_msg": "Location id not found"
 													});
 												}
@@ -836,7 +1441,7 @@ var controller = {
 													myEmitter.emit('checkLocation');
 												} else {
 													res.json({
-														"err_code": "527",
+														"err_code": "514",
 														"err_msg": "Recorder patient id not found"
 													});
 												}
@@ -853,7 +1458,7 @@ var controller = {
 													myEmitter.emit('checkRecorderPatient');
 												} else {
 													res.json({
-														"err_code": "527",
+														"err_code": "513",
 														"err_msg": "Recorder practitioner id not found"
 													});
 												}
@@ -870,7 +1475,7 @@ var controller = {
 													myEmitter.emit('checkRecorderPractitioner');
 												} else {
 													res.json({
-														"err_code": "527",
+														"err_code": "512",
 														"err_msg": "Recorder related person id not found"
 													});
 												}
@@ -887,7 +1492,7 @@ var controller = {
 													myEmitter.emit('checkRecorderRelatedPerson');
 												} else {
 													res.json({
-														"err_code": "527",
+														"err_code": "511",
 														"err_msg": "Event participant practitioner id not found"
 													});
 												}
@@ -904,7 +1509,7 @@ var controller = {
 													myEmitter.emit('checkEventParticipantPractitioner');
 												} else {
 													res.json({
-														"err_code": "527",
+														"err_code": "510",
 														"err_msg": "Event participant device id not found"
 													});
 												}
@@ -915,13 +1520,13 @@ var controller = {
 									})
 									
 									myEmitter.prependOnceListener('checkInstanceDevice', function () {
-										if (!validator.isEmpty(instanceDevice)) {
-											checkUniqeValue(apikey, "Device_ID|" + instanceDevice, 'Device', function (resInstanceDevice) {
+										if (!validator.isEmpty(suspectEntityInstanceDevice)) {
+											checkUniqeValue(apikey, "Device_ID|" + suspectEntityInstanceDevice, 'Device', function (resInstanceDevice) {
 												if (resInstanceDevice.err_code > 0) {
 													myEmitter.emit('checkEventParticipantDevice');
 												} else {
 													res.json({
-														"err_code": "527",
+														"err_code": "509",
 														"err_msg": "Instance device id not found"
 													});
 												}
@@ -932,13 +1537,13 @@ var controller = {
 									})
 									
 									myEmitter.prependOnceListener('checkInstanceMedication', function () {
-										if (!validator.isEmpty(instanceMedication)) {
-											checkUniqeValue(apikey, "Medication_ID|" + instanceMedication, 'Medication', function (resInstanceMedication) {
+										if (!validator.isEmpty(suspectEntityInstanceMedication)) {
+											checkUniqeValue(apikey, "Medication_ID|" + suspectEntityInstanceMedication, 'Medication', function (resInstanceMedication) {
 												if (resInstanceMedication.err_code > 0) {
 													myEmitter.emit('checkInstanceDevice');
 												} else {
 													res.json({
-														"err_code": "527",
+														"err_code": "508",
 														"err_msg": "Instance medication id not found"
 													});
 												}
@@ -949,13 +1554,13 @@ var controller = {
 									})
 									
 									myEmitter.prependOnceListener('checkInstanceSubstance', function () {
-										if (!validator.isEmpty(instanceSubstance)) {
-											checkUniqeValue(apikey, "Substance_ID|" + instanceSubstance, 'Substance', function (resInstanceSubstance) {
+										if (!validator.isEmpty(suspectEntityInstanceSubstance)) {
+											checkUniqeValue(apikey, "Substance_ID|" + suspectEntityInstanceSubstance, 'Substance', function (resInstanceSubstance) {
 												if (resInstanceSubstance.err_code > 0) {
 													myEmitter.emit('checkInstanceMedication');
 												} else {
 													res.json({
-														"err_code": "527",
+														"err_code": "507",
 														"err_msg": "Instance substance id not found"
 													});
 												}
@@ -966,13 +1571,13 @@ var controller = {
 									})
 									
 									myEmitter.prependOnceListener('checkInstanceMedicationAdministration', function () {
-										if (!validator.isEmpty(instanceMedicationAdministration)) {
-											checkUniqeValue(apikey, "Medication_Administration_ID|" + instanceMedicationAdministration, 'Medication_Administration', function (resInstanceMedicationAdministration) {
+										if (!validator.isEmpty(suspectEntityInstanceMedicationAdministration)) {
+											checkUniqeValue(apikey, "Medication_Administration_ID|" + suspectEntityInstanceMedicationAdministration, 'Medication_Administration', function (resInstanceMedicationAdministration) {
 												if (resInstanceMedicationAdministration.err_code > 0) {
 													myEmitter.emit('checkInstanceSubstance');
 												} else {
 													res.json({
-														"err_code": "527",
+														"err_code": "506",
 														"err_msg": "Instance medication administration id not found"
 													});
 												}
@@ -983,13 +1588,13 @@ var controller = {
 									})
 									
 									myEmitter.prependOnceListener('checkInstanceMedicationStatement', function () {
-										if (!validator.isEmpty(instanceMedicationStatement)) {
-											checkUniqeValue(apikey, "Medication_Statement_ID|" + instanceMedicationAdministration, 'Medication_Statement', function (resInstanceMedicationStatement) {
+										if (!validator.isEmpty(suspectEntityInstanceMedicationStatement)) {
+											checkUniqeValue(apikey, "Medication_Statement_ID|" + suspectEntityInstanceMedicationStatement, 'Medication_Statement', function (resInstanceMedicationStatement) {
 												if (resInstanceMedicationStatement.err_code > 0) {
 													myEmitter.emit('checkInstanceMedicationAdministration');
 												} else {
 													res.json({
-														"err_code": "527",
+														"err_code": "505",
 														"err_msg": "Instance medication statement id not found"
 													});
 												}
@@ -1000,13 +1605,13 @@ var controller = {
 									})
 									
 									myEmitter.prependOnceListener('checkCausalityAuthorPractitioner', function () {
-										if (!validator.isEmpty(causalityAuthorPractitioner)) {
-											checkUniqeValue(apikey, "Practitioner_ID|" + causalityAuthorPractitioner, 'Practitioner', function (resCausalityAuthorPractitioner) {
+										if (!validator.isEmpty(suspectEntityCausalityAuthorPractitioner)) {
+											checkUniqeValue(apikey, "Practitioner_ID|" + suspectEntityCausalityAuthorPractitioner, 'Practitioner', function (resCausalityAuthorPractitioner) {
 												if (resCausalityAuthorPractitioner.err_code > 0) {
 													myEmitter.emit('checkInstanceMedicationStatement');
 												} else {
 													res.json({
-														"err_code": "527",
+														"err_code": "504",
 														"err_msg": "Causality author practitioner id not found"
 													});
 												}
@@ -1016,13 +1621,13 @@ var controller = {
 										}
 									})
 									
-									if (!validator.isEmpty(causalityAuthorPractitionerRole)) {
-										checkUniqeValue(apikey, "Practitioner_ROLE_ID|" + causalityAuthorPractitionerRole, 'Practitioner_ROLE', function (resCausalityAuthorPractitionerRole) {
+									if (!validator.isEmpty(suspectEntityCausalityAuthorPractitionerRole)) {
+										checkUniqeValue(apikey, "Practitioner_ROLE_ID|" + suspectEntityCausalityAuthorPractitionerRole, 'Practitioner_ROLE', function (resCausalityAuthorPractitionerRole) {
 											if (resCausalityAuthorPractitionerRole.err_code > 0) {
 												myEmitter.emit('checkCausalityAuthorPractitioner');
 											} else {
 												res.json({
-													"err_code": "527",
+													"err_code": "503",
 													"err_msg": "Causality author practitioner role id not found"
 												});
 											}
@@ -1057,190 +1662,470 @@ var controller = {
       var apikey = req.params.apikey;
       var regex = new RegExp("([0-9]{4}[-](0[1-9]|1[0-2])[-]([0-2]{1}[0-9]{1}|3[0-1]{1})|([0-2]{1}[0-9]{1}|3[0-1]{1})[-](0[1-9]|1[0-2])[-][0-9]{4})");
 			//var isValid = new RegExp("^([0-1]?[0-9]|2[0-4]):([0-5][0-9])(:[0-5][0-9])?$");
+			var adverseEventId = req.params.adverse_event_id;
 
       var err_code = 0;
       var err_msg = "";
-			
-			if(typeof req.body.category !== 'undefined'){
-				category =  req.body.category.trim().toLowerCase();
+      var dataAdverseEvent = {};
+
+			if(typeof adverseEventId !== 'undefined'){
+				if(validator.isEmpty(adverseEventId)){
+					err_code = 2;
+					err_msg = "Adverse Event id is required";
+				}
+			}else{
+				err_code = 2;
+				err_msg = "Adverse Event id is required";
+			}
+
+			if(typeof req.body.category !== 'undefined' && req.body.category !== ""){
+				dataAdverseEvent.category =  req.body.category.trim().toUpperCase();
 				if(validator.isEmpty(category)){
 					err_code = 2;
-					err_msg = "Adverse Event category is required";
+					err_msg = "Allergy intolerance category is required.";
+				}else{
+					dataAdverseEvent.category = category;
 				}
 			}else{
-				err_code = 1;
-				err_msg = "Please add sub-key 'category' in json Adverse Event request.";
+				category = "";
 			}
-			
-			if(typeof req.body.type !== 'undefined'){
-				type =  req.body.type.trim().toLowerCase();
+
+			if(typeof req.body.type !== 'undefined' && req.body.type !== ""){
+				dataAdverseEvent.type =  req.body.type.trim().toLowerCase();
 				if(validator.isEmpty(type)){
 					err_code = 2;
-					err_msg = "Adverse Event type is required";
+					err_msg = "Allergy intolerance type is required.";
+				}else{
+					dataAdverseEvent.type = type;
 				}
 			}else{
-				err_code = 1;
-				err_msg = "Please add sub-key 'type' in json Adverse Event request.";
+				type = "";
 			}
-			
-			//subject
-			if(typeof req.body.subject !== 'undefined'){
-				subject =  req.body.subject.trim().toLowerCase();
-				if(validator.isEmpty(subject)){
-					/*err_code = 2;
-					err_msg = "Adverse Event subject is required";*/
-					subjectPatient = '';
-					subjectResearchSubject  = '';
-					subjectMedication = '';
-					subjectDevice = '';
-				} else {
-					var res = subject.substring(0, 3);
-					if(res == 'pat'){
-						subjectPatient = subject;
-						subjectResearchSubject  = '';
-						subjectMedication = '';
-						subjectDevice = '';
-					} else if (res == 'dev'){
-						subjectPatient = '';
-						subjectResearchSubject  = '';
-						subjectMedication = '';
-						subjectDevice = subject;
-					} else if (res == 'med'){
-						subjectPatient = '';
-						subjectResearchSubject  = '';
-						subjectMedication = subject;
-						subjectDevice = '';
-					} else {
-						subjectPatient = '';
-						subjectResearchSubject  = subject;
-						subjectMedication = '';
-						subjectDevice = '';
-					}
+
+			if(typeof req.body.subject.patient !== 'undefined' && req.body.subject.patient !== ""){
+				dataAdverseEvent.subjectPatient =  req.body.subject.patient.trim().toLowerCase();
+				if(validator.isEmpty(subjectPatient)){
+					err_code = 2;
+					err_msg = "Allergy intolerance subject patient is required.";
+				}else{
+					dataAdverseEvent.subjectPatient = subjectPatient;
 				}
 			}else{
-				err_code = 1;
-				err_msg = "Please add sub-key 'subject' in json Adverse Event request.";
+				subjectPatient = "";
 			}
-			
-			if(typeof req.body.date !== 'undefined'){
-				date =  req.body.date.trim().toLowerCase();
+
+			if(typeof req.body.subject.researchSubject !== 'undefined' && req.body.subject.researchSubject !== ""){
+				dataAdverseEvent.subjectResearchSubject =  req.body.subject.researchSubject.trim().toLowerCase();
+				if(validator.isEmpty(subjectResearchSubject)){
+					err_code = 2;
+					err_msg = "Allergy intolerance subject research subject is required.";
+				}else{
+					dataAdverseEvent.subjectResearchSubject = subjectResearchSubject;
+				}
+			}else{
+				subjectResearchSubject = "";
+			}
+
+			if(typeof req.body.subject.medication !== 'undefined' && req.body.subject.medication !== ""){
+				dataAdverseEvent.subjectMedication =  req.body.subject.medication.trim().toLowerCase();
+				if(validator.isEmpty(subjectMedication)){
+					err_code = 2;
+					err_msg = "Allergy intolerance subject medication is required.";
+				}else{
+					dataAdverseEvent.subjectMedication = subjectMedication;
+				}
+			}else{
+				subjectMedication = "";
+			}
+
+			if(typeof req.body.subject.device !== 'undefined' && req.body.subject.device !== ""){
+				dataAdverseEvent.subjectDevice =  req.body.subject.device.trim().toLowerCase();
+				if(validator.isEmpty(subjectDevice)){
+					err_code = 2;
+					err_msg = "Allergy intolerance subject device is required.";
+				}else{
+					dataAdverseEvent.subjectDevice = subjectDevice;
+				}
+			}else{
+				subjectDevice = "";
+			}
+
+			if(typeof req.body.date !== 'undefined' && req.body.date !== ""){
+				dataAdverseEvent.date =  req.body.date;
 				if(validator.isEmpty(date)){
 					err_code = 2;
-					err_msg = "Adverse Event date is required";
+					err_msg = "allergy intolerance date is required.";
+				}else{
+					if(!regex.test(date)){
+						err_code = 2;
+						err_msg = "allergy intolerance date invalid date format.";	
+					}
 				}
 			}else{
-				err_code = 1;
-				err_msg = "Please add sub-key 'date' in json Adverse Event request.";
+				date = "";
 			}
-			
-			if(typeof req.body.reaction !== 'undefined'){
-				reaction =  req.body.reaction.trim().toLowerCase();
+
+			if(typeof req.body.reaction !== 'undefined' && req.body.reaction !== ""){
+				dataAdverseEvent.reaction =  req.body.reaction.trim().toLowerCase();
 				if(validator.isEmpty(reaction)){
 					err_code = 2;
-					err_msg = "Adverse Event reaction is required";
+					err_msg = "Allergy intolerance reaction is required.";
+				}else{
+					dataAdverseEvent.reaction = reaction;
 				}
 			}else{
-				err_code = 1;
-				err_msg = "Please add sub-key 'reaction' in json Adverse Event request.";
+				reaction = "";
 			}
-			
-			if(typeof req.body.location !== 'undefined'){
-				location =  req.body.location.trim().toLowerCase();
+
+			if(typeof req.body.location !== 'undefined' && req.body.location !== ""){
+				dataAdverseEvent.location =  req.body.location.trim().toLowerCase();
 				if(validator.isEmpty(location)){
 					err_code = 2;
-					err_msg = "Adverse Event location is required";
+					err_msg = "Allergy intolerance location is required.";
+				}else{
+					dataAdverseEvent.location = location;
 				}
 			}else{
-				err_code = 1;
-				err_msg = "Please add sub-key 'location' in json Adverse Event request.";
+				location = "";
 			}
-			
-			if(typeof req.body.seriousness !== 'undefined'){
-				seriousness =  req.body.seriousness.trim().toLowerCase();
+
+			if(typeof req.body.seriousness !== 'undefined' && req.body.seriousness !== ""){
+				dataAdverseEvent.seriousness =  req.body.seriousness.trim();
 				if(validator.isEmpty(seriousness)){
 					err_code = 2;
-					err_msg = "Adverse Event seriousness is required";
+					err_msg = "Allergy intolerance seriousness is required.";
+				}else{
+					dataAdverseEvent.seriousness = seriousness;
 				}
 			}else{
-				err_code = 1;
-				err_msg = "Please add sub-key 'seriousness' in json Adverse Event request.";
+				seriousness = "";
 			}
-			
-			if(typeof req.body.outcome !== 'undefined'){
-				outcome =  req.body.outcome.trim().toLowerCase();
+
+			if(typeof req.body.outcome !== 'undefined' && req.body.outcome !== ""){
+				dataAdverseEvent.outcome =  req.body.outcome.trim().toLowerCase();
 				if(validator.isEmpty(outcome)){
 					err_code = 2;
-					err_msg = "Adverse Event outcome is required";
+					err_msg = "Allergy intolerance outcome is required.";
+				}else{
+					dataAdverseEvent.outcome = outcome;
 				}
 			}else{
-				err_code = 1;
-				err_msg = "Please add sub-key 'outcome' in json Adverse Event request.";
+				outcome = "";
 			}
-			
-			//recorder
-			if(typeof req.body.recorder !== 'undefined'){
-				recorder =  req.body.recorder.trim().toLowerCase();
-				if(validator.isEmpty(recorder)){
-					/*err_code = 2;
-					err_msg = "Adverse Event recorder is required";*/
-					recorderPatient = '';
-					recorderPractitioner  = '';
-					recorderRelatedPerson = '';
-				} else {
-					var res = recorder.substring(0, 3);
-					if(res == 'pat'){
-						recorderPatient = recorder;
-						recorderPractitioner  = '';
-						recorderRelatedPerson = '';
-					} else if (res == 'pra'){
-						recorderPatient = '';
-						recorderPractitioner  = recorder;
-						recorderRelatedPerson = '';
-					} else {
-						recorderPatient = '';
-						recorderPractitioner  = '';
-						recorderRelatedPerson = recorder;
-					}
-				}
-				
-			}else{
-				err_code = 1;
-				err_msg = "Please add sub-key 'recorder' in json Adverse Event request.";
-			}
-			
-			//eventParticipant
-			if(typeof req.body.eventParticipant !== 'undefined'){
-				eventParticipant =  req.body.eventParticipant.trim().toLowerCase();
-				if(validator.isEmpty(eventParticipant)){
-					/*err_code = 2;
-					err_msg = "Adverse Event event participant is required";*/
-					eventParticipantPractitioner  = '';
-					eventParticipantDevice = '';
-				} else {
-					var res = eventParticipant.substring(0, 3);
-					if (res == 'pra'){
-						eventParticipantPractitioner  = eventParticipant;
-						eventParticipantDevice = '';
-					} else {
-						eventParticipantPractitioner  = '';
-						eventParticipantDevice = eventParticipant;
-					}
+
+			if(typeof req.body.recorder.patient !== 'undefined' && req.body.recorder.patient !== ""){
+				dataAdverseEvent.recorderPatient =  req.body.recorder.patient.trim().toLowerCase();
+				if(validator.isEmpty(recorderPatient)){
+					err_code = 2;
+					err_msg = "Allergy intolerance recorder patient is required.";
+				}else{
+					dataAdverseEvent.recorderPatient = recorderPatient;
 				}
 			}else{
-				err_code = 1;
-				err_msg = "Please add sub-key 'eventParticipant' in json Adverse Event request.";
+				recorderPatient = "";
 			}
-			
-			if(typeof req.body.description !== 'undefined'){
-				description =  req.body.description.trim().toLowerCase();
+
+			if(typeof req.body.recorder.practitioner !== 'undefined' && req.body.recorder.practitioner !== ""){
+				dataAdverseEvent.recorderPractitioner =  req.body.recorder.practitioner.trim().toLowerCase();
+				if(validator.isEmpty(recorderPractitioner)){
+					err_code = 2;
+					err_msg = "Allergy intolerance recorder practitioner is required.";
+				}else{
+					dataAdverseEvent.recorderPractitioner = recorderPractitioner;
+				}
+			}else{
+				recorderPractitioner = "";
+			}
+
+			if(typeof req.body.recorder.relatedPerson !== 'undefined' && req.body.recorder.relatedPerson !== ""){
+				dataAdverseEvent.recorderRelatedPerson =  req.body.recorder.relatedPerson.trim().toLowerCase();
+				if(validator.isEmpty(recorderRelatedPerson)){
+					err_code = 2;
+					err_msg = "Allergy intolerance recorder related person is required.";
+				}else{
+					dataAdverseEvent.recorderRelatedPerson = recorderRelatedPerson;
+				}
+			}else{
+				recorderRelatedPerson = "";
+			}
+
+			if(typeof req.body.eventParticipant.practitioner !== 'undefined' && req.body.eventParticipant.practitioner !== ""){
+				dataAdverseEvent.eventParticipantPractitioner =  req.body.eventParticipant.practitioner.trim().toLowerCase();
+				if(validator.isEmpty(eventParticipantPractitioner)){
+					err_code = 2;
+					err_msg = "Allergy intolerance event participant practitioner is required.";
+				}else{
+					dataAdverseEvent.eventParticipantPractitioner = eventParticipantPractitioner;
+				}
+			}else{
+				eventParticipantPractitioner = "";
+			}
+
+			if(typeof req.body.eventParticipant.device !== 'undefined' && req.body.eventParticipant.device !== ""){
+				dataAdverseEvent.eventParticipantDevice =  req.body.eventParticipant.device.trim().toLowerCase();
+				if(validator.isEmpty(eventParticipantDevice)){
+					err_code = 2;
+					err_msg = "Allergy intolerance event participant device is required.";
+				}else{
+					dataAdverseEvent.eventParticipantDevice = eventParticipantDevice;
+				}
+			}else{
+				eventParticipantDevice = "";
+			}
+
+			if(typeof req.body.description !== 'undefined' && req.body.description !== ""){
+				dataAdverseEvent.description =  req.body.description.trim().toLowerCase();
 				if(validator.isEmpty(description)){
 					err_code = 2;
-					err_msg = "Adverse Event description is required";
+					err_msg = "Allergy intolerance description is required.";
+				}else{
+					dataAdverseEvent.description = description;
 				}
 			}else{
-				err_code = 1;
-				err_msg = "Please add sub-key 'description' in json Adverse Event request.";
+				description = "";
 			}
+
+			if(typeof req.body.suspectEntity.instance.substance !== 'undefined' && req.body.suspectEntity.instance.substance !== ""){
+				dataAdverseEvent.suspectEntityInstanceSubstance =  req.body.suspectEntity.instance.substance.trim().toLowerCase();
+				if(validator.isEmpty(suspectEntityInstanceSubstance)){
+					err_code = 2;
+					err_msg = "Allergy intolerance suspect entity instance substance is required.";
+				}else{
+					dataAdverseEvent.suspectEntityInstanceSubstance = suspectEntityInstanceSubstance;
+				}
+			}else{
+				suspectEntityInstanceSubstance = "";
+			}
+
+			if(typeof req.body.suspectEntity.instance.medication !== 'undefined' && req.body.suspectEntity.instance.medication !== ""){
+				dataAdverseEvent.suspectEntityInstanceMedication =  req.body.suspectEntity.instance.medication.trim().toLowerCase();
+				if(validator.isEmpty(suspectEntityInstanceMedication)){
+					err_code = 2;
+					err_msg = "Allergy intolerance suspect entity instance medication is required.";
+				}else{
+					dataAdverseEvent.suspectEntityInstanceMedication = suspectEntityInstanceMedication;
+				}
+			}else{
+				suspectEntityInstanceMedication = "";
+			}
+
+			if(typeof req.body.suspectEntity.instance.medicationAdministration !== 'undefined' && req.body.suspectEntity.instance.medicationAdministration !== ""){
+				dataAdverseEvent.suspectEntityInstanceMedicationAdministration =  req.body.suspectEntity.instance.medicationAdministration.trim().toLowerCase();
+				if(validator.isEmpty(suspectEntityInstanceMedicationAdministration)){
+					err_code = 2;
+					err_msg = "Allergy intolerance suspect entity instance medication administration is required.";
+				}else{
+					dataAdverseEvent.suspectEntityInstanceMedicationAdministration = suspectEntityInstanceMedicationAdministration;
+				}
+			}else{
+				suspectEntityInstanceMedicationAdministration = "";
+			}
+
+			if(typeof req.body.suspectEntity.instance.medicationStatement !== 'undefined' && req.body.suspectEntity.instance.medicationStatement !== ""){
+				dataAdverseEvent.suspectEntityInstanceMedicationStatement =  req.body.suspectEntity.instance.medicationStatement.trim().toLowerCase();
+				if(validator.isEmpty(suspectEntityInstanceMedicationStatement)){
+					err_code = 2;
+					err_msg = "Allergy intolerance suspect entity instance medication statement is required.";
+				}else{
+					dataAdverseEvent.suspectEntityInstanceMedicationStatement = suspectEntityInstanceMedicationStatement;
+				}
+			}else{
+				suspectEntityInstanceMedicationStatement = "";
+			}
+
+			if(typeof req.body.suspectEntity.instance.device !== 'undefined' && req.body.suspectEntity.instance.device !== ""){
+				dataAdverseEvent.suspectEntityInstanceDevice =  req.body.suspectEntity.instance.device.trim().toLowerCase();
+				if(validator.isEmpty(suspectEntityInstanceDevice)){
+					err_code = 2;
+					err_msg = "Allergy intolerance suspect entity instance device is required.";
+				}else{
+					dataAdverseEvent.suspectEntityInstanceDevice = suspectEntityInstanceDevice;
+				}
+			}else{
+				suspectEntityInstanceDevice = "";
+			}
+
+			if(typeof req.body.suspectEntity.causality !== 'undefined' && req.body.suspectEntity.causality !== ""){
+				dataAdverseEvent.suspectEntityCausality =  req.body.suspectEntity.causality.trim().toLowerCase();
+				if(validator.isEmpty(suspectEntityCausality)){
+					err_code = 2;
+					err_msg = "Allergy intolerance suspect entity causality is required.";
+				}else{
+					dataAdverseEvent.suspectEntityCausality = suspectEntityCausality;
+				}
+			}else{
+				suspectEntityCausality = "";
+			}
+
+			if(typeof req.body.suspectEntity.causalityAssessment !== 'undefined' && req.body.suspectEntity.causalityAssessment !== ""){
+				dataAdverseEvent.suspectEntityCausalityAssessment =  req.body.suspectEntity.causalityAssessment.trim().toLowerCase();
+				if(validator.isEmpty(suspectEntityCausalityAssessment)){
+					err_code = 2;
+					err_msg = "Allergy intolerance suspect entity causality assessment is required.";
+				}else{
+					dataAdverseEvent.suspectEntityCausalityAssessment = suspectEntityCausalityAssessment;
+				}
+			}else{
+				suspectEntityCausalityAssessment = "";
+			}
+
+			if(typeof req.body.suspectEntity.causalityProductRelatedness !== 'undefined' && req.body.suspectEntity.causalityProductRelatedness !== ""){
+				dataAdverseEvent.suspectEntityCausalityProductRelatedness =  req.body.suspectEntity.causalityProductRelatedness.trim().toLowerCase();
+				if(validator.isEmpty(suspectEntityCausalityProductRelatedness)){
+					err_code = 2;
+					err_msg = "Allergy intolerance suspect entity causality product relatedness is required.";
+				}else{
+					dataAdverseEvent.suspectEntityCausalityProductRelatedness = suspectEntityCausalityProductRelatedness;
+				}
+			}else{
+				suspectEntityCausalityProductRelatedness = "";
+			}
+
+			if(typeof req.body.suspectEntity.causalityMethod !== 'undefined' && req.body.suspectEntity.causalityMethod !== ""){
+				dataAdverseEvent.suspectEntityCausalityMethod =  req.body.suspectEntity.causalityMethod.trim().toLowerCase();
+				if(validator.isEmpty(suspectEntityCausalityMethod)){
+					err_code = 2;
+					err_msg = "Allergy intolerance suspect entity causality method is required.";
+				}else{
+					dataAdverseEvent.suspectEntityCausalityMethod = suspectEntityCausalityMethod;
+				}
+			}else{
+				suspectEntityCausalityMethod = "";
+			}
+
+			if(typeof req.body.suspectEntity.causalityAuthor.practitioner !== 'undefined' && req.body.suspectEntity.causalityAuthor.practitioner !== ""){
+				dataAdverseEvent.suspectEntityCausalityAuthorPractitioner =  req.body.suspectEntity.causalityAuthor.practitioner.trim().toLowerCase();
+				if(validator.isEmpty(suspectEntityCausalityAuthorPractitioner)){
+					err_code = 2;
+					err_msg = "Allergy intolerance suspect entity causality author practitioner is required.";
+				}else{
+					dataAdverseEvent.suspectEntityCausalityAuthorPractitioner = suspectEntityCausalityAuthorPractitioner;
+				}
+			}else{
+				suspectEntityCausalityAuthorPractitioner = "";
+			}
+
+			if(typeof req.body.suspectEntity.causalityAuthor.practitionerRole !== 'undefined' && req.body.suspectEntity.causalityAuthor.practitionerRole !== ""){
+				dataAdverseEvent.suspectEntityCausalityAuthorPractitionerRole =  req.body.suspectEntity.causalityAuthor.practitionerRole.trim().toLowerCase();
+				if(validator.isEmpty(suspectEntityCausalityAuthorPractitionerRole)){
+					err_code = 2;
+					err_msg = "Allergy intolerance suspect entity causality author practitioner role is required.";
+				}else{
+					dataAdverseEvent.suspectEntityCausalityAuthorPractitionerRole = suspectEntityCausalityAuthorPractitionerRole;
+				}
+			}else{
+				suspectEntityCausalityAuthorPractitionerRole = "";
+			}
+
+			if(typeof req.body.suspectEntity.causalityResult !== 'undefined' && req.body.suspectEntity.causalityResult !== ""){
+				dataAdverseEvent.suspectEntityCausalityResult =  req.body.suspectEntity.causalityResult.trim().toLowerCase();
+				if(validator.isEmpty(suspectEntityCausalityResult)){
+					err_code = 2;
+					err_msg = "Allergy intolerance suspect entity causality result is required.";
+				}else{
+					dataAdverseEvent.suspectEntityCausalityResult = suspectEntityCausalityResult;
+				}
+			}else{
+				suspectEntityCausalityResult = "";
+			}
+
+			if(typeof req.body.subjectMedicalHistory.condition !== 'undefined' && req.body.subjectMedicalHistory.condition !== ""){
+				dataAdverseEvent.subjectMedicalHistoryCondition =  req.body.subjectMedicalHistory.condition.trim().toLowerCase();
+				if(validator.isEmpty(subjectMedicalHistoryCondition)){
+					err_code = 2;
+					err_msg = "Allergy intolerance subject medical history condition is required.";
+				}else{
+					dataAdverseEvent.subjectMedicalHistoryCondition = subjectMedicalHistoryCondition;
+				}
+			}else{
+				subjectMedicalHistoryCondition = "";
+			}
+
+			if(typeof req.body.subjectMedicalHistory.observation !== 'undefined' && req.body.subjectMedicalHistory.observation !== ""){
+				dataAdverseEvent.subjectMedicalHistoryObservation =  req.body.subjectMedicalHistory.observation.trim().toLowerCase();
+				if(validator.isEmpty(subjectMedicalHistoryObservation)){
+					err_code = 2;
+					err_msg = "Allergy intolerance subject medical history observation is required.";
+				}else{
+					dataAdverseEvent.subjectMedicalHistoryObservation = subjectMedicalHistoryObservation;
+				}
+			}else{
+				subjectMedicalHistoryObservation = "";
+			}
+
+			if(typeof req.body.subjectMedicalHistory.allergyIntolerance !== 'undefined' && req.body.subjectMedicalHistory.allergyIntolerance !== ""){
+				dataAdverseEvent.subjectMedicalHistoryAllergyIntolerance =  req.body.subjectMedicalHistory.allergyIntolerance.trim().toLowerCase();
+				if(validator.isEmpty(subjectMedicalHistoryAllergyIntolerance)){
+					err_code = 2;
+					err_msg = "Allergy intolerance subject medical history allergy intolerance is required.";
+				}else{
+					dataAdverseEvent.subjectMedicalHistoryAllergyIntolerance = subjectMedicalHistoryAllergyIntolerance;
+				}
+			}else{
+				subjectMedicalHistoryAllergyIntolerance = "";
+			}
+
+			if(typeof req.body.subjectMedicalHistory.familyMemberHistory !== 'undefined' && req.body.subjectMedicalHistory.familyMemberHistory !== ""){
+				dataAdverseEvent.subjectMedicalHistoryFamilyMemberHistory =  req.body.subjectMedicalHistory.familyMemberHistory.trim().toLowerCase();
+				if(validator.isEmpty(subjectMedicalHistoryFamilyMemberHistory)){
+					err_code = 2;
+					err_msg = "Allergy intolerance subject medical history family member history is required.";
+				}else{
+					dataAdverseEvent.subjectMedicalHistoryFamilyMemberHistory = subjectMedicalHistoryFamilyMemberHistory;
+				}
+			}else{
+				subjectMedicalHistoryFamilyMemberHistory = "";
+			}
+
+			if(typeof req.body.subjectMedicalHistory.immunization !== 'undefined' && req.body.subjectMedicalHistory.immunization !== ""){
+				dataAdverseEvent.subjectMedicalHistoryImmunization =  req.body.subjectMedicalHistory.immunization.trim().toLowerCase();
+				if(validator.isEmpty(subjectMedicalHistoryImmunization)){
+					err_code = 2;
+					err_msg = "Allergy intolerance subject medical history immunization is required.";
+				}else{
+					dataAdverseEvent.subjectMedicalHistoryImmunization = subjectMedicalHistoryImmunization;
+				}
+			}else{
+				subjectMedicalHistoryImmunization = "";
+			}
+
+			if(typeof req.body.subjectMedicalHistory.procedure !== 'undefined' && req.body.subjectMedicalHistory.procedure !== ""){
+				dataAdverseEvent.subjectMedicalHistoryProcedure =  req.body.subjectMedicalHistory.procedure.trim().toLowerCase();
+				if(validator.isEmpty(subjectMedicalHistoryProcedure)){
+					err_code = 2;
+					err_msg = "Allergy intolerance subject medical history procedure is required.";
+				}else{
+					dataAdverseEvent.subjectMedicalHistoryProcedure = subjectMedicalHistoryProcedure;
+				}
+			}else{
+				subjectMedicalHistoryProcedure = "";
+			}
+
+			if(typeof req.body.referenceDocument !== 'undefined' && req.body.referenceDocument !== ""){
+				dataAdverseEvent.referenceDocument =  req.body.referenceDocument.trim().toLowerCase();
+				if(validator.isEmpty(referenceDocument)){
+					err_code = 2;
+					err_msg = "Allergy intolerance reference document is required.";
+				}else{
+					dataAdverseEvent.referenceDocument = referenceDocument;
+				}
+			}else{
+				referenceDocument = "";
+			}
+
+			if(typeof req.body.study !== 'undefined' && req.body.study !== ""){
+				dataAdverseEvent.study =  req.body.study.trim().toLowerCase();
+				if(validator.isEmpty(study)){
+					err_code = 2;
+					err_msg = "Allergy intolerance study is required.";
+				}else{
+					dataAdverseEvent.study = study;
+				}
+			}else{
+				study = "";
+			}
+
+
 			
 			if(err_code == 0){
 			//check apikey

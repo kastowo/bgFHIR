@@ -77,8 +77,8 @@ var controller = {
         condition += "ct.STATUS = '" + status + "' AND,";  
       }
 			
-			if(typeof subject !== 'subject' && subject !== ""){
-				condition += "(ct.SUBJECT_PATIENT = '" + subject + "' OR ct.SUBJECT_GROUP = '" + subject + "') AND,";  
+			if(typeof subject !== 'undefined' && subject !== ""){
+				condition += "ct.SUBJECT_PATIENT = '" + subject + "' OR ct.SUBJECT_GROUP = '" + subject + "' AND,";  
 			}
 			
 			
@@ -90,9 +90,10 @@ var controller = {
 			      
       var arrCareTeam = [];
       var query = "select care_team_id, status, category, name, subject_patient, subject_group, context_encounter, context_episode_of_care, period_start, period_end, reason_code, episode_of_care_id from baciro_fhir.CARE_TEAM ct " + fixCondition;
-			//console.log(query);
+			console.log(query);
       db.query(query,function(dataJson){
         rez = lowercaseObject(dataJson);
+				console.log(rez);
 				for(i = 0; i < rez.length; i++){
           var CareTeam = {};
 					var arrSubject = [];
@@ -107,7 +108,7 @@ var controller = {
 					} else {
 						Subject.patient = "";
 					}
-					arrSubject[i] = Subject;
+					arrSubject = Subject;
 					
 					var arrContext = [];
 					var Context = {};
@@ -121,7 +122,7 @@ var controller = {
 					} else {
 						Context.episodeOfCare = "";
 					}
-					arrContext[i] = Context;
+					arrContext = Context;
 					
 					CareTeam.resourceType = "CareTeam";
           CareTeam.id = rez[i].care_team_id;
@@ -134,7 +135,7 @@ var controller = {
 					if(rez[i].period_start == null){
 						period_start = formatDate(rez[i].period_start);  
 					}else{
-						period_start = rez[i].time_period_start;  
+						period_start = rez[i].period_start;  
 					}
 					if(rez[i].period_end == null){
 						period_end = formatDate(rez[i].period_end);  
@@ -210,7 +211,7 @@ var controller = {
 					} else {
 						Member.careTeam = "";
 					}
-					arrMember[i] = Member;
+					arrMember = Member;
 					CareTeamParticipant.member = arrMember;
 					if(rez[i].on_behalf_of != "null"){
 						CareTeamParticipant.onBehalfOf = hostFHIR + ':' + portFHIR + '/' + apikey + '/Organization?_id=' +  rez[i].on_behalf_of;
@@ -221,7 +222,7 @@ var controller = {
 					if(rez[i].period_start == null){
 						period_start = formatDate(rez[i].period_start);  
 					}else{
-						period_start = rez[i].time_period_start;  
+						period_start = rez[i].period_start;  
 					}
 					if(rez[i].period_end == null){
 						period_end = formatDate(rez[i].period_end);  
@@ -245,6 +246,108 @@ var controller = {
 					"function": "getCareTeamParticipant"
 				});
 			});
+		},
+		careTeamCondition: function getCareTeamCondition(req, res) {
+			var apikey = req.params.apikey;
+			
+			var conditionId = req.query._id;
+			var careTeamId = req.query.care_team_id;
+
+			//susun query
+			var condition = "";
+
+			if (typeof conditionId !== 'undefined' && conditionId !== "") {
+				condition += "condition_ID = '" + conditionId + "' AND ";
+			}
+
+			if (typeof careTeamId !== 'undefined' && careTeamId !== "") {
+				condition += "CARE_TEAM_ID = '" + careTeamId + "' AND ";
+			}
+
+			if (condition == '') {
+				fixCondition = '';
+			} else {
+				fixCondition = ' WHERE ' + condition.slice(0, -4);
+			}
+
+			var arrCareTeamCondition = [];
+			var query = 'select condition_id from BACIRO_FHIR.condition ' + fixCondition;
+
+			db.query(query, function (dataJson) {
+				rez = lowercaseObject(dataJson);
+				for (i = 0; i < rez.length; i++) {
+					var careTeamCondition = {};
+					if(rez[i].condition_id != "null"){
+						careTeamCondition.id = hostFHIR + ':' + portFHIR + '/' + apikey + '/Condition?_id=' +  rez[i].condition_id;
+					} else {
+						careTeamCondition.id = "";
+					}
+					
+					arrCareTeamCondition[i] = careTeamCondition;
+				}
+				res.json({
+					"err_code": 0,
+					"data": arrCareTeamCondition
+				});
+			}, function (e) {
+				res.json({
+					"err_code": 1,
+					"err_msg": e,
+					"application": "Api Phoenix",
+					"function": "getCareTeamCondition"
+				});
+			});
+		},
+		careTeamOrganization: function getCareTeamOrganization(req, res) {
+			var apikey = req.params.apikey;
+			
+			var organizationId = req.query._id;
+			var careTeamId = req.query.care_team_id;
+
+			//susun query
+			var condition = "";
+
+			if (typeof organizationId !== 'undefined' && organizationId !== "") {
+				condition += "organization_id = '" + organizationId + "' AND ";
+			}
+
+			if (typeof careTeamId !== 'undefined' && careTeamId !== "") {
+				condition += "CARE_TEAM_ID = '" + careTeamId + "' AND ";
+			}
+
+			if (condition == '') {
+				fixCondition = '';
+			} else {
+				fixCondition = ' WHERE ' + condition.slice(0, -4);
+			}
+
+			var arrCareTeamOrganization = [];
+			var query = 'select organization_id from BACIRO_FHIR.organization ' + fixCondition;
+
+			db.query(query, function (dataJson) {
+				rez = lowercaseObject(dataJson);
+				for (i = 0; i < rez.length; i++) {
+					var careTeamOrganization = {};
+					if(rez[i].organization_id != "null"){
+						careTeamOrganization.id = hostFHIR + ':' + portFHIR + '/' + apikey + '/Organization?_id=' +  rez[i].organization_id;
+					} else {
+						careTeamOrganization.id = "";
+					}
+					
+					arrCareTeamOrganization[i] = careTeamOrganization;
+				}
+				res.json({
+					"err_code": 0,
+					"data": arrCareTeamOrganization
+				});
+			}, function (e) {
+				res.json({
+					"err_code": 1,
+					"err_msg": e,
+					"application": "Api Phoenix",
+					"function": "getCareTeamOrganization"
+				});
+			});
 		}
 		
   },
@@ -264,6 +367,12 @@ var controller = {
 			var reason_code  = req.body.reason_code;
 			var episode_of_care_id  = req.body.episode_of_care_id;
 			
+			var care_plan_author_id  = req.body.care_plan_author_id;
+			var care_plan_team_id  = req.body.care_plan_team_id;
+			var care_plan_activity_detail_id  = req.body.care_plan_activity_detail_id;
+			var communication_request_id  = req.body.communication_request_id;
+
+	
 			var column = "";
       var values = "";
 			
@@ -323,6 +432,26 @@ var controller = {
 			if (typeof episode_of_care_id !== 'undefined' && episode_of_care_id !== "") {
         column += 'episode_of_care_id,';
         values += "'" + episode_of_care_id + "',";
+      }	
+			
+			if (typeof care_plan_author_id !== 'undefined' && care_plan_author_id !== "") {
+        column += 'care_plan_author_id,';
+        values += "'" + care_plan_author_id + "',";
+      }	
+			
+			if (typeof care_plan_team_id !== 'undefined' && care_plan_team_id !== "") {
+        column += 'care_plan_team_id,';
+        values += "'" + care_plan_team_id + "',";
+      }	
+			
+			if (typeof care_plan_activity_detail_id !== 'undefined' && care_plan_activity_detail_id !== "") {
+        column += 'care_plan_activity_detail_id,';
+        values += "'" + care_plan_activity_detail_id + "',";
+      }
+			
+			if (typeof communication_request_id !== 'undefined' && communication_request_id !== "") {
+        column += 'communication_request_id,';
+        values += "'" + communication_request_id + "',";
       }	
 
       var query = "UPSERT INTO BACIRO_FHIR.CARE_TEAM(care_team_id, " + column.slice(0, -1) + ")"+
@@ -446,6 +575,12 @@ var controller = {
 			var reason_code  = req.body.reason_code;
 			var episode_of_care_id  = req.body.episode_of_care_id;
 			
+			var care_plan_author_id  = req.body.care_plan_author_id;
+			var care_plan_team_id  = req.body.care_plan_team_id;
+			var care_plan_activity_detail_id  = req.body.care_plan_activity_detail_id;
+			var communication_request_id  = req.body.communication_request_id;
+			
+			
 			var column = "";
       var values = "";
 			
@@ -506,6 +641,27 @@ var controller = {
         column += 'episode_of_care_id,';
         values += "'" + episode_of_care_id + "',";
       }		
+			
+			if (typeof care_plan_author_id !== 'undefined' && care_plan_author_id !== "") {
+        column += 'care_plan_author_id,';
+        values += "'" + care_plan_author_id + "',";
+      }	
+			
+			if (typeof care_plan_team_id !== 'undefined' && care_plan_team_id !== "") {
+        column += 'care_plan_team_id,';
+        values += "'" + care_plan_team_id + "',";
+      }	
+			
+			if (typeof care_plan_activity_detail_id !== 'undefined' && care_plan_activity_detail_id !== "") {
+        column += 'care_plan_activity_detail_id,';
+        values += "'" + care_plan_activity_detail_id + "',";
+      }
+			
+			if (typeof communication_request_id !== 'undefined' && communication_request_id !== "") {
+        column += 'communication_request_id,';
+        values += "'" + communication_request_id + "',";
+      }	
+
 			
 			var domainResource = req.params.dr;
 			var arrResource = domainResource.split('|');

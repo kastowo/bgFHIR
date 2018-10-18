@@ -1,9 +1,9 @@
-var routesMedicationStatement = function(app, MedicationStatement){
-	app.get('/:apikey/MedicationStatement', MedicationStatement.get.medicationStatement);
+var routesImmunizationRecommendation = function(app, ImmunizationRecommendation){
+	app.get('/:apikey/ImmunizationRecommendation', ImmunizationRecommendation.get.immunizationRecommendation);
+		
+	app.post('/:apikey/ImmunizationRecommendation', ImmunizationRecommendation.post.immunizationRecommendation);
 	
-	app.post('/:apikey/MedicationStatement', MedicationStatement.post.medicationStatement);
-	
-	app.put('/:apikey/MedicationStatement/:medicationStatement_id?', MedicationStatement.put.medicationStatement);
+	/*app.put('/:apikey/ImmunizationRecommendation/:immunizationRecommendation_id?', ImmunizationRecommendation.put.immunizationRecommendation);*/
 	
 }
-module.exports = routesMedicationStatement
+module.exports = routesImmunizationRecommendation

@@ -25,7 +25,7 @@ var controller = {
 			var adverseEventId = req.query._id;
 			var category = req.query.category;
 			var date = req.query.date;
-			var location = req.query.location;
+			var adverseEvent = req.query.adverseEvent;
 			var recorder = req.query.recorder;
 			var seriousness = req.query.seriousness;
 			//var study = req.query.study;
@@ -49,8 +49,8 @@ var controller = {
 				condition += "ad.date = to_date('" + date + "', 'yyyy-MM-dd') AND,"
       }
 			
-			if(typeof location !== 'undefined' && location !== ""){
-        condition += "ad.location = '" + location + "' AND,";  
+			if(typeof adverseEvent !== 'undefined' && adverseEvent !== ""){
+        condition += "ad.adverseEvent = '" + adverseEvent + "' AND,";  
       }
 			
 			if(typeof recorder !== 'undefined' && recorder !== ""){
@@ -78,7 +78,7 @@ var controller = {
 			      
       var arrAdverseEvent = [];
       var query = "SELECT ad.adverse_event_id as adverse_event_id, ad.identifier_id as identifier_id, ad.category as category, ad.type as type, ad.subject_patient as subject_patient, ad.subject_research_subject as subject_research_subject, ad.subject_medication as subject_medication, ad.subject_device as subject_device, ad.date as date, ad.location as location, ad.seriousness as seriousness, ad.outcome as outcome, ad.recorder_patient as recorder_patient, ad.recorder_practitioner as recorder_practitioner, ad.recorder_related_person as recorder_related_person, ad.event_participant_practitioner as event_participant_practitioner, ad.event_participant_device as event_participant_device, ad.description as description FROM BACIRO_FHIR.ADVERSE_EVENT ad " + fixCondition;
-			//console.log(query);
+			console.log(query);
       db.query(query,function(dataJson){
         rez = lowercaseObject(dataJson);
 				for(i = 0; i < rez.length; i++){
@@ -106,7 +106,7 @@ var controller = {
 					} else {
 						Subject.researchSubject = "";
 					}
-					arrSubject[i] = Subject;
+					arrSubject = Subject;
 					
 					var arrRecorder = [];
 					var Recorder = {};
@@ -125,7 +125,7 @@ var controller = {
 					} else {
 						Recorder.relatedPerson = "";
 					}
-					arrRecorder[i] = Recorder;
+					arrRecorder = Recorder;
 					
 					if (rez[i].event_participant_practitioner !== 'null') {
 						AdverseEvent.eventParticipant = hostFHIR + ':' + portFHIR + '/' + apikey + '/Practitioner?_id=' +  rez[i].event_participant_practitioner;
@@ -147,7 +147,7 @@ var controller = {
 					} else {
 						EventParticipant.device = "";
 					}
-					arrEventParticipant[i] = EventParticipant;
+					arrEventParticipant = EventParticipant;
 					
 					AdverseEvent.resourceType = "Adverse Event";
           AdverseEvent.id = rez[i].adverse_event_id;
@@ -160,10 +160,10 @@ var controller = {
 					}else{
 						AdverseEvent.date = rez[i].date;
 					}
-					if(rez[i].location != "null"){
-						AdverseEvent.location = hostFHIR + ':' + portFHIR + '/' + apikey + '/Location?_id=' +  rez[i].location;
+					if(rez[i].adverseEvent != "null"){
+						AdverseEvent.adverseEvent = hostFHIR + ':' + portFHIR + '/' + apikey + '/Location?_id=' +  rez[i].adverseEvent;
 					} else {
-						AdverseEvent.location = "";
+						AdverseEvent.adverseEvent = "";
 					}
 					AdverseEvent.seriousness = rez[i].seriousness;
 					AdverseEvent.outcome = rez[i].outcome;
@@ -237,7 +237,7 @@ var controller = {
 					} else {
 						Instance.device = "";
 					}
-					arrInstance[i] = Instance;
+					arrInstance = Instance;
 					
 					var arrCausalityAuthor = [];
 					var CausalityAuthor = {};
@@ -251,7 +251,7 @@ var controller = {
 					} else {
 						CausalityAuthor.practitionerRole = "";
 					}
-					arrCausalityAuthor[i] = CausalityAuthor;
+					arrCausalityAuthor = CausalityAuthor;
 					
           // var 
           suspectEntity.id = rez[i].organization_contact_id;
@@ -269,7 +269,316 @@ var controller = {
       },function(e){
         res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "getSuspectEntity"});
       });
+    },
+		condition: function getCondition(req, res){
+			var apikey = req.params.apikey;
+			var conditionId = req.query._id;
+			var adverseEventId = req.query.adverse_event_reaction_id;
+			
+			var condition = "";
+			var join = "";
+			
+			if(typeof conditionId !== 'undefined' && conditionId !== ""){
+        condition += "condition_id = '" + conditionId + "' AND ";  
+      }
+						
+			if(typeof adverseEventId !== 'undefined' && adverseEventId !== ""){
+        condition += "adverse_event_reaction_id = '" + adverseEventId + "' AND ";  
+      }
+			
+			if(condition == ""){
+        fixCondition = "";
+      }else{
+        fixCondition = " WHERE  " + condition.slice(0, -4);
+      }
+      
+			var query = "select condition_id from baciro_fhir.condition " + fixCondition;
+			//console.log(query);
+      
+			var arrCondition = [];
+      db.query(query,function(dataJson){
+        rez = lowercaseObject(dataJson);
+				//console.log(rez);
+        for(i = 0; i < rez.length; i++){
+					var Condition = {};
+					if(rez[i].condition_id != "null"){
+						Condition.id = hostfhir + ":" + portfhir + "/" + apikey + "/Condition?_id=" + rez[i].condition_id;
+					} else {
+						Condition.id = "";
+					}
+          //console.log(Condition);
+          arrCondition[i] = Condition;
+        }
+        res.json({"err_code":0,"data": arrCondition});
+      },function(e){
+        res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "getCondition"});
+      });
+    },
+		conditionSubjectMedicalHistory: function getConditionSubjectMedicalHistory(req, res){
+			var apikey = req.params.apikey;
+			var conditionId = req.query._id;
+			var adverseEventId = req.query.adverse_event_subject_medical_history_id;
+			
+			var condition = "";
+			var join = "";
+			
+			if(typeof conditionId !== 'undefined' && conditionId !== ""){
+        condition += "condition_id = '" + conditionId + "' AND ";  
+      }
+						
+			if(typeof adverseEventId !== 'undefined' && adverseEventId !== ""){
+        condition += "ADVERSE_EVENT_SUBJECT_MEDICAL_HISTORY_ID = '" + adverseEventId + "' AND ";  
+      }
+			
+			if(condition == ""){
+        fixCondition = "";
+      }else{
+        fixCondition = " WHERE  " + condition.slice(0, -4);
+      }
+      
+			var query = "select condition_id from baciro_fhir.condition " + fixCondition;
+			//console.log(query);
+      
+			var arrCondition = [];
+      db.query(query,function(dataJson){
+        rez = lowercaseObject(dataJson);
+				//console.log(rez);
+        for(i = 0; i < rez.length; i++){
+					var Condition = {};
+					if(rez[i].condition_id != "null"){
+						Condition.id = hostfhir + ":" + portfhir + "/" + apikey + "/Condition?_id=" + rez[i].condition_id;
+					} else {
+						Condition.id = "";
+					}
+          //console.log(Condition);
+          arrCondition[i] = Condition;
+        }
+        res.json({"err_code":0,"data": arrCondition});
+      },function(e){
+        res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "getConditionSubjectMedicalHistory"});
+      });
+    },
+		observationSubjectMedicalHistory: function getObservationSubjectMedicalHistory(req, res){
+			var apikey = req.params.apikey;
+			var observationId = req.query._id;
+			var adverseEventId = req.query.adverse_event_subject_medical_history_id;
+			
+			var condition = "";
+			var join = "";
+			
+			if(typeof observationId !== 'undefined' && observationId !== ""){
+        condition += "observation_id = '" + observationId + "' AND ";  
+      }
+						
+			if(typeof adverseEventId !== 'undefined' && adverseEventId !== ""){
+        condition += "ADVERSE_EVENT_ID = '" + adverseEventId + "' AND ";  
+      }
+			
+			if(condition == ""){
+        fixCondition = "";
+      }else{
+        fixCondition = " WHERE  " + condition.slice(0, -4);
+      }
+      
+			var query = "select observation_id from baciro_fhir.Observation " + fixCondition;
+			//console.log(query);
+      
+			var arrObservation = [];
+      db.query(query,function(dataJson){
+        rez = lowercaseObject(dataJson);
+				//console.log(rez);
+        for(i = 0; i < rez.length; i++){
+					var Observation = {};
+					if(rez[i].observation_id != "null"){
+						Observation.id = hostfhir + ":" + portfhir + "/" + apikey + "/Observation?_id=" + rez[i].observation_id;
+					} else {
+						Observation.id = "";
+					}
+					//console.log(Condition);
+          arrObservation[i] = Observation;
+        }
+        res.json({"err_code":0,"data": arrObservation});
+      },function(e){
+        res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "getObservationSubjectMedicalHistory"});
+      });
+    },
+		allergyIntoleranceSubjectMedicalHistory: function getAllergyIntoleranceSubjectMedicalHistory(req, res){
+			var apikey = req.params.apikey;
+			var allergyIntoleranceId = req.query._id;
+			var adverseEventId = req.query.adverse_event_subject_medical_history_id;
+			
+			var condition = "";
+			var join = "";
+			
+			if(typeof allergyIntoleranceId !== 'undefined' && allergyIntoleranceId !== ""){
+        condition += "allergy_intolerance_id = '" + allergyIntoleranceId + "' AND ";  
+      }
+						
+			if(typeof adverseEventId !== 'undefined' && adverseEventId !== ""){
+        condition += "ADVERSE_EVENT_ID = '" + adverseEventId + "' AND ";  
+      }
+			
+			if(condition == ""){
+        fixCondition = "";
+      }else{
+        fixCondition = " WHERE  " + condition.slice(0, -4);
+      }
+      
+			var query = "select allergy_intolerance_id from baciro_fhir.ALLERGY_INTOLERANCE " + fixCondition;
+			//console.log(query);
+      
+			var arrAllergyIntolerance = [];
+      db.query(query,function(dataJson){
+        rez = lowercaseObject(dataJson);
+				//console.log(rez);
+        for(i = 0; i < rez.length; i++){
+					var AllergyIntolerance = {};
+					if(rez[i].allergy_intolerance_id != "null"){
+						AllergyIntolerance.id = hostfhir + ":" + portfhir + "/" + apikey + "/AllergyIntolerance?_id=" + rez[i].allergy_intolerance_id;
+					} else {
+						AllergyIntolerance.id = "";
+					}
+          //console.log(Condition);
+          arrAllergyIntolerance[i] = AllergyIntolerance;
+        }
+        res.json({"err_code":0,"data": arrAllergyIntolerance});
+      },function(e){
+        res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "getAllergyIntoleranceSubjectMedicalHistory"});
+      });
+    },
+		familyMemberHistorySubjectMedicalHistory: function getFamilyMemberHistorySubjectMedicalHistory(req, res){
+			var apikey = req.params.apikey;
+			var familyMemberHistoryId = req.query._id;
+			var adverseEventId = req.query.adverse_event_subject_medical_history_id;
+			
+			var condition = "";
+			var join = "";
+			
+			if(typeof familyMemberHistoryId !== 'undefined' && familyMemberHistoryId !== ""){
+        condition += "family_member_history_id = '" + familyMemberHistoryId + "' AND ";  
+      }
+						
+			if(typeof adverseEventId !== 'undefined' && adverseEventId !== ""){
+        condition += "ADVERSE_EVENT_ID = '" + adverseEventId + "' AND ";  
+      }
+			
+			if(condition == ""){
+        fixCondition = "";
+      }else{
+        fixCondition = " WHERE  " + condition.slice(0, -4);
+      }
+      
+			var query = "select family_member_history_id from baciro_fhir.FAMILY_MEMBER_HISTORY " + fixCondition;
+			//console.log(query);
+      
+			var arrFamilyMemberHistory = [];
+      db.query(query,function(dataJson){
+        rez = lowercaseObject(dataJson);
+				//console.log(rez);
+        for(i = 0; i < rez.length; i++){
+					var FamilyMemberHistory = {};
+					if(rez[i].family_member_history_id != "null"){
+						FamilyMemberHistory.id = hostfhir + ":" + portfhir + "/" + apikey + "/FamilyMemberHistory?_id=" + rez[i].family_member_history_id;
+					} else {
+						FamilyMemberHistory.id = "";
+					}
+					
+          arrFamilyMemberHistory[i] = FamilyMemberHistory;
+        }
+        res.json({"err_code":0,"data": arrFamilyMemberHistory});
+      },function(e){
+        res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "getFamilyMemberHistorySubjectMedicalHistory"});
+      });
+    },
+		immunizationSubjectMedicalHistory: function getImmunizationSubjectMedicalHistory(req, res){
+			var apikey = req.params.apikey;
+			var immunizationId = req.query._id;
+			var adverseEventId = req.query.adverse_event_subject_medical_history_id;
+			
+			var condition = "";
+			var join = "";
+			
+			if(typeof immunizationId !== 'undefined' && immunizationId !== ""){
+        condition += "immunization_id = '" + immunizationId + "' AND ";  
+      }
+						
+			if(typeof adverseEventId !== 'undefined' && adverseEventId !== ""){
+        condition += "ADVERSE_EVENT_ID = '" + adverseEventId + "' AND ";  
+      }
+			
+			if(condition == ""){
+        fixCondition = "";
+      }else{
+        fixCondition = " WHERE  " + condition.slice(0, -4);
+      }
+      
+			var query = "select immunization_id from baciro_fhir.IMMUNIZATION " + fixCondition;
+			//console.log(query);
+      
+			var arrImmunization = [];
+      db.query(query,function(dataJson){
+        rez = lowercaseObject(dataJson);
+				//console.log(rez);
+        for(i = 0; i < rez.length; i++){
+					var Immunization = {};
+					if(rez[i].immunization_id != "null"){
+						Immunization.id = hostfhir + ":" + portfhir + "/" + apikey + "/Immunization?_id=" + rez[i].immunization_id;
+					} else {
+						Immunization.id = "";
+					}
+					
+          arrImmunization[i] = Immunization;
+        }
+        res.json({"err_code":0,"data": arrImmunization});
+      },function(e){
+        res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "getImmunizationSubjectMedicalHistory"});
+      });
+    },
+		procedureSubjectMedicalHistory: function getProcedureSubjectMedicalHistory(req, res){
+			var apikey = req.params.apikey;
+			var procedureId = req.query._id;
+			var adverseEventId = req.query.adverse_event_subject_medical_history_id;
+			
+			var condition = "";
+			var join = "";
+			
+			if(typeof procedureId !== 'undefined' && procedureId !== ""){
+        condition += "procedure_id = '" + procedureId + "' AND ";  
+      }
+						
+			if(typeof adverseEventId !== 'undefined' && adverseEventId !== ""){
+        condition += "ADVERSE_EVENT_ID = '" + adverseEventId + "' AND ";  
+      }
+			
+			if(condition == ""){
+        fixCondition = "";
+      }else{
+        fixCondition = " WHERE  " + condition.slice(0, -4);
+      }
+      
+			var query = "select procedure_id from baciro_fhir.PROCEDURE " + fixCondition;
+			//console.log(query);
+      
+			var arrProcedure = [];
+      db.query(query,function(dataJson){
+        rez = lowercaseObject(dataJson);
+				//console.log(rez);
+        for(i = 0; i < rez.length; i++){
+					var Procedure = {};
+					if(rez[i].procedure_id != "null"){
+						Procedure.id = hostfhir + ":" + portfhir + "/" + apikey + "/Procedure?_id=" + rez[i].procedure_id;
+					} else {
+						Procedure.id = "";
+					}
+					
+          arrProcedure[i] = Procedure;
+        }
+        res.json({"err_code":0,"data": arrProcedure});
+      },function(e){
+        res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "getProcedureSubjectMedicalHistory"});
+      });
     }
+		
   },
 	post: {
 		adverseEvent: function addAdverseEvent(req, res) {
@@ -283,7 +592,7 @@ var controller = {
 			var subject_medication = req.body.subject_medication;
 			var subject_device = req.body.subject_device;
 			var date = req.body.date;
-			var location = req.body.location;
+			var adverseEvent = req.body.adverseEvent;
 			var seriousness = req.body.seriousness;
 			var outcome = req.body.outcome;
 			var recorder_patient = req.body.recorder_patient;
@@ -329,9 +638,9 @@ var controller = {
         //values += "'" + date + "',";
 				values += "to_date('"+ date + "', 'yyyy-MM-dd HH:mm'),";
       }
-			if (typeof location !== 'undefined' && location !== "") {
-        column += 'location,';
-        values += "'" + location + "',";
+			if (typeof adverseEvent !== 'undefined' && adverseEvent !== "") {
+        column += 'adverseEvent,';
+        values += "'" + adverseEvent + "',";
       }
 			if (typeof seriousness !== 'undefined' && seriousness !== "") {
         column += 'seriousness,';
@@ -501,7 +810,7 @@ var controller = {
 			var subject_medication = req.body.subject_medication;
 			var subject_device = req.body.subject_device;
 			var date = req.body.date;
-			var location = req.body.location;
+			var adverseEvent = req.body.adverseEvent;
 			var seriousness = req.body.seriousness;
 			var outcome = req.body.outcome;
 			var recorder_patient = req.body.recorder_patient;
@@ -547,9 +856,9 @@ var controller = {
         //values += "'" + date + "',";
 				values += "to_date('"+ date + "', 'yyyy-MM-dd HH:mm'),";
       }
-			if (typeof location !== 'undefined' && location !== "") {
-        column += 'location,';
-        values += "'" + location + "',";
+			if (typeof adverseEvent !== 'undefined' && adverseEvent !== "") {
+        column += 'adverseEvent,';
+        values += "'" + adverseEvent + "',";
       }
 			if (typeof seriousness !== 'undefined' && seriousness !== "") {
         column += 'seriousness,';
