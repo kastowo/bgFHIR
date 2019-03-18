@@ -2845,7 +2845,11 @@ var controller = {
 			}
 			
 			if(typeof req.body.purpose !== 'undefined'){
+<<<<<<< HEAD
 				purpose =  req.body.purpose.trim().toLocaleUpperCase();
+=======
+				purpose =  req.body.purpose.trim().toUpperCase();
+>>>>>>> hcs
 				if(validator.isEmpty(purpose)){
 					err_code = 2;
 					err_msg = "Purpose is required.";

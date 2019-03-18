@@ -1,0 +1,4 @@
+ID,CODE,DISPLAY,DEFINITION
+100,free,Free,This service is available for no patient cost.
+110,disc,Discounts Available,There are discounts available on this service for qualifying patients.
+111,co 3,,

@@ -1,0 +1,3 @@
+ID,CODE,DISPLAY,DEFINITION
+1,DDD,fff,This episode of care is current.
+2,CR,callback results,Filler should contact the placer as soon as results are available, even for preliminary results. (Was C in HL7 version 2.3s reporting priority.)

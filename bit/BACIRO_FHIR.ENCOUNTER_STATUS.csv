@@ -1,0 +1,5 @@
+ID,CODE,DISPLAY,DEFINITION
+1,fff,fff,This episode of care is current.
+2,arrived,Arrived,The Patient is present for the encounter, however is not currently meeting with a practitioner.
+3,triaged,Triaged,The patient has been assessed for the priority of their treatment based on the severity of their condition.
+4,in-progress,In Progress,The Encounter has begun and the patient is present / the practitioner and the patient are meeting.

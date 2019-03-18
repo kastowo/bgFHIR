@@ -1,0 +1,4 @@
+ID,CODE,DISPLAY,DEFINITION
+1,required,Required,The participant is required to attend the appointment.
+101,optional,OPTIONAL,The participant may optionally attend the appointment.
+201,information-only,Information Only,The participant is excluded from the appointment, and may not be informed of the appointment taking place. (Appointment is about them, not for them  such as 2 doctors discussing results about a patients test).

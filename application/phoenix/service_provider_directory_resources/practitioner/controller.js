@@ -13,9 +13,17 @@ var port = configYaml.phoenix.port;
 var hostfhir = configYaml.fhir.host;
 var portfhir = configYaml.fhir.port;
 
+<<<<<<< HEAD
 // var phoenix = require("./phoenix.js");
 var phoenix = require(path.resolve("./phoenix.js"));
 var db = new phoenix("jdbc:phoenix:" + host + ":/hbase-unsecure");
+=======
+var hostHbase = configYaml.hbase.host;
+
+// var phoenix = require("./phoenix.js");
+var phoenix = require(path.resolve("./phoenix.js"));
+var db = new phoenix("jdbc:phoenix:" + hostHbase + ":/hbase-unsecure");
+>>>>>>> hcs
 
 var controller = {
 	get: {
@@ -148,7 +156,15 @@ var controller = {
           Practitioner.id = rez[i].practitioner_id;
           Practitioner.active = rez[i].practitioner_active;
 					Practitioner.gender = rez[i].practitioner_gender;
+<<<<<<< HEAD
 					Practitioner.birthdate = rez[i].practitioner_birthdate;
+=======
+					if(rez[i].practitioner_birthdate == null){
+						Practitioner.birthdate = formatDate(rez[i].practitioner_birthdate);
+					}else{
+						Practitioner.birthdate = rez[i].practitioner_birthdate;
+					}
+>>>>>>> hcs
           arrPractitioner[i] = Practitioner;
         }
         res.json({"err_code":0,"data": arrPractitioner});
@@ -341,6 +357,14 @@ var controller = {
         values += "'" + practitioner_id +"',";
       }
 			
+<<<<<<< HEAD
+=======
+			if(typeof organization_id !== 'undefined'){
+        column += 'organization_id,';
+        values += "'" + organization_id +"',";
+      }
+			
+>>>>>>> hcs
 			
 
       var query = "UPSERT INTO BACIRO_FHIR.QUALIFICATION(qualification_id, " + column.slice(0, -1) + ")"+
@@ -474,6 +498,14 @@ var controller = {
         values += "'" + practitioner_id +"',";
       }
 			
+<<<<<<< HEAD
+=======
+			if(typeof organization_id !== 'undefined'){
+        column += 'organization_id,';
+        values += "'" + organization_id +"',";
+      }
+			
+>>>>>>> hcs
 			var arrResource = domainResource.split('|');
 			var fieldResource = arrResource[0];
 			var valueResource = arrResource[1];

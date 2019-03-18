@@ -1,0 +1,3 @@
+ID,CODE,DISPLAY,DEFINITION
+1,barcode,BarCode,A Barcode scanner captured the data from the device label
+101,rfid,RFID,An RFID chip reader captured the data from the device label

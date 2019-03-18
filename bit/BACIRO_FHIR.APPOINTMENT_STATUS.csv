@@ -1,0 +1,9 @@
+ID,CODE,DISPLAY,DEFINITION
+1,proposed,Proposed,None of the participant(s) have finalized their acceptance of the appointment request, and the start/end time may not be set yet.
+101,pending,Pending,Some or all of the participant(s) have not finalized their acceptance of the appointment request.
+201,booked,Booked,All participant(s) have been considered and the appointment is confirmed to go ahead at the date/times specified.
+301,arrived,Arrived,Some of the patients have arrived.
+302,cancelled,Cancelled,The appointment has been cancelled.
+303,noshow,No Show,Some or all of the participant(s) have not/did not appear for the appointment (usually the patient).
+304,entered-in-error,Entered in error,This instance should not have been part of this patients medical record.
+305,fulfilled,Fulfilled,This appointment has completed and may have resulted in an encounter.

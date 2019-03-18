@@ -11,9 +11,17 @@ var configYaml = yamlconfig.readConfig(path.resolve('../../application/config/co
 var host = configYaml.phoenix.host;
 var port = configYaml.phoenix.port;
 
+<<<<<<< HEAD
 // var phoenix = require("./phoenix.js");
 var phoenix = require(path.resolve("./phoenix.js"));
 var db = new phoenix("jdbc:phoenix:" + host + ":/hbase-unsecure");
+=======
+var hostHbase = configYaml.hbase.host;
+
+// var phoenix = require("./phoenix.js");
+var phoenix = require(path.resolve("./phoenix.js"));
+var db = new phoenix("jdbc:phoenix:" + hostHbase + ":/hbase-unsecure");
+>>>>>>> hcs
 
 var controller = {
 	get: {
@@ -83,7 +91,22 @@ var controller = {
 					Endpoint.name = rez[i].endpoint_name;
 					//Endpoint.managingOrganization = rez[i].endpoint_managing_organization;
 					Endpoint.managingOrganization = rez[i].organization_id;
+<<<<<<< HEAD
 					Endpoint.period = rez[i].endpoint_period_start + " to " + rez[i].endpoint_period_end;
+=======
+					var endpointperiod_start,endpointperiod_end;
+					if(rez[i].endpoint_period_start == null){
+						endpointperiod_start = formatDate(rez[i].endpoint_period_start);  
+					}else{
+						endpointperiod_start = rez[i].endpoint_period_start;  
+					}
+					if(rez[i].endpoint_period_end == null){
+						endpointperiod_end = formatDate(rez[i].endpoint_period_end);  
+					}else{
+						endpointperiod_end = rez[i].endpoint_period_end;  
+					}
+					Endpoint.period = endpointperiod_start + ' to ' + endpointperiod_end;
+>>>>>>> hcs
 					Endpoint.payloadType = rez[i].endpoint_payload_type;
 					Endpoint.payloadMimeType = rez[i].endpoint_payload_mime_type;
 					Endpoint.address = rez[i].endpoint_address;
@@ -138,7 +161,11 @@ var controller = {
         if(endpoint_period_start == ""){
           endpoint_period_start = null;
         }else{
+<<<<<<< HEAD
           endpoint_period_start = "to_date('"+endpoint_period_start+ "', 'yyyy-MM-dd')";
+=======
+          endpoint_period_start = "to_date('"+endpoint_period_start+ "', 'yyyy-MM-dd HH:mm')";
+>>>>>>> hcs
         }
 
         column += 'endpoint_period_start,';
@@ -149,7 +176,11 @@ var controller = {
         if(endpoint_period_end == ""){
           endpoint_period_end = null;
         }else{
+<<<<<<< HEAD
           endpoint_period_end = "to_date('"+endpoint_period_end+ "', 'yyyy-MM-dd')";
+=======
+          endpoint_period_end = "to_date('"+endpoint_period_end+ "', 'yyyy-MM-dd HH:mm')";
+>>>>>>> hcs
         }
 
         column += 'endpoint_period_end,';
@@ -238,7 +269,11 @@ var controller = {
         if(endpoint_period_start == ""){
           endpoint_period_start = null;
         }else{
+<<<<<<< HEAD
           endpoint_period_start = "to_date('"+endpoint_period_start+ "', 'yyyy-MM-dd')";
+=======
+          endpoint_period_start = "to_date('"+endpoint_period_start+ "', 'yyyy-MM-dd HH:mm')";
+>>>>>>> hcs
         }
 
         column += 'endpoint_period_start,';
@@ -249,7 +284,11 @@ var controller = {
         if(endpoint_period_end == ""){
           endpoint_period_end = null;
         }else{
+<<<<<<< HEAD
           endpoint_period_end = "to_date('"+endpoint_period_end+ "', 'yyyy-MM-dd')";
+=======
+          endpoint_period_end = "to_date('"+endpoint_period_end+ "', 'yyyy-MM-dd HH:mm')";
+>>>>>>> hcs
         }
 
         column += 'endpoint_period_end,';

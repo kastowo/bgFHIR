@@ -290,6 +290,7 @@
 	    "udiEntryTypeCode":{
 	      "location": "%(apikey)s/udi-entry-type/code/%(code)s"
       },
+<<<<<<< HEAD
      "deviceStatus":{
         "location": "%(apikey)s/device-status/%(_id)d"
      },
@@ -494,6 +495,1337 @@
 		"endpointPayloadTypeCode":{
 			"location": "%(apikey)s/endpoint-payload-type/code/%(code)s"
 		}
+=======
+			"deviceStatus":{
+				"location": "%(apikey)s/device-status/%(_id)d"
+			},
+			"deviceStatusCode":{
+				"location": "%(apikey)s/device-status/code/%(code)s"
+			},
+			"deviceKind":{
+				"location": "%(apikey)s/device-kind/%(_id)d"
+			},
+			"deviceKindCode":{
+				"location": "%(apikey)s/device-kind/code/%(code)s"
+			},
+			"deviceSafety":{
+				"location": "%(apikey)s/device-safety/%(_id)d"
+			},
+			"deviceSafetyCode":{
+				"location": "%(apikey)s/device-safety/code/%(code)s"
+			},
+			"operationalStatus":{
+				"location": "%(apikey)s/operational-status/%(_id)d"
+			},
+			"operationalStatusCode":{
+				"location": "%(apikey)s/operational-status/code/%(code)s"
+			},
+			"parameterGroup":{
+				"location": "%(apikey)s/parameter-group/%(_id)d"
+			},
+			"parameterGroupCode":{
+				"location": "%(apikey)s/parameter-group/code/%(code)s"
+			},
+			"measurementPrinciple":{
+				"location": "%(apikey)s/measurement-principle/%(_id)d"
+			},
+			"measurementPrincipleCode":{
+				"location": "%(apikey)s/measurement-principle/code/%(code)s"
+			},
+			"specificationType":{
+				"location": "%(apikey)s/specification-type/%(_id)d"
+			},
+			"specificationTypeCode":{
+				"location": "%(apikey)s/specification-type/code/%(code)s"
+			},
+			"metricOperationalStatus":{
+				"location": "%(apikey)s/metric-operational-status/%(_id)d"
+			},
+			"metricOperationalStatusCode":{
+				"location": "%(apikey)s/metric-operational-status/code/%(code)s"
+			},
+			"deviceMetricType":{
+				"location": "%(apikey)s/device-metric-type/%(_id)d"
+			},
+			"deviceMetricTypeCode":{
+				"location": "%(apikey)s/device-metric-type/code/%(code)s"
+			},
+			"metricColor":{
+				"location": "%(apikey)s/metric-color/%(_id)d"
+			},
+			"metricColorCode":{
+				"location": "%(apikey)s/metric-color/code/%(code)s"
+			},
+			"metricCategory":{
+				"location": "%(apikey)s/metric-category/%(_id)d"
+			},
+			"metricColorCode":{
+				"location": "%(apikey)s/metric-category/code/%(code)s"
+			},
+			"metricCalibrationType":{
+				"location": "%(apikey)s/metric-calibration-type/%(_id)d"
+			},
+			"metricCalibrationTypeCode":{
+				"location": "%(apikey)s/metric-calibration-type/code/%(code)s"
+			},
+			"metricCalibrationState":{
+				"location": "%(apikey)s/metric-calibration-state/%(_id)d"
+			},
+			"metricCalibrationStateCode":{
+				"location": "%(apikey)s/metric-calibration-state/code/%(code)s"
+			},
+			"substanceStatus":{
+				"location": "%(apikey)s/substance-status/%(_id)d"
+			},
+			"substanceStatusCode":{
+				"location": "%(apikey)s/substance-status/code/%(code)s"
+			},
+			"substanceCategory":{
+				"location": "%(apikey)s/substance-category/%(_id)d"
+			},
+			"substanceCategoryCode":{
+				"location": "%(apikey)s/substance-category/code/%(code)s"
+			},
+			"substanceCode":{
+				"location": "%(apikey)s/substance-code/%(_id)d"
+			},
+			"substanceCodeCode":{
+				"location": "%(apikey)s/substance-code/code/%(code)s"
+			},
+			"organizationType":{
+				"location": "%(apikey)s/organization-type/%(_id)d"
+			},
+			"organizationTypeCode":{
+				"location": "%(apikey)s/organization-type/code/%(code)s"
+			},
+			"contactentityType":{
+				"location": "%(apikey)s/contactentity-type/%(_id)d"
+			},
+			"contactentityTypeCode":{
+				"location": "%(apikey)s/contactentity-type/code/%(code)s"
+			},
+			"locationStatus":{
+				"location": "%(apikey)s/location-status/%(_id)d"
+			},
+			"locationStatusCode":{
+				"location": "%(apikey)s/location-status/code/%(code)s"
+			},
+			"bedStatus":{
+				"location": "%(apikey)s/bed-status/%(_id)d"
+			},
+			"bedStatusCode":{
+				"location": "%(apikey)s/bed-status/code/%(code)s"
+			},
+			"locationMode":{
+				"location": "%(apikey)s/location-mode/%(_id)d"
+			},
+			"locationModeCode":{
+				"location": "%(apikey)s/location-mode/code/%(code)s"
+			},
+			"serviceDeliveryLocationRoleType":{
+				"location": "%(apikey)s/service-delivery-location-role-type/%(_id)d"
+			},
+			"serviceDeliveryLocationRoleTypeCode":{
+				"location": "%(apikey)s/service-delivery-location-role-type/code/%(code)s"
+			},
+			"locationPhysicalType":{
+				"location": "%(apikey)s/location-physical-type/%(_id)d"
+			},
+			"locationPhysicalTypeCode":{
+				"location": "%(apikey)s/location-physical-type/code/%(code)s"
+			},
+			"qualificationCode":{
+				"location": "%(apikey)s/qualification-code/%(_id)d"
+			},
+			"qualificationCodeCode":{
+				"location": "%(apikey)s/qualification-code/code/%(code)s"
+			},
+			"practitionerRoleCode":{
+				"location": "%(apikey)s/practitioner-role-code/%(_id)d"
+			},
+			"practitionerRoleCodeCode":{
+				"location": "%(apikey)s/practitioner-role-code/code/%(code)s"
+			},
+			"practiceCode":{
+				"location": "%(apikey)s/practice-code/%(_id)d"
+			},
+			"practiceCodeCode":{
+				"location": "%(apikey)s/practice-code/code/%(code)s"
+			},
+			"daysOfWeek":{
+				"location": "%(apikey)s/days-of-week/%(_id)d"
+			},
+			"daysOfWeekCode":{
+				"location": "%(apikey)s/days-of-week/code/%(code)s"
+			},
+			"serviceCategory":{
+				"location": "%(apikey)s/service-category/%(_id)d"
+			},
+			"serviceCategoryCode":{
+				"location": "%(apikey)s/service-category/code/%(code)s"
+			},
+			"serviceType":{
+				"location": "%(apikey)s/service-type/%(_id)d"
+			},
+			"serviceTypeCode":{
+				"location": "%(apikey)s/service-type/code/%(code)s"
+			},
+			"serviceProvisionConditions":{
+				"location": "%(apikey)s/service-provision-conditions/%(_id)d"
+			},
+			"serviceProvisionConditionsCode":{
+				"location": "%(apikey)s/service-provision-conditions/code/%(code)s"
+			},
+			"serviceReferralMethod":{
+				"location": "%(apikey)s/service-referral-method/%(_id)d"
+			},
+			"serviceReferralMethodCode":{
+				"location": "%(apikey)s/service-referral-method/code/%(code)s"
+			},
+			"endpointStatus":{
+				"location": "%(apikey)s/endpoint-status/%(_id)d"
+			},
+			"endpointStatusCode":{
+				"location": "%(apikey)s/endpoint-status/code/%(code)s"
+			},
+			"endpointConnectionType":{
+				"location": "%(apikey)s/endpoint-connection-type/%(_id)d"
+			},
+			"endpointConnectionTypeCode":{
+				"location": "%(apikey)s/endpoint-connection-type/code/%(code)s"
+			},
+			"endpointPayloadType":{
+				"location": "%(apikey)s/endpoint-payload-type/%(_id)d"
+			},
+			"endpointPayloadTypeCode":{
+				"location": "%(apikey)s/endpoint-payload-type/code/%(code)s"
+			},
+			"adverseEventCategory":{
+				"location": "%(apikey)s/adverse-event-category/%(_id)d"
+			},
+			"adverseEventCategoryCode":{
+				"location": "%(apikey)s/adverse-event-category/code/%(code)s"
+			},
+			"adverseEventType":{
+				"location": "%(apikey)s/adverse-event-type/%(_id)d"
+			},
+			"adverseEventTypeCode":{
+				"location": "%(apikey)s/adverse-event-type/code/%(code)s"
+			},
+			"adverseEventSeriousness":{
+				"location": "%(apikey)s/adverse-event-seriousness/%(_id)d"
+			},
+			"adverseEventSeriousnessCode":{
+				"location": "%(apikey)s/adverse-event-seriousness/code/%(code)s"
+			},
+			"adverseEventOutcome":{
+				"location": "%(apikey)s/adverse-event-outcome/%(_id)d"
+			},
+			"adverseEventOutcomeCode":{
+				"location": "%(apikey)s/adverse-event-outcome/code/%(code)s"
+			},
+			"adverseEventCausality":{
+				"location": "%(apikey)s/adverse-event-causality/%(_id)d"
+			},
+			"adverseEventCausalityCode":{
+				"location": "%(apikey)s/adverse-event-causality/code/%(code)s"
+			},
+			"adverseEventCausalityAssess":{
+				"location": "%(apikey)s/adverse-event-causality-assess/%(_id)d"
+			},
+			"adverseEventCausalityAssessCode":{
+				"location": "%(apikey)s/adverse-event-causality-assess/code/%(code)s"
+			},
+			"adverseEventCausalityMethod":{
+				"location": "%(apikey)s/adverse-event-causality-method/%(_id)d"
+			},
+			"adverseEventCausalityMethodCode":{
+				"location": "%(apikey)s/adverse-event-causality-method/code/%(code)s"
+			},
+			"adverseEventCausalityResult":{
+				"location": "%(apikey)s/adverse-event-causality-result/%(_id)d"
+			},
+			"adverseEventCausalityResultCode":{
+				"location": "%(apikey)s/adverse-event-causality-result/code/%(code)s"
+			},
+			"allergyClinicalStatus":{
+				"location": "%(apikey)s/allergy-clinical-status/%(_id)d"
+			},
+			"allergyClinicalStatusCode":{
+				"location": "%(apikey)s/allergy-clinical-status/code/%(code)s"
+			},
+			"allergyVerificationStatus":{
+				"location": "%(apikey)s/allergy-verification-status/%(_id)d"
+			},
+			"allergyVerificationStatusCode":{
+				"location": "%(apikey)s/allergy-verification-status/code/%(code)s"
+			},
+			"allergyIntoleranceType":{
+				"location": "%(apikey)s/allergy-intolerance-type/%(_id)d"
+			},
+			"allergyIntoleranceTypeCode":{
+				"location": "%(apikey)s/allergy-intolerance-type/code/%(code)s"
+			},
+			"allergyIntoleranceCategory":{
+				"location": "%(apikey)s/allergy-intolerance-category/%(_id)d"
+			},
+			"allergyIntoleranceCategoryCode":{
+				"location": "%(apikey)s/allergy-intolerance-category/code/%(code)s"
+			},
+			"allergyIntoleranceCriticality":{
+				"location": "%(apikey)s/allergy-intolerance-criticality/%(_id)d"
+			},
+			"allergyIntoleranceCriticalityCode":{
+				"location": "%(apikey)s/allergy-intolerance-criticality/code/%(code)s"
+			},
+			"allergyIntoleranceCode":{
+				"location": "%(apikey)s/allergy-intolerance-code/%(_id)d"
+			},
+			"allergyIntoleranceCodeCode":{
+				"location": "%(apikey)s/allergy-intolerance-code/code/%(code)s"
+			},
+			"substanceCode":{
+				"location": "%(apikey)s/substance-code/%(_id)d"
+			},
+			"substanceCodeCode":{
+				"location": "%(apikey)s/substance-code/code/%(code)s"
+			},
+			"clinicalFindings":{
+				"location": "%(apikey)s/clinical-findings/%(_id)d"
+			},
+			"clinicalFindingsCode":{
+				"location": "%(apikey)s/clinical-findings/code/%(code)s"
+			},
+			"reactionEventSeverity":{
+				"location": "%(apikey)s/reaction-event-severity/%(_id)d"
+			},
+			"reactionEventSeverityCode":{
+				"location": "%(apikey)s/reaction-event-severity/code/%(code)s"
+			},
+			"routeCodes":{
+				"location": "%(apikey)s/route-codes/%(_id)d"
+			},
+			"routeCodesCode":{
+				"location": "%(apikey)s/route-codes/code/%(code)s"
+			},
+			"carePlanStatus":{
+				"location": "%(apikey)s/care-plan-status/%(_id)d"
+			},
+			"carePlanStatusCode":{
+				"location": "%(apikey)s/care-plan-status/code/%(code)s"
+			},
+			"carePlanIntent":{
+				"location": "%(apikey)s/care-plan-intent/%(_id)d"
+			},
+			"carePlanIntentCode":{
+				"location": "%(apikey)s/care-plan-intent/code/%(code)s"
+			},
+			"carePlanCategory":{
+				"location": "%(apikey)s/care-plan-category/%(_id)d"
+			},
+			"carePlanCategoryCode":{
+				"location": "%(apikey)s/care-plan-category/code/%(code)s"
+			},
+			"carePlanActivityOutcome":{
+				"location": "%(apikey)s/care-plan-activity-outcome/%(_id)d"
+			},
+			"carePlanActivityOutcomeCode":{
+				"location": "%(apikey)s/care-plan-activity-outcome/code/%(code)s"
+			},
+			"carePlanActivityCategory":{
+				"location": "%(apikey)s/care-plan-activity-category/%(_id)d"
+			},
+			"carePlanActivityCategoryCode":{
+				"location": "%(apikey)s/care-plan-activity-category/code/%(code)s"
+			},
+			"carePlanActivity":{
+				"location": "%(apikey)s/care-plan-activity/%(_id)d"
+			},
+			"carePlanActivityCode":{
+				"location": "%(apikey)s/care-plan-activity/code/%(code)s"
+			},
+			"activityReason":{
+				"location": "%(apikey)s/activity-reason/%(_id)d"
+			},
+			"activityReasonCode":{
+				"location": "%(apikey)s/activity-reason/code/%(code)s"
+			},
+			"carePlanActivityStatus":{
+				"location": "%(apikey)s/care-plan-activity-status/%(_id)d"
+			},
+			"carePlanActivityStatusCode":{
+				"location": "%(apikey)s/care-plan-activity-status/code/%(code)s"
+			},
+			"medicationCodes":{
+				"location": "%(apikey)s/medication-codes/%(_id)d"
+			},
+			"medicationCodesCode":{
+				"location": "%(apikey)s/medication-codes/code/%(code)s"
+			},
+			"careTeamStatus":{
+				"location": "%(apikey)s/care-team-status/%(_id)d"
+			},
+			"careTeamStatusCode":{
+				"location": "%(apikey)s/care-team-status/code/%(code)s"
+			},
+			"careTeamCategory":{
+				"location": "%(apikey)s/care-team-category/%(_id)d"
+			},
+			"careTeamCategoryCode":{
+				"location": "%(apikey)s/care-team-category/code/%(code)s"
+			},
+			"participantRole":{
+				"location": "%(apikey)s/participant-role/%(_id)d"
+			},
+			"participantRoleCode":{
+				"location": "%(apikey)s/participant-role/code/%(code)s"
+			},
+			"clinicalImpressionStatus":{
+				"location": "%(apikey)s/clinical-impression-status/%(_id)d"
+			},
+			"clinicalImpressionStatusCode":{
+				"location": "%(apikey)s/clinical-impression-status/code/%(code)s"
+			},
+			"investigationSets":{
+				"location": "%(apikey)s/investigation-sets/%(_id)d"
+			},
+			"investigationSetsCode":{
+				"location": "%(apikey)s/investigation-sets/code/%(code)s"
+			},
+			"clinicalimpressionPrognosis":{
+				"location": "%(apikey)s/clinicalimpression-prognosis/%(_id)d"
+			},
+			"clinicalimpressionPrognosisCode":{
+				"location": "%(apikey)s/clinicalimpression-prognosis/code/%(code)s"
+			},
+			"conditionClinical":{
+				"location": "%(apikey)s/condition-clinical/%(_id)d"
+			},
+			"conditionClinicalCode":{
+				"location": "%(apikey)s/condition-clinical/code/%(code)s"
+			},
+			"conditionVerStatus":{
+				"location": "%(apikey)s/condition-ver-status/%(_id)d"
+			},
+			"conditionVerStatusCode":{
+				"location": "%(apikey)s/condition-ver-status/code/%(code)s"
+			},
+			"conditionCategory":{
+				"location": "%(apikey)s/condition-category/%(_id)d"
+			},
+			"conditionCategoryCode":{
+				"location": "%(apikey)s/condition-category/code/%(code)s"
+			},
+			"conditionSeverity":{
+				"location": "%(apikey)s/condition-severity/%(_id)d"
+			},
+			"conditionSeverityCode":{
+				"location": "%(apikey)s/condition-severity/code/%(code)s"
+			},
+			"conditionCode":{
+				"location": "%(apikey)s/condition-code/%(_id)d"
+			},
+			"conditionCodeCode":{
+				"location": "%(apikey)s/condition-code/code/%(code)s"
+			},
+			"bodySite":{
+				"location": "%(apikey)s/body-site/%(_id)d"
+			},
+			"bodySiteCode":{
+				"location": "%(apikey)s/body-site/code/%(code)s"
+			},
+			"conditionStage":{
+				"location": "%(apikey)s/condition-stage/%(_id)d"
+			},
+			"conditionStageCode":{
+				"location": "%(apikey)s/condition-stage/code/%(code)s"
+			},
+			"manifestationOrSymptom":{
+				"location": "%(apikey)s/manifestation-or-symptom/%(_id)d"
+			},
+			"manifestationOrSymptomCode":{
+				"location": "%(apikey)s/manifestation-or-symptom/code/%(code)s"
+			},
+			"observationStatus":{
+				"location": "%(apikey)s/observation-status/%(_id)d"
+			},
+			"observationStatusCode":{
+				"location": "%(apikey)s/observation-status/code/%(code)s"
+			},
+			"detectedissueCategory":{
+				"location": "%(apikey)s/detectedissue-category/%(_id)d"
+			},
+			"detectedissueCategoryCode":{
+				"location": "%(apikey)s/detectedissue-category/code/%(code)s"
+			},
+			"detectedissueSeverity":{
+				"location": "%(apikey)s/detectedissue-severity/%(_id)d"
+			},
+			"detectedissueSeverityCode":{
+				"location": "%(apikey)s/detectedissue-severity/code/%(code)s"
+			},
+			"detectedissueMitigationAction":{
+				"location": "%(apikey)s/detectedissue-mitigation-action/%(_id)d"
+			},
+			"detectedissueMitigationActionCode":{
+				"location": "%(apikey)s/detectedissue-mitigation-action/code/%(code)s"
+			},
+			"historyStatus":{
+				"location": "%(apikey)s/history-status/%(_id)d"
+			},
+			"historyStatusCode":{
+				"location": "%(apikey)s/history-status/code/%(code)s"
+			},
+			"historyNotDoneReason":{
+				"location": "%(apikey)s/history-not-done-reason/%(_id)d"
+			},
+			"historyNotDoneReasonCode":{
+				"location": "%(apikey)s/history-not-done-reason/code/%(code)s"
+			},
+			"familyMember":{
+				"location": "%(apikey)s/family-member/%(_id)d"
+			},
+			"familyMemberCode":{
+				"location": "%(apikey)s/family-member/code/%(code)s"
+			},
+			"conditionOutcome":{
+				"location": "%(apikey)s/condition-outcome/%(_id)d"
+			},
+			"conditionOutcomeCode":{
+				"location": "%(apikey)s/condition-outcome/code/%(code)s"
+			},
+			"riskProbability":{
+				"location": "%(apikey)s/risk-probability/%(_id)d"
+			},
+			"riskProbabilityCode":{
+				"location": "%(apikey)s/risk-probability/code/%(code)s"
+			},
+			"goalStatus":{
+				"location": "%(apikey)s/goal-status/%(_id)d"
+			},
+			"goalStatusCode":{
+				"location": "%(apikey)s/goal-status/code/%(code)s"
+			},
+			"goalCategory":{
+				"location": "%(apikey)s/goal-category/%(_id)d"
+			},
+			"goalCategoryCode":{
+				"location": "%(apikey)s/goal-category/code/%(code)s"
+			},
+			"goalPriority":{
+				"location": "%(apikey)s/goal-priority/%(_id)d"
+			},
+			"goalPriorityCode":{
+				"location": "%(apikey)s/goal-priority/code/%(code)s"
+			},
+			"goalStartEvent":{
+				"location": "%(apikey)s/goal-start-event/%(_id)d"
+			},
+			"goalStartEventCode":{
+				"location": "%(apikey)s/goal-start-event/code/%(code)s"
+			},
+			"observationCodes":{
+				"location": "%(apikey)s/observation-codes/%(_id)d"
+			},
+			"observationCodesCode":{
+				"location": "%(apikey)s/observation-codes/code/%(code)s"
+			},
+			"eventStatus":{
+				"location": "%(apikey)s/event-status/%(_id)d"
+			},
+			"eventStatusCode":{
+				"location": "%(apikey)s/event-status/code/%(code)s"
+			},
+			"procedureNotPerformedReason":{
+				"location": "%(apikey)s/procedure-not-performed-reason/%(_id)d"
+			},
+			"procedureNotPerformedReasonCode":{
+				"location": "%(apikey)s/procedure-not-performed-reason/code/%(code)s"
+			},
+			"procedureCategory":{
+				"location": "%(apikey)s/procedure-category/%(_id)d"
+			},
+			"procedureCategoryCode":{
+				"location": "%(apikey)s/procedure-category/code/%(code)s"
+			},
+			"procedureCode":{
+				"location": "%(apikey)s/procedure-code/%(_id)d"
+			},
+			"procedureCodeCode":{
+				"location": "%(apikey)s/procedure-code/code/%(code)s"
+			},
+			"performerRole":{
+				"location": "%(apikey)s/performer-role/%(_id)d"
+			},
+			"performerRoleCode":{
+				"location": "%(apikey)s/performer-role/code/%(code)s"
+			},
+			"procedureReason":{
+				"location": "%(apikey)s/procedure-reason/%(_id)d"
+			},
+			"procedureReasonCode":{
+				"location": "%(apikey)s/procedure-reason/code/%(code)s"
+			},
+			"procedureOutcome":{
+				"location": "%(apikey)s/procedure-outcome/%(_id)d"
+			},
+			"procedureOutcomeCode":{
+				"location": "%(apikey)s/procedure-outcome/code/%(code)s"
+			},
+			"procedureFollowup":{
+				"location": "%(apikey)s/procedure-followup/%(_id)d"
+			},
+			"procedureFollowupCode":{
+				"location": "%(apikey)s/procedure-followup/code/%(code)s"
+			},
+			"deviceAction":{
+				"location": "%(apikey)s/device-action/%(_id)d"
+			},
+			"deviceActionCode":{
+				"location": "%(apikey)s/device-action/code/%(code)s"
+			},
+			"deviceKind":{
+				"location": "%(apikey)s/device-kind/%(_id)d"
+			},
+			"deviceKindCode":{
+				"location": "%(apikey)s/device-kind/code/%(code)s"
+			},
+			"immunizationStatus":{
+				"location": "%(apikey)s/immunization-status/%(_id)d"
+			},
+			"immunizationStatusCode":{
+				"location": "%(apikey)s/immunization-status/code/%(code)s"
+			},
+			"vaccineCode":{
+				"location": "%(apikey)s/vaccine-code/%(_id)d"
+			},
+			"vaccineCodeCode":{
+				"location": "%(apikey)s/vaccine-code/code/%(code)s"
+			},
+			"immunizationOrigin":{
+				"location": "%(apikey)s/immunization-origin/%(_id)d"
+			},
+			"immunizationOriginCode":{
+				"location": "%(apikey)s/immunization-origin/code/%(code)s"
+			},
+			"immunizationSite":{
+				"location": "%(apikey)s/immunization-site/%(_id)d"
+			},
+			"immunizationSiteCode":{
+				"location": "%(apikey)s/immunization-site/code/%(code)s"
+			},
+			"immunizationRoute":{
+				"location": "%(apikey)s/immunization-route/%(_id)d"
+			},
+			"immunizationRouteCode":{
+				"location": "%(apikey)s/immunization-route/code/%(code)s"
+			},
+			"immunizationRole":{
+				"location": "%(apikey)s/immunization-role/%(_id)d"
+			},
+			"immunizationRoleCode":{
+				"location": "%(apikey)s/immunization-role/code/%(code)s"
+			},
+			"immunizationReason":{
+				"location": "%(apikey)s/immunization-reason/%(_id)d"
+			},
+			"immunizationReasonCode":{
+				"location": "%(apikey)s/immunization-reason/code/%(code)s"
+			},
+			"noImmunizationReason":{
+				"location": "%(apikey)s/no-immunization-reason/%(_id)d"
+			},
+			"noImmunizationReasonCode":{
+				"location": "%(apikey)s/no-immunization-reason/code/%(code)s"
+			},
+			"vaccinationProtocolDoseTarget":{
+				"location": "%(apikey)s/vaccination-protocol-dose-target/%(_id)d"
+			},
+			"vaccinationProtocolDoseTargetCode":{
+				"location": "%(apikey)s/vaccination-protocol-dose-target/code/%(code)s"
+			},
+			"vaccinationProtocolDoseStatus":{
+				"location": "%(apikey)s/vaccination-protocol-dose-status/%(_id)d"
+			},
+			"vaccinationProtocolDoseStatusCode":{
+				"location": "%(apikey)s/vaccination-protocol-dose-status/code/%(code)s"
+			},
+			"vaccinationProtocolDoseStatusReason":{
+				"location": "%(apikey)s/vaccination-protocol-dose-status-reason/%(_id)d"
+			},
+			"vaccinationProtocolDoseStatusReasonCode":{
+				"location": "%(apikey)s/vaccination-protocol-dose-status-reason/code/%(code)s"
+			},
+			"immunizationRecommendationTargetDisease":{
+				"location": "%(apikey)s/immunization-recommendation-target-disease/%(_id)d"
+			},
+			"immunizationRecommendationTargetDiseaseCode":{
+				"location": "%(apikey)s/immunization-recommendation-target-disease/code/%(code)s"
+			},
+			"immunizationRecommendationStatus":{
+				"location": "%(apikey)s/immunization-recommendation-status/%(_id)d"
+			},
+			"immunizationRecommendationStatusCode":{
+				"location": "%(apikey)s/immunization-recommendation-status/code/%(code)s"
+			},
+			"immunizationRecommendationDateCriterion":{
+				"location": "%(apikey)s/immunization-recommendation-date-criterion/%(_id)d"
+			},
+			"immunizationRecommendationDateCriterionCode":{
+				"location": "%(apikey)s/immunization-recommendation-date-criterion/code/%(code)s"
+			},
+			"medicationStatus":{
+				"location": "%(apikey)s/medication-status/%(_id)d"
+			},
+			"medicationStatusCode":{
+				"location": "%(apikey)s/medication-status/code/%(code)s"
+			},
+			"medicationFormCodes":{
+				"location": "%(apikey)s/medication-form-codes/%(_id)d"
+			},
+			"medicationFormCodesCode":{
+				"location": "%(apikey)s/medication-form-codes/code/%(code)s"
+			},
+			"medicationPackageForm":{
+				"location": "%(apikey)s/medication-package-form/%(_id)d"
+			},
+			"medicationPackageFormCode":{
+				"location": "%(apikey)s/medication-package-form/code/%(code)s"
+			},
+			"medicationAdminStatus":{
+				"location": "%(apikey)s/medication-admin-status/%(_id)d"
+			},
+			"medicationAdminStatusCode":{
+				"location": "%(apikey)s/medication-admin-status/code/%(code)s"
+			},
+			"medicationAdminCategory":{
+				"location": "%(apikey)s/medication-admin-category/%(_id)d"
+			},
+			"medicationAdminCategoryCode":{
+				"location": "%(apikey)s/medication-admin-category/code/%(code)s"
+			},
+			"reasonMedicationNotGivenCodes":{
+				"location": "%(apikey)s/reason-medication-not-given-codes/%(_id)d"
+			},
+			"reasonMedicationNotGivenCodesCode":{
+				"location": "%(apikey)s/reason-medication-not-given-codes/code/%(code)s"
+			},
+			"reasonMedicationGivenCodes":{
+				"location": "%(apikey)s/reason-medication-given-codes/%(_id)d"
+			},
+			"reasonMedicationGivenCodesCode":{
+				"location": "%(apikey)s/reason-medication-given-codes/code/%(code)s"
+			},
+			"approachSiteCodes":{
+				"location": "%(apikey)s/approach-site-codes/%(_id)d"
+			},
+			"approachSiteCodesCode":{
+				"location": "%(apikey)s/approach-site-codes/code/%(code)s"
+			},
+			"administrationMethodCodes":{
+				"location": "%(apikey)s/administration-method-codes/%(_id)d"
+			},
+			"administrationMethodCodesCode":{
+				"location": "%(apikey)s/administration-method-codes/code/%(code)s"
+			},
+			"medicationDispenseStatus":{
+				"location": "%(apikey)s/medication-dispense-status/%(_id)d"
+			},
+			"medicationDispenseStatusCode":{
+				"location": "%(apikey)s/medication-dispense-status/code/%(code)s"
+			},
+			"medicationDispenseCategory":{
+				"location": "%(apikey)s/medication-dispense-category/%(_id)d"
+			},
+			"medicationDispenseCategoryCode":{
+				"location": "%(apikey)s/medication-dispense-category/code/%(code)s"
+			},
+			"actPharmacySupplyType":{
+				"location": "%(apikey)s/act-pharmacy-supply-type/%(_id)d"
+			},
+			"actPharmacySupplyTypeCode":{
+				"location": "%(apikey)s/act-pharmacy-supply-type/code/%(code)s"
+			},
+			"actSubstanceAdminSubstitutionCode":{
+				"location": "%(apikey)s/act-substance-admin-substitution-code/%(_id)d"
+			},
+			"actSubstanceAdminSubstitutionCodeCode":{
+				"location": "%(apikey)s/act-substance-admin-substitution-code/code/%(code)s"
+			},
+			"actSubstanceAdminSubstitutionReason":{
+				"location": "%(apikey)s/act-substance-admin-substitution-reason/%(_id)d"
+			},
+			"actSubstanceAdminSubstitutionReasonCode":{
+				"location": "%(apikey)s/act-substance-admin-substitution-reason/code/%(code)s"
+			}
+			
+			,
+			"medicationRequestStatus":{
+				"location": "%(apikey)s/medication-request-status/%(_id)d"
+			},
+			"medicationRequestStatusCode":{
+				"location": "%(apikey)s/medication-request-status/code/%(code)s"
+			},
+			"medicationRequestIntent":{
+				"location": "%(apikey)s/medication-request-intent/%(_id)d"
+			},
+			"medicationRequestIntentCode":{
+				"location": "%(apikey)s/medication-request-intent/code/%(code)s"
+			},
+			"medicationRequestCategory":{
+				"location": "%(apikey)s/medication-request-category/%(_id)d"
+			},
+			"medicationRequestCategoryCode":{
+				"location": "%(apikey)s/medication-request-category/code/%(code)s"
+			},
+			"medicationRequestPriority":{
+				"location": "%(apikey)s/medication-request-priority/%(_id)d"
+			},
+			"medicationRequestPriorityCode":{
+				"location": "%(apikey)s/medication-request-priority/code/%(code)s"
+			},
+			"medicationCodes":{
+				"location": "%(apikey)s/medication-codes/%(_id)d"
+			},
+			"medicationCodesCode":{
+				"location": "%(apikey)s/medication-codes/code/%(code)s"
+			},
+			"substanceAdminSubstitutionReason":{
+				"location": "%(apikey)s/substance-admin-substitution-reason/%(_id)d"
+			},
+			"substanceAdminSubstitutionReasonCode":{
+				"location": "%(apikey)s/substance-admin-substitution-reason/code/%(code)s"
+			}
+			
+			,
+			"medicationStatementStatus":{
+				"location": "%(apikey)s/medication-statement-status/%(_id)d"
+			},
+			"medicationStatementStatusCode":{
+				"location": "%(apikey)s/medication-statement-status/code/%(code)s"
+			},
+			"medicationStatementCategory":{
+				"location": "%(apikey)s/medication-statement-category/%(_id)d"
+			},
+			"medicationStatementCategoryCode":{
+				"location": "%(apikey)s/medication-statement-category/code/%(code)s"
+			},
+			"medicationStatementTaken":{
+				"location": "%(apikey)s/medication-statement-taken/%(_id)d"
+			},
+			"medicationStatementTakenCode":{
+				"location": "%(apikey)s/medication-statement-taken/code/%(code)s"
+			},
+			"reasonMedicationNotTakenCodes":{
+				"location": "%(apikey)s/reason-medication-not-taken-codes/%(_id)d"
+			},
+			"reasonMedicationNotTakenCodesCode":{
+				"location": "%(apikey)s/reason-medication-not-taken-codes/code/%(code)s"
+			}
+			
+			,
+			"observationCategory":{
+				"location": "%(apikey)s/observation-category/%(_id)d"
+			},
+			"observationCategoryCode":{
+				"location": "%(apikey)s/observation-category/code/%(code)s"
+			},
+			"observationValueabsentreason":{
+				"location": "%(apikey)s/observation-valueabsentreason/%(_id)d"
+			},
+			"observationValueabsentreasonCode":{
+				"location": "%(apikey)s/observation-valueabsentreason/code/%(code)s"
+			},
+			"observationInterpretation":{
+				"location": "%(apikey)s/observation-interpretation/%(_id)d"
+			},
+			"observationInterpretationCode":{
+				"location": "%(apikey)s/observation-interpretation/code/%(code)s"
+			},
+			"observationMethods":{
+				"location": "%(apikey)s/observation-methods/%(_id)d"
+			},
+			"observationMethodsCode":{
+				"location": "%(apikey)s/observation-methods/code/%(code)s"
+			},
+			"referencerangeMeaning":{
+				"location": "%(apikey)s/referencerange-meaning/%(_id)d"
+			},
+			"referencerangeMeaningCode":{
+				"location": "%(apikey)s/referencerange-meaning/code/%(code)s"
+			},
+			"referencerangeAppliesto":{
+				"location": "%(apikey)s/referencerange-appliesto/%(_id)d"
+			},
+			"referencerangeAppliestoCode":{
+				"location": "%(apikey)s/referencerange-appliesto/code/%(code)s"
+			},
+			"observationRelationshiptypes":{
+				"location": "%(apikey)s/observation-relationshiptypes/%(_id)d"
+			},
+			"observationRelationshiptypesCode":{
+				"location": "%(apikey)s/observation-relationshiptypes/code/%(code)s"
+			}
+			
+			,
+			"diagnosticReportStatus":{
+				"location": "%(apikey)s/diagnostic-report-status/%(_id)d"
+			},
+			"diagnosticReportStatusCode":{
+				"location": "%(apikey)s/diagnostic-report-status/code/%(code)s"
+			},
+			"diagnosticServiceSections":{
+				"location": "%(apikey)s/diagnostic-service-sections/%(_id)d"
+			},
+			"diagnosticServiceSectionsCode":{
+				"location": "%(apikey)s/diagnostic-service-sections/code/%(code)s"
+			},
+			"reportCodes":{
+				"location": "%(apikey)s/report-codes/%(_id)d"
+			},
+			"reportCodesCode":{
+				"location": "%(apikey)s/report-codes/code/%(code)s"
+			}
+			
+			,
+			"requestStatus":{
+				"location": "%(apikey)s/request-status/%(_id)d"
+			},
+			"requestStatusCode":{
+				"location": "%(apikey)s/request-status/code/%(code)s"
+			},
+			"requestIntent":{
+				"location": "%(apikey)s/request-intent/%(_id)d"
+			},
+			"requestIntentCode":{
+				"location": "%(apikey)s/request-intent/code/%(code)s"
+			},
+			"requestPriority":{
+				"location": "%(apikey)s/request-priority/%(_id)d"
+			},
+			"requestPriorityCode":{
+				"location": "%(apikey)s/request-priority/code/%(code)s"
+			},
+			"medicationAsNeededReason":{
+				"location": "%(apikey)s/medication-as-needed-reason/%(_id)d"
+			},
+			"medicationAsNeededReasonCode":{
+				"location": "%(apikey)s/medication-as-needed-reason/code/%(code)s"
+			}
+			
+			,
+			"instanceAvailability":{
+				"location": "%(apikey)s/instance-availability/%(_id)d"
+			},
+			"instanceAvailabilityCode":{
+				"location": "%(apikey)s/instance-availability/code/%(code)s"
+			},
+			"dicomCid29":{
+				"location": "%(apikey)s/dicom-cid29/%(_id)d"
+			},
+			"dicomCid29Code":{
+				"location": "%(apikey)s/dicom-cid29/code/%(code)s"
+			},
+			"bodysiteLaterality":{
+				"location": "%(apikey)s/bodysite-laterality/%(_id)d"
+			},
+			"bodysiteLateralityCode":{
+				"location": "%(apikey)s/bodysite-laterality/code/%(code)s"
+			}
+			
+			,
+			"sequenceType":{
+				"location": "%(apikey)s/sequence-type/%(_id)d"
+			},
+			"sequenceTypeCode":{
+				"location": "%(apikey)s/sequence-type/code/%(code)s"
+			},
+			"sequenceReferenceSeq":{
+				"location": "%(apikey)s/sequence-referenceSeq/%(_id)d"
+			},
+			"sequenceReferenceSeqCode":{
+				"location": "%(apikey)s/sequence-referenceSeq/code/%(code)s"
+			},
+			"qualityType":{
+				"location": "%(apikey)s/quality-type/%(_id)d"
+			},
+			"qualityTypeCode":{
+				"location": "%(apikey)s/quality-type/code/%(code)s"
+			},
+			"repositoryType":{
+				"location": "%(apikey)s/repository-type/%(_id)d"
+			},
+			"repositoryTypeCode":{
+				"location": "%(apikey)s/repository-type/code/%(code)s"
+			},
+			"chromosomeHuman":{
+				"location": "%(apikey)s/chromosome-human/%(_id)d"
+			},
+			"chromosomeHumanCode":{
+				"location": "%(apikey)s/chromosome-human/code/%(code)s"
+			}
+			
+			,
+			"specimenStatus":{
+				"location": "%(apikey)s/specimen-status/%(_id)d"
+			},
+			"specimenStatusCode":{
+				"location": "%(apikey)s/specimen-status/code/%(code)s"
+			},
+			"specimenProcessingProcedure":{
+				"location": "%(apikey)s/specimen-processing-procedure/%(_id)d"
+			},
+			"specimenProcessingProcedureCode":{
+				"location": "%(apikey)s/specimen-processing-procedure/code/%(code)s"
+			},
+			"specimenContainerType":{
+				"location": "%(apikey)s/specimen-container-type/%(_id)d"
+			},
+			"specimenContainerTypeCode":{
+				"location": "%(apikey)s/specimen-container-type/code/%(code)s"
+			},
+			"specimenCollectionMethod":{
+				"location": "%(apikey)s/specimen-collection-method/%(_id)d"
+			},
+			"specimenCollectionMethodCode":{
+				"location": "%(apikey)s/specimen-collection-method/code/%(code)s"
+			},
+			"bodysiteRelativeLocation":{
+				"location": "%(apikey)s/bodysite-relative-location/%(_id)d"
+			},
+			"bodysiteRelativeLocationCode":{
+				"location": "%(apikey)s/bodysite-relative-location/code/%(code)s"
+			},
+			"specimenType":{
+				"location": "%(apikey)s/specimen-type/%(_id)d"
+			},
+			"specimenTypeCode":{
+				"location": "%(apikey)s/specimen-type/code/%(code)s"
+			},
+			"preservative":{
+				"location": "%(apikey)s/preservative/%(_id)d"
+			},
+			"preservativeCode":{
+				"location": "%(apikey)s/preservative/code/%(code)s"
+			},
+			"usageContextType":{
+				"location": "%(apikey)s/usage-context-type/%(_id)d"
+			},
+			"usageContextTypeCode":{
+				"location": "%(apikey)s/usage-context-type/code/%(code)s"
+			},
+			"usageContext":{
+				"location": "%(apikey)s/usage-context/%(_id)d"
+			},
+			"usageContextCode":{
+				"location": "%(apikey)s/usage-context/code/%(code)s"
+			},
+			"quantityComparator":{
+				"location": "%(apikey)s/quantity-comparator/%(_id)d"
+			},
+			"quantityComparatorCode":{
+				"location": "%(apikey)s/quantity-comparator/code/%(code)s"
+			},
+			"allTypes":{
+				"location": "%(apikey)s/all-types/%(_id)d"
+			},
+			"allTypesCode":{
+				"location": "%(apikey)s/all-types/code/%(code)s"
+			}
+			
+			,
+			"relatedArtifactType":{
+				"location": "%(apikey)s/related-artifact-type/%(_id)d"
+			},
+			"relatedArtifactTypeCode":{
+				"location": "%(apikey)s/related-artifact-type/code/%(code)s"
+			},
+			"triggerType":{
+				"location": "%(apikey)s/trigger-type/%(_id)d"
+			},
+			"triggerTypeCode":{
+				"location": "%(apikey)s/trigger-type/code/%(code)s"
+			}
+			
+			,
+			"actionParticipantType":{
+				"location": "%(apikey)s/action-participant-type/%(_id)d"
+			},
+			"actionParticipantTypeCode":{
+				"location": "%(apikey)s/action-participant-type/code/%(code)s"
+			},
+			"planDefinitionType":{
+				"location": "%(apikey)s/plan-definition-type/%(_id)d"
+			},
+			"planDefinitionTypeCode":{
+				"location": "%(apikey)s/plan-definition-type/code/%(code)s"
+			},
+			"publicationStatus":{
+				"location": "%(apikey)s/publication-status/%(_id)d"
+			},
+			"publicationStatusCode":{
+				"location": "%(apikey)s/publication-status/code/%(code)s"
+			},
+			"definitionTopic":{
+				"location": "%(apikey)s/definition-topic/%(_id)d"
+			},
+			"definitionTopicCode":{
+				"location": "%(apikey)s/definition-topic/code/%(code)s"
+			},
+			"actionConditionKind":{
+				"location": "%(apikey)s/action-condition-kind/%(_id)d"
+			},
+			"actionConditionKindCode":{
+				"location": "%(apikey)s/action-condition-kind/code/%(code)s"
+			},
+			"actionRelationshipType":{
+				"location": "%(apikey)s/action-relationship-type/%(_id)d"
+			},
+			"actionRelationshipTypeCode":{
+				"location": "%(apikey)s/action-relationship-type/code/%(code)s"
+			},
+			"actionType":{
+				"location": "%(apikey)s/action-type/%(_id)d"
+			},
+			"actionTypeCode":{
+				"location": "%(apikey)s/action-type/code/%(code)s"
+			},
+			"actionGroupingBehavior":{
+				"location": "%(apikey)s/action-grouping-behavior/%(_id)d"
+			},
+			"actionGroupingBehaviorCode":{
+				"location": "%(apikey)s/action-grouping-behavior/code/%(code)s"
+			},
+			"actionSelectionBehavior":{
+				"location": "%(apikey)s/action-selection-behavior/%(_id)d"
+			},
+			"actionSelectionBehaviorCode":{
+				"location": "%(apikey)s/action-selection-behavior/code/%(code)s"
+			},
+			"actionRequiredBehavior":{
+				"location": "%(apikey)s/action-required-behavior/%(_id)d"
+			},
+			"actionRequiredBehaviorCode":{
+				"location": "%(apikey)s/action-required-behavior/code/%(code)s"
+			},
+			"actionPrecheckBehavior":{
+				"location": "%(apikey)s/action-precheck-behavior/%(_id)d"
+			},
+			"actionPrecheckBehaviorCode":{
+				"location": "%(apikey)s/action-precheck-behavior/code/%(code)s"
+			},
+			"actionCardinalityBehavior":{
+				"location": "%(apikey)s/action-cardinality-behavior/%(_id)d"
+			},
+			"actionCardinalityBehaviorCode":{
+				"location": "%(apikey)s/action-cardinality-behavior/code/%(code)s"
+			},
+			"actionlist":{
+				"location": "%(apikey)s/actionlist/%(_id)d"
+			},
+			"actionlistCode":{
+				"location": "%(apikey)s/actionlist/code/%(code)s"
+			},
+			"processOutcome":{
+				"location": "%(apikey)s/process-outcome/%(_id)d"
+			},
+			"processOutcomeCode":{
+				"location": "%(apikey)s/process-outcome/code/%(code)s"
+			},
+			"noteType":{
+				"location": "%(apikey)s/note-type/%(_id)d"
+			},
+			"noteTypeCode":{
+				"location": "%(apikey)s/note-type/code/%(code)s"
+			},
+			"adjudicationError":{
+				"location": "%(apikey)s/adjudication-error/%(_id)d"
+			},
+			"adjudicationErrorCode":{
+				"location": "%(apikey)s/adjudication-error/code/%(code)s"
+			},
+			"deviceStatementStatus":{
+				"location": "%(apikey)s/device-statement-status/%(_id)d"
+			},
+			"deviceStatementStatusCode":{
+				"location": "%(apikey)s/device-statement-status/code/%(code)s"
+			},
+			"supplyrequestStatus":{
+				"location": "%(apikey)s/supplyrequest-status/%(_id)d"
+			},
+			"supplyrequestStatusCode":{
+				"location": "%(apikey)s/supplyrequest-status/code/%(code)s"
+			},
+			"supplyrequestReason":{
+				"location": "%(apikey)s/supplyrequest-reason/%(_id)d"
+			},
+			"supplyrequestReasonCode":{
+				"location": "%(apikey)s/supplyrequest-reason/code/%(code)s"
+			},
+			"supplydeliveryStatus":{
+				"location": "%(apikey)s/supplydelivery-status/%(_id)d"
+			},
+			"supplydeliveryStatusCode":{
+				"location": "%(apikey)s/supplydelivery-status/code/%(code)s"
+			},
+			"supplydeliveryType":{
+				"location": "%(apikey)s/supplydelivery-type/%(_id)d"
+			},
+			"supplydeliveryTypeCode":{
+				"location": "%(apikey)s/supplydelivery-type/code/%(code)s"
+			},
+			"taskStatus":{
+				"location": "%(apikey)s/task-status/%(_id)d"
+			},
+			"taskStatusCode":{
+				"location": "%(apikey)s/task-status/code/%(code)s"
+			},
+			"taskPerformerType":{
+				"location": "%(apikey)s/task-performer-type/%(_id)d"
+			},
+			"taskPerformerTypeCode":{
+				"location": "%(apikey)s/task-performer-type/code/%(code)s"
+			},
+			"forms":{
+				"location": "%(apikey)s/forms/%(_id)d"
+			},
+			"formsCode":{
+				"location": "%(apikey)s/forms/code/%(code)s"
+			},
+			"supplyItem":{
+				"location": "%(apikey)s/supply-item/%(_id)d"
+			},
+			"supplyItemCode":{
+				"location": "%(apikey)s/supply-item/code/%(code)s"
+			},
+			
+			"referralType": {
+        "location": "%(apikey)s/referral-type/%(_id)d"
+      },
+      "referralTypeCode": {
+        "location": "%(apikey)s/referral-type/code/%(code)s"
+      },
+      "c80PracticeCodes": {
+        "location": "%(apikey)s/c80-practice-codes/%(_id)d"
+      },
+      "c80PracticeCodesCode": {
+        "location": "%(apikey)s/c80-practice-codes/code/%(code)s"
+      },
+      "practitionerSpecialty": {
+        "location": "%(apikey)s/practitioner-specialty/%(_id)d"
+      },
+      "practitionerSpecialtyCode": {
+        "location": "%(apikey)s/practitioner-specialty/code/%(code)s"
+      },
+      "nutritionRequestStatus": {
+        "location": "%(apikey)s/nutrition-request-status/%(_id)d"
+      },
+      "nutritionRequestStatusCode": {
+        "location": "%(apikey)s/nutrition-request-status/code/%(code)s"
+      },
+      "foodType": {
+        "location": "%(apikey)s/food-type/%(_id)d"
+      },
+      "foodTypeCode": {
+        "location": "%(apikey)s/food-type/code/%(code)s"
+      },
+      "dietType": {
+        "location": "%(apikey)s/diet-type/%(_id)d"
+      },
+      "dietTypeCode": {
+        "location": "%(apikey)s/diet-type/code/%(code)s"
+      },
+      "nutrientCode": {
+        "location": "%(apikey)s/nutrient-code/%(_id)d"
+      },
+      "nutrientCodeCode": {
+        "location": "%(apikey)s/nutrient-code/code/%(code)s"
+      },
+      "textureCode": {
+        "location": "%(apikey)s/texture-code/%(_id)d"
+      },
+      "textureCodeCode": {
+        "location": "%(apikey)s/texture-code/code/%(code)s"
+      },
+      "modifiedFoodtype": {
+        "location": "%(apikey)s/modified-foodtype/%(_id)d"
+      },
+      "modifiedFoodtypeCode": {
+        "location": "%(apikey)s/modified-foodtype/code/%(code)s"
+      },
+      "consistencyType": {
+        "location": "%(apikey)s/consistency-type/%(_id)d"
+      },
+      "consistencyTypeCode": {
+        "location": "%(apikey)s/consistency-type/code/%(code)s"
+      },
+      "supplementType": {
+        "location": "%(apikey)s/supplement-type/%(_id)d"
+      },
+      "supplementTypeCode": {
+        "location": "%(apikey)s/supplement-type/code/%(code)s"
+      },
+      "entformulaType": {
+        "location": "%(apikey)s/entformula-type/%(_id)d"
+      },
+      "entformulaTypeCode": {
+        "location": "%(apikey)s/entformula-type/code/%(code)s"
+      },
+      "entformulaAdditive": {
+        "location": "%(apikey)s/entformula-additive/%(_id)d"
+      },
+      "entformulaAdditiveCode": {
+        "location": "%(apikey)s/entformula-additive/code/%(code)s"
+      },
+      "enteralRoute": {
+        "location": "%(apikey)s/enteral-route/%(_id)d"
+      },
+      "enteralRouteCode": {
+        "location": "%(apikey)s/enteral-route/code/%(code)s"
+      },
+      "fmStatus": {
+        "location": "%(apikey)s/fm-status/%(_id)d"
+      },
+      "fmStatusCode": {
+        "location": "%(apikey)s/fm-status/code/%(code)s"
+      },
+      "visionProduct": {
+        "location": "%(apikey)s/vision-product/%(_id)d"
+      },
+      "visionProductCode": {
+        "location": "%(apikey)s/vision-product/code/%(code)s"
+      },
+      "visionEyeCodes": {
+        "location": "%(apikey)s/vision-eye-codes/%(_id)d"
+      },
+      "visionEyeCodesCode": {
+        "location": "%(apikey)s/vision-eye-codes/code/%(code)s"
+      },
+      "visionBaseCodes": {
+        "location": "%(apikey)s/vision-base-codes/%(_id)d"
+      },
+      "visionBaseCodesCode": {
+        "location": "%(apikey)s/vision-base-codes/code/%(code)s"
+      },
+      "publicationStatus": {
+        "location": "%(apikey)s/publication-status/%(_id)d"
+      },
+      "publicationStatusCode": {
+        "location": "%(apikey)s/publication-status/code/%(code)s"
+      },
+      "jurisdiction": {
+        "location": "%(apikey)s/jurisdiction/%(_id)d"
+      },
+      "jurisdictionCode": {
+        "location": "%(apikey)s/jurisdiction/code/%(code)s"
+      },
+      "resourceTypes": {
+        "location": "%(apikey)s/resource-types/%(_id)d"
+      },
+      "resourceTypesCode": {
+        "location": "%(apikey)s/resource-types/code/%(code)s"
+      }
+>>>>>>> hcs
 		},
 		"POST": {
 			"identityAssuranceLevel": {
@@ -685,6 +2017,649 @@
 			"reAdmissionIndicator": {
 				"location": "%(apikey)s/re-admission-indicator"
 			},
+			"slot": {
+				"location": "%(apikey)s/slot"
+			},
+			 "appointment": {
+					"location": "%(apikey)s/appointment"
+			 },
+			 "appointmentParticipant": {
+					"location": "%(apikey)s/appointment-participant"
+			 },
+			 "appointmentResponse": {
+					"location": "%(apikey)s/appointment-response"
+			 },
+			 "udiEntryType": {
+					"location": "%(apikey)s/udi-entry-type"
+			 },
+			 "deviceStatus": {
+					"location": "%(apikey)s/device-status"
+			 },
+			 "deviceKind": {
+					"location": "%(apikey)s/device-kind"
+			 },
+			 "deviceSafety": {
+					"location": "%(apikey)s/device-safety"
+			 },
+			 "operationalStatus": {
+					"location": "%(apikey)s/operational-status"
+			 },
+			 "parameterGroup": {
+					"location": "%(apikey)s/parameter-group"
+			 },
+			 "measurementPrinciple": {
+					"location": "%(apikey)s/measurement-principle"
+			 },
+			 "specificationType": {
+					"location": "%(apikey)s/specification-type"
+			 },
+			 "metricOperationalStatus": {
+					"location": "%(apikey)s/metric-operational-status"
+			 },
+			 "deviceMetricType": {
+					"location": "%(apikey)s/device-metric-type"
+			 },
+			 "metricColor": {
+					"location": "%(apikey)s/metric-color"
+			 },
+			 "metricCategory": {
+					"location": "%(apikey)s/metric-category"
+			 },
+			 "metricCalibrationType": {
+					"location": "%(apikey)s/metric-calibration-type"
+			 },
+			 "metricCalibrationState": {
+					"location": "%(apikey)s/metric-calibration-state"
+			 },
+			 "substanceStatus": {
+					"location": "%(apikey)s/substance-status"
+			 },
+			 "substanceCategory": {
+					"location": "%(apikey)s/substance-category"
+			 },
+			 "substanceCode": {
+					"location": "%(apikey)s/substance-code"
+			 },
+			 "device": {
+					"location": "%(apikey)s/device"
+			 },
+			 "deviceUdi": {
+					"location": "%(apikey)s/device-udi"
+			 },
+			 "deviceComponent": {
+					"location": "%(apikey)s/device-component"
+			 },
+			 "deviceComponentProductionSpecification": {
+					"location": "%(apikey)s/device-component-production-specification"
+			 },
+			 "deviceMetric": {
+					"location": "%(apikey)s/device-metric"
+			 },
+			 "deviceMetricCalibration": {
+					"location": "%(apikey)s/device-metric-calibration"
+			 },
+			 "substance": {
+					"location": "%(apikey)s/substance"
+			 },
+			 "substanceInstance": {
+					"location": "%(apikey)s/substance-instance"
+			 },
+			 "substanceIngredient": {
+					"location": "%(apikey)s/substance-ingredient"
+			 },
+			"organizationType":{
+				"location": "%(apikey)s/organization-type"
+			},
+			"contactentityType":{
+				"location": "%(apikey)s/contactentity-type"
+			},
+			"locationStatus":{
+				"location": "%(apikey)s/location-status"
+			},
+			"bedStatus":{
+				"location": "%(apikey)s/bed-status"
+			},
+			"locationMode":{
+				"location": "%(apikey)s/location-mode"
+			},
+			"serviceDeliveryLocationRoleType":{
+				"location": "%(apikey)s/service-delivery-location-role-type"
+			},
+			"locationPhysicalType":{
+				"location": "%(apikey)s/location-physical-type"
+			},
+			"qualificationCode":{
+				"location": "%(apikey)s/qualification-code"
+			},
+			"practitionerRoleCode":{
+				"location": "%(apikey)s/practitioner-role-code"
+			},
+			"practiceCode":{
+				"location": "%(apikey)s/practice-code"
+			},
+			"daysOfWeek":{
+				"location": "%(apikey)s/days-of-week"
+			},
+			"serviceCategory":{
+				"location": "%(apikey)s/service-category"
+			},
+			"serviceType":{
+				"location": "%(apikey)s/service-type"
+			},
+			"serviceProvisionConditions":{
+				"location": "%(apikey)s/service-provision-conditions"
+			},
+			"serviceReferralMethod":{
+				"location": "%(apikey)s/service-referral-method"
+			},
+			"endpointStatus":{
+				"location": "%(apikey)s/endpoint-status"
+			},
+			"endpointConnectionType":{
+				"location": "%(apikey)s/endpoint-connection-type"
+			},
+			"endpointPayloadType":{
+				"location": "%(apikey)s/endpoint-payload-type"
+			},
+			"organization":{
+				"location": "%(apikey)s/Organization"
+			},
+			"organizationContact":{
+				"location": "%(apikey)s/organizationContact"
+			},
+			"endpoint":{
+				"location": "%(apikey)s/Endpoint"
+			},
+			"location":{
+				"location": "%(apikey)s/Location"
+			},
+			"locationPosition":{
+				"location": "%(apikey)s/LocationPosition"
+			},
+			"practitioner":{
+				"location": "%(apikey)s/Practitioner"
+			},
+			"qualification":{
+				"location": "%(apikey)s/Qualification"
+			},
+			"practitionerCommunication":{
+				"location": "%(apikey)s/PractitionerCommunication"
+			},
+			"practitionerRole":{
+				"location": "%(apikey)s/PractitionerRole"
+			},
+			"availableTime":{
+				"location": "%(apikey)s/AvailableTime"
+			},
+			"notAvailable":{
+				"location": "%(apikey)s/NotAvailable"
+			},
+			"timing":{
+				"location": "%(apikey)s/Timing"
+			},
+			"annotation":{
+				"location": "%(apikey)s/Annotation"
+			}
+			
+			,
+			"dataRequirement":{
+				"location": "%(apikey)s/DataRequirement"
+			},
+			"codeFilter":{
+				"location": "%(apikey)s/CodeFilter"
+			},
+			"dateFilter":{
+				"location": "%(apikey)s/DateFilter"
+			},
+			"relatedArtifact":{
+				"location": "%(apikey)s/RelatedArtifact"
+			},
+			"triggerDefinition":{
+				"location": "%(apikey)s/TriggerDefinition"
+			}
+			
+			,
+			"healthcareService":{
+				"location": "%(apikey)s/HealthcareService"
+			},
+			"adverseEventCategory":{
+				"location": "%(apikey)s/adverse-event-category"
+			},
+			"adverseEventType":{
+				"location": "%(apikey)s/adverse-event-type"
+			},
+			"adverseEventSeriousness":{
+				"location": "%(apikey)s/adverse-event-seriousness"
+			},
+			"adverseEventOutcome":{
+				"location": "%(apikey)s/adverse-event-outcome"
+			},
+			"adverseEventCausality":{
+				"location": "%(apikey)s/adverse-event-causality"
+			},
+			"adverseEventCausalityAssess":{
+				"location": "%(apikey)s/adverse-event-causality-assess"
+			},
+			"adverseEventCausalityMethod":{
+				"location": "%(apikey)s/adverse-event-causality-method"
+			},
+			"adverseEventCausalityResult":{
+				"location": "%(apikey)s/adverse-event-causality-result"
+			},
+			"allergyClinicalStatus":{
+				"location": "%(apikey)s/allergy-clinical-status"
+			},
+			"allergyVerificationStatus":{
+				"location": "%(apikey)s/allergy-verification-status"
+			},
+			"allergyIntoleranceType":{
+				"location": "%(apikey)s/allergy-intolerance-type"
+			},
+			"allergyIntoleranceCategory":{
+				"location": "%(apikey)s/allergy-intolerance-category"
+			},
+			"allergyIntoleranceCriticality":{
+				"location": "%(apikey)s/allergy-intolerance-criticality"
+			},
+			"allergyIntoleranceCode":{
+				"location": "%(apikey)s/allergy-intolerance-code"
+			},
+			"substanceCode":{
+				"location": "%(apikey)s/substance-code"
+			},
+			"clinicalFindings":{
+				"location": "%(apikey)s/clinical-findings"
+			},
+			"reactionEventSeverity":{
+				"location": "%(apikey)s/reaction-event-severity"
+			},
+			"routeCodes":{
+				"location": "%(apikey)s/route-codes"
+			},
+			"carePlanStatus":{
+				"location": "%(apikey)s/care-plan-status"
+			},
+			"carePlanIntent":{
+				"location": "%(apikey)s/care-plan-intent"
+			},
+			"carePlanCategory":{
+				"location": "%(apikey)s/care-plan-category"
+			},
+			"carePlanActivityOutcome":{
+				"location": "%(apikey)s/care-plan-activity-outcome"
+			},
+			"carePlanActivityCategory":{
+				"location": "%(apikey)s/care-plan-activity-category"
+			},
+			"carePlanActivity":{
+				"location": "%(apikey)s/care-plan-activity"
+			},
+			"activityReason":{
+				"location": "%(apikey)s/activity-reason"
+			},
+			"carePlanActivityStatus":{
+				"location": "%(apikey)s/care-plan-activity-status"
+			},
+			"medicationCodes":{
+				"location": "%(apikey)s/medication-codes"
+			},
+			"careTeamStatus":{
+				"location": "%(apikey)s/care-team-status"
+			},
+			"careTeamCategory":{
+				"location": "%(apikey)s/care-team-category"
+			},
+			"participantRole":{
+				"location": "%(apikey)s/participant-role"
+			},
+			"clinicalImpressionStatus":{
+				"location": "%(apikey)s/clinical-impression-status"
+			},
+			"investigationSets":{
+				"location": "%(apikey)s/investigation-sets"
+			},
+			"clinicalimpressionPrognosis":{
+				"location": "%(apikey)s/clinicalimpression-prognosis"
+			},
+			"conditionClinical":{
+				"location": "%(apikey)s/condition-clinical"
+			},
+			"conditionVerStatus":{
+				"location": "%(apikey)s/condition-ver-status"
+			},
+			"conditionCategory":{
+				"location": "%(apikey)s/condition-category"
+			},
+			"conditionSeverity":{
+				"location": "%(apikey)s/condition-severity"
+			},
+			"conditionCode":{
+				"location": "%(apikey)s/condition-code"
+			},
+			"bodySite":{
+				"location": "%(apikey)s/body-site"
+			},
+			"conditionStage":{
+				"location": "%(apikey)s/condition-stage"
+			},
+			"manifestationOrSymptom":{
+				"location": "%(apikey)s/manifestation-or-symptom"
+			},
+			"observationStatus":{
+				"location": "%(apikey)s/observation-status"
+			},
+			"detectedissueCategory":{
+				"location": "%(apikey)s/detectedissue-category"
+			},
+			"detectedissueSeverity":{
+				"location": "%(apikey)s/detectedissue-severity"
+			},
+			"detectedissueMitigationAction":{
+				"location": "%(apikey)s/detectedissue-mitigation-action"
+			},
+			"historyStatus":{
+				"location": "%(apikey)s/history-status"
+			},
+			"historyNotDoneReason":{
+				"location": "%(apikey)s/history-not-done-reason"
+			},
+			"familyMember":{
+				"location": "%(apikey)s/family-member"
+			},
+			"conditionOutcome":{
+				"location": "%(apikey)s/condition-outcome"
+			},
+			"riskProbability":{
+				"location": "%(apikey)s/risk-probability"
+			},
+			"goalStatus":{
+				"location": "%(apikey)s/goal-status"
+			},
+			"goalCategory":{
+				"location": "%(apikey)s/goal-category"
+			},
+			"goalPriority":{
+				"location": "%(apikey)s/goal-priority"
+			},
+			"goalStartEvent":{
+				"location": "%(apikey)s/goal-start-event"
+			},
+			"observationCodes":{
+				"location": "%(apikey)s/observation-codes"
+			},
+			"eventStatus":{
+				"location": "%(apikey)s/event-status"
+			},
+			"procedureNotPerformedReason":{
+				"location": "%(apikey)s/procedure-not-performed-reason"
+			},
+			"procedureCategory":{
+				"location": "%(apikey)s/procedure-category"
+			},
+			"procedureCode":{
+				"location": "%(apikey)s/procedure-code"
+			},
+			"performerRole":{
+				"location": "%(apikey)s/performer-role"
+			},
+			"procedureReason":{
+				"location": "%(apikey)s/procedure-reason"
+			},
+			"procedureOutcome":{
+				"location": "%(apikey)s/procedure-outcome"
+			},
+			"procedureFollowup":{
+				"location": "%(apikey)s/procedure-followup"
+			},
+			"deviceAction":{
+				"location": "%(apikey)s/device-action"
+			},
+			"deviceKind":{
+				"location": "%(apikey)s/device-kind"
+			},
+			"adverseEvent":{
+				"location": "%(apikey)s/AdverseEvent"
+			},
+			"adverseEventSuspectEntity":{
+				"location": "%(apikey)s/AdverseEventSuspectEntity"
+			}
+			
+			,
+			"immunizationStatus":{
+				"location": "%(apikey)s/immunization-status"
+			},
+			"vaccineCode":{
+				"location": "%(apikey)s/vaccine-code"
+			},
+			"immunizationOrigin":{
+				"location": "%(apikey)s/immunization-origin"
+			},
+			"immunizationSite":{
+				"location": "%(apikey)s/immunization-site"
+			},
+			"immunizationRoute":{
+				"location": "%(apikey)s/immunization-route"
+			},
+			"immunizationRole":{
+				"location": "%(apikey)s/immunization-role"
+			},
+			"immunizationReason":{
+				"location": "%(apikey)s/immunization-reason"
+			},
+			"noImmunizationReason":{
+				"location": "%(apikey)s/no-immunization-reason"
+			},
+			"vaccinationProtocolDoseTarget":{
+				"location": "%(apikey)s/vaccination-protocol-dose-target"
+			},
+			"vaccinationProtocolDoseStatus":{
+				"location": "%(apikey)s/vaccination-protocol-dose-status"
+			},
+			"vaccinationProtocolDoseStatusReason":{
+				"location": "%(apikey)s/vaccination-protocol-dose-status-reason"
+			},
+			"immunizationRecommendationTargetDisease":{
+				"location": "%(apikey)s/immunization-recommendation-target-disease"
+			},
+			"immunizationRecommendationStatus":{
+				"location": "%(apikey)s/immunization-recommendation-status"
+			},
+			"immunizationRecommendationDateCriterion":{
+				"location": "%(apikey)s/immunization-recommendation-date-criterion"
+			},
+			"medicationStatus":{
+				"location": "%(apikey)s/medication-status"
+			},
+			"medicationFormCodes":{
+				"location": "%(apikey)s/medication-form-codes"
+			},
+			"medicationPackageForm":{
+				"location": "%(apikey)s/medication-package-form"
+			},
+			"medicationAdminStatus":{
+				"location": "%(apikey)s/medication-admin-status"
+			},
+			"medicationAdminCategory":{
+				"location": "%(apikey)s/medication-admin-category"
+			},
+			"reasonMedicationNotGivenCodes":{
+				"location": "%(apikey)s/reason-medication-not-given-codes"
+			},
+			"reasonMedicationGivenCodes":{
+				"location": "%(apikey)s/reason-medication-given-codes"
+			},
+			"approachSiteCodes":{
+				"location": "%(apikey)s/approach-site-codes"
+			},
+			"administrationMethodCodes":{
+				"location": "%(apikey)s/administration-method-codes"
+			},
+			"medicationDispenseStatus":{
+				"location": "%(apikey)s/medication-dispense-status"
+			},
+			"medicationDispenseCategory":{
+				"location": "%(apikey)s/medication-dispense-category"
+			},
+			"actPharmacySupplyType":{
+				"location": "%(apikey)s/act-pharmacy-supply-type"
+			},
+			"actSubstanceAdminSubstitutionCode":{
+				"location": "%(apikey)s/act-substance-admin-substitution-code"
+			},
+			"actSubstanceAdminSubstitutionReason":{
+				"location": "%(apikey)s/act-substance-admin-substitution-reason"
+			},
+			"medicationRequestStatus":{
+				"location": "%(apikey)s/medication-request-status"
+			},
+			"medicationRequestCategory":{
+				"location": "%(apikey)s/medication-request-category"
+			},
+			"medicationRequestIntent":{
+				"location": "%(apikey)s/medication-request-intent"
+			},
+			"medicationRequestPriority":{
+				"location": "%(apikey)s/medication-request-priority"
+			},
+			"medicationCodes":{
+				"location": "%(apikey)s/medication-codes"
+			},
+			"substanceAdminSubstitutionReason":{
+				"location": "%(apikey)s/substance-admin-substitution-reason"
+			}
+			
+			,
+			"medicationStatementStatus":{
+				"location": "%(apikey)s/medication-statement-status"
+			},
+			"medicationStatementCategory":{
+				"location": "%(apikey)s/medication-statement-category"
+			},
+			"medicationStatementTaken":{
+				"location": "%(apikey)s/medication-statement-taken"
+			},
+			"reasonMedicationNotTakenCodes":{
+				"location": "%(apikey)s/reason-medication-not-taken-codes"
+			}
+			
+			,
+			"observationCategory":{
+				"location": "%(apikey)s/observation-category"
+			},
+			"observationValueabsentreason":{
+				"location": "%(apikey)s/observation-valueabsentreason"
+			},
+			"observationInterpretation":{
+				"location": "%(apikey)s/observation-interpretation"
+			},
+			"observationMethods":{
+				"location": "%(apikey)s/observation-methods"
+			},
+			"referencerangeMeaning":{
+				"location": "%(apikey)s/referencerange-meaning"
+			},
+			"referencerangeAppliesto":{
+				"location": "%(apikey)s/referencerange-appliesto"
+			},
+			"observationRelationshiptypes":{
+				"location": "%(apikey)s/observation-relationshiptypes"
+			}
+			
+			,
+			"diagnosticReportStatus":{
+				"location": "%(apikey)s/diagnostic-report-status"
+			},
+			"diagnosticServiceSections":{
+				"location": "%(apikey)s/diagnostic-service-sections"
+			},
+			"reportCodes":{
+				"location": "%(apikey)s/report-codes"
+			}
+			
+			,
+			"requestStatus":{
+				"location": "%(apikey)s/request-status"
+			},
+			"requestIntent":{
+				"location": "%(apikey)s/request-intent"
+			},
+			"requestPriority":{
+				"location": "%(apikey)s/request-priority"
+			},
+			"medicationAsNeededReason":{
+				"location": "%(apikey)s/medication-as-needed-reason"
+			}
+			
+			,
+			"instanceAvailability":{
+				"location": "%(apikey)s/instance-availability"
+			},
+			"dicomCid29":{
+				"location": "%(apikey)s/dicom-cid29"
+			},
+			"bodysiteLaterality":{
+				"location": "%(apikey)s/bodysite-laterality"
+			}
+			
+			,
+			"sequenceType":{
+				"location": "%(apikey)s/sequence-type"
+			},
+			"sequenceReferenceSeq":{
+				"location": "%(apikey)s/sequence-referenceSeq"
+			},
+			"qualityType":{
+				"location": "%(apikey)s/quality-type"
+			},
+			"repositoryType":{
+				"location": "%(apikey)s/repository-type"
+			},
+			"chromosomeHuman":{
+				"location": "%(apikey)s/chromosome-human"
+			}
+			
+			,
+			"specimenStatus":{
+				"location": "%(apikey)s/specimen-status"
+			},
+			"specimenProcessingProcedure":{
+				"location": "%(apikey)s/specimen-processing-procedure"
+			},
+			"specimenContainerType":{
+				"location": "%(apikey)s/specimen-container-type"
+			},
+			"specimenCollectionMethod":{
+				"location": "%(apikey)s/specimen-collection-method"
+			},
+			"bodysiteRelativeLocation":{
+				"location": "%(apikey)s/bodysite-relative-location"
+			},
+			"specimenType":{
+				"location": "%(apikey)s/specimen-type"
+			},
+			"preservative":{
+				"location": "%(apikey)s/preservative"
+			},
+			"usageContextType":{
+				"location": "%(apikey)s/usage-context-type"
+			},
+			"usageContext":{
+				"location": "%(apikey)s/usage-context"
+			},
+			"quantityComparator":{
+				"location": "%(apikey)s/quantity-comparator"
+			},
+			"allTypes":{
+				"location": "%(apikey)s/all-types"
+			}
+			,
+			"relatedArtifactType":{
+				"location": "%(apikey)s/related-artifact-type"
+			},
+<<<<<<< HEAD
+			"reAdmissionIndicator": {
+				"location": "%(apikey)s/re-admission-indicator"
+			},
 	    "slot": {
 	    	"location": "%(apikey)s/slot"
 	    },
@@ -865,6 +2840,188 @@
 		"healthcareService":{
 			"location": "%(apikey)s/HealthcareService"
 		}
+=======
+			"triggerType":{
+				"location": "%(apikey)s/trigger-type"
+			}
+			
+			,
+			"actionParticipantType":{
+				"location": "%(apikey)s/action-participant-type"
+			},
+			"planDefinitionType":{
+				"location": "%(apikey)s/plan-definition-type"
+			},
+			"publicationStatus":{
+				"location": "%(apikey)s/publication-status"
+			},
+			"definitionTopic":{
+				"location": "%(apikey)s/definition-topic"
+			},
+			"actionConditionKind":{
+				"location": "%(apikey)s/action-condition-kind"
+			},
+			"actionRelationshipType":{
+				"location": "%(apikey)s/action-relationship-type"
+			},
+			"actionType":{
+				"location": "%(apikey)s/action-type"
+			},
+			"actionGroupingBehavior":{
+				"location": "%(apikey)s/action-grouping-behavior"
+			},
+			"actionSelectionBehavior":{
+				"location": "%(apikey)s/action-selection-behavior"
+			},
+			"actionRequiredBehavior":{
+				"location": "%(apikey)s/action-required-behavior"
+			},
+			"actionPrecheckBehavior":{
+				"location": "%(apikey)s/action-precheck-behavior"
+			},
+			"actionCardinalityBehavior":{
+				"location": "%(apikey)s/action-cardinality-behavior"
+			},
+			"actionlist":{
+				"location": "%(apikey)s/actionlist"
+			},
+			"processOutcome":{
+				"location": "%(apikey)s/process-outcome"
+			},
+			"noteType":{
+				"location": "%(apikey)s/note-type"
+			},
+			"adjudicationError":{
+				"location": "%(apikey)s/adjudication-error"
+			},
+			"deviceStatementStatus":{
+				"location": "%(apikey)s/device-statement-status"
+			},
+			"supplyrequestStatus":{
+				"location": "%(apikey)s/supplyrequest-status"
+			},
+			"supplyrequestReason":{
+				"location": "%(apikey)s/supplyrequest-reason"
+			},
+			"supplydeliveryStatus":{
+				"location": "%(apikey)s/supplydelivery-status"
+			},
+			"supplydeliveryType":{
+				"location": "%(apikey)s/supplydelivery-type"
+			},
+			"taskStatus":{
+				"location": "%(apikey)s/task-status"
+			},
+			"taskPerformerType":{
+				"location": "%(apikey)s/task-performer-type"
+			},
+			"forms":{
+				"location": "%(apikey)s/forms"
+			},
+			"supplyItem":{
+				"location": "%(apikey)s/supply-item"
+			},
+			
+			"referralType": {
+        "location": "%(apikey)s/referral-type"
+      },
+      "c80PracticeCodes": {
+        "location": "%(apikey)s/c80-practice-codes"
+      },
+      "practitionerSpecialty": {
+        "location": "%(apikey)s/practitioner-specialty"
+      },
+      "nutritionRequestStatus": {
+        "location": "%(apikey)s/nutrition-request-status"
+      },
+      "foodType": {
+        "location": "%(apikey)s/food-type"
+      },
+      "dietType": {
+        "location": "%(apikey)s/diet-type"
+      },
+      "nutrientCode": {
+        "location": "%(apikey)s/nutrient-code"
+      },
+      "textureCode": {
+        "location": "%(apikey)s/texture-code"
+      },
+      "modifiedFoodtype": {
+        "location": "%(apikey)s/modified-foodtype"
+      },
+      "consistencyType": {
+        "location": "%(apikey)s/consistency-type"
+      },
+      "supplementType": {
+        "location": "%(apikey)s/supplement-type"
+      },
+      "entformulaType": {
+        "location": "%(apikey)s/entformula-type"
+      },
+      "entformulaAdditive": {
+        "location": "%(apikey)s/entformula-additive"
+      },
+      "enteralRoute": {
+        "location": "%(apikey)s/enteral-route"
+      },
+      "fmStatus": {
+        "location": "%(apikey)s/fm-status"
+      },
+      "visionProduct": {
+        "location": "%(apikey)s/vision-product"
+      },
+      "visionEyeCodes": {
+        "location": "%(apikey)s/vision-eye-codes"
+      },
+      "visionBaseCodes": {
+        "location": "%(apikey)s/vision-base-codes"
+      },
+      "publicationStatus": {
+        "location": "%(apikey)s/publication-status"
+      },
+      "jurisdiction": {
+        "location": "%(apikey)s/jurisdiction"
+      },
+      "resourceTypes": {
+        "location": "%(apikey)s/resource-types"
+      }
+			
+			,
+      "adverseEvent": {
+        "location": "%(apikey)s/AdverseEvent"
+      },
+      "adverseEventSuspectEntity": {
+        "location": "%(apikey)s/AdverseEventSuspectEntity"
+      }
+			
+			,
+      "allergyIntolerance": {
+        "location": "%(apikey)s/AllergyIntolerance"
+      },
+      "allergyIntoleranceReaction": {
+        "location": "%(apikey)s/AllergyIntoleranceReaction"
+      }
+			
+			,
+      "carePlan": {
+        "location": "%(apikey)s/CarePlan"
+      },
+      "carePlanActivity": {
+        "location": "%(apikey)s/CarePlanActivity"
+      },
+      "carePlanActivityDetail": {
+        "location": "%(apikey)s/CarePlanActivityDetail"
+      }
+			
+			,
+      "careTeam": {
+        "location": "%(apikey)s/CareTeam"
+      },
+      "careTeamParticipant": {
+        "location": "%(apikey)s/CareTeamParticipant"
+      }
+			
+>>>>>>> hcs
 		},
 		"PUT": {
 			"identityAssuranceLevel": {
@@ -1041,6 +3198,7 @@
 			"reAdmissionIndicator": {
 				"location": "%(apikey)s/reAdmissionIndicator/%(_id)d"
 			},
+<<<<<<< HEAD
       "schedule": {
           "location": "%(apikey)s/schedule/%(_id)s"
       },
@@ -1227,6 +3385,817 @@
 		"healthcareService":{
 			"location": "%(apikey)s/HealthcareService/%(_id)s"
 		}
+=======
+			"schedule": {
+					"location": "%(apikey)s/schedule/%(_id)s"
+			},
+			"slot": {
+				"location": "%(apikey)s/slot/%(_id)s"
+			},
+			"appointment": {
+				"location": "%(apikey)s/appointment/%(_id)s"
+			},
+			"appointmentParticipant": {
+				"location": "%(apikey)s/appointment-participant/%(_id)s/%(dr)s"
+			},
+			"appointmentResponse": {
+				"location": "%(apikey)s/appointment-response/%(_id)s"
+			},         
+			"udiEntryType":{
+				"location": "%(apikey)s/udi-entry-type/%(_id)d"
+			},         
+			"deviceStatus":{
+				"location": "%(apikey)s/device-status/%(_id)d"
+			},         
+			"deviceKind":{
+				"location": "%(apikey)s/device-kind/%(_id)d"
+			},         
+			"deviceSafety":{
+				"location": "%(apikey)s/device-safety/%(_id)d"
+			},         
+			"operationalStatus":{
+				"location": "%(apikey)s/operational-status/%(_id)d"
+			},         
+			"parameterGroup":{
+				"location": "%(apikey)s/parameter-group/%(_id)d"
+			},         
+			"measurementPrinciple":{
+				"location": "%(apikey)s/measurement-principle/%(_id)d"
+			},         
+			"specificationType":{
+				"location": "%(apikey)s/specification-type/%(_id)d"
+			},         
+			"metricOperationalStatus":{
+				"location": "%(apikey)s/metric-operational-status/%(_id)d"
+			},         
+			"deviceMetricType":{
+				"location": "%(apikey)s/device-metric-type/%(_id)d"
+			},         
+			"metricColor":{
+				"location": "%(apikey)s/metric-color/%(_id)d"
+			},         
+			"metricCategory":{
+				"location": "%(apikey)s/metric-category/%(_id)d"
+			},         
+			"metricCalibrationType":{
+				"location": "%(apikey)s/metric-calibration-type/%(_id)d"
+			},         
+			"metricCalibrationState":{
+				"location": "%(apikey)s/metric-calibration-state/%(_id)d"
+			},         
+			"substanceStatus":{
+				"location": "%(apikey)s/substance-status/%(_id)d"
+			},         
+			"substanceCategory":{
+				"location": "%(apikey)s/substance-category/%(_id)d"
+			},         
+			"substanceCode":{
+				"location": "%(apikey)s/substance-code/%(_id)d"
+			},
+			"device": {
+				"location": "%(apikey)s/device/%(_id)s"
+			},
+			"deviceUdi": {
+				"location": "%(apikey)s/device-udi/%(_id)s"
+			},
+			"deviceComponent": {
+				"location": "%(apikey)s/device-component/%(_id)s"
+			},
+			"deviceComponentProductionSpecification": {
+				"location": "%(apikey)s/device-component-production-specification/%(_id)s/%(dr)s"
+			},
+			"deviceMetric": {
+				"location": "%(apikey)s/device-metric/%(_id)s"
+			},
+			"deviceMetricCalibration": {
+				"location": "%(apikey)s/device-metric-calibration/%(_id)s/%(dr)s"
+			},
+			"substance": {
+				"location": "%(apikey)s/substance/%(_id)s"
+			},
+			"substanceInstance": {
+				"location": "%(apikey)s/substance-instance/%(_id)s/%(dr)s"
+			},
+			"substanceIngredient": {
+				"location": "%(apikey)s/substance-ingredient/%(_id)s/%(dr)s"
+			},
+			"organizationType":{
+				"location": "%(apikey)s/organization-type/%(_id)d"
+			},
+			"contactentityType":{
+				"location": "%(apikey)s/contactentity-type/%(_id)d"
+			},
+			"locationStatus":{
+				"location": "%(apikey)s/location-status/%(_id)d"
+			},
+			"bedStatus":{
+				"location": "%(apikey)s/bed-status/%(_id)d"
+			},
+			"locationMode":{
+				"location": "%(apikey)s/location-mode/%(_id)d"
+			},
+			"locationMode":{
+				"location": "%(apikey)s/location-mode/%(_id)d"
+			},
+			"serviceDeliveryLocationRoleType":{
+				"location": "%(apikey)s/service-delivery-location-role-type/%(_id)d"
+			},
+			"locationPhysicalType":{
+				"location": "%(apikey)s/location-physical-type/%(_id)d"
+			},
+			"qualificationCode":{
+				"location": "%(apikey)s/qualification-code/%(_id)d"
+			},
+			"practitionerRoleCode":{
+				"location": "%(apikey)s/practitioner-role-code/%(_id)d"
+			},
+			"practiceCode":{
+				"location": "%(apikey)s/practice-code/%(_id)d"
+			},
+			"daysOfWeek":{
+				"location": "%(apikey)s/days-of-week/%(_id)d"
+			},
+			"serviceType":{
+				"location": "%(apikey)s/service-type/%(_id)d"
+			},
+			"serviceCategory":{
+				"location": "%(apikey)s/service-category/%(_id)d"
+			},
+			"serviceProvisionConditions":{
+				"location": "%(apikey)s/service-provision-conditions/%(_id)d"
+			},
+			"serviceReferralMethod":{
+				"location": "%(apikey)s/service-referral-method/%(_id)d"
+			},
+			"endpointStatus":{
+				"location": "%(apikey)s/endpoint-status/%(_id)d"
+			},
+			"endpointConnectionType":{
+				"location": "%(apikey)s/endpoint-connection-type/%(_id)d"
+			},
+			"endpointPayloadType":{
+				"location": "%(apikey)s/endpoint-payload-type/%(_id)d"
+			},
+			"endpoint":{
+				"location": "%(apikey)s/Endpoint/%(_id)s"
+			},
+			"location":{
+				"location": "%(apikey)s/Location/%(_id)s"
+			},
+			"locationPosition":{
+				"location": "%(apikey)s/LocationPosition/%(_id)s/%(dr)s"
+			},
+			"organization":{
+				"location": "%(apikey)s/Organization/%(_id)s"
+			},
+			"organizationContact":{
+				"location": "%(apikey)s/OrganizationContact/%(_id)s/%(dr)s"
+			},
+			"practitioner":{
+				"location": "%(apikey)s/Practitioner/%(_id)s"
+			},
+			"qualification":{
+				"location": "%(apikey)s/Qualification/%(_id)s/%(dr)s"
+			},
+			"communication":{
+				"location": "%(apikey)s/PractitionerCommunication/%(_id)s/%(dr)s"
+			},
+			"practitionerRole":{
+				"location": "%(apikey)s/PractitionerRole/%(_id)s"
+			},
+			"availableTime":{
+				"location": "%(apikey)s/AvailableTime/%(_id)s/%(dr)s"
+			},
+			"notAvailable":{
+				"location": "%(apikey)s/NotAvailable/%(_id)s/%(dr)s"
+			},
+			"timing":{
+				"location": "%(apikey)s/Timing/%(_id)s/%(dr)s"
+			},
+			"annotation":{
+				"location": "%(apikey)s/Annotation/%(_id)s/%(dr)s"
+			}
+			
+			,
+			"dataRequirement":{
+				"location": "%(apikey)s/DataRequirement/%(_id)s/%(dr)s"
+			},
+			"codeFilter":{
+				"location": "%(apikey)s/CodeFilter/%(_id)s/%(dr)s"
+			},
+			"dateFilter":{
+				"location": "%(apikey)s/DateFilter/%(_id)s/%(dr)s"
+			},
+			"relatedArtifact":{
+				"location": "%(apikey)s/RelatedArtifact/%(_id)s/%(dr)s"
+			},
+			"triggerDefinition":{
+				"location": "%(apikey)s/TriggerDefinition/%(_id)s/%(dr)s"
+			}
+			,
+			"healthcareService":{
+				"location": "%(apikey)s/HealthcareService/%(_id)s"
+			},
+			"adverseEventCategory":{
+				"location": "%(apikey)s/adverse-event-category/%(_id)d"
+			},
+			"adverseEventType":{
+				"location": "%(apikey)s/adverse-event-type/%(_id)d"
+			},
+			"adverseEventSeriousness":{
+				"location": "%(apikey)s/adverse-event-seriousness/%(_id)d"
+			},
+			"adverseEventOutcome":{
+				"location": "%(apikey)s/adverse-event-outcome/%(_id)d"
+			},
+			"adverseEventCausality":{
+				"location": "%(apikey)s/adverse-event-causality/%(_id)d"
+			},
+			"adverseEventCausalityAssess":{
+				"location": "%(apikey)s/adverse-event-causality-assess/%(_id)d"
+			},
+			"adverseEventCausalityMethod":{
+				"location": "%(apikey)s/adverse-event-causality-method/%(_id)d"
+			},
+			"adverseEventCausalityResult":{
+				"location": "%(apikey)s/adverse-event-causality-result/%(_id)d"
+			},
+			"allergyClinicalStatus":{
+				"location": "%(apikey)s/allergy-clinical-status/%(_id)d"
+			},
+			"allergyVerificationStatus":{
+				"location": "%(apikey)s/allergy-verification-status/%(_id)d"
+			},
+			"allergyIntoleranceType":{
+				"location": "%(apikey)s/allergy-intolerance-type/%(_id)d"
+			},
+			"allergyIntoleranceCategory":{
+				"location": "%(apikey)s/allergy-intolerance-category/%(_id)d"
+			},
+			"allergyIntoleranceCriticality":{
+				"location": "%(apikey)s/allergy-intolerance-criticality/%(_id)d"
+			},
+			"allergyIntoleranceCode":{
+				"location": "%(apikey)s/allergy-intolerance-code/%(_id)d"
+			},
+			"substanceCode":{
+				"location": "%(apikey)s/substance-code/%(_id)d"
+			},
+			"clinicalFindings":{
+				"location": "%(apikey)s/clinical-findings/%(_id)d"
+			},
+			"reactionEventSeverity":{
+				"location": "%(apikey)s/reaction-event-severity/%(_id)d"
+			},
+			"routeCodes":{
+				"location": "%(apikey)s/route-codes/%(_id)d"
+			},
+			"carePlanStatus":{
+				"location": "%(apikey)s/care-plan-status/%(_id)d"
+			},
+			"carePlanIntent":{
+				"location": "%(apikey)s/care-plan-intent/%(_id)d"
+			},
+			"carePlanCategory":{
+				"location": "%(apikey)s/care-plan-category/%(_id)d"
+			},
+			"carePlanActivityOutcome":{
+				"location": "%(apikey)s/care-plan-activity-outcome/%(_id)d"
+			},
+			"carePlanActivityCategory":{
+				"location": "%(apikey)s/care-plan-activity-category/%(_id)d"
+			},
+			"carePlanActivity":{
+				"location": "%(apikey)s/care-plan-activity/%(_id)d"
+			},
+			"activityReason":{
+				"location": "%(apikey)s/activity-reason/%(_id)d"
+			},
+			"carePlanActivityStatus":{
+				"location": "%(apikey)s/care-plan-activity-status/%(_id)d"
+			},
+			"medicationCodes":{
+				"location": "%(apikey)s/medication-codes/%(_id)d"
+			},
+			"careTeamStatus":{
+				"location": "%(apikey)s/care-team-status/%(_id)d"
+			},
+			"careTeamCategory":{
+				"location": "%(apikey)s/care-team-category/%(_id)d"
+			},
+			"participantRole":{
+				"location": "%(apikey)s/participant-role/%(_id)d"
+			},
+			"clinicalImpressionStatus":{
+				"location": "%(apikey)s/clinical-impression-status/%(_id)d"
+			},
+			"investigationSets":{
+				"location": "%(apikey)s/investigation-sets/%(_id)d"
+			},
+			"clinicalimpressionPrognosis":{
+				"location": "%(apikey)s/clinicalimpression-prognosis/%(_id)d"
+			},
+			"conditionClinical":{
+				"location": "%(apikey)s/condition-clinical/%(_id)d"
+			},
+			"conditionVerStatus":{
+				"location": "%(apikey)s/condition-ver-status/%(_id)d"
+			},
+			"conditionCategory":{
+				"location": "%(apikey)s/condition-category/%(_id)d"
+			},
+			"conditionSeverity":{
+				"location": "%(apikey)s/condition-severity/%(_id)d"
+			},
+			"conditionCode":{
+				"location": "%(apikey)s/condition-code/%(_id)d"
+			},
+			"bodySite":{
+				"location": "%(apikey)s/body-site/%(_id)d"
+			},
+			"conditionStage":{
+				"location": "%(apikey)s/condition-stage/%(_id)d"
+			},
+			"manifestationOrSymptom":{
+				"location": "%(apikey)s/manifestation-or-symptom/%(_id)d"
+			},
+			"observationStatus":{
+				"location": "%(apikey)s/observation-status/%(_id)d"
+			},
+			"detectedissueCategory":{
+				"location": "%(apikey)s/detectedissue-category/%(_id)d"
+			},
+			"detectedissueSeverity":{
+				"location": "%(apikey)s/detectedissue-severity/%(_id)d"
+			},
+			"detectedissueMitigationAction":{
+				"location": "%(apikey)s/detectedissue-mitigation-action/%(_id)d"
+			},
+			"historyStatus":{
+				"location": "%(apikey)s/history-status/%(_id)d"
+			},
+			"historyNotDoneReason":{
+				"location": "%(apikey)s/history-not-done-reason/%(_id)d"
+			},
+			"familyMember":{
+				"location": "%(apikey)s/family-member/%(_id)d"
+			},
+			"conditionOutcome":{
+				"location": "%(apikey)s/condition-outcome/%(_id)d"
+			},
+			"riskProbability":{
+				"location": "%(apikey)s/risk-probability/%(_id)d"
+			},
+			"goalStatus":{
+				"location": "%(apikey)s/goal-status/%(_id)d"
+			},
+			"goalCategory":{
+				"location": "%(apikey)s/goal-category/%(_id)d"
+			},
+			"goalPriority":{
+				"location": "%(apikey)s/goal-priority/%(_id)d"
+			},
+			"goalStartEvent":{
+				"location": "%(apikey)s/goal-start-event/%(_id)d"
+			},
+			"observationCodes":{
+				"location": "%(apikey)s/observation-codes/%(_id)d"
+			},
+			"eventStatus":{
+				"location": "%(apikey)s/event-status/%(_id)d"
+			},
+			"procedureNotPerformedReason":{
+				"location": "%(apikey)s/procedure-not-performed-reason/%(_id)d"
+			},
+			"procedureCategory":{
+				"location": "%(apikey)s/procedure-category/%(_id)d"
+			},
+			"procedureCode":{
+				"location": "%(apikey)s/procedure-code/%(_id)d"
+			},
+			"performerRole":{
+				"location": "%(apikey)s/performer-role/%(_id)d"
+			},
+			"procedureReason":{
+				"location": "%(apikey)s/procedure-reason/%(_id)d"
+			},
+			"procedureOutcome":{
+				"location": "%(apikey)s/procedure-outcome/%(_id)d"
+			},
+			"procedureFollowup":{
+				"location": "%(apikey)s/procedure-followup/%(_id)d"
+			},
+			"deviceAction":{
+				"location": "%(apikey)s/device-action/%(_id)d"
+			},
+			"deviceKind":{
+				"location": "%(apikey)s/device-kind/%(_id)d"
+			}
+			
+			,
+			"immunizationStatus":{
+				"location": "%(apikey)s/immunization-status/%(_id)d"
+			},
+			"vaccineCode":{
+				"location": "%(apikey)s/vaccine-code/%(_id)d"
+			},
+			"immunizationOrigin":{
+				"location": "%(apikey)s/immunization-origin/%(_id)d"
+			},
+			"immunizationSite":{
+				"location": "%(apikey)s/immunization-site/%(_id)d"
+			},
+			"immunizationRoute":{
+				"location": "%(apikey)s/immunization-route/%(_id)d"
+			},
+			"immunizationRole":{
+				"location": "%(apikey)s/immunization-role/%(_id)d"
+			},
+			"immunizationReason":{
+				"location": "%(apikey)s/immunization-reason/%(_id)d"
+			},
+			"noImmunizationReason":{
+				"location": "%(apikey)s/no-immunization-reason/%(_id)d"
+			},
+			"vaccinationProtocolDoseTarget":{
+				"location": "%(apikey)s/vaccination-protocol-dose-target/%(_id)d"
+			},
+			"vaccinationProtocolDoseStatus":{
+				"location": "%(apikey)s/vaccination-protocol-dose-status/%(_id)d"
+			},
+			"vaccinationProtocolDoseStatusReason":{
+				"location": "%(apikey)s/vaccination-protocol-dose-status-reason/%(_id)d"
+			},
+			"immunizationRecommendationTargetDisease":{
+				"location": "%(apikey)s/immunization-recommendation-target-disease/%(_id)d"
+			},
+			"immunizationRecommendationStatus":{
+				"location": "%(apikey)s/immunization-recommendation-status/%(_id)d"
+			},
+			"immunizationRecommendationDateCriterion":{
+				"location": "%(apikey)s/immunization-recommendation-date-criterion/%(_id)d"
+			},
+			"medicationStatus":{
+				"location": "%(apikey)s/medication-status/%(_id)d"
+			},
+			"medicationFormCodes":{
+				"location": "%(apikey)s/medication-form-codes/%(_id)d"
+			},
+			"medicationPackageForm":{
+				"location": "%(apikey)s/medication-package-form/%(_id)d"
+			},
+			"medicationAdminStatus":{
+				"location": "%(apikey)s/medication-admin-status/%(_id)d"
+			},
+			"medicationAdminCategory":{
+				"location": "%(apikey)s/medication-admin-category/%(_id)d"
+			},
+			"reasonMedicationNotGivenCodes":{
+				"location": "%(apikey)s/reason-medication-not-given-codes/%(_id)d"
+			},
+			"reasonMedicationGivenCodes":{
+				"location": "%(apikey)s/reason-medication-given-codes/%(_id)d"
+			},
+			"approachSiteCodes":{
+				"location": "%(apikey)s/approach-site-codes/%(_id)d"
+			},
+			"administrationMethodCodes":{
+				"location": "%(apikey)s/administration-method-codes/%(_id)d"
+			},
+			"medicationDispenseStatus":{
+				"location": "%(apikey)s/medication-dispense-status/%(_id)d"
+			},
+			"medicationDispenseCategory":{
+				"location": "%(apikey)s/medication-dispense-category/%(_id)d"
+			},
+			"actPharmacySupplyType":{
+				"location": "%(apikey)s/act-pharmacy-supply-type/%(_id)d"
+			},
+			"actSubstanceAdminSubstitutionCode":{
+				"location": "%(apikey)s/act-substance-admin-substitution-code/%(_id)d"
+			},
+			"actSubstanceAdminSubstitutionReason":{
+				"location": "%(apikey)s/act-substance-admin-substitution-reason/%(_id)d"
+			},
+			"medicationRequestStatus":{
+				"location": "%(apikey)s/medication-request-status/%(_id)d"
+			},
+			"medicationRequestIntent":{
+				"location": "%(apikey)s/medication-request-intent/%(_id)d"
+			},
+			"medicationRequestCategory":{
+				"location": "%(apikey)s/medication-request-category/%(_id)d"
+			},
+			"medicationRequestPriority":{
+				"location": "%(apikey)s/medication-request-priority/%(_id)d"
+			},
+			"medicationCodes":{
+				"location": "%(apikey)s/medication-codes/%(_id)d"
+			},
+			"substanceAdminSubstitutionReason":{
+				"location": "%(apikey)s/substance-admin-substitution-reason/%(_id)d"
+			}
+			,
+			"medicationStatementStatus":{
+				"location": "%(apikey)s/medication-statement-status/%(_id)d"
+			},
+			"medicationStatementCategory":{
+				"location": "%(apikey)s/medication-statement-category/%(_id)d"
+			},
+			"medicationStatementTaken":{
+				"location": "%(apikey)s/medication-statement-taken/%(_id)d"
+			},
+			"reasonMedicationNotTakenCodes":{
+				"location": "%(apikey)s/reason-medication-not-taken-codes/%(_id)d"
+			}
+			
+			,
+			"observationCategory":{
+				"location": "%(apikey)s/observation-category/%(_id)d"
+			},
+			"observationValueabsentreason":{
+				"location": "%(apikey)s/observation-valueabsentreason/%(_id)d"
+			},
+			"observationInterpretation":{
+				"location": "%(apikey)s/observation-interpretation/%(_id)d"
+			},
+			"observationMethods":{
+				"location": "%(apikey)s/observation-methods/%(_id)d"
+			},
+			"referencerangeMeaning":{
+				"location": "%(apikey)s/referencerange-meaning/%(_id)d"
+			},
+			"referencerangeAppliesto":{
+				"location": "%(apikey)s/referencerange-appliesto/%(_id)d"
+			},
+			"observationRelationshiptypes":{
+				"location": "%(apikey)s/observation-relationshiptypes/%(_id)d"
+			}
+			
+			,
+			"diagnosticReportStatus":{
+				"location": "%(apikey)s/diagnostic-report-status/%(_id)d"
+			},
+			"diagnosticServiceSections":{
+				"location": "%(apikey)s/diagnostic-service-sections/%(_id)d"
+			},
+			"reportCodes":{
+				"location": "%(apikey)s/report-codes/%(_id)d"
+			}
+			
+			,
+			"requestStatus":{
+				"location": "%(apikey)s/request-status/%(_id)d"
+			},
+			"requestIntent":{
+				"location": "%(apikey)s/request-intent/%(_id)d"
+			},
+			"requestPriority":{
+				"location": "%(apikey)s/request-priority/%(_id)d"
+			},
+			"medicationAsNeededReason":{
+				"location": "%(apikey)s/medication-as-needed-reason/%(_id)d"
+			}
+			
+			,
+			"instanceAvailability":{
+				"location": "%(apikey)s/instance-availability/%(_id)d"
+			},
+			"dicomCid29":{
+				"location": "%(apikey)s/dicom-cid29/%(_id)d"
+			},
+			"bodysiteLaterality":{
+				"location": "%(apikey)s/bodysite-laterality/%(_id)d"
+			}
+			
+			,
+			"sequenceType":{
+				"location": "%(apikey)s/sequence-type/%(_id)d"
+			},
+			"sequenceReferenceSeq":{
+				"location": "%(apikey)s/sequence-referenceSeq/%(_id)d"
+			},
+			"qualityType":{
+				"location": "%(apikey)s/quality-type/%(_id)d"
+			},
+			"repositoryType":{
+				"location": "%(apikey)s/repository-type/%(_id)d"
+			},
+			"chromosomeHuman":{
+				"location": "%(apikey)s/chromosome-human/%(_id)d"
+			}
+			
+			,
+			"specimenStatus":{
+				"location": "%(apikey)s/specimen-status/%(_id)d"
+			},
+			"specimenProcessingProcedure":{
+				"location": "%(apikey)s/specimen-processing-procedure/%(_id)d"
+			},
+			"specimenContainerType":{
+				"location": "%(apikey)s/specimen-container-type/%(_id)d"
+			},
+			"specimenCollectionMethod":{
+				"location": "%(apikey)s/specimen-collection-method/%(_id)d"
+			},
+			"bodysiteRelativeLocation":{
+				"location": "%(apikey)s/bodysite-relative-location/%(_id)d"
+			},
+			"specimenType":{
+				"location": "%(apikey)s/specimen-type/%(_id)d"
+			},
+			"preservative":{
+				"location": "%(apikey)s/preservative/%(_id)d"
+			},
+			"usageContextType":{
+				"location": "%(apikey)s/usage-context-type/%(_id)d"
+			},
+			"usageContext":{
+				"location": "%(apikey)s/usage-context/%(_id)d"
+			},
+			"quantityComparator":{
+				"location": "%(apikey)s/quantity-comparator/%(_id)d"
+			},
+			"allTypes":{
+				"location": "%(apikey)s/all-types/%(_id)d"
+			}
+			
+			,
+			"relatedArtifactType":{
+				"location": "%(apikey)s/related-artifact-type/%(_id)d"
+			},
+			"triggerType":{
+				"location": "%(apikey)s/trigger-type/%(_id)d"
+			}
+			
+			,
+			"actionParticipantType":{
+				"location": "%(apikey)s/action-participant-type/%(_id)d"
+			},
+			"planDefinitionType":{
+				"location": "%(apikey)s/plan-definition-type/%(_id)d"
+			},
+			"publicationStatus":{
+				"location": "%(apikey)s/publication-status/%(_id)d"
+			},
+			"definitionTopic":{
+				"location": "%(apikey)s/definition-topic/%(_id)d"
+			},
+			"actionConditionKind":{
+				"location": "%(apikey)s/action-condition-kind/%(_id)d"
+			},
+			"actionRelationshipType":{
+				"location": "%(apikey)s/action-relationship-type/%(_id)d"
+			},
+			"actionType":{
+				"location": "%(apikey)s/action-type/%(_id)d"
+			},
+			"actionGroupingBehavior":{
+				"location": "%(apikey)s/action-grouping-behavior/%(_id)d"
+			},
+			"actionSelectionBehavior":{
+				"location": "%(apikey)s/action-selection-behavior/%(_id)d"
+			},
+			"actionRequiredBehavior":{
+				"location": "%(apikey)s/action-required-behavior/%(_id)d"
+			},
+			"actionPrecheckBehavior":{
+				"location": "%(apikey)s/action-precheck-behavior/%(_id)d"
+			},
+			"actionCardinalityBehavior":{
+				"location": "%(apikey)s/action-cardinality-behavior/%(_id)d"
+			},
+			"actionlist":{
+				"location": "%(apikey)s/actionlist/%(_id)d"
+			},
+			"processOutcome":{
+				"location": "%(apikey)s/process-outcome/%(_id)d"
+			},
+			"noteType":{
+				"location": "%(apikey)s/note-type/%(_id)d"
+			},
+			"adjudicationError":{
+				"location": "%(apikey)s/adjudication-error/%(_id)d"
+			},
+			"deviceStatementStatus":{
+				"location": "%(apikey)s/device-statement-status/%(_id)d"
+			},
+			"supplyrequestStatus":{
+				"location": "%(apikey)s/supplyrequest-status/%(_id)d"
+			},
+			"supplyrequestReason":{
+				"location": "%(apikey)s/supplyrequest-reason/%(_id)d"
+			},
+			"supplydeliveryStatus":{
+				"location": "%(apikey)s/supplydelivery-status/%(_id)d"
+			},
+			"supplydeliveryType":{
+				"location": "%(apikey)s/supplydelivery-type/%(_id)d"
+			},
+			"taskStatus":{
+				"location": "%(apikey)s/task-status/%(_id)d"
+			},
+			"taskPerformerType":{
+				"location": "%(apikey)s/task-performer-type/%(_id)d"
+			},
+			"forms":{
+				"location": "%(apikey)s/forms/%(_id)d"
+			},
+			"supplyItem":{
+				"location": "%(apikey)s/supply-item/%(_id)d"
+			},
+			
+			"referralType": {
+        "location": "%(apikey)s/referral-type/%(_id)d"
+      },
+      "c80PracticeCodes": {
+        "location": "%(apikey)s/c80-practice-codes/%(_id)d"
+      },
+      "practitionerSpecialty": {
+        "location": "%(apikey)s/practitioner-specialty/%(_id)d"
+      },
+      "nutritionRequestStatus": {
+        "location": "%(apikey)s/nutrition-request-status/%(_id)d"
+      },
+      "foodType": {
+        "location": "%(apikey)s/food-type/%(_id)d"
+      },
+      "dietType": {
+        "location": "%(apikey)s/diet-type/%(_id)d"
+      },
+      "nutrientCode": {
+        "location": "%(apikey)s/nutrient-code/%(_id)d"
+      },
+      "textureCode": {
+        "location": "%(apikey)s/texture-code/%(_id)d"
+      },
+      "modifiedFoodtype": {
+        "location": "%(apikey)s/modified-foodtype/%(_id)d"
+      },
+      "consistencyType": {
+        "location": "%(apikey)s/consistency-type/%(_id)d"
+      },
+      "supplementType": {
+        "location": "%(apikey)s/supplement-type/%(_id)d"
+      },
+      "entformulaType": {
+        "location": "%(apikey)s/entformula-type/%(_id)d"
+      },
+      "entformulaAdditive": {
+        "location": "%(apikey)s/entformula-additive/%(_id)d"
+      },
+      "enteralRoute": {
+        "location": "%(apikey)s/enteral-route/%(_id)d"
+      },
+      "fmStatus": {
+        "location": "%(apikey)s/fm-status/%(_id)d"
+      },
+      "visionProduct": {
+        "location": "%(apikey)s/vision-product/%(_id)d"
+      },
+      "visionEyeCodes": {
+        "location": "%(apikey)s/vision-eye-codes/%(_id)d"
+      },
+      "visionBaseCodes": {
+        "location": "%(apikey)s/vision-base-codes/%(_id)d"
+      },
+      "publicationStatus": {
+        "location": "%(apikey)s/publication-status/%(_id)d"
+      },
+      "jurisdiction": {
+        "location": "%(apikey)s/jurisdiction/%(_id)d"
+      },
+      "resourceTypes": {
+        "location": "%(apikey)s/resource-types/%(_id)d"
+      }
+			
+			,
+      "adverseEvent": {
+        "location": "%(apikey)s/AdverseEvent/%(_id)s"
+      },
+      "adverseEventSuspectEntity": {
+        "location": "%(apikey)s/AdverseEventSuspectEntity/%(_id)s/%(dr)s"
+      }
+			
+			,
+      "allergyIntolerance": {
+        "location": "%(apikey)s/AllergyIntolerance/%(_id)s"
+      },
+      "allergyIntoleranceReaction": {
+        "location": "%(apikey)s/AllergyIntoleranceReaction/%(_id)s/%(dr)s"
+      }
+			
+			,
+      "carePlan": {
+        "location": "%(apikey)s/CarePlan/%(_id)s"
+      },
+      "carePlanActivity": {
+        "location": "%(apikey)s/CarePlanActivity/%(_id)s/%(dr)s"
+      },
+      "carePlanActivityDetail": {
+        "location": "%(apikey)s/CarePlanActivityDetail/%(_id)s/%(dr)s"
+      }
+>>>>>>> hcs
 		}
 	}
 }

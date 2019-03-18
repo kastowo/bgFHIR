@@ -19,11 +19,12 @@
   "license": "ISC",
   "dependencies": {
     "apiclient": "^0.2.5",
+    "bytes": "^3.0.0",
     "express": "^4.16.2",
     "md5": "^2.2.1",
     "sha1": "^1.1.1",
     "uniqid": "^4.1.1",
-    "validator": "^9.4.0",
+    "validator": "^9.4.1",
     "yaml-config": "^0.3.0"
   }
 }

@@ -1,0 +1,6 @@
+ID,CODE,DISPLAY,DEFINITION
+1,busy,Busy,Indicates that the time interval is busy because one or more events have been scheduled for that interval.
+11,free,Free,Indicates that the time interval is free for scheduling.
+21,busy_unavailable,Busy (Unavailable),Indicates that the time interval is busy and that the interval can not be scheduled.
+31,busy-tentative,Busy Tentative,
+32,entered-in-error,Entered in error,This instance should not have been part of this patients medical record.

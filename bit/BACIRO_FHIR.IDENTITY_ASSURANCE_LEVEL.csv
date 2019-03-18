@@ -1,0 +1,9 @@
+ID,CODE,DISPLAY,DEFINITION
+1,Level1,Level 1,Little or no confidence in the asserted identitys accuracy
+2,level2,Level 2,Some confidence in the asserted identitys accuracy
+3,level3,Level 3,High confidence in the asserted identitys accuracy
+4,level4,Level 4,Very high confidence in the asserted identitys accuracy
+11,level5,Level 5,Very high confidence in the asserted identitys accuracy
+21,level1,Level 1,Little or no confidence in the asserted identitys accuracy
+25,le,level00,Little or no confidence in the asserted identitys accuracy
+32,...,Level 1,Little or no confidence in the asserted identitys accuracy

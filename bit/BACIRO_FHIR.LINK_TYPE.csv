@@ -1,0 +1,7 @@
+ID,CODE,DISPLAY,DEFINITION
+1,replaced-by,Replaced-by,The patient resource containing this link must no longer be used. The link points forward to another patient resource that must be used in lieu of the patient resource that contains this link.
+2,replaces,Replaces,The patient resource containing this link is the current active patient record. The link points back to an inactive patient resource that has been merged into this resource, and should be consulted to retrieve additional referenced information.
+3,refer,Refer,The patient resource containing this link is in use and valid but not considered the main source of information about a patient The link points forward to another patient resource that should be consulted to retrieve additional patient information
+4,seealso,See also,The patient resource containing this link is in use and valid, but points to another patient resource that is known to contain data about the same person. Data in this resource might overlap or contradict information found in the other patient resource. This link does not indicate any relative importance of the resources concerned, and both should be regarded as equally valid.
+11,key,key,The link points back to an inactive patient resource that has been merged into this resource
+12,keyby2,keyby2,The link points back to an inactive patient resource that has been merged into this resource.

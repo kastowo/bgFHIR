@@ -13,9 +13,17 @@ var port = configYaml.phoenix.port;
 var hostfhir = configYaml.fhir.host;
 var portfhir = configYaml.fhir.port;
 
+<<<<<<< HEAD
 // var phoenix = require("./phoenix.js");
 var phoenix = require(path.resolve("./phoenix.js"));
 var db = new phoenix("jdbc:phoenix:" + host + ":/hbase-unsecure");
+=======
+var hostHbase = configYaml.hbase.host;
+
+// var phoenix = require("./phoenix.js");
+var phoenix = require(path.resolve("./phoenix.js"));
+var db = new phoenix("jdbc:phoenix:" + hostHbase + ":/hbase-unsecure");
+>>>>>>> hcs
 
 var controller = {
 	get: {
@@ -323,7 +331,16 @@ var controller = {
 				////console.log(rez);
         for(i = 0; i < rez.length; i++){
 					var Endpoint = {};
+<<<<<<< HEAD
 					Endpoint.id = hostfhir + ":" + portfhir + "/" + apikey + "/endpoint?_id=" + rez[i].endpoint_id;
+=======
+					if(rez[i].endpoint_id !== 'null'){
+						Endpoint.id = hostfhir + ":" + portfhir + "/" + apikey + "/endpoint?_id=" + rez[i].endpoint_id;
+					} else {
+						Endpoint.id = rez[i].endpoint_id;
+					}
+					
+>>>>>>> hcs
           ////console.log(Endpoint);
           arrEndpoint[i] = Endpoint;
         }

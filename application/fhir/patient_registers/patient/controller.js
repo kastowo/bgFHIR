@@ -532,9 +532,9 @@ var controller = {
 																															for(k=0; k < patientContact.data.length; k++){
 																																contactTeleponJoin = contactTeleponJoin.concat(patientContact.data[k].telecom);
 																															}
-																															if(typeof patientContact.data[0].telecom !== 'undefined'){
+																															/*if(typeof patientContact.data[0].telecom !== 'undefined'){
 																																patientContact.data[0].telecom = removeDuplicates(contactTeleponJoin); // set ke ke data pertama karena sudah digabung
-																															}
+																															}*/
 																															
 																															objectPatient.contact = patientContact.data;
 																															objectPatient.animal = patient.animal;
@@ -1121,7 +1121,7 @@ var controller = {
 
 					var err_code = 0;
 					var err_msg = "";
-
+console.log(req.body);
 					//input check 
 					//identifier
 					if(typeof req.body.identifier.use !== 'undefined'){
@@ -2176,7 +2176,7 @@ var controller = {
 																																																											"animal_id": patientAnimalId,
 																																																											"organization_id": managingOrganizationOrganizationId
 																																																										}
-
+console.log(dataPatient);
 																																																			ApiFHIR.post('patient', {"apikey": apikey}, {body: dataPatient, json: true}, function(error, response, body){
 																																																				patient = body;
 																																																				if(patient.err_code > 0){

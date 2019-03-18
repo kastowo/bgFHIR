@@ -14,9 +14,17 @@ var port = configYaml.phoenix.port;
 var hostFHIR = configYaml.fhir.host;
 var portFHIR = configYaml.fhir.port;
 
+<<<<<<< HEAD
 // var phoenix = require("./phoenix.js");
 var phoenix = require(path.resolve("./phoenix.js"));
 var db = new phoenix("jdbc:phoenix:" + host + ":/hbase-unsecure");
+=======
+var hostHbase = configYaml.hbase.host;
+
+// var phoenix = require("./phoenix.js");
+var phoenix = require(path.resolve("./phoenix.js"));
+var db = new phoenix("jdbc:phoenix:" + hostHbase + ":/hbase-unsecure");
+>>>>>>> hcs
 
 var controller = {
 	get: {

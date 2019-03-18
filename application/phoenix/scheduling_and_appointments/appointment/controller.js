@@ -14,9 +14,17 @@ var port = configYaml.phoenix.port;
 var hostFHIR = configYaml.fhir.host;
 var portFHIR = configYaml.fhir.port;
 
+<<<<<<< HEAD
 // var phoenix = require("./phoenix.js");
 var phoenix = require(path.resolve("./phoenix.js"));
 var db = new phoenix("jdbc:phoenix:" + host + ":/hbase-unsecure");
+=======
+var hostHbase = configYaml.hbase.host;
+
+// var phoenix = require("./phoenix.js");
+var phoenix = require(path.resolve("./phoenix.js"));
+var db = new phoenix("jdbc:phoenix:" + hostHbase + ":/hbase-unsecure");
+>>>>>>> hcs
 
 var controller = {
 	get: {
@@ -296,7 +304,11 @@ var controller = {
 
       var query = "UPSERT INTO BACIRO_FHIR.APPOINTMENT(" + column.slice(0, -1) + ")"+
         " VALUES ("+ values.slice(0, -1) +")";
+<<<<<<< HEAD
       
+=======
+      console.log(query);
+>>>>>>> hcs
       db.upsert(query,function(succes){
         res.json({"err_code": 0, "err_msg": "Appointment has been add."});
       },function(e){

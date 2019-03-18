@@ -1,0 +1,5 @@
+ID,CODE,DISPLAY,DEFINITION
+1,postal,Postal,Mailing addresses  PO Boxes and careof addresses.
+2,physical,Physical,A physical address that can be visited.
+3,both,Postal & Physical,An address that is both physical and postal.
+41,phys,Physical2,A physical address that can be visited.

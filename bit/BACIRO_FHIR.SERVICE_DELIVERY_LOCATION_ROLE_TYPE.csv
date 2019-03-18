@@ -1,0 +1,10 @@
+ID,CODE,DISPLAY,DEFINITION
+100,DX,Diagnostics or therapeutics unit_1234,A practice setting where diagnostic procedures or therapeutic interventions are performed
+110,CVDX,Cardiovascular diagnostics or therapeutics unit,A practice setting where cardiovascular diagnostic procedures or therapeutic interventions are performed (e.g., cardiac catheterization lab, echocardiography suite)
+120,CATH,Cardiac catheterization lab,Cardiac catheterization lab
+121,CATH1,Diagnostics or therapeutics unit,Cardiac catheterization lab
+122,CA TH,Cardiac catheterization lab,Cardiac catheterization lab
+123,CATH123,Cardiac catheterization lab,Cardiac catheterization lab
+124,CATH_1,Cardiac catheterization lab,Cardiac catheterization lab
+125,ECHO,Cardiac catheterization lab123,Cardiac catheterization lab
+126,EC HO,Echocardiography lab123,Echocardiography lab123

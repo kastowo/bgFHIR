@@ -1,0 +1,3 @@
+ID,CODE,DISPLAY,DEFINITION
+1,measurement,Measurement,DeviceObservations generated for this DeviceMetric are measured.
+2,setting,Setting,DeviceObservations generated for this DeviceMetric is a setting that will influence the behavior of the Device.

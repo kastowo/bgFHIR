@@ -1,0 +1,21 @@
+AVAILABLE_TIME_ID,AVAILABLE_TIME_DAY_OF_WEEK,AVAILABLE_TIME_ALL_DAY,AVAILABLE_TIME_START,AVAILABLE_TIME_END,PRACTITIONER_ROLE_ID,HEALTHCARE_SERVICE_ID
+2324,mon,true,2019-01-11 00:00:00.000,2019-01-11 00:00:00.000,1234,
+avtjezksr8w,mon,true,2019-01-11 00:00:00.000,2019-01-11 00:00:00.000,prrjezksr8w,
+avtjezl95xm,mon,true,2019-01-11 00:00:00.000,2019-01-11 00:00:00.000,prrjezl95xm,
+avtjezlbyqi,mon,true,2019-01-11 00:00:00.000,2019-01-11 00:00:00.000,prrjezlbyqi,
+avtjezlddfx,mon,true,2019-01-11 00:00:00.000,2019-01-11 00:00:00.000,prrjezlddfx,
+avtjezm4bwt,mon,true,2019-01-11 00:00:00.000,2019-01-11 00:00:00.000,prrjezm4bwt,
+avtjezm7f9z,mon,true,2019-01-11 00:00:00.000,2019-01-11 00:00:00.000,prrjezm7f9z,
+avtjezm9yd3,mon,true,2019-01-11 00:00:00.000,2019-01-11 00:00:00.000,prrjezm9yd3,
+avtjf0yoten,mon,true,2019-01-11 00:00:00.000,2019-01-11 00:00:00.000,prrjf0yoten,
+avtjf0yywjp,mon,true,2019-01-11 00:00:00.000,2019-01-11 00:00:00.000,prrjf0yywjp,
+avtjf3pvvzz,mon,true,2019-01-11 00:00:00.000,2019-01-11 00:00:00.000,,hcsjf3pvvzz
+avtjf3qo5m4,mon,true,2019-01-11 00:00:00.000,2019-01-11 00:00:00.000,,hcsjf3qo5m4
+avtjf9i3gur,mon,true,2019-01-11 00:00:00.000,2019-01-11 00:00:00.000,prrjf9i3gur,
+avtjf9i7y22,mon,true,2019-01-11 00:00:00.000,2019-01-11 00:00:00.000,prrjf9i7y22,
+avtjf9id78s,mon,false,2019-01-11 00:00:00.000,2019-01-11 00:00:00.000,prrjf9id78s,
+avtjfaiww4m,mon,true,2019-01-11 00:00:00.000,2019-01-11 00:00:00.000,prrjfaiww4m,
+avtjfajzyul,mon,true,2019-01-11 00:00:00.000,2019-01-11 00:00:00.000,prrjfajzyul,
+avtjfaqjxem,mon,true,2019-01-11 00:00:00.000,2019-01-11 00:00:00.000,,
+avtjfwfy8hf,mon,true,2019-01-11 00:00:00.000,2019-01-11 00:00:00.000,prrjfwc2af2,
+avtjfwg3s3e,mon,true,2019-01-11 00:00:00.000,2019-01-11 00:00:00.000,prrjfwc2af2,
