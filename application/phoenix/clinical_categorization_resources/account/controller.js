@@ -34,7 +34,10 @@ var controller = {
 			var status = req.query.status;
 			var subject = req.query.subject;
 			var type = req.query.type;
-			
+			var offset = req.query.offset;
+			var limit = req.query.limit;
+
+
 			//susun query
       var condition = "";
       var join = "";
@@ -73,6 +76,16 @@ var controller = {
         condition += "acc.account_type = '" + type + "' AND ";
       }
 			
+			if((typeof offset !== 'undefined' && offset !== '')){
+				condition = " acc.account_id > '" + offset + "' AND ";       
+			}
+			
+			if((typeof limit !== 'undefined' && limit !== '')){
+				limit = " limit " + limit + " ";       
+			} else {
+				limit = " ";
+			}
+			
 			if (condition == "") {
         fixCondition = "";
       } else {
@@ -81,7 +94,7 @@ var controller = {
 			
 			var arrAccount = [];
 			
-			var query = "SELECT acc.account_id as id, acc.account_status as acc_status, acc.account_type as acc_type, acc.account_name as acc_name, acc.subject_patient_id as subj_patient, acc.subject_device_id as subj_device, acc.subject_practitioner_id as subj_practitioner, acc.subject_location_id as subj_location, acc.subject_healthcare_service_id as subj_healthcare_service, acc.subject_organization_id as subj_org, acc.account_period_start as period_start, acc.account_period_end as period_end, acc.account_active_start as active_start, acc.account_active_end as active_end, acc.account_balance as acc_balance, acc.owner_organization_id as owner, acc.account_description as acc_description, acc.episode_of_care_id as episode_of_care, acc.encounter_id as encounter FROM BACIRO_FHIR.ACCOUNT acc " + fixCondition;
+			var query = "SELECT acc.account_id as id, acc.account_status as acc_status, acc.account_type as acc_type, acc.account_name as acc_name, acc.subject_patient_id as subj_patient, acc.subject_device_id as subj_device, acc.subject_practitioner_id as subj_practitioner, acc.subject_location_id as subj_location, acc.subject_healthcare_service_id as subj_healthcare_service, acc.subject_organization_id as subj_org, acc.account_period_start as period_start, acc.account_period_end as period_end, acc.account_active_start as active_start, acc.account_active_end as active_end, acc.account_balance as acc_balance, acc.owner_organization_id as owner, acc.account_description as acc_description, acc.episode_of_care_id as episode_of_care, acc.encounter_id as encounter FROM BACIRO_FHIR.ACCOUNT acc " + fixCondition + limit;
 			
 			//console.log(query);
 			db.query(query, function (dataJson) {

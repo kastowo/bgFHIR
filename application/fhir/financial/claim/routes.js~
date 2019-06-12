@@ -1,0 +1,10 @@
+var routesCoverage = function(app, Coverage){
+	
+	//get method
+	app.get('/:apikey/Coverage', Coverage.get.coverage);
+	//post method
+	app.post('/:apikey/Coverage', Coverage.post.coverage);
+	//put method
+	app.put('/:apikey/Coverage/:coverage_id?', Coverage.put.coverage);
+}
+module.exports = routesCoverage;

@@ -34,7 +34,10 @@ var controller = {
 			var endpoint = req.query.endpoint_id;
 			var identifier = req.query.identifier_value;
 			var location = req.query.location_id;
-			
+			var offset = req.query.offset;
+			var limit = req.query.limit;
+
+
 			//susun query
       var condition = "";
 			var join = "";
@@ -86,6 +89,17 @@ var controller = {
 				join += " LEFT JOIN BACIRO_FHIR.endpoint ep ON ep.healthcare_service_id = hs.healthcare_service_id ";
       }
 			
+			if((typeof offset !== 'undefined' && offset !== '')){
+				condition = " hs.healthcare_service_id > '" + offset + "' AND ";       
+			}
+			
+			if((typeof limit !== 'undefined' && limit !== '')){
+				limit = " limit " + limit + " ";       
+			} else {
+				limit = " ";
+			}
+
+			
       if(condition == ""){
         fixCondition = "";
       }else{
@@ -93,7 +107,7 @@ var controller = {
       }
 			      
       
-			var query = "select hs.healthcare_service_id as healthcare_service_id, healthcare_service_active, hs.organization_id as organization_id, healthcare_service_category, healthcare_service_type, healthcare_service_specialty, healthcare_service_name, healthcare_service_comment, healthcare_service_extra_details, hs.attachment_id as attachment_id, healthcare_service_service_provision_code,healthcare_service_eligibility, healthcare_service_eligibility_note, healthcare_service_program_name, healthcare_service_characteristic, healthcare_service_referral_method, healthcare_service_appointegerment_required, healthcare_service_availability_exceptions from BACIRO_FHIR.HEALTHCARE_SERVICE hs " + fixCondition;
+			var query = "select hs.healthcare_service_id as healthcare_service_id, healthcare_service_active, hs.organization_id as organization_id, healthcare_service_category, healthcare_service_type, healthcare_service_specialty, healthcare_service_name, healthcare_service_comment, healthcare_service_extra_details, hs.attachment_id as attachment_id, healthcare_service_service_provision_code,healthcare_service_eligibility, healthcare_service_eligibility_note, healthcare_service_program_name, healthcare_service_characteristic, healthcare_service_referral_method, healthcare_service_appointegerment_required, healthcare_service_availability_exceptions from BACIRO_FHIR.HEALTHCARE_SERVICE hs " + fixCondition + limit;
 			
       //console.log(query);
 			var arrHealthcareService = [];
@@ -455,17 +469,18 @@ var controller = {
 
       var query = "UPSERT INTO BACIRO_FHIR.HEALTHCARE_SERVICE(healthcare_service_id, " + column.slice(0, -1) + ")"+
         " VALUES ('"+healthcare_service_id+"', " + values.slice(0, -1) + ")";
-			//console.log(query);
+			console.log(query);
 			
       db.upsert(query,function(succes){
 				
 				var query2 = "UPSERT INTO BACIRO_FHIR.ENDPOINT(ENDPOINT_ID, HEALTHCARE_SERVICE_ID) SELECT ENDPOINT_ID, '" + healthcare_service_id + "' FROM BACIRO_FHIR.ENDPOINT WHERE ENDPOINT_ID = '" + endpoint_id + "'";
+				console.log(query2);
         db.upsert(query2,function(dataJson){
 					var query3 = "UPSERT INTO BACIRO_FHIR.LOCATION(LOCATION_ID, LOCATION_HEALTHCARE_SERVICE_LOCATION) SELECT LOCATION_ID, '" + healthcare_service_id + "' FROM BACIRO_FHIR.LOCATION WHERE LOCATION_ID = '" + location_id + "'";
-					//console.log(query3);
+					console.log(query3);
 					db.upsert(query3,function(dataJson){
 						var query4 = "UPSERT INTO BACIRO_FHIR.LOCATION(LOCATION_ID, LOCATION_HEALTHCARE_SERVICE_COVERAGE_AREA) SELECT LOCATION_ID, '" + healthcare_service_id + "' FROM BACIRO_FHIR.LOCATION WHERE LOCATION_ID = '" + location_coverageArea + "'";
-						//console.log(query4);
+						console.log(query4);
 						db.upsert(query4,function(dataJson){
 				
 							var query = "SELECT healthcare_service_id, healthcare_service_active, healthcare_service_category, healthcare_service_type, healthcare_service_specialty, healthcare_service_name, healthcare_service_comment, healthcare_service_extra_details, healthcare_service_service_provision_code, healthcare_service_eligibility, healthcare_service_eligibility_note,healthcare_service_program_name,healthcare_service_characteristic,  healthcare_service_referral_method, healthcare_service_appointegerment_required, healthcare_service_availability_exceptions, organization_id FROM BACIRO_FHIR.HEALTHCARE_SERVICE  WHERE healthcare_service_id = '" + healthcare_service_id + "' ";

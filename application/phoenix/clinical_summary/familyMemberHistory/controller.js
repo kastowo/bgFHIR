@@ -73,7 +73,18 @@ var controller = {
         condition += "fmh.status = '" + status + "' AND,";  
       }
 			
+			var offset = req.query.offset;
+			var limit = req.query.limit;
+
+			if((typeof offset !== 'undefined' && offset !== '')){
+				condition = " fmh.family_member_history_id > '" + offset + "' AND ";       
+			}
 			
+			if((typeof limit !== 'undefined' && limit !== '')){
+				limit = " limit " + limit + " ";
+			} else {
+				limit = " ";
+			}
 			
       if(condition == ""){
         fixCondition = "";
@@ -82,14 +93,14 @@ var controller = {
       }
 			      
       var arrFamilyMemberHistory = [];
-      var query = "select family_member_history_id, status, not_done, not_done_reason, patient, date, name, relationship, gender, born_period_start, born_period_end, born_date, born_string, age_age, age_range_low, age_range_high, age_string, estimated_age, deceased_boolean, deceased_age, deceased_range_low, deceased_range_high, deceased_date, deceased_string, reason_code from baciro_fhir.family_member_history fmh " + fixCondition;
-			//console.log(query);
+      var query = "select fmh.family_member_history_id as family_member_history_id, fmh.status as status, fmh.not_done as not_done, fmh.not_done_reason as not_done_reason, fmh.patient as patient, fmh.date as date, fmh.name as name, fmh.relationship as relationship, fmh.gender as gender, fmh.born_period_start as born_period_start, fmh.born_period_end as born_period_end, fmh.born_date as born_date, fmh.born_string as born_string, fmh.age_age as age_age, fmh.age_range_low as age_range_low, fmh.age_range_high as age_range_high, fmh.age_string as age_string, fmh.estimated_age as estimated_age, fmh.deceased_boolean as deceased_boolean, fmh.deceased_age as deceased_age, fmh.deceased_range_low as deceased_range_low, fmh.deceased_range_high as deceased_range_high, fmh.deceased_date as deceased_date, fmh.deceased_string as deceased_string, fmh.reason_code as reason_code from baciro_fhir.family_member_history fmh " + fixCondition + limit;
+			console.log(query);
       db.query(query,function(dataJson){
         rez = lowercaseObject(dataJson);
 				for(i = 0; i < rez.length; i++){
           var FamilyMemberHistory = {};
 					FamilyMemberHistory.resourceType = "FamilyMemberHistory";
-          FamilyMemberHistory.id = rez[i].care_team_id;
+          FamilyMemberHistory.id = rez[i].family_member_history_id;
 					FamilyMemberHistory.notDone = rez[i].not_done;
 					FamilyMemberHistory.notDoneReason = rez[i].not_done_reason;
 					if(rez[i].patient != "null"){
@@ -105,22 +116,24 @@ var controller = {
 					FamilyMemberHistory.name = rez[i].name;
 					FamilyMemberHistory.relationship = rez[i].relationship;
 					FamilyMemberHistory.gender = rez[i].patientgender;
-					
-					FamilyMemberHistory.born.bornPeriod = rez[i].born_period_start + ' to ' + rez[i].born_period_end;
-					FamilyMemberHistory.born.bornDate = rez[i].born_date;
-					FamilyMemberHistory.born.bornString = rez[i].born_string;
-					FamilyMemberHistory.age.ageAge = rez[i].age_age;
-					FamilyMemberHistory.age.ageRange = rez[i].age_range_low + ' to ' + rez[i].age_range_high;
-					FamilyMemberHistory.age.ageString = rez[i].age_string;
-					
+					var Born = {};
+					Born.bornPeriod = rez[i].born_period_start + ' to ' + rez[i].born_period_end;
+					Born.bornDate = rez[i].born_date;
+					Born.bornString = rez[i].born_string;
+					FamilyMemberHistory.born = Born;
+					var Age = {};
+					Age.ageAge = rez[i].age_age;
+					Age.ageRange = rez[i].age_range_low + ' to ' + rez[i].age_range_high;
+					Age.ageString = rez[i].age_string;
+					FamilyMemberHistory.age = Age;
 					FamilyMemberHistory.estimatedAge = rez[i].estimated_age;
-					
-					FamilyMemberHistory.deceased_boolean = rez[i].deceased_boolean;
-					FamilyMemberHistory.deceased_age = rez[i].deceased_age;
-					FamilyMemberHistory.deceased_range = rez[i].deceased_range_low + ' to ' + rez[i].deceased_range_high;
-					FamilyMemberHistory.deceased_date = rez[i].deceased_date;
-					FamilyMemberHistory.deceased_string = rez[i].deceased_string;
-					
+					var Deceased = {};
+					Deceased.deceasedBoolean = rez[i].deceased_boolean;
+					Deceased.deceasedAge = rez[i].deceased_age;
+					Deceased.deceasedRange = rez[i].deceased_range_low + ' to ' + rez[i].deceased_range_high;
+					Deceased.deceasedDate = rez[i].deceased_date;
+					Deceased.deceasedString = rez[i].deceased_string;
+					FamilyMemberHistory.deceased = Deceased;
 					FamilyMemberHistory.reasonCode = rez[i].reason_code;
 					
           arrFamilyMemberHistory[i] = FamilyMemberHistory;
@@ -155,7 +168,7 @@ var controller = {
 
 			var arrFamilyMemberHistoryCondition = [];
 			var query = "select condition_id, code, outcome, onset_age, onset_range_low, onset_range_high, onset_period_start, onset_period_end, onset_string from baciro_fhir.family_member_history_condition " + fixCondition;
-
+			console.log(query);
 			db.query(query, function (dataJson) {
 				rez = lowercaseObject(dataJson);
 				for (i = 0; i < rez.length; i++) {
@@ -163,11 +176,12 @@ var controller = {
 					FamilyMemberHistoryCondition.id = rez[i].condition_id;
 					FamilyMemberHistoryCondition.code = rez[i].code;
 					FamilyMemberHistoryCondition.outcome = rez[i].outcome;
-					FamilyMemberHistoryCondition.onset.onsetAge = rez[i].onset_age;
-					FamilyMemberHistoryCondition.onset.onsetRange = rez[i].onset_range_low + ' to ' + rez[i].onset_range_high;
-					FamilyMemberHistoryCondition.onset.onsetPeriod = rez[i].onset_period_start + ' to ' + rez[i].onset_period_end;
-					FamilyMemberHistoryCondition.onset.onsetString = rez[i].onset_string;
-				
+					var Onset = {};
+					Onset.onsetAge = rez[i].onset_age;
+					Onset.onsetRange = rez[i].onset_range_low + ' to ' + rez[i].onset_range_high;
+					Onset.onsetPeriod = rez[i].onset_period_start + ' to ' + rez[i].onset_period_end;
+					Onset.onsetString = rez[i].onset_string;
+					FamilyMemberHistoryCondition.onset = Onset;
 					arrFamilyMemberHistoryCondition[i] = FamilyMemberHistoryCondition;
 				}
 				res.json({
@@ -182,7 +196,290 @@ var controller = {
 					"function": "getFamilyMemberHistoryCondition"
 				});
 			});
-		}
+		},
+
+		familyMemberHistoryDefinitionPlanDefinition: function getFamilyMemberHistoryDefinitionPlanDefinition(req, res) {
+			var apikey = req.params.apikey;
+			
+			var _id = req.query._id;
+			var familyMemberHistoryId = req.query.family_member_history_id;
+
+			//susun query
+			var condition = '';
+
+			if (typeof familyMemberHistoryId !== 'undefined' && familyMemberHistoryId !== "") {
+				condition += "family_member_history_id = '" + familyMemberHistoryId + "' AND ";
+			}
+
+			if (condition == '') {
+				fixCondition = '';
+			} else {
+				fixCondition = ' WHERE ' + condition.slice(0, -4);
+			}
+
+			var arrFamilyMemberHistoryDefinitionPlanDefinition = [];
+			var query = 'select plan_definition_id from BACIRO_FHIR.plan_definition ' + fixCondition;
+
+			db.query(query, function (dataJson) {
+				rez = lowercaseObject(dataJson);
+				for (i = 0; i < rez.length; i++) {
+					var familyMemberHistoryDefinitionPlanDefinition = {};
+					if(rez[i].plan_definition_id != "null"){
+						familyMemberHistoryDefinitionPlanDefinition.id = hostFHIR + ':' + portFHIR + '/' + apikey + '/planDefinition?_id=' +  rez[i].plan_definition_id;
+					} else {
+						familyMemberHistoryDefinitionPlanDefinition.id = "";
+					}
+					
+					arrFamilyMemberHistoryDefinitionPlanDefinition[i] = familyMemberHistoryDefinitionPlanDefinition;
+				}
+				res.json({
+					"err_code": 0,
+					"data": arrFamilyMemberHistoryDefinitionPlanDefinition
+				});
+			}, function (e) {
+				res.json({
+					"err_code": 1,
+					"err_msg": e,
+					"application": "Api Phoenix",
+					"function": "getFamilyMemberHistoryDefinitionPlanDefinition"
+				});
+			});
+		},
+		familyMemberHistoryDefinitionQuestionnaire: function getFamilyMemberHistoryDefinitionQuestionnaire(req, res) {
+			var apikey = req.params.apikey;
+			
+			var _id = req.query._id;
+			var familyMemberHistoryId = req.query.family_member_history_id;
+
+			//susun query
+			var condition = '';
+
+			if (typeof familyMemberHistoryId !== 'undefined' && familyMemberHistoryId !== "") {
+				condition += "family_member_history_id = '" + familyMemberHistoryId + "' AND ";
+			}
+
+			if (condition == '') {
+				fixCondition = '';
+			} else {
+				fixCondition = ' WHERE ' + condition.slice(0, -4);
+			}
+
+			var arrFamilyMemberHistoryDefinitionQuestionnaire = [];
+			var query = 'select questionnaire_id from BACIRO_FHIR.questionnaire ' + fixCondition;
+
+			db.query(query, function (dataJson) {
+				rez = lowercaseObject(dataJson);
+				for (i = 0; i < rez.length; i++) {
+					var familyMemberHistoryDefinitionQuestionnaire = {};
+					if(rez[i].questionnaire_id != "null"){
+						familyMemberHistoryDefinitionQuestionnaire.id = hostFHIR + ':' + portFHIR + '/' + apikey + '/Questionnaire?_id=' +  rez[i].questionnaire_id;
+					} else {
+						familyMemberHistoryDefinitionQuestionnaire.id = "";
+					}
+					
+					arrFamilyMemberHistoryDefinitionQuestionnaire[i] = familyMemberHistoryDefinitionQuestionnaire;
+				}
+				res.json({
+					"err_code": 0,
+					"data": arrFamilyMemberHistoryDefinitionQuestionnaire
+				});
+			}, function (e) {
+				res.json({
+					"err_code": 1,
+					"err_msg": e,
+					"application": "Api Phoenix",
+					"function": "getFamilyMemberHistoryDefinitionQuestionnaire"
+				});
+			});
+		},
+		familyMemberHistoryReasonReferenceCondition: function getFamilyMemberHistoryReasonReferenceCondition(req, res) {
+			var apikey = req.params.apikey;
+			
+			var _id = req.query._id;
+			var familyMemberHistoryId = req.query.family_member_history_id;
+
+			//susun query
+			var condition = '';
+
+			if (typeof familyMemberHistoryId !== 'undefined' && familyMemberHistoryId !== "") {
+				condition += "family_member_history_id = '" + familyMemberHistoryId + "' AND ";
+			}
+
+			if (condition == '') {
+				fixCondition = '';
+			} else {
+				fixCondition = ' WHERE ' + condition.slice(0, -4);
+			}
+
+			var arrFamilyMemberHistoryReasonReferenceCondition = [];
+			var query = 'select condition_id from BACIRO_FHIR.condition ' + fixCondition;
+
+			db.query(query, function (dataJson) {
+				rez = lowercaseObject(dataJson);
+				for (i = 0; i < rez.length; i++) {
+					var familyMemberHistoryReasonReferenceCondition = {};
+					if(rez[i].condition_id != "null"){
+						familyMemberHistoryReasonReferenceCondition.id = hostFHIR + ':' + portFHIR + '/' + apikey + '/Condition?_id=' +  rez[i].condition_id;
+					} else {
+						familyMemberHistoryReasonReferenceCondition.id = "";
+					}
+					
+					arrFamilyMemberHistoryReasonReferenceCondition[i] = familyMemberHistoryReasonReferenceCondition;
+				}
+				res.json({
+					"err_code": 0,
+					"data": arrFamilyMemberHistoryReasonReferenceCondition
+				});
+			}, function (e) {
+				res.json({
+					"err_code": 1,
+					"err_msg": e,
+					"application": "Api Phoenix",
+					"function": "getFamilyMemberHistoryReasonReferenceCondition"
+				});
+			});
+		},
+		familyMemberHistoryReasonReferenceObservation: function getFamilyMemberHistoryReasonReferenceObservation(req, res) {
+			var apikey = req.params.apikey;
+			
+			var _id = req.query._id;
+			var familyMemberHistoryId = req.query.family_member_history_id;
+
+			//susun query
+			var condition = '';
+
+			if (typeof familyMemberHistoryId !== 'undefined' && familyMemberHistoryId !== "") {
+				condition += "family_member_history_id = '" + familyMemberHistoryId + "' AND ";
+			}
+
+			if (condition == '') {
+				fixCondition = '';
+			} else {
+				fixCondition = ' WHERE ' + condition.slice(0, -4);
+			}
+
+			var arrFamilyMemberHistoryReasonReferenceObservation = [];
+			var query = 'select observation_id from BACIRO_FHIR.observation ' + fixCondition;
+
+			db.query(query, function (dataJson) {
+				rez = lowercaseObject(dataJson);
+				for (i = 0; i < rez.length; i++) {
+					var familyMemberHistoryReasonReferenceObservation = {};
+					if(rez[i].observation_id != "null"){
+						familyMemberHistoryReasonReferenceObservation.id = hostFHIR + ':' + portFHIR + '/' + apikey + '/Observation?_id=' +  rez[i].observation_id;
+					} else {
+						familyMemberHistoryReasonReferenceObservation.id = "";
+					}
+					
+					arrFamilyMemberHistoryReasonReferenceObservation[i] = familyMemberHistoryReasonReferenceObservation;
+				}
+				res.json({
+					"err_code": 0,
+					"data": arrFamilyMemberHistoryReasonReferenceObservation
+				});
+			}, function (e) {
+				res.json({
+					"err_code": 1,
+					"err_msg": e,
+					"application": "Api Phoenix",
+					"function": "getFamilyMemberHistoryReasonReferenceObservation"
+				});
+			});
+		},
+		familyMemberHistoryReasonReferenceAllergyIntolerance: function getFamilyMemberHistoryReasonReferenceAllergyIntolerance(req, res) {
+			var apikey = req.params.apikey;
+			
+			var _id = req.query._id;
+			var familyMemberHistoryId = req.query.family_member_history_id;
+
+			//susun query
+			var condition = '';
+
+			if (typeof familyMemberHistoryId !== 'undefined' && familyMemberHistoryId !== "") {
+				condition += "family_member_history_id = '" + familyMemberHistoryId + "' AND ";
+			}
+
+			if (condition == '') {
+				fixCondition = '';
+			} else {
+				fixCondition = ' WHERE ' + condition.slice(0, -4);
+			}
+
+			var arrFamilyMemberHistoryReasonReferenceAllergyIntolerance = [];
+			var query = 'select allergy_intolerance_id from BACIRO_FHIR.allergy_intolerance ' + fixCondition;
+
+			db.query(query, function (dataJson) {
+				rez = lowercaseObject(dataJson);
+				for (i = 0; i < rez.length; i++) {
+					var familyMemberHistoryReasonReferenceAllergyIntolerance = {};
+					if(rez[i].allergy_intolerance_id != "null"){
+						familyMemberHistoryReasonReferenceAllergyIntolerance.id = hostFHIR + ':' + portFHIR + '/' + apikey + '/AllergyIntolerance?_id=' +  rez[i].allergy_intolerance_id;
+					} else {
+						familyMemberHistoryReasonReferenceAllergyIntolerance.id = "";
+					}
+					
+					arrFamilyMemberHistoryReasonReferenceAllergyIntolerance[i] = familyMemberHistoryReasonReferenceAllergyIntolerance;
+				}
+				res.json({
+					"err_code": 0,
+					"data": arrFamilyMemberHistoryReasonReferenceAllergyIntolerance
+				});
+			}, function (e) {
+				res.json({
+					"err_code": 1,
+					"err_msg": e,
+					"application": "Api Phoenix",
+					"function": "getFamilyMemberHistoryReasonReferenceAllergyIntolerance"
+				});
+			});
+		},
+		familyMemberHistoryReasonReferenceQuestionnaireResponse: function getFamilyMemberHistoryReasonReferenceQuestionnaireResponse(req, res) {
+			var apikey = req.params.apikey;
+			
+			var _id = req.query._id;
+			var familyMemberHistoryId = req.query.family_member_history_id;
+
+			//susun query
+			var condition = '';
+
+			if (typeof familyMemberHistoryId !== 'undefined' && familyMemberHistoryId !== "") {
+				condition += "family_member_history_id = '" + familyMemberHistoryId + "' AND ";
+			}
+
+			if (condition == '') {
+				fixCondition = '';
+			} else {
+				fixCondition = ' WHERE ' + condition.slice(0, -4);
+			}
+
+			var arrFamilyMemberHistoryReasonReferenceQuestionnaireResponse = [];
+			var query = 'select questionnaire_response_id from BACIRO_FHIR.questionnaire_response ' + fixCondition;
+
+			db.query(query, function (dataJson) {
+				rez = lowercaseObject(dataJson);
+				for (i = 0; i < rez.length; i++) {
+					var familyMemberHistoryReasonReferenceQuestionnaireResponse = {};
+					if(rez[i].questionnaire_response_id != "null"){
+						familyMemberHistoryReasonReferenceQuestionnaireResponse.id = hostFHIR + ':' + portFHIR + '/' + apikey + '/QuestionnaireResponse?_id=' +  rez[i].questionnaire_response_id;
+					} else {
+						familyMemberHistoryReasonReferenceQuestionnaireResponse.id = "";
+					}
+					
+					arrFamilyMemberHistoryReasonReferenceQuestionnaireResponse[i] = familyMemberHistoryReasonReferenceQuestionnaireResponse;
+				}
+				res.json({
+					"err_code": 0,
+					"data": arrFamilyMemberHistoryReasonReferenceQuestionnaireResponse
+				});
+			}, function (e) {
+				res.json({
+					"err_code": 1,
+					"err_msg": e,
+					"application": "Api Phoenix",
+					"function": "getFamilyMemberHistoryReasonReferenceQuestionnaireResponse"
+				});
+			});
+		},		
   },
 	post: {
 		familyMemberHistory: function addFamilyMemberHistory(req, res) {
@@ -349,7 +646,7 @@ var controller = {
         values += "'" + clinical_impression_id + "',";
       }
 
-      var query = "UPSERT INTO BACIRO_FHIR.family_member_history(care_team_id, " + column.slice(0, -1) + ")"+
+      var query = "UPSERT INTO BACIRO_FHIR.family_member_history(family_member_history_id, " + column.slice(0, -1) + ")"+
         " VALUES ('"+family_member_history_id+"', " + values.slice(0, -1) + ")";
 			
 			console.log(query);
@@ -451,7 +748,7 @@ var controller = {
 	put: {
 		familyMemberHistory: function updateFamilyMemberHistory(req, res) {
 			console.log(req.body);
-			var family_member_history_id = req.params.family_member_history_id;
+			var family_member_history_id = req.params._id;
 			var status = req.body.status;
 			var not_done = req.body.not_done;
 			var not_done_reason = req.body.not_done_reason;
@@ -613,10 +910,14 @@ var controller = {
       }
 			
 			var domainResource = req.params.dr;
-			var arrResource = domainResource.split('|');
-			var fieldResource = arrResource[0];
-			var valueResource = arrResource[1];
-			var condition = "family_member_history_id = '" + family_member_history_id + "' AND " + fieldResource + " = '" + valueResource + "'";
+			if(domainResource !== "" && typeof domainResource !== 'undefined'){
+				var arrResource = domainResource.split('|');
+				var fieldResource = arrResource[0];
+				var valueResource = arrResource[1];
+				var condition = "family_member_history_id = '" + family_member_history_id + "' AND " + fieldResource + " = '" + valueResource + "'";
+			}else{
+        var condition = "family_member_history_id = '" + family_member_history_id+ "'";
+      }
 
       var query = "UPSERT INTO BACIRO_FHIR.family_member_history(family_member_history_id," + column.slice(0, -1) + ") SELECT family_member_history_id, " + values.slice(0, -1) + " FROM BACIRO_FHIR.family_member_history WHERE " + condition;
 			
@@ -636,7 +937,7 @@ var controller = {
     },
 		familyMemberHistoryCondition: function updateFamilyMemberHistoryCondition(req, res) {
 			console.log(req.body);
-			var condition_id = req.params.condition_id;
+			var condition_id = req.params._id;
 			var code = req.body.code;
 			var outcome = req.body.outcome;
 			var onset_age = req.body.onset_age;
@@ -700,10 +1001,14 @@ var controller = {
 
      
 			var domainResource = req.params.dr;
-			var arrResource = domainResource.split('|');
-			var fieldResource = arrResource[0];
-			var valueResource = arrResource[1];
-			var condition = "condition_id = " + condition_id + " AND " + fieldResource + " = '" + valueResource + "'";
+			if(domainResource !== "" && typeof domainResource !== 'undefined'){
+				var arrResource = domainResource.split('|');
+				var fieldResource = arrResource[0];
+				var valueResource = arrResource[1];
+				var condition = "condition_id = " + condition_id + " AND " + fieldResource + " = '" + valueResource + "'";
+			}else{
+        var condition = "condition_id = '" + condition_id+ "'";
+      }
 			
 			var query = "UPSERT INTO BACIRO_FHIR.family_member_history_condition(condition_id," + column.slice(0, -1) + ") SELECT condition_id, " + values.slice(0, -1) + " FROM BACIRO_FHIR.family_member_history_condition WHERE " + condition;
 			

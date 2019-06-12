@@ -1,25 +1,20 @@
 var routesImmunization = function(app, Immunization){
-	app.get('/:apikey/Immunization', Immunization.get.immunization);
-	/*app.get('/:apikey/Immunization/:immunization_id?/ImmunizationContact/:immunization_contact_id?', Immunization.get.immunizationContact);
-	app.get('/:apikey/Immunization/:immunization_id?/Identifier/:identifier_id?', Immunization.get.identifier);
-	app.get('/:apikey/Immunization/:immunization_id?/Telecom/:contact_point_id?', Immunization.get.telecom);
-	app.get('/:apikey/Immunization/:immunization_id?/Address/:address_id?', Immunization.get.address);*/
-	
+	app.get('/:apikey/Immunization/:immunization_id?', Immunization.get.immunization);
+	app.get('/:apikey/Immunization/:immunization_id?/identifier/:identifier_id?', Immunization.get.identifier);
+	app.get('/:apikey/Immunization/:immunization_id?/immunizationPractitioner/:immunization_practitioner_id?', Immunization.get.immunizationPractitioner);
+	app.get('/:apikey/Immunization/:immunization_id?/immunizationReaction/:immunization_reaction_id?', Immunization.get.immunizationReaction);
+	app.get('/:apikey/Immunization/:immunization_id?/immunizationVaccinationProtocol/:immunization_vaccination_protocol_id?', Immunization.get.immunizationVaccinationProtocol);
+
 	app.post('/:apikey/Immunization', Immunization.post.immunization);
-	/*app.post('/:apikey/Immunization/:immunization_id?/immunizationContact', Immunization.post.immunizationContact);
-	app.post('/:apikey/Immunization/:immunization_id?/Identifier', Immunization.post.identifier);
-	app.post('/:apikey/Immunization/:immunization_id?/Telecom', Immunization.post.telecom);
-	app.post('/:apikey/Immunization/:immunization_id?/Address', Immunization.post.address);
-	app.post('/:apikey/Immunization/:immunization_id?/Endpoint', Immunization.post.endpointRef);
-	*/
+	app.post('/:apikey/Immunization/:immunization_id?/identifier', Immunization.post.identifier);
+	app.post('/:apikey/Immunization/:immunization_id?/immunizationPractitioner', Immunization.post.immunizationPractitioner);
+	app.post('/:apikey/Immunization/:immunization_id?/immunizationReaction', Immunization.post.immunizationReaction);
+	app.post('/:apikey/Immunization/:immunization_id?/immunizationVaccinationProtocol', Immunization.post.immunizationVaccinationProtocol);
+	
 	app.put('/:apikey/Immunization/:immunization_id?', Immunization.put.immunization);
-	/*app.put('/:apikey/Immunization/:immunization_id?/ImmunizationContact/:immunization_contact_id?', Immunization.put.immunizationContact);
-	app.put('/:apikey/Immunization/:immunization_id?/ImmunizationContact/:immunization_contact_id?/Address/:address_id?', Immunization.put.immunizationContactaddress);
-	app.put('/:apikey/Immunization/:immunization_id?/ImmunizationContact/:immunization_contact_id?/Telecom/:contact_point_id?', Immunization.put.immunizationContactTelecom);
-	app.put('/:apikey/Immunization/:immunization_id?/ImmunizationContact/:immunization_contact_id?/HumanName/:human_name_id?', Immunization.put.immunizationContactHumanName);
-	app.put('/:apikey/Immunization/:immunization_id?/Identifier/:identifier_id?', Immunization.put.identifier);
-	app.put('/:apikey/Immunization/:immunization_id?/Telecom/:contact_point_id?', Immunization.put.telecom);
-	app.put('/:apikey/Immunization/:immunization_id?/Address/:address_id?', Immunization.put.address);
-*/
+	app.put('/:apikey/Immunization/:immunization_id?/identifier/:identifier_id?', Immunization.put.identifier);
+	app.put('/:apikey/Immunization/:immunization_id?/immunizationPractitioner/:immunization_practitioner_id?', Immunization.put.immunizationPractitioner);
+	app.put('/:apikey/Immunization/:immunization_id?/immunizationReaction/:immunization_reaction_id?', Immunization.put.immunizationReaction);
+	app.put('/:apikey/Immunization/:immunization_id?/immunizationVaccinationProtocol/:immunization_vaccination_protocol_id?', Immunization.put.immunizationVaccinationProtocol);
 }
 module.exports = routesImmunization

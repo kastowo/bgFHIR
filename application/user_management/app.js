@@ -163,7 +163,7 @@ var User = {
 																				"user_apikey": generateApikey(getFormattedDate()),
 																				"user_create_date": getFormattedDate(),
 																				"user_password": md5(req.body.user_password),
-																				"user_is_active": true,
+																				"user_is_active": 1,
 																				"user_ip_address": req.body.user_ip_address
 																			};
 											

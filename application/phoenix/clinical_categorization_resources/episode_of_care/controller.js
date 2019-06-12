@@ -34,7 +34,9 @@ var controller = {
 			var episodeOfCarePatient = req.query.patient;
 			var episodeOfCareStatus = req.query.status;
 			var episodeOfCareType = req.query.type;
-			
+			var offset = req.query.offset;
+			var limit = req.query.limit;
+
 			//susun query
       var condition = "";
       var join = "";
@@ -79,6 +81,17 @@ var controller = {
         condition += "eoc.episode_of_care_type = '" + episodeOfCareType + "' AND ";
       }
 			
+			if((typeof offset !== 'undefined' && offset !== '')){
+				condition = " eoc.episode_of_care_id > '" + offset + "' AND ";       
+			}
+			
+			if((typeof limit !== 'undefined' && limit !== '')){
+				limit = " limit " + limit + " ";       
+			} else {
+				limit = " ";
+			}
+
+			
 			if (condition == "") {
         fixCondition = "";
       } else {
@@ -86,7 +99,7 @@ var controller = {
       }
 			
 			var arrEpisodeOfCare = [];
-			var query = "SELECT eoc.episode_of_care_id as id, eoc.practitioner_id as practitioner_id, eoc.episode_of_care_period_start as period_start, eoc.episode_of_care_period_end as period_end, eoc.organization_id as org_id, eoc.patient_id as patient_id, eoc.episode_of_care_status as status, eoc.episode_of_care_type as type FROM BACIRO_FHIR.EPISODE_OF_CARE eoc " + fixCondition;
+			var query = "SELECT eoc.episode_of_care_id as id, eoc.practitioner_id as practitioner_id, eoc.episode_of_care_period_start as period_start, eoc.episode_of_care_period_end as period_end, eoc.organization_id as org_id, eoc.patient_id as patient_id, eoc.episode_of_care_status as status, eoc.episode_of_care_type as type FROM BACIRO_FHIR.EPISODE_OF_CARE eoc " + fixCondition + limit;
 			
 			db.query(query, function (dataJson) {
         rez = lowercaseObject(dataJson);

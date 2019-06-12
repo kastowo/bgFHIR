@@ -42,6 +42,9 @@ var controller = {
       var relatedPersonPhone = req.query.phone; 
       var relatedPersonPhonetic = req.query.phonetic; 
       var relatedPersonTelecom = req.query.telecom;
+			var offset = req.query.offset;
+			var limit = req.query.limit;
+
 
       //susun query
       var condition = "";
@@ -153,8 +156,16 @@ var controller = {
         }
       }
 
-      
-
+      if((typeof offset !== 'undefined' && offset !== '')){
+				condition = " rp.related_person_id > '" + offset + "' AND ";       
+			}
+			
+			if((typeof limit !== 'undefined' && limit !== '')){
+				limit = " limit " + limit + " ";       
+			} else {
+				limit = " ";
+			}
+			
       if(condition == ""){
         fixCondition = "";
       }else{
@@ -162,7 +173,7 @@ var controller = {
       }
       
       var arrRelatedPerson = [];
-      var query = "SELECT rp.related_person_id as related_person_id, related_person_active, related_person_relationship, related_person_gender, related_person_birthdate, related_person_period_start, related_person_period_end, rp.patient_id as patient_id FROM BACIRO_FHIR.RELATED_PERSON rp " + fixCondition;
+      var query = "SELECT rp.related_person_id as related_person_id, related_person_active, related_person_relationship, related_person_gender, related_person_birthdate, related_person_period_start, related_person_period_end, rp.patient_id as patient_id FROM BACIRO_FHIR.RELATED_PERSON rp " + fixCondition + limit;
       
       db.query(query,function(dataJson){
         rez = lowercaseObject(dataJson);

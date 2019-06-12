@@ -60,7 +60,7 @@ var controller = {
         condition += "ct.STATUS = '" + status + "' AND,";  
       }
 			
-			if(typeof subject !== 'subject' && subject !== ""){
+			if(typeof subject !== 'undefined' && subject !== ""){
 				condition += "(go.SUBJECT_PATIENT = '" + subject + "' OR go.SUBJECT_GROUP = '" + subject + "' OR go.SUBJECT_ORGANIZATION = '" + subject + "') AND,";  
 			}
 			
@@ -69,6 +69,19 @@ var controller = {
         condition += "gt.DUE_DATE <= to_date('" + target_date + "', 'yyyy-MM-dd') AND,";
       }
 			
+			var offset = req.query.offset;
+			var limit = req.query.limit;
+
+			if((typeof offset !== 'undefined' && offset !== '')){
+				condition = " go.goal_id > '" + offset + "' AND ";       
+			}
+			
+			if((typeof limit !== 'undefined' && limit !== '')){
+				limit = " limit " + limit + " ";
+			} else {
+				limit = " ";
+			}
+			
       if(condition == ""){
         fixCondition = "";
       }else{
@@ -76,8 +89,8 @@ var controller = {
       }
 			      
       var arrGoal = [];
-      var query = "select goal_id, status, category, priority, description, subject_patient, subject_group, subject_organization, start_date, start_codeable_concept, status_date, status_reason, expressed_by_patient, expressed_by_practitioner, expressed_by_related_person, outcome_code from baciro_fhir.goal go " + fixCondition;
-			//console.log(query);
+      var query = "select go.goal_id as goal_id, go.status as status, go.category as category, go.priority as priority, go.description as description, go.subject_patient as subject_patient, go.subject_group as subject_group, go.subject_organization as subject_organization, go.start_date as start_date, go.start_codeable_concept as start_codeable_concept, go.status_date as status_date, go.status_reason as status_reason, go.expressed_by_patient as expressed_by_patient, go.expressed_by_practitioner as expressed_by_practitioner, go.expressed_by_related_person as expressed_by_related_person, go.outcome_code as outcome_code from baciro_fhir.goal go " + fixCondition + limit;
+			console.log(query);
       db.query(query,function(dataJson){
         rez = lowercaseObject(dataJson);
 				for(i = 0; i < rez.length; i++){
@@ -88,7 +101,6 @@ var controller = {
 					Goal.category = rez[i].category;
 					Goal.priority = rez[i].priority;
 					Goal.description = rez[i].description;
-					var arrSubject = [];
 					var Subject = {};
 					if(rez[i].subject_group != "null"){
 						Subject.group = hostFHIR + ':' + portFHIR + '/' + apikey + '/Group?_id=' +  rez[i].subject_group;
@@ -105,21 +117,21 @@ var controller = {
 					} else {
 						Subject.organization = "";
 					}
-					arrSubject[i] = Subject;
-					Goal.subject = arrSubject;
+					Goal.subject = Subject;
+					var Start = {};
 					if(rez[i].start_date == null){
-						Goal.start.startDate = formatDate(rez[i].start_date);
+						Start.startDate = formatDate(rez[i].start_date);
 					}else{
-						Goal.start.startDate = rez[i].start_date;
+						Start.startDate = rez[i].start_date;
 					}
-					Goal.start.startCodeableConcept = rez[i].start_codeable_concept;
+					Start.startCodeableConcept = rez[i].start_codeable_concept;
+					Goal.start = Start;
 					if(rez[i].status_date == null){
 						Goal.statusDate = formatDate(rez[i].status_date);
 					}else{
 						Goal.statusDate = rez[i].status_date;
 					}
-					Goal.statusReason = rez[i].status_reason;var arrSubject = [];
-					var arrExpressedBy = [];
+					Goal.statusReason = rez[i].status_reason;
 					var ExpressedBy = {};
 					if(rez[i].expressed_by_practitioner != "null"){
 						ExpressedBy.practitioner = hostFHIR + ':' + portFHIR + '/' + apikey + '/Practitioner?_id=' +  rez[i].expressed_by_practitioner;
@@ -136,11 +148,8 @@ var controller = {
 					} else {
 						ExpressedBy.relatedPerson = "";
 					}
-					arrExpressedBy[i] = ExpressedBy;
-					Goal.expressedBy = arrExpressedBy;
+					Goal.expressedBy = ExpressedBy;
 					Goal.outcomeCode = rez[i].outcome_code;
-					
-					
 					
           arrGoal[i] = Goal;
         }
@@ -204,8 +213,337 @@ var controller = {
 					"function": "getGoalTarget"
 				});
 			});
-		}
+		},
 		
+		goalAddressesCondition: function getGoalAddressesCondition(req, res) {
+			var apikey = req.params.apikey;
+			
+			var _id = req.query._id;
+			var goalId = req.query.goal_id;
+
+			//susun query
+			var condition = '';
+
+			if (typeof goalId !== 'undefined' && goalId !== "") {
+				condition += "goal_id = '" + goalId + "' AND ";
+			}
+
+			if (condition == '') {
+				fixCondition = '';
+			} else {
+				fixCondition = ' WHERE ' + condition.slice(0, -4);
+			}
+
+			var arrGoalAddressesCondition = [];
+			var query = 'select condition_id from BACIRO_FHIR.condition ' + fixCondition;
+
+			db.query(query, function (dataJson) {
+				rez = lowercaseObject(dataJson);
+				for (i = 0; i < rez.length; i++) {
+					var goalAddressesCondition = {};
+					if(rez[i].condition_id != "null"){
+						goalAddressesCondition.id = hostFHIR + ':' + portFHIR + '/' + apikey + '/condition?_id=' +  rez[i].condition_id;
+					} else {
+						goalAddressesCondition.id = "";
+					}
+					
+					arrGoalAddressesCondition[i] = goalAddressesCondition;
+				}
+				res.json({
+					"err_code": 0,
+					"data": arrGoalAddressesCondition
+				});
+			}, function (e) {
+				res.json({
+					"err_code": 1,
+					"err_msg": e,
+					"application": "Api Phoenix",
+					"function": "getGoalAddressesCondition"
+				});
+			});
+		},
+		goalAddressesObservation: function getGoalAddressesObservation(req, res) {
+			var apikey = req.params.apikey;
+			
+			var _id = req.query._id;
+			var goalId = req.query.goal_id;
+
+			//susun query
+			var condition = '';
+
+			if (typeof goalId !== 'undefined' && goalId !== "") {
+				condition += "goal_addresses_id = '" + goalId + "' AND ";
+			}
+
+			if (condition == '') {
+				fixCondition = '';
+			} else {
+				fixCondition = ' WHERE ' + condition.slice(0, -4);
+			}
+
+			var arrGoalAddressesObservation = [];
+			var query = 'select observation_id from BACIRO_FHIR.observation ' + fixCondition;
+
+			db.query(query, function (dataJson) {
+				rez = lowercaseObject(dataJson);
+				for (i = 0; i < rez.length; i++) {
+					var goalAddressesObservation = {};
+					if(rez[i].observation_id != "null"){
+						goalAddressesObservation.id = hostFHIR + ':' + portFHIR + '/' + apikey + '/observation?_id=' +  rez[i].observation_id;
+					} else {
+						goalAddressesObservation.id = "";
+					}
+					
+					arrGoalAddressesObservation[i] = goalAddressesObservation;
+				}
+				res.json({
+					"err_code": 0,
+					"data": arrGoalAddressesObservation
+				});
+			}, function (e) {
+				res.json({
+					"err_code": 1,
+					"err_msg": e,
+					"application": "Api Phoenix",
+					"function": "getGoalAddressesObservation"
+				});
+			});
+		},
+		goalAddressesMedicationStatement: function getGoalAddressesMedicationStatement(req, res) {
+			var apikey = req.params.apikey;
+			
+			var _id = req.query._id;
+			var goalId = req.query.goal_id;
+
+			//susun query
+			var condition = '';
+
+			if (typeof goalId !== 'undefined' && goalId !== "") {
+				condition += "goal_id = '" + goalId + "' AND ";
+			}
+
+			if (condition == '') {
+				fixCondition = '';
+			} else {
+				fixCondition = ' WHERE ' + condition.slice(0, -4);
+			}
+
+			var arrGoalAddressesMedicationStatement = [];
+			var query = 'select medication_statement_id from BACIRO_FHIR.medication_statement ' + fixCondition;
+
+			db.query(query, function (dataJson) {
+				rez = lowercaseObject(dataJson);
+				for (i = 0; i < rez.length; i++) {
+					var goalAddressesMedicationStatement = {};
+					if(rez[i].medication_statement_id != "null"){
+						goalAddressesMedicationStatement.id = hostFHIR + ':' + portFHIR + '/' + apikey + '/medicationStatement?_id=' +  rez[i].medication_statement_id;
+					} else {
+						goalAddressesMedicationStatement.id = "";
+					}
+					
+					arrGoalAddressesMedicationStatement[i] = goalAddressesMedicationStatement;
+				}
+				res.json({
+					"err_code": 0,
+					"data": arrGoalAddressesMedicationStatement
+				});
+			}, function (e) {
+				res.json({
+					"err_code": 1,
+					"err_msg": e,
+					"application": "Api Phoenix",
+					"function": "getGoalAddressesMedicationStatement"
+				});
+			});
+		},
+		goalAddressesNutritionOrder: function getGoalAddressesNutritionOrder(req, res) {
+			var apikey = req.params.apikey;
+			
+			var _id = req.query._id;
+			var goalId = req.query.goal_id;
+
+			//susun query
+			var condition = '';
+
+			if (typeof goalId !== 'undefined' && goalId !== "") {
+				condition += "goal_id = '" + goalId + "' AND ";
+			}
+
+			if (condition == '') {
+				fixCondition = '';
+			} else {
+				fixCondition = ' WHERE ' + condition.slice(0, -4);
+			}
+
+			var arrGoalAddressesNutritionOrder = [];
+			var query = 'select nutrition_order_id from BACIRO_FHIR.nutrition_order ' + fixCondition;
+
+			db.query(query, function (dataJson) {
+				rez = lowercaseObject(dataJson);
+				for (i = 0; i < rez.length; i++) {
+					var goalAddressesNutritionOrder = {};
+					if(rez[i].nutrition_order_id != "null"){
+						goalAddressesNutritionOrder.id = hostFHIR + ':' + portFHIR + '/' + apikey + '/nutritionOrder?_id=' +  rez[i].nutrition_order_id;
+					} else {
+						goalAddressesNutritionOrder.id = "";
+					}
+					
+					arrGoalAddressesNutritionOrder[i] = goalAddressesNutritionOrder;
+				}
+				res.json({
+					"err_code": 0,
+					"data": arrGoalAddressesNutritionOrder
+				});
+			}, function (e) {
+				res.json({
+					"err_code": 1,
+					"err_msg": e,
+					"application": "Api Phoenix",
+					"function": "getGoalAddressesNutritionOrder"
+				});
+			});
+		},
+		goalAddressesProcedureRequest: function getGoalAddressesProcedureRequest(req, res) {
+			var apikey = req.params.apikey;
+			
+			var _id = req.query._id;
+			var goalId = req.query.goal_id;
+
+			//susun query
+			var condition = '';
+
+			if (typeof goalId !== 'undefined' && goalId !== "") {
+				condition += "goal_id = '" + goalId + "' AND ";
+			}
+
+			if (condition == '') {
+				fixCondition = '';
+			} else {
+				fixCondition = ' WHERE ' + condition.slice(0, -4);
+			}
+
+			var arrGoalAddressesProcedureRequest = [];
+			var query = 'select procedure_request_id from BACIRO_FHIR.procedure_request ' + fixCondition;
+
+			db.query(query, function (dataJson) {
+				rez = lowercaseObject(dataJson);
+				for (i = 0; i < rez.length; i++) {
+					var goalAddressesProcedureRequest = {};
+					if(rez[i].procedure_request_id != "null"){
+						goalAddressesProcedureRequest.id = hostFHIR + ':' + portFHIR + '/' + apikey + '/procedureRequest?_id=' +  rez[i].procedure_request_id;
+					} else {
+						goalAddressesProcedureRequest.id = "";
+					}
+					
+					arrGoalAddressesProcedureRequest[i] = goalAddressesProcedureRequest;
+				}
+				res.json({
+					"err_code": 0,
+					"data": arrGoalAddressesProcedureRequest
+				});
+			}, function (e) {
+				res.json({
+					"err_code": 1,
+					"err_msg": e,
+					"application": "Api Phoenix",
+					"function": "getGoalAddressesProcedureRequest"
+				});
+			});
+		},
+		goalAddressesRiskAssessment: function getGoalAddressesRiskAssessment(req, res) {
+			var apikey = req.params.apikey;
+			
+			var _id = req.query._id;
+			var goalId = req.query.goal_id;
+
+			//susun query
+			var condition = '';
+
+			if (typeof goalId !== 'undefined' && goalId !== "") {
+				condition += "goal_id = '" + goalId + "' AND ";
+			}
+
+			if (condition == '') {
+				fixCondition = '';
+			} else {
+				fixCondition = ' WHERE ' + condition.slice(0, -4);
+			}
+
+			var arrGoalAddressesRiskAssessment = [];
+			var query = 'select risk_assessment_id from BACIRO_FHIR.risk_assessment ' + fixCondition;
+
+			db.query(query, function (dataJson) {
+				rez = lowercaseObject(dataJson);
+				for (i = 0; i < rez.length; i++) {
+					var goalAddressesRiskAssessment = {};
+					if(rez[i].risk_assessment_id != "null"){
+						goalAddressesRiskAssessment.id = hostFHIR + ':' + portFHIR + '/' + apikey + '/riskAssessment?_id=' +  rez[i].risk_assessment_id;
+					} else {
+						goalAddressesRiskAssessment.id = "";
+					}
+					
+					arrGoalAddressesRiskAssessment[i] = goalAddressesRiskAssessment;
+				}
+				res.json({
+					"err_code": 0,
+					"data": arrGoalAddressesRiskAssessment
+				});
+			}, function (e) {
+				res.json({
+					"err_code": 1,
+					"err_msg": e,
+					"application": "Api Phoenix",
+					"function": "getGoalAddressesRiskAssessment"
+				});
+			});
+		},
+		goalOutcomeReference: function getGoalOutcomeReference(req, res) {
+			var apikey = req.params.apikey;
+			
+			var _id = req.query._id;
+			var goalId = req.query.goal_id;
+
+			//susun query
+			var condition = '';
+
+			if (typeof goalId !== 'undefined' && goalId !== "") {
+				condition += "goal_outcome_reference_id = '" + goalId + "' AND ";
+			}
+
+			if (condition == '') {
+				fixCondition = '';
+			} else {
+				fixCondition = ' WHERE ' + condition.slice(0, -4);
+			}
+
+			var arrGoalOutcomeReference = [];
+			var query = 'select observation_id from BACIRO_FHIR.observation ' + fixCondition;
+
+			db.query(query, function (dataJson) {
+				rez = lowercaseObject(dataJson);
+				for (i = 0; i < rez.length; i++) {
+					var goalOutcomeReference = {};
+					if(rez[i].observation_id != "null"){
+						goalOutcomeReference.id = hostFHIR + ':' + portFHIR + '/' + apikey + '/observation?_id=' +  rez[i].observation_id;
+					} else {
+						goalOutcomeReference.id = "";
+					}
+					
+					arrGoalOutcomeReference[i] = goalOutcomeReference;
+				}
+				res.json({
+					"err_code": 0,
+					"data": arrGoalOutcomeReference
+				});
+			}, function (e) {
+				res.json({
+					"err_code": 1,
+					"err_msg": e,
+					"application": "Api Phoenix",
+					"function": "getGoalOutcomeReference"
+				});
+			});
+		},		
   },
 	post: {
 		goal: function addGoal(req, res) {
@@ -411,7 +749,7 @@ var controller = {
 	put: {
 		goal: function updateGoal(req, res) {
 			console.log(req.body);
-			var goal_id = req.params.goal_id;
+			var goal_id = req.params._id;
 			var status = req.body.status;
 			var category = req.body.category;
 			var priority = req.body.priority;
@@ -521,10 +859,14 @@ var controller = {
 				
 			
 			var domainResource = req.params.dr;
-			var arrResource = domainResource.split('|');
-			var fieldResource = arrResource[0];
-			var valueResource = arrResource[1];
-			var condition = "goal_id = '" + goal_id + "' AND " + fieldResource + " = '" + valueResource + "'";
+			if(domainResource !== "" && typeof domainResource !== 'undefined'){
+				var arrResource = domainResource.split('|');
+				var fieldResource = arrResource[0];
+				var valueResource = arrResource[1];
+				var condition = "goal_id = '" + goal_id + "' AND " + fieldResource + " = '" + valueResource + "'";
+			}else{
+        var condition = "goal_id = '" + goal_id+ "'";
+      }
 
       var query = "UPSERT INTO BACIRO_FHIR.goal(goal_id," + column.slice(0, -1) + ") SELECT goal_id, " + values.slice(0, -1) + " FROM BACIRO_FHIR.goal WHERE " + condition;
 			
@@ -545,7 +887,7 @@ var controller = {
 		goalTarget: function updateGoalTarget(req, res) {
 			console.log(req.body);
 			
-			var target_id  = req.params.target_id;
+			var target_id  = req.params._id;
 			var measure = req.body.measure;
 			var detail_quantity= req.body.detail_quantity;
 			var detail_range_low = req.body.detail_range_low;
@@ -601,10 +943,14 @@ var controller = {
 
      
 			var domainResource = req.params.dr;
-			var arrResource = domainResource.split('|');
-			var fieldResource = arrResource[0];
-			var valueResource = arrResource[1];
-			var condition = "target_id = '" + target_id + "' AND " + fieldResource + " = '" + valueResource + "'";
+			if(domainResource !== "" && typeof domainResource !== 'undefined'){
+				var arrResource = domainResource.split('|');
+				var fieldResource = arrResource[0];
+				var valueResource = arrResource[1];
+				var condition = "target_id = '" + target_id + "' AND " + fieldResource + " = '" + valueResource + "'";
+			}else{
+        var condition = "target_id = '" + target_id+ "'";
+      }
 			
 			var query = "UPSERT INTO BACIRO_FHIR.goal_target(target_id," + column.slice(0, -1) + ") SELECT target_id, " + values.slice(0, -1) + " FROM BACIRO_FHIR.goal_target WHERE " + condition;
 			

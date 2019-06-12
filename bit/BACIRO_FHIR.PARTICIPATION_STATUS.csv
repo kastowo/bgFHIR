@@ -1,5 +1,0 @@
-ID,CODE,DISPLAY,DEFINITION
-1,accepted,Accepted,The participant has accepted the appointment.
-101,rfid,RFID,An RFID chip reader captured the data from the device label
-102,tenttive,Tentative,The participant has tentatively accepted the appointment. This could be automatically created by a system and requires further processing before it can be accepted. There is no commitment that attendance will occur.
-201,needs-action,Needs Action,The participant needs to indicate if they accept the appointment by changing this status to one of the other statuses.

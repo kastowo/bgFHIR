@@ -64,8 +64,9 @@ var controller = {
 					var patientPhoneContact = req.query.phone; 
 					// var patientPhonetic = req.query.phonetic; //butuh riset lagi
 					var patientTelecom = req.query.telecom; 
-
-
+					var offset = req.query.offset;
+					var limit = req.query.limit;
+					
 					var qString = {};
 					if(typeof patientId !== 'undefined'){
 						if(!validator.isEmpty(patientId)){
@@ -302,7 +303,28 @@ var controller = {
 							res.json({"err_code": 1, "err_msg": "Telecom is empty."});
 						}
 					}
-
+					
+					if(typeof offset !== 'undefined'){
+						if(!validator.isEmpty(offset)){
+							qString.offset = offset; 
+						}else{
+							res.json({"err_code": 1, "err_msg": "offset id is empty."});
+						}
+					}
+					
+					if(typeof limit !== 'undefined'){
+						if(!validator.isEmpty(limit)){
+							if(!validator.isInt(limit)){
+								err_code = 2;
+								err_msg = "limit must be number";
+							} else{
+								qString.limit = limit; 	
+							}
+						}else{
+							res.json({"err_code": 1, "err_msg": "limit is empty."});
+						}
+					}
+					
 					seedPhoenixFHIR.path.GET = {
 						"Patient" : {
 							"location": "%(apikey)s/Patient",
@@ -715,11 +737,13 @@ var controller = {
 														})
 								  				})
 													//check animal id
-								  				if(patient.patient_animal_id == 'null'){
+								  				myEmitter.emit("getAttachment", patient, index, newPatient, countPatient);
+													/*if(patient.patient_animal_id == 'null'){
 									  				myEmitter.emit("getAttachment", patient, index, newPatient, countPatient);
 									  			}else{
 									  				qString = {};
-										  			qString._id = patient.data[i].patient_animal_id;
+										  			//qString._id = patient.data[i].patient_animal_id;
+														qString._id = patient.data[0].patient_animal_id;
 												  		seedPhoenixFHIR.path.GET = {
 																"PatientAnimal" : {
 																	"location": "%(apikey)s/PatientAnimal",
@@ -751,7 +775,7 @@ var controller = {
 																res.json(patientAnimal);
 															}
 														})
-									  			}	
+									  			}	*/
 								  			})
 												myEmitter.emit("getPatientAnimal", patient.data[i], i, newPatient, patient.data.length);
 								  		}
@@ -1164,8 +1188,8 @@ console.log(req.body);
 						period = req.body.identifier.period;
 						if(period.indexOf("to") > 0){
 							arrPeriod = period.split("to");
-							identifierPeriodStart = arrPeriod[0];
-							identifierPeriodEnd = arrPeriod[1];
+							var identifierPeriodStart = arrPeriod[0];
+							var identifierPeriodEnd = arrPeriod[1];
 							
 							if(!regex.test(identifierPeriodStart) && !regex.test(identifierPeriodEnd)){
 								err_code = 2;
@@ -1256,8 +1280,8 @@ console.log(req.body);
 						var period = req.body.name.period;
 						if(period.indexOf("to") > 0){
 							arrPeriod = period.split("to");
-							humanNamePeriodStart = arrPeriod[0];
-							humanNamePeriodEnd = arrPeriod[1];
+							var humanNamePeriodStart = arrPeriod[0];
+							var humanNamePeriodEnd = arrPeriod[1];
 							
 							if(!regex.test(humanNamePeriodStart) && !regex.test(humanNamePeriodEnd)){
 								err_code = 2;
@@ -1326,8 +1350,8 @@ console.log(req.body);
 						var period = req.body.telecom.period;
 						if(period.indexOf("to") > 0){
 							arrPeriod = period.split("to");
-							contactPointPeriodStart = arrPeriod[0];
-							contactPointPeriodEnd = arrPeriod[1];
+							var contactPointPeriodStart = arrPeriod[0];
+							var contactPointPeriodEnd = arrPeriod[1];
 							
 							if(!regex.test(contactPointPeriodStart) && !regex.test(contactPointPeriodEnd)){
 								err_code = 2;
@@ -1374,25 +1398,33 @@ console.log(req.body);
 					//deceased
 					if(typeof req.body.deceased.status !== 'undefined'){
 						deceasedStatus =  req.body.deceased.status;
-						if(deceasedStatus == true && typeof req.body.deceased.date_time !== 'undefined' && validator.isEmpty(req.body.deceased.date_time)){
-							err_code = 2;
-							err_msg = "Deceased date time is required.";
+						//if(deceasedStatus == true && typeof req.body.deceased.date_time !== 'undefined' && validator.isEmpty(req.body.deceased.date_time)){
+						if(deceasedStatus == true && typeof req.body.deceased.date_time !== 'undefined'){
+							if(validator.isEmpty(req.body.deceased.date_time)){
+								err_code = 2;
+								err_msg = "Deceased date time is required.";	
+							} else {
+								if(typeof req.body.deceased.date_time !== 'undefined'){
+									deceasedDateTime = req.body.deceased.date_time;
+									if(!regex.test(deceasedDateTime) && deceasedStatus == true){
+											err_code = 2;
+											err_msg = "Deceased Date Time invalid date format.";	
+										}
+								}else{
+									deceasedDateTime = "";
+								}
+							}
+							
 						}else{
 							deceasedStatus = false;
+							deceasedDateTime = "";
 						}
 					}else{
 						deceasedStatus = false;
+						deceasedDateTime = "";
 					}			
 
-					if(typeof req.body.deceased.date_time !== 'undefined'){
-						deceasedDateTime = req.body.deceased.date_time;
-						if(!regex.test(deceasedDateTime) && deceasedStatus == true){
-								err_code = 2;
-								err_msg = "Deceased Date Time invalid date format.";	
-							}
-					}else{
-						deceasedDateTime = "";
-					}
+					
 
 					//address use
 					if(typeof req.body.address.use !== 'undefined'){
@@ -1506,8 +1538,8 @@ console.log(req.body);
 						var period = req.body.address.period;
 						if(period.indexOf("to") > 0){
 							arrPeriod = period.split("to");
-							addressPeriodStart = arrPeriod[0];
-							addressPeriodEnd = arrPeriod[1];
+							var addressPeriodStart = arrPeriod[0];
+							var addressPeriodEnd = arrPeriod[1];
 							
 							if(!regex.test(addressPeriodStart) && !regex.test(addressPeriodEnd)){
 								err_code = 2;
@@ -1709,8 +1741,8 @@ console.log(req.body);
 						var period = req.body.contact.name.period;
 						if(period.indexOf("to") > 0){
 							arrPeriod = period.split("to");
-							contactPeriodStart = arrPeriod[0];
-							contactPeriodEnd = arrPeriod[1];
+							var contactPeriodStart = arrPeriod[0];
+							var contactPeriodEnd = arrPeriod[1];
 							
 							if(!regex.test(contactPeriodStart) && !regex.test(contactPeriodEnd)){
 								err_code = 2;
@@ -1779,8 +1811,8 @@ console.log(req.body);
 						var period = req.body.contact.telecom.period;
 						if(period.indexOf("to") > 0){
 							arrPeriod = period.split("to");
-							contactTelecomPeriodStart = arrPeriod[0];
-							contactTelecomPeriodEnd = arrPeriod[1];
+							var contactTelecomPeriodStart = arrPeriod[0];
+							var contactTelecomPeriodEnd = arrPeriod[1];
 							
 							if(!regex.test(contactTelecomPeriodStart) && !regex.test(contactTelecomPeriodEnd)){
 								err_code = 2;
@@ -1906,8 +1938,8 @@ console.log(req.body);
 						var period = req.body.contact.address.period;
 						if(period.indexOf("to") > 0){
 							arrPeriod = period.split("to");
-							contactAddressPeriodStart = arrPeriod[0];
-							contactAddressPeriodEnd = arrPeriod[1];
+							var contactAddressPeriodStart = arrPeriod[0];
+							var contactAddressPeriodEnd = arrPeriod[1];
 							
 							if(!regex.test(contactAddressPeriodStart) && !regex.test(contactAddressPeriodEnd)){
 								err_code = 2;
@@ -1949,8 +1981,8 @@ console.log(req.body);
 						var period = req.body.contact.period;
 						if(period.indexOf("to") > 0){
 							arrPeriod = period.split("to");
-							contactPeriodStart = arrPeriod[0];
-							contactPeriodEnd = arrPeriod[1];
+							var contactPeriodStart = arrPeriod[0];
+							var contactPeriodEnd = arrPeriod[1];
 							
 							if(!regex.test(contactPeriodStart) && !regex.test(contactPeriodEnd)){
 								err_code = 2;
@@ -2185,16 +2217,16 @@ console.log(dataPatient);
 																																																			})	
 
 																																																			//identifier
-																																																  		dataIdentifier = {
-																																																  											"id": identifierId,
-																																														  													"use": identifierUseCode,
-																																														  													"type": identifierTypeCode,
-																																														  													"system": identifierSystem,
-																																														  													"value": identifierValue,
-																																														  													"period_start": identifierPeriodStart,
-																																														  													"period_end": identifierPeriodEnd,
-																																														  													"patient_id": patientId
-																																														  												}
+																								dataIdentifier = {
+																																	"id": identifierId,
+																																	"use": identifierUseCode,
+																																	"type": identifierTypeCode,
+																																	"system": identifierSystem,
+																																	"value": identifierValue,
+																																	"period_start": identifierPeriodStart,
+																																	"period_end": identifierPeriodEnd,
+																																	"patient_id": patientId
+																																}
 																																																		
 																																														  				ApiFHIR.post('identifier', {"apikey": apikey}, {body: dataIdentifier, json: true}, function(error, response, body){
 																																														  					identifier = body;
@@ -2694,8 +2726,8 @@ console.log(dataPatient);
 						period = req.body.period;
 						if(period.indexOf("to") > 0){
 							arrPeriod = period.split("to");
-							identifierPeriodStart = arrPeriod[0];
-							identifierPeriodEnd = arrPeriod[1];
+							var identifierPeriodStart = arrPeriod[0];
+							var identifierPeriodEnd = arrPeriod[1];
 							
 							if(!regex.test(identifierPeriodStart) && !regex.test(identifierPeriodEnd)){
 								err_code = 2;
@@ -2860,8 +2892,8 @@ console.log(dataPatient);
 						var period = req.body.period;
 						if(period.indexOf("to") > 0){
 							arrPeriod = period.split("to");
-							humanNamePeriodStart = arrPeriod[0];
-							humanNamePeriodEnd = arrPeriod[1];
+							var humanNamePeriodStart = arrPeriod[0];
+							var humanNamePeriodEnd = arrPeriod[1];
 							
 							if(!regex.test(humanNamePeriodStart) && !regex.test(humanNamePeriodEnd)){
 								err_code = 2;
@@ -3003,8 +3035,8 @@ console.log(dataPatient);
 						var period = req.body.period;
 						if(period.indexOf("to") > 0){
 							arrPeriod = period.split("to");
-							contactPointPeriodStart = arrPeriod[0];
-							contactPointPeriodEnd = arrPeriod[1];
+							var contactPointPeriodStart = arrPeriod[0];
+							var contactPointPeriodEnd = arrPeriod[1];
 							
 							if(!regex.test(contactPointPeriodStart) && !regex.test(contactPointPeriodEnd)){
 								err_code = 2;
@@ -3206,8 +3238,8 @@ console.log(dataPatient);
 						var period = req.body.period;
 						if(period.indexOf("to") > 0){
 							arrPeriod = period.split("to");
-							addressPeriodStart = arrPeriod[0];
-							addressPeriodEnd = arrPeriod[1];
+							var addressPeriodStart = arrPeriod[0];
+							var addressPeriodEnd = arrPeriod[1];
 							
 							if(!regex.test(addressPeriodStart) && !regex.test(addressPeriodEnd)){
 								err_code = 2;
@@ -3525,8 +3557,8 @@ console.log(dataPatient);
 						var period = req.body.name.period;
 						if(period.indexOf("to") > 0){
 							arrPeriod = period.split("to");
-							contactPeriodStart = arrPeriod[0];
-							contactPeriodEnd = arrPeriod[1];
+							var contactPeriodStart = arrPeriod[0];
+							var contactPeriodEnd = arrPeriod[1];
 							
 							if(!regex.test(contactPeriodStart) && !regex.test(contactPeriodEnd)){
 								err_code = 2;
@@ -3595,8 +3627,8 @@ console.log(dataPatient);
 						var period = req.body.telecom.period;
 						if(period.indexOf("to") > 0){
 							arrPeriod = period.split("to");
-							contactTelecomPeriodStart = arrPeriod[0];
-							contactTelecomPeriodEnd = arrPeriod[1];
+							var contactTelecomPeriodStart = arrPeriod[0];
+							var contactTelecomPeriodEnd = arrPeriod[1];
 							
 							if(!regex.test(contactTelecomPeriodStart) && !regex.test(contactTelecomPeriodEnd)){
 								err_code = 2;
@@ -3722,8 +3754,8 @@ console.log(dataPatient);
 						var period = req.body.address.period;
 						if(period.indexOf("to") > 0){
 							arrPeriod = period.split("to");
-							contactAddressPeriodStart = arrPeriod[0];
-							contactAddressPeriodEnd = arrPeriod[1];
+							var contactAddressPeriodStart = arrPeriod[0];
+							var contactAddressPeriodEnd = arrPeriod[1];
 							
 							if(!regex.test(contactAddressPeriodStart) && !regex.test(contactAddressPeriodEnd)){
 								err_code = 2;
@@ -3765,8 +3797,8 @@ console.log(dataPatient);
 						var period = req.body.period;
 						if(period.indexOf("to") > 0){
 							arrPeriod = period.split("to");
-							contactPeriodStart = arrPeriod[0];
-							contactPeriodEnd = arrPeriod[1];
+							var contactPeriodStart = arrPeriod[0];
+							var contactPeriodEnd = arrPeriod[1];
 							
 							if(!regex.test(contactPeriodStart) && !regex.test(contactPeriodEnd)){
 								err_code = 2;
@@ -4007,9 +4039,22 @@ console.log(dataPatient);
 					if(typeof req.body.deceased !== 'undefined'){
 						if(typeof req.body.deceased.status !== 'undefined'){
 							deceasedStatus =  req.body.deceased.status;
-							if(deceasedStatus == true && typeof req.body.deceased.date_time !== 'undefined' && validator.isEmpty(req.body.deceased.date_time)){
-								err_code = 2;
-								err_msg = "Deceased date time is required.";
+							//if(deceasedStatus == true && typeof req.body.deceased.date_time !== 'undefined' && validator.isEmpty(req.body.deceased.date_time)){
+							if(deceasedStatus == true && typeof req.body.deceased.date_time !== 'undefined'){
+								if(validator.isEmpty(req.body.deceased.date_time)){
+									err_code = 2;
+									err_msg = "Deceased date time is required.";	
+								} else {
+									if(typeof req.body.deceased.date_time !== 'undefined'){
+										deceasedDateTime = req.body.deceased.date_time;
+										if(!regex.test(deceasedDateTime) && deceasedStatus == true){
+											err_code = 2;
+											err_msg = "Deceased Date Time invalid date format.";	
+										}else{
+											dataPatient.deceased_date = deceasedDateTime;
+										}
+									}	
+								}
 							}else{
 								deceasedStatus = false;
 							}
@@ -4018,16 +4063,6 @@ console.log(dataPatient);
 						}
 
 						dataPatient.deceased = deceasedStatus;
-
-						if(typeof req.body.deceased.date_time !== 'undefined'){
-							deceasedDateTime = req.body.deceased.date_time;
-							if(!regex.test(deceasedDateTime) && deceasedStatus == true){
-								err_code = 2;
-								err_msg = "Deceased Date Time invalid date format.";	
-							}else{
-								dataPatient.deceased_date = deceasedDateTime;
-							}
-						}	
 					}
 					
 					//marital_status
@@ -4608,8 +4643,8 @@ console.log(dataPatient);
 						period = req.body.period;
 						if(period.indexOf("to") > 0){
 							arrPeriod = period.split("to");
-							identifierPeriodStart = arrPeriod[0];
-							identifierPeriodEnd = arrPeriod[1];
+							var identifierPeriodStart = arrPeriod[0];
+							var identifierPeriodEnd = arrPeriod[1];
 							
 							if(!regex.test(identifierPeriodStart) && !regex.test(identifierPeriodEnd)){
 								err_code = 2;
@@ -4791,8 +4826,8 @@ console.log(dataPatient);
 						var period = req.body.period;
 						if(period.indexOf("to") > 0){
 							arrPeriod = period.split("to");
-							humanNamePeriodStart = arrPeriod[0];
-							humanNamePeriodEnd = arrPeriod[1];
+							var humanNamePeriodStart = arrPeriod[0];
+							var humanNamePeriodEnd = arrPeriod[1];
 							
 							if(!regex.test(humanNamePeriodStart) && !regex.test(humanNamePeriodEnd)){
 								err_code = 2;
@@ -4951,8 +4986,8 @@ console.log(dataPatient);
 						var period = req.body.period;
 						if(period.indexOf("to") > 0){
 							arrPeriod = period.split("to");
-							contactPointPeriodStart = arrPeriod[0];
-							contactPointPeriodEnd = arrPeriod[1];
+							var contactPointPeriodStart = arrPeriod[0];
+							var contactPointPeriodEnd = arrPeriod[1];
 							
 							if(!regex.test(contactPointPeriodStart) && !regex.test(contactPointPeriodEnd)){
 								err_code = 2;
@@ -5177,8 +5212,8 @@ console.log(dataPatient);
 						var period = req.body.period;
 						if(period.indexOf("to") > 0){
 							arrPeriod = period.split("to");
-							addressPeriodStart = arrPeriod[0];
-							addressPeriodEnd = arrPeriod[1];
+							var addressPeriodStart = arrPeriod[0];
+							var addressPeriodEnd = arrPeriod[1];
 							
 							if(!regex.test(addressPeriodStart) && !regex.test(addressPeriodEnd)){
 								err_code = 2;
@@ -5506,8 +5541,8 @@ console.log(dataPatient);
 							var period = req.body.name.period;
 							if(period.indexOf("to") > 0){
 								arrPeriod = period.split("to");
-								contactPeriodStart = arrPeriod[0];
-								contactPeriodEnd = arrPeriod[1];
+								var contactPeriodStart = arrPeriod[0];
+								var contactPeriodEnd = arrPeriod[1];
 								
 								if(!regex.test(contactPeriodStart) && !regex.test(contactPeriodEnd)){
 									err_code = 2;
@@ -5582,8 +5617,8 @@ console.log(dataPatient);
 							var period = req.body.telecom.period;
 							if(period.indexOf("to") > 0){
 								arrPeriod = period.split("to");
-								contactTelecomPeriodStart = arrPeriod[0];
-								contactTelecomPeriodEnd = arrPeriod[1];
+								var contactTelecomPeriodStart = arrPeriod[0];
+								var contactTelecomPeriodEnd = arrPeriod[1];
 								
 								if(!regex.test(contactTelecomPeriodStart) && !regex.test(contactTelecomPeriodEnd)){
 									err_code = 2;
@@ -5707,8 +5742,8 @@ console.log(dataPatient);
 							var period = req.body.address.period;
 							if(period.indexOf("to") > 0){
 								arrPeriod = period.split("to");
-								contactAddressPeriodStart = arrPeriod[0];
-								contactAddressPeriodEnd = arrPeriod[1];
+								var contactAddressPeriodStart = arrPeriod[0];
+								var contactAddressPeriodEnd = arrPeriod[1];
 								
 								if(!regex.test(contactAddressPeriodStart) && !regex.test(contactAddressPeriodEnd)){
 									err_code = 2;
@@ -5752,8 +5787,8 @@ console.log(dataPatient);
 						var period = req.body.period;
 						if(period.indexOf("to") > 0){
 							arrPeriod = period.split("to");
-							contactPeriodStart = arrPeriod[0];
-							contactPeriodEnd = arrPeriod[1];
+							var contactPeriodStart = arrPeriod[0];
+							var contactPeriodEnd = arrPeriod[1];
 							
 							if(!regex.test(contactPeriodStart) && !regex.test(contactPeriodEnd)){
 								err_code = 2;

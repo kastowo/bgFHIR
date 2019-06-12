@@ -22,20 +22,20 @@ var controller = {
 	get: {
 		medicationAdministration: function getMedicationAdministration(req, res){
 			var apikey = req.params.apikey;
-			
+			console.log(req.query);
 			var medication_administration_id = req.query._id;
 			var code = req.query.code;
 			var context = req.query.context;
 			var device = req.query.device;
-			var effective_time = req.query.effective_time;
+			var effective_time = req.query.effectiveTime;
 			var identifier = req.query.identifier;
 			var medication = req.query.medication;
-			var not_given = req.query.not_given;
+			var not_given = req.query.notGiven;
 			var patient = req.query.patient;
 			var performer = req.query.performer;
 			var prescription = req.query.prescription;
-			var reason_given = req.query.reason_given;
-			var reason_not_given = req.query.reason_not_given;
+			var reason_given = req.query.reasonGiven;
+			var reason_not_given = req.query.reasonNotGiven;
 			var status = req.query.status;
 			var subject = req.query.subject;
 	
@@ -74,10 +74,10 @@ var controller = {
       }
 			
 			if(typeof not_given !== 'undefined' && not_given !== ""){
-        condition += "m.form = " + not_given + " AND,";  
+        condition += "ma.form = " + not_given + " AND,";  
       }
 			
-			if(typeof subject !== 'subject' && subject !== ""){
+			if(typeof subject !== 'undefined' && subject !== ""){
 				condition += "(ma.SUBJECT_PATIENT = '" + subject + "' OR ma.SUBJECT_GROUP = '" + subject + "') AND,";  
 			}
 			
@@ -106,6 +106,19 @@ var controller = {
         condition += "ma.STATUS = '" + status + "' AND,";  
       }
 			
+			var offset = req.query.offset;
+			var limit = req.query.limit;
+
+			if((typeof offset !== 'undefined' && offset !== '')){
+				condition = " ma.medication_administration_id > '" + offset + "' AND ";       
+			}
+			
+			if((typeof limit !== 'undefined' && limit !== '')){
+				limit = " limit " + limit + " ";
+			} else {
+				limit = " ";
+			}
+			
       if(condition == ""){
         fixCondition = "";
       }else{
@@ -113,8 +126,8 @@ var controller = {
       }
 			      
       var arrMedicationAdministration = [];
-      var query = "select medication_administration_id, status, category, medication_codeable_concept, medication_reference, subject_patient, subject_group, context_encounter, context_episode_of_care, supporting_information, effective_date_time, effective_period_start, effective_period_end, not_given, reason_not_given, reason_code, prescription  from BACIRO_FHIR.MEDICATION_ADMINISTRATION ma " + fixCondition;
-			//console.log(query);
+      var query = "select ma.medication_administration_id as medication_administration_id, ma.status as status, ma.category as category, ma.medication_codeable_concept as medication_codeable_concept, ma.medication_reference as medication_reference, ma.subject_patient as subject_patient, ma.subject_group as subject_group, ma.context_encounter as context_encounter, ma.context_episode_of_care as context_episode_of_care, ma.supporting_information as supporting_information, ma.effective_date_time as effective_date_time, ma.effective_period_start as effective_period_start, ma.effective_period_end as effective_period_end, ma.not_given as not_given, ma.reason_not_given as reason_not_given, ma.reason_code as reason_code, ma.prescription as prescription  from BACIRO_FHIR.MEDICATION_ADMINISTRATION ma " + fixCondition + limit;
+			console.log(query);
       db.query(query,function(dataJson){
         rez = lowercaseObject(dataJson);
 				for(i = 0; i < rez.length; i++){
@@ -132,7 +145,6 @@ var controller = {
 						Medication.medicationReference = "";
 					}
 					MedicationAdministration.medication = Medication;
-					var arrSubject = [];
 					var Subject = {};
 					if(rez[i].subject_group != "null"){
 						Subject.group = hostFHIR + ':' + portFHIR + '/' + apikey + '/Group?_id=' +  rez[i].subject_group;
@@ -144,9 +156,6 @@ var controller = {
 					} else {
 						Subject.patient = "";
 					}
-					arrSubject[i] = Subject;
-					
-					var arrContext = [];
 					var Context = {};
 					if(rez[i].context_encounter != "null"){
 						Context.encounter = hostFHIR + ':' + portFHIR + '/' + apikey + '/Encounter?_id=' +  rez[i].context_encounter;
@@ -158,9 +167,8 @@ var controller = {
 					} else {
 						Context.episodeOfCare = "";
 					}
-					arrContext[i] = Context;
-					MedicationAdministration.subject = arrSubject;
-					MedicationAdministration.context = arrContext;
+					MedicationAdministration.subject = Subject;
+					MedicationAdministration.context = Context;
 					MedicationAdministration.supportingInformation = rez[i].supporting_information;
 					var Effective = {};
 					if(rez[i].effective_date_time == null){
@@ -189,9 +197,9 @@ var controller = {
 					} else {
 						MedicationAdministration.prescription = "";
 					}
-					
           arrMedicationAdministration[i] = MedicationAdministration;
         }
+				
         res.json({"err_code":0,"data": arrMedicationAdministration});
       },function(e){
         res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "getMedicationAdministration"});
@@ -228,7 +236,6 @@ var controller = {
 				for (i = 0; i < rez.length; i++) {
 					var MedicationAdministrationPerformer = {};
 					MedicationAdministrationPerformer.id = rez[i].performer_id;
-					var arrActor = [];
 					var Actor = {};
 					if(rez[i].actor_practitioner != "null"){
 						Actor.practitioner = hostFHIR + ':' + portFHIR + '/' + apikey + '/Practitioner?_id=' +  rez[i].actor_practitioner;
@@ -250,8 +257,7 @@ var controller = {
 					} else {
 						Actor.device = "";
 					}
-					arrActor[i] = Actor;
-					MedicationAdministrationPerformer.actor  = arrActor;
+					MedicationAdministrationPerformer.actor  = Actor;
 					if(rez[i].on_behalf_of != "null"){
 						MedicationAdministrationPerformer.onBehalfOf = hostFHIR + ':' + portFHIR + '/' + apikey + '/Organization?_id=' +  rez[i].on_behalf_of;
 					} else {
@@ -296,7 +302,7 @@ var controller = {
 			}
 
 			var arrMedicationAdministrationDosage = [];
-			var query = "select dosage_id, text, site, route, method, dose, rate_ratio, rate_quality, medication_administration_id from BACIRO_FHIR.MEDICATION_ADMINISTRATION_DOSAGE " + fixCondition;
+			var query = "select dosage_id, text, site, route, method, dose, rate_ratio_numerator, rate_ratio_denominator, rate_quality, medication_administration_id from BACIRO_FHIR.MEDICATION_ADMINISTRATION_DOSAGE " + fixCondition;
 
 			db.query(query, function (dataJson) {
 				rez = lowercaseObject(dataJson);
@@ -310,7 +316,7 @@ var controller = {
 					MedicationAdministrationDosage.dose = rez[i].dose;
 					var Rate = {};
 					Rate.rateRatio = rez[i].rate_ratio;
-					Rate.rateQuality = rez[i].rate_quality;
+					Rate.rateQuality = rez[i].rate_ratio_numerator + ' to ' + rez[i].rate_ratio_denominator;
 					MedicationAdministrationDosage.rate = Rate;
 					arrMedicationAdministrationDosage[i] = MedicationAdministrationDosage;
 				}
@@ -328,6 +334,420 @@ var controller = {
 			});
 		},
 		
+		
+		medicationAdministrationDefinitionPlanDefinition: function getMedicationAdministrationDefinitionPlanDefinition(req, res) {
+			var apikey = req.params.apikey;
+			
+			var PlanDefinitionId = req.query._id;
+			var medicationAdministrationId = req.query.medication_administration_id;
+
+			//susun query
+			var condition = '';
+
+			if (typeof PlanDefinitionId !== 'undefined' && PlanDefinitionId !== "") {
+				condition += "plan_definition_id = '" + PlanDefinitionId + "' AND ";
+			}
+
+			if (typeof medicationAdministrationId !== 'undefined' && medicationAdministrationId !== "") {
+				condition += "medication_administration_id = '" + medicationAdministrationId + "' AND ";
+			}
+
+			if (condition == '') {
+				fixCondition = '';
+			} else {
+				fixCondition = ' WHERE ' + condition.slice(0, -4);
+			}
+
+			var arrMedicationAdministrationDefinitionPlanDefinition = [];
+			var query = 'select plan_definition_id from BACIRO_FHIR.Plan_Definition ' + fixCondition;
+
+			db.query(query, function (dataJson) {
+				rez = lowercaseObject(dataJson);
+				for (i = 0; i < rez.length; i++) {
+					var medicationAdministrationDefinitionPlanDefinition = {};
+					if(rez[i].plan_definition_id != "null"){
+						medicationAdministrationDefinitionPlanDefinition.id = hostFHIR + ':' + portFHIR + '/' + apikey + '/PlanDefinition?_id=' +  rez[i].plan_definition_id;
+					} else {
+						medicationAdministrationDefinitionPlanDefinition.id = "";
+					}
+					
+					arrMedicationAdministrationDefinitionPlanDefinition[i] = medicationAdministrationDefinitionPlanDefinition;
+				}
+				res.json({
+					"err_code": 0,
+					"data": arrMedicationAdministrationDefinitionPlanDefinition
+				});
+			}, function (e) {
+				res.json({
+					"err_code": 1,
+					"err_msg": e,
+					"application": "Api Phoenix",
+					"function": "getMedicationAdministrationDefinitionPlanDefinition"
+				});
+			});
+		},
+		medicationAdministrationDefinitionActivityDefinition: function getMedicationAdministrationDefinitionActivityDefinition(req, res) {
+			var apikey = req.params.apikey;
+			
+			var ActivityDefinitionId = req.query._id;
+			var medicationAdministrationId = req.query.medication_administration_id;
+
+			//susun query
+			var condition = '';
+
+			if (typeof ActivityDefinitionId !== 'undefined' && ActivityDefinitionId !== "") {
+				condition += "activity_definition_id = '" + ActivityDefinitionId + "' AND ";
+			}
+
+			if (typeof medicationAdministrationId !== 'undefined' && medicationAdministrationId !== "") {
+				condition += "medication_administration_id = '" + medicationAdministrationId + "' AND ";
+			}
+
+			if (condition == '') {
+				fixCondition = '';
+			} else {
+				fixCondition = ' WHERE ' + condition.slice(0, -4);
+			}
+
+			var arrMedicationAdministrationDefinitionActivityDefinition = [];
+			var query = 'select activity_definition_id from BACIRO_FHIR.activity_definition ' + fixCondition;
+
+			db.query(query, function (dataJson) {
+				rez = lowercaseObject(dataJson);
+				for (i = 0; i < rez.length; i++) {
+					var medicationAdministrationDefinitionActivityDefinition = {};
+					if(rez[i].activity_definition_id != "null"){
+						medicationAdministrationDefinitionActivityDefinition.id = hostFHIR + ':' + portFHIR + '/' + apikey + '/ActivityDefinition?_id=' +  rez[i].activity_definition_id;
+					} else {
+						medicationAdministrationDefinitionActivityDefinition.id = "";
+					}
+					
+					arrMedicationAdministrationDefinitionActivityDefinition[i] = medicationAdministrationDefinitionActivityDefinition;
+				}
+				res.json({
+					"err_code": 0,
+					"data": arrMedicationAdministrationDefinitionActivityDefinition
+				});
+			}, function (e) {
+				res.json({
+					"err_code": 1,
+					"err_msg": e,
+					"application": "Api Phoenix",
+					"function": "getMedicationAdministrationDefinitionActivityDefinition"
+				});
+			});
+		},
+		
+		medicationAdministrationPartOfMedicationAdministration: function getMedicationAdministrationPartOfMedicationAdministration(req, res) {
+			var apikey = req.params.apikey;
+			
+			var medicationAdministrationId = req.query._id;
+			var partOfId = req.query.medication_administration_id;
+
+			//susun query
+			var condition = '';
+
+			if (typeof medicationAdministrationId !== 'undefined' && medicationAdministrationId !== "") {
+				condition += "medication_administration_id = '" + medicationAdministrationId + "' AND ";
+			}
+
+			if (typeof partOfId !== 'undefined' && partOfId !== "") {
+				condition += "part_of = '" + partOfId + "' AND ";
+			}
+
+			if (condition == '') {
+				fixCondition = '';
+			} else {
+				fixCondition = ' WHERE ' + condition.slice(0, -4);
+			}
+
+			var arrMedicationAdministrationPartOfMedicationAdministration = [];
+			var query = 'select part_of from BACIRO_FHIR.medication_administration ' + fixCondition;
+
+			db.query(query, function (dataJson) {
+				rez = lowercaseObject(dataJson);
+				for (i = 0; i < rez.length; i++) {
+					var medicationAdministrationPartOfMedicationAdministration = {};
+					if(rez[i].activity_definition_id != "null"){
+						medicationAdministrationPartOfMedicationAdministration.id = hostFHIR + ':' + portFHIR + '/' + apikey + '/MedicationAdministration?_id=' +  rez[i].part_of;
+					} else {
+						medicationAdministrationPartOfMedicationAdministration.id = "";
+					}
+					
+					arrMedicationAdministrationPartOfMedicationAdministration[i] = medicationAdministrationPartOfMedicationAdministration;
+				}
+				res.json({
+					"err_code": 0,
+					"data": arrMedicationAdministrationPartOfMedicationAdministration
+				});
+			}, function (e) {
+				res.json({
+					"err_code": 1,
+					"err_msg": e,
+					"application": "Api Phoenix",
+					"function": "getMedicationAdministrationPartOfMedicationAdministration"
+				});
+			});
+		},
+		medicationAdministrationPartOfProcedure: function getMedicationAdministrationPartOfProcedure(req, res) {
+			var apikey = req.params.apikey;
+			
+			var ProcedureId = req.query._id;
+			var medicationAdministrationId = req.query.medication_administration_id;
+
+			//susun query
+			var condition = '';
+
+			if (typeof ProcedureId !== 'undefined' && ProcedureId !== "") {
+				condition += "procedure_id = '" + ProcedureId + "' AND ";
+			}
+
+			if (typeof medicationAdministrationId !== 'undefined' && medicationAdministrationId !== "") {
+				condition += "medication_administration_id = '" + medicationAdministrationId + "' AND ";
+			}
+
+			if (condition == '') {
+				fixCondition = '';
+			} else {
+				fixCondition = ' WHERE ' + condition.slice(0, -4);
+			}
+
+			var arrMedicationAdministrationPartOfProcedure = [];
+			var query = 'select procedure_id from BACIRO_FHIR.procedure ' + fixCondition;
+
+			db.query(query, function (dataJson) {
+				rez = lowercaseObject(dataJson);
+				for (i = 0; i < rez.length; i++) {
+					var medicationAdministrationPartOfProcedure = {};
+					if(rez[i].procedure_id != "null"){
+						medicationAdministrationPartOfProcedure.id = hostFHIR + ':' + portFHIR + '/' + apikey + '/Procedure?_id=' +  rez[i].procedure_id;
+					} else {
+						medicationAdministrationPartOfProcedure.id = "";
+					}
+					
+					arrMedicationAdministrationPartOfProcedure[i] = medicationAdministrationPartOfProcedure;
+				}
+				res.json({
+					"err_code": 0,
+					"data": arrMedicationAdministrationPartOfProcedure
+				});
+			}, function (e) {
+				res.json({
+					"err_code": 1,
+					"err_msg": e,
+					"application": "Api Phoenix",
+					"function": "getMedicationAdministrationPartOfProcedure"
+				});
+			});
+		},
+		
+		medicationAdministrationReasonReferenceCondition: function getMedicationAdministrationReasonReferenceCondition(req, res) {
+			var apikey = req.params.apikey;
+			
+			var ConditionId = req.query._id;
+			var medicationAdministrationId = req.query.medication_administration_id;
+
+			//susun query
+			var condition = '';
+
+			if (typeof ConditionId !== 'undefined' && ConditionId !== "") {
+				condition += "condition_id = '" + ConditionId + "' AND ";
+			}
+
+			if (typeof medicationAdministrationId !== 'undefined' && medicationAdministrationId !== "") {
+				condition += "medication_administration_id = '" + medicationAdministrationId + "' AND ";
+			}
+
+			if (condition == '') {
+				fixCondition = '';
+			} else {
+				fixCondition = ' WHERE ' + condition.slice(0, -4);
+			}
+
+			var arrMedicationAdministrationReasonReferenceCondition = [];
+			var query = 'select condition_id from BACIRO_FHIR.condition ' + fixCondition;
+
+			db.query(query, function (dataJson) {
+				rez = lowercaseObject(dataJson);
+				for (i = 0; i < rez.length; i++) {
+					var medicationAdministrationReasonReferenceCondition = {};
+					if(rez[i].condition_id != "null"){
+						medicationAdministrationReasonReferenceCondition.id = hostFHIR + ':' + portFHIR + '/' + apikey + '/Condition?_id=' +  rez[i].condition_id;
+					} else {
+						medicationAdministrationReasonReferenceCondition.id = "";
+					}
+					
+					arrMedicationAdministrationReasonReferenceCondition[i] = medicationAdministrationReasonReferenceCondition;
+				}
+				res.json({
+					"err_code": 0,
+					"data": arrMedicationAdministrationReasonReferenceCondition
+				});
+			}, function (e) {
+				res.json({
+					"err_code": 1,
+					"err_msg": e,
+					"application": "Api Phoenix",
+					"function": "getMedicationAdministrationReasonReferenceCondition"
+				});
+			});
+		},
+		medicationAdministrationReasonReferenceObservation: function getMedicationAdministrationReasonReferenceObservation(req, res) {
+			var apikey = req.params.apikey;
+			
+			var ObservationId = req.query._id;
+			var medicationAdministrationId = req.query.medication_administration_id;
+
+			//susun query
+			var condition = '';
+
+			if (typeof ObservationId !== 'undefined' && ObservationId !== "") {
+				condition += "observation_id = '" + ObservationId + "' AND ";
+			}
+
+			if (typeof medicationAdministrationId !== 'undefined' && medicationAdministrationId !== "") {
+				condition += "medication_administration_id = '" + medicationAdministrationId + "' AND ";
+			}
+
+			if (condition == '') {
+				fixCondition = '';
+			} else {
+				fixCondition = ' WHERE ' + condition.slice(0, -4);
+			}
+
+			var arrMedicationAdministrationReasonReferenceObservation = [];
+			var query = 'select observation_id from BACIRO_FHIR.observation ' + fixCondition;
+
+			db.query(query, function (dataJson) {
+				rez = lowercaseObject(dataJson);
+				for (i = 0; i < rez.length; i++) {
+					var medicationAdministrationReasonReferenceObservation = {};
+					if(rez[i].observation_id != "null"){
+						medicationAdministrationReasonReferenceObservation.id = hostFHIR + ':' + portFHIR + '/' + apikey + '/Observation?_id=' +  rez[i].observation_id;
+					} else {
+						medicationAdministrationReasonReferenceObservation.id = "";
+					}
+					
+					arrMedicationAdministrationReasonReferenceObservation[i] = medicationAdministrationReasonReferenceObservation;
+				}
+				res.json({
+					"err_code": 0,
+					"data": arrMedicationAdministrationReasonReferenceObservation
+				});
+			}, function (e) {
+				res.json({
+					"err_code": 1,
+					"err_msg": e,
+					"application": "Api Phoenix",
+					"function": "getMedicationAdministrationReasonReferenceObservation"
+				});
+			});
+		},
+		
+		medicationAdministrationDevice: function getMedicationAdministrationDevice(req, res) {
+			var apikey = req.params.apikey;
+			
+			var DeviceId = req.query._id;
+			var medicationAdministrationId = req.query.medication_administration_id;
+
+			//susun query
+			var condition = '';
+
+			if (typeof DeviceId !== 'undefined' && DeviceId !== "") {
+				condition += "device_id = '" + DeviceId + "' AND ";
+			}
+
+			if (typeof medicationAdministrationId !== 'undefined' && medicationAdministrationId !== "") {
+				condition += "medication_administration_id = '" + medicationAdministrationId + "' AND ";
+			}
+
+			if (condition == '') {
+				fixCondition = '';
+			} else {
+				fixCondition = ' WHERE ' + condition.slice(0, -4);
+			}
+
+			var arrMedicationAdministrationDevice = [];
+			var query = 'select device_id from BACIRO_FHIR.device ' + fixCondition;
+
+			db.query(query, function (dataJson) {
+				rez = lowercaseObject(dataJson);
+				for (i = 0; i < rez.length; i++) {
+					var medicationAdministrationDevice = {};
+					if(rez[i].device_id != "null"){
+						medicationAdministrationDevice.id = hostFHIR + ':' + portFHIR + '/' + apikey + '/Device?_id=' +  rez[i].device_id;
+					} else {
+						medicationAdministrationDevice.id = "";
+					}
+					
+					arrMedicationAdministrationDevice[i] = medicationAdministrationDevice;
+				}
+				res.json({
+					"err_code": 0,
+					"data": arrMedicationAdministrationDevice
+				});
+			}, function (e) {
+				res.json({
+					"err_code": 1,
+					"err_msg": e,
+					"application": "Api Phoenix",
+					"function": "getMedicationAdministrationDevice"
+				});
+			});
+		},
+		medicationAdministrationProvenance: function getMedicationAdministrationProvenance(req, res) {
+			var apikey = req.params.apikey;
+			
+			var ProvenanceId = req.query._id;
+			var medicationAdministrationId = req.query.medication_administration_id;
+
+			//susun query
+			var condition = '';
+
+			if (typeof ProvenanceId !== 'undefined' && ProvenanceId !== "") {
+				condition += "provenance_id = '" + ProvenanceId + "' AND ";
+			}
+
+			if (typeof medicationAdministrationId !== 'undefined' && medicationAdministrationId !== "") {
+				condition += "medication_administration_id = '" + medicationAdministrationId + "' AND ";
+			}
+
+			if (condition == '') {
+				fixCondition = '';
+			} else {
+				fixCondition = ' WHERE ' + condition.slice(0, -4);
+			}
+
+			var arrMedicationAdministrationProvenance = [];
+			var query = 'select provenance_id from BACIRO_FHIR.provenance ' + fixCondition;
+
+			db.query(query, function (dataJson) {
+				rez = lowercaseObject(dataJson);
+				for (i = 0; i < rez.length; i++) {
+					var medicationAdministrationProvenance = {};
+					if(rez[i].provenance_id != "null"){
+						medicationAdministrationProvenance.id = hostFHIR + ':' + portFHIR + '/' + apikey + '/Provenance?_id=' +  rez[i].provenance_id;
+					} else {
+						medicationAdministrationProvenance.id = "";
+					}
+					
+					arrMedicationAdministrationProvenance[i] = medicationAdministrationProvenance;
+				}
+				res.json({
+					"err_code": 0,
+					"data": arrMedicationAdministrationProvenance
+				});
+			}, function (e) {
+				res.json({
+					"err_code": 1,
+					"err_msg": e,
+					"application": "Api Phoenix",
+					"function": "getMedicationAdministrationProvenance"
+				});
+			});
+		},
+		
+		/*------------*/
   },
 	post: {
 		medicationAdministration: function addMedicationAdministration(req, res) {
@@ -519,7 +939,8 @@ var controller = {
 			var route  = req.body.route;
 			var method  = req.body.method;
 			var dose  = req.body.dose;
-			var rate_ratio  = req.body.rate_ratio;
+			var rate_ratio_numerator  = req.body.rate_ratio_numerator;
+			var rate_ratio_denominator   = req.body.rate_ratio_denominator;
 			var rate_quality  = req.body.rate_quality;
 			var medication_administration_id  = req.body.medication_administration_id;
 
@@ -551,9 +972,14 @@ var controller = {
         values += " " + dose + ",";
       }
 			
-			if (typeof rate_ratio !== 'undefined' && rate_ratio !== "") {
-        column += 'rate_ratio,';
-        values += " " + rate_ratio + ",";
+			if (typeof rate_ratio_numerator !== 'undefined' && rate_ratio_numerator !== "") {
+        column += 'rate_ratio_numerator,';
+        values += " " + rate_ratio_numerator + ",";
+      }
+			
+			if (typeof rate_ratio_denominator !== 'undefined' && rate_ratio_denominator !== "") {
+        column += 'rate_ratio_denominator,';
+        values += " " + rate_ratio_denominator + ",";
       }
 			
 			if (typeof rate_quality !== 'undefined' && rate_quality !== "") {
@@ -587,7 +1013,7 @@ var controller = {
 	put: {
 		medicationAdministration: function updateMedicationAdministration(req, res) {
 			console.log(req.body);
-			var medication_administration_id = req.params.medication_administration_id;
+			var medication_administration_id = req.params._id;
 			var status = req.body.status;
 			var category = req.body.category;
 			var medication_codeable_concept = req.body.medication_codeable_concept;
@@ -690,10 +1116,14 @@ var controller = {
       }
 			
       var domainResource = req.params.dr;
-			var arrResource = domainResource.split('|');
-			var fieldResource = arrResource[0];
-			var valueResource = arrResource[1];
-			var condition = "medication_administration_id = '" + medication_administration_id + "' AND " + fieldResource + " = '" + valueResource + "'";
+			if(domainResource !== "" && typeof domainResource !== 'undefined'){
+				var arrResource = domainResource.split('|');
+				var fieldResource = arrResource[0];
+				var valueResource = arrResource[1];
+				var condition = "medication_administration_id = '" + medication_administration_id + "' AND " + fieldResource + " = '" + valueResource + "'";
+			}else{
+        var condition = "medication_administration_id = '" + medication_administration_id + "'";
+      }	
 
       var query = "UPSERT INTO BACIRO_FHIR.MEDICATION_ADMINISTRATION(medication_administration_id," + column.slice(0, -1) + ") SELECT medication_administration_id, " + values.slice(0, -1) + " FROM BACIRO_FHIR.MEDICATION_ADMINISTRATION WHERE " + condition;
 			
@@ -713,7 +1143,7 @@ var controller = {
     },
 		medicationAdministrationPerformer: function updateMedicationAdministrationPerformer(req, res) {
 			console.log(req.body);
-			var performer_id  = req.params.performer_id;
+			var performer_id  = req.params._id;
 			var actor_practitioner = req.body.actor_practitioner;
 			var actor_patient = req.body.actor_patient;
 			var actor_related_person = req.body.actor_related_person;
@@ -756,10 +1186,14 @@ var controller = {
 
 			
 			var domainResource = req.params.dr;
-			var arrResource = domainResource.split('|');
-			var fieldResource = arrResource[0];
-			var valueResource = arrResource[1];
-			var condition = "performer_id = '" + performer_id + "' AND " + fieldResource + " = '" + valueResource + "'";
+			if(domainResource !== "" && typeof domainResource !== 'undefined'){
+				var arrResource = domainResource.split('|');
+				var fieldResource = arrResource[0];
+				var valueResource = arrResource[1];
+				var condition = "performer_id = '" + performer_id + "' AND " + fieldResource + " = '" + valueResource + "'";
+			}else{
+        var condition = "performer_id = '" + performer_id + "'";
+      }	
 			
 			var query = "UPSERT INTO BACIRO_FHIR.MEDICATION_ADMINISTRATION_PERFORMER(performer_id," + column.slice(0, -1) + ") SELECT performer_id, " + values.slice(0, -1) + " FROM BACIRO_FHIR.MEDICATION_ADMINISTRATION_PERFORMER WHERE " + condition;
 			
@@ -779,13 +1213,14 @@ var controller = {
     },
 		medicationAdministrationDosage: function updateMedicationAdministrationDosage(req, res) {
 			console.log(req.body);
-			var dosage_id  = req.params.dosage_id;
+			var dosage_id  = req.params._id;
 			var text  = req.body.text;
 			var site  = req.body.site;
 			var route  = req.body.route;
 			var method  = req.body.method;
 			var dose  = req.body.dose;
-			var rate_ratio  = req.body.rate_ratio;
+			var rate_ratio_numerator  = req.body.rate_ratio_numerator;
+			var rate_ratio_denominator   = req.body.rate_ratio_denominator;
 			var rate_quality  = req.body.rate_quality;
 			var medication_administration_id  = req.body.medication_administration_id;
 
@@ -817,9 +1252,14 @@ var controller = {
         values += " " + dose + ",";
       }
 			
-			if (typeof rate_ratio !== 'undefined' && rate_ratio !== "") {
-        column += 'rate_ratio,';
-        values += " " + rate_ratio + ",";
+			if (typeof rate_ratio_numerator !== 'undefined' && rate_ratio_numerator !== "") {
+        column += 'rate_ratio_numerator,';
+        values += " " + rate_ratio_numerator + ",";
+      }
+			
+			if (typeof rate_ratio_denominator !== 'undefined' && rate_ratio_denominator !== "") {
+        column += 'rate_ratio_denominator,';
+        values += " " + rate_ratio_denominator + ",";
       }
 			
 			if (typeof rate_quality !== 'undefined' && rate_quality !== "") {
@@ -833,10 +1273,14 @@ var controller = {
       }
 
       var domainResource = req.params.dr;
-			var arrResource = domainResource.split('|');
-			var fieldResource = arrResource[0];
-			var valueResource = arrResource[1];
-			var condition = "dosage_id = '" + dosage_id + "' AND " + fieldResource + " = '" + valueResource + "'";
+			if(domainResource !== "" && typeof domainResource !== 'undefined'){
+				var arrResource = domainResource.split('|');
+				var fieldResource = arrResource[0];
+				var valueResource = arrResource[1];
+				var condition = "dosage_id = '" + dosage_id + "' AND " + fieldResource + " = '" + valueResource + "'";
+			}else{
+        var condition = "dosage_id = '" + dosage_id + "'";
+      }	
 			
 			var query = "UPSERT INTO BACIRO_FHIR.MEDICATION_ADMINISTRATION_DOSAGE(dosage_id," + column.slice(0, -1) + ") SELECT dosage_id, " + values.slice(0, -1) + " FROM BACIRO_FHIR.MEDICATION_ADMINISTRATION_DOSAGE WHERE " + condition;
 			

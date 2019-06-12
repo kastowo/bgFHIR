@@ -163,7 +163,18 @@ var controller = {
         condition += "cd.care_team_id = '" + care_team_id + "' AND,";  
       }
 			
+			var offset = req.query.offset;
+			var limit = req.query.limit;
+
+			if((typeof offset !== 'undefined' && offset !== '')){
+				condition = " cd.condition_id > '" + offset + "' AND ";       
+			}
 			
+			if((typeof limit !== 'undefined' && limit !== '')){
+				limit = " limit " + limit + " ";
+			} else {
+				limit = " ";
+			}
 			
       if(condition == ""){
         fixCondition = "";
@@ -172,14 +183,14 @@ var controller = {
       }
 			      
       var arrCondition = [];
-      var query = "select  condition_id, clinical_status, verification_status, category, severity, code, body_site, subject_patient, subject_group, context_encounter, context_episode_of_care, onset_date_time, onset_age, onset_period_start, onset_period_end, onset_range_low, onset_range_high, onset_string, abatement_date_time, abatement_age, abatement_boolean, abatement_period_start, abatement_period_end, abatement_range_low, abatement_range_high, abatement_string, asserted_date, asserter_practitioner, asserter_patient, asserter_related_person from baciro_fhir.condition cd " + fixCondition;
+      var query = "select cd.condition_id as condition_id, cd.clinical_status as clinical_status, cd.verification_status as verification_status, cd.category as category, cd.severity as severity, cd.code as code, cd.body_site as body_site, cd.subject_patient as subject_patient, cd.subject_group as subject_group, cd.context_encounter as context_encounter, cd.context_episode_of_care as context_episode_of_care, cd.onset_date_time as onset_date_time, cd.onset_age as onset_age, cd.onset_period_start as onset_period_start, cd.onset_period_end as onset_period_end, cd.onset_range_low as onset_range_low, cd.onset_range_high as onset_range_high, cd.onset_string as onset_string, cd.abatement_date_time as abatement_date_time, cd.abatement_age as abatement_age, cd.abatement_boolean as abatement_boolean, cd.abatement_period_start as abatement_period_start, cd.abatement_period_end as abatement_period_end, cd.abatement_range_low as abatement_range_low, cd.abatement_range_high as abatement_range_high, cd.abatement_string as abatement_string, cd.asserted_date as asserted_date, cd.asserter_practitioner as asserter_practitioner, cd.asserter_patient as asserter_patient, cd.asserter_related_person as asserter_related_person, cd.summary as summary from baciro_fhir.condition cd " + fixCondition + limit;
+			
 			console.log(query);
       db.query(query,function(dataJson){
         rez = lowercaseObject(dataJson);
 				for(i = 0; i < rez.length; i++){
-          var Condition = {id : "", clinicalStatus : "", verificationStatus : "", category : "", severity : "", code : "", body_site : "", subject : {}, context : {}, onset : {}, abatement : {}, assertedDate : "", asserter : "" };
-					
-					var arrSubject = [];
+          //var Condition = {id : "", clinicalStatus : "", verificationStatus : "", category : "", severity : "", code : "", body_site : "", subject : {}, context : {}, onset : {}, abatement : {}, assertedDate : "", asserter : "" };
+					var Condition = {};
 					var Subject = {};
 					if(rez[i].subject_group != "null"){
 						Subject.group = hostFHIR + ':' + portFHIR + '/' + apikey + '/Group?_id=' +  rez[i].subject_group;
@@ -191,9 +202,7 @@ var controller = {
 					} else {
 						Subject.patient = "";
 					}
-					arrSubject = Subject;
 					
-					var arrContext = [];
 					var Context = {};
 					if(rez[i].context_encounter != "null"){
 						Context.encounter = hostFHIR + ':' + portFHIR + '/' + apikey + '/Encounter?_id=' +  rez[i].context_encounter;
@@ -205,7 +214,6 @@ var controller = {
 					} else {
 						Context.episodeOfCare = "";
 					}
-					arrContext = Context;
 					
 					Condition.resourceType = "Condition";
           Condition.id = rez[i].condition_id;
@@ -214,17 +222,18 @@ var controller = {
 					Condition.category = rez[i].category;
 					Condition.severity = rez[i].severity;
 					Condition.code = rez[i].code;
-					Condition.body_site = rez[i].body_site;
+					Condition.bodySite = rez[i].body_site;
 					
-					Condition.subject = arrSubject;
-					Condition.context = arrContext;
+					Condition.subject = Subject;
+					Condition.context = Context;
+					var Onset = {};
 					if(rez[i].onset_date_time == null){
-						Condition.onset.onsetDateTime = formatDate(rez[i].onset_date_time);
+						Onset.onsetDateTime = formatDate(rez[i].onset_date_time);
 					}else{
-						Condition.onset.onsetDateTime = rez[i].onset_date_time;
+						Onset.onsetDateTime = rez[i].onset_date_time;
 					}
 					
-					Condition.onset.onsetAge = rez[i].onset_age;
+					Onset.onsetAge = rez[i].onset_age;
 					var onsetperiod_start,onsetperiod_end;
 					if(rez[i].onset_period_start == null){
 						onsetperiod_start = formatDate(rez[i].onset_period_start);  
@@ -236,17 +245,19 @@ var controller = {
 					}else{
 						onsetperiod_end = rez[i].onset_period_end;  
 					}
-					Condition.onset.onsetPeriod = onsetperiod_start + ' to ' + onsetperiod_end;
-					Condition.onset.onsetRange = rez[i].onset_range_low + ' to ' + rez[i].onset_range_high;
-					Condition.onset.onsetString = rez[i].onset_string;
+					Onset.onsetPeriod = onsetperiod_start + ' to ' + onsetperiod_end;
+					Onset.onsetRange = rez[i].onset_range_low + ' to ' + rez[i].onset_range_high;
+					Onset.onsetString = rez[i].onset_string;
+					Condition.onset = Onset;
+					var Abatement = {};
 					if(rez[i].abatement_date_time == null){
-						Condition.abatement.abatementDateTime = formatDate(rez[i].abatement_date_time);
+						Abatement.abatementDateTime = formatDate(rez[i].abatement_date_time);
 					}else{
-						Condition.abatement.abatementDateTime = rez[i].abatement_date_time;
+						Abatement.abatementDateTime = rez[i].abatement_date_time;
 					}
 					
-					Condition.abatement.abatementAge = rez[i].abatement_age;
-					Condition.abatement.abatementBoolean = rez[i].abatement_boolean;
+					Abatement.abatementAge = rez[i].abatement_age;
+					Abatement.abatementBoolean = rez[i].abatement_boolean;
 					var abatementperiod_start,abatementperiod_end;
 					if(rez[i].abatement_period_start == null){
 						abatementperiod_start = formatDate(rez[i].abatement_period_start);  
@@ -258,15 +269,15 @@ var controller = {
 					}else{
 						abatementperiod_end = rez[i].abatement_period_end;  
 					}
-					Condition.abatement.abatementPeriod = abatementperiod_start + ' to ' + abatementperiod_end;
-					Condition.abatement.abatementRange = rez[i].abatement_range_low + ' to ' + rez[i].abatement_range_high;
-					Condition.abatement.abatementString = rez[i].abatement_string;
+					Abatement.abatementPeriod = abatementperiod_start + ' to ' + abatementperiod_end;
+					Abatement.abatementRange = rez[i].abatement_range_low + ' to ' + rez[i].abatement_range_high;
+					Abatement.abatementString = rez[i].abatement_string;
+					Condition.abatement = Abatement;
 					if(rez[i].asserted_date == null){
 						Condition.assertedDate = formatDate(rez[i].asserted_date);
 					}else{
 						Condition.assertedDate = rez[i].asserted_date;
 					}
-					var arrAsserter = [];
 					var Asserter = {};
 					if(rez[i].asserter_practitioner != "null"){
 						Asserter.practitioner = hostFHIR + ':' + portFHIR + '/' + apikey + '/Practitioner?_id=' +  rez[i].asserter_practitioner;
@@ -283,8 +294,10 @@ var controller = {
 					} else {
 						Asserter.relatedPerson = "";
 					}
-					arrAsserter = Asserter;
-					Condition.asserter = arrAsserter;
+					Condition.asserter = Asserter;
+					var Stage = {};
+					Stage.summary = rez[i].summary;
+					Condition.stage = Stage;
           arrCondition[i] = Condition;
         }
         res.json({"err_code":0,"data": arrCondition});
@@ -292,7 +305,7 @@ var controller = {
         res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "getCondition"});
       });
     },
-		conditionStages: function getConditionStages(req, res) {
+		/*conditionStages: function getConditionStages(req, res) {
 			var apikey = req.params.apikey;
 			
 			var conditionStagesId = req.query._id;
@@ -339,7 +352,7 @@ var controller = {
 					"function": "getConditionStages"
 				});
 			});
-		},
+		},*/
 		conditionEvidence: function getConditionEvidence(req, res) {
 			var apikey = req.params.apikey;
 			
@@ -388,8 +401,148 @@ var controller = {
 					"function": "getConditionEvidence"
 				});
 			});
-		}
-		
+		},
+		conditionStageAssessmentClinicalImpression: function getConditionStageAssessmentClinicalImpression(req, res) {
+			var apikey = req.params.apikey;
+			
+			var _id = req.query._id;
+			var conditionId = req.query.condition_id;
+
+			//susun query
+			var condition = '';
+
+			if (typeof conditionId !== 'undefined' && conditionId !== "") {
+				condition += "condition_id = '" + conditionId + "' AND ";
+			}
+
+			if (condition == '') {
+				fixCondition = '';
+			} else {
+				fixCondition = ' WHERE ' + condition.slice(0, -4);
+			}
+
+			var arrConditionStageAssessmentClinicalImpression = [];
+			var query = 'select clinical_impression_id from BACIRO_FHIR.clinical_impression ' + fixCondition;
+
+			db.query(query, function (dataJson) {
+				rez = lowercaseObject(dataJson);
+				for (i = 0; i < rez.length; i++) {
+					var conditionStageAssessmentClinicalImpression = {};
+					if(rez[i].clinical_impression_id != "null"){
+						conditionStageAssessmentClinicalImpression.id = hostFHIR + ':' + portFHIR + '/' + apikey + '/ClinicalImpression?_id=' +  rez[i].clinical_impression_id;
+					} else {
+						conditionStageAssessmentClinicalImpression.id = "";
+					}
+					
+					arrConditionStageAssessmentClinicalImpression[i] = conditionStageAssessmentClinicalImpression;
+				}
+				res.json({
+					"err_code": 0,
+					"data": arrConditionStageAssessmentClinicalImpression
+				});
+			}, function (e) {
+				res.json({
+					"err_code": 1,
+					"err_msg": e,
+					"application": "Api Phoenix",
+					"function": "getConditionStageAssessmentClinicalImpression"
+				});
+			});
+		},
+		conditionStageAssessmentDiagnosticReport: function getConditionStageAssessmentDiagnosticReport(req, res) {
+			var apikey = req.params.apikey;
+			
+			var _id = req.query._id;
+			var conditionId = req.query.condition_id;
+
+			//susun query
+			var condition = '';
+
+			if (typeof conditionId !== 'undefined' && conditionId !== "") {
+				condition += "condition_stage_id = '" + conditionId + "' AND ";
+			}
+
+			if (condition == '') {
+				fixCondition = '';
+			} else {
+				fixCondition = ' WHERE ' + condition.slice(0, -4);
+			}
+
+			var arrConditionStageAssessmentDiagnosticReport = [];
+			var query = 'select diagnostic_report_id from BACIRO_FHIR.diagnostic_report ' + fixCondition;
+
+			db.query(query, function (dataJson) {
+				rez = lowercaseObject(dataJson);
+				for (i = 0; i < rez.length; i++) {
+					var conditionStageAssessmentDiagnosticReport = {};
+					if(rez[i].diagnostic_report_id != "null"){
+						conditionStageAssessmentDiagnosticReport.id = hostFHIR + ':' + portFHIR + '/' + apikey + '/DiagnosticReport?_id=' +  rez[i].diagnostic_report_id;
+					} else {
+						conditionStageAssessmentDiagnosticReport.id = "";
+					}
+					
+					arrConditionStageAssessmentDiagnosticReport[i] = conditionStageAssessmentDiagnosticReport;
+				}
+				res.json({
+					"err_code": 0,
+					"data": arrConditionStageAssessmentDiagnosticReport
+				});
+			}, function (e) {
+				res.json({
+					"err_code": 1,
+					"err_msg": e,
+					"application": "Api Phoenix",
+					"function": "getConditionStageAssessmentDiagnosticReport"
+				});
+			});
+		},
+		conditionStageAssessmentObservation: function getConditionStageAssessmentObservation(req, res) {
+			var apikey = req.params.apikey;
+			
+			var _id = req.query._id;
+			var conditionId = req.query.condition_id;
+
+			//susun query
+			var condition = '';
+
+			if (typeof conditionId !== 'undefined' && conditionId !== "") {
+				condition += "condition_stage_id = '" + conditionId + "' AND ";
+			}
+
+			if (condition == '') {
+				fixCondition = '';
+			} else {
+				fixCondition = ' WHERE ' + condition.slice(0, -4);
+			}
+
+			var arrConditionStageAssessmentObservation = [];
+			var query = 'select observation_id from BACIRO_FHIR.observation ' + fixCondition;
+
+			db.query(query, function (dataJson) {
+				rez = lowercaseObject(dataJson);
+				for (i = 0; i < rez.length; i++) {
+					var conditionStageAssessmentObservation = {};
+					if(rez[i].observation_id != "null"){
+						conditionStageAssessmentObservation.id = hostFHIR + ':' + portFHIR + '/' + apikey + '/Observation?_id=' +  rez[i].observation_id;
+					} else {
+						conditionStageAssessmentObservation.id = "";
+					}
+					
+					arrConditionStageAssessmentObservation[i] = conditionStageAssessmentObservation;
+				}
+				res.json({
+					"err_code": 0,
+					"data": arrConditionStageAssessmentObservation
+				});
+			}, function (e) {
+				res.json({
+					"err_code": 1,
+					"err_msg": e,
+					"application": "Api Phoenix",
+					"function": "getConditionStageAssessmentObservation"
+				});
+			});
+		},		
   },
 	post: {
 		condition: function addCondition(req, res) {
@@ -424,7 +577,7 @@ var controller = {
 			var asserter_practitioner = req.body.asserter_practitioner;
 			var asserter_patient = req.body.asserter_patient;
 			var asserter_related_person = req.body.asserter_related_person;
-			
+			var summary  = req.body.summary;
 			var family_member_history_id = req.body.family_member_history_id;
 			var care_plan_id = req.body.care_plan_id;
 			var care_plan_activity_detail_id = req.body.care_plan_activity_detail_id;
@@ -600,6 +753,11 @@ var controller = {
         column += 'asserter_related_person,';
         values += "'" + asserter_related_person + "',";
       }	
+			
+			if (typeof summary !== 'undefined' && summary !== "") {
+        column += 'summary,';
+        values += "'" + summary + "',";
+      }
 			
 			if (typeof family_member_history_id !== 'undefined' && family_member_history_id !== "") {
         column += 'family_member_history_id,';
@@ -716,7 +874,7 @@ var controller = {
           res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "addCondition"});
       });
     },
-		conditionStages: function addConditionStages(req, res) {
+		/*conditionStages: function addConditionStages(req, res) {
 			console.log(req.body);
 			var stage_id = req.body.stage_id;
 			var summary  = req.body.summary;
@@ -756,7 +914,7 @@ var controller = {
       },function(e){
           res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "addConditionStages"});
       });
-    },
+    },*/
 		conditionEvidence: function addConditionEvidence(req, res) {
 			console.log(req.body);
 			var evidence_id = req.body.evidence_id;
@@ -809,7 +967,7 @@ var controller = {
 	put: {
 		condition: function updateCondition(req, res) {
 			console.log(req.body);
-			var condition_id = req.params.condition_id;
+			var condition_id = req.params._id;
 			var clinical_status = req.body.clinical_status;
 			var verification_status = req.body.verification_status;
 			var category = req.body.category;
@@ -839,6 +997,7 @@ var controller = {
 			var asserter_practitioner = req.body.asserter_practitioner;
 			var asserter_patient = req.body.asserter_patient;
 			var asserter_related_person = req.body.asserter_related_person;
+			var summary  = req.body.summary;
 			var family_member_history_id = req.body.family_member_history_id;
 			var care_plan_id = req.body.care_plan_id;
 			var care_plan_activity_detail_id = req.body.care_plan_activity_detail_id;
@@ -1015,6 +1174,11 @@ var controller = {
         values += "'" + asserter_related_person + "',";
       }	
 			
+			if (typeof summary !== 'undefined' && summary !== "") {
+        column += 'summary,';
+        values += "'" + summary + "',";
+      }
+			
 			if (typeof family_member_history_id !== 'undefined' && family_member_history_id !== "") {
         column += 'family_member_history_id,';
         values += "'" + family_member_history_id + "',";
@@ -1112,10 +1276,14 @@ var controller = {
 				
 			
 			var domainResource = req.params.dr;
-			var arrResource = domainResource.split('|');
-			var fieldResource = arrResource[0];
-			var valueResource = arrResource[1];
-			var condition = "condition_id = '" + condition_id + "' AND " + fieldResource + " = '" + valueResource + "'";
+			if(domainResource !== "" && typeof domainResource !== 'undefined'){
+				var arrResource = domainResource.split('|');
+				var fieldResource = arrResource[0];
+				var valueResource = arrResource[1];
+				var condition = "condition_id = '" + condition_id + "' AND " + fieldResource + " = '" + valueResource + "'";
+			}else{
+        var condition = "condition_id = '" + condition_id+ "'";
+      }
 
       var query = "UPSERT INTO BACIRO_FHIR.condition(condition_id," + column.slice(0, -1) + ") SELECT condition_id, " + values.slice(0, -1) + " FROM BACIRO_FHIR.condition WHERE " + condition;
 			
@@ -1133,9 +1301,9 @@ var controller = {
           res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "updateCondition"});
       });
     },
-		conditionStages: function updateConditionStages(req, res) {
+		/*conditionStages: function updateConditionStages(req, res) {
 			console.log(req.body);
-			var stage_id = req.params.stage_id;
+			var stage_id = req.params._id;
 			var summary  = req.body.summary;
 			var condition_id = req.body.condition_id;
 
@@ -1158,10 +1326,14 @@ var controller = {
       }
 			
 			var domainResource = req.params.dr;
-			var arrResource = domainResource.split('|');
-			var fieldResource = arrResource[0];
-			var valueResource = arrResource[1];
-			var condition = "stage_id = '" + stage_id + "' AND " + fieldResource + " = '" + valueResource + "'";
+			if(domainResource !== "" && typeof domainResource !== 'undefined'){
+				var arrResource = domainResource.split('|');
+				var fieldResource = arrResource[0];
+				var valueResource = arrResource[1];
+				var condition = "stage_id = '" + stage_id + "' AND " + fieldResource + " = '" + valueResource + "'";
+			}else{
+        var condition = "stage_id = '" + stage_id + "'";
+      }
 			
 			var query = "UPSERT INTO BACIRO_FHIR.condition_stages(stage_id," + column.slice(0, -1) + ") SELECT stage_id, " + values.slice(0, -1) + " FROM BACIRO_FHIR.condition_stages WHERE " + condition;
 			
@@ -1178,10 +1350,10 @@ var controller = {
       },function(e){
           res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "updateConditionStages"});
       });
-    },
+    },*/
 		conditionEvidence: function updateConditionEvidence(req, res) {
 			console.log(req.body);
-			var evidence_id = req.params.evidence_id;
+			var evidence_id = req.params._id;
 			var code  = req.body.code;
 			var detail = req.body.detail;
 			var condition_id = req.body.condition_id;
@@ -1210,12 +1382,16 @@ var controller = {
       }
 			
 			var domainResource = req.params.dr;
-			var arrResource = domainResource.split('|');
-			var fieldResource = arrResource[0];
-			var valueResource = arrResource[1];
-			var condition = "evidence_id = '" + evidence_id + "' AND " + fieldResource + " = '" + valueResource + "'";
+			if(domainResource !== "" && typeof domainResource !== 'undefined'){
+				var arrResource = domainResource.split('|');
+				var fieldResource = arrResource[0];
+				var valueResource = arrResource[1];
+				var condition = "evidence_id = '" + evidence_id + "' AND " + fieldResource + " = '" + valueResource + "'";
+			}else{
+        var condition = "evidence_id = '" + evidence_id + "'";
+      }
 			
-			var query = "UPSERT INTO BACIRO_FHIR.condition_evidence(stage_id," + column.slice(0, -1) + ") SELECT stage_id, " + values.slice(0, -1) + " FROM BACIRO_FHIR.condition_evidence WHERE " + condition;
+			var query = "UPSERT INTO BACIRO_FHIR.condition_evidence(evidence_id," + column.slice(0, -1) + ") SELECT evidence_id, " + values.slice(0, -1) + " FROM BACIRO_FHIR.condition_evidence WHERE " + condition;
 			
 			console.log(query);
       db.upsert(query,function(succes){

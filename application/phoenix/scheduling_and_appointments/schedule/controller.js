@@ -30,7 +30,9 @@ var controller = {
       var scheduleActor = req.query.actor;
       var scheduleDate = req.query.date;
       var scheduleType = req.query.type;
-      
+      var offset = req.query.offset;
+			var limit = req.query.limit;
+
 
       //susun query
       var condition = "";
@@ -51,6 +53,17 @@ var controller = {
       if(typeof scheduleType !== 'undefined' && scheduleType !== ""){
         condition += "schedule_service_type = '" + scheduleType + "' AND ";  
       }
+			
+			if((typeof offset !== 'undefined' && offset !== '')){
+				condition = " schedule_id > '" + offset + "' AND ";       
+			}
+			
+			if((typeof limit !== 'undefined' && limit !== '')){
+				limit = " limit " + limit + " ";       
+			} else {
+				limit = " ";
+			}
+
 
       if(condition == ""){
         fixCondition = "";
@@ -59,7 +72,7 @@ var controller = {
       }
       
       var arrSchedule = [];
-      var query = "SELECT schedule_id, schedule_active, schedule_service_category, schedule_service_type, schedule_specialty, schedule_actor_patient_id, schedule_actor_practitioner_id, schedule_actor_practitioner_role_id, schedule_actor_related_person_id, schedule_actor_device_id, schedule_actor_healthcare_service_id, schedule_actor_location_id, schedule_period_start, schedule_period_end, schedule_comment FROM BACIRO_FHIR.SCHEDULE " + fixCondition;
+      var query = "SELECT schedule_id, schedule_active, schedule_service_category, schedule_service_type, schedule_specialty, schedule_actor_patient_id, schedule_actor_practitioner_id, schedule_actor_practitioner_role_id, schedule_actor_related_person_id, schedule_actor_device_id, schedule_actor_healthcare_service_id, schedule_actor_location_id, schedule_period_start, schedule_period_end, schedule_comment FROM BACIRO_FHIR.SCHEDULE " + fixCondition + limit;
 
       db.query(query,function(dataJson){
         rez = lowercaseObject(dataJson);

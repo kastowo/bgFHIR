@@ -1,3 +1,0 @@
-ID,CODE,DISPLAY,DEFINITION
-1,cek,cekkee,ffff
-2,active,Active,The patient is currently at this location, or was between the period specified. A system may update these records when the patient leaves the location to either reserved, or completed

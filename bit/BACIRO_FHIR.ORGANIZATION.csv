@@ -1,5 +1,0 @@
-ORGANIZATION_ID,ORGANIZATION_ACTIVE,ORGANIZATION_TYPE,ORGANIZATION_NAME,ORGANIZATION_ALIAS,PARENT_ID,ENDPOINT_ID
-orgjf7woha6,true,prov,hcs organization edit,hcs office,null,enpjfjj4s45
-orgjf7wq2xi,true,prov,hcs organization,hcs office,null,null
-orgjf7wxdoe,true,prov,hcs organization,hcs office,null,null
-orgjfrz0jbh,true,prov,hcs organization,hcs office,orgjf7wq2xi,enpjfrxsdrn

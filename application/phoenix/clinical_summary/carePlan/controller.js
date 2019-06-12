@@ -45,7 +45,6 @@ var controller = {
 			var status = req.query.status;
 			var subject = req.query.subject;
 			
-			
       //susun query
       var condition = "";
       var join = "";
@@ -149,6 +148,19 @@ var controller = {
 				condition += "(cp.SUBJECT_PATIENT = '" + subject + "' OR cp.SUBJECT_GROUP = '" + subject + "') AND,";  
 			}
 			
+			var offset = req.query.offset;
+			var limit = req.query.limit;
+
+			if((typeof offset !== 'undefined' && offset !== '')){
+				condition = " cp.careplan_id > '" + offset + "' AND ";       
+			}
+			
+			if((typeof limit !== 'undefined' && limit !== '')){
+				limit = " limit " + limit + " ";
+			} else {
+				limit = " ";
+			}
+			
       if(condition == ""){
         fixCondition = "";
       }else{
@@ -156,14 +168,11 @@ var controller = {
       }
 			      
       var arrCarePlan = [];
-      var query = "select careplan_id, based_on, replaces, part_of, status, intent, category, title, description, subject_patient, subject_group, context_encounter, context_episode_of_care, period_start, period_end, supporting_info from baciro_fhir.CAREPLAN cp " + fixCondition;
-			//console.log(query);
+      var query = "select cp.careplan_id as careplan_id, cp.based_on as based_on, cp.replaces as replaces, cp.part_of as part_of, cp.status as status, cp.intent as intent, cp.category as category, cp.title as title, cp.description as description, cp.subject_patient as subject_patient, cp.subject_group as subject_group, cp.context_encounter as context_encounter, cp.context_episode_of_care as context_episode_of_care, cp.period_start as period_start, cp.period_end as period_end, cp.supporting_info as supporting_info from baciro_fhir.CAREPLAN cp " + fixCondition + limit;			//console.log(query);
       db.query(query,function(dataJson){
         rez = lowercaseObject(dataJson);
 				for(i = 0; i < rez.length; i++){
           var CarePlan = {};
-					
-					var arrSubject = [];
 					var Subject = {};
 					if(rez[i].subject_group != "null"){
 						Subject.group = hostFHIR + ':' + portFHIR + '/' + apikey + '/Group?_id=' +  rez[i].subject_group;
@@ -175,9 +184,6 @@ var controller = {
 					} else {
 						Subject.patient = "";
 					}
-					arrSubject = Subject;
-					
-					var arrContext = [];
 					var Context = {};
 					if(rez[i].context_encounter != "null"){
 						Context.encounter = hostFHIR + ':' + portFHIR + '/' + apikey + '/Encounter?_id=' +  rez[i].context_encounter;
@@ -189,7 +195,6 @@ var controller = {
 					} else {
 						Context.episodeOfCare = "";
 					}
-					arrContext = Context;
 					
 					CarePlan.resourceType = "CarePlan";
           CarePlan.id = rez[i].careplan_id;
@@ -200,8 +205,8 @@ var controller = {
 					CarePlan.intent = rez[i].intent;
 					CarePlan.category = rez[i].category;
 					CarePlan.title = rez[i].title;
-					CarePlan.subject = arrSubject;
-					CarePlan.context = arrContext;
+					CarePlan.subject = Subject;
+					CarePlan.context = Context;
 					var period_start,period_end;
 					if(rez[i].period_start == null){
 						period_start = formatDate(rez[i].period_start);  
@@ -233,11 +238,11 @@ var controller = {
 			var condition = "";
 
 			if (typeof carePlanActivityId !== 'undefined' && carePlanActivityId !== "") {
-				condition += "CAREPLAN_ACTIVITY_ID = '" + carePlanActivityId + "' AND ";
+				condition += "ca.CAREPLAN_ACTIVITY_ID = '" + carePlanActivityId + "' AND ";
 			}
 
 			if (typeof carePlanId !== 'undefined' && carePlanId !== "") {
-				condition += "CAREPLAN_ID = '" + carePlanId + "' AND ";
+				condition += "ca.CAREPLAN_ID = '" + carePlanId + "' AND ";
 			}
 
 			if (condition == "") {
@@ -247,14 +252,14 @@ var controller = {
 			}
 
 			var arrCarePlanActivity = [];
-			var query = "select careplan_activity_id, outcome_codeable_concept, outcome_reference, progress, reference_appointment, reference_communication_request, reference_device_request, reference_medication_request, reference_nutrition_order, reference_task, reference_procedure_request, reference_referral_request, reference_vision_prescription, reference_request_group, activity_detail_id, category, definition_plan_definition, definition_activity_definition, definition_questionnaire, code, reason_code, status, status_reason, prohibited, scheduled_timing, scheduled_period_start, scheduled_period_end, scheduled_string, location, product_codeable_concept, product_reference_medication, product_reference_substance, daily_amount, quantity, description from baciro_fhir.careplan_activity ca left join baciro_fhir.careplan_activity_detail cd on ca.careplan_activity_id  = cd.activity_id " + fixCondition;
-
+			var query = "select care_plan_activity_id as careplan_activity_id, outcome_codeable_concept, outcome_reference, progress, reference_appointment, reference_communication_request, reference_device_request, reference_medication_request, reference_nutrition_order, reference_task, reference_procedure_request, reference_referral_request, reference_vision_prescription, reference_request_group, activity_detail_id, category, definition_plan_definition, definition_activity_definition, definition_questionnaire, code, reason_code, status, status_reason, prohibited, scheduled_timing, scheduled_period_start, scheduled_period_end, scheduled_string, location, product_codeable_concept, product_reference_medication, product_reference_substance, daily_amount, quantity, description, tim.timing_id alias timtiming_id, tim.event alias timevent, tim.repeat_bounds_duration alias timrepeat_bounds_duration, tim.repeat_bounds_range_low alias timrepeat_bounds_range_low, tim.repeat_bounds_range_high alias timrepeat_bounds_range_high, tim.repeat_bounds_period_start alias timrepeat_bounds_period_start, tim.repeat_bounds_period_end alias timrepeat_bounds_period_end, tim.count alias timcount, tim.count_max alias timcount_max, tim.duration alias timduration, tim.duration_max alias timduration_max, tim.duration_unit alias timduration_unit, tim.frequency alias timfrequency, tim.frequency_max alias timfrequency_max, tim.period alias timperiod, tim.period_max alias timperiod_max, tim.period_unit alias timperiod_unit, tim.day_of_week alias timday_of_week, tim.time_of_day alias timtime_of_day, tim.whenn alias timwhenn, tim.offsett alias timoffsett, tim.code alias timcode from baciro_fhir.careplan_activity ca left join baciro_fhir.careplan_activity_detail cd on ca.care_plan_activity_id  = cd.activity_id left join baciro_fhir.timing tim on cd.scheduled_timing = tim.timing_id" + fixCondition;	
+	
+			console.log(query);
 			db.query(query, function (dataJson) {
 				rez = lowercaseObject(dataJson);
 				for (i = 0; i < rez.length; i++) {
 					var CarePlanActivity = { id : "", outcomeCodeableConcept : "", outcomeReference : "", progress : "", reference : "", detail : {} };
 					
-					var arrReference = [];
 					var Reference = {};
 					if(rez[i].reference_appointment !== "null"){
 						Reference.appointment = hostFHIR + ':' + portFHIR + '/' + apikey + '/Appointment?_id=' +  rez[i].reference_appointment;
@@ -306,9 +311,7 @@ var controller = {
 					} else {
 						Reference.requestGroup = "";
 					}
-					arrReference = Reference;
 					
-					var arrDefinition = [];
 					var Definition = {};
 					if(rez[i].definition_plan_definition !== "null"){
 						Definition.planDefinition = hostFHIR + ':' + portFHIR + '/' + apikey + '/PlanDefinition?_id=' +  rez[i].definition_plan_definition;
@@ -325,9 +328,7 @@ var controller = {
 					} else {
 						Definition.questionnaire = "";
 					}
-					arrDefinition = Definition;
 					
-					var arrProductReference = [];
 					var ProductReference = {};
 					if(rez[i].product_reference_medication !== "null"){
 						ProductReference.medication = hostFHIR + ':' + portFHIR + '/' + apikey + '/Medication?_id=' +  rez[i].product_reference_medication;
@@ -339,10 +340,55 @@ var controller = {
 					} else {
 						ProductReference.substance = "";
 					}
-					arrProductReference = ProductReference;
+					
+					var Timing = {};
+					Timing.id = rez[i].timtiming_id;
+					if(rez[i].timevent == null){
+						Timing.event = formatDate(rez[i].timevent);  
+					}else{
+						Timing.event = rez[i].timevent;
+					}
+					var Repeat = {};
+					var Bounds = {};
+					Bounds.boundsDuration = rez[i].timrepeat_bounds_duration;
+					Bounds.boundsRange = rez[i].timrepeat_bounds_range_low + ' to ' + rez[i].timrepeat_bounds_range_high;
+					var repeatperiod_start,repeatperiod_end;
+          if(rez[i].timrepeat_bounds_period_start == null){
+            repeatperiod_start = formatDate(rez[i].timrepeat_bounds_period_start);  
+          }else{
+            repeatperiod_start = rez[i].timrepeat_bounds_period_start;  
+          }
+          if(rez[i].timonset_period_end == null){
+            repeatperiod_end = formatDate(rez[i].timonset_period_end);  
+          }else{
+            repeatperiod_end = rez[i].timonset_period_end;  
+          }
+					Bounds.boundsPeriod = repeatperiod_start + ' to ' + repeatperiod_end;
+					Repeat.bounds = Bounds;
+					Repeat.count = rez[i].timcount;
+					Repeat.countMax = rez[i].timcount_max;
+					Repeat.duration = rez[i].timduration;
+					Repeat.durationMax = rez[i].timduration_max;
+					Repeat.durationUnit = rez[i].timduration_unit;
+					Repeat.frequency = rez[i].timfrequency;
+					Repeat.frequencyMax = rez[i].timfrequency_max;
+					Repeat.period = rez[i].timperiod;
+					Repeat.periodMax = rez[i].timperiod_max;
+					Repeat.periodUnit = rez[i].timperiod_unit;
+					Repeat.dayOfWeek = rez[i].timday_of_week;
+					if(rez[i].timtime_of_day == null){
+						Repeat.timeOfDay = formatDate(rez[i].timtime_of_day);  
+					}else{
+						Repeat.timeOfDay = rez[i].timtime_of_day;
+					}
+					Repeat.when = rez[i].timwhenn;
+					Repeat.offset = rez[i].timoffsett;
+					Timing.repeat = Repeat;
+					Timing.code = rez[i].timcode;
 					
 					var Scheduled = {};
-					Scheduled.scheduledTiming = rez[i].scheduled_timing;
+					//Scheduled.scheduledTiming = rez[i].scheduled_timing;
+					Scheduled.scheduledTiming = Timing;
 					var scheduledperiod_start,scheduledperiod_end;
 					if(rez[i].scheduled_period_start !== "null"){
 						scheduledperiod_start = rez[i].scheduled_period_start;  
@@ -359,17 +405,18 @@ var controller = {
 					
 					var Product = {};
 					Product.productCodeableConcept = rez[i].product_codeable_concept;
-					Product.productReference = arrProductReference;
+					Product.productReference = ProductReference;
+					
 					/*-------------------*/
 					
 					CarePlanActivity.id = rez[i].careplan_activity_id;
 					CarePlanActivity.outcomeCodeableConcept = rez[i].outcome_codeable_concept;
 					CarePlanActivity.outcomeReference = rez[i].outcome_reference;
-					CarePlanActivity.progress = rez[i].progress;
-					CarePlanActivity.reference = arrReference;
+					//CarePlanActivity.progress = rez[i].progress;
+					CarePlanActivity.reference = Reference;
 					CarePlanActivity.detail.id = rez[i].activity_detail_id;
 					CarePlanActivity.detail.category = rez[i].category;
-					CarePlanActivity.detail.definition = arrDefinition;
+					CarePlanActivity.detail.definition = Definition;
 					CarePlanActivity.detail.code = rez[i].code;
 					CarePlanActivity.detail.reasonCode = rez[i].reason_code;
 					CarePlanActivity.detail.status = rez[i].status;
@@ -400,8 +447,1042 @@ var controller = {
 					"function": "getCarePlanActivity"
 				});
 			});
-		}
+		},
 		
+		carePlanDefinitionPlanDefinition: function getCarePlanDefinitionPlanDefinition(req, res) {
+			var apikey = req.params.apikey;
+			
+			var _id = req.query._id;
+			var carePlanId = req.query.care_plan_id;
+
+			//susun query
+			var condition = '';
+
+			if (typeof carePlanId !== 'undefined' && carePlanId !== "") {
+				condition += "care_plan_id = '" + carePlanId + "' AND ";
+			}
+
+			if (condition == '') {
+				fixCondition = '';
+			} else {
+				fixCondition = ' WHERE ' + condition.slice(0, -4);
+			}
+
+			var arrCarePlanDefinitionPlanDefinition = [];
+			var query = 'select plan_definition_id from BACIRO_FHIR.plan_definition ' + fixCondition;
+
+			db.query(query, function (dataJson) {
+				rez = lowercaseObject(dataJson);
+				for (i = 0; i < rez.length; i++) {
+					var carePlanDefinitionPlanDefinition = {};
+					if(rez[i].plan_definition_id != "null"){
+						carePlanDefinitionPlanDefinition.id = hostFHIR + ':' + portFHIR + '/' + apikey + '/PlanDefinition?_id=' +  rez[i].plan_definition_id;
+					} else {
+						carePlanDefinitionPlanDefinition.id = "";
+					}
+					
+					arrCarePlanDefinitionPlanDefinition[i] = carePlanDefinitionPlanDefinition;
+				}
+				res.json({
+					"err_code": 0,
+					"data": arrCarePlanDefinitionPlanDefinition
+				});
+			}, function (e) {
+				res.json({
+					"err_code": 1,
+					"err_msg": e,
+					"application": "Api Phoenix",
+					"function": "getCarePlanDefinitionPlanDefinition"
+				});
+			});
+		},
+		carePlanDefinitionQuestionnaire: function getCarePlanDefinitionQuestionnaire(req, res) {
+			var apikey = req.params.apikey;
+			
+			var _id = req.query._id;
+			var carePlanId = req.query.care_plan_id;
+
+			//susun query
+			var condition = '';
+
+			if (typeof carePlanId !== 'undefined' && carePlanId !== "") {
+				condition += "careplan_id = '" + carePlanId + "' AND ";
+			}
+
+			if (condition == '') {
+				fixCondition = '';
+			} else {
+				fixCondition = ' WHERE ' + condition.slice(0, -4);
+			}
+
+			var arrCarePlanDefinitionQuestionnaire = [];
+			var query = 'select questionnaire_id from BACIRO_FHIR.questionnaire ' + fixCondition;
+
+			db.query(query, function (dataJson) {
+				rez = lowercaseObject(dataJson);
+				for (i = 0; i < rez.length; i++) {
+					var carePlanDefinitionQuestionnaire = {};
+					if(rez[i].questionnaire_id != "null"){
+						carePlanDefinitionQuestionnaire.id = hostFHIR + ':' + portFHIR + '/' + apikey + '/Questionnaire?_id=' +  rez[i].questionnaire_id;
+					} else {
+						carePlanDefinitionQuestionnaire.id = "";
+					}
+					
+					arrCarePlanDefinitionQuestionnaire[i] = carePlanDefinitionQuestionnaire;
+				}
+				res.json({
+					"err_code": 0,
+					"data": arrCarePlanDefinitionQuestionnaire
+				});
+			}, function (e) {
+				res.json({
+					"err_code": 1,
+					"err_msg": e,
+					"application": "Api Phoenix",
+					"function": "getCarePlanDefinitionQuestionnaire"
+				});
+			});
+		},
+		carePlanBasedOn: function getCarePlanBasedOn(req, res) {
+			var apikey = req.params.apikey;
+			
+			var _id = req.query._id;
+			var carePlanId = req.query.care_plan_id;
+
+			//susun query
+			var condition = '';
+
+			if (typeof carePlanId !== 'undefined' && carePlanId !== "") {
+				condition += "based_on = '" + carePlanId + "' AND ";
+			}
+
+			if (condition == '') {
+				fixCondition = '';
+			} else {
+				fixCondition = ' WHERE ' + condition.slice(0, -4);
+			}
+
+			var arrCarePlanBasedOn = [];
+			var query = 'select careplan_id from BACIRO_FHIR.careplan ' + fixCondition;
+
+			db.query(query, function (dataJson) {
+				rez = lowercaseObject(dataJson);
+				for (i = 0; i < rez.length; i++) {
+					var carePlanBasedOn = {};
+					if(rez[i].careplan_id != "null"){
+						carePlanBasedOn.id = hostFHIR + ':' + portFHIR + '/' + apikey + '/Careplan?_id=' +  rez[i].careplan_id;
+					} else {
+						carePlanBasedOn.id = "";
+					}
+					
+					arrCarePlanBasedOn[i] = carePlanBasedOn;
+				}
+				res.json({
+					"err_code": 0,
+					"data": arrCarePlanBasedOn
+				});
+			}, function (e) {
+				res.json({
+					"err_code": 1,
+					"err_msg": e,
+					"application": "Api Phoenix",
+					"function": "getCarePlanBasedOn"
+				});
+			});
+		},
+		carePlanReplaces: function getCarePlanReplaces(req, res) {
+			var apikey = req.params.apikey;
+			
+			var _id = req.query._id;
+			var carePlanId = req.query.care_plan_id;
+
+			//susun query
+			var condition = '';
+
+			if (typeof carePlanId !== 'undefined' && carePlanId !== "") {
+				condition += "replaces = '" + carePlanId + "' AND ";
+			}
+
+			if (condition == '') {
+				fixCondition = '';
+			} else {
+				fixCondition = ' WHERE ' + condition.slice(0, -4);
+			}
+
+			var arrCarePlanReplaces = [];
+			var query = 'select careplan_id from BACIRO_FHIR.careplan ' + fixCondition;
+
+			db.query(query, function (dataJson) {
+				rez = lowercaseObject(dataJson);
+				for (i = 0; i < rez.length; i++) {
+					var carePlanReplaces = {};
+					if(rez[i].careplan_id != "null"){
+						carePlanReplaces.id = hostFHIR + ':' + portFHIR + '/' + apikey + '/Careplan?_id=' +  rez[i].careplan_id;
+					} else {
+						carePlanReplaces.id = "";
+					}
+					
+					arrCarePlanReplaces[i] = carePlanReplaces;
+				}
+				res.json({
+					"err_code": 0,
+					"data": arrCarePlanReplaces
+				});
+			}, function (e) {
+				res.json({
+					"err_code": 1,
+					"err_msg": e,
+					"application": "Api Phoenix",
+					"function": "getCarePlanReplaces"
+				});
+			});
+		},
+		carePlanPartOf: function getCarePlanPartOf(req, res) {
+			var apikey = req.params.apikey;
+			
+			var _id = req.query._id;
+			var carePlanId = req.query.care_plan_id;
+
+			//susun query
+			var condition = '';
+
+			if (typeof carePlanId !== 'undefined' && carePlanId !== "") {
+				condition += "part_of = '" + carePlanId + "' AND ";
+			}
+
+			if (condition == '') {
+				fixCondition = '';
+			} else {
+				fixCondition = ' WHERE ' + condition.slice(0, -4);
+			}
+
+			var arrCarePlanPartOf = [];
+			var query = 'select careplan_id from BACIRO_FHIR.careplan ' + fixCondition;
+
+			db.query(query, function (dataJson) {
+				rez = lowercaseObject(dataJson);
+				for (i = 0; i < rez.length; i++) {
+					var carePlanPartOf = {};
+					if(rez[i].careplan_id != "null"){
+						carePlanPartOf.id = hostFHIR + ':' + portFHIR + '/' + apikey + '/Careplan?_id=' +  rez[i].careplan_id;
+					} else {
+						carePlanPartOf.id = "";
+					}
+					
+					arrCarePlanPartOf[i] = carePlanPartOf;
+				}
+				res.json({
+					"err_code": 0,
+					"data": arrCarePlanPartOf
+				});
+			}, function (e) {
+				res.json({
+					"err_code": 1,
+					"err_msg": e,
+					"application": "Api Phoenix",
+					"function": "getCarePlanPartOf"
+				});
+			});
+		},
+		carePlanAuthorPatient: function getCarePlanAuthorPatient(req, res) {
+			var apikey = req.params.apikey;
+			
+			var _id = req.query._id;
+			var carePlanId = req.query.care_plan_id;
+
+			//susun query
+			var condition = '';
+
+			if (typeof carePlanId !== 'undefined' && carePlanId !== "") {
+				condition += "care_plan_id = '" + carePlanId + "' AND ";
+			}
+
+			if (condition == '') {
+				fixCondition = '';
+			} else {
+				fixCondition = ' WHERE ' + condition.slice(0, -4);
+			}
+
+			var arrCarePlanAuthorPatient = [];
+			var query = 'select patient_id from BACIRO_FHIR.patient ' + fixCondition;
+
+			db.query(query, function (dataJson) {
+				rez = lowercaseObject(dataJson);
+				for (i = 0; i < rez.length; i++) {
+					var carePlanAuthorPatient = {};
+					if(rez[i].patient_id != "null"){
+						carePlanAuthorPatient.id = hostFHIR + ':' + portFHIR + '/' + apikey + '/Patient?_id=' +  rez[i].patient_id;
+					} else {
+						carePlanAuthorPatient.id = "";
+					}
+					
+					arrCarePlanAuthorPatient[i] = carePlanAuthorPatient;
+				}
+				res.json({
+					"err_code": 0,
+					"data": arrCarePlanAuthorPatient
+				});
+			}, function (e) {
+				res.json({
+					"err_code": 1,
+					"err_msg": e,
+					"application": "Api Phoenix",
+					"function": "getCarePlanAuthorPatient"
+				});
+			});
+		},
+		carePlanAuthorPractitioner: function getCarePlanAuthorPractitioner(req, res) {
+			var apikey = req.params.apikey;
+			
+			var _id = req.query._id;
+			var carePlanId = req.query.care_plan_id;
+
+			//susun query
+			var condition = '';
+
+			if (typeof carePlanId !== 'undefined' && carePlanId !== "") {
+				condition += "care_plan_id = '" + carePlanId + "' AND ";
+			}
+
+			if (condition == '') {
+				fixCondition = '';
+			} else {
+				fixCondition = ' WHERE ' + condition.slice(0, -4);
+			}
+
+			var arrCarePlanAuthorPractitioner = [];
+			var query = 'select practitioner_id from BACIRO_FHIR.practitioner ' + fixCondition;
+
+			db.query(query, function (dataJson) {
+				rez = lowercaseObject(dataJson);
+				for (i = 0; i < rez.length; i++) {
+					var carePlanAuthorPractitioner = {};
+					if(rez[i].practitioner_id != "null"){
+						carePlanAuthorPractitioner.id = hostFHIR + ':' + portFHIR + '/' + apikey + '/Practitioner?_id=' +  rez[i].practitioner_id;
+					} else {
+						carePlanAuthorPractitioner.id = "";
+					}
+					
+					arrCarePlanAuthorPractitioner[i] = carePlanAuthorPractitioner;
+				}
+				res.json({
+					"err_code": 0,
+					"data": arrCarePlanAuthorPractitioner
+				});
+			}, function (e) {
+				res.json({
+					"err_code": 1,
+					"err_msg": e,
+					"application": "Api Phoenix",
+					"function": "getCarePlanAuthorPractitioner"
+				});
+			});
+		},
+		carePlanAuthorRelatedPerson: function getCarePlanAuthorRelatedPerson(req, res) {
+			var apikey = req.params.apikey;
+			
+			var _id = req.query._id;
+			var carePlanId = req.query.care_plan_id;
+
+			//susun query
+			var condition = '';
+
+			if (typeof carePlanId !== 'undefined' && carePlanId !== "") {
+				condition += "care_plan_id = '" + carePlanId + "' AND ";
+			}
+
+			if (condition == '') {
+				fixCondition = '';
+			} else {
+				fixCondition = ' WHERE ' + condition.slice(0, -4);
+			}
+
+			var arrCarePlanAuthorRelatedPerson = [];
+			var query = 'select related_person_id from BACIRO_FHIR.related_person ' + fixCondition;
+
+			db.query(query, function (dataJson) {
+				rez = lowercaseObject(dataJson);
+				for (i = 0; i < rez.length; i++) {
+					var carePlanAuthorRelatedPerson = {};
+					if(rez[i].related_person_id != "null"){
+						carePlanAuthorRelatedPerson.id = hostFHIR + ':' + portFHIR + '/' + apikey + '/RelatedPerson?_id=' +  rez[i].related_person_id;
+					} else {
+						carePlanAuthorRelatedPerson.id = "";
+					}
+					
+					arrCarePlanAuthorRelatedPerson[i] = carePlanAuthorRelatedPerson;
+				}
+				res.json({
+					"err_code": 0,
+					"data": arrCarePlanAuthorRelatedPerson
+				});
+			}, function (e) {
+				res.json({
+					"err_code": 1,
+					"err_msg": e,
+					"application": "Api Phoenix",
+					"function": "getCarePlanAuthorRelatedPerson"
+				});
+			});
+		},
+		carePlanAuthorOrganization: function getCarePlanAuthorOrganization(req, res) {
+			var apikey = req.params.apikey;
+			
+			var _id = req.query._id;
+			var carePlanId = req.query.care_plan_id;
+
+			//susun query
+			var condition = '';
+
+			if (typeof carePlanId !== 'undefined' && carePlanId !== "") {
+				condition += "care_plan_id = '" + carePlanId + "' AND ";
+			}
+
+			if (condition == '') {
+				fixCondition = '';
+			} else {
+				fixCondition = ' WHERE ' + condition.slice(0, -4);
+			}
+
+			var arrCarePlanAuthorOrganization = [];
+			var query = 'select organization_id from BACIRO_FHIR.organization ' + fixCondition;
+
+			db.query(query, function (dataJson) {
+				rez = lowercaseObject(dataJson);
+				for (i = 0; i < rez.length; i++) {
+					var carePlanAuthorOrganization = {};
+					if(rez[i].organization_id != "null"){
+						carePlanAuthorOrganization.id = hostFHIR + ':' + portFHIR + '/' + apikey + '/Organization?_id=' +  rez[i].organization_id;
+					} else {
+						carePlanAuthorOrganization.id = "";
+					}
+					
+					arrCarePlanAuthorOrganization[i] = carePlanAuthorOrganization;
+				}
+				res.json({
+					"err_code": 0,
+					"data": arrCarePlanAuthorOrganization
+				});
+			}, function (e) {
+				res.json({
+					"err_code": 1,
+					"err_msg": e,
+					"application": "Api Phoenix",
+					"function": "getCarePlanAuthorOrganization"
+				});
+			});
+		},
+		carePlanAuthorCareTeam: function getCarePlanAuthorCareTeam(req, res) {
+			var apikey = req.params.apikey;
+			
+			var _id = req.query._id;
+			var carePlanId = req.query.care_plan_id;
+
+			//susun query
+			var condition = '';
+
+			if (typeof carePlanId !== 'undefined' && carePlanId !== "") {
+				condition += "care_plan_author_id = '" + carePlanId + "' AND ";
+			}
+
+			if (condition == '') {
+				fixCondition = '';
+			} else {
+				fixCondition = ' WHERE ' + condition.slice(0, -4);
+			}
+
+			var arrCarePlanAuthorCareTeam = [];
+			var query = 'select care_team_id from BACIRO_FHIR.care_team ' + fixCondition;
+
+			db.query(query, function (dataJson) {
+				rez = lowercaseObject(dataJson);
+				for (i = 0; i < rez.length; i++) {
+					var carePlanAuthorCareTeam = {};
+					if(rez[i].care_team_id != "null"){
+						carePlanAuthorCareTeam.id = hostFHIR + ':' + portFHIR + '/' + apikey + '/CareTeam?_id=' +  rez[i].care_team_id;
+					} else {
+						carePlanAuthorCareTeam.id = "";
+					}
+					
+					arrCarePlanAuthorCareTeam[i] = carePlanAuthorCareTeam;
+				}
+				res.json({
+					"err_code": 0,
+					"data": arrCarePlanAuthorCareTeam
+				});
+			}, function (e) {
+				res.json({
+					"err_code": 1,
+					"err_msg": e,
+					"application": "Api Phoenix",
+					"function": "getCarePlanAuthorCareTeam"
+				});
+			});
+		},
+		carePlanCareTeam: function getCarePlanCareTeam(req, res) {
+			var apikey = req.params.apikey;
+			
+			var _id = req.query._id;
+			var carePlanId = req.query.care_plan_id;
+
+			//susun query
+			var condition = '';
+
+			if (typeof carePlanId !== 'undefined' && carePlanId !== "") {
+				condition += "care_plan_team_id = '" + carePlanId + "' AND ";
+			}
+
+			if (condition == '') {
+				fixCondition = '';
+			} else {
+				fixCondition = ' WHERE ' + condition.slice(0, -4);
+			}
+
+			var arrCarePlanCareTeam = [];
+			var query = 'select care_team_id from BACIRO_FHIR.care_team ' + fixCondition;
+
+			db.query(query, function (dataJson) {
+				rez = lowercaseObject(dataJson);
+				for (i = 0; i < rez.length; i++) {
+					var carePlanCareTeam = {};
+					if(rez[i].care_team_id != "null"){
+						carePlanCareTeam.id = hostFHIR + ':' + portFHIR + '/' + apikey + '/careTeam?_id=' +  rez[i].care_team_id;
+					} else {
+						carePlanCareTeam.id = "";
+					}
+					
+					arrCarePlanCareTeam[i] = carePlanCareTeam;
+				}
+				res.json({
+					"err_code": 0,
+					"data": arrCarePlanCareTeam
+				});
+			}, function (e) {
+				res.json({
+					"err_code": 1,
+					"err_msg": e,
+					"application": "Api Phoenix",
+					"function": "getCarePlanCareTeam"
+				});
+			});
+		},
+		carePlanAddresses: function getCarePlanAddresses(req, res) {
+			var apikey = req.params.apikey;
+			
+			var _id = req.query._id;
+			var carePlanId = req.query.care_plan_id;
+
+			//susun query
+			var condition = '';
+
+			if (typeof carePlanId !== 'undefined' && carePlanId !== "") {
+				condition += "care_plan_id = '" + carePlanId + "' AND ";
+			}
+
+			if (condition == '') {
+				fixCondition = '';
+			} else {
+				fixCondition = ' WHERE ' + condition.slice(0, -4);
+			}
+
+			var arrCarePlanAddresses = [];
+			var query = 'select condition_id from BACIRO_FHIR.condition ' + fixCondition;
+
+			db.query(query, function (dataJson) {
+				rez = lowercaseObject(dataJson);
+				for (i = 0; i < rez.length; i++) {
+					var carePlanAddresses = {};
+					if(rez[i].condition_id != "null"){
+						carePlanAddresses.id = hostFHIR + ':' + portFHIR + '/' + apikey + '/Condition?_id=' +  rez[i].condition_id;
+					} else {
+						carePlanAddresses.id = "";
+					}
+					
+					arrCarePlanAddresses[i] = carePlanAddresses;
+				}
+				res.json({
+					"err_code": 0,
+					"data": arrCarePlanAddresses
+				});
+			}, function (e) {
+				res.json({
+					"err_code": 1,
+					"err_msg": e,
+					"application": "Api Phoenix",
+					"function": "getCarePlanAddresses"
+				});
+			});
+		},
+		carePlanGoal: function getCarePlanGoal(req, res) {
+			var apikey = req.params.apikey;
+			
+			var _id = req.query._id;
+			var carePlanId = req.query.care_plan_id;
+
+			//susun query
+			var condition = '';
+
+			if (typeof carePlanId !== 'undefined' && carePlanId !== "") {
+				condition += "care_plan_id = '" + carePlanId + "' AND ";
+			}
+
+			if (condition == '') {
+				fixCondition = '';
+			} else {
+				fixCondition = ' WHERE ' + condition.slice(0, -4);
+			}
+
+			var arrCarePlanGoal = [];
+			var query = 'select goal_id from BACIRO_FHIR.goal ' + fixCondition;
+
+			db.query(query, function (dataJson) {
+				rez = lowercaseObject(dataJson);
+				for (i = 0; i < rez.length; i++) {
+					var carePlanGoal = {};
+					if(rez[i].goal_id != "null"){
+						carePlanGoal.id = hostFHIR + ':' + portFHIR + '/' + apikey + '/Goal?_id=' +  rez[i].goal_id;
+					} else {
+						carePlanGoal.id = "";
+					}
+					
+					arrCarePlanGoal[i] = carePlanGoal;
+				}
+				res.json({
+					"err_code": 0,
+					"data": arrCarePlanGoal
+				});
+			}, function (e) {
+				res.json({
+					"err_code": 1,
+					"err_msg": e,
+					"application": "Api Phoenix",
+					"function": "getCarePlanGoal"
+				});
+			});
+		},
+		carePlanActivityProgress: function getCarePlanActivityProgress(req, res) {
+			var apikey = req.params.apikey;
+			
+			var _id = req.query._id;
+			var carePlanId = req.query.care_plan_activity_id;
+
+			//susun query
+			var condition = '';
+
+			if (typeof carePlanId !== 'undefined' && carePlanId !== "") {
+				condition += "care_plan_activity_id = '" + carePlanId + "' AND ";
+			}
+
+			if (condition == '') {
+				fixCondition = '';
+			} else {
+				fixCondition = ' WHERE ' + condition.slice(0, -4);
+			}
+
+			var arrCarePlanActivityProgress = [];
+			var query = 'select note_id from BACIRO_FHIR.note ' + fixCondition;
+
+			db.query(query, function (dataJson) {
+				rez = lowercaseObject(dataJson);
+				for (i = 0; i < rez.length; i++) {
+					var carePlanActivityProgress = {};
+					if(rez[i].note_id != "null"){
+						carePlanActivityProgress.id = hostFHIR + ':' + portFHIR + '/' + apikey + '/Note?_id=' +  rez[i].note_id;
+					} else {
+						carePlanActivityProgress.id = "";
+					}
+					
+					arrCarePlanActivityProgress[i] = carePlanActivityProgress;
+				}
+				res.json({
+					"err_code": 0,
+					"data": arrCarePlanActivityProgress
+				});
+			}, function (e) {
+				res.json({
+					"err_code": 1,
+					"err_msg": e,
+					"application": "Api Phoenix",
+					"function": "getCarePlanActivityProgress"
+				});
+			});
+		},
+		carePlanActivityDetailReasonReference: function getCarePlanActivityDetailReasonReference(req, res) {
+			var apikey = req.params.apikey;
+			
+			var _id = req.query._id;
+			var carePlanId = req.query.care_plan_activity_id;
+
+			//susun query
+			var condition = '';
+
+			if (typeof carePlanId !== 'undefined' && carePlanId !== "") {
+				condition += "care_plan_id = '" + carePlanId + "' AND ";
+			}
+
+			if (condition == '') {
+				fixCondition = '';
+			} else {
+				fixCondition = ' WHERE ' + condition.slice(0, -4);
+			}
+
+			var arrCarePlanActivityDetailReasonReference = [];
+			var query = 'select condition_id from BACIRO_FHIR.condition ' + fixCondition;
+
+			db.query(query, function (dataJson) {
+				rez = lowercaseObject(dataJson);
+				for (i = 0; i < rez.length; i++) {
+					var carePlanActivityDetailReasonReference = {};
+					if(rez[i].condition_id != "null"){
+						carePlanActivityDetailReasonReference.id = hostFHIR + ':' + portFHIR + '/' + apikey + '/Condition?_id=' +  rez[i].condition_id;
+					} else {
+						carePlanActivityDetailReasonReference.id = "";
+					}
+					
+					arrCarePlanActivityDetailReasonReference[i] = carePlanActivityDetailReasonReference;
+				}
+				res.json({
+					"err_code": 0,
+					"data": arrCarePlanActivityDetailReasonReference
+				});
+			}, function (e) {
+				res.json({
+					"err_code": 1,
+					"err_msg": e,
+					"application": "Api Phoenix",
+					"function": "getCarePlanActivityDetailReasonReference"
+				});
+			});
+		},
+		carePlanActivityDetailGoal: function getCarePlanActivityDetailGoal(req, res) {
+			var apikey = req.params.apikey;
+			
+			var _id = req.query._id;
+			var carePlanId = req.query.care_plan_activity_id;
+
+			//susun query
+			var condition = '';
+
+			if (typeof carePlanId !== 'undefined' && carePlanId !== "") {
+				condition += "care_plan_activity_detail_id = '" + carePlanId + "' AND ";
+			}
+
+			if (condition == '') {
+				fixCondition = '';
+			} else {
+				fixCondition = ' WHERE ' + condition.slice(0, -4);
+			}
+
+			var arrCarePlanActivityDetailGoal = [];
+			var query = 'select goal_id from BACIRO_FHIR.goal ' + fixCondition;
+
+			db.query(query, function (dataJson) {
+				rez = lowercaseObject(dataJson);
+				for (i = 0; i < rez.length; i++) {
+					var carePlanActivityDetailGoal = {};
+					if(rez[i].goal_id != "null"){
+						carePlanActivityDetailGoal.id = hostFHIR + ':' + portFHIR + '/' + apikey + '/Goal?_id=' +  rez[i].goal_id;
+					} else {
+						carePlanActivityDetailGoal.id = "";
+					}
+					
+					arrCarePlanActivityDetailGoal[i] = carePlanActivityDetailGoal;
+				}
+				res.json({
+					"err_code": 0,
+					"data": arrCarePlanActivityDetailGoal
+				});
+			}, function (e) {
+				res.json({
+					"err_code": 1,
+					"err_msg": e,
+					"application": "Api Phoenix",
+					"function": "getCarePlanActivityDetailGoal"
+				});
+			});
+		},
+		carePlanActivityDetailPerformerPractitioner: function getCarePlanActivityDetailPerformerPractitioner(req, res) {
+			var apikey = req.params.apikey;
+			
+			var _id = req.query._id;
+			var carePlanId = req.query.care_plan_activity_id;
+
+			//susun query
+			var condition = '';
+
+			if (typeof carePlanId !== 'undefined' && carePlanId !== "") {
+				condition += "care_plan_activity_id = '" + carePlanId + "' AND ";
+			}
+
+			if (condition == '') {
+				fixCondition = '';
+			} else {
+				fixCondition = ' WHERE ' + condition.slice(0, -4);
+			}
+
+			var arrCarePlanActivityDetailPerformerPractitioner = [];
+			var query = 'select practitioner_id from BACIRO_FHIR.practitioner ' + fixCondition;
+
+			db.query(query, function (dataJson) {
+				rez = lowercaseObject(dataJson);
+				for (i = 0; i < rez.length; i++) {
+					var carePlanActivityDetailPerformerPractitioner = {};
+					if(rez[i].practitioner_id != "null"){
+						carePlanActivityDetailPerformerPractitioner.id = hostFHIR + ':' + portFHIR + '/' + apikey + '/Practitioner?_id=' +  rez[i].practitioner_id;
+					} else {
+						carePlanActivityDetailPerformerPractitioner.id = "";
+					}
+					
+					arrCarePlanActivityDetailPerformerPractitioner[i] = carePlanActivityDetailPerformerPractitioner;
+				}
+				res.json({
+					"err_code": 0,
+					"data": arrCarePlanActivityDetailPerformerPractitioner
+				});
+			}, function (e) {
+				res.json({
+					"err_code": 1,
+					"err_msg": e,
+					"application": "Api Phoenix",
+					"function": "getCarePlanActivityDetailPerformerPractitioner"
+				});
+			});
+		},
+		carePlanActivityDetailPerformerOrganization: function getCarePlanActivityDetailPerformerOrganization(req, res) {
+			var apikey = req.params.apikey;
+			
+			var _id = req.query._id;
+			var carePlanId = req.query.care_plan_activity_id;
+
+			//susun query
+			var condition = '';
+
+			if (typeof carePlanId !== 'undefined' && carePlanId !== "") {
+				condition += "care_plan_activity_detail_id = '" + carePlanId + "' AND ";
+			}
+
+			if (condition == '') {
+				fixCondition = '';
+			} else {
+				fixCondition = ' WHERE ' + condition.slice(0, -4);
+			}
+
+			var arrCarePlanActivityDetailPerformerOrganization = [];
+			var query = 'select organization_id from BACIRO_FHIR.organization ' + fixCondition;
+
+			db.query(query, function (dataJson) {
+				rez = lowercaseObject(dataJson);
+				for (i = 0; i < rez.length; i++) {
+					var carePlanActivityDetailPerformerOrganization = {};
+					if(rez[i].organization_id != "null"){
+						carePlanActivityDetailPerformerOrganization.id = hostFHIR + ':' + portFHIR + '/' + apikey + '/Organization?_id=' +  rez[i].organization_id;
+					} else {
+						carePlanActivityDetailPerformerOrganization.id = "";
+					}
+					
+					arrCarePlanActivityDetailPerformerOrganization[i] = carePlanActivityDetailPerformerOrganization;
+				}
+				res.json({
+					"err_code": 0,
+					"data": arrCarePlanActivityDetailPerformerOrganization
+				});
+			}, function (e) {
+				res.json({
+					"err_code": 1,
+					"err_msg": e,
+					"application": "Api Phoenix",
+					"function": "getCarePlanActivityDetailPerformerOrganization"
+				});
+			});
+		},
+		carePlanActivityDetailPerformerRelatedPerson: function getCarePlanActivityDetailPerformerRelatedPerson(req, res) {
+			var apikey = req.params.apikey;
+			
+			var _id = req.query._id;
+			var carePlanId = req.query.care_plan_activity_id;
+
+			//susun query
+			var condition = '';
+
+			if (typeof carePlanId !== 'undefined' && carePlanId !== "") {
+				condition += "care_plan_activity_detail_id = '" + carePlanId + "' AND ";
+			}
+
+			if (condition == '') {
+				fixCondition = '';
+			} else {
+				fixCondition = ' WHERE ' + condition.slice(0, -4);
+			}
+
+			var arrCarePlanActivityDetailPerformerRelatedPerson = [];
+			var query = 'select related_person_id from BACIRO_FHIR.related_person ' + fixCondition;
+
+			db.query(query, function (dataJson) {
+				rez = lowercaseObject(dataJson);
+				for (i = 0; i < rez.length; i++) {
+					var carePlanActivityDetailPerformerRelatedPerson = {};
+					if(rez[i].related_person_id != "null"){
+						carePlanActivityDetailPerformerRelatedPerson.id = hostFHIR + ':' + portFHIR + '/' + apikey + '/RelatedPerson?_id=' +  rez[i].related_person_id;
+					} else {
+						carePlanActivityDetailPerformerRelatedPerson.id = "";
+					}
+					
+					arrCarePlanActivityDetailPerformerRelatedPerson[i] = carePlanActivityDetailPerformerRelatedPerson;
+				}
+				res.json({
+					"err_code": 0,
+					"data": arrCarePlanActivityDetailPerformerRelatedPerson
+				});
+			}, function (e) {
+				res.json({
+					"err_code": 1,
+					"err_msg": e,
+					"application": "Api Phoenix",
+					"function": "getCarePlanActivityDetailPerformerRelatedPerson"
+				});
+			});
+		},
+		carePlanActivityDetailPerformerPatient: function getCarePlanActivityDetailPerformerPatient(req, res) {
+			var apikey = req.params.apikey;
+			
+			var _id = req.query._id;
+			var carePlanId = req.query.care_plan_activity_id;
+
+			//susun query
+			var condition = '';
+
+			if (typeof carePlanId !== 'undefined' && carePlanId !== "") {
+				condition += "care_plan_detail_id = '" + carePlanId + "' AND ";
+			}
+
+			if (condition == '') {
+				fixCondition = '';
+			} else {
+				fixCondition = ' WHERE ' + condition.slice(0, -4);
+			}
+
+			var arrCarePlanActivityDetailPerformerPatient = [];
+			var query = 'select patient_id from BACIRO_FHIR.patient ' + fixCondition;
+
+			db.query(query, function (dataJson) {
+				rez = lowercaseObject(dataJson);
+				for (i = 0; i < rez.length; i++) {
+					var carePlanActivityDetailPerformerPatient = {};
+					if(rez[i].patient_id != "null"){
+						carePlanActivityDetailPerformerPatient.id = hostFHIR + ':' + portFHIR + '/' + apikey + '/Patient?_id=' +  rez[i].patient_id;
+					} else {
+						carePlanActivityDetailPerformerPatient.id = "";
+					}
+					
+					arrCarePlanActivityDetailPerformerPatient[i] = carePlanActivityDetailPerformerPatient;
+				}
+				res.json({
+					"err_code": 0,
+					"data": arrCarePlanActivityDetailPerformerPatient
+				});
+			}, function (e) {
+				res.json({
+					"err_code": 1,
+					"err_msg": e,
+					"application": "Api Phoenix",
+					"function": "getCarePlanActivityDetailPerformerPatient"
+				});
+			});
+		},
+		carePlanActivityDetailPerformerCareTeam: function getCarePlanActivityDetailPerformerCareTeam(req, res) {
+			var apikey = req.params.apikey;
+			
+			var _id = req.query._id;
+			var carePlanId = req.query.care_plan_activity_id;
+
+			//susun query
+			var condition = '';
+
+			if (typeof carePlanId !== 'undefined' && carePlanId !== "") {
+				condition += "care_plan_activity_detail_id = '" + carePlanId + "' AND ";
+			}
+
+			if (condition == '') {
+				fixCondition = '';
+			} else {
+				fixCondition = ' WHERE ' + condition.slice(0, -4);
+			}
+
+			var arrCarePlanActivityDetailPerformerCareTeam = [];
+			var query = 'select care_team_id from BACIRO_FHIR.care_team ' + fixCondition;
+
+			db.query(query, function (dataJson) {
+				rez = lowercaseObject(dataJson);
+				for (i = 0; i < rez.length; i++) {
+					var carePlanActivityDetailPerformerCareTeam = {};
+					if(rez[i].care_team_id != "null"){
+						carePlanActivityDetailPerformerCareTeam.id = hostFHIR + ':' + portFHIR + '/' + apikey + '/CareTeam?_id=' +  rez[i].care_team_id;
+					} else {
+						carePlanActivityDetailPerformerCareTeam.id = "";
+					}
+					
+					arrCarePlanActivityDetailPerformerCareTeam[i] = carePlanActivityDetailPerformerCareTeam;
+				}
+				res.json({
+					"err_code": 0,
+					"data": arrCarePlanActivityDetailPerformerCareTeam
+				});
+			}, function (e) {
+				res.json({
+					"err_code": 1,
+					"err_msg": e,
+					"application": "Api Phoenix",
+					"function": "getCarePlanActivityDetailPerformerCareTeam"
+				});
+			});
+		},
+		carePlanNote: function getCarePlanNote(req, res) {
+			var apikey = req.params.apikey;
+			
+			var _id = req.query._id;
+			var carePlanId = req.query.care_plan_id;
+
+			//susun query
+			var condition = '';
+
+			if (typeof carePlanId !== 'undefined' && carePlanId !== "") {
+				condition += "care_plan_id = '" + carePlanId + "' AND ";
+			}
+
+			if (condition == '') {
+				fixCondition = '';
+			} else {
+				fixCondition = ' WHERE ' + condition.slice(0, -4);
+			}
+
+			var arrCarePlanNote = [];
+			var query = 'select note_id from BACIRO_FHIR.note ' + fixCondition;
+
+			db.query(query, function (dataJson) {
+				rez = lowercaseObject(dataJson);
+				for (i = 0; i < rez.length; i++) {
+					var carePlanNote = {};
+					if(rez[i].note_id != "null"){
+						carePlanNote.id = hostFHIR + ':' + portFHIR + '/' + apikey + '/note?_id=' +  rez[i].note_id;
+					} else {
+						carePlanNote.id = "";
+					}
+					
+					arrCarePlanNote[i] = carePlanNote;
+				}
+				res.json({
+					"err_code": 0,
+					"data": arrCarePlanNote
+				});
+			}, function (e) {
+				res.json({
+					"err_code": 1,
+					"err_msg": e,
+					"application": "Api Phoenix",
+					"function": "getCarePlanNote"
+				});
+			});
+		},		
   },
 	post: {
 		carePlan: function addCarePlan(req, res) {
@@ -837,12 +1918,11 @@ var controller = {
           res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "updateCarePlanActivityDetail"});
       });
     }
-		
 	},
 	put: {
 		carePlan: function updateCarePlan(req, res) {
 			console.log(req.body);
-			var careplan_id  = req.params.careplan_id;
+			var careplan_id  = req.params._id;
 			var based_on = req.body.based_on;
 			var replaces = req.body.replaces;
 			var part_of = req.body.part_of;
@@ -990,10 +2070,16 @@ var controller = {
 			
 			
 			var domainResource = req.params.dr;
-			var arrResource = domainResource.split('|');
-			var fieldResource = arrResource[0];
-			var valueResource = arrResource[1];
-			var condition = "careplan_id = '" + careplan_id + "' AND " + fieldResource + " = '" + valueResource + "'";
+			if(domainResource !== "" && typeof domainResource !== 'undefined'){
+				var arrResource = domainResource.split('|');
+				var fieldResource = arrResource[0];
+				var valueResource = arrResource[1];
+				var condition = "careplan_id = '" + careplan_id + "' AND " + fieldResource + " = '" + valueResource + "'";
+			}else{
+        var condition = "careplan_id = '" + careplan_id + "'";
+      }
+			
+			
 
       var query = "UPSERT INTO BACIRO_FHIR.CAREPLAN(careplan_id," + column.slice(0, -1) + ") SELECT careplan_id, " + values.slice(0, -1) + " FROM BACIRO_FHIR.CAREPLAN WHERE " + condition;
 			
@@ -1013,7 +2099,7 @@ var controller = {
     },
 		carePlanActivity: function updateCarePlanActivity(req, res) {
 			console.log(req.body);
-			var careplan_activity_id  = req.params.careplan_activity_id;
+			var careplan_activity_id  = req.params._id;
 			var outcome_codeable_concept  = req.body.outcome_codeable_concept;
 			var outcome_reference  = req.body.outcome_reference;
 			var progress  = req.body.progress;
@@ -1104,10 +2190,15 @@ var controller = {
 
      
 			var domainResource = req.params.dr;
-			var arrResource = domainResource.split('|');
-			var fieldResource = arrResource[0];
-			var valueResource = arrResource[1];
-			var condition = "careplan_activity_id = '" + careplan_activity_id + "' AND " + fieldResource + " = '" + valueResource + "'";
+			if(domainResource !== "" && typeof domainResource !== 'undefined'){
+				var arrResource = domainResource.split('|');
+				var fieldResource = arrResource[0];
+				var valueResource = arrResource[1];
+				var condition = "careplan_activity_id = '" + careplan_activity_id + "' AND " + fieldResource + " = '" + valueResource + "'";
+			}else{
+        var condition = "careplan_activity_id = '" + careplan_activity_id + "'";
+      }
+			
 			
 			var query = "UPSERT INTO BACIRO_FHIR.CAREPLAN_ACTIVITY(careplan_activity_id," + column.slice(0, -1) + ") SELECT careplan_activity_id, " + values.slice(0, -1) + " FROM BACIRO_FHIR.CAREPLAN_ACTIVITY WHERE " + condition;
 			
@@ -1127,7 +2218,7 @@ var controller = {
     },
 		carePlanActivityDetail: function updateCarePlanActivityDetail(req, res) {
 			console.log(req.body);
-			var activity_detail_id  = req.params.activity_detail_id;
+			var activity_detail_id  = req.params._id;
 			var category  = req.body.category;
 			var definition_plan_definition  = req.body.definition_plan_definition;
 			var definition_activity_definition  = req.body.definition_activity_definition;
@@ -1265,10 +2356,15 @@ var controller = {
       }	
 			
 			var domainResource = req.params.dr;
-			var arrResource = domainResource.split('|');
-			var fieldResource = arrResource[0];
-			var valueResource = arrResource[1];
-			var condition = "careplan_activity_id = '" + careplan_activity_id + "' AND " + fieldResource + " = '" + valueResource + "'";
+			if(domainResource !== "" && typeof domainResource !== 'undefined'){
+				var arrResource = domainResource.split('|');
+				var fieldResource = arrResource[0];
+				var valueResource = arrResource[1];
+				var condition = "activity_detail_id = '" + activity_detail_id + "' AND " + fieldResource + " = '" + valueResource + "'";
+			}else{
+        var condition = "activity_detail_id = '" + activity_detail_id + "'";
+      }
+			
 			
 			var query = "UPSERT INTO BACIRO_FHIR.CAREPLAN_ACTIVITY_DETAIL(activity_detail_id," + column.slice(0, -1) + ") SELECT activity_detail_id, " + values.slice(0, -1) + " FROM BACIRO_FHIR.CAREPLAN_ACTIVITY_DETAIL WHERE " + condition;
 

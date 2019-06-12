@@ -38,7 +38,9 @@ var controller = {
 			var human_name = req.query.human_name;
 			var identifier = req.query.identifier_value;
 			var contactPointValue = req.query.contact_point_value;
-			
+			var offset = req.query.offset;
+			var limit = req.query.limit;
+
 			
       //susun query
       var condition = "";
@@ -130,6 +132,17 @@ var controller = {
 				join += "LEFT JOIN BACIRO_FHIR.HUMAN_NAME hn ON p.practitioner_id = hn.practitioner_id ";  
         condition += "cp.contact_point_value = '" + contactPointValue + "' AND,";  
       }
+			
+			if((typeof offset !== 'undefined' && offset !== '')){
+				condition = " p.practitioner_id > '" + offset + "' AND ";       
+			}
+			
+			if((typeof limit !== 'undefined' && limit !== '')){
+				limit = " limit " + limit + " ";       
+			} else {
+				limit = " ";
+			}
+
 
       if(condition == ""){
         fixCondition = "";
@@ -139,7 +152,7 @@ var controller = {
 			      
       var arrPractitioner = [];
 			/*var query = "SELECT p.practitioner_id as practitioner_id, p.practitioner_active as practitioner_active, p.practitioner_gender as practitioner_gender, p.practitioner_birthdate as practitioner_birthdate, hn.human_name_id as human_name_id, addr.address_id as address_id, cp.contact_point_id as contact_point_id, id.identifier_id , pc.practitioner_communication_id FROM BACIRO_FHIR.PRACTITIONER p LEFT JOIN BACIRO_FHIR.HUMAN_NAME hn ON p.practitioner_id = hn.practitioner_id LEFT JOIN BACIRO_FHIR.ADDRESS addr ON p.practitioner_id = addr.practitioner_id LEFT JOIN BACIRO_FHIR.CONTACT_POINT cp ON p.practitioner_id = cp.practitioner_id LEFT JOIN BACIRO_FHIR.IDENTIFIER id ON p.practitioner_id = id.practitioner_id LEFT JOIN BACIRO_FHIR.PRACTITIONER_COMMUNICATION pc ON p.practitioner_id = pc.practitioner_id " + fixCondition;*/
-			var query = "SELECT p.practitioner_id as practitioner_id, p.practitioner_active as practitioner_active, p.practitioner_gender as practitioner_gender, p.practitioner_birthdate as practitioner_birthdate FROM BACIRO_FHIR.PRACTITIONER p " + fixCondition;
+			var query = "SELECT p.practitioner_id as practitioner_id, p.practitioner_active as practitioner_active, p.practitioner_gender as practitioner_gender, p.practitioner_birthdate as practitioner_birthdate FROM BACIRO_FHIR.PRACTITIONER p " + fixCondition + limit;
 			
       console.log(query);
       db.query(query,function(dataJson){
@@ -454,6 +467,7 @@ var controller = {
       });
     },
 		qualification: function addQualification(req, res){
+			console.log(req.body);
 			var _id = req.params.qualification_id;
 			var qualification_code = req.body.code;
 			var organization_id = req.body.issuer;

@@ -9,9 +9,9 @@ var routesImmunization = function(app, Immunization){
 	app.post('/:apikey/ImmunizationReaction', Immunization.post.immunizationReaction);
 	app.post('/:apikey/ImmunizationVaccinationProtocol', Immunization.post.immunizationVaccinationProtocol);
 	
-	app.put('/:apikey/Immunization/:immunization_id', Immunization.put.immunization);
-	app.put('/:apikey/ImmunizationPractitioner/:practitioner_id', Immunization.put.immunizationPractitioner);
-	app.put('/:apikey/ImmunizationReaction/:reaction_id', Immunization.put.immunizationReaction);
-	app.put('/:apikey/ImmunizationVaccinationProtocol/:vaccination_protocol_id', Immunization.put.immunizationVaccinationProtocol);
+	app.put('/:apikey/Immunization/:_id?', Immunization.put.immunization);
+	app.put('/:apikey/ImmunizationPractitioner/:_id?/:dr?', Immunization.put.immunizationPractitioner);
+	app.put('/:apikey/ImmunizationReaction/:_id?/:dr?', Immunization.put.immunizationReaction);
+	app.put('/:apikey/ImmunizationVaccinationProtocol/:_id?/:dr?', Immunization.put.immunizationVaccinationProtocol);
 }
 module.exports = routesImmunization;

@@ -44,6 +44,9 @@ var controller = {
       var personRelatedPerson = req.query.relatedperson;
       var personPhonetic = req.query.phonetic; 
       var personTelecom = req.query.telecom;
+			var offset = req.query.offset;
+			var limit = req.query.limit;
+
 
       //susun query
       var condition = "";
@@ -170,7 +173,17 @@ var controller = {
           condition += "person_link_target_related_person = '" + personRelatedPerson + "' AND ";  
         }
       }
-
+			
+			if((typeof offset !== 'undefined' && offset !== '')){
+				condition = " p.person_id > '" + offset + "' AND ";       
+			}
+			
+			if((typeof limit !== 'undefined' && limit !== '')){
+				limit = " limit " + limit + " ";       
+			} else {
+				limit = " ";
+			}
+			
       if(condition == ""){
         fixCondition = "";
       }else{
@@ -178,7 +191,7 @@ var controller = {
       }
       
       var arrPerson = [];
-      var query = "SELECT p.person_id as person_id, person_gender, person_birthdate, person_active, org.organization_id, attachment_id FROM BACIRO_FHIR.PERSON p LEFT JOIN BACIRO_FHIR.ORGANIZATION org on p.organization_id = org.organization_id " + fixCondition; //join ke organization
+      var query = "SELECT p.person_id as person_id, person_gender, person_birthdate, person_active, org.organization_id, attachment_id FROM BACIRO_FHIR.PERSON p LEFT JOIN BACIRO_FHIR.ORGANIZATION org on p.organization_id = org.organization_id " + fixCondition + limit; //join ke organization
 
       db.query(query,function(dataJson){
         rez = lowercaseObject(dataJson);

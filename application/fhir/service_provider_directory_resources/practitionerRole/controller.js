@@ -52,6 +52,9 @@ var controller = {
 			var contactPointValue = req.query.telecom;
 			var practitionerId = req.query.practitioner;
 			var healthcareServiceId = req.query.service;
+			var offset = req.query.offset;
+			var limit = req.query.limit;
+
 
 			var qString = {};
 
@@ -182,6 +185,28 @@ var controller = {
 					qString.contact_point_value = contactPointValue; 
 				}else{
 					res.json({"err_code": 1, "err_msg": "contact point value is required."});
+				}
+			}
+			
+			
+			if(typeof offset !== 'undefined'){
+				if(!validator.isEmpty(offset)){
+					qString.offset = offset; 
+				}else{
+					res.json({"err_code": 1, "err_msg": "offset id is empty."});
+				}
+			}
+
+			if(typeof limit !== 'undefined'){
+				if(!validator.isEmpty(limit)){
+					if(!validator.isInt(limit)){
+						err_code = 2;
+						err_msg = "limit must be number";
+					} else{
+						qString.limit = limit; 	
+					}
+				}else{
+					res.json({"err_code": 1, "err_msg": "limit is empty."});
 				}
 			}
 

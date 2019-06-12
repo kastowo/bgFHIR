@@ -22,23 +22,25 @@ var controller = {
 	get: {
 		immunization: function getImmunization(req, res){
 			var apikey = req.params.apikey;
-			var immunizationId = req.query._id;
+			var immunizationId = req.query.immunizationId;
 			var date = req.query.date;
-			var dose_sequence = req.query.dose_sequence;
+			var dose_sequence = req.query.doseSequence;
 			var identifier = req.query.identifier;
 			var location = req.query.location;
-			var iot_number = req.query.lot_number;
+			var iot_number = req.query.lotNumber;
 			var manufacturer = req.query.manufacturer;
 			var notgiven = req.query.notgiven;
 			var patient = req.query.patient;
 			var practitioner = req.query.practitioner;
 			var reaction = req.query.reaction;
-			var reaction_date = req.query.reaction_date;
+			var reaction_date = req.query.reactionDate;
 			var reason = req.query.reason;
-			var reason_not_given = req.query.reason_not_given;
+			var reason_not_given = req.query.reasonNotGiven;
 			var status = req.query.status;
-			var vaccine_code = req.query.vaccine_code;
-	
+			var vaccine_code = req.query.vaccineCode;
+			var offset = req.query.offset;
+			var limit = req.query.limit;
+			
 			//susun query
       var condition = "";
       var join = "";
@@ -113,6 +115,16 @@ var controller = {
         condition += "im.VECCINE_CODE = '" + vaccine_code + "' AND,";  
       }
 			
+			if((typeof offset !== 'undefined' && offset !== '')){
+				condition = " im.immunization_id > '" + offset + "' AND ";       
+			}
+			
+			if((typeof limit !== 'undefined' && limit !== '')){
+				limit = " limit " + limit + " ";
+			} else {
+				limit = " ";
+			}
+			
       if(condition == ""){
         fixCondition = "";
       }else{
@@ -120,8 +132,8 @@ var controller = {
       }
 			      
       var arrImmunization = [];
-      var query = "select im.immunization_id as immunization_id, im.status as status, im.not_given as not_given, im.veccine_code as veccine_code, im.patient as patient, im.encounter as encounter, im.date as date, im.primary_source as primary_source, im.report_origin as report_origin, im.location as location, im.manufacturer as manufacturer, im.iot_number as iot_number, im.expiration_date as expiration_date, im.site as site, im.route as route, im.dose_quantity as dose_quantity, im.explanation_reason as explanation_reason, im.explanation_reason_not_given as explanation_reason_not_given from BACIRO_FHIR.IMMUNIZATION im " + fixCondition;
-			//console.log(query);
+      var query = "select im.immunization_id as immunization_id, im.status as status, im.not_given as not_given, im.veccine_code as veccine_code, im.patient as patient, im.encounter as encounter, im.date as date, im.primary_source as primary_source, im.report_origin as report_origin, im.location as location, im.manufacturer as manufacturer, im.iot_number as iot_number, im.expiration_date as expiration_date, im.site as site, im.route as route, im.dose_quantity as dose_quantity, im.explanation_reason as explanation_reason, im.explanation_reason_not_given as explanation_reason_not_given from BACIRO_FHIR.IMMUNIZATION im " + fixCondition + limit;
+			console.log(query);
       db.query(query,function(dataJson){
         rez = lowercaseObject(dataJson);
 				for(i = 0; i < rez.length; i++){
@@ -172,11 +184,9 @@ var controller = {
 					Immunization.doseQuantity = rez[i].dose_quantity;
 					
 					/*------------------*/
-					var arrExplanation = [];
 					var Explanation = {};
 					Explanation.reason = rez[i].explanation_reason;
 					Explanation.reasonNotGiven = rez[i].explanation_reason_not_given;
-					arrExplanation = Explanation;
 					
 					/*Immunization.explanation.reason = rez[i].explanation_reason;
 					Immunization.explanation.reasonNotGiven = rez[i].explanation_reason_not_given;*/
@@ -650,7 +660,7 @@ var controller = {
 			
 			console.log(query);
       db.upsert(query,function(succes){
-        var query2 = "select vaccination_protocol_id, dose_sequence, description, authority, series, series_doses, target_disease, dose_status, dose_status_reason, immunization_id from BACIRO_FHIR.IMMUNIZATION_VACCINATION_PROTOCOL WHERE vaccination_protocol_id = '" + VaccinationProtocol_id + "' ";
+        var query2 = "select vaccination_protocol_id, dose_sequence, description, authority, series, series_doses, target_disease, dose_status, dose_status_reason, immunization_id from BACIRO_FHIR.IMMUNIZATION_VACCINATION_PROTOCOL WHERE vaccination_protocol_id = '" + vaccination_protocol_id + "' ";
 				console.log(query2);
 				db.query(query2,function(dataJson){
           rez = lowercaseObject(dataJson);
@@ -668,7 +678,7 @@ var controller = {
 		immunization: function updateImmunization(req, res) {
 			console.log(req.body);
 			
-			var immunization_id = req.params.immunization_id;
+			var immunization_id = req.params._id;
 			var status = req.body.status;
 			var not_given = req.body.not_given;
 			var veccine_code = req.body.veccine_code;
@@ -791,10 +801,14 @@ var controller = {
       }
 			
 			var domainResource = req.params.dr;
-			var arrResource = domainResource.split('|');
-			var fieldResource = arrResource[0];
-			var valueResource = arrResource[1];
-			var condition = "immunization_id = '" + immunization_id + "' AND " + fieldResource + " = '" + valueResource + "'";
+			if(domainResource !== "" && typeof domainResource !== 'undefined'){
+				var arrResource = domainResource.split('|');
+				var fieldResource = arrResource[0];
+				var valueResource = arrResource[1];
+				var condition = "immunization_id = '" + immunization_id + "' AND " + fieldResource + " = '" + valueResource + "'";
+			}else{
+        var condition = "immunization_id = '" + immunization_id + "'";
+      }
 
       var query = "UPSERT INTO BACIRO_FHIR.IMMUNIZATION(immunization_id," + column.slice(0, -1) + ") SELECT immunization_id, " + values.slice(0, -1) + " FROM BACIRO_FHIR.IMMUNIZATION WHERE " + condition;
 			
@@ -814,7 +828,7 @@ var controller = {
     },
 		immunizationPractitioner: function updateImmunizationPractitioner(req, res) {
 			console.log(req.body);
-			var practitioner_id  = req.params.practitioner_id;
+			var practitioner_id  = req.params._id;
 			var role  = req.body.role;
 			var actor  = req.body.actor;
 			var immunization_id  = req.body.immunization_id;
@@ -837,11 +851,16 @@ var controller = {
         values += "'" + immunization_id + "',";
       }	
 			
+			
 			var domainResource = req.params.dr;
-			var arrResource = domainResource.split('|');
-			var fieldResource = arrResource[0];
-			var valueResource = arrResource[1];
-			var condition = "practitioner_id = '" + practitioner_id + "' AND " + fieldResource + " = '" + valueResource + "'";
+			if(domainResource !== "" && typeof domainResource !== 'undefined'){
+				var arrResource = domainResource.split('|');
+				var fieldResource = arrResource[0];
+				var valueResource = arrResource[1];
+				var condition = "practitioner_id = '" + practitioner_id + "' AND " + fieldResource + " = '" + valueResource + "'";
+			}else{
+        var condition = "practitioner_id = '" + practitioner_id + "'";
+      }	
 			
 			var query = "UPSERT INTO BACIRO_FHIR.IMMUNIZATION_PRACTITIONER(practitioner_id," + column.slice(0, -1) + ") SELECT practitioner_id, " + values.slice(0, -1) + " FROM BACIRO_FHIR.IMMUNIZATION_PRACTITIONER WHERE " + condition;
 			
@@ -861,7 +880,7 @@ var controller = {
     },
 		immunizationReaction: function updateImmunizationReaction(req, res) {
 			console.log(req.body);
-			var reaction_id  = req.params.reaction_id;
+			var reaction_id  = req.params._id;
 			var date = req.body.date;
 			var detail = req.body.detail;
 			var reported = req.body.reported;
@@ -892,10 +911,14 @@ var controller = {
       }	
 			
 			var domainResource = req.params.dr;
-			var arrResource = domainResource.split('|');
-			var fieldResource = arrResource[0];
-			var valueResource = arrResource[1];
-			var condition = "reaction_id = '" + reaction_id + "' AND " + fieldResource + " = '" + valueResource + "'";
+			if(domainResource !== "" && typeof domainResource !== 'undefined'){
+				var arrResource = domainResource.split('|');
+				var fieldResource = arrResource[0];
+				var valueResource = arrResource[1];
+				var condition = "reaction_id = '" + reaction_id + "' AND " + fieldResource + " = '" + valueResource + "'";
+			}else{
+        var condition = "reaction_id = '" + reaction_id + "'";
+      }	
 			
 			var query = "UPSERT INTO BACIRO_FHIR.IMMUNIZATION_REACTION(reaction_id," + column.slice(0, -1) + ") SELECT reaction_id, " + values.slice(0, -1) + " FROM BACIRO_FHIR.IMMUNIZATION_REACTION WHERE " + condition;
 			
@@ -915,7 +938,7 @@ var controller = {
     },
 		immunizationVaccinationProtocol: function updateImmunizationVaccinationProtocol(req, res) {
 			console.log(req.body);
-			var vaccination_protocol_id  = req.params.vaccination_protocol_id;
+			var vaccination_protocol_id  = req.params._id;
 			var dose_sequence = req.body.dose_sequence;
 			var description = req.body.description;
 			var authority = req.body.authority;
@@ -975,10 +998,14 @@ var controller = {
       }	
 			
 			var domainResource = req.params.dr;
-			var arrResource = domainResource.split('|');
-			var fieldResource = arrResource[0];
-			var valueResource = arrResource[1];
-			var condition = "vaccination_protocol_id = '" + vaccination_protocol_id + "' AND " + fieldResource + " = '" + valueResource + "'";
+			if(domainResource !== "" && typeof domainResource !== 'undefined'){
+				var arrResource = domainResource.split('|');
+				var fieldResource = arrResource[0];
+				var valueResource = arrResource[1];
+				var condition = "vaccination_protocol_id = '" + vaccination_protocol_id + "' AND " + fieldResource + " = '" + valueResource + "'";
+			}else{
+        var condition = "reaction_id = '" + reaction_id + "'";
+      }	
 			
 			var query = "UPSERT INTO BACIRO_FHIR.IMMUNIZATION_VACCINATION_PROTOCOL(vaccination_protocol_id," + column.slice(0, -1) + ") SELECT vaccination_protocol_id, " + values.slice(0, -1) + " FROM BACIRO_FHIR.IMMUNIZATION_VACCINATION_PROTOCOL WHERE " + condition;
 			

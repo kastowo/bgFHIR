@@ -36,6 +36,8 @@ var controller = {
       var appointmentParticipantStatus = req.query.participant_status;
       var appointmentServiceType = req.query.service_type;
       var appointmentStatus = req.query.status;
+			var offset = req.query.offset;
+			var limit = req.query.limit;
 
       //susun query
       var condition = "";
@@ -84,7 +86,17 @@ var controller = {
           condition += "ref.referral_request_id = '" + referralRequestId + "' AND ";    
         }
       }
-
+			
+			if((typeof offset !== 'undefined' && offset !== '')){
+				condition = " app.appointment_id > '" + offset + "' AND ";       
+			}
+			
+			if((typeof limit !== 'undefined' && limit !== '')){
+				limit = " limit " + limit + " ";       
+			} else {
+				limit = " ";
+			}
+			
       if(condition == ""){
         fixCondition = "";
       }else{
@@ -92,7 +104,7 @@ var controller = {
       }
       
       var arrAppointment = [];
-      var query = "SELECT app.appointment_id as appointment_id, appointment_status, appointment_service_category, appointment_service_type, appointment_specialty, appointment_type, appointment_reason, appointment_priority, appointment_description, appointment_supporting_information, appointment_start, appointment_end, appointment_minutes_duration, appointment_created, appointment_comment, appointment_period_start, appointment_period_end FROM BACIRO_FHIR.APPOINTMENT app " + fixCondition;
+      var query = "SELECT app.appointment_id as appointment_id, appointment_status, appointment_service_category, appointment_service_type, appointment_specialty, appointment_type, appointment_reason, appointment_priority, appointment_description, appointment_supporting_information, appointment_start, appointment_end, appointment_minutes_duration, appointment_created, appointment_comment, appointment_period_start, appointment_period_end FROM BACIRO_FHIR.APPOINTMENT app " + fixCondition + limit;
 
       db.query(query,function(dataJson){
         rez = lowercaseObject(dataJson);

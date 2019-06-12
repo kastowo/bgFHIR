@@ -22,5 +22,6 @@ var routesPatient = function(app, Patient){
 	app.put('/:apikey/Patient/:patient_id?/Photo/:attachment_id?', Patient.put.attachment);
 	app.put('/:apikey/Patient/:patient_id?/Contact/:contact_id?', Patient.put.contact);
 
+	
 }
 module.exports = routesPatient

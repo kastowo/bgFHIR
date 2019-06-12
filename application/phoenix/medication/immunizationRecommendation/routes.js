@@ -10,9 +10,9 @@ var routesImmunizationRecommendation = function(app, ImmunizationRecommendation)
 	app.post('/:apikey/ImmunizationRecommendationRecommendation', ImmunizationRecommendation.post.immunizationRecommendationRecommendation);
 	app.post('/:apikey/ImmunizationRecommendationDateCriterion', ImmunizationRecommendation.post.immunizationRecommendationDateCriterion);
 	
-	app.put('/:apikey/ImmunizationRecommendation/:immunization_recommendation_id', ImmunizationRecommendation.put.immunizationRecommendation);
-	app.put('/:apikey/ImmunizationRecommendationRecommendation/:recommendation_id', ImmunizationRecommendation.put.immunizationRecommendationRecommendation);
-	app.put('/:apikey/ImmunizationRecommendationDateCriterion/:date_creation_id', ImmunizationRecommendation.put.immunizationRecommendationDateCriterion);
+	app.put('/:apikey/ImmunizationRecommendation/:_id?', ImmunizationRecommendation.put.immunizationRecommendation);
+	app.put('/:apikey/ImmunizationRecommendationRecommendation/:_id?/:dr?', ImmunizationRecommendation.put.immunizationRecommendationRecommendation);
+	app.put('/:apikey/ImmunizationRecommendationDateCriterion/:_id?/:dr?', ImmunizationRecommendation.put.immunizationRecommendationDateCriterion);
 	
 }
 module.exports = routesImmunizationRecommendation;

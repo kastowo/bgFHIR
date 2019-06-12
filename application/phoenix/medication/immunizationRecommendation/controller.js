@@ -22,18 +22,19 @@ var controller = {
 	get: {
 		immunizationRecommendation: function getImmunizationRecommendation(req, res){
 			var apikey = req.params.apikey;
-			var immunizationRecommendationId = req.query._id;
-			
+			var immunizationRecommendationId = req.query.immunizationRecommendationId;
 			var date = req.query.date;
-			var dose_number = req.query.dose_number;
-			var dose_sequence = req.query.dose_sequence;
+			var dose_number = req.query.doseNumber;
+			var dose_sequence = req.query.doseSequence;
 			var identifier = req.query.identifier;
 			var information = req.query.information;
 			var patient = req.query.patient;
 			var status = req.query.status;
 			var support = req.query.support;
-			var target_disease = req.query.target_disease;
-			var vaccine_type = req.query.vaccine_type;
+			var target_disease = req.query.targetDisease;
+			var vaccine_type = req.query.vaccineType;
+			var offset = req.query.offset;
+			var limit = req.query.limit;
 			
 			//susun query
       var condition = "";
@@ -77,10 +78,6 @@ var controller = {
         condition += "i.identifier_value = '" + identifier + "' AND,";  
       }
 			
-			if(typeof information !== 'undefined' && information !== ""){
-        condition += "xx.information = '" + information + "' AND,";  
-      }
-			
 			if((typeof information !== 'undefined' && information !== "")){ 
 			 var res = information.substring(0, 3);
 				if(res == 'ali'){
@@ -88,7 +85,7 @@ var controller = {
           condition += "ALLERGY_INTOLERANCE_ID = '" + information + "' AND ";       
 				} 
 				if(res == 'obs') {
-					join += " LEFT JOIN BACIRO_FHIR.OBSERVATION o ON iri.IMMUNIZATION_RECOMMENDATION_ID = o.IMMUNIZATION_RECOMMENDATION_ID ";
+					join += " LEFT JOIN BACIRO_FHIR.OBSERVATION o ON ir.IMMUNIZATION_RECOMMENDATION_ID = o.IMMUNIZATION_RECOMMENDATION_ID ";
           condition += "OBSERVATION_ID = '" + information + "' AND ";       
 				}
       }
@@ -97,9 +94,20 @@ var controller = {
         condition += "ir.PATIENT = '" + patient + "' AND,";  
       }
 			
-			/*if(typeof support !== 'undefined' && support !== ""){
-        condition += "im.support = " + support + " AND,";  
-      }*/
+			if(typeof support !== 'undefined' && support !== ""){
+				join += " LEFT JOIN BACIRO_FHIR.IMMUNIZATION im on ir.IMMUNIZATION_RECOMMENDATION_ID = im.RECOMMENDATION_ID ";
+        condition += "im.RECOMMENDATION_ID = '" + support + "' AND,";  
+      }
+			
+			if((typeof offset !== 'undefined' && offset !== '')){
+				condition = " ir.immunization_recommendation_id > '" + offset + "' AND ";       
+			}
+			
+			if((typeof limit !== 'undefined' && limit !== '')){
+				limit = " limit " + limit + " ";
+			} else {
+				limit = " ";
+			}
 			
       if(condition == ""){
         fixCondition = "";
@@ -108,8 +116,8 @@ var controller = {
       }
 			      
       var arrImmunizationRecommendation = [];
-      var query = "select immunization_recommendation_id, patient from BACIRO_FHIR.IMMUNIZATION_RECOMMENDATION ir " + fixCondition;
-			//console.log(query);
+      var query = "select ir.immunization_recommendation_id as immunization_recommendation_id, ir.patient as patient from BACIRO_FHIR.IMMUNIZATION_RECOMMENDATION ir " + fixCondition + limit;
+			console.log(query);
       db.query(query,function(dataJson){
         rez = lowercaseObject(dataJson);
 				for(i = 0; i < rez.length; i++){
@@ -153,7 +161,7 @@ var controller = {
 
 			var arrImmunizationRecommendationRecommendation = [];
 			var query = "select recommendation__id, date, vaccine_code, target_disease, dose_number, forecast_status, protocol_dose_sequence, protocol_description, protocol_authority, protocol_series, immunization_recommendation_id from BACIRO_FHIR.IMMUNIZATION_RECOMMENDATION_RECOMMENDATION " + fixCondition;
-
+console.log(query);
 			db.query(query, function (dataJson) {
 				rez = lowercaseObject(dataJson);
 				for (i = 0; i < rez.length; i++) {
@@ -164,10 +172,10 @@ var controller = {
 					}else{
 						ImmunizationRecommendationRecommendation.date = rez[i].date;
 					}
-					ImmunizationRecommendationRecommendation.vaccine_code = rez[i].vaccine_code;
-					ImmunizationRecommendationRecommendation.target_disease = rez[i].target_disease;
-					ImmunizationRecommendationRecommendation.dose_number = rez[i].dose_number;
-					ImmunizationRecommendationRecommendation.forecast_status = rez[i].forecast_status;
+					ImmunizationRecommendationRecommendation.vaccineCode = rez[i].vaccine_code;
+					ImmunizationRecommendationRecommendation.targetDisease = rez[i].target_disease;
+					ImmunizationRecommendationRecommendation.doseNumber = rez[i].dose_number;
+					ImmunizationRecommendationRecommendation.forecastStatus = rez[i].forecast_status;
 					
 					/*ImmunizationRecommendationRecommendation.protocol.doseSequence = rez[i].protocol_dose_sequence;
 					ImmunizationRecommendationRecommendation.protocol.description = rez[i].protocol_description;
@@ -213,11 +221,11 @@ var controller = {
 			var condition = '';
 
 			if (typeof immunizationRecommendationDateCriterionId !== 'undefined' && immunizationRecommendationDateCriterionId !== "") {
-				condition += 'DATE_CREATION_ID = "' + immunizationRecommendationDateCriterionId + '" AND ';
+				condition += "DATE_CREATION_ID = '" + immunizationRecommendationDateCriterionId + "' AND ";
 			}
 
 			if (typeof immunizationRecommendationId !== 'undefined' && immunizationRecommendationId !== "") {
-				condition += 'RECOMMENDATION_ID = "' + immunizationRecommendationId + '" AND ';
+				condition += "RECOMMENDATION_ID = '" + immunizationRecommendationId + "' AND ";
 			}
 
 			if (condition == '') {
@@ -228,13 +236,13 @@ var controller = {
 
 			var arrImmunizationRecommendationDateCriterion = [];
 			var query = 'select date_creation_id, code, "value" as col_value, recommendation_id from BACIRO_FHIR.RECOMMENDATION_DATE_CREATION ' + fixCondition;
-
+console.log(query);
 			db.query(query, function (dataJson) {
 				rez = lowercaseObject(dataJson);
 				for (i = 0; i < rez.length; i++) {
 					var ImmunizationRecommendationDateCriterion = {};
 					ImmunizationRecommendationDateCriterion.id = rez[i].date_creation_id;
-					ImmunizationRecommendationDateCriterion.code = rez[i].date;
+					ImmunizationRecommendationDateCriterion.code = rez[i].code;
 					ImmunizationRecommendationDateCriterion.value = rez[i].col_value;
 					arrImmunizationRecommendationDateCriterion[i] = ImmunizationRecommendationDateCriterion;
 				}
@@ -261,13 +269,13 @@ var controller = {
 			var condition = '';
 
 			if (typeof ImmunizationId !== 'undefined' && ImmunizationId !== "") {
-				condition += 'Immunization_ID = "' + ImmunizationId + '" AND ';
+				condition += "immunization_id = '" + ImmunizationId + "' AND ";
 			}
 
 			if (typeof immunizationRecommendationId !== 'undefined' && immunizationRecommendationId !== "") {
-				condition += 'recommendation_id = "' + immunizationRecommendationId + '" AND ';
+				condition += "recommendation_id = '" + immunizationRecommendationId + "' AND ";
 			}
-
+			
 			if (condition == '') {
 				fixCondition = '';
 			} else {
@@ -276,7 +284,7 @@ var controller = {
 
 			var arrImmunizationRecommendationSupportingImmunization = [];
 			var query = 'select immunization_id from BACIRO_FHIR.immunization ' + fixCondition;
-
+			console.log(query);
 			db.query(query, function (dataJson) {
 				rez = lowercaseObject(dataJson);
 				for (i = 0; i < rez.length; i++) {
@@ -305,18 +313,18 @@ var controller = {
 		immunizationRecommendationSupportingPatientInformationObservation: function getImmunizationRecommendationSupportingPatientInformationObservation(req, res) {
 			var apikey = req.params.apikey;
 			
-			var ImmunizationId = req.query._id;
+			var ObservationId = req.query._id;
 			var immunizationRecommendationId = req.query.recommendation_id;
 
 			//susun query
 			var condition = '';
 
 			if (typeof ObservationId !== 'undefined' && ObservationId !== "") {
-				condition += 'Observation_ID = "' + ObservationId + '" AND ';
+				condition += "observation_id = '" + ObservationId + "' AND ";
 			}
-
+			
 			if (typeof immunizationRecommendationId !== 'undefined' && immunizationRecommendationId !== "") {
-				condition += 'recommendation_id = "' + immunizationRecommendationId + '" AND ';
+				condition += "recommendation_id = '" + immunizationRecommendationId + "' AND ";
 			}
 
 			if (condition == '') {
@@ -356,18 +364,18 @@ var controller = {
 		immunizationRecommendationSupportingPatientInformationAllergyIntolerance: function getImmunizationRecommendationSupportingPatientInformationAllergyIntolerance(req, res) {
 			var apikey = req.params.apikey;
 			
-			var ImmunizationId = req.query._id;
+			var AllergyIntoleranceId = req.query._id;
 			var immunizationRecommendationId = req.query.recommendation_id;
 
 			//susun query
 			var condition = '';
 
 			if (typeof AllergyIntoleranceId !== 'undefined' && AllergyIntoleranceId !== "") {
-				condition += 'AllergyIntolerance_ID = "' + AllergyIntoleranceId + '" AND ';
+				condition += "allergy_intolerance_id = '" + AllergyIntoleranceId + "' AND ";
 			}
 
 			if (typeof immunizationRecommendationId !== 'undefined' && immunizationRecommendationId !== "") {
-				condition += 'recommendation_id = "' + immunizationRecommendationId + '" AND ';
+				condition += "recommendation_id = '" + immunizationRecommendationId + "' AND ";
 			}
 
 			if (condition == '') {
@@ -417,11 +425,11 @@ var controller = {
 			
 			if (typeof patient !== 'undefined' && patient !== "") {
         column += 'patient,';
-        values += "'" + patient + "',";
+        values += ", '" + patient + "',";
       }	
 			
-			var query = "UPSERT INTO BACIRO_FHIR.IMMUNIZATION_RECOMMENDATION(immunization_recommendation_id, " + column.slice(0, -1) + ")"+
-        " VALUES ('"+immunization_recommendation_id+"', " + values.slice(0, -1) + ")";
+			var query = "UPSERT INTO BACIRO_FHIR.IMMUNIZATION_RECOMMENDATION(immunization_recommendation_id " + column.slice(0, -1) + ")"+
+        " VALUES ('"+immunization_recommendation_id+"'" + values.slice(0, -1) + ")";
 			
 			console.log(query);
       db.upsert(query,function(succes){
@@ -524,6 +532,7 @@ var controller = {
     },
 		immunizationRecommendationDateCriterion: function addImmunizationRecommendationDateCriterion(req, res) {
 			console.log(req.body);
+			console.log("678");
 			var date_creation_id  = req.body.date_creation_id;
 			var code = req.body.code;
 			var value = req.body.value;
@@ -536,30 +545,25 @@ var controller = {
 			if (typeof value !== 'undefined' && value !== "") {
         column += '"value",';
         //values += "'" + date + "',";
-				values += 'to_date("'+ value + '", "yyyy-MM-dd HH:mm"),';
-      }
-			
-			if (typeof date_creation_id !== 'undefined' && date_creation_id !== "") {
-        column += 'date_creation_id,';
-        values += '"' + date_creation_id + '",';
+				values += "to_date('"+ value + "', 'yyyy-MM-dd HH:mm'),";
       }
 			
 			if (typeof code !== 'undefined' && code !== "") {
         column += 'code,';
-        values += '"'  + code + '",';
+        values += "'"  + code + "',";
       }
 			
 			if (typeof recommendation_id !== 'undefined' && recommendation_id !== "") {
         column += 'recommendation_id,';
-        values += '"' + recommendation_id + '",';
+        values += "'" + recommendation_id + "',";
       }
 			
-      var query = 'UPSERT INTO BACIRO_FHIR.RECOMMENDATION_DATE_CREATION(date_creation_id, ' + column.slice(0, -1) + ')'+
-        ' VALUES ("'+date_creation_id+'", ' + values.slice(0, -1) + ')';
+      var query = "UPSERT INTO BACIRO_FHIR.RECOMMENDATION_DATE_CREATION(date_creation_id, " + column.slice(0, -1) + ")"+
+        " VALUES ('"+date_creation_id+"', " + values.slice(0, -1) + ")";
 			
 			console.log(query);
       db.upsert(query,function(succes){
-        var query2 = 'select date_creation_id, code, "value" as col_value, recommendation_id from BACIRO_FHIR.RECOMMENDATION_DATE_CREATION WHERE date_creation_id = "' + date_creation_id + '"';
+        var query2 = 'select date_creation_id, code, "value" as col_value, recommendation_id from BACIRO_FHIR.RECOMMENDATION_DATE_CREATION WHERE date_creation_id = ' +  "'" + date_creation_id + "'";
 				console.log(query2);
 				db.query(query2,function(dataJson){
           rez = lowercaseObject(dataJson);
@@ -571,13 +575,12 @@ var controller = {
           res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "addImmunizationRecommendationDateCriterion"});
       });
     },
-		
 	},
 	put: {
 		immunizationRecommendation: function updateImmunizationRecommendation(req, res) {
 			console.log(req.body);
 			
-			var immunization_recommendation_id = req.params.immunization_recommendation_id;
+			var immunization_recommendation_id = req.params._id;
 			var patient = req.body.patient;
 			
 			var column = "";
@@ -585,17 +588,21 @@ var controller = {
 			
 			if (typeof patient !== 'undefined' && patient !== "") {
         column += 'patient,';
-        values += "'" + patient + "',";
+        values += ", '" + patient + "',";
       }	
 			
 			
 			var domainResource = req.params.dr;
-			var arrResource = domainResource.split('|');
-			var fieldResource = arrResource[0];
-			var valueResource = arrResource[1];
-			var condition = "immunization_recommendation_id = '" + immunization_recommendation_id + "' AND " + fieldResource + " = '" + valueResource + "'";
+			if(domainResource !== "" && typeof domainResource !== 'undefined'){
+				var arrResource = domainResource.split('|');
+				var fieldResource = arrResource[0];
+				var valueResource = arrResource[1];
+				var condition = "immunization_recommendation_id = '" + immunization_recommendation_id + "' AND " + fieldResource + " = '" + valueResource + "'";
+			}else{
+        var condition = "immunization_recommendation_id = '" + immunization_recommendation_id + "'";
+      }
 
-      var query = "UPSERT INTO BACIRO_FHIR.IMMUNIZATION_RECOMMENDATION(immunization_recommendation_id," + column.slice(0, -1) + ") SELECT immunization_recommendation_id, " + values.slice(0, -1) + " FROM BACIRO_FHIR.IMMUNIZATION_RECOMMENDATION WHERE " + condition;
+      var query = "UPSERT INTO BACIRO_FHIR.IMMUNIZATION_RECOMMENDATION(immunization_recommendation_id" + column.slice(0, -1) + ") SELECT immunization_recommendation_id " + values.slice(0, -1) + " FROM BACIRO_FHIR.IMMUNIZATION_RECOMMENDATION WHERE " + condition;
 			
 			console.log(query);
       db.upsert(query,function(succes){
@@ -613,7 +620,7 @@ var controller = {
     },
 		immunizationRecommendationRecommendation: function updateImmunizationRecommendationRecommendation(req, res) {
 			console.log(req.body);
-			var recommendation__id = req.params.recommendation_id;
+			var recommendation__id = req.params._id;
 			var date = req.body.date;
 			var vaccine_code = req.body.vaccine_code;
 			var target_disease = req.body.target_disease;
@@ -680,10 +687,14 @@ var controller = {
       }		
 			
 			var domainResource = req.params.dr;
-			var arrResource = domainResource.split('|');
-			var fieldResource = arrResource[0];
-			var valueResource = arrResource[1];
-			var condition = "recommendation__id = '" + recommendation__id + "' AND " + fieldResource + " = '" + valueResource + "'";
+			if(domainResource !== "" && typeof domainResource !== 'undefined'){
+				var arrResource = domainResource.split('|');
+				var fieldResource = arrResource[0];
+				var valueResource = arrResource[1];
+				var condition = "recommendation__id = '" + recommendation__id + "' AND " + fieldResource + " = '" + valueResource + "'";
+			}else{
+        var condition = "recommendation__id = '" + recommendation__id + "'";
+      }
 			
 			var query = "UPSERT INTO BACIRO_FHIR.IMMUNIZATION_RECOMMENDATION_RECOMMENDATION(recommendation__id," + column.slice(0, -1) + ") SELECT recommendation__id, " + values.slice(0, -1) + " FROM BACIRO_FHIR.IMMUNIZATION_RECOMMENDATION_RECOMMENDATION WHERE " + condition;
 			
@@ -703,7 +714,7 @@ var controller = {
     },
 		immunizationRecommendationDateCriterion: function updateImmunizationRecommendationDateCriterion(req, res) {
 			console.log(req.body);
-			var date_creation_id  = req.params.date_creation_id;
+			var date_creation_id  = req.params._id;
 			var code = req.body.code;
 			var value = req.body.value;
 			var recommendation_id = req.body.recommendation_id;
@@ -715,30 +726,29 @@ var controller = {
 			if (typeof value !== 'undefined' && value !== "") {
         column += '"value",';
         //values += "'" + date + "',";
-				values += 'to_date("'+ value + '", "yyyy-MM-dd HH:mm"),';
-      }
-			
-			if (typeof date_creation_id !== 'undefined' && date_creation_id !== "") {
-        column += 'date_creation_id,';
-        values += '"' + date_creation_id + '",';
+				values += "to_date('"+ value + "', 'yyyy-MM-dd HH:mm'),";
       }
 			
 			if (typeof code !== 'undefined' && code !== "") {
         column += 'code,';
-        values += '"'  + code + '",';
+        values += "'"  + code + "',";
       }
 			
 			if (typeof recommendation_id !== 'undefined' && recommendation_id !== "") {
         column += 'recommendation_id,';
-        values += '"' + recommendation_id + '",';
+        values += "'" + recommendation_id + "',";
       }
 
 			
 			var domainResource = req.params.dr;
-			var arrResource = domainResource.split('|');
-			var fieldResource = arrResource[0];
-			var valueResource = arrResource[1];
-			var condition = 'date_creation_id = "' + date_creation_id + '" AND ' + fieldResource + ' = "' + valueResource + '"';
+			if(domainResource !== "" && typeof domainResource !== 'undefined'){
+				var arrResource = domainResource.split('|');
+				var fieldResource = arrResource[0];
+				var valueResource = arrResource[1];
+				var condition = "date_creation_id = '" + date_creation_id + "' AND " + fieldResource + " = '" + valueResource + "'";
+			}else{
+        var condition = "recommendation__id = '" + recommendation__id + "'";
+      }
 			
 			var query = 'UPSERT INTO BACIRO_FHIR.RECOMMENDATION_DATE_CREATION(date_creation_id,' + column.slice(0, -1) + ') SELECT date_creation_id, ' + values.slice(0, -1) + ' FROM BACIRO_FHIR.RECOMMENDATION_DATE_CREATION WHERE ' + condition;
 			

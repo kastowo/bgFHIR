@@ -1,6 +1,0 @@
-ID,CODE,DISPLAY,DEFINITION
-100,active,Active,This endpoint is expected to be active and can be used
-110,suspended,Suspended,This endpoint is temporarily unavailable
-120,error,Error,This endpoint has exceeded connectivity thresholds and is considered in an error state and should no longer be attempted to connect to until corrective action is taken
-121,0& *,Error,This endpoint has exceeded connectivity thresholds and is considered in an error state and should no longer be attempted to connect to until corrective action is taken
-124,erro,Error,This endpoint has exceeded connectivity thresholds and is considered in an error state and should no longer be attempted to connect to until corrective action is taken. 

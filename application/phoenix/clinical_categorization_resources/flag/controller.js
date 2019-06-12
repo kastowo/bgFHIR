@@ -31,7 +31,9 @@ var controller = {
 			var identifier = req.query.identifier;
 			var patient = req.query.patient;
 			var subject = req.query.subject;
-			
+			var offset = req.query.offset;
+			var limit = req.query.limit;
+
 			//susun query
       var condition = "";
       var join = "";
@@ -64,6 +66,16 @@ var controller = {
         condition += "fl.subject_patient_id = '" + subject + "' OR fl.subject_location_id = '" + subject + "' OR fl.subject_group_id = '" + subject + "' OR fl.subject_organization_id = '" + subject + "' OR fl.subject_practitioner_id = '" + subject  + "' OR fl.subject_plan_definition_id = '" + subject + "' OR fl.subject_medication_id = '" + subject  + "' OR fl.subject_procedure_id = '" + subject + "' AND ";
       }
 			
+			if((typeof offset !== 'undefined' && offset !== '')){
+				condition = " fl.flag_id > '" + offset + "' AND ";       
+			}
+			
+			if((typeof limit !== 'undefined' && limit !== '')){
+				limit = " limit " + limit + " ";       
+			} else {
+				limit = " ";
+			}
+			
 			if (condition == "") {
         fixCondition = "";
       } else {
@@ -73,7 +85,7 @@ var controller = {
 			var arrFlag = [];
 			var arrSubject = [];
 			var arrAuthor = [];
-			var query = "SELECT fl.flag_id as id, fl.flag_status as flag_status, fl.flag_category as flag_category, fl.flag_code as flag_code, fl.subject_patient_id as subj_patient, fl.subject_location_id as subj_location, fl.subject_group_id as subj_group, fl.subject_organization_id as subj_org, fl.subject_practitioner_id as subj_practitioner, fl.subject_plan_definition_id as subj_plan_definition, fl.subject_medication_id as subj_medication, fl.subject_procedure_id as subj_procedure, fl.flag_period_start as period_start, fl.flag_period_end as period_end, fl.encounter_id as encounter, fl.author_device_id as author_device, fl.author_organization_id as author_org, fl.author_patient_id as author_patient, fl.author_practitioner_id as author_practitioner FROM BACIRO_FHIR.FLAG fl " + fixCondition;
+			var query = "SELECT fl.flag_id as id, fl.flag_status as flag_status, fl.flag_category as flag_category, fl.flag_code as flag_code, fl.subject_patient_id as subj_patient, fl.subject_location_id as subj_location, fl.subject_group_id as subj_group, fl.subject_organization_id as subj_org, fl.subject_practitioner_id as subj_practitioner, fl.subject_plan_definition_id as subj_plan_definition, fl.subject_medication_id as subj_medication, fl.subject_procedure_id as subj_procedure, fl.flag_period_start as period_start, fl.flag_period_end as period_end, fl.encounter_id as encounter, fl.author_device_id as author_device, fl.author_organization_id as author_org, fl.author_patient_id as author_patient, fl.author_practitioner_id as author_practitioner FROM BACIRO_FHIR.FLAG fl " + fixCondition + limit;
 			
 			//console.log(query);
 			db.query(query, function (dataJson) {

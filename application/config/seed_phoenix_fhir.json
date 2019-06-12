@@ -5,6 +5,9 @@
 	},
 	"path": {
 		"GET": {
+			"checkRow": {
+				"location": "%(apikey)s/count-data-table/%(table)s"
+			},
 			"checkId": {
 				"location": "%(apikey)s/check-id/%(id)d/%(name)s"
 			},
@@ -1619,6 +1622,326 @@
       "resourceTypesCode": {
         "location": "%(apikey)s/resource-types/code/%(code)s"
       }
+			,
+      "immunizationEvaluationStatus": {
+        "location": "%(apikey)s/immunization-evaluation-status/%(_id)d"
+      },
+      "immunizationEvaluationStatusCode": {
+        "location": "%(apikey)s/immunization-evaluation-status/code/%(code)s"
+      },
+      "immunizationEvaluationTargetDisease": {
+        "location": "%(apikey)s/immunization-evaluation-target-disease/%(_id)d"
+      },
+      "immunizationEvaluationTargetDiseaseCode": {
+        "location": "%(apikey)s/immunization-evaluation-target-disease/code/%(code)s"
+      },
+      "immunizationEvaluationDoseStatus": {
+        "location": "%(apikey)s/immunization-evaluation-dose-status/%(_id)d"
+      },
+      "immunizationEvaluationDoseStatusCode": {
+        "location": "%(apikey)s/immunization-evaluation-dose-status/code/%(code)s"
+      },
+      "immunizationEvaluationDoseStatusReason": {
+        "location": "%(apikey)s/immunization-evaluation-dose-status-reason/%(_id)d"
+      },
+      "immunizationEvaluationDoseStatusReasonCode": {
+        "location": "%(apikey)s/immunization-evaluation-dose-status-reason/code/%(code)s"
+      }
+			,
+			"coverageType": {
+				"location": "%(apikey)s/coverage-type/%(_id)d"
+			},
+			"coverageTypeCode": {
+				"location": "%(apikey)s/coverage-type/code/%(code)s"
+			}
+			,
+			"policyholderRelationship": {
+				"location": "%(apikey)s/policyholder-relationship/%(_id)d"
+			},
+			"policyholderRelationshipCode": {
+				"location": "%(apikey)s/policyholder-relationship/code/%(code)s"
+			}
+			,
+			"remittanceOutcome": {
+				"location": "%(apikey)s/remittance-outcome/%(_id)d"
+			},
+			"remittanceOutcomeCode": {
+				"location": "%(apikey)s/remittance-outcome/code/%(code)s"
+			}
+			,
+			"benefitCategory": {
+				"location": "%(apikey)s/benefit-category/%(_id)d"
+			},
+			"benefitCategoryCode": {
+				"location": "%(apikey)s/benefit-category/code/%(code)s"
+			}
+			,
+			"benefitSubcategory": {
+				"location": "%(apikey)s/benefit-subcategory/%(_id)d"
+			},
+			"benefitSubcategoryCode": {
+				"location": "%(apikey)s/benefit-subcategory/code/%(code)s"
+			}
+			,
+			"benefitNetwork": {
+				"location": "%(apikey)s/benefit-network/%(_id)d"
+			},
+			"benefitNetworkCode": {
+				"location": "%(apikey)s/benefit-network/code/%(code)s"
+			}
+			,
+			"benefitUnit": {
+				"location": "%(apikey)s/benefit-unit/%(_id)d"
+			},
+			"benefitUnitCode": {
+				"location": "%(apikey)s/benefit-unit/code/%(code)s"
+			}
+			,
+			"benefitTerm": {
+				"location": "%(apikey)s/benefit-term/%(_id)d"
+			},
+			"benefitTermCode": {
+				"location": "%(apikey)s/benefit-term/code/%(code)s"
+			}
+			,
+			"benefitType": {
+				"location": "%(apikey)s/benefit-type/%(_id)d"
+			},
+			"benefitTypeCode": {
+				"location": "%(apikey)s/benefit-type/code/%(code)s"
+			}
+			,
+			"claimType": {
+				"location": "%(apikey)s/claim-type/%(_id)d"
+			},
+			"claimTypeCode": {
+				"location": "%(apikey)s/claim-type/code/%(code)s"
+			}
+			,
+			"claimSubtype": {
+				"location": "%(apikey)s/claim-subtype/%(_id)d"
+			},
+			"claimSubtypeCode": {
+				"location": "%(apikey)s/claim-subtype/code/%(code)s"
+			}
+			,
+			"claimUse": {
+				"location": "%(apikey)s/claim-use/%(_id)d"
+			},
+			"claimUseCode": {
+				"location": "%(apikey)s/claim-use/code/%(code)s"
+			}
+			,
+			"processPriority": {
+				"location": "%(apikey)s/process-priority/%(_id)d"
+			},
+			"processPriorityCode": {
+				"location": "%(apikey)s/process-priority/code/%(code)s"
+			}
+			,
+			"fundsreserve": {
+				"location": "%(apikey)s/fundsreserve/%(_id)d"
+			},
+			"fundsreserveCode": {
+				"location": "%(apikey)s/fundsreserve/code/%(code)s"
+			}
+			,
+			"relatedClaimRelationship": {
+				"location": "%(apikey)s/related-claim-relationship/%(_id)d"
+			},
+			"relatedClaimRelationshipCode": {
+				"location": "%(apikey)s/related-claim-relationship/code/%(code)s"
+			}
+			,
+			"payeetype": {
+				"location": "%(apikey)s/payeetype/%(_id)d"
+			},
+			"payeetypeCode": {
+				"location": "%(apikey)s/payeetype/code/%(code)s"
+			}
+			,
+			"exPayeeResourceType": {
+				"location": "%(apikey)s/ex-payee-resource-type/%(_id)d"
+			},
+			"exPayeeResourceTypeCode": {
+				"location": "%(apikey)s/ex-payee-resource-type/code/%(code)s"
+			}
+			,
+			"claimCareteamrole": {
+				"location": "%(apikey)s/claim-careteamrole/%(_id)d"
+			},
+			"claimCareteamroleCode": {
+				"location": "%(apikey)s/claim-careteamrole/code/%(code)s"
+			}
+			,
+			"providerQualification": {
+				"location": "%(apikey)s/provider-qualification/%(_id)d"
+			},
+			"providerQualificationCode": {
+				"location": "%(apikey)s/provider-qualification/code/%(code)s"
+			}
+			,
+			"claimInformationcategory": {
+				"location": "%(apikey)s/claim-informationcategory/%(_id)d"
+			},
+			"claimInformationcategoryCode": {
+				"location": "%(apikey)s/claim-informationcategory/code/%(code)s"
+			}
+			,
+			"claimException": {
+				"location": "%(apikey)s/claim-exception/%(_id)d"
+			},
+			"claimExceptionCode": {
+				"location": "%(apikey)s/claim-exception/code/%(code)s"
+			}
+			,
+			"missingToothReason": {
+				"location": "%(apikey)s/missing-tooth-reason/%(_id)d"
+			},
+			"missingToothReasonCode": {
+				"location": "%(apikey)s/missing-tooth-reason/code/%(code)s"
+			}
+			,
+			"icd10": {
+				"location": "%(apikey)s/icd-10/%(_id)d"
+			},
+			"icd10Code": {
+				"location": "%(apikey)s/icd-10/code/%(code)s"
+			}
+			,
+			"exDiagnosistype": {
+				"location": "%(apikey)s/ex-diagnosistype/%(_id)d"
+			},
+			"exDiagnosistypeCode": {
+				"location": "%(apikey)s/ex-diagnosistype/code/%(code)s"
+			}
+			,
+			"exDiagnosisrelatedgroup": {
+				"location": "%(apikey)s/ex-diagnosisrelatedgroup/%(_id)d"
+			},
+			"exDiagnosisrelatedgroupCode": {
+				"location": "%(apikey)s/ex-diagnosisrelatedgroup/code/%(code)s"
+			}
+			,
+			"icd10Procedures": {
+				"location": "%(apikey)s/icd-10-procedures/%(_id)d"
+			},
+			"icd10ProceduresCode": {
+				"location": "%(apikey)s/icd-10-procedures/code/%(code)s"
+			}
+			,
+			"v3ActIncidentCode": {
+				"location": "%(apikey)s/v3-ActIncidentCode/%(_id)d"
+			},
+			"v3ActIncidentCodeCode": {
+				"location": "%(apikey)s/v3-ActIncidentCode/code/%(code)s"
+			}
+			,
+			"exRevenueCenter": {
+				"location": "%(apikey)s/ex-revenue-center/%(_id)d"
+			},
+			"exRevenueCenterCode": {
+				"location": "%(apikey)s/ex-revenue-center/code/%(code)s"
+			}
+			,
+			"serviceUscls": {
+				"location": "%(apikey)s/service-uscls/%(_id)d"
+			},
+			"serviceUsclsCode": {
+				"location": "%(apikey)s/service-uscls/code/%(code)s"
+			}
+			,
+			"claimModifiers": {
+				"location": "%(apikey)s/claim-modifiers/%(_id)d"
+			},
+			"claimModifiersCode": {
+				"location": "%(apikey)s/claim-modifiers/code/%(code)s"
+			}
+			,
+			"exProgramCode": {
+				"location": "%(apikey)s/ex-program-code/%(_id)d"
+			},
+			"exProgramCodeCode": {
+				"location": "%(apikey)s/ex-program-code/code/%(code)s"
+			}
+			,
+			"servicePlace": {
+				"location": "%(apikey)s/service-place/%(_id)d"
+			},
+			"servicePlaceCode": {
+				"location": "%(apikey)s/service-place/code/%(code)s"
+			}
+			,
+			"tooth": {
+				"location": "%(apikey)s/tooth/%(_id)d"
+			},
+			"toothCode": {
+				"location": "%(apikey)s/tooth/code/%(code)s"
+			}
+			,
+			"surface": {
+				"location": "%(apikey)s/surface/%(_id)d"
+			},
+			"surfaceCode": {
+				"location": "%(apikey)s/surface/code/%(code)s"
+			}
+			,
+			"adjudicationReason": {
+				"location": "%(apikey)s/adjudication-reason/%(_id)d"
+			},
+			"adjudicationReasonCode": {
+				"location": "%(apikey)s/adjudication-reason/code/%(code)s"
+			}
+			,
+			"exPaymenttype": {
+				"location": "%(apikey)s/ex-paymenttype/%(_id)d"
+			},
+			"exPaymenttypeCode": {
+				"location": "%(apikey)s/ex-paymenttype/code/%(code)s"
+			}
+			,
+			"paymentAdjustmentReason": {
+				"location": "%(apikey)s/payment-adjustment-reason/%(_id)d"
+			},
+			"paymentAdjustmentReasonCode": {
+				"location": "%(apikey)s/payment-adjustment-reason/code/%(code)s"
+			}
+			,
+			"paymentStatus": {
+				"location": "%(apikey)s/payment-status/%(_id)d"
+			},
+			"paymentStatusCode": {
+				"location": "%(apikey)s/payment-status/code/%(code)s"
+			}
+			,
+			"paymentType": {
+				"location": "%(apikey)s/payment-type/%(_id)d"
+			},
+			"paymentTypeCode": {
+				"location": "%(apikey)s/payment-type/code/%(code)s"
+			}
+			,
+			"explanationofbenefitStatus": {
+				"location": "%(apikey)s/explanationofbenefit-status/%(_id)d"
+			},
+			"explanationofbenefitStatusCode": {
+				"location": "%(apikey)s/explanationofbenefit-status/code/%(code)s"
+			}
+			,
+			"resourceTypeLink": {
+				"location": "%(apikey)s/resource-type-link/%(_id)d"
+			},
+			"resourceTypeLinkCode": {
+				"location": "%(apikey)s/resource-type-link/code/%(code)s"
+			}
+			,
+			"v3ActInvoiceGroupCode": {
+				"location": "%(apikey)s/v3-ActInvoiceGroupCode/%(_id)d"
+			},
+			"v3ActInvoiceGroupCodeCode": {
+				"location": "%(apikey)s/v3-ActInvoiceGroupCode/code/%(code)s"
+			}
+			
 		},
 		"POST": {
 			"identityAssuranceLevel": {
@@ -1990,6 +2313,9 @@
 			"timing":{
 				"location": "%(apikey)s/Timing"
 			},
+			"quantity":{
+				"location": "%(apikey)s/Quantity"
+			},
 			"annotation":{
 				"location": "%(apikey)s/Annotation"
 			}
@@ -2009,6 +2335,9 @@
 			},
 			"triggerDefinition":{
 				"location": "%(apikey)s/TriggerDefinition"
+			},
+			"dosage":{
+				"location": "%(apikey)s/Dosage"
 			}
 			
 			,
@@ -2209,14 +2538,7 @@
 			},
 			"deviceKind":{
 				"location": "%(apikey)s/device-kind"
-			},
-			"adverseEvent":{
-				"location": "%(apikey)s/AdverseEvent"
-			},
-			"adverseEventSuspectEntity":{
-				"location": "%(apikey)s/AdverseEventSuspectEntity"
 			}
-			
 			,
 			"immunizationStatus":{
 				"location": "%(apikey)s/immunization-status"
@@ -2593,7 +2915,187 @@
       "resourceTypes": {
         "location": "%(apikey)s/resource-types"
       }
-			
+			,
+      "immunizationEvaluationStatus": {
+        "location": "%(apikey)s/immunization-evaluation-status"
+      },
+      "immunizationEvaluationTargetDisease": {
+        "location": "%(apikey)s/immunization-evaluation-target-disease"
+      },
+      "immunizationEvaluationDoseStatus": {
+        "location": "%(apikey)s/immunization-evaluation-dose-status"
+      },
+      "immunizationEvaluationDoseStatusReason": {
+        "location": "%(apikey)s/immunization-evaluation-dose-status-reason"
+      }
+			,
+      "coverageType": {
+        "location": "%(apikey)s/coverage-type"
+      }
+			,
+      "policyholderRelationship": {
+        "location": "%(apikey)s/policyholder-relationship"
+      }
+			,
+      "remittanceOutcome": {
+        "location": "%(apikey)s/remittance-outcome"
+      }
+			,
+      "benefitCategory": {
+        "location": "%(apikey)s/benefit-category"
+      }
+			,
+      "benefitSubcategory": {
+        "location": "%(apikey)s/benefit-subcategory"
+      }
+			,
+      "benefitNetwork": {
+        "location": "%(apikey)s/benefit-network"
+      }
+			,
+      "benefitUnit": {
+        "location": "%(apikey)s/benefit-unit"
+      }
+			,
+      "benefitTerm": {
+        "location": "%(apikey)s/benefit-term"
+      }
+			,
+      "benefitType": {
+        "location": "%(apikey)s/benefit-type"
+      }
+			,
+      "claimType": {
+        "location": "%(apikey)s/claim-type"
+      }
+			,
+      "claimSubtype": {
+        "location": "%(apikey)s/claim-subtype"
+      }
+			,
+      "claimUse": {
+        "location": "%(apikey)s/claim-use"
+      }
+			,
+      "processPriority": {
+        "location": "%(apikey)s/process-priority"
+      }
+			,
+      "fundsreserve": {
+        "location": "%(apikey)s/fundsreserve"
+      }
+			,
+      "relatedClaimRelationship": {
+        "location": "%(apikey)s/related-claim-relationship"
+      }
+			,
+      "payeetype": {
+        "location": "%(apikey)s/payeetype"
+      }
+			,
+      "exPayeeResourceType": {
+        "location": "%(apikey)s/ex-payee-resource-type"
+      }
+			,
+      "claimCareteamrole": {
+        "location": "%(apikey)s/claim-careteamrole"
+      }
+			,
+      "providerQualification": {
+        "location": "%(apikey)s/provider-qualification"
+      }
+			,
+      "claimInformationcategory": {
+        "location": "%(apikey)s/claim-informationcategory"
+      }
+			,
+      "claimException": {
+        "location": "%(apikey)s/claim-exception"
+      }
+			,
+      "missingToothReason": {
+        "location": "%(apikey)s/missing-tooth-reason"
+      }
+			,
+      "icd10": {
+        "location": "%(apikey)s/icd-10"
+      }
+			,
+      "exDiagnosistype": {
+        "location": "%(apikey)s/ex-diagnosistype"
+      }
+			,
+      "exDiagnosisrelatedgroup": {
+        "location": "%(apikey)s/ex-diagnosisrelatedgroup"
+      }
+			,
+      "icd10Procedures": {
+        "location": "%(apikey)s/icd-10-procedures"
+      }
+			,
+      "v3ActIncidentCode": {
+        "location": "%(apikey)s/v3-ActIncidentCode"
+      }
+			,
+      "exRevenueCenter": {
+        "location": "%(apikey)s/ex-revenue-center"
+      }
+			,
+      "serviceUscls": {
+        "location": "%(apikey)s/service-uscls"
+      }
+			,
+      "claimModifiers": {
+        "location": "%(apikey)s/claim-modifiers"
+      }
+			,
+      "exProgramCode": {
+        "location": "%(apikey)s/ex-program-code"
+      }
+			,
+      "servicePlace": {
+        "location": "%(apikey)s/service-place"
+      }
+			,
+      "tooth": {
+        "location": "%(apikey)s/tooth"
+      }
+			,
+      "surface": {
+        "location": "%(apikey)s/surface"
+      }
+			,
+      "adjudicationReason": {
+        "location": "%(apikey)s/adjudication-reason"
+      }
+			,
+      "exPaymenttype": {
+        "location": "%(apikey)s/ex-paymenttype"
+      }
+			,
+      "paymentAdjustmentReason": {
+        "location": "%(apikey)s/payment-adjustment-reason"
+      }
+			,
+      "paymentStatus": {
+        "location": "%(apikey)s/payment-status"
+      }
+			,
+      "paymentType": {
+        "location": "%(apikey)s/payment-type"
+      }
+			,
+      "explanationofbenefitStatus": {
+        "location": "%(apikey)s/explanationofbenefit-status"
+      }
+			,
+      "resourceTypeLink": {
+        "location": "%(apikey)s/resource-type-link"
+      }
+			,
+      "v3ActInvoiceGroupCode": {
+        "location": "%(apikey)s/v3-ActInvoiceGroupCode"
+      }			
 			,
       "adverseEvent": {
         "location": "%(apikey)s/AdverseEvent"
@@ -2627,6 +3129,292 @@
       },
       "careTeamParticipant": {
         "location": "%(apikey)s/CareTeamParticipant"
+      }
+			
+			,
+      "clinicalImpression": {
+        "location": "%(apikey)s/ClinicalImpression"
+      },
+      "clinicalImpressionInvestigation": {
+        "location": "%(apikey)s/ClinicalImpressionInvestigation"
+      }
+			,
+      "clinicalImpressionFinding": {
+        "location": "%(apikey)s/ClinicalImpressionFinding"
+      }
+			
+			,
+      "condition": {
+        "location": "%(apikey)s/Condition"
+      },
+      "conditionStages": {
+        "location": "%(apikey)s/ConditionStages"
+      }
+			,
+      "conditionEvidence": {
+        "location": "%(apikey)s/ConditionEvidence"
+      }
+			
+			,
+      "detectedIssue": {
+        "location": "%(apikey)s/DetectedIssue"
+      },
+      "detectedIssueMitigation": {
+        "location": "%(apikey)s/DetectedIssueMitigation"
+      }
+			
+			,
+      "goal": {
+        "location": "%(apikey)s/Goal"
+      },
+      "goalTarget": {
+        "location": "%(apikey)s/GoalTarget"
+      }
+			
+			,
+      "familyMemberHistory": {
+        "location": "%(apikey)s/FamilyMemberHistory"
+      },
+      "familyMemberHistoryCondition": {
+        "location": "%(apikey)s/FamilyMemberHistoryCondition"
+      }
+			
+			,
+      "procedure": {
+        "location": "%(apikey)s/Procedure"
+      },
+      "procedurePerformer": {
+        "location": "%(apikey)s/ProcedurePerformer"
+      },
+      "procedureFocalDevice": {
+        "location": "%(apikey)s/ProcedureFocalDevice"
+      }
+			
+			,
+      "riskAssessment": {
+        "location": "%(apikey)s/RiskAssessment"
+      },
+      "riskAssessmentPrediction": {
+        "location": "%(apikey)s/RiskAssessmentPrediction"
+      }
+			
+			,
+      "immunization": {
+        "location": "%(apikey)s/Immunization"
+      },
+      "immunizationPractitioner": {
+        "location": "%(apikey)s/ImmunizationPractitioner"
+      },
+      "immunizationReaction": {
+        "location": "%(apikey)s/ImmunizationReaction"
+      },
+      "immunizationVaccinationProtocol": {
+        "location": "%(apikey)s/ImmunizationVaccinationProtocol"
+      }
+			
+			,
+      "immunizationRecommendation": {
+        "location": "%(apikey)s/ImmunizationRecommendation"
+      },
+      "immunizationRecommendationRecommendation": {
+        "location": "%(apikey)s/ImmunizationRecommendationRecommendation"
+      },
+      "immunizationRecommendationRecommendationDateCriterion": {
+        "location": "%(apikey)s/ImmunizationRecommendationDateCriterion"
+      }
+			
+			,
+      "medication": {
+        "location": "%(apikey)s/Medication"
+      },
+      "medicationIngredient": {
+        "location": "%(apikey)s/MedicationIngredient"
+      },
+      "medicationPackageContent": {
+        "location": "%(apikey)s/MedicationPackageContent"
+      },
+      "medicationPackageBatch": {
+        "location": "%(apikey)s/MedicationPackageBatch"
+      }
+			
+			,
+      "medicationAdministration": {
+        "location": "%(apikey)s/MedicationAdministration"
+      },
+      "medicationAdministrationPerformer": {
+        "location": "%(apikey)s/MedicationAdministrationPerformer"
+      },
+      "medicationAdministrationDosage": {
+        "location": "%(apikey)s/MedicationAdministrationDosage"
+      },
+			"immunizationEvaluation": {
+        "location": "%(apikey)s/ImmunizationEvaluation"
+      }
+			
+			,
+      "medicationDispense": {
+        "location": "%(apikey)s/MedicationDispense"
+      },
+      "medicationDispensePerformer": {
+        "location": "%(apikey)s/MedicationDispensePerformer"
+      },
+      "medicationDispenseSubstitution": {
+        "location": "%(apikey)s/MedicationDispenseSubstitution"
+      }
+			
+			,
+      "medicationRequest": {
+        "location": "%(apikey)s/MedicationRequest"
+      }
+			
+			,
+      "medicationStatement": {
+        "location": "%(apikey)s/MedicationStatement"
+      }
+			
+			,
+      "bodysite": {
+        "location": "%(apikey)s/Bodysite"
+      }
+			
+			,
+      "diagnosticReport": {
+        "location": "%(apikey)s/DiagnosticReport"
+      },
+      "diagnosticReportPerformer": {
+        "location": "%(apikey)s/DiagnosticReportPerformer"
+      },
+      "diagnosticReportReportImage": {
+        "location": "%(apikey)s/DiagnosticReportReportImage"
+      }
+			
+			,
+      "imagingManifest": {
+        "location": "%(apikey)s/ImagingManifest"
+      },
+      "imagingManifestStudy": {
+        "location": "%(apikey)s/ImagingManifestStudy"
+      },
+      "imagingManifestSeries": {
+        "location": "%(apikey)s/ImagingManifestSeries"
+      },
+      "imagingManifestInstance": {
+        "location": "%(apikey)s/ImagingManifestInstance"
+      }
+			
+			,
+      "imagingStudy": {
+        "location": "%(apikey)s/ImagingStudy"
+      },
+      "imagingStudySeries": {
+        "location": "%(apikey)s/ImagingStudySeries"
+      },
+      "imagingStudySeriesInstance": {
+        "location": "%(apikey)s/ImagingStudySeriesInstance"
+      }
+			
+			,
+      "imagingManifest": {
+        "location": "%(apikey)s/ImagingManifest"
+      },
+      "imagingManifestStudy": {
+        "location": "%(apikey)s/ImagingManifestStudy"
+      },
+      "imagingManifestSeries": {
+        "location": "%(apikey)s/ImagingManifestSeries"
+      },
+      "imagingManifestInstance": {
+        "location": "%(apikey)s/ImagingManifestInstance"
+      }
+			,
+      "observation": {
+        "location": "%(apikey)s/Observation"
+      },
+      "observationRelated": {
+        "location": "%(apikey)s/ObservationRelated"
+      },
+      "observationComponent": {
+        "location": "%(apikey)s/ObservationComponent"
+      },
+      "observationReferenceRange": {
+        "location": "%(apikey)s/ObservationReferenceRange"
+      },
+      "observationSampledData": {
+        "location": "%(apikey)s/ObservationSampledData"
+      }
+			
+			,
+      "procedureRequest": {
+        "location": "%(apikey)s/ProcedureRequest"
+      }
+			
+			,
+      "sequence": {
+        "location": "%(apikey)s/Sequence"
+      },
+      "sequenceRepository": {
+        "location": "%(apikey)s/SequenceRepository"
+      },
+      "sequenceVariant": {
+        "location": "%(apikey)s/SequenceVariant"
+      },
+      "sequenceQuality": {
+        "location": "%(apikey)s/SequenceQuality"
+      }
+			
+			,
+      "specimen": {
+        "location": "%(apikey)s/Specimen"
+      },
+      "specimenProcessing": {
+        "location": "%(apikey)s/SpecimenProcessing"
+      },
+      "specimenContainer": {
+        "location": "%(apikey)s/SpecimenContainer"
+      }
+			
+			,
+      "coverage": {
+        "location": "%(apikey)s/Coverage"
+      },
+      "eligibilityRequest": {
+        "location": "%(apikey)s/EligibilityRequest"
+      },
+      "enrollmentRequest": {
+        "location": "%(apikey)s/EnrollmentRequest"
+      },
+      "eligibilityResponse": {
+        "location": "%(apikey)s/EligibilityResponse"
+      },
+      "eligibilityResponseInsurance": {
+        "location": "%(apikey)s/EligibilityResponseInsurance"
+      },
+      "eligibilityResponseBenefitBalance": {
+        "location": "%(apikey)s/EligibilityResponseBenefitBalance"
+      },
+      "eligibilityResponseFinancial": {
+        "location": "%(apikey)s/EligibilityResponseFinancial"
+      },
+      "eligibilityResponseError": {
+        "location": "%(apikey)s/EligibilityResponseError"
+      },
+      "enrollmentRequest": {
+        "location": "%(apikey)s/EnrollmentRequest"
+      },
+      "enrollmentResponse": {
+        "location": "%(apikey)s/EnrollmentResponse"
+      },
+      "paymentNotice": {
+        "location": "%(apikey)s/PaymentNotice"
+      },
+      "paymentReconciliation": {
+        "location": "%(apikey)s/PaymentReconciliation"
+      },
+      "paymentReconciliationDetail": {
+        "location": "%(apikey)s/PaymentReconciliationDetail"
+      },
+      "paymentReconciliationProcessNote": {
+        "location": "%(apikey)s/PaymentReconciliationProcessNote"
       }
 			
 		},
@@ -2991,6 +3779,9 @@
 			"timing":{
 				"location": "%(apikey)s/Timing/%(_id)s/%(dr)s"
 			},
+			"quantity":{
+				"location": "%(apikey)s/Quantity/%(_id)s/%(dr)s"
+			},
 			"annotation":{
 				"location": "%(apikey)s/Annotation/%(_id)s/%(dr)s"
 			}
@@ -3010,6 +3801,9 @@
 			},
 			"triggerDefinition":{
 				"location": "%(apikey)s/TriggerDefinition/%(_id)s/%(dr)s"
+			},
+			"dosage":{
+				"location": "%(apikey)s/Dosage/%(_id)s/%(dr)s"
 			}
 			,
 			"healthcareService":{
@@ -3587,7 +4381,189 @@
       "resourceTypes": {
         "location": "%(apikey)s/resource-types/%(_id)d"
       }
+			,
+      "immunizationEvaluationStatus": {
+        "location": "%(apikey)s/immunization-evaluation-status/%(_id)d"
+      },
+      "immunizationEvaluationTargetDisease": {
+        "location": "%(apikey)s/immunization-evaluation-target-disease/%(_id)d"
+      },
+      "immunizationEvaluationDoseStatus": {
+        "location": "%(apikey)s/immunization-evaluation-dose-status/%(_id)d"
+      }
+			,
+      "immunizationEvaluationDoseStatusReason": {
+        "location": "%(apikey)s/immunization-evaluation-dose-status-reason/%(_id)d"
+      }
 			
+			,
+      "coverageType": {
+        "location": "%(apikey)s/coverage-type/%(_id)d"
+      }
+			,
+      "policyholderRelationship": {
+        "location": "%(apikey)s/policyholder-relationship/%(_id)d"
+      }
+			,
+      "remittanceOutcome": {
+        "location": "%(apikey)s/remittance-outcome/%(_id)d"
+      }
+			,
+      "benefitCategory": {
+        "location": "%(apikey)s/benefit-category/%(_id)d"
+      }
+			,
+      "benefitSubcategory": {
+        "location": "%(apikey)s/benefit-subcategory/%(_id)d"
+      }
+			,
+      "benefitNetwork": {
+        "location": "%(apikey)s/benefit-network/%(_id)d"
+      }
+			,
+      "benefitUnit": {
+        "location": "%(apikey)s/benefit-unit/%(_id)d"
+      }
+			,
+      "benefitTerm": {
+        "location": "%(apikey)s/benefit-term/%(_id)d"
+      }
+			,
+      "benefitType": {
+        "location": "%(apikey)s/benefit-type/%(_id)d"
+      }
+			,
+      "claimType": {
+        "location": "%(apikey)s/claim-type/%(_id)d"
+      }
+			,
+      "claimSubtype": {
+        "location": "%(apikey)s/claim-subtype/%(_id)d"
+      }
+			,
+      "claimUse": {
+        "location": "%(apikey)s/claim-use/%(_id)d"
+      }
+			,
+      "processPriority": {
+        "location": "%(apikey)s/process-priority/%(_id)d"
+      }
+			,
+      "fundsreserve": {
+        "location": "%(apikey)s/fundsreserve/%(_id)d"
+      }
+			,
+      "relatedClaimRelationship": {
+        "location": "%(apikey)s/related-claim-relationship/%(_id)d"
+      }
+			,
+      "payeetype": {
+        "location": "%(apikey)s/payeetype/%(_id)d"
+      }
+			,
+      "exPayeeResourceType": {
+        "location": "%(apikey)s/ex-payee-resource-type/%(_id)d"
+      }
+			,
+      "claimCareteamrole": {
+        "location": "%(apikey)s/claim-careteamrole/%(_id)d"
+      }
+			,
+      "providerQualification": {
+        "location": "%(apikey)s/provider-qualification/%(_id)d"
+      }
+			,
+      "claimInformationcategory": {
+        "location": "%(apikey)s/claim-informationcategory/%(_id)d"
+      }
+			,
+      "claimException": {
+        "location": "%(apikey)s/claim-exception/%(_id)d"
+      }
+			,
+      "missingToothReason": {
+        "location": "%(apikey)s/missing-tooth-reason/%(_id)d"
+      }
+			,
+      "icd10": {
+        "location": "%(apikey)s/icd-10/%(_id)d"
+      }
+			,
+      "exDiagnosistype": {
+        "location": "%(apikey)s/ex-diagnosistype/%(_id)d"
+      }
+			,
+      "exDiagnosisrelatedgroup": {
+        "location": "%(apikey)s/ex-diagnosisrelatedgroup/%(_id)d"
+      }
+			,
+      "icd10Procedures": {
+        "location": "%(apikey)s/icd-10-procedures/%(_id)d"
+      }
+			,
+      "v3ActIncidentCode": {
+        "location": "%(apikey)s/v3-ActIncidentCode/%(_id)d"
+      }
+			,
+      "exRevenueCenter": {
+        "location": "%(apikey)s/ex-revenue-center/%(_id)d"
+      }
+			,
+      "serviceUscls": {
+        "location": "%(apikey)s/service-uscls/%(_id)d"
+      }
+			,
+      "claimModifiers": {
+        "location": "%(apikey)s/claim-modifiers/%(_id)d"
+      }
+			,
+      "exProgramCode": {
+        "location": "%(apikey)s/ex-program-code/%(_id)d"
+      }
+			,
+      "servicePlace": {
+        "location": "%(apikey)s/service-place/%(_id)d"
+      }
+			,
+      "tooth": {
+        "location": "%(apikey)s/tooth/%(_id)d"
+      }
+			,
+      "surface": {
+        "location": "%(apikey)s/surface/%(_id)d"
+      }
+			,
+      "adjudicationReason": {
+        "location": "%(apikey)s/adjudication-reason/%(_id)d"
+      }
+			,
+      "exPaymenttype": {
+        "location": "%(apikey)s/ex-paymenttype/%(_id)d"
+      }
+			,
+      "paymentAdjustmentReason": {
+        "location": "%(apikey)s/payment-adjustment-reason/%(_id)d"
+      }
+			,
+      "paymentStatus": {
+        "location": "%(apikey)s/payment-status/%(_id)d"
+      }
+			,
+      "paymentType": {
+        "location": "%(apikey)s/payment-type/%(_id)d"
+      }
+			,
+      "explanationofbenefitStatus": {
+        "location": "%(apikey)s/explanationofbenefit-status/%(_id)d"
+      }
+			,
+      "resourceTypeLink": {
+        "location": "%(apikey)s/resource-type-link/%(_id)d"
+      }
+			,
+      "v3ActInvoiceGroupCode": {
+        "location": "%(apikey)s/v3-ActInvoiceGroupCode/%(_id)d"
+      }
 			,
       "adverseEvent": {
         "location": "%(apikey)s/AdverseEvent/%(_id)s"
@@ -3614,6 +4590,307 @@
       "carePlanActivityDetail": {
         "location": "%(apikey)s/CarePlanActivityDetail/%(_id)s/%(dr)s"
       }
+			
+			,
+      "careTeam": {
+        "location": "%(apikey)s/CareTeam/%(_id)s"
+      },
+      "careTeamParticipant": {
+        "location": "%(apikey)s/CareTeamParticipant/%(_id)s/%(dr)s"
+      }
+			
+			,
+      "clinicalImpression": {
+        "location": "%(apikey)s/ClinicalImpression/%(_id)s"
+      },
+      "clinicalImpressionInvestigation": {
+        "location": "%(apikey)s/ClinicalImpressionInvestigation/%(_id)s/%(dr)s"
+      }
+			,
+      "clinicalImpressionFinding": {
+        "location": "%(apikey)s/ClinicalImpressionFinding/%(_id)s/%(dr)s"
+      }
+			
+			,
+      "condition": {
+        "location": "%(apikey)s/Condition/%(_id)s"
+      },
+      "conditionStages": {
+        "location": "%(apikey)s/ConditionStages/%(_id)s/%(dr)s"
+      }
+			,
+      "conditionEvidence": {
+        "location": "%(apikey)s/ConditionEvidence/%(_id)s/%(dr)s"
+      }
+			
+			,
+      "detectedIssue": {
+        "location": "%(apikey)s/DetectedIssue/%(_id)s"
+      },
+      "detectedIssueMitigation": {
+        "location": "%(apikey)s/DetectedIssueMitigation/%(_id)s/%(dr)s"
+      }
+			
+			,
+      "goal": {
+        "location": "%(apikey)s/Goal/%(_id)s"
+      },
+      "goalTarget": {
+        "location": "%(apikey)s/GoalTarget/%(_id)s/%(dr)s"
+      }
+			
+			,
+      "familyMemberHistory": {
+        "location": "%(apikey)s/FamilyMemberHistory/%(_id)s"
+      },
+      "familyMemberHistoryCondition": {
+        "location": "%(apikey)s/FamilyMemberHistoryCondition/%(_id)s/%(dr)s"
+      }
+			
+			,
+      "procedure": {
+        "location": "%(apikey)s/Procedure/%(_id)s"
+      },
+      "procedurePerformer": {
+        "location": "%(apikey)s/ProcedurePerformer/%(_id)s/%(dr)s"
+      },
+      "procedureFocalDevice": {
+        "location": "%(apikey)s/ProcedureFocalDevice/%(_id)s/%(dr)s"
+      }
+			
+			,
+      "riskAssessment": {
+        "location": "%(apikey)s/RiskAssessment/%(_id)s"
+      },
+      "riskAssessmentPrediction": {
+        "location": "%(apikey)s/RiskAssessmentPrediction/%(_id)s/%(dr)s"
+      }
+			
+			
+
+			,
+      "immunization": {
+        "location": "%(apikey)s/Immunization/%(_id)s"
+      },
+      "immunizationPractitioner": {
+        "location": "%(apikey)s/ImmunizationPractitioner/%(_id)s/%(dr)s"
+      },
+      "immunizationReaction": {
+        "location": "%(apikey)s/ImmunizationReaction/%(_id)s/%(dr)s"
+      },
+      "immunizationVaccinationProtocol": {
+        "location": "%(apikey)s/ImmunizationVaccinationProtocol/%(_id)s/%(dr)s"
+      }
+			
+			,
+      "immunizationRecommendation": {
+        "location": "%(apikey)s/ImmunizationRecommendation/%(_id)s"
+      },
+      "immunizationRecommendationRecommendation": {
+        "location": "%(apikey)s/ImmunizationRecommendationRecommendation/%(_id)s/%(dr)s"
+      },
+      "immunizationRecommendationRecommendationDateCriterion": {
+        "location": "%(apikey)s/ImmunizationRecommendationDateCriterion/%(_id)s/%(dr)s"
+      }
+			
+			,
+      "medication": {
+        "location": "%(apikey)s/Medication/%(_id)s"
+      },
+      "medicationIngredient": {
+        "location": "%(apikey)s/MedicationIngredient/%(_id)s/%(dr)s"
+      },
+      "medicationPackageContent": {
+        "location": "%(apikey)s/MedicationPackageContent/%(_id)s/%(dr)s"
+      },
+      "medicationPackageBatch": {
+        "location": "%(apikey)s/MedicationPackageBatch/%(_id)s/%(dr)s"
+      }
+			
+			,
+      "medicationAdministration": {
+        "location": "%(apikey)s/MedicationAdministration/%(_id)s"
+      },
+      "medicationAdministrationPerformer": {
+        "location": "%(apikey)s/MedicationAdministrationPerformer/%(_id)s/%(dr)s"
+      },
+      "medicationAdministrationDosage": {
+        "location": "%(apikey)s/MedicationAdministrationDosage/%(_id)s/%(dr)s"
+      },
+			 "immunizationEvaluation": {
+        "location": "%(apikey)s/ImmunizationEvaluation/%(_id)s"
+      }
+			
+			,
+      "medicationDispense": {
+        "location": "%(apikey)s/MedicationDispense/%(_id)s"
+      },
+      "medicationDispensePerformer": {
+        "location": "%(apikey)s/MedicationDispensePerformer/%(_id)s/%(dr)s"
+      },
+      "medicationDispenseSubstitution": {
+        "location": "%(apikey)s/MedicationDispenseSubstitution/%(_id)s/%(dr)s"
+      }
+			
+			,
+      "medicationRequest": {
+        "location": "%(apikey)s/MedicationRequest/%(_id)s"
+      }
+			
+			,
+      "medicationStatement": {
+        "location": "%(apikey)s/MedicationStatement/%(_id)s"
+      }
+			
+			,
+      "bodysite": {
+        "location": "%(apikey)s/Bodysite/%(_id)s"
+      }
+			
+			,
+      "diagnosticReport": {
+        "location": "%(apikey)s/DiagnosticReport/%(_id)s"
+      },
+      "diagnosticReportPerformer": {
+        "location": "%(apikey)s/DiagnosticReportPerformer/%(_id)s/%(dr)s"
+      },
+      "diagnosticReportReportImage": {
+        "location": "%(apikey)s/DiagnosticReportReportImage/%(_id)s/%(dr)s"
+      }
+			
+			,
+      "imagingManifest": {
+        "location": "%(apikey)s/ImagingManifest/%(_id)s"
+      },
+      "imagingManifestStudy": {
+        "location": "%(apikey)s/ImagingManifestStudy/%(_id)s/%(dr)s"
+      },
+      "imagingManifestSeries": {
+        "location": "%(apikey)s/ImagingManifestSeries/%(_id)s/%(dr)s"
+      },
+      "imagingManifestInstance": {
+        "location": "%(apikey)s/ImagingManifestInstance/%(_id)s/%(dr)s"
+      }
+			
+			,
+      "imagingStudy": {
+        "location": "%(apikey)s/ImagingStudy/%(_id)s"
+      },
+      "imagingStudySeries": {
+        "location": "%(apikey)s/ImagingStudySeries/%(_id)s/%(dr)s"
+      },
+      "imagingStudySeriesInstance": {
+        "location": "%(apikey)s/ImagingStudySeriesInstance/%(_id)s/%(dr)s"
+      }
+			
+			,
+      "imagingManifest": {
+        "location": "%(apikey)s/ImagingManifest/%(_id)s"
+      },
+      "imagingManifestStudy": {
+        "location": "%(apikey)s/ImagingManifestStudy/%(_id)s/%(dr)s"
+      },
+      "imagingManifestSeries": {
+        "location": "%(apikey)s/ImagingManifestSeries/%(_id)s/%(dr)s"
+      },
+      "imagingManifestInstance": {
+        "location": "%(apikey)s/ImagingManifestInstance/%(_id)s/%(dr)s"
+      }
+			
+			,
+      "observation": {
+        "location": "%(apikey)s/Observation/%(_id)s"
+      },
+      "observationRelated": {
+        "location": "%(apikey)s/ObservationRelated/%(_id)s/%(dr)s"
+      },
+      "observationComponent": {
+        "location": "%(apikey)s/ObservationComponent/%(_id)s/%(dr)s"
+      },
+      "observationReferenceRange": {
+        "location": "%(apikey)s/ObservationReferenceRange/%(_id)s/%(dr)s"
+      },
+      "observationSampledData": {
+        "location": "%(apikey)s/ObservationSampledData/%(_id)s/%(dr)s"
+      }
+			
+			,
+      "procedureRequest": {
+        "location": "%(apikey)s/ProcedureRequest/%(_id)s"
+      }
+			
+			,
+      "sequence": {
+        "location": "%(apikey)s/Sequence/%(_id)s"
+      },
+      "sequenceRepository": {
+        "location": "%(apikey)s/SequenceRepository/%(_id)s/%(dr)s"
+      },
+      "sequenceVariant": {
+        "location": "%(apikey)s/SequenceVariant/%(_id)s/%(dr)s"
+      },
+      "sequenceQuality": {
+        "location": "%(apikey)s/SequenceQuality/%(_id)s/%(dr)s"
+      }
+			
+			,
+      "specimen": {
+        "location": "%(apikey)s/Specimen/%(_id)s"
+      },
+      "specimenProcessing": {
+        "location": "%(apikey)s/SpecimenProcessing/%(_id)s/%(dr)s"
+      },
+      "specimenContainer": {
+        "location": "%(apikey)s/SpecimenContainer/%(_id)s/%(dr)s"
+      }
+			
+			,
+      "coverage": {
+        "location": "%(apikey)s/Coverage/%(_id)s"
+      },
+      "eligibilityRequest": {
+        "location": "%(apikey)s/EligibilityRequest/%(_id)s"
+      },
+      "enrollmentRequest": {
+        "location": "%(apikey)s/EnrollmentRequest/%(_id)s"
+      },
+      "eligibilityResponse": {
+        "location": "%(apikey)s/EligibilityResponse/%(_id)s"
+      },
+      "eligibilityResponseInsurance": {
+        "location": "%(apikey)s/EligibilityResponseInsurance/%(_id)s/%(dr)s"
+      },
+      "eligibilityResponseBenefitBalance": {
+        "location": "%(apikey)s/EligibilityResponseBenefitBalance/%(_id)s/%(dr)s"
+      },
+      "eligibilityResponseFinancial": {
+        "location": "%(apikey)s/EligibilityResponseFinancial/%(_id)s/%(dr)s"
+      },
+      "eligibilityResponseError": {
+        "location": "%(apikey)s/EligibilityResponseError/%(_id)s/%(dr)s"
+      }
+			
+			,
+      "enrollmentRequest": {
+        "location": "%(apikey)s/EnrollmentRequest/%(_id)s"
+      },
+      "enrollmentResponse": {
+        "location": "%(apikey)s/EnrollmentResponse/%(_id)s"
+      },
+      "paymentNotice": {
+        "location": "%(apikey)s/PaymentNotice/%(_id)s"
+      },
+      "paymentReconciliation": {
+        "location": "%(apikey)s/PaymentReconciliation/%(_id)s"
+      },
+      "paymentReconciliationDetail": {
+        "location": "%(apikey)s/PaymentReconciliationDetail/%(_id)s/%(dr)s"
+      },
+      "paymentReconciliationProcessNote": {
+        "location": "%(apikey)s/PaymentReconciliationProcessNote/%(_id)s/%(dr)s"
+      }
+			
+			
 		}
 	}
 }

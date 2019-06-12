@@ -82,10 +82,22 @@ var controller = {
 				}
       }
 			
-			if(typeof subject !== 'subject' && subject !== ""){
+			if(typeof subject !== 'undefined' && subject !== ""){
 				condition += "(ra.SUBJECT_PATIENT = '" + subject + "' OR ra.SUBJECT_GROUP = '" + subject + "') AND,";  
 			}
 			
+			var offset = req.query.offset;
+			var limit = req.query.limit;
+
+			if((typeof offset !== 'undefined' && offset !== '')){
+				condition = " ra.risk_assessment_id > '" + offset + "' AND ";       
+			}
+			
+			if((typeof limit !== 'undefined' && limit !== '')){
+				limit = " limit " + limit + " ";
+			} else {
+				limit = " ";
+			}
 			
       if(condition == ""){
         fixCondition = "";
@@ -94,20 +106,19 @@ var controller = {
       }
 			      
       var arrRiskAssessment = [];
-      var query = "select risk_assessment_id, based_on, parent, status, method, code, subject_patient, subject_group, context_encounter, context_episode_of_care, occurrence_date_time, occurrence_period_start, occurrence_period_end, condition, performer_practitioner, performer_device, reason_codeable_concept, reason_reference, basis, mitigation, comment from baciro_fhir.risk_assessment ra " + fixCondition;
-			//console.log(query);
+      var query = "select ra.risk_assessment_id as risk_assessment_id, ra.based_on as based_on, ra.parent as parent, ra.status as status, ra.method as method, ra.code as code, ra.subject_patient as subject_patient, ra.subject_group as subject_group, ra.context_encounter as context_encounter, ra.context_episode_of_care as context_episode_of_care, ra.occurrence_date_time as occurrence_date_time, ra.occurrence_period_start as occurrence_period_start, ra.occurrence_period_end as occurrence_period_end, ra.condition as condition, ra.performer_practitioner as performer_practitioner, ra.performer_device as performer_device, ra.reason_codeable_concept as reason_codeable_concept, ra.reason_reference as reason_reference, ra.basis as basis, ra.mitigation as mitigation, ra.comment as comment from baciro_fhir.risk_assessment ra " + fixCondition + limit;
+			console.log(query);
       db.query(query,function(dataJson){
         rez = lowercaseObject(dataJson);
 				for(i = 0; i < rez.length; i++){
           var RiskAssessment = {};
 					RiskAssessment.resourceType = "RiskAssessment";
           RiskAssessment.id = rez[i].riskAssessment_id;
-					RiskAssessment.based_on = rez[i].based_on;
+					RiskAssessment.basedOn = rez[i].based_on;
 					RiskAssessment.parent = rez[i].parent;
 					RiskAssessment.status = rez[i].status;
 					RiskAssessment.method = rez[i].method;
 					RiskAssessment.code = rez[i].code;
-					var arrSubject = [];
 					var Subject = {};
 					if(rez[i].subject_group != "null"){
 						Subject.group = hostFHIR + ':' + portFHIR + '/' + apikey + '/Group?_id=' +  rez[i].subject_group;
@@ -119,9 +130,6 @@ var controller = {
 					} else {
 						Subject.patient = "";
 					}
-					arrSubject[i] = Subject;
-					
-					var arrContext = [];
 					var Context = {};
 					if(rez[i].context_encounter != "null"){
 						Context.encounter = hostFHIR + ':' + portFHIR + '/' + apikey + '/Encounter?_id=' +  rez[i].context_encounter;
@@ -133,13 +141,13 @@ var controller = {
 					} else {
 						Context.episodeOfCare = "";
 					}
-					arrContext[i] = Context;
-					RiskAssessment.subject = arrContext;
-					RiskAssessment.context = arrContext;
+					RiskAssessment.subject = Context;
+					RiskAssessment.context = Context;
+					var Occurrence = {};
 					if(rez[i].occurrence_date_time == null){
-						RiskAssessment.occurrence.occurrenceDateTime = formatDate(rez[i].occurrence_date_time);
+						Occurrence.occurrenceDateTime = formatDate(rez[i].occurrence_date_time);
 					}else{
-						RiskAssessment.occurrence.occurrenceDateTime = rez[i].occurrence_date_time;
+						Occurrence.occurrenceDateTime = rez[i].occurrence_date_time;
 					}
 					var occurrenceperiod_start,occurrenceperiod_end;
 					if(rez[i].occurrence_period_start == null){
@@ -152,14 +160,14 @@ var controller = {
 					}else{
 						occurrenceperiod_end = rez[i].occurrence_period_end;  
 					}
-					RiskAssessment.occurrence.occurrencePeriod = occurrenceperiod_start + ' to ' + occurrenceperiod_end;
+					Occurrence.occurrencePeriod = occurrenceperiod_start + ' to ' + occurrenceperiod_end;
+					RiskAssessment.occurrence = Occurrence;
 					if(rez[i].condition != "null"){
 						Performer.condition = hostFHIR + ':' + portFHIR + '/' + apikey + '/Condition?_id=' +  rez[i].condition;
 					} else {
 						RiskAssessment.condition = "";
 					}
 					
-					var arrPerformer = [];
 					var Performer = {};
 					if(rez[i].performer_practitioner != "null"){
 						Performer.practitioner = hostFHIR + ':' + portFHIR + '/' + apikey + '/Practitioner?_id=' +  rez[i].performer_practitioner;
@@ -171,10 +179,12 @@ var controller = {
 					} else {
 						Performer.device = "";
 					}
-					arrPerformer[i] = Performer;
-					RiskAssessment.performer = arrPerformer;
-					RiskAssessment.reason.reasonCodeableConcept = rez[i].reason_codeable_concept;
-					RiskAssessment.reason.reasonReference = rez[i].reason_reference;
+					RiskAssessment.performer = Performer;
+					var arrReason = [];
+					var Reason = {};
+					Reason.reasonCodeableConcept = rez[i].reason_codeable_concept;
+					Reason.reasonReference = rez[i].reason_reference;
+					RiskAssessment.reason = Reason;
 					RiskAssessment.basis = rez[i].basis;
 					RiskAssessment.mitigation = rez[i].mitigation;
 					RiskAssessment.comment = rez[i].comment;
@@ -217,9 +227,10 @@ var controller = {
 					var RiskAssessmentPrediction = {};
 					RiskAssessmentPrediction.id = rez[i].prediction_id;
 					RiskAssessmentPrediction.outcome = rez[i].outcome;
-					
-					RiskAssessmentPrediction.probability.probabilityDecimal = rez[i].probability_decimal;
-					RiskAssessmentPrediction.probability.probabilityRange = rez[i].probability_range_low + ' to ' + rez[i].probability_range_high;
+					var Probability = {};
+					Probability.probabilityDecimal = rez[i].probability_decimal;
+					Probability.probabilityRange = rez[i].probability_range_low + ' to ' + rez[i].probability_range_high;
+					RiskAssessmentPrediction.probability = Probability;
 					RiskAssessmentPrediction.qualitative_risk = rez[i].qualitative_risk;
 					RiskAssessmentPrediction.relative_risk = rez[i].relative_risk;
 					var whenperiod_start,whenperiod_end;
@@ -233,8 +244,10 @@ var controller = {
 					}else{
 						whenperiod_end = rez[i].when_period_end;  
 					}
-					RiskAssessmentPrediction.when.whenPeriod = whenperiod_start + ' to ' + whenperiod_end;
-					RiskAssessmentPrediction.when.whenRange = rez[i].when_range_low + ' to ' + rez[i].when_range_high;
+					var When = {};
+					When.whenPeriod = whenperiod_start + ' to ' + whenperiod_end;
+					When.whenRange = rez[i].when_range_low + ' to ' + rez[i].when_range_high;
+					RiskAssessmentPrediction.when = When;
 					RiskAssessmentPrediction.rationale = rez[i].rationale;
 					
 					arrRiskAssessmentPrediction[i] = RiskAssessmentPrediction;
@@ -525,7 +538,7 @@ var controller = {
 	put: {
 		riskAssessment: function updateRiskAssessment(req, res) {
 			console.log(req.body);
-			var risk_assessment_id = req.params.risk_assessment_id;
+			var risk_assessment_id = req.params._id;
 			var based_on = req.body.based_on;
 			var parent = req.body.parent;
 			var status = req.body.status;
@@ -672,10 +685,14 @@ var controller = {
       }
 			
 			var domainResource = req.params.dr;
-			var arrResource = domainResource.split('|');
-			var fieldResource = arrResource[0];
-			var valueResource = arrResource[1];
-			var condition = "risk_assessment_id = '" + risk_assessment_id + "' AND " + fieldResource + " = '" + valueResource + "'";
+			if(domainResource !== "" && typeof domainResource !== 'undefined'){
+				var arrResource = domainResource.split('|');
+				var fieldResource = arrResource[0];
+				var valueResource = arrResource[1];
+				var condition = "risk_assessment_id = '" + risk_assessment_id + "' AND " + fieldResource + " = '" + valueResource + "'";
+			}else{
+        var condition = "risk_assessment_id = '" + risk_assessment_id+ "'";
+      }
 
       var query = "UPSERT INTO BACIRO_FHIR.risk_assessment(risk_assessment_id," + column.slice(0, -1) + ") SELECT risk_assessment_id, " + values.slice(0, -1) + " FROM BACIRO_FHIR.risk_assessment WHERE " + condition;
 			
@@ -696,7 +713,7 @@ var controller = {
 		riskAssessmentPrediction: function updateRiskAssessmentPrediction(req, res) {
 			console.log(req.body);
 			
-			var prediction_id = req.params.prediction_id;
+			var prediction_id = req.params._id;
 			var outcome = req.body.outcome;
 			var probability_decimal = req.body.probability_decimal;
 			var probability_range_low = req.body.probability_range_low;
@@ -776,10 +793,14 @@ var controller = {
       }
      
 			var domainResource = req.params.dr;
-			var arrResource = domainResource.split('|');
-			var fieldResource = arrResource[0];
-			var valueResource = arrResource[1];
-			var condition = "prediction_id = '" + prediction_id + "' AND " + fieldResource + " = '" + valueResource + "'";
+			if(domainResource !== "" && typeof domainResource !== 'undefined'){
+				var arrResource = domainResource.split('|');
+				var fieldResource = arrResource[0];
+				var valueResource = arrResource[1];
+				var condition = "prediction_id = '" + prediction_id + "' AND " + fieldResource + " = '" + valueResource + "'";
+			}else{
+        var condition = "prediction_id = '" + prediction_id+ "'";
+      }
 			
 			var query = "UPSERT INTO BACIRO_FHIR.risk_assessment_prediction(prediction_id," + column.slice(0, -1) + ") SELECT prediction_id, " + values.slice(0, -1) + " FROM BACIRO_FHIR.risk_assessment_prediction WHERE " + condition;
 			

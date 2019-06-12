@@ -22,13 +22,13 @@ var controller = {
 	get: {
 		adverseEvent: function getAdverseEvent(req, res){
 			var apikey = req.params.apikey;
-			var adverseEventId = req.query._id;
+			var adverseEventId = req.query.adverseEventId;
 			var category = req.query.category;
 			var date = req.query.date;
-			var adverseEvent = req.query.adverseEvent;
+			var location = req.query.location;
 			var recorder = req.query.recorder;
 			var seriousness = req.query.seriousness;
-			//var study = req.query.study;
+			var study = req.query.study;
 			var subject = req.query.subject;
 			var substance = req.query.substance;
 			var type = req.query.type;
@@ -46,11 +46,11 @@ var controller = {
 			
 			if(typeof date !== 'undefined' && date !== ""){
         //condition += "ad.date = '" + date + "' AND,";  
-				condition += "ad.date = to_date('" + date + "', 'yyyy-MM-dd') AND,"
+				condition += "ad.date = to_date('" + date + "', 'yyyy-MM-dd HH:mm') AND,"
       }
 			
-			if(typeof adverseEvent !== 'undefined' && adverseEvent !== ""){
-        condition += "ad.adverseEvent = '" + adverseEvent + "' AND,";  
+			if(typeof location !== 'undefined' && location !== ""){
+        condition += "ad.location = '" + location + "' AND,";  
       }
 			
 			if(typeof recorder !== 'undefined' && recorder !== ""){
@@ -61,14 +61,36 @@ var controller = {
         condition += "ad.seriousness = '" + seriousness + "' AND,";  
       }
 			
-			/*if((typeof study !== 'undefined' && study !== "")){
+			if((typeof study !== 'undefined' && study !== "")){
 				condition += "rs.research_study_id = '" + study + "' AND ";       
         join += " LEFT JOIN BACIRO_FHIR.RESEARCH_STUDY ep ON rs.ADVERSE_EVENT_ID = ad.ADVERSE_EVENT_ID ";
-      }*/
+      }
 			
 			if(typeof subject !== 'undefined' && subject !== ""){
         condition += "(ad.SUBJECT_PATIENT = '" + subject + "' OR ad.SUBJECT_RESEARCH_SUBJECT = '" + subject + "' OR ad.SUBJECT_MEDICATION  = '" + subject + "' OR ad.SUBJECT_DEVICE = '" + subject + "') AND,";  
       }
+			
+			if(typeof substance !== 'undefined' && substance !== ""){
+				join += " LEFT JOIN BACIRO_FHIR.ADVERSE_EVENT_SUSPECT_ENTITY ades ON ades.ADVERSE_EVENT_ID = ad.ADVERSE_EVENT_ID ";
+        condition += "(ades.INSTANCE_SUBSTANCE = '" + substance + "' OR ades.INSTANCE_MEDICATION = '" + substance + "' OR ades.INSTANCE_MEDICATION_ADMINISTRATION  = '" + substance + "' OR ades.INSTANCE_MEDICATION_STATEMENT = '" + substance + "' OR ades.INSTANCE_DEVICE = '" + substance + "') AND,";  
+      }
+			
+			if(typeof type !== 'undefined' && type !== ""){
+        condition += "ad.type = '" + type + "' AND,";  
+      }
+			
+			var offset = req.query.offset;
+			var limit = req.query.limit;
+
+			if((typeof offset !== 'undefined' && offset !== '')){
+				condition = " ad.adverse_event_id > '" + offset + "' AND ";       
+			}
+			
+			if((typeof limit !== 'undefined' && limit !== '')){
+				limit = " limit " + limit + " ";
+			} else {
+				limit = " ";
+			}
 			
       if(condition == ""){
         fixCondition = "";
@@ -77,14 +99,13 @@ var controller = {
       }
 			      
       var arrAdverseEvent = [];
-      var query = "SELECT ad.adverse_event_id as adverse_event_id, ad.identifier_id as identifier_id, ad.category as category, ad.type as type, ad.subject_patient as subject_patient, ad.subject_research_subject as subject_research_subject, ad.subject_medication as subject_medication, ad.subject_device as subject_device, ad.date as date, ad.location as location, ad.seriousness as seriousness, ad.outcome as outcome, ad.recorder_patient as recorder_patient, ad.recorder_practitioner as recorder_practitioner, ad.recorder_related_person as recorder_related_person, ad.event_participant_practitioner as event_participant_practitioner, ad.event_participant_device as event_participant_device, ad.description as description FROM BACIRO_FHIR.ADVERSE_EVENT ad " + fixCondition;
+      var query = "SELECT ad.adverse_event_id as adverse_event_id, ad.identifier_id as identifier_id, ad.category as category, ad.type as type, ad.subject_patient as subject_patient, ad.subject_research_subject as subject_research_subject, ad.subject_medication as subject_medication, ad.subject_device as subject_device, ad.date as date, ad.location as location, ad.seriousness as seriousness, ad.outcome as outcome, ad.recorder_patient as recorder_patient, ad.recorder_practitioner as recorder_practitioner, ad.recorder_related_person as recorder_related_person, ad.event_participant_practitioner as event_participant_practitioner, ad.event_participant_device as event_participant_device, ad.description as description FROM BACIRO_FHIR.ADVERSE_EVENT ad " + fixCondition + limit;
 			console.log(query);
       db.query(query,function(dataJson){
         rez = lowercaseObject(dataJson);
 				for(i = 0; i < rez.length; i++){
           var AdverseEvent = {};
 					
-					var arrSubject = [];
 					var Subject = {};
 					if(rez[i].subject_medication != "null"){
 						Subject.medication = hostFHIR + ':' + portFHIR + '/' + apikey + '/Dedication?_id=' +  rez[i].subject_medication;
@@ -106,9 +127,7 @@ var controller = {
 					} else {
 						Subject.researchSubject = "";
 					}
-					arrSubject = Subject;
 					
-					var arrRecorder = [];
 					var Recorder = {};
 					if(rez[i].recorder_patient != "null"){
 						Recorder.patient = hostFHIR + ':' + portFHIR + '/' + apikey + '/Patient?_id=' +  rez[i].recorder_patient;
@@ -125,7 +144,6 @@ var controller = {
 					} else {
 						Recorder.relatedPerson = "";
 					}
-					arrRecorder = Recorder;
 					
 					if (rez[i].event_participant_practitioner !== 'null') {
 						AdverseEvent.eventParticipant = hostFHIR + ':' + portFHIR + '/' + apikey + '/Practitioner?_id=' +  rez[i].event_participant_practitioner;
@@ -135,7 +153,6 @@ var controller = {
 						AdverseEvent.eventParticipant = "";
 					}
 					
-					var arrEventParticipant = [];
 					var EventParticipant = {};
 					if(rez[i].event_participant_practitioner != "null"){
 						EventParticipant.practitioner = hostFHIR + ':' + portFHIR + '/' + apikey + '/Practitioner?_id=' +  rez[i].event_participant_practitioner;
@@ -147,14 +164,13 @@ var controller = {
 					} else {
 						EventParticipant.device = "";
 					}
-					arrEventParticipant = EventParticipant;
 					
 					AdverseEvent.resourceType = "Adverse Event";
           AdverseEvent.id = rez[i].adverse_event_id;
           AdverseEvent.identifierId = rez[i].identifier_id;
 					AdverseEvent.category = rez[i].category;
 					AdverseEvent.type = rez[i].type;
-					AdverseEvent.subject = arrSubject;
+					AdverseEvent.subject = Subject;
 					if(rez[i].date == null){
 						AdverseEvent.date = formatDate(rez[i].date);
 					}else{
@@ -167,8 +183,8 @@ var controller = {
 					}
 					AdverseEvent.seriousness = rez[i].seriousness;
 					AdverseEvent.outcome = rez[i].outcome;
-					AdverseEvent.recorder = arrRecorder;
-					AdverseEvent.eventParticipant = arrEventParticipant;
+					AdverseEvent.recorder = Recorder;
+					AdverseEvent.eventParticipant = EventParticipant;
 					AdverseEvent.description = rez[i].description;
           arrAdverseEvent[i] = AdverseEvent;
         }
@@ -210,7 +226,7 @@ var controller = {
           countSuspectEntity = rez.length;
           var suspectEntity = {};
 					
-					var arrInstance = [];
+					
 					var Instance = {};
 					if(rez[i].instance_substance != "null"){
 						Instance.substance = hostFHIR + ':' + portFHIR + '/' + apikey + '/Substance?_id=' +  rez[i].instance_substance;
@@ -237,9 +253,7 @@ var controller = {
 					} else {
 						Instance.device = "";
 					}
-					arrInstance = Instance;
 					
-					var arrCausalityAuthor = [];
 					var CausalityAuthor = {};
 					if(rez[i].causality_author_practitioner != "null"){
 						CausalityAuthor.practitioner = hostFHIR + ':' + portFHIR + '/' + apikey + '/Practitioner?_id=' +  rez[i].causality_author_practitioner;
@@ -251,16 +265,15 @@ var controller = {
 					} else {
 						CausalityAuthor.practitionerRole = "";
 					}
-					arrCausalityAuthor = CausalityAuthor;
 					
           // var 
-          suspectEntity.id = rez[i].organization_contact_id;
-					suspectEntity.instance = arrInstance;
+          suspectEntity.id = rez[i].suspect_entity_id;
+					suspectEntity.instance = Instance;
           suspectEntity.causality = rez[i].causality;
 					suspectEntity.causalityAssessment = rez[i].causality_assessment;
 					suspectEntity.causalityProductRelatedness = rez[i].causality_product_relatedness;
 					suspectEntity.causalityMethod = rez[i].causality_method;
-					suspectEntity.causalityAuthor = arrCausalityAuthor;
+					suspectEntity.causalityAuthor = CausalityAuthor;
 					suspectEntity.causalityResult = rez[i].causality_result;
 
           arrSuspectEntity[i] = suspectEntity;
@@ -577,8 +590,96 @@ var controller = {
       },function(e){
         res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "getProcedureSubjectMedicalHistory"});
       });
-    }
+    },
 		
+		referenceDocument: function getReferenceDocument(req, res){
+			var apikey = req.params.apikey;
+			var documentReferenceId = req.query._id;
+			var adverseEventId = req.query.adverse_event_id;
+			
+			var condition = "";
+			var join = "";
+			
+			if(typeof documentReferenceId !== 'undefined' && documentReferenceId !== ""){
+        condition += "document_reference_id = '" + documentReferenceId + "' AND ";  
+      }
+						
+			if(typeof adverseEventId !== 'undefined' && adverseEventId !== ""){
+        condition += "ADVERSE_EVENT_ID = '" + adverseEventId + "' AND ";  
+      }
+			
+			if(condition == ""){
+        fixCondition = "";
+      }else{
+        fixCondition = " WHERE  " + condition.slice(0, -4);
+      }
+      
+			var query = "select document_reference_id from baciro_fhir.document_reference " + fixCondition;
+			//console.log(query);
+      
+			var arrDocumentReference = [];
+      db.query(query,function(dataJson){
+        rez = lowercaseObject(dataJson);
+				//console.log(rez);
+        for(i = 0; i < rez.length; i++){
+					var DocumentReference = {};
+					if(rez[i].document_reference_id != "null"){
+						DocumentReference.id = hostfhir + ":" + portfhir + "/" + apikey + "/DocumentReference?_id=" + rez[i].document_reference_id;
+					} else {
+						DocumentReference.id = "";
+					}
+					
+          arrDocumentReference[i] = DocumentReference;
+        }
+        res.json({"err_code":0,"data": arrDocumentReference});
+      },function(e){
+        res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "getReferenceDocument"});
+      });
+    },
+		researchStudy: function getResearchStudy(req, res){
+			var apikey = req.params.apikey;
+			var researchStudyId = req.query._id;
+			var adverseEventId = req.query.adverse_event_id;
+			
+			var condition = "";
+			var join = "";
+			
+			if(typeof researchStudyId !== 'undefined' && researchStudyId !== ""){
+        condition += "research_study_id = '" + researchStudyId + "' AND ";  
+      }
+						
+			if(typeof adverseEventId !== 'undefined' && adverseEventId !== ""){
+        condition += "ADVERSE_EVENT_ID = '" + adverseEventId + "' AND ";  
+      }
+			
+			if(condition == ""){
+        fixCondition = "";
+      }else{
+        fixCondition = " WHERE  " + condition.slice(0, -4);
+      }
+      
+			var query = "select research_study_id from baciro_fhir.research_study " + fixCondition;
+			//console.log(query);
+      
+			var arrResearchStudy = [];
+      db.query(query,function(dataJson){
+        rez = lowercaseObject(dataJson);
+				//console.log(rez);
+        for(i = 0; i < rez.length; i++){
+					var ResearchStudy = {};
+					if(rez[i].research_study_id != "null"){
+						ResearchStudy.id = hostfhir + ":" + portfhir + "/" + apikey + "/ResearchStudy?_id=" + rez[i].research_study_id;
+					} else {
+						ResearchStudy.id = "";
+					}
+					
+          arrResearchStudy[i] = ResearchStudy;
+        }
+        res.json({"err_code":0,"data": arrResearchStudy});
+      },function(e){
+        res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "getResearchStudy"});
+      });
+    }
   },
 	post: {
 		adverseEvent: function addAdverseEvent(req, res) {
@@ -592,7 +693,7 @@ var controller = {
 			var subject_medication = req.body.subject_medication;
 			var subject_device = req.body.subject_device;
 			var date = req.body.date;
-			var adverseEvent = req.body.adverseEvent;
+			var location = req.body.location;
 			var seriousness = req.body.seriousness;
 			var outcome = req.body.outcome;
 			var recorder_patient = req.body.recorder_patient;
@@ -768,7 +869,7 @@ var controller = {
 			
 			var query = "UPSERT INTO BACIRO_FHIR.adverse_event_suspect_entity(suspect_entity_id, " + column.slice(0, -1) + ")" + " VALUES ('" + id + "', " + values.slice(0, -1) + ")";
 			
-			//console.log(query)
+			console.log(query)
 			db.upsert(query, function (succes) {
 				console.log("add suspectEntity ok");
         var query = "SELECT suspect_entity_id, instance_substance, instance_medication, instance_medication_administration, instance_medication_statement, instance_device, causality, causality_assessment, causality_product_relatedness, causality_method, causality_author_practitioner, causality_author_practitioner_role, causality_result, adverse_event_id from baciro_fhir.adverse_event_suspect_entity se WHERE suspect_entity_id = '" + id + "' ";
@@ -788,8 +889,7 @@ var controller = {
           });
         });
       }, function (e) {
-				console.log("encounter failed");
-        res.json({
+				res.json({
           "err_code": 2,
           "err_msg": e,
           "application": "Api Phoenix",
@@ -801,7 +901,7 @@ var controller = {
 	put: {
 		adverseEvent: function putAdverseEvent(req, res) {
 			console.log(req.body);
-      var adverse_event_id = req.params.adverse_event_id;
+      var adverse_event_id = req.params._id;
       var identifier_id = req.body.identifier_id;
 			var category = req.body.category;
 			var type = req.body.type;
@@ -810,7 +910,7 @@ var controller = {
 			var subject_medication = req.body.subject_medication;
 			var subject_device = req.body.subject_device;
 			var date = req.body.date;
-			var adverseEvent = req.body.adverseEvent;
+			var location = req.body.location;
 			var seriousness = req.body.seriousness;
 			var outcome = req.body.outcome;
 			var recorder_patient = req.body.recorder_patient;
@@ -856,9 +956,9 @@ var controller = {
         //values += "'" + date + "',";
 				values += "to_date('"+ date + "', 'yyyy-MM-dd HH:mm'),";
       }
-			if (typeof adverseEvent !== 'undefined' && adverseEvent !== "") {
-        column += 'adverseEvent,';
-        values += "'" + adverseEvent + "',";
+			if (typeof location !== 'undefined' && location !== "") {
+        column += 'location,';
+        values += "'" + location + "',";
       }
 			if (typeof seriousness !== 'undefined' && seriousness !== "") {
         column += 'seriousness,';
@@ -894,10 +994,14 @@ var controller = {
       }
 
       var domainResource = req.params.dr;
-			var arrResource = domainResource.split('|');
-			var fieldResource = arrResource[0];
-			var valueResource = arrResource[1];
-			var condition = "ADVERSE_EVENT_ID = '" + adverse_event_id + "' AND " + fieldResource + " = '" + valueResource + "'";
+			if(domainResource !== "" && typeof domainResource !== 'undefined'){
+				var arrResource = domainResource.split('|');
+				var fieldResource = arrResource[0];
+				var valueResource = arrResource[1];
+				var condition = "ADVERSE_EVENT_ID = '" + adverse_event_id + "' AND " + fieldResource + " = '" + valueResource + "'";
+			}else{
+        var condition = "ADVERSE_EVENT_ID = '" + adverse_event_id + "'";
+      }	
 			
 			var query = "UPSERT INTO BACIRO_FHIR.ADVERSE_EVENT(ADVERSE_EVENT_ID," + column.slice(0, -1) + ") SELECT ADVERSE_EVENT_ID, " + values.slice(0, -1) + " FROM BACIRO_FHIR.ADVERSE_EVENT WHERE " + condition;
 			console.log(query);
@@ -914,8 +1018,8 @@ var controller = {
           res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "putAdverseEvent"});
       });
     },
-		suspectEntity: function addSuspectEntity(req, res) {
-      var suspect_entity_id = req.params.suspect_entity_id; 
+		suspectEntity: function updateSuspectEntity(req, res) {
+      var suspect_entity_id = req.params._id; 
 			var instance_substance = req.body.instance_substance; 
 			var instance_medication = req.body.instance_medication; 
 			var instance_medication_administration = req.body.instance_medication_administration;  
@@ -986,41 +1090,36 @@ var controller = {
         values += "'" + adverse_event_id + "',";
       }
 			
-			
 			var domainResource = req.params.dr;
-			var arrResource = domainResource.split('|');
-			var fieldResource = arrResource[0];
-			var valueResource = arrResource[1];
-			var condition = "suspect_entity_id = '" + suspect_entity_id + "' AND " + fieldResource + " = '" + valueResource + "'";
+			if(domainResource !== "" && typeof domainResource !== 'undefined'){
+				var arrResource = domainResource.split('|');
+				var fieldResource = arrResource[0];
+				var valueResource = arrResource[1];
+				var condition = "suspect_entity_id = '" + suspect_entity_id + "' AND " + fieldResource + " = '" + valueResource + "'";
+			}else{
+        var condition = "suspect_entity_id = '" + suspect_entity_id + "'";
+      }
+			
 			var query = "UPSERT INTO BACIRO_FHIR.adverse_event_suspect_entity(suspect_entity_id," + column.slice(0, -1) + ") SELECT suspect_entity_id, " + values.slice(0, -1) + " FROM BACIRO_FHIR.adverse_event_suspect_entity WHERE " + condition;
 			
-			
-			//console.log(query)
+			console.log(query)
 			db.upsert(query, function (succes) {
-				console.log("add suspectEntity ok");
-        var query = "SELECT suspect_entity_id, instance_substance, instance_medication, instance_medication_administration, instance_medication_statement, instance_device, causality, causality_assessment, causality_product_relatedness, causality_method, causality_author_practitioner, causality_author_practitioner_role, causality_result, adverse_event_id from baciro_fhir.adverse_event_suspect_entity se WHERE suspect_entity_id = '" + id + "' ";
-				//console.log(query);
-        db.query(query, function (dataJson) {
+				console.log("update suspectEntity ok");
+        var query = "SELECT suspect_entity_id, instance_substance, instance_medication, instance_medication_administration, instance_medication_statement, instance_device, causality, causality_assessment, causality_product_relatedness, causality_method, causality_author_practitioner, causality_author_practitioner_role, causality_result, adverse_event_id from baciro_fhir.adverse_event_suspect_entity se WHERE suspect_entity_id = '" + suspect_entity_id + "' ";
+				console.log(query);
+				
+				db.query(query,function(dataJson){
           rez = lowercaseObject(dataJson);
-          res.json({
-            "err_code": 0,
-            "data": rez
-          });
-        }, function (e) {
-          res.json({
-            "err_code": 1,
-            "err_msg": e,
-            "application": "Api Phoenix",
-            "function": "addSuspectEntity"
-          });
+          res.json({"err_code":0,"data":rez});
+        },function(e){
+          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "updateSuspectEntity"});
         });
       }, function (e) {
-				console.log("encounter failed");
         res.json({
           "err_code": 2,
           "err_msg": e,
           "application": "Api Phoenix",
-          "function": "addSuspectEntity"
+          "function": "updateSuspectEntity"
         });
       });
     }

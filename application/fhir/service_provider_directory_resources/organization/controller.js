@@ -52,6 +52,9 @@ var controller = {
 			var organizationPart_of = req.query.part_of; 
 			//var organizationPhonetic = req.query.phonetic; 
 			var organizationType = req.query.type; 
+			var offset = req.query.offset;
+			var limit = req.query.limit;
+
 
 			var qString = {};
 			if(typeof organizationId !== 'undefined'){
@@ -189,6 +192,29 @@ var controller = {
 					res.json({"err_code": 1, "err_msg": "Phonetic is empty."});
 				}
 			 }*/
+			
+			
+			if(typeof offset !== 'undefined'){
+				if(!validator.isEmpty(offset)){
+					qString.offset = offset; 
+				}else{
+					res.json({"err_code": 1, "err_msg": "offset id is empty."});
+				}
+			}
+
+			if(typeof limit !== 'undefined'){
+				if(!validator.isEmpty(limit)){
+					if(!validator.isInt(limit)){
+						err_code = 2;
+						err_msg = "limit must be number";
+					} else{
+						qString.limit = limit; 	
+					}
+				}else{
+					res.json({"err_code": 1, "err_msg": "limit is empty."});
+				}
+			}
+			
 			seedPhoenixFHIR.path.GET = {
 				"Organization" : {
 					"location": "%(apikey)s/Organization",

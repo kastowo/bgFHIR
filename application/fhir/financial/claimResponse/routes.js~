@@ -1,0 +1,10 @@
+var routesClaimResponse = function(app, ClaimResponse){
+	
+	//get method
+	app.get('/:apikey/ClaimResponse', ClaimResponse.get.claimResponse);
+	//post method
+	app.post('/:apikey/ClaimResponse', ClaimResponse.post.claimResponse);
+	//put method
+	app.put('/:apikey/ClaimResponse/:claim_response_id?', ClaimResponse.put.claimResponse);
+}
+module.exports = routesClaimResponse;

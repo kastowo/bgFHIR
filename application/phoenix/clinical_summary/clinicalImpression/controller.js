@@ -26,7 +26,7 @@ var controller = {
 			var action = req.query.action;
 			var assessor = req.query.assessor;
 			var context = req.query.context;
-			var date = req.query.date
+			var date = req.query.date;
 			var finding_code = req.query.finding_code;
 			var finding_ref = req.query.finding_ref;
 			var identifier = req.query.identifier;
@@ -36,7 +36,6 @@ var controller = {
 			var problem = req.query.problem;
 			var status = req.query.status;
 			var subject = req.query.subject;
-			
 			
       //susun query
       var condition = "";
@@ -92,10 +91,22 @@ var controller = {
         condition += "ci.STATUS = '" + status + "' AND,";  
       }
 			
-			if(typeof subject !== 'subject' && subject !== ""){
+			if(typeof subject !== 'undefined' && subject !== ""){
 				condition += "(ci.SUBJECT_PATIENT = '" + subject + "' OR ci.SUBJECT_GROUP = '" + subject + "') AND,";  
 			}
 			
+			var offset = req.query.offset;
+			var limit = req.query.limit;
+
+			if((typeof offset !== 'undefined' && offset !== '')){
+				condition = " ci.clinical_impression_id > '" + offset + "' AND ";       
+			}
+			
+			if((typeof limit !== 'undefined' && limit !== '')){
+				limit = " limit " + limit + " ";
+			} else {
+				limit = " ";
+			}
 			
       if(condition == ""){
         fixCondition = "";
@@ -104,13 +115,15 @@ var controller = {
       }
 			      
       var arrClinicalImpression = [];
-      var query = "select clinical_impression_id, status, code, description, subject_patient, subject_group, context_encounter, context_episode_of_care, effective_date_time, effective_period_start, effective_period_end, date, assessor, previous, protocol, summary, prognosis_codeable_concept, condition_id from baciro_fhir.clinical_impression ci " + fixCondition;
-			//console.log(query);
+      var query = "select ci.clinical_impression_id as clinical_impression_id, ci.status as status, ci.code as code, ci.description as description, ci.subject_patient as subject_patient, ci.subject_group as subject_group, ci.context_encounter as context_encounter, ci.context_episode_of_care as context_episode_of_care, ci.effective_date_time as effective_date_time, ci.effective_period_start as effective_period_start, ci.effective_period_end as effective_period_end, ci.date as date, ci.assessor as assessor, ci.previous as previous, ci.protocol as protocol, ci.summary as summary, ci.prognosis_codeable_concept as prognosis_codeable_concept, ci.condition_id as condition_id from baciro_fhir.clinical_impression ci " + fixCondition + limit;
+			
+			
+			/*----*/
+			console.log(query);
       db.query(query,function(dataJson){
         rez = lowercaseObject(dataJson);
 				for(i = 0; i < rez.length; i++){
           var ClinicalImpression = {};
-					var arrSubject = [];
 					var Subject = {};
 					if(rez[i].subject_group != "null"){
 						Subject.group = hostFHIR + ':' + portFHIR + '/' + apikey + '/Group?_id=' +  rez[i].subject_group;
@@ -122,9 +135,6 @@ var controller = {
 					} else {
 						Subject.patient = "";
 					}
-					arrSubject = Subject;
-					
-					var arrContext = [];
 					var Context = {};
 					if(rez[i].context_encounter != "null"){
 						Context.encounter = hostFHIR + ':' + portFHIR + '/' + apikey + '/Encounter?_id=' +  rez[i].context_encounter;
@@ -136,7 +146,6 @@ var controller = {
 					} else {
 						Context.episodeOfCare = "";
 					}
-					arrContext = Context;
 					
 					ClinicalImpression.resourceType = "ClinicalImpression";
           ClinicalImpression.id = rez[i].clinical_impression_id;
@@ -144,12 +153,13 @@ var controller = {
 					ClinicalImpression.code = rez[i].code;
 					ClinicalImpression.description = rez[i].description;
 					
-					ClinicalImpression.subject = arrSubject;
-					ClinicalImpression.context = arrContext;
+					ClinicalImpression.subject = Subject;
+					ClinicalImpression.context = Context;
+					var Effective = {};
 					if(rez[i].effective_date_time == null){
-						ClinicalImpression.effective.date = formatDate(rez[i].effective_date_time);
+						Effective.date = formatDate(rez[i].effective_date_time);
 					}else{
-						ClinicalImpression.effective.date = rez[i].effective_date_time;
+						Effective.date = rez[i].effective_date_time;
 					}
 					var effectiveperiod_start,effectiveperiod_end;
 					if(rez[i].effective_period_start == null){
@@ -162,7 +172,8 @@ var controller = {
 					}else{
 						effectiveperiod_end = rez[i].effective_period_end;  
 					}
-					ClinicalImpression.effective.period = effectiveperiod_start + ' to ' + effectiveperiod_end;
+					Effective = effectiveperiod_start + ' to ' + effectiveperiod_end;
+					ClinicalImpression.effective = Effective;
 					if(rez[i].date == null){
 						ClinicalImpression.date = formatDate(rez[i].date);
 					}else{
@@ -269,7 +280,6 @@ var controller = {
 					var ClinicalImpressionFinding = {};
 					ClinicalImpressionFinding.id = rez[i].participant_id;
 					ClinicalImpressionFinding.itemCodeableConcept = rez[i].item_codeable_concept;
-					var arrItemReference = [];
 					var ItemReference = {};
 					if(rez[i].item_reference_condition != "null"){
 						ItemReference.condition = hostFHIR + ':' + portFHIR + '/' + apikey + '/Condition?_id=' +  rez[i].item_reference_condition;
@@ -281,7 +291,6 @@ var controller = {
 					} else {
 						ItemReference.observation = "";
 					}
-					arrItemReference = ItemReference;
 					ClinicalImpressionFinding.itemReference = ItemReference;
 					ClinicalImpressionFinding.basis = rez[i].basis;
 					
@@ -299,8 +308,666 @@ var controller = {
 					"function": "getClinicalImpressionFinding"
 				});
 			});
-		}
+		},
 		
+		clinicalImpressionProblemCondition: function getClinicalImpressionProblemCondition(req, res) {
+			var apikey = req.params.apikey;
+			
+			var _id = req.query._id;
+			var clinicalImpressionId = req.query.clinical_impression_id;
+
+			//susun query
+			var condition = '';
+
+			if (typeof clinicalImpressionId !== 'undefined' && clinicalImpressionId !== "") {
+				condition += "clinical_impression_id = '" + clinicalImpressionId + "' AND ";
+			}
+
+			if (condition == '') {
+				fixCondition = '';
+			} else {
+				fixCondition = ' WHERE ' + condition.slice(0, -4);
+			}
+
+			var arrClinicalImpressionProblemCondition = [];
+			var query = 'select condition_id from BACIRO_FHIR.condition ' + fixCondition;
+
+			db.query(query, function (dataJson) {
+				rez = lowercaseObject(dataJson);
+				for (i = 0; i < rez.length; i++) {
+					var clinicalImpressionProblemCondition = {};
+					if(rez[i].condition_id != "null"){
+						clinicalImpressionProblemCondition.id = hostFHIR + ':' + portFHIR + '/' + apikey + '/Condition?_id=' +  rez[i].condition_id;
+					} else {
+						clinicalImpressionProblemCondition.id = "";
+					}
+					
+					arrClinicalImpressionProblemCondition[i] = clinicalImpressionProblemCondition;
+				}
+				res.json({
+					"err_code": 0,
+					"data": arrClinicalImpressionProblemCondition
+				});
+			}, function (e) {
+				res.json({
+					"err_code": 1,
+					"err_msg": e,
+					"application": "Api Phoenix",
+					"function": "getClinicalImpressionProblemCondition"
+				});
+			});
+		},
+		clinicalImpressionProblemAllergyIntolerance: function getClinicalImpressionProblemAllergyIntolerance(req, res) {
+			var apikey = req.params.apikey;
+			
+			var _id = req.query._id;
+			var clinicalImpressionId = req.query.clinical_impression_id;
+
+			//susun query
+			var condition = '';
+
+			if (typeof clinicalImpressionId !== 'undefined' && clinicalImpressionId !== "") {
+				condition += "clinical_impression_id = '" + clinicalImpressionId + "' AND ";
+			}
+
+			if (condition == '') {
+				fixCondition = '';
+			} else {
+				fixCondition = ' WHERE ' + condition.slice(0, -4);
+			}
+
+			var arrClinicalImpressionProblemAllergyIntolerance = [];
+			var query = 'select allergy_intolerance_id from BACIRO_FHIR.allergy_intolerance ' + fixCondition;
+
+			db.query(query, function (dataJson) {
+				rez = lowercaseObject(dataJson);
+				for (i = 0; i < rez.length; i++) {
+					var clinicalImpressionProblemAllergyIntolerance = {};
+					if(rez[i].allergy_intolerance_id != "null"){
+						clinicalImpressionProblemAllergyIntolerance.id = hostFHIR + ':' + portFHIR + '/' + apikey + '/AllergyIntolerance?_id=' +  rez[i].allergy_intolerance_id;
+					} else {
+						clinicalImpressionProblemAllergyIntolerance.id = "";
+					}
+					
+					arrClinicalImpressionProblemAllergyIntolerance[i] = clinicalImpressionProblemAllergyIntolerance;
+				}
+				res.json({
+					"err_code": 0,
+					"data": arrClinicalImpressionProblemAllergyIntolerance
+				});
+			}, function (e) {
+				res.json({
+					"err_code": 1,
+					"err_msg": e,
+					"application": "Api Phoenix",
+					"function": "getClinicalImpressionProblemAllergyIntolerance"
+				});
+			});
+		},
+		clinicalImpressionInvestigationItemObservation: function getClinicalImpressionInvestigationItemObservation(req, res) {
+			var apikey = req.params.apikey;
+			
+			var _id = req.query._id;
+			var clinicalImpressionId = req.query.clinical_impression_investigation_id;
+
+			//susun query
+			var condition = '';
+
+			if (typeof clinicalImpressionId !== 'undefined' && clinicalImpressionId !== "") {
+				condition += "clinical_impression_investigation_id = '" + clinicalImpressionId + "' AND ";
+			}
+
+			if (condition == '') {
+				fixCondition = '';
+			} else {
+				fixCondition = ' WHERE ' + condition.slice(0, -4);
+			}
+
+			var arrClinicalImpressionInvestigationItemObservation = [];
+			var query = 'select observation_id from BACIRO_FHIR.observation ' + fixCondition;
+
+			db.query(query, function (dataJson) {
+				rez = lowercaseObject(dataJson);
+				for (i = 0; i < rez.length; i++) {
+					var clinicalImpressionInvestigationItemObservation = {};
+					if(rez[i].observation_id != "null"){
+						clinicalImpressionInvestigationItemObservation.id = hostFHIR + ':' + portFHIR + '/' + apikey + '/Observation?_id=' +  rez[i].observation_id;
+					} else {
+						clinicalImpressionInvestigationItemObservation.id = "";
+					}
+					
+					arrClinicalImpressionInvestigationItemObservation[i] = clinicalImpressionInvestigationItemObservation;
+				}
+				res.json({
+					"err_code": 0,
+					"data": arrClinicalImpressionInvestigationItemObservation
+				});
+			}, function (e) {
+				res.json({
+					"err_code": 1,
+					"err_msg": e,
+					"application": "Api Phoenix",
+					"function": "getClinicalImpressionInvestigationItemObservation"
+				});
+			});
+		},
+		clinicalImpressionInvestigationItemQuestionnaireResponse: function getClinicalImpressionInvestigationItemQuestionnaireResponse(req, res) {
+			var apikey = req.params.apikey;
+			
+			var _id = req.query._id;
+			var clinicalImpressionId = req.query.clinical_impression_investigation_id;
+
+			//susun query
+			var condition = '';
+
+			if (typeof clinicalImpressionId !== 'undefined' && clinicalImpressionId !== "") {
+				condition += "clinical_impression_id = '" + clinicalImpressionId + "' AND ";
+			}
+
+			if (condition == '') {
+				fixCondition = '';
+			} else {
+				fixCondition = ' WHERE ' + condition.slice(0, -4);
+			}
+
+			var arrClinicalImpressionInvestigationItemQuestionnaireResponse = [];
+			var query = 'select questionnaire_response_id from BACIRO_FHIR.questionnaire_response ' + fixCondition;
+
+			db.query(query, function (dataJson) {
+				rez = lowercaseObject(dataJson);
+				for (i = 0; i < rez.length; i++) {
+					var clinicalImpressionInvestigationItemQuestionnaireResponse = {};
+					if(rez[i].questionnaire_response_id != "null"){
+						clinicalImpressionInvestigationItemQuestionnaireResponse.id = hostFHIR + ':' + portFHIR + '/' + apikey + '/QuestionnaireResponse?_id=' +  rez[i].questionnaire_response_id;
+					} else {
+						clinicalImpressionInvestigationItemQuestionnaireResponse.id = "";
+					}
+					
+					arrClinicalImpressionInvestigationItemQuestionnaireResponse[i] = clinicalImpressionInvestigationItemQuestionnaireResponse;
+				}
+				res.json({
+					"err_code": 0,
+					"data": arrClinicalImpressionInvestigationItemQuestionnaireResponse
+				});
+			}, function (e) {
+				res.json({
+					"err_code": 1,
+					"err_msg": e,
+					"application": "Api Phoenix",
+					"function": "getClinicalImpressionInvestigationItemQuestionnaireResponse"
+				});
+			});
+		},
+		clinicalImpressionInvestigationItemFamilyMemberHistory: function getClinicalImpressionInvestigationItemFamilyMemberHistory(req, res) {
+			var apikey = req.params.apikey;
+			
+			var _id = req.query._id;
+			var clinicalImpressionId = req.query.clinical_impression_investigation_id;
+
+			//susun query
+			var condition = '';
+
+			if (typeof clinicalImpressionId !== 'undefined' && clinicalImpressionId !== "") {
+				condition += "clinical_impression_id = '" + clinicalImpressionId + "' AND ";
+			}
+
+			if (condition == '') {
+				fixCondition = '';
+			} else {
+				fixCondition = ' WHERE ' + condition.slice(0, -4);
+			}
+
+			var arrClinicalImpressionInvestigationItemFamilyMemberHistory = [];
+			var query = 'select family_member_history_id from BACIRO_FHIR.family_member_history ' + fixCondition;
+
+			db.query(query, function (dataJson) {
+				rez = lowercaseObject(dataJson);
+				for (i = 0; i < rez.length; i++) {
+					var clinicalImpressionInvestigationItemFamilyMemberHistory = {};
+					if(rez[i].family_member_history_id != "null"){
+						clinicalImpressionInvestigationItemFamilyMemberHistory.id = hostFHIR + ':' + portFHIR + '/' + apikey + '/FamilyMemberHistory?_id=' +  rez[i].family_member_history_id;
+					} else {
+						clinicalImpressionInvestigationItemFamilyMemberHistory.id = "";
+					}
+					
+					arrClinicalImpressionInvestigationItemFamilyMemberHistory[i] = clinicalImpressionInvestigationItemFamilyMemberHistory;
+				}
+				res.json({
+					"err_code": 0,
+					"data": arrClinicalImpressionInvestigationItemFamilyMemberHistory
+				});
+			}, function (e) {
+				res.json({
+					"err_code": 1,
+					"err_msg": e,
+					"application": "Api Phoenix",
+					"function": "getClinicalImpressionInvestigationItemFamilyMemberHistory"
+				});
+			});
+		},
+		clinicalImpressionInvestigationItemDiagnosticReport: function getClinicalImpressionInvestigationItemDiagnosticReport(req, res) {
+			var apikey = req.params.apikey;
+			
+			var _id = req.query._id;
+			var clinicalImpressionId = req.query.clinical_impression_investigation_id;
+
+			//susun query
+			var condition = '';
+
+			if (typeof clinicalImpressionId !== 'undefined' && clinicalImpressionId !== "") {
+				condition += "clinical_impression_investigation_id = '" + clinicalImpressionId + "' AND ";
+			}
+
+			if (condition == '') {
+				fixCondition = '';
+			} else {
+				fixCondition = ' WHERE ' + condition.slice(0, -4);
+			}
+
+			var arrClinicalImpressionInvestigationItemDiagnosticReport = [];
+			var query = 'select diagnostic_report_id from BACIRO_FHIR.diagnostic_report ' + fixCondition;
+
+			db.query(query, function (dataJson) {
+				rez = lowercaseObject(dataJson);
+				for (i = 0; i < rez.length; i++) {
+					var clinicalImpressionInvestigationItemDiagnosticReport = {};
+					if(rez[i].diagnostic_report_id != "null"){
+						clinicalImpressionInvestigationItemDiagnosticReport.id = hostFHIR + ':' + portFHIR + '/' + apikey + '/DiagnosticReport?_id=' +  rez[i].diagnostic_report_id;
+					} else {
+						clinicalImpressionInvestigationItemDiagnosticReport.id = "";
+					}
+					
+					arrClinicalImpressionInvestigationItemDiagnosticReport[i] = clinicalImpressionInvestigationItemDiagnosticReport;
+				}
+				res.json({
+					"err_code": 0,
+					"data": arrClinicalImpressionInvestigationItemDiagnosticReport
+				});
+			}, function (e) {
+				res.json({
+					"err_code": 1,
+					"err_msg": e,
+					"application": "Api Phoenix",
+					"function": "getClinicalImpressionInvestigationItemDiagnosticReport"
+				});
+			});
+		},
+		clinicalImpressionInvestigationItemRiskAssessment: function getClinicalImpressionInvestigationItemRiskAssessment(req, res) {
+			var apikey = req.params.apikey;
+			
+			var _id = req.query._id;
+			var clinicalImpressionId = req.query.clinical_impression_investigation_id;
+
+			//susun query
+			var condition = '';
+
+			if (typeof clinicalImpressionId !== 'undefined' && clinicalImpressionId !== "") {
+				condition += "clinical_impression_investigation_id = '" + clinicalImpressionId + "' AND ";
+			}
+
+			if (condition == '') {
+				fixCondition = '';
+			} else {
+				fixCondition = ' WHERE ' + condition.slice(0, -4);
+			}
+
+			var arrClinicalImpressionInvestigationItemRiskAssessment = [];
+			var query = 'select risk_assessment_id from BACIRO_FHIR.risk_assessment ' + fixCondition;
+
+			db.query(query, function (dataJson) {
+				rez = lowercaseObject(dataJson);
+				for (i = 0; i < rez.length; i++) {
+					var clinicalImpressionInvestigationItemRiskAssessment = {};
+					if(rez[i].risk_assessment_id != "null"){
+						clinicalImpressionInvestigationItemRiskAssessment.id = hostFHIR + ':' + portFHIR + '/' + apikey + '/RiskAssessment?_id=' +  rez[i].risk_assessment_id;
+					} else {
+						clinicalImpressionInvestigationItemRiskAssessment.id = "";
+					}
+					
+					arrClinicalImpressionInvestigationItemRiskAssessment[i] = clinicalImpressionInvestigationItemRiskAssessment;
+				}
+				res.json({
+					"err_code": 0,
+					"data": arrClinicalImpressionInvestigationItemRiskAssessment
+				});
+			}, function (e) {
+				res.json({
+					"err_code": 1,
+					"err_msg": e,
+					"application": "Api Phoenix",
+					"function": "getClinicalImpressionInvestigationItemRiskAssessment"
+				});
+			});
+		},
+		clinicalImpressionInvestigationItemImagingStudy: function getClinicalImpressionInvestigationItemImagingStudy(req, res) {
+			var apikey = req.params.apikey;
+			
+			var _id = req.query._id;
+			var clinicalImpressionId = req.query.clinical_impression_investigation_id;
+
+			//susun query
+			var condition = '';
+
+			if (typeof clinicalImpressionId !== 'undefined' && clinicalImpressionId !== "") {
+				condition += "clinical_impression_investigation_id = '" + clinicalImpressionId + "' AND ";
+			}
+
+			if (condition == '') {
+				fixCondition = '';
+			} else {
+				fixCondition = ' WHERE ' + condition.slice(0, -4);
+			}
+
+			var arrClinicalImpressionInvestigationItemImagingStudy = [];
+			var query = 'select imaging_study_id from BACIRO_FHIR.imaging_study ' + fixCondition;
+
+			db.query(query, function (dataJson) {
+				rez = lowercaseObject(dataJson);
+				for (i = 0; i < rez.length; i++) {
+					var clinicalImpressionInvestigationItemImagingStudy = {};
+					if(rez[i].imaging_study_id != "null"){
+						clinicalImpressionInvestigationItemImagingStudy.id = hostFHIR + ':' + portFHIR + '/' + apikey + '/ImagingStudy?_id=' +  rez[i].imaging_study_id;
+					} else {
+						clinicalImpressionInvestigationItemImagingStudy.id = "";
+					}
+					
+					arrClinicalImpressionInvestigationItemImagingStudy[i] = clinicalImpressionInvestigationItemImagingStudy;
+				}
+				res.json({
+					"err_code": 0,
+					"data": arrClinicalImpressionInvestigationItemImagingStudy
+				});
+			}, function (e) {
+				res.json({
+					"err_code": 1,
+					"err_msg": e,
+					"application": "Api Phoenix",
+					"function": "getClinicalImpressionInvestigationItemImagingStudy"
+				});
+			});
+		},
+		clinicalImpressionPrognosisReference: function getClinicalImpressionPrognosisReference(req, res) {
+			var apikey = req.params.apikey;
+			
+			var _id = req.query._id;
+			var clinicalImpressionId = req.query.clinical_impression_id;
+
+			//susun query
+			var condition = '';
+
+			if (typeof clinicalImpressionId !== 'undefined' && clinicalImpressionId !== "") {
+				condition += "clinical_impression_id = '" + clinicalImpressionId + "' AND ";
+			}
+
+			if (condition == '') {
+				fixCondition = '';
+			} else {
+				fixCondition = ' WHERE ' + condition.slice(0, -4);
+			}
+
+			var arrClinicalImpressionPrognosisReference = [];
+			var query = 'select risk_assessment_id from BACIRO_FHIR.risk_assessment ' + fixCondition;
+
+			db.query(query, function (dataJson) {
+				rez = lowercaseObject(dataJson);
+				for (i = 0; i < rez.length; i++) {
+					var clinicalImpressionPrognosisReference = {};
+					if(rez[i].risk_assessment_id != "null"){
+						clinicalImpressionPrognosisReference.id = hostFHIR + ':' + portFHIR + '/' + apikey + '/RiskAssessment?_id=' +  rez[i].risk_assessment_id;
+					} else {
+						clinicalImpressionPrognosisReference.id = "";
+					}
+					
+					arrClinicalImpressionPrognosisReference[i] = clinicalImpressionPrognosisReference;
+				}
+				res.json({
+					"err_code": 0,
+					"data": arrClinicalImpressionPrognosisReference
+				});
+			}, function (e) {
+				res.json({
+					"err_code": 1,
+					"err_msg": e,
+					"application": "Api Phoenix",
+					"function": "getClinicalImpressionPrognosisReference"
+				});
+			});
+		},
+		clinicalImpressionActionReferralRequest: function getClinicalImpressionActionReferralRequest(req, res) {
+			var apikey = req.params.apikey;
+			
+			var _id = req.query._id;
+			var clinicalImpressionId = req.query.clinical_impression_id;
+
+			//susun query
+			var condition = '';
+
+			if (typeof clinicalImpressionId !== 'undefined' && clinicalImpressionId !== "") {
+				condition += "clinical_impression_id = '" + clinicalImpressionId + "' AND ";
+			}
+
+			if (condition == '') {
+				fixCondition = '';
+			} else {
+				fixCondition = ' WHERE ' + condition.slice(0, -4);
+			}
+
+			var arrClinicalImpressionActionReferralRequest = [];
+			var query = 'select referral_request_id from BACIRO_FHIR.referral_request ' + fixCondition;
+
+			db.query(query, function (dataJson) {
+				rez = lowercaseObject(dataJson);
+				for (i = 0; i < rez.length; i++) {
+					var clinicalImpressionActionReferralRequest = {};
+					if(rez[i].referral_request_id != "null"){
+						clinicalImpressionActionReferralRequest.id = hostFHIR + ':' + portFHIR + '/' + apikey + '/ReferralRequest?_id=' +  rez[i].referral_request_id;
+					} else {
+						clinicalImpressionActionReferralRequest.id = "";
+					}
+					
+					arrClinicalImpressionActionReferralRequest[i] = clinicalImpressionActionReferralRequest;
+				}
+				res.json({
+					"err_code": 0,
+					"data": arrClinicalImpressionActionReferralRequest
+				});
+			}, function (e) {
+				res.json({
+					"err_code": 1,
+					"err_msg": e,
+					"application": "Api Phoenix",
+					"function": "getClinicalImpressionActionReferralRequest"
+				});
+			});
+		},
+		clinicalImpressionActionProcedureRequest: function getClinicalImpressionActionProcedureRequest(req, res) {
+			var apikey = req.params.apikey;
+			
+			var _id = req.query._id;
+			var clinicalImpressionId = req.query.clinical_impression_id;
+
+			//susun query
+			var condition = '';
+
+			if (typeof clinicalImpressionId !== 'undefined' && clinicalImpressionId !== "") {
+				condition += "clinical_impression_id = '" + clinicalImpressionId + "' AND ";
+			}
+
+			if (condition == '') {
+				fixCondition = '';
+			} else {
+				fixCondition = ' WHERE ' + condition.slice(0, -4);
+			}
+
+			var arrClinicalImpressionActionProcedureRequest = [];
+			var query = 'select procedure_request_id from BACIRO_FHIR.procedure_request ' + fixCondition;
+
+			db.query(query, function (dataJson) {
+				rez = lowercaseObject(dataJson);
+				for (i = 0; i < rez.length; i++) {
+					var clinicalImpressionActionProcedureRequest = {};
+					if(rez[i].procedure_request_id != "null"){
+						clinicalImpressionActionProcedureRequest.id = hostFHIR + ':' + portFHIR + '/' + apikey + '/ProcedureRequest?_id=' +  rez[i].procedure_request_id;
+					} else {
+						clinicalImpressionActionProcedureRequest.id = "";
+					}
+					
+					arrClinicalImpressionActionProcedureRequest[i] = clinicalImpressionActionProcedureRequest;
+				}
+				res.json({
+					"err_code": 0,
+					"data": arrClinicalImpressionActionProcedureRequest
+				});
+			}, function (e) {
+				res.json({
+					"err_code": 1,
+					"err_msg": e,
+					"application": "Api Phoenix",
+					"function": "getClinicalImpressionActionProcedureRequest"
+				});
+			});
+		},
+		clinicalImpressionActionProcedure: function getClinicalImpressionActionProcedure(req, res) {
+			var apikey = req.params.apikey;
+			
+			var _id = req.query._id;
+			var clinicalImpressionId = req.query.clinical_impression_id;
+
+			//susun query
+			var condition = '';
+
+			if (typeof clinicalImpressionId !== 'undefined' && clinicalImpressionId !== "") {
+				condition += "clinical_impression_id = '" + clinicalImpressionId + "' AND ";
+			}
+
+			if (condition == '') {
+				fixCondition = '';
+			} else {
+				fixCondition = ' WHERE ' + condition.slice(0, -4);
+			}
+
+			var arrClinicalImpressionActionProcedure = [];
+			var query = 'select procedure_id from BACIRO_FHIR.procedure ' + fixCondition;
+
+			db.query(query, function (dataJson) {
+				rez = lowercaseObject(dataJson);
+				for (i = 0; i < rez.length; i++) {
+					var clinicalImpressionActionProcedure = {};
+					if(rez[i].procedure_id != "null"){
+						clinicalImpressionActionProcedure.id = hostFHIR + ':' + portFHIR + '/' + apikey + '/Procedure?_id=' +  rez[i].procedure_id;
+					} else {
+						clinicalImpressionActionProcedure.id = "";
+					}
+					
+					arrClinicalImpressionActionProcedure[i] = clinicalImpressionActionProcedure;
+				}
+				res.json({
+					"err_code": 0,
+					"data": arrClinicalImpressionActionProcedure
+				});
+			}, function (e) {
+				res.json({
+					"err_code": 1,
+					"err_msg": e,
+					"application": "Api Phoenix",
+					"function": "getClinicalImpressionActionProcedure"
+				});
+			});
+		},
+		clinicalImpressionActionMedicationRequest: function getClinicalImpressionActionMedicationRequest(req, res) {
+			var apikey = req.params.apikey;
+			
+			var _id = req.query._id;
+			var clinicalImpressionId = req.query.clinical_impression_id;
+
+			//susun query
+			var condition = '';
+
+			if (typeof clinicalImpressionId !== 'undefined' && clinicalImpressionId !== "") {
+				condition += "clinical_impression_id = '" + clinicalImpressionId + "' AND ";
+			}
+
+			if (condition == '') {
+				fixCondition = '';
+			} else {
+				fixCondition = ' WHERE ' + condition.slice(0, -4);
+			}
+
+			var arrClinicalImpressionActionMedicationRequest = [];
+			var query = 'select medication_request_id from BACIRO_FHIR.medication_request ' + fixCondition;
+
+			db.query(query, function (dataJson) {
+				rez = lowercaseObject(dataJson);
+				for (i = 0; i < rez.length; i++) {
+					var clinicalImpressionActionMedicationRequest = {};
+					if(rez[i].medication_request_id != "null"){
+						clinicalImpressionActionMedicationRequest.id = hostFHIR + ':' + portFHIR + '/' + apikey + '/MedicationRequest?_id=' +  rez[i].medication_request_id;
+					} else {
+						clinicalImpressionActionMedicationRequest.id = "";
+					}
+					
+					arrClinicalImpressionActionMedicationRequest[i] = clinicalImpressionActionMedicationRequest;
+				}
+				res.json({
+					"err_code": 0,
+					"data": arrClinicalImpressionActionMedicationRequest
+				});
+			}, function (e) {
+				res.json({
+					"err_code": 1,
+					"err_msg": e,
+					"application": "Api Phoenix",
+					"function": "getClinicalImpressionActionMedicationRequest"
+				});
+			});
+		},
+		clinicalImpressionActionAppointment: function getClinicalImpressionActionAppointment(req, res) {
+			var apikey = req.params.apikey;
+			
+			var _id = req.query._id;
+			var clinicalImpressionId = req.query.clinical_impression_id;
+
+			//susun query
+			var condition = '';
+
+			if (typeof clinicalImpressionId !== 'undefined' && clinicalImpressionId !== "") {
+				condition += "clinical_impression_id = '" + clinicalImpressionId + "' AND ";
+			}
+
+			if (condition == '') {
+				fixCondition = '';
+			} else {
+				fixCondition = ' WHERE ' + condition.slice(0, -4);
+			}
+
+			var arrClinicalImpressionActionAppointment = [];
+			var query = 'select appointment_id from BACIRO_FHIR.appointment ' + fixCondition;
+
+			db.query(query, function (dataJson) {
+				rez = lowercaseObject(dataJson);
+				for (i = 0; i < rez.length; i++) {
+					var clinicalImpressionActionAppointment = {};
+					if(rez[i].appointment_id != "null"){
+						clinicalImpressionActionAppointment.id = hostFHIR + ':' + portFHIR + '/' + apikey + '/Appointment?_id=' +  rez[i].appointment_id;
+					} else {
+						clinicalImpressionActionAppointment.id = "";
+					}
+					
+					arrClinicalImpressionActionAppointment[i] = clinicalImpressionActionAppointment;
+				}
+				res.json({
+					"err_code": 0,
+					"data": arrClinicalImpressionActionAppointment
+				});
+			}, function (e) {
+				res.json({
+					"err_code": 1,
+					"err_msg": e,
+					"application": "Api Phoenix",
+					"function": "getClinicalImpressionActionAppointment"
+				});
+			});
+		},
   },
 	post: {
 		clinicalImpression: function addClinicalImpression(req, res) {
@@ -533,7 +1200,7 @@ var controller = {
 	put: {
 		clinicalImpression: function updateClinicalImpression(req, res) {
 			console.log(req.body);
-			var clinical_impression_id = req.params.clinical_impression_id;
+			var clinical_impression_id = req.params._id;
 			var status = req.body.status;
 			var code = req.body.code;
 			var description = req.body.description;
@@ -645,10 +1312,14 @@ var controller = {
       }			
 			
 			var domainResource = req.params.dr;
-			var arrResource = domainResource.split('|');
-			var fieldResource = arrResource[0];
-			var valueResource = arrResource[1];
-			var condition = "clinical_impression_id = '" + clinical_impression_id + "' AND " + fieldResource + " = '" + valueResource + "'";
+			if(domainResource !== "" && typeof domainResource !== 'undefined'){
+				var arrResource = domainResource.split('|');
+				var fieldResource = arrResource[0];
+				var valueResource = arrResource[1];
+				var condition = "clinical_impression_id = '" + clinical_impression_id + "' AND " + fieldResource + " = '" + valueResource + "'";
+			}else{
+        var condition = "clinical_impression_id = '" + clinical_impression_id + "'";
+      }
 
       var query = "UPSERT INTO BACIRO_FHIR.CLINICAL_IMPRESSION(clinical_impression_id," + column.slice(0, -1) + ") SELECT clinical_impression_id, " + values.slice(0, -1) + " FROM BACIRO_FHIR.CLINICAL_IMPRESSION WHERE " + condition;
 			
@@ -668,7 +1339,7 @@ var controller = {
     },
 		clinicalImpressionInvestigation: function updateClinicalImpressionInvestigation(req, res) {
 			console.log(req.body);
-			var investigation_id = req.body.investigation_id;
+			var investigation_id = req.body._id;
 			var code = req.body.code;
 			var clinical_impression_id = req.body.clinical_impression_id;
 
@@ -688,10 +1359,14 @@ var controller = {
 
      
 			var domainResource = req.params.dr;
-			var arrResource = domainResource.split('|');
-			var fieldResource = arrResource[0];
-			var valueResource = arrResource[1];
-			var condition = "investigation_id = '" + investigation_id + "' AND " + fieldResource + " = '" + valueResource + "'";
+			if(domainResource !== "" && typeof domainResource !== 'undefined'){
+				var arrResource = domainResource.split('|');
+				var fieldResource = arrResource[0];
+				var valueResource = arrResource[1];
+				var condition = "investigation_id = '" + investigation_id + "' AND " + fieldResource + " = '" + valueResource + "'";
+			}else{
+        var condition = "investigation_id = '" + investigation_id + "'";
+      }
 			
 			var query = "UPSERT INTO BACIRO_FHIR.CLINICAL_IMPRESSION_INVESTIGATION(investigation_id," + column.slice(0, -1) + ") SELECT investigation_id, " + values.slice(0, -1) + " FROM BACIRO_FHIR.CLINICAL_IMPRESSION_INVESTIGATION WHERE " + condition;
 			
@@ -712,7 +1387,7 @@ var controller = {
 		clinicalImpressionFinding: function updateClinicalImpressionFinding(req, res) {
 			console.log(req.body);
 			
-			var finding_id = req.params.finding_id;
+			var finding_id = req.params._id;
 			var item_codeable_concept = req.body.item_codeable_concept;
 			var item_reference_condition = req.body.item_reference_condition;
 			var item_reference_observation = req.body.item_reference_observation;
@@ -748,10 +1423,14 @@ var controller = {
       }
 			
 			var domainResource = req.params.dr;
-			var arrResource = domainResource.split('|');
-			var fieldResource = arrResource[0];
-			var valueResource = arrResource[1];
-			var condition = "finding_id = '" + finding_id + "' AND " + fieldResource + " = '" + valueResource + "'";
+			if(domainResource !== "" && typeof domainResource !== 'undefined'){
+				var arrResource = domainResource.split('|');
+				var fieldResource = arrResource[0];
+				var valueResource = arrResource[1];
+				var condition = "finding_id = '" + finding_id + "' AND " + fieldResource + " = '" + valueResource + "'";
+			}else{
+        var condition = "finding_id = '" + finding_id + "'";
+      }
 			
 			var query = "UPSERT INTO BACIRO_FHIR.clinical_impression_finding(finding_id," + column.slice(0, -1) + ") SELECT finding_id, " + values.slice(0, -1) + " FROM BACIRO_FHIR.clinical_impression_finding WHERE " + condition;
 			

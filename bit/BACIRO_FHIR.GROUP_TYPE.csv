@@ -1,8 +1,0 @@
-ID,CODE,DISPLAY,DEFINITION
-1,person,Person,Group contains "person" Patient resources
-2,animal,Animal,Group contains "animal" Patient resources
-3,practitioner,practitioner,Group contains healthcare practitioner resources
-4,device,Device,Group contains Device resources
-5,medication,Medication,Group contains Medication resources
-6,substance,Substance,Group contains Substance resources
-31,sub123,sub123,Group contains healthcare practitioner resources

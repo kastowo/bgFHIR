@@ -47,7 +47,10 @@ var controller = {
 			var encounterStatus = req.query.status;
 			var subjectId = req.query.subject;
 			var typeId = req.query.type;
-			
+			var offset = req.query.offset;
+			var limit = req.query.limit;
+
+
 			//susun query
       var condition = "";
       var join = "";
@@ -139,6 +142,18 @@ var controller = {
 			if (typeof typeId !== 'undefined' && typeId !== "") {
         condition += "enc.encounter_type = '" + typeId + "' AND ";
       }
+			
+			
+			if((typeof offset !== 'undefined' && offset !== '')){
+				condition = " enc.encounter_id > '" + offset + "' AND ";       
+			}
+			
+			if((typeof limit !== 'undefined' && limit !== '')){
+				limit = " limit " + limit + " ";       
+			} else {
+				limit = " ";
+			}
+
 			if (condition == "") {
         fixCondition = "";
       } else {
@@ -146,7 +161,7 @@ var controller = {
       }
 			
 			var arrEncounter = [];
-			var query = "SELECT enc.encounter_id as id, enc.encounter_priority as priority, enc.appointment_id as appointment, enc.encounter_class as encounter_class, enc.encounter_period_start as period_start, enc.encounter_period_end as period_end, enc.parent_id as parent, enc.encounter_reason as reason, enc.organization_id as org_id, enc.encounter_status as encounter_status, enc.subject_patient_id as subject_patient_id, enc.subject_group_id as subject_group_id, enc.encounter_type as type, enc.encounter_length as length FROM BACIRO_FHIR.ENCOUNTER enc " + fixCondition;
+			var query = "SELECT enc.encounter_id as id, enc.encounter_priority as priority, enc.appointment_id as appointment, enc.encounter_class as encounter_class, enc.encounter_period_start as period_start, enc.encounter_period_end as period_end, enc.parent_id as parent, enc.encounter_reason as reason, enc.organization_id as org_id, enc.encounter_status as encounter_status, enc.subject_patient_id as subject_patient_id, enc.subject_group_id as subject_group_id, enc.encounter_type as type, enc.encounter_length as length FROM BACIRO_FHIR.ENCOUNTER enc " + fixCondition + limit;;
 			//console.log(query);
 			db.query(query, function (dataJson) {
         rez = lowercaseObject(dataJson);

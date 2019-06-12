@@ -1,0 +1,10 @@
+var routesPaymentNotice = function(app, PaymentNotice){
+	
+	//get method
+	app.get('/:apikey/PaymentNotice', PaymentNotice.get.paymentNotice);
+	//post method
+	app.post('/:apikey/PaymentNotice', PaymentNotice.post.paymentNotice);
+	//put method
+	app.put('/:apikey/PaymentNotice/:payment_notice_id?', PaymentNotice.put.paymentNotice);
+}
+module.exports = routesPaymentNotice;

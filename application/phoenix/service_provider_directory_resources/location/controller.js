@@ -45,7 +45,10 @@ var controller = {
 			var locationAddressUse = req.query.address_use; 
 			var endpoint = req.query.endpoint;
 			var identifier = req.query.identifier;
-			
+			var offset = req.query.offset;
+			var limit = req.query.limit;
+
+
       //susun query
 			var column= "";
       var condition = "";
@@ -136,6 +139,16 @@ var controller = {
 				join += " LEFT JOIN BACIRO_FHIR.ENDPOINT ep ON ep.LOCATION_ID = l.LOCATION_ID ";
       }
 			
+			if((typeof offset !== 'undefined' && offset !== '')){
+				condition = " l.location_id > '" + offset + "' AND ";       
+			}
+			
+			if((typeof limit !== 'undefined' && limit !== '')){
+				limit = " limit " + limit + " ";       
+			} else {
+				limit = " ";
+			}
+			
       if(condition == ""){
         fixCondition = "";
       }else{
@@ -144,7 +157,7 @@ var controller = {
       
       var arrOrganization = [];
 			
-      var query = "select l.location_id as location_id, location_status, location_operational_status, location_name, location_alias, location_description, location_mode, location_type, location_physical_type, l.address_id as address_id, l.organization_id as organization_id, parent_id, location_position_id from baciro_fhir.location l  " + fixCondition;
+      var query = "select l.location_id as location_id, l.location_status as location_status, l.location_operational_status as location_operational_status, l.location_name as location_name, l.location_alias as location_alias, l.location_description as location_description, l.location_mode as location_mode, l.location_type as location_type, l.location_physical_type as location_physical_type, l.address_id as address_id, l.organization_id as organization_id, parent_id, location_position_id from baciro_fhir.location l  " + fixCondition + limit;
 			console.log(query);
 			var arrLocation = [];
       db.query(query,function(dataJson){

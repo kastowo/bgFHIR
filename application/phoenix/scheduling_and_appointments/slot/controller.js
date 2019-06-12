@@ -30,7 +30,10 @@ var controller = {
       var slotServiceType = req.query.service_type;
       var slotStart = req.query.start;
       var slotStatus = req.query.status;
-      
+      var offset = req.query.offset;
+			var limit = req.query.limit;
+
+
       //susun query
       var condition = "";
       var join = "";
@@ -54,6 +57,17 @@ var controller = {
       if(typeof slotStatus !== 'undefined' && slotStatus !== ""){
         condition += "slot_status = '" + slotStatus + "' AND ";  
       }
+			
+			if((typeof offset !== 'undefined' && offset !== '')){
+				condition = " slot_id > '" + offset + "' AND ";       
+			}
+			
+			if((typeof limit !== 'undefined' && limit !== '')){
+				limit = " limit " + limit + " ";       
+			} else {
+				limit = " ";
+			}
+
       
       if(condition == ""){
         fixCondition = "";
@@ -62,7 +76,7 @@ var controller = {
       }
 
       var arrSlot = [];
-      var query = "SELECT slot_id, slot_service_category, slot_service_type, slot_specialty, slot_appointment_type, slot_status, slot_start, slot_end, slot_overbooked, slot_comment, schedule_id FROM BACIRO_FHIR.SLOT " + fixCondition;
+      var query = "SELECT slot_id, slot_service_category, slot_service_type, slot_specialty, slot_appointment_type, slot_status, slot_start, slot_end, slot_overbooked, slot_comment, schedule_id FROM BACIRO_FHIR.SLOT " + fixCondition + limit;
 
       db.query(query,function(dataJson){
         rez = lowercaseObject(dataJson);

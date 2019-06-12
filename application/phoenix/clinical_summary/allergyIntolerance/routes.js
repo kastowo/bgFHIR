@@ -5,7 +5,7 @@ var routesAllergyIntolerance = function(app, AllergyIntolerance){
 	app.post('/:apikey/AllergyIntolerance', AllergyIntolerance.post.allergyIntolerance);
 	app.post('/:apikey/AllergyIntoleranceReaction', AllergyIntolerance.post.allergyIntoleranceReaction);
 	
-	app.put('/:apikey/AllergyIntolerance/:adverse_event_id', AllergyIntolerance.put.allergyIntolerance);
-	app.put('/:apikey/AllergyIntoleranceReaction', AllergyIntolerance.put.allergyIntoleranceReaction);
+	app.put('/:apikey/AllergyIntolerance/:_id?', AllergyIntolerance.put.allergyIntolerance);
+	app.put('/:apikey/AllergyIntoleranceReaction/:_id?/:dr?', AllergyIntolerance.put.allergyIntoleranceReaction);
 }
 module.exports = routesAllergyIntolerance;

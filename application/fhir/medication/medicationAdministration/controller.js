@@ -39,97 +39,169 @@ var controller = {
 			var qString = {};
 
 			//params from query string
-			/*var medicationAdministrationId = req.query._id;
-			var category = req.query.category;
-			var date=req.query.date;
-			var location=req.query.location;
-			var reaction=req.query.reaction;
-			var recorder=req.query.recorder;
-			var seriousness=req.query.seriousness;			
-			var study=req.query.study;
-			var subject=req.query.subject;
-			var substance=req.query.substance;
-			var type=req.query.type;
+			var medicationAdministrationId = req.query._id;
+			var code = req.query.code;
+			var context = req.query.context;
+			var device = req.query.device;
+			var effectiveTime = req.query.effectiveTime;
+			var identifier = req.query.identifier;
+			var medication = req.query.medication;
+			var notGiven = req.query.notGiven;
+			var patient = req.query.patient;
+			var performer = req.query.performer;
+			var prescription = req.query.prescription;
+			var reasonGiven = req.query.reasonGiven;
+			var reasonNotGiven = req.query.reasonNotGiven;
+			var status = req.query.status;
+			var subject = req.query.subject;
+			var offset = req.query.offset;
+			var limit = req.query.limit;
+
+			if(typeof offset !== 'undefined'){
+				if(!validator.isEmpty(offset)){
+					qString.offset = offset; 
+				}else{
+					res.json({"err_code": 1, "err_msg": "offset id is empty."});
+				}
+			}
+
+			if(typeof limit !== 'undefined'){
+				if(!validator.isEmpty(limit)){
+					if(!validator.isInt(limit)){
+						err_code = 2;
+						err_msg = "limit must be number";
+					} else{
+						qString.limit = limit; 	
+					}
+				}else{
+					res.json({"err_code": 1, "err_msg": "limit is empty."});
+				}
+			}			
 
 			if(typeof medicationAdministrationId !== 'undefined'){
 				if(!validator.isEmpty(medicationAdministrationId)){
 					qString.medicationAdministrationId = medicationAdministrationId; 
 				}else{
-					res.json({"err_code": 1, "err_msg": "Care Team Id is required."});
+					res.json({"err_code": 1, "err_msg": "Medication Administration Id is required."});
 				}
 			}
 
-			if(typeof category !== 'undefined'){
-				if(!validator.isEmpty(category)){
-					qString.category = category; 
+			if(typeof code !== 'undefined'){
+				if(!validator.isEmpty(code)){
+					qString.code = code; 
 				}else{
-					res.json({"err_code": 1, "err_msg": "Category is required."});
+					res.json({"err_code": 1, "err_msg": "code is empty."});
 				}
 			}
 
-			if(typeof date !== 'undefined'){
-				if(!validator.isEmpty(date)){
-					qString.date = date; 
+			if(typeof context !== 'undefined'){
+				if(!validator.isEmpty(context)){
+					qString.context = context; 
 				}else{
-					res.json({"err_code": 1, "err_msg": "Date is empty."});
+					res.json({"err_code": 1, "err_msg": "context is empty."});
 				}
 			}
 
-			if(typeof location !== 'undefined'){
-				if(!validator.isEmpty(location)){
-					qString.location = location;
+			if(typeof device !== 'undefined'){
+				if(!validator.isEmpty(device)){
+					qString.device = device; 
 				}else{
-					res.json({"err_code": 1, "err_msg": "Location is empty."});
+					res.json({"err_code": 1, "err_msg": "device is empty."});
 				}
 			}
 
-			if(typeof reaction !== 'undefined'){
-				if(!validator.isEmpty(reaction)){
-					qString.reaction = reaction;
+			if(typeof effectiveTime !== 'undefined'){
+				if(!validator.isEmpty(effectiveTime)){
+					if(!regex.test(effectiveTime)){
+						res.json({"err_code": 1, "err_msg": "effective time invalid format."});
+					}else{
+						qString.effectiveTime = effectiveTime; 
+					}	
 				}else{
-					res.json({"err_code": 1, "err_msg": "Reaction is empty."});
+					res.json({"err_code": 1, "err_msg": "effective time is empty."});
 				}
 			}
 
-			if(typeof seriousness !== 'undefined'){
-				if(!validator.isEmpty(seriousness)){
-					qString.seriousness = seriousness;
+			if(typeof identifier !== 'undefined'){
+				if(!validator.isEmpty(identifier)){
+					qString.identifier = identifier; 
 				}else{
-					res.json({"err_code": 1, "err_msg": "Seriousness of is empty."});
+					res.json({"err_code": 1, "err_msg": "identifier is empty."});
 				}
-			}	
+			}
 
-			if(typeof study !== 'undefined'){
-				if(!validator.isEmpty(study)){
-					qString.study = study;
+			if(typeof medication !== 'undefined'){
+				if(!validator.isEmpty(medication)){
+					qString.medication = medication; 
 				}else{
-					res.json({"err_code": 1, "err_msg": "Study of is empty."});
+					res.json({"err_code": 1, "err_msg": "medication is empty."});
+				}
+			}
+
+			if(typeof notGiven !== 'undefined'){
+				if(!validator.isEmpty(notGiven)){
+					qString.notGiven = notGiven; 
+				}else{
+					res.json({"err_code": 1, "err_msg": "not given is empty."});
+				}
+			}
+
+			if(typeof patient !== 'undefined'){
+				if(!validator.isEmpty(patient)){
+					qString.patient = patient; 
+				}else{
+					res.json({"err_code": 1, "err_msg": "patient is empty."});
+				}
+			}
+
+			if(typeof performer !== 'undefined'){
+				if(!validator.isEmpty(performer)){
+					qString.performer = performer; 
+				}else{
+					res.json({"err_code": 1, "err_msg": "performer is empty."});
+				}
+			}
+
+			if(typeof prescription !== 'undefined'){
+				if(!validator.isEmpty(prescription)){
+					qString.prescription = prescription; 
+				}else{
+					res.json({"err_code": 1, "err_msg": "prescription is empty."});
+				}
+			}
+
+			if(typeof reasonGiven !== 'undefined'){
+				if(!validator.isEmpty(reasonGiven)){
+					qString.reasonGiven = reasonGiven; 
+				}else{
+					res.json({"err_code": 1, "err_msg": "reason given is empty."});
+				}
+			}
+
+			if(typeof reasonNotGiven !== 'undefined'){
+				if(!validator.isEmpty(reasonNotGiven)){
+					qString.reasonNotGiven = reasonNotGiven; 
+				}else{
+					res.json({"err_code": 1, "err_msg": "reason not given is empty."});
+				}
+			}
+
+			if(typeof status !== 'undefined'){
+				if(!validator.isEmpty(status)){
+					qString.status = status; 
+				}else{
+					res.json({"err_code": 1, "err_msg": "status is empty."});
 				}
 			}
 
 			if(typeof subject !== 'undefined'){
 				if(!validator.isEmpty(subject)){
-					qString.subject = subject;
+					qString.subject = subject; 
 				}else{
-					res.json({"err_code": 1, "err_msg": "Subject of is empty."});
+					res.json({"err_code": 1, "err_msg": "subject is empty."});
 				}
 			}
 
-			if(typeof substance !== 'undefined'){
-				if(!validator.isEmpty(substance)){
-					qString.substance = substance;
-				}else{
-					res.json({"err_code": 1, "err_msg": "Substance of is empty."});
-				}
-			}
-
-			if(typeof type !== 'undefined'){
-				if(!validator.isEmpty(type)){
-					qString.type = type;
-				}else{
-					res.json({"err_code": 1, "err_msg": "Type of is empty."});
-				}
-			}*/
 
 			seedPhoenixFHIR.path.GET = {
 				"MedicationAdministration" : {
@@ -153,24 +225,58 @@ var controller = {
 									newMedicationAdministration = [];
 									for(i=0; i < medicationAdministration.data.length; i++){
 										myEmitter.once("getIdentifier", function(medicationAdministration, index, newMedicationAdministration, countMedicationAdministration){
-											/*console.log(medicationAdministration);*/
-														//get identifier
+											//get identifier
+											qString = {};
+											qString.medication_administration_id = medicationAdministration.id;
+											seedPhoenixFHIR.path.GET = {
+												"Identifier" : {
+													"location": "%(apikey)s/Identifier",
+													"query": qString
+												}
+											}
+											var ApiFHIR = new Apiclient(seedPhoenixFHIR);
+											ApiFHIR.get('Identifier', {"apikey": apikey}, {}, function(error, response, body){
+												identifier = JSON.parse(body);
+												if(identifier.err_code == 0){
+													var objectMedicationAdministration = {};
+													objectMedicationAdministration.resourceType = medicationAdministration.resourceType;
+													objectMedicationAdministration.id = medicationAdministration.id;
+													objectMedicationAdministration.identifier = identifier.data;
+													objectMedicationAdministration.status = medicationAdministration.status;
+													objectMedicationAdministration.category = medicationAdministration.category;
+													objectMedicationAdministration.medication = medicationAdministration.medication;
+													objectMedicationAdministration.subject = medicationAdministration.subject;
+													objectMedicationAdministration.context = medicationAdministration.context;
+													objectMedicationAdministration.supportingInformation = medicationAdministration.supportingInformation;
+													objectMedicationAdministration.effective = medicationAdministration.effective;
+													objectMedicationAdministration.notGiven = medicationAdministration.notGiven;
+													objectMedicationAdministration.reasonNotGiven = medicationAdministration.reasonNotGiven;
+													objectMedicationAdministration.reasonCode = medicationAdministration.reasonCode;
+													objectMedicationAdministration.prescription = medicationAdministration.prescription;
+
+													objectMedicationAdministration.patient = medicationAdministration.patient;
+
+													newMedicationAdministration[index] = objectMedicationAdministration;
+
+													myEmitter.once('getMedicationAdministrationPerformer', function(medicationAdministration, index, newMedicationAdministration, countMedicationAdministration){
 														qString = {};
-														qString.immunization_recommendation_id = medicationAdministration.id;
+														qString.medication_administration_id = medicationAdministration.id;
 														seedPhoenixFHIR.path.GET = {
-															"Identifier" : {
-																"location": "%(apikey)s/Identifier",
+															"MedicationAdministrationPerformer" : {
+																"location": "%(apikey)s/MedicationAdministrationPerformer",
 																"query": qString
 															}
 														}
+
 														var ApiFHIR = new Apiclient(seedPhoenixFHIR);
-														ApiFHIR.get('Identifier', {"apikey": apikey}, {}, function(error, response, body){
-															identifier = JSON.parse(body);
-															if(identifier.err_code == 0){
+
+														ApiFHIR.get('MedicationAdministrationPerformer', {"apikey": apikey}, {}, function(error, response, body){
+															medicationAdministrationPerformer = JSON.parse(body);
+															if(medicationAdministrationPerformer.err_code == 0){
 																var objectMedicationAdministration = {};
 																objectMedicationAdministration.resourceType = medicationAdministration.resourceType;
 																objectMedicationAdministration.id = medicationAdministration.id;
-																objectMedicationAdministration.identifier = identifier.data;
+																objectMedicationAdministration.identifier = medicationAdministration.identifier;
 																objectMedicationAdministration.status = medicationAdministration.status;
 																objectMedicationAdministration.category = medicationAdministration.category;
 																objectMedicationAdministration.medication = medicationAdministration.medication;
@@ -178,38 +284,75 @@ var controller = {
 																objectMedicationAdministration.context = medicationAdministration.context;
 																objectMedicationAdministration.supportingInformation = medicationAdministration.supportingInformation;
 																objectMedicationAdministration.effective = medicationAdministration.effective;
+																objectMedicationAdministration.performer = medicationAdministrationPerformer.data;
 																objectMedicationAdministration.notGiven = medicationAdministration.notGiven;
 																objectMedicationAdministration.reasonNotGiven = medicationAdministration.reasonNotGiven;
 																objectMedicationAdministration.reasonCode = medicationAdministration.reasonCode;
 																objectMedicationAdministration.prescription = medicationAdministration.prescription;
-																
-																objectMedicationAdministration.patient = medicationAdministration.patient;
-																
+
 																newMedicationAdministration[index] = objectMedicationAdministration;
 																
-																/*if(index == countMedicationAdministration -1 ){
-																	res.json({"err_code": 0, "data":newMedicationAdministration});				
-																}
-*/
-																myEmitter.once('getMedicationAdministrationPerformer', function(medicationAdministration, index, newMedicationAdministration, countMedicationAdministration){
+																myEmitter.once('getMedicationAdministrationDosage', function(medicationAdministration, index, newMedicationAdministration, countMedicationAdministration){
+																	qString = {};
+																	qString.medication_administration_id = medicationAdministration.id;
+																	seedPhoenixFHIR.path.GET = {
+																		"MedicationAdministrationDosage" : {
+																			"location": "%(apikey)s/MedicationAdministrationDosage",
+																			"query": qString
+																		}
+																	}
+
+																	var ApiFHIR = new Apiclient(seedPhoenixFHIR);
+
+																	ApiFHIR.get('MedicationAdministrationDosage', {"apikey": apikey}, {}, function(error, response, body){
+																		medicationAdministrationDosage = JSON.parse(body);
+																		if(medicationAdministrationDosage.err_code == 0){
+																			var objectMedicationAdministration = {};
+																			objectMedicationAdministration.resourceType = medicationAdministration.resourceType;
+																			objectMedicationAdministration.id = medicationAdministration.id;
+																			objectMedicationAdministration.identifier = medicationAdministration.identifier;
+																			objectMedicationAdministration.status = medicationAdministration.status;
+																			objectMedicationAdministration.category = medicationAdministration.category;
+																			objectMedicationAdministration.medication = medicationAdministration.medication;
+																			objectMedicationAdministration.subject = medicationAdministration.subject;
+																			objectMedicationAdministration.context = medicationAdministration.context;
+																			objectMedicationAdministration.supportingInformation = medicationAdministration.supportingInformation;
+																			objectMedicationAdministration.effective = medicationAdministration.effective;
+																			objectMedicationAdministration.performer = medicationAdministration.performer;
+																			objectMedicationAdministration.notGiven = medicationAdministration.notGiven;
+																			objectMedicationAdministration.reasonNotGiven = medicationAdministration.reasonNotGiven;
+																			objectMedicationAdministration.reasonCode = medicationAdministration.reasonCode;
+																			objectMedicationAdministration.prescription = medicationAdministration.prescription;
+																			objectMedicationAdministration.dosage = medicationAdministrationDosage.data;
+
+																			newMedicationAdministration[index] = objectMedicationAdministration;
+
+																			/*if(index == countMedicationAdministration -1 ){
+																				res.json({"err_code": 0, "data":newMedicationAdministration});				
+																			}*/
+																			
+																			myEmitter.once('getMedicationAdministrationDefinitionPlanDefinition', function(medicationAdministration, index, newMedicationAdministration, countMedicationAdministration){
 																				qString = {};
 																				qString.medication_administration_id = medicationAdministration.id;
 																				seedPhoenixFHIR.path.GET = {
-																					"MedicationAdministrationPerformer" : {
-																						"location": "%(apikey)s/MedicationAdministrationPerformer",
+																					"MedicationAdministrationDefinitionPlanDefinition" : {
+																						"location": "%(apikey)s/MedicationAdministrationDefinitionPlanDefinition",
 																						"query": qString
 																					}
 																				}
 
 																				var ApiFHIR = new Apiclient(seedPhoenixFHIR);
 
-																				ApiFHIR.get('MedicationAdministrationPerformer', {"apikey": apikey}, {}, function(error, response, body){
-																					medicationAdministrationPerformer = JSON.parse(body);
-																					if(medicationAdministrationPerformer.err_code == 0){
+																				ApiFHIR.get('MedicationAdministrationDefinitionPlanDefinition', {"apikey": apikey}, {}, function(error, response, body){
+																					medicationAdministrationDefinitionPlanDefinition = JSON.parse(body);
+																					if(medicationAdministrationDefinitionPlanDefinition.err_code == 0){
 																						var objectMedicationAdministration = {};
 																						objectMedicationAdministration.resourceType = medicationAdministration.resourceType;
 																						objectMedicationAdministration.id = medicationAdministration.id;
 																						objectMedicationAdministration.identifier = medicationAdministration.identifier;
+																						var Definition = {};
+																						Definition.planDefinition = medicationAdministrationDefinitionPlanDefinition.data;
+																						objectMedicationAdministration.definition = Definition;
 																						objectMedicationAdministration.status = medicationAdministration.status;
 																						objectMedicationAdministration.category = medicationAdministration.category;
 																						objectMedicationAdministration.medication = medicationAdministration.medication;
@@ -217,36 +360,37 @@ var controller = {
 																						objectMedicationAdministration.context = medicationAdministration.context;
 																						objectMedicationAdministration.supportingInformation = medicationAdministration.supportingInformation;
 																						objectMedicationAdministration.effective = medicationAdministration.effective;
-																						objectMedicationAdministration.performer = medicationAdministrationPerformer.data;
+																						objectMedicationAdministration.performer = medicationAdministration.performer;
 																						objectMedicationAdministration.notGiven = medicationAdministration.notGiven;
 																						objectMedicationAdministration.reasonNotGiven = medicationAdministration.reasonNotGiven;
 																						objectMedicationAdministration.reasonCode = medicationAdministration.reasonCode;
 																						objectMedicationAdministration.prescription = medicationAdministration.prescription;
-																						
-																						newMedicationAdministration[index] = objectMedicationAdministration;
+																						objectMedicationAdministration.dosage = medicationAdministration.dosage;
 
-																						/*if(index == countMedicationAdministration -1 ){
-																							res.json({"err_code": 0, "data":newMedicationAdministration});				
-																						}*/
-																						myEmitter.once('getMedicationAdministrationDosage', function(medicationAdministration, index, newMedicationAdministration, countMedicationAdministration){
+																						newMedicationAdministration[index] = objectMedicationAdministration;
+																						myEmitter.once('getMedicationAdministrationDefinitionActivityDefinition', function(medicationAdministration, index, newMedicationAdministration, countMedicationAdministration){
 																							qString = {};
-																							qString.medication_administration_id = medicationAdministration.recommendation.id;
+																							qString.medication_administration_id = medicationAdministration.id;
 																							seedPhoenixFHIR.path.GET = {
-																								"MedicationAdministrationDosage" : {
-																									"location": "%(apikey)s/MedicationAdministrationDosage",
+																								"MedicationAdministrationDefinitionActivityDefinition" : {
+																									"location": "%(apikey)s/MedicationAdministrationDefinitionActivityDefinition",
 																									"query": qString
 																								}
 																							}
 
 																							var ApiFHIR = new Apiclient(seedPhoenixFHIR);
 
-																							ApiFHIR.get('MedicationAdministrationDosage', {"apikey": apikey}, {}, function(error, response, body){
-																								medicationAdministrationDosage = JSON.parse(body);
-																								if(medicationAdministrationDosage.err_code == 0){
+																							ApiFHIR.get('MedicationAdministrationDefinitionActivityDefinition', {"apikey": apikey}, {}, function(error, response, body){
+																								medicationAdministrationDefinitionActivityDefinition = JSON.parse(body);
+																								if(medicationAdministrationDefinitionActivityDefinition.err_code == 0){
 																									var objectMedicationAdministration = {};
 																									objectMedicationAdministration.resourceType = medicationAdministration.resourceType;
 																									objectMedicationAdministration.id = medicationAdministration.id;
 																									objectMedicationAdministration.identifier = medicationAdministration.identifier;
+																									var Definition = {};
+																									Definition.planDefinition = medicationAdministration.definition.planDefinition;
+																									Definition.activityDefinition = medicationAdministrationDefinitionActivityDefinition.data;
+																									objectMedicationAdministration.definition = Definition;
 																									objectMedicationAdministration.status = medicationAdministration.status;
 																									objectMedicationAdministration.category = medicationAdministration.category;
 																									objectMedicationAdministration.medication = medicationAdministration.medication;
@@ -259,168 +403,370 @@ var controller = {
 																									objectMedicationAdministration.reasonNotGiven = medicationAdministration.reasonNotGiven;
 																									objectMedicationAdministration.reasonCode = medicationAdministration.reasonCode;
 																									objectMedicationAdministration.prescription = medicationAdministration.prescription;
-																									objectMedicationAdministration.dosage = medicationAdministrationDosage.data;
+																									objectMedicationAdministration.dosage = medicationAdministration.dosage;
 
 																									newMedicationAdministration[index] = objectMedicationAdministration;
-																									
-																									if(index == countMedicationAdministration -1 ){
-																										res.json({"err_code": 0, "data":newMedicationAdministration});				
-																									}
 
-																									/*myEmitter.once('getSupportingImmunization', function(medicationAdministration, index, newMedicationAdministration, countMedicationAdministration){
+																									myEmitter.once('getMedicationAdministrationPartOfMedicationAdministration', function(medicationAdministration, index, newMedicationAdministration, countMedicationAdministration){
 																										qString = {};
-																										qString.recommendation_id = medicationAdministration.recommendation.id;
+																										qString.medication_administration_id = medicationAdministration.id;
 																										seedPhoenixFHIR.path.GET = {
-																											"SupportingImmunization" : {
-																												"location": "%(apikey)s/MedicationAdministrationSupportingImmunization",
+																											"MedicationAdministrationPartOfMedicationAdministration" : {
+																												"location": "%(apikey)s/MedicationAdministrationPartOfMedicationAdministration",
 																												"query": qString
 																											}
-																										}	
-																										ApiFHIR.get('SupportingImmunization', {"apikey": apikey}, {}, function(error, response, body){
-																											supportingImmunization = JSON.parse(body);
-																											if(supportingImmunization.err_code == 0){
+																										}
+
+																										var ApiFHIR = new Apiclient(seedPhoenixFHIR);
+
+																										ApiFHIR.get('MedicationAdministrationPartOfMedicationAdministration', {"apikey": apikey}, {}, function(error, response, body){
+																											medicationAdministrationPartOfMedicationAdministration = JSON.parse(body);
+																											if(medicationAdministrationPartOfMedicationAdministration.err_code == 0){
 																												var objectMedicationAdministration = {};
-objectMedicationAdministration.resourceType = medicationAdministration.resourceType;
-objectMedicationAdministration.id = medicationAdministration.id;
-objectMedicationAdministration.identifier = medicationAdministration.identifier;
-objectMedicationAdministration.patient = medicationAdministration.patient;
-var Recommendation = {};
-Recommendation.id = medicationAdministration.recommendation.id;
-Recommendation.date = medicationAdministration.recommendation.date;
-Recommendation.vaccineCode = medicationAdministration.recommendation.vaccine_code;
-Recommendation.targetDisease = medicationAdministration.recommendation.target_disease;
-Recommendation.doseNumber = medicationAdministration.recommendation.dose_number;
-Recommendation.forecastStatus = medicationAdministration.recommendation.forecast_status;
-Recommendation.dateCriterion = medicationAdministration.recommendation.dateCriterion;
-Recommendation.protocol = medicationAdministration.recommendation.protocol;	
-Recommendation.supportingImmunization = medicationAdministration.recommendation.supportingImmunization.data;
-objectMedicationAdministration.recommendation = Recommendation;
-																												
+																												objectMedicationAdministration.resourceType = medicationAdministration.resourceType;
+																												objectMedicationAdministration.id = medicationAdministration.id;
+																												objectMedicationAdministration.identifier = medicationAdministration.identifier;
+																												objectMedicationAdministration.definition = medicationAdministration.definition;
+																												var PartOf = {};
+																												PartOf.medicationAdministration = medicationAdministrationPartOfMedicationAdministration.data;
+																												objectMedicationAdministration.partOf = PartOf;
+																												objectMedicationAdministration.status = medicationAdministration.status;
+																												objectMedicationAdministration.category = medicationAdministration.category;
+																												objectMedicationAdministration.medication = medicationAdministration.medication;
+																												objectMedicationAdministration.subject = medicationAdministration.subject;
+																												objectMedicationAdministration.context = medicationAdministration.context;
+																												objectMedicationAdministration.supportingInformation = medicationAdministration.supportingInformation;
+																												objectMedicationAdministration.effective = medicationAdministration.effective;
+																												objectMedicationAdministration.performer = medicationAdministration.performer;
+																												objectMedicationAdministration.notGiven = medicationAdministration.notGiven;
+																												objectMedicationAdministration.reasonNotGiven = medicationAdministration.reasonNotGiven;
+																												objectMedicationAdministration.reasonCode = medicationAdministration.reasonCode;
+																												objectMedicationAdministration.prescription = medicationAdministration.prescription;
+																												objectMedicationAdministration.dosage = medicationAdministration.dosage;
 
 																												newMedicationAdministration[index] = objectMedicationAdministration;
 
-																												myEmitter.once('getSupportingPatientInformationObservation', function(medicationAdministration, index, newMedicationAdministration, countMedicationAdministration){
+																												myEmitter.once('getMedicationAdministrationPartOfProcedure', function(medicationAdministration, index, newMedicationAdministration, countMedicationAdministration){
 																													qString = {};
-																													qString.recommendation_id = medicationAdministration.recommendation.id;
+																													qString.medication_administration_id = medicationAdministration.id;
 																													seedPhoenixFHIR.path.GET = {
-																														"InformationObservation" : {
-																															"location": "%(apikey)s/SupportingPatientInformationObservation",
+																														"MedicationAdministrationPartOfProcedure" : {
+																															"location": "%(apikey)s/MedicationAdministrationPartOfProcedure",
 																															"query": qString
 																														}
 																													}
 
 																													var ApiFHIR = new Apiclient(seedPhoenixFHIR);
 
-																													ApiFHIR.get('InformationObservation', {"apikey": apikey}, {}, function(error, response, body){
-																														informationObservation = JSON.parse(body);
-																														if(informationObservation.err_code == 0){
+																													ApiFHIR.get('MedicationAdministrationPartOfProcedure', {"apikey": apikey}, {}, function(error, response, body){
+																														medicationAdministrationPartOfProcedure = JSON.parse(body);
+																														if(medicationAdministrationPartOfProcedure.err_code == 0){
 																															var objectMedicationAdministration = {};
-objectMedicationAdministration.resourceType = medicationAdministration.resourceType;
-objectMedicationAdministration.id = medicationAdministration.id;
-objectMedicationAdministration.identifier = medicationAdministration.identifier;
-objectMedicationAdministration.patient = medicationAdministration.patient;
-var Recommendation = {};
-Recommendation.id = medicationAdministration.recommendation.id;
-Recommendation.date = medicationAdministration.recommendation.date;
-Recommendation.vaccineCode = medicationAdministration.recommendation.vaccine_code;
-Recommendation.targetDisease = medicationAdministration.recommendation.target_disease;
-Recommendation.doseNumber = medicationAdministration.recommendation.dose_number;
-Recommendation.forecastStatus = medicationAdministration.recommendation.forecast_status;
-Recommendation.dateCriterion = medicationAdministration.recommendation.dateCriterion;
-Recommendation.protocol = medicationAdministration.recommendation.protocol;
-Recommendation.supportingImmunization = medicationAdministration.recommendation.supportingImmunization;	
-var SupportingPatientInformation = {};
-SupportingPatientInformation.observation = informationObservation.data;																
-Recommendation.supportingPatientInformation = SupportingPatientInformation;
-																															
-objectMedicationAdministration.recommendation = Recommendation;
+																															objectMedicationAdministration.resourceType = medicationAdministration.resourceType;
+																															objectMedicationAdministration.id = medicationAdministration.id;
+																															objectMedicationAdministration.identifier = medicationAdministration.identifier;
+																															objectMedicationAdministration.definition = medicationAdministration.definition;
+																															var PartOf = {};
+																															PartOf.medicationAdministration = medicationAdministration.partOf.medicationAdministration
+																															PartOf.procedure = medicationAdministrationPartOfProcedure.data;
+																															objectMedicationAdministration.partOf = PartOf;
+																															objectMedicationAdministration.status = medicationAdministration.status;
+																															objectMedicationAdministration.category = medicationAdministration.category;
+																															objectMedicationAdministration.medication = medicationAdministration.medication;
+																															objectMedicationAdministration.subject = medicationAdministration.subject;
+																															objectMedicationAdministration.context = medicationAdministration.context;
+																															objectMedicationAdministration.supportingInformation = medicationAdministration.supportingInformation;
+																															objectMedicationAdministration.effective = medicationAdministration.effective;
+																															objectMedicationAdministration.performer = medicationAdministration.performer;
+																															objectMedicationAdministration.notGiven = medicationAdministration.notGiven;
+																															objectMedicationAdministration.reasonNotGiven = medicationAdministration.reasonNotGiven;
+																															objectMedicationAdministration.reasonCode = medicationAdministration.reasonCode;
+																															objectMedicationAdministration.prescription = medicationAdministration.prescription;
+																															objectMedicationAdministration.dosage = medicationAdministration.dosage;
 
 																															newMedicationAdministration[index] = objectMedicationAdministration;
 
-																															myEmitter.once('getSupportingPatientInformationAllergyIntolerance', function(medicationAdministration, index, newMedicationAdministration, countMedicationAdministration){
+																															myEmitter.once('getMedicationAdministrationReasonReferenceCondition', function(medicationAdministration, index, newMedicationAdministration, countMedicationAdministration){
 																																qString = {};
-																																qString.recommendation_id = medicationAdministration.recommendation.id;
+																																qString.medication_administration_id = medicationAdministration.id;
 																																seedPhoenixFHIR.path.GET = {
-																																	"InformationAllergyIntolerance" : {
-																																		"location": "%(apikey)s/SupportingPatientInformationAllergyIntolerance",
+																																	"MedicationAdministrationReasonReferenceCondition" : {
+																																		"location": "%(apikey)s/MedicationAdministrationReasonReferenceCondition",
 																																		"query": qString
 																																	}
 																																}
 
 																																var ApiFHIR = new Apiclient(seedPhoenixFHIR);
 
-																																ApiFHIR.get('InformationAllergyIntolerance', {"apikey": apikey}, {}, function(error, response, body){
-																																	informationAllergyIntolerance = JSON.parse(body);
-																																	if(informationAllergyIntolerance.err_code == 0){
+																																ApiFHIR.get('MedicationAdministrationReasonReferenceCondition', {"apikey": apikey}, {}, function(error, response, body){
+																																	medicationAdministrationReasonReferenceCondition = JSON.parse(body);
+																																	if(medicationAdministrationReasonReferenceCondition.err_code == 0){
 																																		var objectMedicationAdministration = {};
-objectMedicationAdministration.resourceType = medicationAdministration.resourceType;
-objectMedicationAdministration.id = medicationAdministration.id;
-objectMedicationAdministration.identifier = medicationAdministration.identifier;
-objectMedicationAdministration.patient = medicationAdministration.patient;
-var Recommendation = {};
-Recommendation.id = medicationAdministration.recommendation.id;
-Recommendation.date = medicationAdministration.recommendation.date;
-Recommendation.vaccineCode = medicationAdministration.recommendation.vaccine_code;
-Recommendation.targetDisease = medicationAdministration.recommendation.target_disease;
-Recommendation.doseNumber = medicationAdministration.recommendation.dose_number;
-Recommendation.forecastStatus = medicationAdministration.recommendation.forecast_status;
-Recommendation.dateCriterion = medicationAdministration.recommendation.dateCriterion;
-Recommendation.protocol = medicationAdministration.recommendation.protocol;
-Recommendation.supportingImmunization = medicationAdministration.recommendation.supportingImmunization;	
-var SupportingPatientInformation = {};
-SupportingPatientInformation.observation = medicationAdministration.recommendation.supportingPatientInformation.observation;
-																																		
-SupportingPatientInformation.allergyIntolerance = informationAllergyIntolerance.data;
-Recommendation.supportingPatientInformation = SupportingPatientInformation;
-																																		
-objectMedicationAdministration.recommendation = Recommendation;
+																																		objectMedicationAdministration.resourceType = medicationAdministration.resourceType;
+																																		objectMedicationAdministration.id = medicationAdministration.id;
+																																		objectMedicationAdministration.identifier = medicationAdministration.identifier;
+																																		objectMedicationAdministration.definition = medicationAdministration.definition;
+																																		objectMedicationAdministration.partOf = medicationAdministration.partOf;
+																																		objectMedicationAdministration.status = medicationAdministration.status;
+																																		objectMedicationAdministration.category = medicationAdministration.category;
+																																		objectMedicationAdministration.medication = medicationAdministration.medication;
+																																		objectMedicationAdministration.subject = medicationAdministration.subject;
+																																		objectMedicationAdministration.context = medicationAdministration.context;
+																																		objectMedicationAdministration.supportingInformation = medicationAdministration.supportingInformation;
+																																		objectMedicationAdministration.effective = medicationAdministration.effective;
+																																		objectMedicationAdministration.performer = medicationAdministration.performer;
+																																		objectMedicationAdministration.notGiven = medicationAdministration.notGiven;
+																																		objectMedicationAdministration.reasonNotGiven = medicationAdministration.reasonNotGiven;
+																																		objectMedicationAdministration.reasonCode = medicationAdministration.reasonCode;
+																																		var ReasonReference = {};
+																																		ReasonReference.condition = medicationAdministrationReasonReferenceCondition.data;
+																																		objectMedicationAdministration.reasonReference = ReasonReference;
+																																		objectMedicationAdministration.prescription = medicationAdministration.prescription;
+																																		objectMedicationAdministration.dosage = medicationAdministration.dosage;
 
 																																		newMedicationAdministration[index] = objectMedicationAdministration;
 
-																																		if(index == countMedicationAdministration -1 ){
-																																			res.json({"err_code": 0, "data":newMedicationAdministration});				
-																																		}
+																																		myEmitter.once('getMedicationAdministrationReasonReferenceObservation', function(medicationAdministration, index, newMedicationAdministration, countMedicationAdministration){
+																																			qString = {};
+																																			qString.medication_administration_id = medicationAdministration.id;
+																																			seedPhoenixFHIR.path.GET = {
+																																				"MedicationAdministrationReasonReferenceObservation" : {
+																																					"location": "%(apikey)s/MedicationAdministrationReasonReferenceObservation",
+																																					"query": qString
+																																				}
+																																			}
 
+																																			var ApiFHIR = new Apiclient(seedPhoenixFHIR);
+
+																																			ApiFHIR.get('MedicationAdministrationReasonReferenceObservation', {"apikey": apikey}, {}, function(error, response, body){
+																																				medicationAdministrationReasonReferenceObservation = JSON.parse(body);
+																																				if(medicationAdministrationReasonReferenceObservation.err_code == 0){
+																																					var objectMedicationAdministration = {};
+																																					objectMedicationAdministration.resourceType = medicationAdministration.resourceType;
+																																					objectMedicationAdministration.id = medicationAdministration.id;
+																																					objectMedicationAdministration.identifier = medicationAdministration.identifier;
+																																					objectMedicationAdministration.definition = medicationAdministration.definition;
+																																					objectMedicationAdministration.partOf = medicationAdministration.partOf;
+																																					objectMedicationAdministration.status = medicationAdministration.status;
+																																					objectMedicationAdministration.category = medicationAdministration.category;
+																																					objectMedicationAdministration.medication = medicationAdministration.medication;
+																																					objectMedicationAdministration.subject = medicationAdministration.subject;
+																																					objectMedicationAdministration.context = medicationAdministration.context;
+																																					objectMedicationAdministration.supportingInformation = medicationAdministration.supportingInformation;
+																																					objectMedicationAdministration.effective = medicationAdministration.effective;
+																																					objectMedicationAdministration.performer = medicationAdministration.performer;
+																																					objectMedicationAdministration.notGiven = medicationAdministration.notGiven;
+																																					objectMedicationAdministration.reasonNotGiven = medicationAdministration.reasonNotGiven;
+																																					objectMedicationAdministration.reasonCode = medicationAdministration.reasonCode;
+																																					var ReasonReference = {};
+																																					ReasonReference.condition = medicationAdministration.reasonReference.condition;
+																																					ReasonReference.observation = medicationAdministrationReasonReferenceObservation.data;
+																																					objectMedicationAdministration.reasonReference = ReasonReference;
+																																					objectMedicationAdministration.prescription = medicationAdministration.prescription;
+																																					objectMedicationAdministration.dosage = medicationAdministration.dosage;
+
+																																					newMedicationAdministration[index] = objectMedicationAdministration;
+
+myEmitter.once('getMedicationAdministrationDevice', function(medicationAdministration, index, newMedicationAdministration, countMedicationAdministration){
+	qString = {};
+	qString.medication_administration_id = medicationAdministration.id;
+	seedPhoenixFHIR.path.GET = {
+		"MedicationAdministrationDevice" : {
+			"location": "%(apikey)s/MedicationAdministrationDevice",
+			"query": qString
+		}
+	}
+
+	var ApiFHIR = new Apiclient(seedPhoenixFHIR);
+
+	ApiFHIR.get('MedicationAdministrationDevice', {"apikey": apikey}, {}, function(error, response, body){
+		medicationAdministrationDevice = JSON.parse(body);
+		if(medicationAdministrationDevice.err_code == 0){
+			var objectMedicationAdministration = {};
+			objectMedicationAdministration.resourceType = medicationAdministration.resourceType;
+			objectMedicationAdministration.id = medicationAdministration.id;
+			objectMedicationAdministration.identifier = medicationAdministration.identifier;
+			objectMedicationAdministration.definition = medicationAdministration.definition;
+			objectMedicationAdministration.partOf = medicationAdministration.partOf;
+			objectMedicationAdministration.status = medicationAdministration.status;
+			objectMedicationAdministration.category = medicationAdministration.category;
+			objectMedicationAdministration.medication = medicationAdministration.medication;
+			objectMedicationAdministration.subject = medicationAdministration.subject;
+			objectMedicationAdministration.context = medicationAdministration.context;
+			objectMedicationAdministration.supportingInformation = medicationAdministration.supportingInformation;
+			objectMedicationAdministration.effective = medicationAdministration.effective;
+			objectMedicationAdministration.performer = medicationAdministration.performer;
+			objectMedicationAdministration.notGiven = medicationAdministration.notGiven;
+			objectMedicationAdministration.reasonNotGiven = medicationAdministration.reasonNotGiven;
+			objectMedicationAdministration.reasonCode = medicationAdministration.reasonCode;
+			objectMedicationAdministration.reasonReference = medicationAdministration.reasonReference;
+			objectMedicationAdministration.prescription = medicationAdministration.prescription;
+			objectMedicationAdministration.device = medicationAdministrationDevice.data;
+			objectMedicationAdministration.dosage = medicationAdministration.dosage;
+
+			newMedicationAdministration[index] = objectMedicationAdministration;
+
+			myEmitter.once('getMedicationAdministrationProvenance', function(medicationAdministration, index, newMedicationAdministration, countMedicationAdministration){
+				qString = {};
+				qString.medication_administration_id = medicationAdministration.id;
+				seedPhoenixFHIR.path.GET = {
+					"MedicationAdministrationProvenance" : {
+						"location": "%(apikey)s/MedicationAdministrationProvenance",
+						"query": qString
+					}
+				}
+
+				var ApiFHIR = new Apiclient(seedPhoenixFHIR);
+
+				ApiFHIR.get('MedicationAdministrationProvenance', {"apikey": apikey}, {}, function(error, response, body){
+					medicationAdministrationProvenance = JSON.parse(body);
+					if(medicationAdministrationProvenance.err_code == 0){
+						var objectMedicationAdministration = {};
+						objectMedicationAdministration.resourceType = medicationAdministration.resourceType;
+						objectMedicationAdministration.id = medicationAdministration.id;
+						objectMedicationAdministration.identifier = medicationAdministration.identifier;
+						objectMedicationAdministration.definition = medicationAdministration.definition;
+						objectMedicationAdministration.partOf = medicationAdministration.partOf;
+						objectMedicationAdministration.status = medicationAdministration.status;
+						objectMedicationAdministration.category = medicationAdministration.category;
+						objectMedicationAdministration.medication = medicationAdministration.medication;
+						objectMedicationAdministration.subject = medicationAdministration.subject;
+						objectMedicationAdministration.context = medicationAdministration.context;
+						objectMedicationAdministration.supportingInformation = medicationAdministration.supportingInformation;
+						objectMedicationAdministration.effective = medicationAdministration.effective;
+						objectMedicationAdministration.performer = medicationAdministration.performer;
+						objectMedicationAdministration.notGiven = medicationAdministration.notGiven;
+						objectMedicationAdministration.reasonNotGiven = medicationAdministration.reasonNotGiven;
+						objectMedicationAdministration.reasonCode = medicationAdministration.reasonCode;
+						objectMedicationAdministration.reasonReference = medicationAdministration.reasonReference;
+						objectMedicationAdministration.prescription = medicationAdministration.prescription;
+						objectMedicationAdministration.device = medicationAdministration.device;
+						objectMedicationAdministration.dosage = medicationAdministration.dosage;
+						objectMedicationAdministration.eventHistory = medicationAdministrationProvenance.data;
+
+						newMedicationAdministration[index] = objectMedicationAdministration;
+
+						myEmitter.once('getAnnotation', function(medicationAdministration, index, newMedicationAdministration, countMedicationAdministration){
+							qString = {};
+							qString.medication_administration_id = medicationAdministration.id;
+							seedPhoenixFHIR.path.GET = {
+								"Annotation" : {
+									"location": "%(apikey)s/Annotation",
+									"query": qString
+								}
+							}
+
+							var ApiFHIR = new Apiclient(seedPhoenixFHIR);
+
+							ApiFHIR.get('Annotation', {"apikey": apikey}, {}, function(error, response, body){
+								annotation = JSON.parse(body);
+								if(annotation.err_code == 0){
+									var objectMedicationAdministration = {};
+									objectMedicationAdministration.resourceType = medicationAdministration.resourceType;
+									objectMedicationAdministration.id = medicationAdministration.id;
+									objectMedicationAdministration.identifier = medicationAdministration.identifier;
+									objectMedicationAdministration.definition = medicationAdministration.definition;
+									objectMedicationAdministration.partOf = medicationAdministration.partOf;
+									objectMedicationAdministration.status = medicationAdministration.status;
+									objectMedicationAdministration.category = medicationAdministration.category;
+									objectMedicationAdministration.medication = medicationAdministration.medication;
+									objectMedicationAdministration.subject = medicationAdministration.subject;
+									objectMedicationAdministration.context = medicationAdministration.context;
+									objectMedicationAdministration.supportingInformation = medicationAdministration.supportingInformation;
+									objectMedicationAdministration.effective = medicationAdministration.effective;
+									objectMedicationAdministration.performer = medicationAdministration.performer;
+									objectMedicationAdministration.notGiven = medicationAdministration.notGiven;
+									objectMedicationAdministration.reasonNotGiven = medicationAdministration.reasonNotGiven;
+									objectMedicationAdministration.reasonCode = medicationAdministration.reasonCode;
+									objectMedicationAdministration.reasonReference = medicationAdministration.reasonReference;
+									objectMedicationAdministration.prescription = medicationAdministration.prescription;
+									objectMedicationAdministration.device = medicationAdministration.device;
+									objectMedicationAdministration.node = annotation.data;
+									objectMedicationAdministration.dosage = medicationAdministration.dosage;
+									objectMedicationAdministration.eventHistory = medicationAdministration.eventHistory;
+
+									newMedicationAdministration[index] = objectMedicationAdministration;
+
+									if(index == countMedicationAdministration -1 ){
+										res.json({"err_code": 0, "data":newMedicationAdministration});				
+									}
+								}else{
+									res.json(annotation);			
+								}
+							})
+						})
+						myEmitter.emit('getAnnotation', objectMedicationAdministration, index, newMedicationAdministration, countMedicationAdministration);
+					}else{
+						res.json(medicationAdministrationProvenance);			
+					}
+				})
+			})
+			myEmitter.emit('getMedicationAdministrationProvenance', objectMedicationAdministration, index, newMedicationAdministration, countMedicationAdministration);
+		}else{
+			res.json(medicationAdministrationDevice);			
+		}
+	})
+})
+myEmitter.emit('getMedicationAdministrationDevice', objectMedicationAdministration, index, newMedicationAdministration, countMedicationAdministration);																																					
+																																				}else{
+																																					res.json(medicationAdministrationReasonReferenceObservation);			
+																																				}
+																																			})
+																																		})
+																																		myEmitter.emit('getMedicationAdministrationReasonReferenceObservation', objectMedicationAdministration, index, newMedicationAdministration, countMedicationAdministration);																												
 																																	}else{
-																																		res.json(informationAllergyIntolerance);			
+																																		res.json(medicationAdministrationReasonReferenceCondition);			
 																																	}
 																																})
 																															})
-																															myEmitter.emit('getSupportingPatientInformationAllergyIntolerance', objectMedicationAdministration, index, newMedicationAdministration, countMedicationAdministration);
-
+																															myEmitter.emit('getMedicationAdministrationReasonReferenceCondition', objectMedicationAdministration, index, newMedicationAdministration, countMedicationAdministration);																															
 																														}else{
-																															res.json(informationObservation);			
+																															res.json(medicationAdministrationPartOfProcedure);			
 																														}
 																													})
 																												})
-																												myEmitter.emit('getSupportingPatientInformationObservation', objectMedicationAdministration, index, newMedicationAdministration, countMedicationAdministration);			
+																												myEmitter.emit('getMedicationAdministrationPartOfProcedure', objectMedicationAdministration, index, newMedicationAdministration, countMedicationAdministration);																									
+
+
 																											}else{
-																												res.json(supportingImmunization);			
+																												res.json(medicationAdministrationPartOfMedicationAdministration);			
 																											}
 																										})
 																									})
-																									myEmitter.emit('getSupportingImmunization', objectMedicationAdministration, index, newMedicationAdministration, countMedicationAdministration);	*/		
+																									myEmitter.emit('getMedicationAdministrationPartOfMedicationAdministration', objectMedicationAdministration, index, newMedicationAdministration, countMedicationAdministration);
+
 																								}else{
-																									res.json(medicationAdministrationDosage);			
+																									res.json(medicationAdministrationDefinitionActivityDefinition);			
 																								}
 																							})
 																						})
-																						myEmitter.emit('getMedicationAdministrationDosage', objectMedicationAdministration, index, newMedicationAdministration, countMedicationAdministration);
+																						myEmitter.emit('getMedicationAdministrationDefinitionActivityDefinition', objectMedicationAdministration, index, newMedicationAdministration, countMedicationAdministration);
 																					}else{
-																						res.json(medicationAdministrationPerformer);			
+																						res.json(medicationAdministrationDefinitionPlanDefinition);			
 																					}
 																				})
 																			})
-																myEmitter.emit('getMedicationAdministrationPerformer', objectMedicationAdministration, index, newMedicationAdministration, countMedicationAdministration);
+																			myEmitter.emit('getMedicationAdministrationDefinitionPlanDefinition', objectMedicationAdministration, index, newMedicationAdministration, countMedicationAdministration);															
+
+																		}else{
+																			res.json(medicationAdministrationDosage);			
+																		}
+																	})
+																})
+																myEmitter.emit('getMedicationAdministrationDosage', objectMedicationAdministration, index, newMedicationAdministration, countMedicationAdministration);
 															}else{
-																res.json(identifier);
+																res.json(medicationAdministrationPerformer);			
 															}
 														})
 													})
-										myEmitter.emit("getIdentifier", medicationAdministration.data[i], i, newMedicationAdministration, medicationAdministration.data.length);
-										//res.json({"err_code": 0, "err_msg": "endpoint is not empty."});		
+													myEmitter.emit('getMedicationAdministrationPerformer', objectMedicationAdministration, index, newMedicationAdministration, countMedicationAdministration);
+												}else{
+													res.json(identifier);
+												}
+											})
+										})
+										myEmitter.emit("getIdentifier", medicationAdministration.data[i], i, newMedicationAdministration, medicationAdministration.data.length);	
 									}
-									 //res.json({"err_code": 0, "data":organization.data});
 								}else{
 									res.json({"err_code": 2, "err_msg": "Medication Administration is empty."});	
 								}
@@ -434,7 +780,214 @@ objectMedicationAdministration.recommendation = Recommendation;
 					res.json(result);
 				}
 			});	
-		}		
+		},
+		identifier: function getIdentifier(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var regex = new RegExp("([0-9]{4}[-](0[1-9]|1[0-2])[-]([0-2]{1}[0-9]{1}|3[0-1]{1})|([0-2]{1}[0-9]{1}|3[0-1]{1})[-](0[1-9]|1[0-2])[-][0-9]{4})");
+			var medicationAdministrationId = req.params.medication_administration_id;
+			var identifierId = req.params.identifier_id;
+
+			checkApikey(apikey, ipAddres, function(result){
+				if(result.err_code == 0){	
+					checkUniqeValue(apikey, "MEDICATION_ADMINISTRATION_ID|" + medicationAdministrationId, 'MEDICATION_ADMINISTRATION', function(resPatientID){
+						if(resPatientID.err_code > 0){
+							if(typeof identifierId !== 'undefined' && !validator.isEmpty(identifierId)){
+								checkUniqeValue(apikey, "IDENTIFIER_ID|" + identifierId, 'IDENTIFIER', function(resIdentifierID){
+									if(resIdentifierID.err_code > 0){
+										//get identifier
+										qString = {};
+										qString.medication_administration_id = medicationAdministrationId;
+										qString._id = identifierId;
+										seedPhoenixFHIR.path.GET = {
+											"Identifier" : {
+												"location": "%(apikey)s/Identifier",
+												"query": qString
+											}
+										}
+										var ApiFHIR = new Apiclient(seedPhoenixFHIR);
+
+										ApiFHIR.get('Identifier', {"apikey": apikey}, {}, function(error, response, body){
+											identifier = JSON.parse(body);
+											if(identifier.err_code == 0){
+												res.json({"err_code": 0, "data":identifier.data});	
+											}else{
+												res.json(identifier);
+											}
+										})
+									}else{
+										res.json({"err_code": 502, "err_msg": "Identifier Id not found"});		
+									}
+								})
+							}else{
+								//get identifier
+								qString = {};
+								qString.medication_administration_id = medicationAdministrationId;
+								seedPhoenixFHIR.path.GET = {
+									"Identifier" : {
+										"location": "%(apikey)s/Identifier",
+										"query": qString
+									}
+								}
+								var ApiFHIR = new Apiclient(seedPhoenixFHIR);
+
+								ApiFHIR.get('Identifier', {"apikey": apikey}, {}, function(error, response, body){
+									identifier = JSON.parse(body);
+									if(identifier.err_code == 0){
+										res.json({"err_code": 0, "data":identifier.data});	
+									}else{
+										res.json(identifier);
+									}
+								})
+							}
+						}else{
+							res.json({"err_code": 501, "err_msg": "Medication Administration Id not found"});		
+						}
+					})
+				}else{
+					result.err_code = 500;
+					res.json(result);
+				}	
+			});
+		},
+		medicationAdministrationPerformer: function getMedicationAdministrationPerformer(req, res){
+					var ipAddres = req.connection.remoteAddress;
+					var apikey = req.params.apikey;
+					var regex = new RegExp("([0-9]{4}[-](0[1-9]|1[0-2])[-]([0-2]{1}[0-9]{1}|3[0-1]{1})|([0-2]{1}[0-9]{1}|3[0-1]{1})[-](0[1-9]|1[0-2])[-][0-9]{4})");
+					var medicationAdministrationId = req.params.medication_administration_id;
+					var medicationAdministrationPerformerId = req.params.medication_administration_performer_id;
+					
+					checkApikey(apikey, ipAddres, function(result){
+						if(result.err_code == 0){	
+							checkUniqeValue(apikey, "MEDICATION_ADMINISTRATION_ID|" + medicationAdministrationId, 'MEDICATION_ADMINISTRATION', function(resMedicationAdministrationID){
+								if(resMedicationAdministrationID.err_code > 0){
+									if(typeof medicationAdministrationPerformerId !== 'undefined' && !validator.isEmpty(medicationAdministrationPerformerId)){
+										checkUniqeValue(apikey, "PERFORMER_ID|" + medicationAdministrationPerformerId, 'MEDICATION_ADMINISTRATION_PERFORMER', function(resMedicationAdministrationPerformerID){
+											if(resMedicationAdministrationPerformerID.err_code > 0){
+												//get medicationAdministrationPerformer
+								  			qString = {};
+								  			qString.medication_administration_id = medicationAdministrationId;
+								  			qString._id = medicationAdministrationPerformerId;
+									  		seedPhoenixFHIR.path.GET = {
+													"MedicationAdministrationPerformer" : {
+														"location": "%(apikey)s/MedicationAdministrationPerformer",
+														"query": qString
+													}
+												}
+												var ApiFHIR = new Apiclient(seedPhoenixFHIR);
+
+												ApiFHIR.get('MedicationAdministrationPerformer', {"apikey": apikey}, {}, function(error, response, body){
+													medicationAdministrationPerformer = JSON.parse(body);
+													if(medicationAdministrationPerformer.err_code == 0){
+														res.json({"err_code": 0, "data":medicationAdministrationPerformer.data});	
+													}else{
+														res.json(medicationAdministrationPerformer);
+													}
+												})
+											}else{
+												res.json({"err_code": 502, "err_msg": "Medication Administration Performer Id not found"});		
+											}
+										})
+									}else{
+										//get medicationAdministrationPerformer
+						  			qString = {};
+						  			qString.medication_administration_id = medicationAdministrationId;
+							  		seedPhoenixFHIR.path.GET = {
+											"MedicationAdministrationPerformer" : {
+												"location": "%(apikey)s/MedicationAdministrationPerformer",
+												"query": qString
+											}
+										}
+										var ApiFHIR = new Apiclient(seedPhoenixFHIR);
+
+										ApiFHIR.get('MedicationAdministrationPerformer', {"apikey": apikey}, {}, function(error, response, body){
+											medicationAdministrationPerformer = JSON.parse(body);
+											if(medicationAdministrationPerformer.err_code == 0){
+												res.json({"err_code": 0, "data":medicationAdministrationPerformer.data});	
+											}else{
+												res.json(medicationAdministrationPerformer);
+											}
+										})
+									}
+								}else{
+									res.json({"err_code": 501, "err_msg": "Medication Administration Id not found"});		
+								}
+							})
+						}else{
+							result.err_code = 500;
+							res.json(result);
+						}	
+					});
+				},
+		medicationAdministrationDosage: function getMedicationAdministrationDosage(req, res){
+					var ipAddres = req.connection.remoteAddress;
+					var apikey = req.params.apikey;
+					var regex = new RegExp("([0-9]{4}[-](0[1-9]|1[0-2])[-]([0-2]{1}[0-9]{1}|3[0-1]{1})|([0-2]{1}[0-9]{1}|3[0-1]{1})[-](0[1-9]|1[0-2])[-][0-9]{4})");
+					var medicationAdministrationId = req.params.medication_administration_id;
+					var medicationAdministrationDosageId = req.params.medication_administration_dosage_id;
+					
+					checkApikey(apikey, ipAddres, function(result){
+						if(result.err_code == 0){	
+							checkUniqeValue(apikey, "MEDICATION_ADMINISTRATION_ID|" + medicationAdministrationId, 'MEDICATION_ADMINISTRATION', function(resMedicationAdministrationID){
+								if(resMedicationAdministrationID.err_code > 0){
+									if(typeof medicationAdministrationDosageId !== 'undefined' && !validator.isEmpty(medicationAdministrationDosageId)){
+										checkUniqeValue(apikey, "DOSAGE_ID|" + medicationAdministrationDosageId, 'MEDICATION_ADMINISTRATION_DOSAGE', function(resMedicationAdministrationDosageID){
+											if(resMedicationAdministrationDosageID.err_code > 0){
+												//get medicationAdministrationDosage
+								  			qString = {};
+								  			qString.medication_administration_id = medicationAdministrationId;
+								  			qString._id = medicationAdministrationDosageId;
+									  		seedPhoenixFHIR.path.GET = {
+													"MedicationAdministrationDosage" : {
+														"location": "%(apikey)s/MedicationAdministrationDosage",
+														"query": qString
+													}
+												}
+												var ApiFHIR = new Apiclient(seedPhoenixFHIR);
+
+												ApiFHIR.get('MedicationAdministrationDosage', {"apikey": apikey}, {}, function(error, response, body){
+													medicationAdministrationDosage = JSON.parse(body);
+													if(medicationAdministrationDosage.err_code == 0){
+														res.json({"err_code": 0, "data":medicationAdministrationDosage.data});	
+													}else{
+														res.json(medicationAdministrationDosage);
+													}
+												})
+											}else{
+												res.json({"err_code": 502, "err_msg": "Medication Administration Dosage Id not found"});		
+											}
+										})
+									}else{
+										//get medicationAdministrationDosage
+						  			qString = {};
+						  			qString.medication_administration_id = medicationAdministrationId;
+							  		seedPhoenixFHIR.path.GET = {
+											"MedicationAdministrationDosage" : {
+												"location": "%(apikey)s/MedicationAdministrationDosage",
+												"query": qString
+											}
+										}
+										var ApiFHIR = new Apiclient(seedPhoenixFHIR);
+
+										ApiFHIR.get('MedicationAdministrationDosage', {"apikey": apikey}, {}, function(error, response, body){
+											medicationAdministrationDosage = JSON.parse(body);
+											if(medicationAdministrationDosage.err_code == 0){
+												res.json({"err_code": 0, "data":medicationAdministrationDosage.data});	
+											}else{
+												res.json(medicationAdministrationDosage);
+											}
+										})
+									}
+								}else{
+									res.json({"err_code": 501, "err_msg": "Medication Administration Id not found"});		
+								}
+							})
+						}else{
+							result.err_code = 500;
+							res.json(result);
+						}	
+					});
+				},
 	},
 	post: {
 		medicationAdministration : function addMedicationAdministration(req, res){
@@ -996,7 +1549,6 @@ eventHistory|eventHistory||
 				err_msg = "Please add sub-key 'event history' in json Medication Administration request.";
 			}
 
-
 			if(err_code == 0){
 				//check apikey
 				checkApikey(apikey, ipAddres, function(result){
@@ -1020,6 +1572,7 @@ eventHistory|eventHistory||
 														var medicationAdministrationId = 'mad' + unicId;
 														var medicationAdministrationPerformeId = 'map' + unicId;
 														var medicationAdministrationDosageId = 'mad' + unicId;
+														var AnnotationId = 'ann' + unicId;
 
 														dataMedicationAdministration = {
 															"medication_administration_id" : medicationAdministrationId,
@@ -1059,7 +1612,7 @@ eventHistory|eventHistory||
 																							"value": identifierValue,
 																							"period_start": identifierPeriodStart,
 																							"period_end": identifierPeriodEnd,
-																							"care_team_id": medicationAdministrationId
+																							"medication_administration_id": medicationAdministrationId
 																						}
 
 														ApiFHIR.post('identifier', {"apikey": apikey}, {body: dataIdentifier, json: true}, function(error, response, body){
@@ -1068,7 +1621,7 @@ eventHistory|eventHistory||
 																res.json(identifier);	
 															}
 														})
-																										
+																									
 														//MedicationAdministrationRecommendation
 														dataMedicationAdministrationPerformer = {
 															"performer_id" : medicationAdministrationPerformeId,
@@ -1096,8 +1649,8 @@ eventHistory|eventHistory||
 															"method" : dosageMethod,
 															"dose" : dosageDose,
 															"rate_ratio_numerator" : dosageRateRateRatioNumerator,
-															"rate_ratio_denominator" : dosageRateRateRatioDenominator,												
-															"rate_quality" : rateQuantity,
+															"rate_ratio_denominator" : dosageRateRateRatioDenominator,
+															"rate_quality" : dosageRateRateQuantity,
 															"medication_administration_id" : medicationAdministrationId
 														}
 														ApiFHIR.post('medicationAdministrationDosage', {"apikey": apikey}, {body: dataMedicationAdministrationDosage, json: true}, function(error, response, body){
@@ -1107,6 +1660,146 @@ eventHistory|eventHistory||
 																console.log("ok");
 															}
 														});
+														
+														dataAnnotation = {
+															"id" : AnnotationId,
+															"author_ref_practitioner" : noteAuthorPractitioner,
+															"author_ref_patient" : noteAuthorPatient,
+															"author_ref_relatedPerson" : noteAuthorRelatedPerson,
+															"author_string" : noteAuthorAuthorString,
+															"time" : noteTime,
+															"text" : noteText,
+															"medication_administration_id" : medicationAdministrationId
+														}
+														ApiFHIR.post('annotation', {"apikey": apikey}, {body: dataAnnotation, json: true}, function(error, response, body){
+															annotation = body;
+															if(annotation.err_code > 0){
+																res.json(annotation);	
+																console.log("ok");
+															}
+														});														
+														
+														//all reference
+/*
+
+
+
+
+device
+
+*/													
+														if(definitionPlanDefinition !== ""){
+															dataDefinitionPlanDefinition = {
+																"_id" : definitionPlanDefinition,
+																"medication_administration_id" : medicationAdministrationId
+															}
+															ApiFHIR.put('planDefinition', {"apikey": apikey, "_id": definitionPlanDefinition}, {body: dataDefinitionPlanDefinition, json: true}, function(error, response, body){
+																returnDefinitionPlanDefinition = body;
+																if(returnDefinitionPlanDefinition.err_code > 0){
+																	res.json(returnDefinitionPlanDefinition);	
+																	console.log("add reference definition plan definition : " + definitionPlanDefinition);
+																}
+															});
+														}
+														
+														if(definitionActivityDefinition !== ""){
+															dataDefinitionActivityDefinition = {
+																"_id" : definitionActivityDefinition,
+																"medication_administration_id" : medicationAdministrationId
+															}
+															ApiFHIR.put('activityDefinition', {"apikey": apikey, "_id": definitionActivityDefinition}, {body: dataDefinitionActivityDefinition, json: true}, function(error, response, body){
+																returnDefinitionActivityDefinition = body;
+																if(returnDefinitionActivityDefinition.err_code > 0){
+																	res.json(returnDefinitionActivityDefinition);	
+																	console.log("add reference definition activity definition : " + definitionActivityDefinition);
+																}
+															});
+														}
+														
+														if(partOfMedicationAdministration !== ""){
+															dataPartOfMedicationAdministration = {
+																"_id" : partOfMedicationAdministration,
+																"part_of" : medicationAdministrationId
+															}
+															ApiFHIR.put('medicationAdministration', {"apikey": apikey, "_id": partOfMedicationAdministration}, {body: dataPartOfMedicationAdministration, json: true}, function(error, response, body){
+																returnPartOfMedicationAdministration = body;
+																if(returnPartOfMedicationAdministration.err_code > 0){
+																	res.json(returnPartOfMedicationAdministration);	
+																	console.log("add reference part of medication administration : " + partOfMedicationAdministration);
+																}
+															});
+														}
+														
+														if(partOfProcedure !== ""){
+															dataPartOfProcedure = {
+																"_id" : partOfProcedure,
+																"medication_administration_id" : medicationAdministrationId
+															}
+															ApiFHIR.put('procedure', {"apikey": apikey, "_id": imagingManifestId}, {body: partOfProcedure, json: true}, function(error, response, body){
+																returnPartOfProcedure = body;
+																if(returnPartOfProcedure.err_code > 0){
+																	res.json(returnPartOfProcedure);	
+																	console.log("add reference part of rocedure : " + partOfProcedure);
+																}
+															});
+														}
+														
+														if(reasonReferenceCondition !== ""){
+															dataReasonReferenceCondition = {
+																"_id" : reasonReferenceCondition,
+																"medication_administration_id" : medicationAdministrationId
+															}
+															ApiFHIR.put('condition', {"apikey": apikey, "_id": imagingManifestId}, {body: reasonReferenceCondition, json: true}, function(error, response, body){
+																returnReasonReferenceCondition = body;
+																if(returnReasonReferenceCondition.err_code > 0){
+																	res.json(returnReasonReferenceCondition);	
+																	console.log("add reference reason reference condition : " + reasonReferenceCondition);
+																}
+															});
+														}
+														
+														if(reasonReferenceObservation !== ""){
+															dataReasonReferenceObservation = {
+																"_id" : reasonReferenceObservation,
+																"medication_administration_id" : medicationAdministrationId
+															}
+															ApiFHIR.put('observation', {"apikey": apikey, "_id": imagingManifestId}, {body: reasonReferenceObservation, json: true}, function(error, response, body){
+																returnReasonReferenceObservation = body;
+																if(returnReasonReferenceObservation.err_code > 0){
+																	res.json(returnReasonReferenceObservation);	
+																	console.log("add reference reason reference observation : " + reasonReferenceObservation);
+																}
+															});
+														}
+														
+														if(device !== ""){
+															dataDevice = {
+																"_id" : device,
+																"medication_administration_id" : medicationAdministrationId
+															}
+															ApiFHIR.put('device', {"apikey": apikey, "_id": device}, {body: dataDevice, json: true}, function(error, response, body){
+																returnDevice = body;
+																if(returnDevice.err_code > 0){
+																	res.json(returnDevice);	
+																	console.log("add reference device : " + device);
+																}
+															});
+														}
+														
+														if(eventHistory !== ""){
+															dataEventHistory = {
+																"_id" : eventHistory,
+																"medication_administration_id" : medicationAdministrationId
+															}
+															ApiFHIR.put('provenance', {"apikey": apikey, "_id": eventHistory}, {body: dataEventHistory, json: true}, function(error, response, body){
+																returnEventHistory = body;
+																if(returnEventHistory.err_code > 0){
+																	res.json(returnEventHistory);	
+																	console.log("add reference event history : " + eventHistory);
+																}
+															});
+														}
+														
 														
 														res.json({"err_code": 0, "err_msg": "Medication Administration has been add.", "data": [{"_id": medicationAdministrationId}]});
 													}else{
@@ -1280,12 +1973,12 @@ eventHistory|eventHistory||
 										performerOnBehalfOf|organization
 										reasonReferenceCondition|Condition
 										reasonReferenceObservation|Observation
-										prescription|MedicationRequest
+										prescription|Medication_Request
 										device|device
 										noteAuthorPractitioner|Practitioner
 										noteAuthorPatient|Patient
 										noteAuthorRelatedPerson|Related_Person
-										eventHistory|eventHistory
+										eventHistory|event_History
 										*/
 
 										myEmitter.prependOnceListener('checkDefinitionPlanDefinition', function () {
@@ -1562,7 +2255,7 @@ eventHistory|eventHistory||
 
 										myEmitter.prependOnceListener('checkPrescription', function () {
 											if (!validator.isEmpty(prescription)) {
-												checkUniqeValue(apikey, "MEDICATIONREQUEST_ID|" + prescription, 'MEDICATIONREQUEST', function (resPrescription) {
+												checkUniqeValue(apikey, "MEDICATION_REQUEST_ID|" + prescription, 'MEDICATION_REQUEST', function (resPrescription) {
 													if (resPrescription.err_code > 0) {
 														myEmitter.emit('checkReasonReferenceObservation');
 													} else {
@@ -1646,7 +2339,7 @@ eventHistory|eventHistory||
 										})
 
 										if (!validator.isEmpty(eventHistory)) {
-											checkUniqeValue(apikey, "EVENTHISTORY_ID|" + eventHistory, 'EVENTHISTORY', function (resEventHistory) {
+											checkUniqeValue(apikey, "EVENT_HISTORY_ID|" + eventHistory, 'EVENT_HISTORY', function (resEventHistory) {
 												if (resEventHistory.err_code > 0) {
 													myEmitter.emit('checkNoteAuthorRelatedPerson');
 												} else {
@@ -1678,7 +2371,542 @@ eventHistory|eventHistory||
 			}else{
 				res.json({"err_code": err_code, "err_msg": err_msg});
 			}
-		}
+		},
+		identifier: function addIdentifier(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var regex = new RegExp("([0-9]{4}[-](0[1-9]|1[0-2])[-]([0-2]{1}[0-9]{1}|3[0-1]{1})|([0-2]{1}[0-9]{1}|3[0-1]{1})[-](0[1-9]|1[0-2])[-][0-9]{4})");
+			var medicationAdministrationId = req.params.medication_administration_id;
+
+			var err_code = 0;
+			var err_msg = "";
+
+			//input check 
+			if(typeof medicationAdministrationId !== 'undefined'){
+				if(validator.isEmpty(medicationAdministrationId)){
+					err_code = 2;
+					err_msg = "Medication Administration id is required";
+				}
+			}else{
+				err_code = 2;
+				err_msg = "Medication Administration id is required";
+			}
+
+			//identifier
+			if(typeof req.body.use !== 'undefined'){
+				identifierUseCode =  req.body.use.trim().toLowerCase();
+				if(validator.isEmpty(identifierUseCode)){
+					err_code = 2;
+					err_msg = "Identifier Use is required";
+				}
+			}else{
+				err_code = 1;
+				err_msg = "Please add key 'use' in json request.";
+			} 
+
+			//type code
+			if(typeof req.body.type !== 'undefined'){
+				identifierTypeCode =  req.body.type.trim().toUpperCase();
+				if(validator.isEmpty(identifierTypeCode)){
+					err_code = 2;
+					err_msg = "Identifier Type is required";
+				}
+			}else{
+				err_code = 1;
+				err_msg = "Please add key 'type' in json request.";
+			} 
+
+			//identifier uniqe value
+			if(typeof req.body.value !== 'undefined'){
+				identifierValue =  req.body.value.trim();
+				if(validator.isEmpty(identifierValue)){
+					err_code = 2;
+					err_msg = "Identifier Value is required";
+				}
+			}else{
+				err_code = 1;
+				err_msg = "Please add key 'value' in json request.";
+			}
+
+			//identifier period start
+			if(typeof req.body.period !== 'undefined'){
+				period = req.body.period;
+				if(period.indexOf("to") > 0){
+					arrPeriod = period.split("to");
+					identifierPeriodStart = arrPeriod[0];
+					identifierPeriodEnd = arrPeriod[1];
+
+					if(!regex.test(identifierPeriodStart) && !regex.test(identifierPeriodEnd)){
+						err_code = 2;
+						err_msg = "Identifier Period invalid date format.";
+					}	
+				}else{
+					err_code = 1;
+					err_msg = "Identifier Period format is wrong, `ex: start to end` ";
+				}
+			}else{
+				err_code = 1;
+				err_msg = "Please add key 'period' in json identifier request.";
+			}  
+
+			if(err_code == 0){
+				//check apikey
+				checkApikey(apikey, ipAddres, function(result){
+					if(result.err_code == 0){	
+						checkCode(apikey, identifierUseCode, 'IDENTIFIER_USE', function(resUseCode){
+							if(resUseCode.err_code > 0){ //code harus lebih besar dari nol, ini menunjukan datanya valid
+								checkCode(apikey, identifierTypeCode, 'IDENTIFIER_TYPE', function(resUseTypeCode){
+									if(resUseTypeCode.err_code > 0){ //code harus lebih besar dari nol, ini menunjukan datanya valid
+										checkUniqeValue(apikey, "IDENTIFIER_VALUE|" + identifierValue, 'IDENTIFIER', function(resUniqeValue){
+											if(resUniqeValue.err_code == 0){
+												checkUniqeValue(apikey, "MEDICATION_ADMINISTRATION_ID|" + medicationAdministrationId, 'MEDICATION_ADMINISTRATION', function(resMedicationAdministrationId){
+													if(resMedicationAdministrationId.err_code > 0){
+														var identifierId = 'ide' + uniqid.time();
+														//set by sistem
+														var identifierSystem = identifierId;
+
+														dataIdentifier = {
+															"id": identifierId,
+															"use": identifierUseCode,
+															"type": identifierTypeCode,
+															"system": identifierSystem,
+															"value": identifierValue,
+															"period_start": identifierPeriodStart,
+															"period_end": identifierPeriodEnd,
+															"medication_administration_id": medicationAdministrationId
+														}
+
+														ApiFHIR.post('identifier', {"apikey": apikey}, {body: dataIdentifier, json: true}, function(error, response, body){
+															identifier = body;
+															if(identifier.err_code == 0){
+																res.json({"err_code": 0, "err_msg": "Identifier has been add in this medicationAdministration.", "data": identifier.data});
+															}else{
+																res.json(identifier);	
+															}
+														})
+													}else{
+														res.json({"err_code": 503, "err_msg": "Medication Administration Id not found"});		
+													}
+												})
+											}else{
+												res.json({"err_code": 504, "err_msg": "Identifier value already exist."});	
+											}
+										})
+
+									}else{
+										res.json({"err_code": 502, "err_msg": "Identifier type code not found"});		
+									}
+								})
+							}else{
+								res.json({"err_code": 501, "err_msg": "Identifier use code not found"});
+							}
+						})
+					}else{
+						result.err_code = 500;
+						res.json(result);
+					}	
+				});
+			}else{
+				res.json({"err_code": err_code, "err_msg": err_msg});
+			}
+		},
+		medicationAdministrationPerformer: function addMedicationAdministrationPerformer(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var regex = new RegExp("([0-9]{4}[-](0[1-9]|1[0-2])[-]([0-2]{1}[0-9]{1}|3[0-1]{1})|([0-2]{1}[0-9]{1}|3[0-1]{1})[-](0[1-9]|1[0-2])[-][0-9]{4})");
+			var medicationAdministrationId = req.params.medication_id;
+
+			var err_code = 0;
+			var err_msg = "";
+
+			//input check 
+			if(typeof medicationAdministrationId !== 'undefined'){
+				if(validator.isEmpty(medicationAdministrationId)){
+					err_code = 2;
+					err_msg = "Medication Administration id is required";
+				}
+			}else{
+				err_code = 2;
+				err_msg = "Medication Administration id is required";
+			}
+			
+			if(typeof req.body.actor.practitioner !== 'undefined'){
+				var performerActorPractitioner =  req.body.actor.practitioner.trim().toLowerCase();
+				if(validator.isEmpty(performerActorPractitioner)){
+					performerActorPractitioner = "";
+				}
+			}else{
+				err_code = 1;
+				err_msg = "Please add sub-key 'performer actor practitioner' in json Medication Administration request.";
+			}
+
+			if(typeof req.body.actor.patient !== 'undefined'){
+				var performerActorPatient =  req.body.actor.patient.trim().toLowerCase();
+				if(validator.isEmpty(performerActorPatient)){
+					performerActorPatient = "";
+				}
+			}else{
+				err_code = 1;
+				err_msg = "Please add sub-key 'performer actor patient' in json Medication Administration request.";
+			}
+
+			if(typeof req.body.actor.relatedPerson !== 'undefined'){
+				var performerActorRelatedPerson =  req.body.actor.relatedPerson.trim().toLowerCase();
+				if(validator.isEmpty(performerActorRelatedPerson)){
+					performerActorRelatedPerson = "";
+				}
+			}else{
+				err_code = 1;
+				err_msg = "Please add sub-key 'performer actor related person' in json Medication Administration request.";
+			}
+
+			if(typeof req.body.actor.device !== 'undefined'){
+				var performerActorDevice =  req.body.actor.device.trim().toLowerCase();
+				if(validator.isEmpty(performerActorDevice)){
+					performerActorDevice = "";
+				}
+			}else{
+				err_code = 1;
+				err_msg = "Please add sub-key 'performer actor device' in json Medication Administration request.";
+			}
+
+			if(typeof req.body.onBehalfOf !== 'undefined'){
+				var performerOnBehalfOf =  req.body.onBehalfOf.trim().toLowerCase();
+				if(validator.isEmpty(performerOnBehalfOf)){
+					performerOnBehalfOf = "";
+				}
+			}else{
+				err_code = 1;
+				err_msg = "Please add sub-key 'performer on behalf of' in json Medication Administration request.";
+			}
+
+			if(err_code == 0){
+				//check apikey
+				checkApikey(apikey, ipAddres, function(result){
+					if(result.err_code == 0){
+						myEmitter.once('checkMedicationAdministrationID', function(){
+							checkUniqeValue(apikey, "MEDICATION_ADMINISTRATION_ID|" + medicationAdministrationId, 'MEDICATION_ADMINISTRATION', function(resImmunizationID){
+								if(resImmunizationID.err_code > 0){
+									var unicId = uniqid.time();
+									var medicationAdministrationPerformeId = 'map' + unicId;
+									//MedicationAdministrationPerformer
+									dataMedicationAdministrationPerformer = {
+										"performer_id" : medicationAdministrationPerformeId,
+										"actor_practitioner" : performerActorPractitioner,
+										"actor_patient" : performerActorPatient,
+										"actor_related_person" : performerActorRelatedPerson,
+										"actor_device" : performerActorDevice,
+										"on_behalf_of" : performerOnBehalfOf,
+										"medication_administration_id" : medicationAdministrationId
+									};
+							
+									ApiFHIR.post('medicationAdministrationPerformer', {"apikey": apikey}, {body: dataMedicationAdministrationPerformer, json: true}, function(error, response, body){
+										medicationAdministrationPerformer = body;
+										
+										if(medicationAdministrationPerformer.err_code == 0){
+											res.json({"err_code": 0, "err_msg": "Performer has been add in this Medication Administration.", "data": medicationAdministrationPerformer.data});
+										}else{
+											res.json(medicationAdministrationPerformer);	
+										}
+									});
+								}else{
+									res.json({"err_code": 504, "err_msg": "Medication Administration Performer Id not found"});		
+								}
+							})
+						})
+						
+						myEmitter.prependOnceListener('checkPerformerActorPractitioner', function () {
+							if (!validator.isEmpty(performerActorPractitioner)) {
+								checkUniqeValue(apikey, "PRACTITIONER_ID|" + performerActorPractitioner, 'PRACTITIONER', function (resPerformerActorPractitioner) {
+									if (resPerformerActorPractitioner.err_code > 0) {
+										myEmitter.emit('checkMedicationAdministrationID');
+									} else {
+										res.json({
+											"err_code": "500",
+											"err_msg": "Performer actor practitioner id not found"
+										});
+									}
+								})
+							} else {
+								myEmitter.emit('checkMedicationAdministrationID');
+							}
+						})
+
+						myEmitter.prependOnceListener('checkPerformerActorPatient', function () {
+							if (!validator.isEmpty(performerActorPatient)) {
+								checkUniqeValue(apikey, "PATIENT_ID|" + performerActorPatient, 'PATIENT', function (resPerformerActorPatient) {
+									if (resPerformerActorPatient.err_code > 0) {
+										myEmitter.emit('checkPerformerActorPractitioner');
+									} else {
+										res.json({
+											"err_code": "500",
+											"err_msg": "Performer actor patient id not found"
+										});
+									}
+								})
+							} else {
+								myEmitter.emit('checkPerformerActorPractitioner');
+							}
+						})
+
+						myEmitter.prependOnceListener('checkPerformerActorRelatedPerson', function () {
+							if (!validator.isEmpty(performerActorRelatedPerson)) {
+								checkUniqeValue(apikey, "RELATED_PERSON_ID|" + performerActorRelatedPerson, 'RELATED_PERSON', function (resPerformerActorRelatedPerson) {
+									if (resPerformerActorRelatedPerson.err_code > 0) {
+										myEmitter.emit('checkPerformerActorPatient');
+									} else {
+										res.json({
+											"err_code": "500",
+											"err_msg": "Performer actor related person id not found"
+										});
+									}
+								})
+							} else {
+								myEmitter.emit('checkPerformerActorPatient');
+							}
+						})
+
+						myEmitter.prependOnceListener('checkPerformerActorDevice', function () {
+							if (!validator.isEmpty(performerActorDevice)) {
+								checkUniqeValue(apikey, "DEVICE_ID|" + performerActorDevice, 'DEVICE', function (resPerformerActorDevice) {
+									if (resPerformerActorDevice.err_code > 0) {
+										myEmitter.emit('checkPerformerActorRelatedPerson');
+									} else {
+										res.json({
+											"err_code": "500",
+											"err_msg": "Performer actor device id not found"
+										});
+									}
+								})
+							} else {
+								myEmitter.emit('checkPerformerActorRelatedPerson');
+							}
+						})
+
+						if (!validator.isEmpty(performerOnBehalfOf)) {
+							checkUniqeValue(apikey, "ORGANIZATION_ID|" + performerOnBehalfOf, 'ORGANIZATION', function (resPerformerOnBehalfOf) {
+								if (resPerformerOnBehalfOf.err_code > 0) {
+									myEmitter.emit('checkPerformerActorDevice');
+								} else {
+									res.json({
+										"err_code": "500",
+										"err_msg": "Performer on behalf of id not found"
+									});
+								}
+							})
+						} else {
+							myEmitter.emit('checkPerformerActorDevice');
+						}
+					}else{
+						result.err_code = 500;
+						res.json(result);
+					}	
+				});
+			}else{
+				res.json({"err_code": err_code, "err_msg": err_msg});
+			}
+		},
+		/*medicationAdministrationDosage: function addMedicationAdministrationDosage(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var regex = new RegExp("([0-9]{4}[-](0[1-9]|1[0-2])[-]([0-2]{1}[0-9]{1}|3[0-1]{1})|([0-2]{1}[0-9]{1}|3[0-1]{1})[-](0[1-9]|1[0-2])[-][0-9]{4})");
+			var medicationAdministrationId = req.params.medication_id;
+
+			var err_code = 0;
+			var err_msg = "";
+
+			//input check 
+			if(typeof medicationAdministrationId !== 'undefined'){
+				if(validator.isEmpty(medicationAdministrationId)){
+					err_code = 2;
+					err_msg = "Medication Administration id is required";
+				}
+			}else{
+				err_code = 2;
+				err_msg = "Medication Administration id is required";
+			}
+			
+			if(typeof req.body.text !== 'undefined'){
+				var dosageText =  req.body.text.trim().toLowerCase();
+				if(validator.isEmpty(dosageText)){
+					dosageText = "";
+				}
+			}else{
+				err_code = 1;
+				err_msg = "Please add sub-key 'dosage text' in json Medication Administration request.";
+			}
+
+			if(typeof req.body.site !== 'undefined'){
+				var dosageSite =  req.body.site.trim().toLowerCase();
+				if(validator.isEmpty(dosageSite)){
+					dosageSite = "";
+				}
+			}else{
+				err_code = 1;
+				err_msg = "Please add sub-key 'dosage site' in json Medication Administration request.";
+			}
+
+			if(typeof req.body.route !== 'undefined'){
+				var dosageRoute =  req.body.route.trim().toLowerCase();
+				if(validator.isEmpty(dosageRoute)){
+					dosageRoute = "";
+				}
+			}else{
+				err_code = 1;
+				err_msg = "Please add sub-key 'dosage route' in json Medication Administration request.";
+			}
+
+			if(typeof req.body.method !== 'undefined'){
+				var dosageMethod =  req.body.method.trim().toLowerCase();
+				if(validator.isEmpty(dosageMethod)){
+					dosageMethod = "";
+				}
+			}else{
+				err_code = 1;
+				err_msg = "Please add sub-key 'dosage method' in json Medication Administration request.";
+			}
+
+			if(typeof req.body.dose !== 'undefined'){
+				var dosageDose =  req.body.dose;
+				if(validator.isEmpty(dosageDose)){
+					dosageDose = "";
+				}else{
+					if(validator.isInt(dosageDose)){
+						err_code = 2;
+						err_msg = "Medication Administration dosage dose is must be number.";
+					}
+				}
+			}else{
+				err_code = 1;
+				err_msg = "Please add sub-key 'dosage dose' in json Medication Administration request.";
+			}
+
+			if (typeof req.body.rate.rateRatio !== 'undefined') {
+			  var dosageRateRateRatio = req.body.rate.rateRatio;
+ 				if(validator.isEmpty(dosageRateRateRatio)){
+				  var dosageRateRateRatioNumerator = "";
+				  var dosageRateRateRatioDenominator = "";
+				} else {
+				  if (dosageRateRateRatio.indexOf("to") > 0) {
+				    arrDosageRateRateRatio = dosageRateRateRatio.split("to");
+				    var dosageRateRateRatioNumerator = arrDosageRateRateRatio[0];
+				    var dosageRateRateRatioDenominator = arrDosageRateRateRatio[1];
+					} else {
+				  	err_code = 2;
+				  	err_msg = "Medication Administration dosage rate rate ratio invalid ratio format.";
+					}
+				}
+			} else {
+			  err_code = 1;
+			  err_msg = "Please add key 'dosage rate rate ratio' in json Medication Administration request.";
+			}
+
+			if(typeof req.body.rate.rateQuantity !== 'undefined'){
+				var dosageRateRateQuantity =  req.body.rate.rateQuantity.trim().toLowerCase();
+				if(validator.isEmpty(dosageRateRateQuantity)){
+					dosageRateRateQuantity = "";
+				}
+			}else{
+				err_code = 1;
+				err_msg = "Please add sub-key 'dosage rate rate quantity' in json Medication Administration request.";
+			}
+
+			if(err_code == 0){
+				//check apikey
+				checkApikey(apikey, ipAddres, function(result){
+					if(result.err_code == 0){
+						myEmitter.once('checkMedicationAdministrationID', function(){
+							checkUniqeValue(apikey, "MEDICATION_ADMINISTRATION_ID|" + medicationAdministrationId, 'MEDICATION_ADMINISTRATION', function(resImmunizationID){
+								if(resImmunizationID.err_code > 0){
+									var unicId = uniqid.time();
+									var medicationAdministrationPerformeId = 'map' + unicId;
+									//MedicationAdministrationDosage
+									dataMedicationAdministrationDosage = {
+										"dosage_id" : medicationAdministrationDosageId,
+										"text" : dosageText,
+										"site" : dosageSite,
+										"route" : dosageRoute,
+										"method" : dosageMethod,
+										"dose" : dosageDose,
+										"rate_ratio_numerator" : dosageRateRateRatioNumerator,
+										"rate_ratio_denominator" : dosageRateRateRatioDenominator,
+										"rate_quality" : dosageRateRateQuantity,
+										"medication_administration_id" : medicationAdministrationId
+									};
+							
+									ApiFHIR.post('medicationAdministrationDosage', {"apikey": apikey}, {body: dataMedicationAdministrationDosage, json: true}, function(error, response, body){
+										medicationAdministrationDosage = body;
+										
+										if(medicationAdministrationDosage.err_code == 0){
+											res.json({"err_code": 0, "err_msg": "Performer has been add in this Medication Administration.", "data": medicationAdministrationDosage.data});
+										}else{
+											res.json(medicationAdministrationDosage);	
+										}
+									});
+								}else{
+									res.json({"err_code": 504, "err_msg": "Medication Administration Performer Id not found"});		
+								}
+							})
+						})
+						
+						myEmitter.prependOnceListener('checkDosageSite', function () {
+							if (!validator.isEmpty(dosageSite)) {
+								checkCode(apikey, dosageSite, 'APPROACH_SITE_CODES', function (resDosageSiteCode) {
+									if (resDosageSiteCode.err_code > 0) {
+										myEmitter.emit('checkMedicationAdministrationID');
+									} else {
+										res.json({
+											"err_code": "500",
+											"err_msg": "Dosage site code not found"
+										});
+									}
+								})
+							} else {
+								myEmitter.emit('checkMedicationAdministrationID');
+							}
+						})
+
+						myEmitter.prependOnceListener('checkDosageRoute', function () {
+							if (!validator.isEmpty(dosageRoute)) {
+								checkCode(apikey, dosageRoute, 'ROUTE_CODES', function (resDosageRouteCode) {
+									if (resDosageRouteCode.err_code > 0) {
+										myEmitter.emit('checkDosageSite');
+									} else {
+										res.json({
+											"err_code": "500",
+											"err_msg": "Dosage route code not found"
+										});
+									}
+								})
+							} else {
+								myEmitter.emit('checkDosageSite');
+							}
+						})
+
+						if (!validator.isEmpty(dosageMethod)) {
+							checkCode(apikey, dosageMethod, 'ADMINISTRATION_METHOD_CODES', function (resDosageMethodCode) {
+								if (resDosageMethodCode.err_code > 0) {
+									myEmitter.emit('checkDosageRoute');
+								} else {
+									res.json({
+										"err_code": "500",
+										"err_msg": "Dosage method code not found"
+									});
+								}
+							})
+						} else {
+							myEmitter.emit('checkDosageRoute');
+						}
+						
+					}else{
+						result.err_code = 500;
+						res.json(result);
+					}	
+				});
+			}else{
+				res.json({"err_code": err_code, "err_msg": err_msg});
+			}
+		},*/
 	},
 	put: {
 		medicationAdministration : function putMedicationAdministration(req, res){
@@ -1686,7 +2914,7 @@ eventHistory|eventHistory||
       var apikey = req.params.apikey;
       var regex = new RegExp("([0-9]{4}[-](0[1-9]|1[0-2])[-]([0-2]{1}[0-9]{1}|3[0-1]{1})|([0-2]{1}[0-9]{1}|3[0-1]{1})[-](0[1-9]|1[0-2])[-][0-9]{4})");
 			//var isValid = new RegExp("^([0-1]?[0-9]|2[0-4]):([0-5][0-9])(:[0-5][0-9])?$");
-			var medicationAdministrationId = req.params.adverse_event_id;
+			var medicationAdministrationId = req.params.medication_administration_id;
 
       var err_code = 0;
       var err_msg = "";
@@ -1695,171 +2923,177 @@ eventHistory|eventHistory||
 			if(typeof medicationAdministrationId !== 'undefined'){
 				if(validator.isEmpty(medicationAdministrationId)){
 					err_code = 2;
-					err_msg = "Medication administration id is required";
+					err_msg = "Medication Administration id is required";
 				}
 			}else{
 				err_code = 2;
-				err_msg = "Medication administration id is required";
+				err_msg = "Medication Administration id is required";
 			}
+			
+			/*var status = req.body.status;
+			var category = req.body.category;
+			var medication_codeable_concept = req.body.medication_codeable_concept;
+			var medication_reference = req.body.medication_reference;
+			var subject_patient = req.body.subject_patient;
+			var subject_group = req.body.subject_group;
+			var context_encounter = req.body.context_encounter;
+			var context_episode_of_care = req.body.context_episode_of_care;
+			var supporting_information = req.body.supporting_information;
+			var effective_date_time = req.body.effective_date_time;
+			var effective_period_start = req.body.effective_period_start;
+			var effective_period_end = req.body.effective_period_end;
+			var not_given = req.body.not_given;
+			var reason_not_given = req.body.reason_not_given;
+			var reason_code = req.body.reason_code;
+			var prescription = req.body.prescription;*/
 
-						if(typeof req.body.definition.planDefinition !== 'undefined' && req.body.definition.planDefinition !== ""){
-				dataMedicationAdministration.definitionPlanDefinition =  req.body.definition.planDefinition.trim().toLowerCase();
+			if(typeof req.body.definition.planDefinition !== 'undefined' && req.body.definition.planDefinition !== ""){
+				var definitionPlanDefinition =  req.body.definition.planDefinition.trim().toLowerCase();
 				if(validator.isEmpty(definitionPlanDefinition)){
-					err_code = 2;
-					err_msg = "Medication administration definition plan definition is required.";
+					dataMedicationAdministration.plan_definition = "";
 				}else{
-					dataMedicationAdministration.definitionPlanDefinition = definitionPlanDefinition;
+					dataMedicationAdministration.plan_definition = definitionPlanDefinition;
 				}
 			}else{
-				definitionPlanDefinition = "";
+			  definitionPlanDefinition = "";
 			}
 
 			if(typeof req.body.definition.activityDefinition !== 'undefined' && req.body.definition.activityDefinition !== ""){
-				dataMedicationAdministration.definitionActivityDefinition =  req.body.definition.activityDefinition.trim().toLowerCase();
+				var definitionActivityDefinition =  req.body.definition.activityDefinition.trim().toLowerCase();
 				if(validator.isEmpty(definitionActivityDefinition)){
-					err_code = 2;
-					err_msg = "Medication administration definition activity definition is required.";
+					dataMedicationAdministration.activity_definition = "";
 				}else{
-					dataMedicationAdministration.definitionActivityDefinition = definitionActivityDefinition;
+					dataMedicationAdministration.activity_definition = definitionActivityDefinition;
 				}
 			}else{
-				definitionActivityDefinition = "";
+			  definitionActivityDefinition = "";
 			}
 
 			if(typeof req.body.partOf.medicationAdministration !== 'undefined' && req.body.partOf.medicationAdministration !== ""){
-				dataMedicationAdministration.partOfMedicationAdministration =  req.body.partOf.medicationAdministration.trim().toLowerCase();
+				var partOfMedicationAdministration =  req.body.partOf.medicationAdministration.trim().toLowerCase();
 				if(validator.isEmpty(partOfMedicationAdministration)){
-					err_code = 2;
-					err_msg = "Medication administration part of medication administration is required.";
+					dataMedicationAdministration.medication_administration = "";
 				}else{
-					dataMedicationAdministration.partOfMedicationAdministration = partOfMedicationAdministration;
+					dataMedicationAdministration.medication_administration = partOfMedicationAdministration;
 				}
 			}else{
-				partOfMedicationAdministration = "";
+			  partOfMedicationAdministration = "";
 			}
 
 			if(typeof req.body.partOf.procedure !== 'undefined' && req.body.partOf.procedure !== ""){
-				dataMedicationAdministration.partOfProcedure =  req.body.partOf.procedure.trim().toLowerCase();
+				var partOfProcedure =  req.body.partOf.procedure.trim().toLowerCase();
 				if(validator.isEmpty(partOfProcedure)){
-					err_code = 2;
-					err_msg = "Medication administration part of procedure is required.";
+					dataMedicationAdministration.procedure = "";
 				}else{
-					dataMedicationAdministration.partOfProcedure = partOfProcedure;
+					dataMedicationAdministration.procedure = partOfProcedure;
 				}
 			}else{
-				partOfProcedure = "";
+			  partOfProcedure = "";
 			}
 
 			if(typeof req.body.status !== 'undefined' && req.body.status !== ""){
-				dataMedicationAdministration.status =  req.body.status.trim().toLowerCase();
+				var status =  req.body.status.trim().toLowerCase();
 				if(validator.isEmpty(status)){
 					err_code = 2;
-					err_msg = "Medication administration status is required.";
+					err_msg = "medication administration status is required.";
 				}else{
 					dataMedicationAdministration.status = status;
 				}
 			}else{
-				status = "";
+			  status = "";
 			}
 
 			if(typeof req.body.category !== 'undefined' && req.body.category !== ""){
-				dataMedicationAdministration.category =  req.body.category.trim().toLowerCase();
+				var category =  req.body.category.trim().toLowerCase();
 				if(validator.isEmpty(category)){
-					err_code = 2;
-					err_msg = "Medication administration category is required.";
+					dataMedicationAdministration.category = "";
 				}else{
 					dataMedicationAdministration.category = category;
 				}
 			}else{
-				category = "";
+			  category = "";
 			}
 
 			if(typeof req.body.medication.medicationCodeableConcept !== 'undefined' && req.body.medication.medicationCodeableConcept !== ""){
-				dataMedicationAdministration.medicationMedicationCodeableConcept =  req.body.medication.medicationCodeableConcept.trim().toLowerCase();
+				var medicationMedicationCodeableConcept =  req.body.medication.medicationCodeableConcept.trim().toLowerCase();
 				if(validator.isEmpty(medicationMedicationCodeableConcept)){
 					err_code = 2;
-					err_msg = "Medication administration medication medication codeable concept is required.";
+					err_msg = "medication administration medication medication codeable concept is required.";
 				}else{
-					dataMedicationAdministration.medicationMedicationCodeableConcept = medicationMedicationCodeableConcept;
+					dataMedicationAdministration.medication_codeable_concept = medicationMedicationCodeableConcept;
 				}
 			}else{
-				medicationMedicationCodeableConcept = "";
+			  medicationMedicationCodeableConcept = "";
 			}
 
 			if(typeof req.body.medication.medicationReference !== 'undefined' && req.body.medication.medicationReference !== ""){
-				dataMedicationAdministration.medicationMedicationReference =  req.body.medication.medicationReference.trim().toLowerCase();
+				var medicationMedicationReference =  req.body.medication.medicationReference.trim().toLowerCase();
 				if(validator.isEmpty(medicationMedicationReference)){
-					err_code = 2;
-					err_msg = "Medication administration medication medication reference is required.";
+					dataMedicationAdministration.medication_reference = "";
 				}else{
-					dataMedicationAdministration.medicationMedicationReference = medicationMedicationReference;
+					dataMedicationAdministration.medication_reference = medicationMedicationReference;
 				}
 			}else{
-				medicationMedicationReference = "";
+			  medicationMedicationReference = "";
 			}
 
 			if(typeof req.body.subject.patient !== 'undefined' && req.body.subject.patient !== ""){
-				dataMedicationAdministration.subjectPatient =  req.body.subject.patient.trim().toLowerCase();
+				var subjectPatient =  req.body.subject.patient.trim().toLowerCase();
 				if(validator.isEmpty(subjectPatient)){
-					err_code = 2;
-					err_msg = "Medication administration subject patient is required.";
+					dataMedicationAdministration.patient = "";
 				}else{
-					dataMedicationAdministration.subjectPatient = subjectPatient;
+					dataMedicationAdministration.patient = subjectPatient;
 				}
 			}else{
-				subjectPatient = "";
+			  subjectPatient = "";
 			}
 
 			if(typeof req.body.subject.group !== 'undefined' && req.body.subject.group !== ""){
-				dataMedicationAdministration.subjectGroup =  req.body.subject.group.trim().toLowerCase();
+				var subjectGroup =  req.body.subject.group.trim().toLowerCase();
 				if(validator.isEmpty(subjectGroup)){
-					err_code = 2;
-					err_msg = "Medication administration subject group is required.";
+					dataMedicationAdministration.group = "";
 				}else{
-					dataMedicationAdministration.subjectGroup = subjectGroup;
+					dataMedicationAdministration.group = subjectGroup;
 				}
 			}else{
-				subjectGroup = "";
+			  subjectGroup = "";
 			}
 
 			if(typeof req.body.context.encounter !== 'undefined' && req.body.context.encounter !== ""){
-				dataMedicationAdministration.contextEncounter =  req.body.context.encounter.trim().toLowerCase();
+				var contextEncounter =  req.body.context.encounter.trim().toLowerCase();
 				if(validator.isEmpty(contextEncounter)){
-					err_code = 2;
-					err_msg = "Medication administration context encounter is required.";
+					dataMedicationAdministration.encounter = "";
 				}else{
-					dataMedicationAdministration.contextEncounter = contextEncounter;
+					dataMedicationAdministration.encounter = contextEncounter;
 				}
 			}else{
-				contextEncounter = "";
+			  contextEncounter = "";
 			}
 
 			if(typeof req.body.context.episodeOfCare !== 'undefined' && req.body.context.episodeOfCare !== ""){
-				dataMedicationAdministration.contextEpisodeOfCare =  req.body.context.episodeOfCare.trim().toLowerCase();
+				var contextEpisodeOfCare =  req.body.context.episodeOfCare.trim().toLowerCase();
 				if(validator.isEmpty(contextEpisodeOfCare)){
-					err_code = 2;
-					err_msg = "Medication administration context episode of care is required.";
+					dataMedicationAdministration.episode_of_care = "";
 				}else{
-					dataMedicationAdministration.contextEpisodeOfCare = contextEpisodeOfCare;
+					dataMedicationAdministration.episode_of_care = contextEpisodeOfCare;
 				}
 			}else{
-				contextEpisodeOfCare = "";
+			  contextEpisodeOfCare = "";
 			}
 
 			if(typeof req.body.supportingInformation !== 'undefined' && req.body.supportingInformation !== ""){
-				dataMedicationAdministration.supportingInformation =  req.body.supportingInformation.trim().toLowerCase();
+				var supportingInformation =  req.body.supportingInformation.trim().toLowerCase();
 				if(validator.isEmpty(supportingInformation)){
-					err_code = 2;
-					err_msg = "Medication administration supporting information is required.";
+					dataMedicationAdministration.supporting_information = "";
 				}else{
-					dataMedicationAdministration.supportingInformation = supportingInformation;
+					dataMedicationAdministration.supporting_information = supportingInformation;
 				}
 			}else{
-				supportingInformation = "";
+			  supportingInformation = "";
 			}
 
 			if(typeof req.body.effective.effectiveDateTime !== 'undefined' && req.body.effective.effectiveDateTime !== ""){
-				dataMedicationAdministration.effectiveEffectiveDateTime =  req.body.effective.effectiveDateTime;
+				var effectiveEffectiveDateTime =  req.body.effective.effectiveDateTime;
 				if(validator.isEmpty(effectiveEffectiveDateTime)){
 					err_code = 2;
 					err_msg = "medication administration effective effective date time is required.";
@@ -1867,18 +3101,20 @@ eventHistory|eventHistory||
 					if(!regex.test(effectiveEffectiveDateTime)){
 						err_code = 2;
 						err_msg = "medication administration effective effective date time invalid date format.";	
+					}else{
+						dataMedicationAdministration.effective_date_time = effectiveEffectiveDateTime;
 					}
 				}
 			}else{
-				effectiveEffectiveDateTime = "";
+			  effectiveEffectiveDateTime = "";
 			}
 
 			if (typeof req.body.effective.effectivePeriod !== 'undefined' && req.body.effective.effectivePeriod !== "") {
 			  var effectiveEffectivePeriod = req.body.effective.effectivePeriod;
 			  if (effectiveEffectivePeriod.indexOf("to") > 0) {
 			    arrEffectiveEffectivePeriod = effectiveEffectivePeriod.split("to");
-			    dataMedicationAdministration.effectiveEffectivePeriodStart = arrEffectiveEffectivePeriod[0];
-			    dataMedicationAdministration.effectiveEffectivePeriodEnd = arrEffectiveEffectivePeriod[1];
+			    dataMedicationAdministration.effective_period_start = arrEffectiveEffectivePeriod[0];
+			    dataMedicationAdministration.effective_period_end = arrEffectiveEffectivePeriod[1];
 			    if (!regex.test(effectiveEffectivePeriodStart) && !regex.test(effectiveEffectivePeriodEnd)) {
 			      err_code = 2;
 			      err_msg = "medication administration effective effective period invalid date format.";
@@ -1888,73 +3124,16 @@ eventHistory|eventHistory||
 			  	err_msg = "medication administration effective effective period invalid date format.";
 				}
 			} else {
-				effectiveEffectivePeriod = "";
-			}
-
-			if(typeof req.body.performer.actor.practitioner !== 'undefined' && req.body.performer.actor.practitioner !== ""){
-				dataMedicationAdministration.performerActorPractitioner =  req.body.performer.actor.practitioner.trim().toLowerCase();
-				if(validator.isEmpty(performerActorPractitioner)){
-					err_code = 2;
-					err_msg = "Medication administration performer actor practitioner is required.";
-				}else{
-					dataMedicationAdministration.performerActorPractitioner = performerActorPractitioner;
-				}
-			}else{
-				performerActorPractitioner = "";
-			}
-
-			if(typeof req.body.performer.actor.patient !== 'undefined' && req.body.performer.actor.patient !== ""){
-				dataMedicationAdministration.performerActorPatient =  req.body.performer.actor.patient.trim().toLowerCase();
-				if(validator.isEmpty(performerActorPatient)){
-					err_code = 2;
-					err_msg = "Medication administration performer actor patient is required.";
-				}else{
-					dataMedicationAdministration.performerActorPatient = performerActorPatient;
-				}
-			}else{
-				performerActorPatient = "";
-			}
-
-			if(typeof req.body.performer.actor.relatedPerson !== 'undefined' && req.body.performer.actor.relatedPerson !== ""){
-				dataMedicationAdministration.performerActorRelatedPerson =  req.body.performer.actor.relatedPerson.trim().toLowerCase();
-				if(validator.isEmpty(performerActorRelatedPerson)){
-					err_code = 2;
-					err_msg = "Medication administration performer actor related person is required.";
-				}else{
-					dataMedicationAdministration.performerActorRelatedPerson = performerActorRelatedPerson;
-				}
-			}else{
-				performerActorRelatedPerson = "";
-			}
-
-			if(typeof req.body.performer.actor.device !== 'undefined' && req.body.performer.actor.device !== ""){
-				dataMedicationAdministration.performerActorDevice =  req.body.performer.actor.device.trim().toLowerCase();
-				if(validator.isEmpty(performerActorDevice)){
-					err_code = 2;
-					err_msg = "Medication administration performer actor device is required.";
-				}else{
-					dataMedicationAdministration.performerActorDevice = performerActorDevice;
-				}
-			}else{
-				performerActorDevice = "";
-			}
-
-			if(typeof req.body.performer.onBehalfOf !== 'undefined' && req.body.performer.onBehalfOf !== ""){
-				dataMedicationAdministration.performerOnBehalfOf =  req.body.performer.onBehalfOf.trim().toLowerCase();
-				if(validator.isEmpty(performerOnBehalfOf)){
-					err_code = 2;
-					err_msg = "Medication administration performer on behalf of is required.";
-				}else{
-					dataMedicationAdministration.performerOnBehalfOf = performerOnBehalfOf;
-				}
-			}else{
-				performerOnBehalfOf = "";
+			  effectiveEffectivePeriod = "";
 			}
 
 			if (typeof req.body.notGiven !== 'undefined' && req.body.notGiven !== "") {
-			  dataMedicationAdministration.notGiven = req.body.notGiven.trim().toLowerCase();
+			  var notGiven = req.body.notGiven.trim().toLowerCase();
+					if(validator.isEmpty(notGiven)){
+						notGiven = "false";
+					}
 			  if(notGiven === "true" || notGiven === "false"){
-					dataMedicationAdministration.notGiven = notGiven;
+					dataMedicationAdministration.not_given = notGiven;
 			  } else {
 			    err_code = 2;
 			    err_msg = "Medication administration not given is must be boolean.";
@@ -1964,316 +3143,268 @@ eventHistory|eventHistory||
 			}
 
 			if(typeof req.body.reasonNotGiven !== 'undefined' && req.body.reasonNotGiven !== ""){
-				dataMedicationAdministration.reasonNotGiven =  req.body.reasonNotGiven.trim().toLowerCase();
+				var reasonNotGiven =  req.body.reasonNotGiven.trim().toLowerCase();
 				if(validator.isEmpty(reasonNotGiven)){
-					err_code = 2;
-					err_msg = "Medication administration reason not given is required.";
+					dataMedicationAdministration.reason_not_given = "";
 				}else{
-					dataMedicationAdministration.reasonNotGiven = reasonNotGiven;
+					dataMedicationAdministration.reason_not_given = reasonNotGiven;
 				}
 			}else{
-				reasonNotGiven = "";
+			  reasonNotGiven = "";
 			}
 
 			if(typeof req.body.reasonCode !== 'undefined' && req.body.reasonCode !== ""){
-				dataMedicationAdministration.reasonCode =  req.body.reasonCode.trim().toLowerCase();
+				var reasonCode =  req.body.reasonCode.trim().toLowerCase();
 				if(validator.isEmpty(reasonCode)){
-					err_code = 2;
-					err_msg = "Medication administration reason code is required.";
+					dataMedicationAdministration.reason_code = "";
 				}else{
-					dataMedicationAdministration.reasonCode = reasonCode;
+					dataMedicationAdministration.reason_code = reasonCode;
 				}
 			}else{
-				reasonCode = "";
+			  reasonCode = "";
 			}
 
-			if(typeof req.body.reasonReference.condition !== 'undefined' && req.body.reasonReference.condition !== ""){
-				dataMedicationAdministration.reasonReferenceCondition =  req.body.reasonReference.condition.trim().toLowerCase();
+			/*if(typeof req.body.reasonReference.condition !== 'undefined' && req.body.reasonReference.condition !== ""){
+				var reasonReferenceCondition =  req.body.reasonReference.condition.trim().toLowerCase();
 				if(validator.isEmpty(reasonReferenceCondition)){
-					err_code = 2;
-					err_msg = "Medication administration reason reference condition is required.";
+					dataMedicationAdministration.condition = "";
 				}else{
-					dataMedicationAdministration.reasonReferenceCondition = reasonReferenceCondition;
+					dataMedicationAdministration.condition = reasonReferenceCondition;
 				}
 			}else{
-				reasonReferenceCondition = "";
+			  reasonReferenceCondition = "";
 			}
 
 			if(typeof req.body.reasonReference.observation !== 'undefined' && req.body.reasonReference.observation !== ""){
-				dataMedicationAdministration.reasonReferenceObservation =  req.body.reasonReference.observation.trim().toLowerCase();
+				var reasonReferenceObservation =  req.body.reasonReference.observation.trim().toLowerCase();
 				if(validator.isEmpty(reasonReferenceObservation)){
-					err_code = 2;
-					err_msg = "Medication administration reason reference observation is required.";
+					dataMedicationAdministration.observation = "";
 				}else{
-					dataMedicationAdministration.reasonReferenceObservation = reasonReferenceObservation;
+					dataMedicationAdministration.observation = reasonReferenceObservation;
 				}
 			}else{
-				reasonReferenceObservation = "";
-			}
+			  reasonReferenceObservation = "";
+			}*/
 
 			if(typeof req.body.prescription !== 'undefined' && req.body.prescription !== ""){
-				dataMedicationAdministration.prescription =  req.body.prescription.trim().toLowerCase();
+				var prescription =  req.body.prescription.trim().toLowerCase();
 				if(validator.isEmpty(prescription)){
-					err_code = 2;
-					err_msg = "Medication administration prescription is required.";
+					dataMedicationAdministration.prescription = "";
 				}else{
 					dataMedicationAdministration.prescription = prescription;
 				}
 			}else{
-				prescription = "";
+			  prescription = "";
 			}
 
-			if(typeof req.body.device !== 'undefined' && req.body.device !== ""){
-				dataMedicationAdministration.device =  req.body.device.trim().toLowerCase();
+			/*if(typeof req.body.device !== 'undefined' && req.body.device !== ""){
+				var device =  req.body.device.trim().toLowerCase();
 				if(validator.isEmpty(device)){
-					err_code = 2;
-					err_msg = "Medication administration device is required.";
+					dataMedicationAdministration.device = "";
 				}else{
 					dataMedicationAdministration.device = device;
 				}
 			}else{
-				device = "";
+			  device = "";
 			}
-
-			if(typeof req.body.note.author.authorReference.practitioner !== 'undefined' && req.body.note.author.authorReference.practitioner !== ""){
-				dataMedicationAdministration.noteAuthorPractitioner =  req.body.note.author.authorReference.practitioner.trim().toLowerCase();
-				if(validator.isEmpty(noteAuthorPractitioner)){
-					err_code = 2;
-					err_msg = "Medication administration note author author reference practitioner is required.";
-				}else{
-					dataMedicationAdministration.noteAuthorPractitioner = noteAuthorPractitioner;
-				}
-			}else{
-				noteAuthorPractitioner = "";
-			}
-
-			if(typeof req.body.note.author.authorReference.patient !== 'undefined' && req.body.note.author.authorReference.patient !== ""){
-				dataMedicationAdministration.noteAuthorPatient =  req.body.note.author.authorReference.patient.trim().toLowerCase();
-				if(validator.isEmpty(noteAuthorPatient)){
-					err_code = 2;
-					err_msg = "Medication administration note author author reference patient is required.";
-				}else{
-					dataMedicationAdministration.noteAuthorPatient = noteAuthorPatient;
-				}
-			}else{
-				noteAuthorPatient = "";
-			}
-
-			if(typeof req.body.note.author.authorReference.relatedPerson !== 'undefined' && req.body.note.author.authorReference.relatedPerson !== ""){
-				dataMedicationAdministration.noteAuthorRelatedPerson =  req.body.note.author.authorReference.relatedPerson.trim().toLowerCase();
-				if(validator.isEmpty(noteAuthorRelatedPerson)){
-					err_code = 2;
-					err_msg = "Medication administration note author author reference related person is required.";
-				}else{
-					dataMedicationAdministration.noteAuthorRelatedPerson = noteAuthorRelatedPerson;
-				}
-			}else{
-				noteAuthorRelatedPerson = "";
-			}
-
-			if(typeof req.body.note.author.authorString !== 'undefined' && req.body.note.author.authorString !== ""){
-				dataMedicationAdministration.noteAuthorAuthorString =  req.body.note.author.authorString.trim().toLowerCase();
-				if(validator.isEmpty(noteAuthorAuthorString)){
-					err_code = 2;
-					err_msg = "Medication administration note author author string is required.";
-				}else{
-					dataMedicationAdministration.noteAuthorAuthorString = noteAuthorAuthorString;
-				}
-			}else{
-				noteAuthorAuthorString = "";
-			}
-
-			if(typeof req.body.note.time !== 'undefined' && req.body.note.time !== ""){
-				dataMedicationAdministration.noteTime =  req.body.note.time;
-				if(validator.isEmpty(noteTime)){
-					err_code = 2;
-					err_msg = "medication administration note time is required.";
-				}else{
-					if(!regex.test(noteTime)){
-						err_code = 2;
-						err_msg = "medication administration note time invalid date format.";	
-					}
-				}
-			}else{
-				noteTime = "";
-			}
-
-			if(typeof req.body.note.text !== 'undefined' && req.body.note.text !== ""){
-				dataMedicationAdministration.noteText =  req.body.note.text.trim().toLowerCase();
-				if(validator.isEmpty(noteText)){
-					err_code = 2;
-					err_msg = "Medication administration note text is required.";
-				}else{
-					dataMedicationAdministration.noteText = noteText;
-				}
-			}else{
-				noteText = "";
-			}
-
-			if(typeof req.body.dosage.text !== 'undefined' && req.body.dosage.text !== ""){
-				dataMedicationAdministration.dosageText =  req.body.dosage.text.trim().toLowerCase();
-				if(validator.isEmpty(dosageText)){
-					err_code = 2;
-					err_msg = "Medication administration dosage text is required.";
-				}else{
-					dataMedicationAdministration.dosageText = dosageText;
-				}
-			}else{
-				dosageText = "";
-			}
-
-			if(typeof req.body.dosage.site !== 'undefined' && req.body.dosage.site !== ""){
-				dataMedicationAdministration.dosageSite =  req.body.dosage.site.trim().toLowerCase();
-				if(validator.isEmpty(dosageSite)){
-					err_code = 2;
-					err_msg = "Medication administration dosage site is required.";
-				}else{
-					dataMedicationAdministration.dosageSite = dosageSite;
-				}
-			}else{
-				dosageSite = "";
-			}
-
-			if(typeof req.body.dosage.route !== 'undefined' && req.body.dosage.route !== ""){
-				dataMedicationAdministration.dosageRoute =  req.body.dosage.route.trim().toLowerCase();
-				if(validator.isEmpty(dosageRoute)){
-					err_code = 2;
-					err_msg = "Medication administration dosage route is required.";
-				}else{
-					dataMedicationAdministration.dosageRoute = dosageRoute;
-				}
-			}else{
-				dosageRoute = "";
-			}
-
-			if(typeof req.body.dosage.method !== 'undefined' && req.body.dosage.method !== ""){
-				dataMedicationAdministration.dosageMethod =  req.body.dosage.method.trim().toLowerCase();
-				if(validator.isEmpty(dosageMethod)){
-					err_code = 2;
-					err_msg = "Medication administration dosage method is required.";
-				}else{
-					dataMedicationAdministration.dosageMethod = dosageMethod;
-				}
-			}else{
-				dosageMethod = "";
-			}
-
-			if(typeof req.body.dosage.dose !== 'undefined' && req.body.dosage.dose !== ""){
-				dataMedicationAdministration.dosageDose =  req.body.dosage.dose;
-				if(validator.isInt(dosageDose)){
-					err_code = 2;
-					err_msg = "medication administration dosage dose is must be number.";
-				}
-			}else{
-				dosageDose = "";
-			}
-
-			if (typeof req.body.dosage.rate.rateRatio !== 'undefined' && req.body.dosage.rate.rateRatio !== "") {
-			  var dosageRateRateRatio = req.body.dosage.rate.rateRatio;
-			  if (dosageRateRateRatio.indexOf("to") > 0) {
-			    arrDosageRateRateRatio = dosageRateRateRatio.split("to");
-			    dataMedicationAdministration.dosageRateRateRatioNumerator = arrDosageRateRateRatio[0];
-			    dataMedicationAdministration.dosageRateRateRatioDenominator = arrDosageRateRateRatio[1];
-				} else {
-			  	err_code = 2;
-			  	err_msg = "medication administration dosage rate rate ratio invalid ratio format.";
-				}
-			} else {
-			  dosageRateRateRatio = "";
-			}
-
-			if(typeof req.body.dosage.rate.rateQuantity !== 'undefined' && req.body.dosage.rate.rateQuantity !== ""){
-				dataMedicationAdministration.dosageRateRateQuantity =  req.body.dosage.rate.rateQuantity.trim().toLowerCase();
-				if(validator.isEmpty(dosageRateRateQuantity)){
-					err_code = 2;
-					err_msg = "Medication administration dosage rate rate quantity is required.";
-				}else{
-					dataMedicationAdministration.dosageRateRateQuantity = dosageRateRateQuantity;
-				}
-			}else{
-				dosageRateRateQuantity = "";
-			}
-
-			if(typeof req.body.eventHistory !== 'undefined' && req.body.eventHistory !== ""){
-				dataMedicationAdministration.eventHistory =  req.body.eventHistory.trim().toLowerCase();
-				if(validator.isEmpty(eventHistory)){
-					err_code = 2;
-					err_msg = "Medication administration event history is required.";
-				}else{
-					dataMedicationAdministration.eventHistory = eventHistory;
-				}
-			}else{
-				eventHistory = "";
-			}
-
-
 			
+			if(typeof req.body.eventHistory !== 'undefined' && req.body.eventHistory !== ""){
+				var eventHistory =  req.body.eventHistory.trim().toLowerCase();
+				if(validator.isEmpty(eventHistory)){
+					dataMedicationAdministration.event_history = "";
+				}else{
+					dataMedicationAdministration.event_history = eventHistory;
+				}
+			}else{
+			  eventHistory = "";
+			}*/
+
 			if(err_code == 0){
 				//check apikey
 				checkApikey(apikey, ipAddres, function(result){
 					if(result.err_code == 0){	
+						//event emiter
+						myEmitter.prependOnceListener('checkMedicationAdministrationId', function() {
+							console.log(dataMedicationAdministration);
+							ApiFHIR.put('medicationAdministration', {"apikey": apikey}, {body: dataMedicationAdministration, json: true}, function(error, response, body){
+								medicationAdministration = body;
+								if(medicationAdministration.err_code > 0){
+									res.json(medicationAdministration);	
+									console.log("ok");
+								}
+							});
 
-										//event emiter
-										myEmitter.prependOnceListener('checkEndpointId', function() {
-														//proses insert
-														//set uniqe id
-														var unicId = uniqid.time();
-														var identifierId = 'ide' + unicId;
-														var medicationAdministrationId = 'ade' + unicId;
-
-														dataMedicationAdministration = {
-															"adverse_event_id" : medicationAdministrationId,
-															"identifier_id" : identifierId,
-															"category" : category,
-															"type" : type,
-															"subject_patient" : subjectPatient,
-															"subject_research_subject" : subjectResearchSubject,
-															"subject_research_subject" : subjectResearchSubject,
-															"subject_device" : subjectDevice,
-															"date" : date,
-															"location" : location,
-															"seriousness" : seriousness,
-															"outcome" : outcome,
-															"recorder_patient" : recorderPatient,
-															"recorder_practitioner" : recorderPractitioner,
-															"recorder_related_person" : recorderRelatedPerson,
-															"event_participant_practitioner" : eventParticipantPractitioner,
-															"event_participant_device" :eventParticipantDevice,
-															"description" : description,
-														}
-														console.log(dataMedicationAdministration);
-														ApiFHIR.post('medicationAdministration', {"apikey": apikey}, {body: dataMedicationAdministration, json: true}, function(error, response, body){
-															medicationAdministration = body;
-															if(medicationAdministration.err_code > 0){
-																res.json(medicationAdministration);	
-																console.log("ok");
-															}
-														});
-
-														//identifier
-														/*var identifierSystem = identifierId;
-														dataIdentifier = {
-																							"id": identifierId,
-																							"use": identifierUseCode,
-																							"type": identifierTypeCode,
-																							"system": identifierSystem,
-																							"value": identifierValue,
-																							"period_start": identifierPeriodStart,
-																							"period_end": identifierPeriodEnd,
-																							"adverse_event_id": medicationAdministrationId
-																						}
-
-														ApiFHIR.post('identifier', {"apikey": apikey}, {body: dataIdentifier, json: true}, function(error, response, body){
-															identifier = body;
-															if(identifier.err_code > 0){
-																res.json(identifier);	
-															}
-														})*/
-
-														res.json({"err_code": 0, "err_msg": "Care Team has been update.", "data": [{"_id": medicationAdministrationId}]});
-
+							res.json({"err_code": 0, "err_msg": "Medication Administration has been update.", "data": [{"_id": medicationAdministrationId}]});
+						});
+						
+						myEmitter.prependOnceListener('checkStatus', function () {
+							if (!validator.isEmpty(status)) {
+								checkCode(apikey, status, 'MEDICATION_ADMIN_STATUS', function (resStatusCode) {
+									if (resStatusCode.err_code > 0) {
+										myEmitter.emit('checkMedicationAdministrationId');
+									} else {
+										res.json({
+											"err_code": "500",
+											"err_msg": "Status code not found"
 										});
-										myEmitter.emit('checkEndpointId');
+									}
+								})
+							} else {
+								myEmitter.emit('checkMedicationAdministrationId');
+							}
+						})
+
+						myEmitter.prependOnceListener('checkCategory', function () {
+							if (!validator.isEmpty(category)) {
+								checkCode(apikey, category, 'MEDICATION_ADMIN_CATEGORY', function (resCategoryCode) {
+									if (resCategoryCode.err_code > 0) {
+										myEmitter.emit('checkStatus');
+									} else {
+										res.json({
+											"err_code": "500",
+											"err_msg": "Category code not found"
+										});
+									}
+								})
+							} else {
+								myEmitter.emit('checkStatus');
+							}
+						})
+
+						myEmitter.prependOnceListener('checkMedicationMedicationCodeableConcept', function () {
+							if (!validator.isEmpty(medicationMedicationCodeableConcept)) {
+								checkCode(apikey, medicationMedicationCodeableConcept, 'MEDICATION_CODES', function (resMedicationMedicationCodeableConceptCode) {
+									if (resMedicationMedicationCodeableConceptCode.err_code > 0) {
+										myEmitter.emit('checkCategory');
+									} else {
+										res.json({
+											"err_code": "500",
+											"err_msg": "Medication medication codeable concept code not found"
+										});
+									}
+								})
+							} else {
+								myEmitter.emit('checkCategory');
+							}
+						})
+
+						myEmitter.prependOnceListener('checkReasonNotGiven', function () {
+							if (!validator.isEmpty(reasonNotGiven)) {
+								checkCode(apikey, reasonNotGiven, 'REASON_MEDICATION_NOT_GIVEN_CODES', function (resReasonNotGivenCode) {
+									if (resReasonNotGivenCode.err_code > 0) {
+										myEmitter.emit('checkMedicationMedicationCodeableConcept');
+									} else {
+										res.json({
+											"err_code": "500",
+											"err_msg": "Reason not given code not found"
+										});
+									}
+								})
+							} else {
+								myEmitter.emit('checkMedicationMedicationCodeableConcept');
+							}
+						})
+
+						myEmitter.prependOnceListener('checkReasonCode', function () {
+							if (!validator.isEmpty(reasonCode)) {
+								checkCode(apikey, reasonCode, 'REASON_MEDICATION_GIVEN_CODES', function (resReasonCodeCode) {
+									if (resReasonCodeCode.err_code > 0) {
+										myEmitter.emit('checkReasonNotGiven');
+									} else {
+										res.json({
+											"err_code": "500",
+											"err_msg": "Reason code code not found"
+										});
+									}
+								})
+							} else {
+								myEmitter.emit('checkReasonNotGiven');
+							}
+						})
+						
+						myEmitter.prependOnceListener('checkSubjectPatient', function () {
+							if (!validator.isEmpty(subjectPatient)) {
+								checkUniqeValue(apikey, "PATIENT_ID|" + subjectPatient, 'PATIENT', function (resSubjectPatient) {
+									if (resSubjectPatient.err_code > 0) {
+										myEmitter.emit('checkReasonCode');
+									} else {
+										res.json({
+											"err_code": "500",
+											"err_msg": "Subject patient id not found"
+										});
+									}
+								})
+							} else {
+								myEmitter.emit('checkReasonCode');
+							}
+						})
+
+						myEmitter.prependOnceListener('checkSubjectGroup', function () {
+							if (!validator.isEmpty(subjectGroup)) {
+								checkUniqeValue(apikey, "GROUP_ID|" + subjectGroup, 'GROUP', function (resSubjectGroup) {
+									if (resSubjectGroup.err_code > 0) {
+										myEmitter.emit('checkSubjectPatient');
+									} else {
+										res.json({
+											"err_code": "500",
+											"err_msg": "Subject group id not found"
+										});
+									}
+								})
+							} else {
+								myEmitter.emit('checkSubjectPatient');
+							}
+						})
+
+						myEmitter.prependOnceListener('checkContextEncounter', function () {
+							if (!validator.isEmpty(contextEncounter)) {
+								checkUniqeValue(apikey, "ENCOUNTER_ID|" + contextEncounter, 'ENCOUNTER', function (resContextEncounter) {
+									if (resContextEncounter.err_code > 0) {
+										myEmitter.emit('checkSubjectGroup');
+									} else {
+										res.json({
+											"err_code": "500",
+											"err_msg": "Context encounter id not found"
+										});
+									}
+								})
+							} else {
+								myEmitter.emit('checkSubjectGroup');
+							}
+						})
+
+						myEmitter.prependOnceListener('checkContextEpisodeOfCare', function () {
+							if (!validator.isEmpty(contextEpisodeOfCare)) {
+								checkUniqeValue(apikey, "EPISODE_OF_CARE_ID|" + contextEpisodeOfCare, 'EPISODE_OF_CARE', function (resContextEpisodeOfCare) {
+									if (resContextEpisodeOfCare.err_code > 0) {
+										myEmitter.emit('checkContextEncounter');
+									} else {
+										res.json({
+											"err_code": "500",
+											"err_msg": "Context episode of care id not found"
+										});
+									}
+								})
+							} else {
+								myEmitter.emit('checkContextEncounter');
+							}
+						})
+						
+						if (!validator.isEmpty(prescription)) {
+							checkUniqeValue(apikey, "MEDICATION_REQUEST_ID|" + prescription, 'MEDICATION_REQUEST', function (resPrescription) {
+								if (resPrescription.err_code > 0) {
+									myEmitter.emit('checkContextEpisodeOfCare');
+								} else {
+									res.json({
+										"err_code": "500",
+										"err_msg": "Prescription id not found"
+									});
+								}
+							})
+						} else {
+							myEmitter.emit('checkContextEpisodeOfCare');
+						}
+
 
 					}else{
 						result.err_code = 500;
@@ -2283,8 +3414,603 @@ eventHistory|eventHistory||
 			}else{
 				res.json({"err_code": err_code, "err_msg": err_msg});
 			}	
+		},
+		identifier: function updateIdentifier(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var regex = new RegExp("([0-9]{4}[-](0[1-9]|1[0-2])[-]([0-2]{1}[0-9]{1}|3[0-1]{1})|([0-2]{1}[0-9]{1}|3[0-1]{1})[-](0[1-9]|1[0-2])[-][0-9]{4})");
+			var medicationAdministrationId = req.params.medication_administration_id;
+			var identifierId = req.params.identifier_id;
+
+			var err_code = 0;
+			var err_msg = "";
+			var dataIdentifier = {};
+			//input check 
+			if(typeof medicationAdministrationId !== 'undefined'){
+				if(validator.isEmpty(medicationAdministrationId)){
+					err_code = 2;
+					err_msg = "Immunization Recommendation id is required";
+				}
+			}else{
+				err_code = 2;
+				err_msg = "Immunization Recommendation id is required";
+			}
+
+			if(typeof identifierId !== 'undefined'){
+				if(validator.isEmpty(identifierId)){
+					err_code = 2;
+					err_msg = "Identifier id is required";
+				}
+			}else{
+				err_code = 2;
+				err_msg = "Identifier id is required";
+			}
+
+			//identifier
+			if(typeof req.body.use !== 'undefined'){
+				identifierUseCode =  req.body.use.trim().toLowerCase();
+				if(validator.isEmpty(identifierUseCode)){
+					err_code = 2;
+					err_msg = "Identifier Use is empty";
+				}else{
+					dataIdentifier.use = identifierUseCode;
+				}
+			}else{
+				identifierUseCode = "";
+			} 
+
+			//type code
+			if(typeof req.body.type !== 'undefined'){
+				identifierTypeCode =  req.body.type.trim().toUpperCase();
+				if(validator.isEmpty(identifierTypeCode)){
+					err_code = 2;
+					err_msg = "Identifier Type is empty";
+				}else{
+					dataIdentifier.type = identifierTypeCode;
+				}
+			}else{
+				identifierTypeCode = "";
+			} 
+
+			//identifier uniqe value
+			if(typeof req.body.value !== 'undefined'){
+				identifierValue =  req.body.value.trim();
+				if(validator.isEmpty(identifierValue)){
+					err_code = 2;
+					err_msg = "Identifier Value is empty";
+				}else{
+					dataIdentifier.value = identifierValue;
+				}
+			}else{
+				identifierValue = "";
+			}
+
+			//identifier period start
+			if(typeof req.body.period !== 'undefined'){
+				period = req.body.period;
+				if(period.indexOf("to") > 0){
+					arrPeriod = period.split("to");
+					identifierPeriodStart = arrPeriod[0];
+					identifierPeriodEnd = arrPeriod[1];
+
+					if(!regex.test(identifierPeriodStart) && !regex.test(identifierPeriodEnd)){
+						err_code = 2;
+						err_msg = "Identifier Period invalid date format.";
+					}else{
+						dataIdentifier.period_start = identifierPeriodStart;
+						dataIdentifier.period_end = identifierPeriodEnd;
+					}	
+				}else{
+					err_code = 1;
+					err_msg = "Period request format is wrong, `ex: start to end` ";
+				}
+			}else{
+				identifierPeriodStart = "";
+				identifierPeriodEnd = "";
+			}  
+
+			if(err_code == 0){
+				//check apikey
+				checkApikey(apikey, ipAddres, function(result){
+					if(result.err_code == 0){
+						myEmitter.prependOnceListener('checkMedicationAdministrationId', function(){
+							checkUniqeValue(apikey, "MEDICATION_ADMINISTRATION_ID|" + medicationAdministrationId, 'MEDICATION_ADMINISTRATION', function(resImmunizationRecommendationID){
+								if(resImmunizationRecommendationID.err_code > 0){
+									checkUniqeValue(apikey, "IDENTIFIER_ID|" + identifierId, 'IDENTIFIER', function(resIdentifierID){
+										if(resIdentifierID.err_code > 0){
+											ApiFHIR.put('identifier', {"apikey": apikey, "_id": identifierId, "dr": "MEDICATION_ADMINISTRATION_ID|"+medicationAdministrationId}, {body: dataIdentifier, json: true}, function(error, response, body){
+												identifier = body;
+												if(identifier.err_code > 0){
+													res.json(identifier);	
+												}else{
+													res.json({"err_code": 0, "err_msg": "Identifier has been update in this Medication Administration.", "data": identifier.data});
+												}
+											})
+										}else{
+											res.json({"err_code": 505, "err_msg": "Identifier Id not found"});		
+										}
+									})
+								}else{
+									res.json({"err_code": 504, "err_msg": "Medication Administration Id not found"});		
+								}
+							})
+						})
+
+						myEmitter.prependOnceListener('checkIdentifierValue', function(){
+							if(validator.isEmpty(identifierValue)){
+								myEmitter.emit('checkMedicationAdministrationId');
+							}else{
+								checkUniqeValue(apikey, "IDENTIFIER_VALUE|" + identifierValue, 'IDENTIFIER', function(resIdentifierValue){
+									if(resIdentifierValue.err_code == 0){
+										myEmitter.emit('checkMedicationAdministrationId');				
+									}else{
+										res.json({"err_code": 503, "err_msg": "Identifier value already exist."});	
+									}
+								})
+							}
+						})
+
+						myEmitter.prependOnceListener('checkIdentifierType', function(){
+							if(validator.isEmpty(identifierTypeCode)){
+								myEmitter.emit('checkIdentifierValue');
+							}else{
+								checkCode(apikey, identifierTypeCode, 'IDENTIFIER_TYPE', function(resUseTypeCode){
+									if(resUseTypeCode.err_code > 0){ //code harus lebih besar dari nol, ini menunjukan datanya valid
+										myEmitter.emit('checkIdentifierValue');
+									}else{
+										res.json({"err_code": 502, "err_msg": "Identifier type code not found"});		
+									}
+								})
+							}
+						})
+
+						if(validator.isEmpty(identifierUseCode)){
+							myEmitter.emit('checkIdentifierType');	
+						}else{
+							checkCode(apikey, identifierUseCode, 'IDENTIFIER_USE', function(resUseCode){
+								if(resUseCode.err_code > 0){ //code harus lebih besar dari nol, ini menunjukan datanya valid
+									myEmitter.emit('checkIdentifierType');
+								}else{
+									res.json({"err_code": 501, "err_msg": "Identifier use code not found"});
+								}
+							})
+						}
+					}else{
+						result.err_code = 500;
+						res.json(result);
+					}	
+				});
+			}else{
+				res.json({"err_code": err_code, "err_msg": err_msg});
+			}
+		},
+		medicationAdministrationPerformer: function updateMedicationAdministrationPerformer(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var regex = new RegExp("([0-9]{4}[-](0[1-9]|1[0-2])[-]([0-2]{1}[0-9]{1}|3[0-1]{1})|([0-2]{1}[0-9]{1}|3[0-1]{1})[-](0[1-9]|1[0-2])[-][0-9]{4})");
+			var medicationAdministrationId = req.params.medication_administration_id;
+			var medicationAdministrationPerformerId = req.params.medication_administration_performer_id;
+
+			var err_code = 0;
+			var err_msg = "";
+			var dataMedicationAdministrationPerformer = {};
+			//input check 
+			if(typeof medicationAdministrationId !== 'undefined'){
+				if(validator.isEmpty(medicationAdministrationId)){
+					err_code = 2;
+					err_msg = "Medication Administration id is required";
+				}
+			}else{
+				err_code = 2;
+				err_msg = "Medication Administration id is required";
+			}
+
+			if(typeof medicationAdministrationPerformerId !== 'undefined'){
+				if(validator.isEmpty(medicationAdministrationPerformerId)){
+					err_code = 2;
+					err_msg = "Medication Administration Performer id is required";
+				}
+			}else{
+				err_code = 2;
+				err_msg = "Medication Administration Performer id is required";
+			}
 			
-		}
+			/*
+			var actor_practitioner = req.body.actor_practitioner;
+			var actor_patient = req.body.actor_patient;
+			var actor_related_person = req.body.actor_related_person;
+			var actor_device = req.body.actor_device;
+			var on_behalf_of = req.body.on_behalf_of;
+			*/
+			if(typeof req.body.actor.practitioner !== 'undefined' && req.body.actor.practitioner !== ""){
+				var performerActorPractitioner =  req.body.actor.practitioner.trim().toLowerCase();
+				if(validator.isEmpty(performerActorPractitioner)){
+					dataMedicationAdministrationPerformer.actor_practitioner = "";
+				}else{
+					dataMedicationAdministrationPerformer.actor_practitioner = performerActorPractitioner;
+				}
+			}else{
+			  performerActorPractitioner = "";
+			}
+
+			if(typeof req.body.actor.patient !== 'undefined' && req.body.actor.patient !== ""){
+				var performerActorPatient =  req.body.actor.patient.trim().toLowerCase();
+				if(validator.isEmpty(performerActorPatient)){
+					dataMedicationAdministrationPerformer.actor_patient = "";
+				}else{
+					dataMedicationAdministrationPerformer.actor_patient = performerActorPatient;
+				}
+			}else{
+			  performerActorPatient = "";
+			}
+
+			if(typeof req.body.actor.relatedPerson !== 'undefined' && req.body.actor.relatedPerson !== ""){
+				var performerActorRelatedPerson =  req.body.actor.relatedPerson.trim().toLowerCase();
+				if(validator.isEmpty(performerActorRelatedPerson)){
+					dataMedicationAdministrationPerformer.actor_related_person = "";
+				}else{
+					dataMedicationAdministrationPerformer.actor_related_person = performerActorRelatedPerson;
+				}
+			}else{
+			  performerActorRelatedPerson = "";
+			}
+
+			if(typeof req.body.actor.device !== 'undefined' && req.body.actor.device !== ""){
+				var performerActorDevice =  req.body.actor.device.trim().toLowerCase();
+				if(validator.isEmpty(performerActorDevice)){
+					dataMedicationAdministrationPerformer.actor_device = "";
+				}else{
+					dataMedicationAdministrationPerformer.actor_device = performerActorDevice;
+				}
+			}else{
+			  performerActorDevice = "";
+			}
+
+			if(typeof req.body.onBehalfOf !== 'undefined' && req.body.onBehalfOf !== ""){
+				var performerOnBehalfOf =  req.body.onBehalfOf.trim().toLowerCase();
+				if(validator.isEmpty(performerOnBehalfOf)){
+					dataMedicationAdministrationPerformer.on_behalf_of = "";
+				}else{
+					dataMedicationAdministrationPerformer.on_behalf_of = performerOnBehalfOf;
+				}
+			}else{
+			  performerOnBehalfOf = "";
+			}	 
+
+			if(err_code == 0){
+				//check apikey
+				checkApikey(apikey, ipAddres, function(result){
+					if(result.err_code == 0){
+						myEmitter.once('checkMedicationAdministrationID', function(){
+							checkUniqeValue(apikey, "MEDICATION_ADMINISTRATION_ID|" + medicationAdministrationId, 'MEDICATION_ADMINISTRATION', function(resMedicationAdministrationID){
+								if(resMedicationAdministrationID.err_code > 0){
+									checkUniqeValue(apikey, "PERFORMER_ID|" + medicationAdministrationPerformerId, 'MEDICATION_ADMINISTRATION_PERFORMER', function(resMedicationAdministrationPerformerID){
+										if(resMedicationAdministrationPerformerID.err_code > 0){
+											ApiFHIR.put('medicationAdministrationPerformer', {"apikey": apikey, "_id": medicationAdministrationPerformerId, "dr": "MEDICATION_ADMINISTRATION_ID|"+medicationAdministrationId}, {body: dataMedicationAdministrationPerformer, json: true}, function(error, response, body){
+												medicationAdministrationPerformer = body;
+												if(medicationAdministrationPerformer.err_code > 0){
+													res.json(medicationAdministrationPerformer);	
+												}else{
+													res.json({"err_code": 0, "err_msg": "Medication Administration Performer has been update in this Medication Administration.", "data": medicationAdministrationPerformer.data});
+												}
+											})
+										}else{
+											res.json({"err_code": 505, "err_msg": "Medication Administration Performer Id not found"});		
+										}
+									})
+								}else{
+									res.json({"err_code": 504, "err_msg": "Medication Administration Id not found"});		
+								}
+							})
+						})
+						
+						myEmitter.prependOnceListener('checkPerformerActorPractitioner', function () {
+							if (!validator.isEmpty(performerActorPractitioner)) {
+								checkUniqeValue(apikey, "PRACTITIONER_ID|" + performerActorPractitioner, 'PRACTITIONER', function (resPerformerActorPractitioner) {
+									if (resPerformerActorPractitioner.err_code > 0) {
+										myEmitter.emit('checkMedicationAdministrationID');
+									} else {
+										res.json({
+											"err_code": "500",
+											"err_msg": "Performer actor practitioner id not found"
+										});
+									}
+								})
+							} else {
+								myEmitter.emit('checkMedicationAdministrationID');
+							}
+						})
+
+						myEmitter.prependOnceListener('checkPerformerActorPatient', function () {
+							if (!validator.isEmpty(performerActorPatient)) {
+								checkUniqeValue(apikey, "PATIENT_ID|" + performerActorPatient, 'PATIENT', function (resPerformerActorPatient) {
+									if (resPerformerActorPatient.err_code > 0) {
+										myEmitter.emit('checkPerformerActorPractitioner');
+									} else {
+										res.json({
+											"err_code": "500",
+											"err_msg": "Performer actor patient id not found"
+										});
+									}
+								})
+							} else {
+								myEmitter.emit('checkPerformerActorPractitioner');
+							}
+						})
+
+						myEmitter.prependOnceListener('checkPerformerActorRelatedPerson', function () {
+							if (!validator.isEmpty(performerActorRelatedPerson)) {
+								checkUniqeValue(apikey, "RELATED_PERSON_ID|" + performerActorRelatedPerson, 'RELATED_PERSON', function (resPerformerActorRelatedPerson) {
+									if (resPerformerActorRelatedPerson.err_code > 0) {
+										myEmitter.emit('checkPerformerActorPatient');
+									} else {
+										res.json({
+											"err_code": "500",
+											"err_msg": "Performer actor related person id not found"
+										});
+									}
+								})
+							} else {
+								myEmitter.emit('checkPerformerActorPatient');
+							}
+						})
+
+						myEmitter.prependOnceListener('checkPerformerActorDevice', function () {
+							if (!validator.isEmpty(performerActorDevice)) {
+								checkUniqeValue(apikey, "DEVICE_ID|" + performerActorDevice, 'DEVICE', function (resPerformerActorDevice) {
+									if (resPerformerActorDevice.err_code > 0) {
+										myEmitter.emit('checkPerformerActorRelatedPerson');
+									} else {
+										res.json({
+											"err_code": "500",
+											"err_msg": "Performer actor device id not found"
+										});
+									}
+								})
+							} else {
+								myEmitter.emit('checkPerformerActorRelatedPerson');
+							}
+						})
+
+						if (!validator.isEmpty(performerOnBehalfOf)) {
+							checkUniqeValue(apikey, "ORGANIZATION_ID|" + performerOnBehalfOf, 'ORGANIZATION', function (resPerformerOnBehalfOf) {
+								if (resPerformerOnBehalfOf.err_code > 0) {
+									myEmitter.emit('checkPerformerActorDevice');
+								} else {
+									res.json({
+										"err_code": "500",
+										"err_msg": "Performer on behalf of id not found"
+									});
+								}
+							})
+						} else {
+							myEmitter.emit('checkPerformerActorDevice');
+						}
+						
+
+						/*---------*/
+					}else{
+						result.err_code = 500;
+						res.json(result);
+					}	
+				});
+			}else{
+				res.json({"err_code": err_code, "err_msg": err_msg});
+			}
+		},
+		medicationAdministrationDosage: function updateMedicationAdministrationDosage(req, res){
+			var ipAddres = req.connection.remoteAddress;
+			var apikey = req.params.apikey;
+			var regex = new RegExp("([0-9]{4}[-](0[1-9]|1[0-2])[-]([0-2]{1}[0-9]{1}|3[0-1]{1})|([0-2]{1}[0-9]{1}|3[0-1]{1})[-](0[1-9]|1[0-2])[-][0-9]{4})");
+			var medicationAdministrationId = req.params.medication_administration_id;
+			var medicationAdministrationDosageId = req.params.medication_administration_dosage_id;
+
+			var err_code = 0;
+			var err_msg = "";
+			var dataMedicationAdministrationDosage = {};
+			//input check 
+			if(typeof medicationAdministrationId !== 'undefined'){
+				if(validator.isEmpty(medicationAdministrationId)){
+					err_code = 2;
+					err_msg = "Medication Administration id is required";
+				}
+			}else{
+				err_code = 2;
+				err_msg = "Medication Administration id is required";
+			}
+
+			if(typeof medicationAdministrationDosageId !== 'undefined'){
+				if(validator.isEmpty(medicationAdministrationDosageId)){
+					err_code = 2;
+					err_msg = "Medication Administration Performer id is required";
+				}
+			}else{
+				err_code = 2;
+				err_msg = "Medication Administration Performer id is required";
+			}
+			
+			/*
+			var text  = req.body.text;
+			var site  = req.body.site;
+			var route  = req.body.route;
+			var method  = req.body.method;
+			var dose  = req.body.dose;
+			var rate_ratio_numerator  = req.body.rate_ratio_numerator;
+			var rate_ratio_denominator   = req.body.rate_ratio_denominator;
+			var rate_quality  = req.body.rate_quality;
+			*/
+			if(typeof req.body.text !== 'undefined' && req.body.text !== ""){
+				var dosageText =  req.body.text.trim().toLowerCase();
+				if(validator.isEmpty(dosageText)){
+					dataMedicationAdministrationDosage.text = "";
+				}else{
+					dataMedicationAdministrationDosage.text = dosageText;
+				}
+			}else{
+			  dosageText = "";
+			}
+
+			if(typeof req.body.site !== 'undefined' && req.body.site !== ""){
+				var dosageSite =  req.body.site.trim().toLowerCase();
+				if(validator.isEmpty(dosageSite)){
+					dataMedicationAdministrationDosage.site = "";
+				}else{
+					dataMedicationAdministrationDosage.site = dosageSite;
+				}
+			}else{
+			  dosageSite = "";
+			}
+
+			if(typeof req.body.route !== 'undefined' && req.body.route !== ""){
+				var dosageRoute =  req.body.route.trim().toLowerCase();
+				if(validator.isEmpty(dosageRoute)){
+					dataMedicationAdministrationDosage.route = "";
+				}else{
+					dataMedicationAdministrationDosage.route = dosageRoute;
+				}
+			}else{
+			  dosageRoute = "";
+			}
+
+			if(typeof req.body.method !== 'undefined' && req.body.method !== ""){
+				var dosageMethod =  req.body.method.trim().toLowerCase();
+				if(validator.isEmpty(dosageMethod)){
+					dataMedicationAdministrationDosage.method = "";
+				}else{
+					dataMedicationAdministrationDosage.method = dosageMethod;
+				}
+			}else{
+			  dosageMethod = "";
+			}
+
+			if(typeof req.body.dose !== 'undefined' && req.body.dose !== ""){
+				var dosageDose =  req.body.dose;
+				if(validator.isEmpty(dosageDose)){
+					dataMedicationAdministrationDosage.dose = "";
+				}else{
+					if(validator.isInt(dosageDose)){
+						err_code = 2;
+						err_msg = "medication administration dosage dose is must be number.";
+					}else{
+						dataMedicationAdministrationDosage.dose = dosageDose;
+					}
+				}
+			}else{
+			  dosageDose = "";
+			}
+
+			if (typeof req.body.rate.rateRatio !== 'undefined' && req.body.rate.rateRatio !== "") {
+			  var dosageRateRateRatio = req.body.rate.rateRatio;
+			  if (dosageRateRateRatio.indexOf("to") > 0) {
+			    arrDosageRateRateRatio = dosageRateRateRatio.split("to");
+			    dataMedicationAdministrationDosage.rate_ratio_numerator = arrDosageRateRateRatio[0];
+			    dataMedicationAdministrationDosage.rate_ratio_denominator = arrDosageRateRateRatio[1];
+				} else {
+			  	err_code = 2;
+			  	err_msg = "medication administration dosage rate rate ratio invalid ratio format.";
+				}
+			} else {
+			  dosageRateRateRatio = "";
+			}
+
+			if(typeof req.body.rate.rateQuantity !== 'undefined' && req.body.rate.rateQuantity !== ""){
+				var dosageRateRateQuantity =  req.body.rate.rateQuantity.trim().toLowerCase();
+				if(validator.isEmpty(dosageRateRateQuantity)){
+					dataMedicationAdministrationDosage.rate_quality = "";
+				}else{
+					dataMedicationAdministrationDosage.rate_quality = dosageRateRateQuantity;
+				}
+			}else{
+			  dosageRateRateQuantity = "";
+			}
+			
+			if(err_code == 0){
+				//check apikey
+				checkApikey(apikey, ipAddres, function(result){
+					if(result.err_code == 0){
+						myEmitter.once('checkMedicationAdministrationID', function(){
+							checkUniqeValue(apikey, "MEDICATION_ADMINISTRATION_ID|" + medicationAdministrationId, 'MEDICATION_ADMINISTRATION', function(resMedicationAdministrationID){
+								if(resMedicationAdministrationID.err_code > 0){
+									checkUniqeValue(apikey, "DOSAGE_ID|" + medicationAdministrationDosageId, 'MEDICATION_ADMINISTRATION_DOSAGE', function(resMedicationAdministrationDosageID){
+										if(resMedicationAdministrationDosageID.err_code > 0){
+											ApiFHIR.put('medicationAdministrationDosage', {"apikey": apikey, "_id": medicationAdministrationDosageId, "dr": "MEDICATION_ADMINISTRATION_ID|"+medicationAdministrationId}, {body: dataMedicationAdministrationDosage, json: true}, function(error, response, body){
+												medicationAdministrationDosage = body;
+												if(medicationAdministrationDosage.err_code > 0){
+													res.json(medicationAdministrationDosage);	
+												}else{
+													res.json({"err_code": 0, "err_msg": "Medication Administration Dosage has been update in this Medication Administration.", "data": medicationAdministrationDosage.data});
+												}
+											})
+										}else{
+											res.json({"err_code": 505, "err_msg": "Medication Administration Dosage Id not found"});		
+										}
+									})
+								}else{
+									res.json({"err_code": 504, "err_msg": "Medication Administration Id not found"});		
+								}
+							})
+						})
+						
+						myEmitter.prependOnceListener('checkDosageSite', function () {
+							if (!validator.isEmpty(dosageSite)) {
+								checkCode(apikey, dosageSite, 'APPROACH_SITE_CODES', function (resDosageSiteCode) {
+									if (resDosageSiteCode.err_code > 0) {
+										myEmitter.emit('checkMedicationAdministrationID');
+									} else {
+										res.json({
+											"err_code": "500",
+											"err_msg": "Dosage site code not found"
+										});
+									}
+								})
+							} else {
+								myEmitter.emit('checkMedicationAdministrationID');
+							}
+						})
+
+						myEmitter.prependOnceListener('checkDosageRoute', function () {
+							if (!validator.isEmpty(dosageRoute)) {
+								checkCode(apikey, dosageRoute, 'ROUTE_CODES', function (resDosageRouteCode) {
+									if (resDosageRouteCode.err_code > 0) {
+										myEmitter.emit('checkDosageSite');
+									} else {
+										res.json({
+											"err_code": "500",
+											"err_msg": "Dosage route code not found"
+										});
+									}
+								})
+							} else {
+								myEmitter.emit('checkDosageSite');
+							}
+						})
+
+						if (!validator.isEmpty(dosageMethod)) {
+							checkCode(apikey, dosageMethod, 'ADMINISTRATION_METHOD_CODES', function (resDosageMethodCode) {
+								if (resDosageMethodCode.err_code > 0) {
+									myEmitter.emit('checkDosageRoute');
+								} else {
+									res.json({
+										"err_code": "500",
+										"err_msg": "Dosage method code not found"
+									});
+								}
+							})
+						} else {
+							myEmitter.emit('checkDosageRoute');
+						}
+						
+
+						/*---------*/
+					}else{
+						result.err_code = 500;
+						res.json(result);
+					}	
+				});
+			}else{
+				res.json({"err_code": err_code, "err_msg": err_msg});
+			}
+		},
 	}
 }
 

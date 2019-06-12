@@ -136,6 +136,19 @@ var controller = {
         condition += "(ai.RECORDER_PRACTITIONER = '" + recorder + "' OR ai.RECORDER_PATIENT = '" + recorder + "') AND,";  
       }
 			
+			var offset = req.query.offset;
+			var limit = req.query.limit;
+
+			if((typeof offset !== 'undefined' && offset !== '')){
+				condition = " ai.allergy_intolerance_id > '" + offset + "' AND ";       
+			}
+			
+			if((typeof limit !== 'undefined' && limit !== '')){
+				limit = " limit " + limit + " ";
+			} else {
+				limit = " ";
+			}
+			
       if(condition == ""){
         fixCondition = "";
       }else{
@@ -143,14 +156,14 @@ var controller = {
       }
 			      
       var arrAllergyIntolerance = [];
-      var query = "select ai.allergy_intolerance_id as allergy_intolerance_id, ai.clinical_status as clinical_status, ai.verification_status as verification_status, ai.type as type, ai.category as category, ai.criticality as criticality, ai.code as code, ai.patient as patient, ai.onset_date_time as onset_date_time, ai.onset_age as onset_age, ai.onset_period_start as onset_period_start, ai.onset_period_end as onset_period_end, ai.onset_range_low as onset_range_low, ai.onset_range_high as onset_range_high, ai.onset_string as onset_string, ai.asserted_date as asserted_date, ai.recorder_practitioner as recorder_practitioner, ai.recorder_patient as recorder_patient, ai.asserter_patient as asserter_patient, ai.asserter_related_person as asserter_related_person, ai.asserter_practitioner as asserter_practitioner, ai.last_occurrence as last_occurrence, ai.family_member_history_id as family_member_history_id, ai.clinical_impression_id as clinical_impression_id, ai.adverse_event_id as adverse_event_id from baciro_fhir.allergy_intolerance ai " + fixCondition;
+      var query = "select ai.allergy_intolerance_id as allergy_intolerance_id, ai.clinical_status as clinical_status, ai.verification_status as verification_status, ai.type as type, ai.category as category, ai.criticality as criticality, ai.code as code, ai.patient as patient, ai.onset_date_time as onset_date_time, ai.onset_age as onset_age, ai.onset_period_start as onset_period_start, ai.onset_period_end as onset_period_end, ai.onset_range_low as onset_range_low, ai.onset_range_high as onset_range_high, ai.onset_string as onset_string, ai.asserted_date as asserted_date, ai.recorder_practitioner as recorder_practitioner, ai.recorder_patient as recorder_patient, ai.asserter_patient as asserter_patient, ai.asserter_related_person as asserter_related_person, ai.asserter_practitioner as asserter_practitioner, ai.last_occurrence as last_occurrence, ai.family_member_history_id as family_member_history_id, ai.clinical_impression_id as clinical_impression_id, ai.adverse_event_id as adverse_event_id from baciro_fhir.allergy_intolerance ai " + fixCondition + limit;
 			console.log(query);
       db.query(query,function(dataJson){
         rez = lowercaseObject(dataJson);
 				for(i = 0; i < rez.length; i++){
 					console.log("tes tes");
 					var AllergyIntolerance = {};
-					var arrRecorder = [];
+					
 					var Recorder = {};
 					if(rez[i].recorder_practitioner != "null"){
 						Recorder.practitioner = hostFHIR + ':' + portFHIR + '/' + apikey + '/Practitioner?_id=' +  rez[i].recorder_practitioner;
@@ -162,9 +175,7 @@ var controller = {
 					} else {
 						Recorder.patient = "";
 					}
-					arrRecorder = Recorder;
 					
-					var arrAsserter = [];
 					var Asserter = {};
 					if(rez[i].asserter_patient != "null"){
 						Asserter.patient = hostFHIR + ':' + portFHIR + '/' + apikey + '/Patient?_id=' +  rez[i].asserter_patient;
@@ -181,7 +192,6 @@ var controller = {
 					} else {
 						Asserter.practitioner = "";
 					}
-					arrAsserter = Asserter;	
 					
 					AllergyIntolerance.resourceType = "Allergy Intolerance";
           AllergyIntolerance.id = rez[i].allergy_intolerance_id;
@@ -271,7 +281,7 @@ var controller = {
           index = i;
           var reaction = {};
           // var 
-          reaction.id = rez[i].organization_contact_id;
+          reaction.id = rez[i].reaction_id;
           reaction.substance = rez[i].substance;
 					reaction.manifestation = rez[i].manifestation;
 					reaction.description = rez[i].description;
@@ -539,7 +549,7 @@ var controller = {
 		allergyIntolerance: function updateAllergyIntolerance(req, res) {
 			console.log(req.body);
       
-			var allergy_intolerance_id = req.params.allergy_intolerance_id;
+			var allergy_intolerance_id = req.params._id;
 			var clinical_status = req.body.clinical_status;
 			var verification_status = req.body.verification_status;
 			var type = req.body.type;
@@ -701,10 +711,15 @@ var controller = {
       }
 			
 			var domainResource = req.params.dr;
-			var arrResource = domainResource.split('|');
-			var fieldResource = arrResource[0];
-			var valueResource = arrResource[1];
-			var condition = "allergy_intolerance_id = '" + allergy_intolerance_id + "' AND " + fieldResource + " = '" + valueResource + "'";
+			if(domainResource !== "" && typeof domainResource !== 'undefined'){
+				var arrResource = domainResource.split('|');
+				var fieldResource = arrResource[0];
+				var valueResource = arrResource[1];
+				var condition = "allergy_intolerance_id = '" + allergy_intolerance_id + "' AND " + fieldResource + " = '" + valueResource + "'";
+			}else{
+        var condition = "allergy_intolerance_id = '" + allergy_intolerance_id + "'";
+      }
+			
 			
 			var query = "UPSERT INTO BACIRO_FHIR.allergy_intolerance(allergy_intolerance_id," + column.slice(0, -1) + ") SELECT allergy_intolerance_id, " + values.slice(0, -1) + " FROM BACIRO_FHIR.allergy_intolerance WHERE " + condition;
 			
@@ -725,7 +740,7 @@ var controller = {
 		allergyIntoleranceReaction: function updateAllergyIntoleranceReaction(req, res){
 			////console.log(req.body);
       
-			var reaction_id = req.params.id;
+			var reaction_id = req.params._id;
 			var substance = req.body.substance;
 			var manifestation = req.body.manifestation;
 			var description = req.body.description;
@@ -774,10 +789,15 @@ var controller = {
       }
 			
 			var domainResource = req.params.dr;
-			var arrResource = domainResource.split('|');
-			var fieldResource = arrResource[0];
-			var valueResource = arrResource[1];
-			var condition = "reaction_id = '" + reaction_id + "' AND " + fieldResource + " = '" + valueResource + "'";
+			if(domainResource !== "" && typeof domainResource !== 'undefined'){
+				var arrResource = domainResource.split('|');
+				var fieldResource = arrResource[0];
+				var valueResource = arrResource[1];
+				var condition = "reaction_id = '" + reaction_id + "' AND " + fieldResource + " = '" + valueResource + "'";
+			}else{
+        var condition = "reaction_id = '" + reaction_id + "'";
+      }
+			
 			var query = "UPSERT INTO BACIRO_FHIR.allergy_intolerance_reaction(reaction_id," + column.slice(0, -1) + ") SELECT reaction_id, " + values.slice(0, -1) + " FROM BACIRO_FHIR.allergy_intolerance_reaction WHERE " + condition;
 			
 			////console.log(query);

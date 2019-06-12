@@ -23,14 +23,14 @@ var controller = {
 		medicationStatement: function getMedicationStatement(req, res){
 			var apikey = req.params.apikey;
 			
-			var medication_statement_id = req.query._id;
+			var medication_statement_id = req.query.medicationStatementId;
 			var category = req.query.category;
 			var code = req.query.code;
 			var context = req.query.context;
 			var effective = req.query.effective;
 			var identifier = req.query.identifier;
 			var medication = req.query.medication;
-			var part_of = req.query.part_of;
+			var part_of = req.query.partOf;
 			var patient = req.query.patient;
 			var source = req.query.source;
 			var status = req.query.status;
@@ -43,10 +43,6 @@ var controller = {
 			if(typeof medication_statement_id !== 'undefined' && medication_statement_id !== ""){
         condition += "ms.medication_statement_id = '" + medication_statement_id + "' AND,";  
       }
-			
-			/*if (typeof authoredon !== 'undefined' && authoredon !== "") {
-				condition += "mr.AUTHORED_ON == to_date('" + authoredon + "', 'yyyy-MM-dd') AND,";
-      }*/
 			
 			if(typeof category !== 'undefined' && category !== ""){
         condition += "ms.CATEGORY = '" + category + "' AND,";  
@@ -74,8 +70,33 @@ var controller = {
       }
 			
 			//kurang part_of
+			/*(MedicationDispense, Observation, MedicationAdministration, Procedure, MedicationStatement)*/
 			
-			if(typeof subject !== 'subject' && subject !== ""){
+			if((typeof part_of !== 'undefined' && part_of !== "")){ 
+			 var res = part_of.substring(0, 3);
+				if(res == 'mdi'){
+					join += " LEFT JOIN BACIRO_FHIR.Medication_Dispense md ON ms.MEDICATION_STATEMENT_ID = md.MEDICATION_STATEMENT_ID ";
+          condition += "md.Medication_Dispense_id = '" + part_of + "' AND ";       
+				} 			
+				if(res == 'mad') {
+					join += " LEFT JOIN BACIRO_FHIR.Medication_Administration ma ON ms.MEDICATION_STATEMENT_ID = ms.MEDICATION_STATEMENT_ID ";
+          condition += "ma.Medication_Administration_id = '" + part_of + "' AND ";       
+				}
+				if(res == 'obs'){
+					join += " LEFT JOIN BACIRO_FHIR.Observation obs ON ms.MEDICATION_STATEMENT_ID = obs.MEDICATION_STATEMENT_PART_OF_ID ";
+          condition += "obs.Observation_id = '" + part_of + "' AND ";       
+				} 			
+				if(res == 'pro') {
+					join += " LEFT JOIN BACIRO_FHIR.Procedure pro ON ms.MEDICATION_STATEMENT_ID = pro.MEDICATION_STATEMENT_ID ";
+          condition += "pro.Procedure_id = '" + part_of + "' AND ";       
+				}
+				
+				if(res == 'mes') {
+          condition += "ms.part_of = '" + part_of + "' AND ";       
+				}
+      }
+			
+			if(typeof subject !== 'undefined' && subject !== ""){
 				condition += "(ms.SUBJECT_PATIENT = '" + subject + "' OR ms.SUBJECT_GROUP = '" + subject + "') AND,";  
 			}
 			
@@ -91,6 +112,19 @@ var controller = {
         condition += "ms.STATUS = '" + status + "' AND,";  
       }
 			
+			var offset = req.query.offset;
+			var limit = req.query.limit;
+
+			if((typeof offset !== 'undefined' && offset !== '')){
+				condition = " ms.medication_statement_id > '" + offset + "' AND ";       
+			}
+			
+			if((typeof limit !== 'undefined' && limit !== '')){
+				limit = " limit " + limit + " ";
+			} else {
+				limit = " ";
+			}
+			
       if(condition == ""){
         fixCondition = "";
       }else{
@@ -98,7 +132,7 @@ var controller = {
       }
 			      
       var arrMedicationStatement = [];
-      var query = "select medication_statement_id, part_of, context_encounter, context_episode_of_care, status, category, medication_codeable_concept, medication_reference, effective_date_time, effective_period_start, effective_period_end, date_asserted, information_source_patient, information_source_practitioner, information_source_related_person, information_source_organization, subject_patient, subject_group, derived_from, taken, reason_not_taken, reason_code from BACIRO_FHIR.MEDICATION_STATEMENT ms " + fixCondition;
+      var query = "select ms.medication_statement_id as medication_statement_id, ms.part_of as part_of, ms.context_encounter as context_encounter, ms.context_episode_of_care as context_episode_of_care, ms.status as status, ms.category as category, ms.medication_codeable_concept as medication_codeable_concept, ms.medication_reference as medication_reference, ms.effective_date_time as effective_date_time, ms.effective_period_start as effective_period_start, ms.effective_period_end as effective_period_end, ms.date_asserted as date_asserted, ms.information_source_patient as information_source_patient, ms.information_source_practitioner as information_source_practitioner, ms.information_source_related_person as information_source_related_person, ms.information_source_organization as information_source_organization, ms.subject_patient as subject_patient, ms.subject_group as subject_group, ms.derived_from as derived_from, ms.taken as taken, ms.reason_not_taken as reason_not_taken, ms.reason_code as reason_code from BACIRO_FHIR.MEDICATION_STATEMENT ms " + fixCondition + limit;
 			//console.log(query);
       db.query(query,function(dataJson){
         rez = lowercaseObject(dataJson);
@@ -107,7 +141,6 @@ var controller = {
 					MedicationStatement.resourceType = "MedicationStatement";
           MedicationStatement.id = rez[i].medication_statement_id;
 					MedicationStatement.partOf = rez[i].part_of;
-					var arrContext = [];
 					var Context = {};
 					if(rez[i].context_encounter != "null"){
 						Context.encounter = hostFHIR + ':' + portFHIR + '/' + apikey + '/Encounter?_id=' +  rez[i].context_encounter;
@@ -119,20 +152,22 @@ var controller = {
 					} else {
 						Context.episodeOfCare = "";
 					}
-					arrContext[i] = Context;
-					MedicationStatement.context = arrContext;
+					MedicationStatement.context = Context;
 					MedicationStatement.status = rez[i].status;
 					MedicationStatement.category = rez[i].category;
-					MedicationStatement.medication.medicationCodeableConcept = rez[i].medication_codeable_concept;
+					var Medication = {};
+					Medication.medicationCodeableConcept = rez[i].medication_codeable_concept;
 					if(rez[i].medication_reference != "null"){
-						MedicationStatement.medication.medicationReference = hostFHIR + ':' + portFHIR + '/' + apikey + '/Medication?_id=' +  rez[i].medication_reference;
+						Medication.medicationReference = hostFHIR + ':' + portFHIR + '/' + apikey + '/Medication?_id=' +  rez[i].medication_reference;
 					} else {
-						MedicationStatement.medication.medicationReference = "";
+						Medication.medicationReference = "";
 					}
+					MedicationStatement.medication = Medication;
+					var Effective = {};
 					if(rez[i].effective_date_time == null){
-						MedicationStatement.effective.effectiveDateTime = formatDate(rez[i].effective_date_time);
+						Effective.effectiveDateTime = formatDate(rez[i].effective_date_time);
 					}else{
-						MedicationStatement.effective.effectiveDateTime = rez[i].effective_date_time;
+						Effective.effectiveDateTime = rez[i].effective_date_time;
 					}
 					
 					var effectiveperiod_start,effectiveperiod_end;
@@ -146,14 +181,15 @@ var controller = {
 					}else{
 						effectiveperiod_end = rez[i].effective_period_end;  
 					}
-					MedicationStatement.effective.effectivePeriod = effectiveperiod_start + ' to ' + effectiveperiod_end;
+					Effective.effectivePeriod = effectiveperiod_start + ' to ' + effectiveperiod_end;
+					MedicationStatement.effective = Effective;
+					
 					
 					if(rez[i].date_asserted == null){
 						MedicationStatement.dateAsserted = formatDate(rez[i].date_asserted);
 					}else{
 						MedicationStatement.dateAsserted = rez[i].date_asserted;
 					}
-					var arrInformationSource = [];
 					var InformationSource = {};
 					if(rez[i].information_source_patient != "null"){
 						InformationSource.patient = hostFHIR + ':' + portFHIR + '/' + apikey + '/Patient?_id=' +  rez[i].information_source_patient;
@@ -175,10 +211,8 @@ var controller = {
 					} else {
 						InformationSource.organization = "";
 					}
-					arrInformationSource[i] = InformationSource;
-					MedicationStatement.informationSource = "";
+					MedicationStatement.informationSource = InformationSource;
 					
-					var arrSubject = [];
 					var Subject = {};
 					if(rez[i].subject_group != "null"){
 						Subject.group = hostFHIR + ':' + portFHIR + '/' + apikey + '/Group?_id=' +  rez[i].subject_group;
@@ -190,8 +224,7 @@ var controller = {
 					} else {
 						Subject.patient = "";
 					}
-					arrSubject[i] = Subject;
-					MedicationStatement.subject = arrSubject;
+					MedicationStatement.subject = Subject;
 					
 					MedicationStatement.derivedFrom = rez[i].derived_from;
 					MedicationStatement.taken = rez[i].taken;
@@ -205,21 +238,22 @@ var controller = {
         res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "getMedicationStatement"});
       });
     },
-		medicationStatementDosage: function getMedicationStatementDosage(req, res) {
+		
+		medicationStatementBasedOnCarePlan: function getMedicationStatementBasedOnCarePlan(req, res) {
 			var apikey = req.params.apikey;
 			
-			var medicationStatementDosageId = req.query._id;
-			var medicationStatementId = req.query.medicationStatement_id;
+			var CarePlanId = req.query._id;
+			var medicationStatementId = req.query.medication_statement_id;
 
 			//susun query
-			var condition = "";
+			var condition = '';
 
-			if (typeof medicationStatementDosageId !== 'undefined' && medicationStatementDosageId !== "") {
-				condition += 'DOSAGE_ID = "' + medicationStatementDosageId + '" AND ';
+			if (typeof CarePlanId !== 'undefined' && CarePlanId !== "") {
+				condition += "careplan_id = '" + CarePlanId + "' AND ";
 			}
 
 			if (typeof medicationStatementId !== 'undefined' && medicationStatementId !== "") {
-				condition += 'MEDICATION_STATEMENT_ID = "' + medicationStatementId + '" AND ';
+				condition += "medication_statement_id = '" + medicationStatementId + "' AND ";
 			}
 
 			if (condition == '') {
@@ -228,53 +262,546 @@ var controller = {
 				fixCondition = ' WHERE ' + condition.slice(0, -4);
 			}
 
-			var arrMedicationStatementDosage = [];
-			var query = 'select dosage_id, "sequence" as val_sequence, text, additional_instruction, patient_instruction, timing_id, as_needed_boolean, as_needed_codeable_concept, site, route, method, dose_range_low, dose_range_high, dose_quantity, max_dose_per_period_numerator, max_dose_per_period_denominator, max_dose_per_administration, max_dose_per_lifetime, rate_ratio_numerator, rate_ratio_denominator, rate_range_low, rate_range_high, rate_quantity, medication_statement_id from BACIRO_FHIR.DOSAGE' + fixCondition;
+			var arrMedicationStatementBasedOnCarePlan = [];
+			var query = 'select careplan_id from BACIRO_FHIR.careplan ' + fixCondition;
 
 			db.query(query, function (dataJson) {
 				rez = lowercaseObject(dataJson);
 				for (i = 0; i < rez.length; i++) {
-					var MedicationStatementDosage = {};
-					MedicationStatementDosage.id = rez[i].dosage_id;
-					MedicationStatementDosage.sequence = rez[i].val_sequence;
-					MedicationStatementDosage.text = rez[i].text;
-					MedicationStatementDosage.additionalInstruction = rez[i].additional_instruction;
-					MedicationStatementDosage.patientInstruction = rez[i].patient_instruction;
-					MedicationStatementDosage.timing = rez[i].timing_id;
-					/*if(rez[i].timing != "null"){
-						MedicationStatementDosage.timing = hostFHIR + ':' + portFHIR + '/' + apikey + '/Timing?_id=' +  rez[i].timing;
+					var medicationStatementBasedOnCarePlan = {};
+					if(rez[i].careplan_id != "null"){
+						medicationStatementBasedOnCarePlan.id = hostFHIR + ':' + portFHIR + '/' + apikey + '/CarePlan?_id=' +  rez[i].careplan_id;
 					} else {
-						MedicationStatementDosage.timing = "";
-					}*/
-					MedicationStatementDosage.asNeeded.asNeededBoolean = rez[i].as_needed_boolean;
-					MedicationStatementDosage.asNeeded.asNeededCodeableConcept = rez[i].as_needed_codeable_concept;
-					MedicationStatementDosage.site = rez[i].site;
-					MedicationStatementDosage.route = rez[i].route;
-					MedicationStatementDosage.method = rez[i].method;
-					MedicationStatementDosage.dose.dose_range = rez[i].dose_range_low + ' to ' + rez[i].dose_range_high
-					MedicationStatementDosage.dose.doseQuantity = rez[i].dose_quantity;
-					MedicationStatementDosage.max_dose_per_period = rez[i].max_dose_per_period_numerator + ' to ' + rez[i].max_dose_per_period_denominator;
-					MedicationStatementDosage.max_dose_per_administration = rez[i].max_dose_per_administration;
-					MedicationStatementDosage.max_dose_per_lifetime = rez[i].max_dose_per_lifetime;
-					MedicationStatementDosage.rate.rateRatio = rez[i].rate_ratio_numerator + ' to ' + rez[i].rate_ratio_denominator;
-					MedicationStatementDosage.rate.rateRange = rez[i].rate_range_low + ' to ' + rez[i].rate_range_high;
-					MedicationStatementDosage.rate.rateQuantity = rez[i].rate_quantity;
-					arrMedicationStatementDosage[i] = MedicationStatementDosage;
+						medicationStatementBasedOnCarePlan.id = "";
+					}
+					
+					arrMedicationStatementBasedOnCarePlan[i] = medicationStatementBasedOnCarePlan;
 				}
 				res.json({
 					"err_code": 0,
-					"data": arrMedicationStatementDosage
+					"data": arrMedicationStatementBasedOnCarePlan
 				});
 			}, function (e) {
 				res.json({
 					"err_code": 1,
 					"err_msg": e,
 					"application": "Api Phoenix",
-					"function": "getMedicationStatementDosage"
+					"function": "getMedicationStatementBasedOnCarePlan"
+				});
+			});
+		},
+		medicationStatementBasedOnProcedureRequest: function getMedicationStatementBasedOnProcedureRequest(req, res) {
+			var apikey = req.params.apikey;
+			
+			var ProcedureRequestId = req.query._id;
+			var medicationStatementId = req.query.medication_statement_id;
+
+			//susun query
+			var condition = '';
+
+			if (typeof ProcedureRequestId !== 'undefined' && ProcedureRequestId !== "") {
+				condition += "procedure_request_id = '" + ProcedureRequestId + "' AND ";
+			}
+
+			if (typeof medicationStatementId !== 'undefined' && medicationStatementId !== "") {
+				condition += "medication_statement_id = '" + medicationStatementId + "' AND ";
+			}
+
+			if (condition == '') {
+				fixCondition = '';
+			} else {
+				fixCondition = ' WHERE ' + condition.slice(0, -4);
+			}
+
+			var arrMedicationStatementBasedOnProcedureRequest = [];
+			var query = 'select procedure_request_id from BACIRO_FHIR.procedure_request ' + fixCondition;
+
+			db.query(query, function (dataJson) {
+				rez = lowercaseObject(dataJson);
+				for (i = 0; i < rez.length; i++) {
+					var medicationStatementBasedOnProcedureRequest = {};
+					if(rez[i].procedure_request_id != "null"){
+						medicationStatementBasedOnProcedureRequest.id = hostFHIR + ':' + portFHIR + '/' + apikey + '/ProcedureRequest?_id=' +  rez[i].procedure_request_id;
+					} else {
+						medicationStatementBasedOnProcedureRequest.id = "";
+					}
+					
+					arrMedicationStatementBasedOnProcedureRequest[i] = medicationStatementBasedOnProcedureRequest;
+				}
+				res.json({
+					"err_code": 0,
+					"data": arrMedicationStatementBasedOnProcedureRequest
+				});
+			}, function (e) {
+				res.json({
+					"err_code": 1,
+					"err_msg": e,
+					"application": "Api Phoenix",
+					"function": "getMedicationStatementBasedOnProcedureRequest"
+				});
+			});
+		},
+		medicationStatementBasedOnReferralRequest: function getMedicationStatementBasedOnReferralRequest(req, res) {
+			var apikey = req.params.apikey;
+			
+			var ReferralRequestId = req.query._id;
+			var medicationStatementId = req.query.medication_statement_id;
+
+			//susun query
+			var condition = '';
+
+			if (typeof ReferralRequestId !== 'undefined' && ReferralRequestId !== "") {
+				condition += "referral_request_id = '" + ReferralRequestId + "' AND ";
+			}
+
+			if (typeof medicationStatementId !== 'undefined' && medicationStatementId !== "") {
+				condition += "medication_statement_id = '" + medicationStatementId + "' AND ";
+			}
+
+			if (condition == '') {
+				fixCondition = '';
+			} else {
+				fixCondition = ' WHERE ' + condition.slice(0, -4);
+			}
+
+			var arrMedicationStatementBasedOnReferralRequest = [];
+			var query = 'select referral_request_id from BACIRO_FHIR.referral_request ' + fixCondition;
+
+			db.query(query, function (dataJson) {
+				rez = lowercaseObject(dataJson);
+				for (i = 0; i < rez.length; i++) {
+					var medicationStatementBasedOnReferralRequest = {};
+					if(rez[i].referral_request_id != "null"){
+						medicationStatementBasedOnReferralRequest.id = hostFHIR + ':' + portFHIR + '/' + apikey + '/ReferralRequest?_id=' +  rez[i].referral_request_id;
+					} else {
+						medicationStatementBasedOnReferralRequest.id = "";
+					}
+					
+					arrMedicationStatementBasedOnReferralRequest[i] = medicationStatementBasedOnReferralRequest;
+				}
+				res.json({
+					"err_code": 0,
+					"data": arrMedicationStatementBasedOnReferralRequest
+				});
+			}, function (e) {
+				res.json({
+					"err_code": 1,
+					"err_msg": e,
+					"application": "Api Phoenix",
+					"function": "getMedicationStatementBasedOnReferralRequest"
+				});
+			});
+		},
+		medicationStatementBasedOnMedicationRequest: function getMedicationStatementBasedOnMedicationRequest(req, res) {
+			var apikey = req.params.apikey;
+			
+			var medicationRequestId = req.query._id;
+			var medicationStatementId = req.query.medication_statement_id;
+
+			//susun query
+			var condition = '';
+
+			if (typeof medicationRequestId !== 'undefined' && medicationRequestId !== "") {
+				condition += "medication_request_id = '" + medicationRequestId + "' AND ";
+			}
+
+			if (typeof medicationStatementId !== 'undefined' && medicationStatementId !== "") {
+				condition += "medication_statement_id = '" + medicationStatementId + "' AND ";
+			}
+
+			if (condition == '') {
+				fixCondition = '';
+			} else {
+				fixCondition = ' WHERE ' + condition.slice(0, -4);
+			}
+
+			var arrMedicationStatementBasedOnMedicationRequest = [];
+			var query = 'select medication_request_id from BACIRO_FHIR.medication_request ' + fixCondition;
+
+			db.query(query, function (dataJson) {
+				rez = lowercaseObject(dataJson);
+				for (i = 0; i < rez.length; i++) {
+					var medicationStatementBasedOnMedicationRequest = {};
+					if(rez[i].medication_request_id != "null"){
+						medicationStatementBasedOnMedicationRequest.id = hostFHIR + ':' + portFHIR + '/' + apikey + '/MedicationRequest?_id=' +  rez[i].medication_request_id;
+					} else {
+						medicationStatementBasedOnMedicationRequest.id = "";
+					}
+					
+					arrMedicationStatementBasedOnMedicationRequest[i] = medicationStatementBasedOnMedicationRequest;
+				}
+				res.json({
+					"err_code": 0,
+					"data": arrMedicationStatementBasedOnMedicationRequest
+				});
+			}, function (e) {
+				res.json({
+					"err_code": 1,
+					"err_msg": e,
+					"application": "Api Phoenix",
+					"function": "getMedicationStatementBasedOnMedicationRequest"
 				});
 			});
 		},
 		
+		medicationStatementPartOfMedicationAdministration: function getMedicationStatementPartOfMedicationAdministration(req, res) {
+			var apikey = req.params.apikey;
+			
+			var MedicationAdministrationId = req.query._id;
+			var medicationStatementId = req.query.medication_statement_id;
+
+			//susun query
+			var condition = '';
+
+			if (typeof MedicationAdministrationId !== 'undefined' && MedicationAdministrationId !== "") {
+				condition += "medication_administration_id = '" + MedicationAdministrationId + "' AND ";
+			}
+
+			if (typeof medicationStatementId !== 'undefined' && medicationStatementId !== "") {
+				condition += "medication_statement_id = '" + medicationStatementId + "' AND ";
+			}
+
+			if (condition == '') {
+				fixCondition = '';
+			} else {
+				fixCondition = ' WHERE ' + condition.slice(0, -4);
+			}
+
+			var arrMedicationStatementPartOfMedicationAdministration = [];
+			var query = 'select medication_administration_id from BACIRO_FHIR.medication_administration ' + fixCondition;
+
+			db.query(query, function (dataJson) {
+				rez = lowercaseObject(dataJson);
+				for (i = 0; i < rez.length; i++) {
+					var medicationStatementPartOfMedicationAdministration = {};
+					if(rez[i].medication_administration_id != "null"){
+						medicationStatementPartOfMedicationAdministration.id = hostFHIR + ':' + portFHIR + '/' + apikey + '/MedicationAdministration?_id=' +  rez[i].medication_administration_id;
+					} else {
+						medicationStatementPartOfMedicationAdministration.id = "";
+					}
+					
+					arrMedicationStatementPartOfMedicationAdministration[i] = medicationStatementPartOfMedicationAdministration;
+				}
+				res.json({
+					"err_code": 0,
+					"data": arrMedicationStatementPartOfMedicationAdministration
+				});
+			}, function (e) {
+				res.json({
+					"err_code": 1,
+					"err_msg": e,
+					"application": "Api Phoenix",
+					"function": "getMedicationStatementPartOfMedicationAdministration"
+				});
+			});
+		},
+		medicationStatementPartOfMedicationDispense: function getMedicationStatementPartOfMedicationDispense(req, res) {
+			var apikey = req.params.apikey;
+			
+			var MedicationDispenseId = req.query._id;
+			var medicationStatementId = req.query.medication_statement_id;
+
+			//susun query
+			var condition = '';
+
+			if (typeof MedicationDispenseId !== 'undefined' && MedicationDispenseId !== "") {
+				condition += "medication_dispense_id = '" + MedicationDispenseId + "' AND ";
+			}
+
+			if (typeof medicationStatementId !== 'undefined' && medicationStatementId !== "") {
+				condition += "medication_statement_id = '" + medicationStatementId + "' AND ";
+			}
+
+			if (condition == '') {
+				fixCondition = '';
+			} else {
+				fixCondition = ' WHERE ' + condition.slice(0, -4);
+			}
+
+			var arrMedicationStatementPartOfMedicationDispense = [];
+			var query = 'select medication_dispense_id from BACIRO_FHIR.medication_dispense ' + fixCondition;
+
+			db.query(query, function (dataJson) {
+				rez = lowercaseObject(dataJson);
+				for (i = 0; i < rez.length; i++) {
+					var medicationStatementPartOfMedicationDispense = {};
+					if(rez[i].medication_dispense_id != "null"){
+						medicationStatementPartOfMedicationDispense.id = hostFHIR + ':' + portFHIR + '/' + apikey + '/MedicationDispense?_id=' +  rez[i].medication_dispense_id;
+					} else {
+						medicationStatementPartOfMedicationDispense.id = "";
+					}
+					
+					arrMedicationStatementPartOfMedicationDispense[i] = medicationStatementPartOfMedicationDispense;
+				}
+				res.json({
+					"err_code": 0,
+					"data": arrMedicationStatementPartOfMedicationDispense
+				});
+			}, function (e) {
+				res.json({
+					"err_code": 1,
+					"err_msg": e,
+					"application": "Api Phoenix",
+					"function": "getMedicationStatementPartOfMedicationDispense"
+				});
+			});
+		},
+		medicationStatementPartOfMedicationStatement: function getMedicationStatementPartOfMedicationStatement(req, res) {
+			var apikey = req.params.apikey;
+			
+			var MedicationStatementId = req.query._id;
+			var partOfId = req.query.medication_statement_id;
+
+			//susun query
+			var condition = '';
+
+			if (typeof MedicationStatementId !== 'undefined' && MedicationStatementId !== "") {
+				condition += "medication_statement_id = '" + MedicationStatementId + "' AND ";
+			}
+
+			if (typeof partOfId !== 'undefined' && partOfId !== "") {
+				condition += "part_of = '" + partOfId + "' AND ";
+			}
+
+			if (condition == '') {
+				fixCondition = '';
+			} else {
+				fixCondition = ' WHERE ' + condition.slice(0, -4);
+			}
+
+			var arrMedicationStatementPartOfMedicationStatement = [];
+			var query = 'select medication_statement_id from BACIRO_FHIR.medication_statement ' + fixCondition;
+
+			db.query(query, function (dataJson) {
+				rez = lowercaseObject(dataJson);
+				for (i = 0; i < rez.length; i++) {
+					var medicationStatementPartOfMedicationStatement = {};
+					if(rez[i].medication_statement_id != "null"){
+						medicationStatementPartOfMedicationStatement.id = hostFHIR + ':' + portFHIR + '/' + apikey + '/MedicationStatement?_id=' +  rez[i].medication_statement_id;
+					} else {
+						medicationStatementPartOfMedicationStatement.id = "";
+					}
+					
+					arrMedicationStatementPartOfMedicationStatement[i] = medicationStatementPartOfMedicationStatement;
+				}
+				res.json({
+					"err_code": 0,
+					"data": arrMedicationStatementPartOfMedicationStatement
+				});
+			}, function (e) {
+				res.json({
+					"err_code": 1,
+					"err_msg": e,
+					"application": "Api Phoenix",
+					"function": "getMedicationStatementPartOfMedicationStatement"
+				});
+			});
+		},
+		medicationStatementPartOfProcedure: function getMedicationStatementPartOfProcedure(req, res) {
+			var apikey = req.params.apikey;
+			
+			var ProcedureId = req.query._id;
+			var medicationStatementId = req.query.medication_statement_id;
+
+			//susun query
+			var condition = '';
+
+			if (typeof ProcedureId !== 'undefined' && ProcedureId !== "") {
+				condition += "procedure_id = '" + ProcedureId + "' AND ";
+			}
+
+			if (typeof medicationStatementId !== 'undefined' && medicationStatementId !== "") {
+				condition += "medication_statement_id = '" + medicationStatementId + "' AND ";
+			}
+
+			if (condition == '') {
+				fixCondition = '';
+			} else {
+				fixCondition = ' WHERE ' + condition.slice(0, -4);
+			}
+
+			var arrMedicationStatementPartOfProcedure = [];
+			var query = 'select procedure_id from BACIRO_FHIR.procedure ' + fixCondition;
+
+			db.query(query, function (dataJson) {
+				rez = lowercaseObject(dataJson);
+				for (i = 0; i < rez.length; i++) {
+					var medicationStatementPartOfProcedure = {};
+					if(rez[i].procedure_id != "null"){
+						medicationStatementPartOfProcedure.id = hostFHIR + ':' + portFHIR + '/' + apikey + '/Procedure?_id=' +  rez[i].procedure_id;
+					} else {
+						medicationStatementPartOfProcedure.id = "";
+					}
+					
+					arrMedicationStatementPartOfProcedure[i] = medicationStatementPartOfProcedure;
+				}
+				res.json({
+					"err_code": 0,
+					"data": arrMedicationStatementPartOfProcedure
+				});
+			}, function (e) {
+				res.json({
+					"err_code": 1,
+					"err_msg": e,
+					"application": "Api Phoenix",
+					"function": "getMedicationStatementPartOfProcedure"
+				});
+			});
+		},
+		medicationStatementPartOfObservation: function getMedicationStatementPartOfObservation(req, res) {
+			var apikey = req.params.apikey;
+			
+			var ObservationId = req.query._id;
+			var medicationStatementId = req.query.medication_statement_id;
+
+			//susun query
+			var condition = '';
+
+			if (typeof ObservationId !== 'undefined' && ObservationId !== "") {
+				condition += "observation_id = '" + ObservationId + "' AND ";
+			}
+
+			if (typeof medicationStatementId !== 'undefined' && medicationStatementId !== "") {
+				condition += "MEDICATION_STATEMENT_PART_OF_ID = '" + medicationStatementId + "' AND ";
+			}
+
+			if (condition == '') {
+				fixCondition = '';
+			} else {
+				fixCondition = ' WHERE ' + condition.slice(0, -4);
+			}
+
+			var arrMedicationStatementPartOfObservation = [];
+			var query = 'select observation_id from BACIRO_FHIR.observation ' + fixCondition;
+
+			db.query(query, function (dataJson) {
+				rez = lowercaseObject(dataJson);
+				for (i = 0; i < rez.length; i++) {
+					var medicationStatementPartOfObservation = {};
+					if(rez[i].observation_id != "null"){
+						medicationStatementPartOfObservation.id = hostFHIR + ':' + portFHIR + '/' + apikey + '/Observation?_id=' +  rez[i].observation_id;
+					} else {
+						medicationStatementPartOfObservation.id = "";
+					}
+					
+					arrMedicationStatementPartOfObservation[i] = medicationStatementPartOfObservation;
+				}
+				res.json({
+					"err_code": 0,
+					"data": arrMedicationStatementPartOfObservation
+				});
+			}, function (e) {
+				res.json({
+					"err_code": 1,
+					"err_msg": e,
+					"application": "Api Phoenix",
+					"function": "getMedicationStatementPartOfObservation"
+				});
+			});
+		},
+		
+		medicationStatementReasonReferenceCondition: function getMedicationStatementReasonReferenceCondition(req, res) {
+			var apikey = req.params.apikey;
+			
+			var ConditionId = req.query._id;
+			var medicationStatementId = req.query.medication_statement_id;
+
+			//susun query
+			var condition = '';
+
+			if (typeof ConditionId !== 'undefined' && ConditionId !== "") {
+				condition += "condition_id = '" + ConditionId + "' AND ";
+			}
+
+			if (typeof medicationStatementId !== 'undefined' && medicationStatementId !== "") {
+				condition += "medication_statement_id = '" + medicationStatementId + "' AND ";
+			}
+
+			if (condition == '') {
+				fixCondition = '';
+			} else {
+				fixCondition = ' WHERE ' + condition.slice(0, -4);
+			}
+
+			var arrMedicationStatementReasonReferenceCondition = [];
+			var query = 'select condition_id from BACIRO_FHIR.condition ' + fixCondition;
+
+			db.query(query, function (dataJson) {
+				rez = lowercaseObject(dataJson);
+				for (i = 0; i < rez.length; i++) {
+					var medicationStatementReasonReferenceCondition = {};
+					if(rez[i].condition_id != "null"){
+						medicationStatementReasonReferenceCondition.id = hostFHIR + ':' + portFHIR + '/' + apikey + '/Condition?_id=' +  rez[i].condition_id;
+					} else {
+						medicationStatementReasonReferenceCondition.id = "";
+					}
+					
+					arrMedicationStatementReasonReferenceCondition[i] = medicationStatementReasonReferenceCondition;
+				}
+				res.json({
+					"err_code": 0,
+					"data": arrMedicationStatementReasonReferenceCondition
+				});
+			}, function (e) {
+				res.json({
+					"err_code": 1,
+					"err_msg": e,
+					"application": "Api Phoenix",
+					"function": "getMedicationStatementReasonReferenceCondition"
+				});
+			});
+		},
+		medicationStatementReasonReferenceObservation: function getMedicationStatementReasonReferenceObservation(req, res) {
+			var apikey = req.params.apikey;
+			
+			var ObservationId = req.query._id;
+			var medicationStatementId = req.query.medication_statement_id;
+
+			//susun query
+			var condition = '';
+
+			if (typeof ObservationId !== 'undefined' && ObservationId !== "") {
+				condition += "observation_id = '" + ObservationId + "' AND ";
+			}
+
+			if (typeof medicationStatementId !== 'undefined' && medicationStatementId !== "") {
+				condition += "MEDICATION_STATEMENT_REASON_REFERENCE_ID = '" + medicationStatementId + "' AND ";
+			}
+
+			if (condition == '') {
+				fixCondition = '';
+			} else {
+				fixCondition = ' WHERE ' + condition.slice(0, -4);
+			}
+
+			var arrMedicationStatementReasonReferenceObservation = [];
+			var query = 'select observation_id from BACIRO_FHIR.observation ' + fixCondition;
+
+			db.query(query, function (dataJson) {
+				rez = lowercaseObject(dataJson);
+				for (i = 0; i < rez.length; i++) {
+					var medicationStatementReasonReferenceObservation = {};
+					if(rez[i].observation_id != "null"){
+						medicationStatementReasonReferenceObservation.id = hostFHIR + ':' + portFHIR + '/' + apikey + '/Observation?_id=' +  rez[i].observation_id;
+					} else {
+						medicationStatementReasonReferenceObservation.id = "";
+					}
+					
+					arrMedicationStatementReasonReferenceObservation[i] = medicationStatementReasonReferenceObservation;
+				}
+				res.json({
+					"err_code": 0,
+					"data": arrMedicationStatementReasonReferenceObservation
+				});
+			}, function (e) {
+				res.json({
+					"err_code": 1,
+					"err_msg": e,
+					"application": "Api Phoenix",
+					"function": "getMedicationStatementReasonReferenceObservation"
+				});
+			});
+		},
   },
 	post: {
 		medicationStatement: function addMedicationStatement(req, res) {
@@ -427,176 +954,12 @@ var controller = {
       },function(e){
           res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "addMedicationStatement"});
       });
-    },
-		medicationStatementDosage: function addMedicationStatementDosage(req, res) {
-			console.log(req.body);
-			var dosage_id = req.body.dosage_id;
-			var sequence = req.body.sequence;
-			var text = req.body.text;
-			var additional_instruction = req.body.additional_instruction;
-			var patient_instruction = req.body.patient_instruction;
-			var timing_id = req.body.timing_id;
-			var as_needed_boolean = req.body.as_needed_boolean;
-			var as_needed_codeable_concept = req.body.as_needed_codeable_concept;
-			var site = req.body.site;
-			var route = req.body.route;
-			var method = req.body.method;
-			var dose_range_low = req.body.dose_range_low;
-			var dose_range_high = req.body.dose_range_high;
-			var dose_quantity = req.body.dose_quantity;
-			var max_dose_per_period_numerator = req.body.max_dose_per_period_numerator;
-			var max_dose_per_period_denominator = req.body.max_dose_per_period_denominator;
-			var max_dose_per_administration = req.body.max_dose_per_administration;
-			var max_dose_per_lifetime = req.body.max_dose_per_lifetime;
-			var rate_ratio_numerator = req.body.rate_ratio_numerator;
-			var rate_ratio_denominator = req.body.rate_ratio_denominator;
-			var rate_range_low = req.body.rate_range_low;
-			var rate_range_high = req.body.rate_range_high;
-			var rate_quantity = req.body.rate_quantity;
-			var medication_statement_id = req.body.medication_statement_id;
-			
-			
-			var column = "";
-      var values = "";
-			
-			if (typeof sequence !== 'undefined' && sequence !== "") {
-        column += '"sequence",';
-        values += ' '  + sequence + ',';
-      }
-			
-			if (typeof text !== 'undefined' && text !== "") {
-        column += 'text,';
-        values += '"'  + text + '",';
-      }
-			
-			if (typeof additional_instruction !== 'undefined' && additional_instruction !== "") {
-        column += 'additional_instruction,';
-        values += '"'  + additional_instruction + '",';
-      }
-			
-			if (typeof patient_instruction !== 'undefined' && patient_instruction !== "") {
-        column += 'patient_instruction,';
-        values += '"'  + patient_instruction + '",';
-      }
-			
-			if (typeof timing_id !== 'undefined' && timing_id !== "") {
-        column += 'timing_id,';
-        values += '"'  + timing_id + '",';
-      }
-			
-			if (typeof as_needed_boolean !== 'undefined' && as_needed_boolean !== "") {
-        column += 'as_needed_boolean,';
-        values += '"'  + as_needed_boolean + '",';
-      }
-			
-			if (typeof as_needed_codeable_concept !== 'undefined' && as_needed_codeable_concept !== "") {
-        column += 'as_needed_codeable_concept,';
-        values += '"'  + as_needed_codeable_concept + '",';
-      }
-			
-			if (typeof site !== 'undefined' && site !== "") {
-        column += 'site,';
-        values += '"'  + site + '",';
-      }
-			
-			if (typeof route !== 'undefined' && route !== "") {
-        column += 'route,';
-        values += '"'  + route + '",';
-      }
-			
-			if (typeof method !== 'undefined' && method !== "") {
-        column += 'method,';
-        values += '"'  + method + '",';
-      }
-			
-			if (typeof medication_statement_id !== 'undefined' && medication_statement_id !== "") {
-        column += 'medication_statement_id,';
-        values += '"'  + medication_statement_id + '",';
-      }
-			
-			if (typeof dose_range_low !== 'undefined' && dose_range_low !== "") {
-        column += 'dose_range_low,';
-        values += ' '  + dose_range_low + ',';
-      }
-			
-			if (typeof dose_range_higdose_range_highh !== 'undefined' && dose_range_higdose_range_highh !== "") {
-        column += 'dose_range_higdose_range_highh,';
-        values += ' '  + dose_range_higdose_range_highh + ',';
-      }
-			
-			if (typeof dose_quantity !== 'undefined' && dose_quantity !== "") {
-        column += 'dose_quantity,';
-        values += ' '  + dose_quantity + ',';
-      }
-			
-			if (typeof max_dose_per_period_numerator !== 'undefined' && max_dose_per_period_numerator !== "") {
-        column += 'max_dose_per_period_numerator,';
-        values += ' '  + max_dose_per_period_numerator + ',';
-      }
-			
-			if (typeof max_dose_per_period_denominator !== 'undefined' && max_dose_per_period_denominator !== "") {
-        column += 'max_dose_per_period_denominator,';
-        values += ' '  + max_dose_per_period_denominator + ',';
-      }
-			
-			if (typeof max_dose_per_administration !== 'undefined' && max_dose_per_administration !== "") {
-        column += 'max_dose_per_administration,';
-        values += ' '  + max_dose_per_administration + ',';
-      }
-			
-			if (typeof max_dose_per_lifetime !== 'undefined' && max_dose_per_lifetime !== "") {
-        column += 'max_dose_per_lifetime,';
-        values += ' '  + max_dose_per_lifetime + ',';
-      }
-			
-			if (typeof rate_ratio_numerator !== 'undefined' && rate_ratio_numerator !== "") {
-        column += 'rate_ratio_numerator,';
-        values += ' '  + rate_ratio_numerator + ',';
-      }
-			
-			if (typeof rate_ratio_denominator !== 'undefined' && rate_ratio_denominator !== "") {
-        column += 'rate_ratio_denominator,';
-        values += ' '  + rate_ratio_denominator + ',';
-      }
-			
-			if (typeof rate_range_low !== 'undefined' && rate_range_low !== "") {
-        column += 'rate_range_low,';
-        values += ' '  + rate_range_low + ',';
-      }
-			
-			if (typeof rate_range_high !== 'undefined' && rate_range_high !== "") {
-        column += 'rate_range_high,';
-        values += ' '  + rate_range_high + ',';
-      }
-			
-			if (typeof rate_quantity !== 'undefined' && rate_quantity !== "") {
-        column += 'rate_quantity,';
-        values += ' '  + rate_quantity + ',';
-      }
-
-      var query = 'UPSERT INTO BACIRO_FHIR.DOSAGE(dosage_id, ' + column.slice(0, -1) + ')'+
-        ' VALUES ("'+dosage_id+'", ' + values.slice(0, -1) + ')';
-			
-			console.log(query);
-      db.upsert(query,function(succes){
-        var query2 = 'select dosage_id, "sequence", text, additional_instruction, patient_instruction, timing_id, as_needed_boolean, as_needed_codeable_concept, site, route, method, dose_range_low, dose_range_high, dose_quantity, max_dose_per_period_numerator, max_dose_per_period_denominator, max_dose_per_administration, max_dose_per_lifetime, rate_ratio_numerator, rate_ratio_denominator, rate_range_low, rate_range_high, rate_quantity, medication_statement_id from BACIRO_FHIR.DOSAGE  WHERE dosage_id = "' + requester_id + '"';
-				console.log(query2);
-				db.query(query2,function(dataJson){
-          rez = lowercaseObject(dataJson);
-          res.json({"err_code":0,"data":rez});
-        },function(e){
-          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "addMedicationStatementDosage"});
-        });
-      },function(e){
-          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "addMedicationStatementDosage"});
-      });
-    },
-		
+    }
 	},
 	put: {
 		medicationStatement: function updateMedicationStatement(req, res) {
 			console.log(req.body);
-			var medication_statement_id = req.params.medication_statement_id;
+			var medication_statement_id = req.params._id;
 			var part_of = req.body.part_of;
 			var context_encounter = req.body.context_encounter;
 			var context_episode_of_care = req.body.context_episode_of_care;
@@ -730,10 +1093,14 @@ var controller = {
 			
 			
       var domainResource = req.params.dr;
-			var arrResource = domainResource.split('|');
-			var fieldResource = arrResource[0];
-			var valueResource = arrResource[1];
-			var condition = "medication_statement_id = '" + medication_statement_id + "' AND " + fieldResource + " = '" + valueResource + "'";
+			if(domainResource !== "" && typeof domainResource !== 'undefined'){
+				var arrResource = domainResource.split('|');
+				var fieldResource = arrResource[0];
+				var valueResource = arrResource[1];
+				var condition = "medication_statement_id = '" + medication_statement_id + "' AND " + fieldResource + " = '" + valueResource + "'";
+			}else{
+        var condition = "medication_statement_id = '" + medication_statement_id + "'";
+      }
 
       var query = "UPSERT INTO BACIRO_FHIR.MEDICATION_STATEMENT(medication_statement_id," + column.slice(0, -1) + ") SELECT medication_statement_id, " + values.slice(0, -1) + " FROM BACIRO_FHIR.MEDICATION_STATEMENT WHERE " + condition;
 			
@@ -750,175 +1117,7 @@ var controller = {
       },function(e){
           res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "updateMedicationStatement"});
       });
-    },
-		medicationStatementDosage: function updateMedicationStatementDosage(req, res) {
-			console.log(req.body);
-			var dosage_id = req.body.dosage_id;
-			var sequence = req.body.sequence;
-			var text = req.body.text;
-			var additional_instruction = req.body.additional_instruction;
-			var patient_instruction = req.body.patient_instruction;
-			var timing_id = req.body.timing_id;
-			var as_needed_boolean = req.body.as_needed_boolean;
-			var as_needed_codeable_concept = req.body.as_needed_codeable_concept;
-			var site = req.body.site;
-			var route = req.body.route;
-			var method = req.body.method;
-			var dose_range_low = req.body.dose_range_low;
-			var dose_range_higdose_range_highh = req.body.dose_range_high;
-			var dose_quantity = req.body.dose_quantity;
-			var max_dose_per_period_numerator = req.body.max_dose_per_period_numerator;
-			var max_dose_per_period_denominator = req.body.max_dose_per_period_denominator;
-			var max_dose_per_administration = req.body.max_dose_per_administration;
-			var max_dose_per_lifetime = req.body.max_dose_per_lifetime;
-			var rate_ratio_numerator = req.body.rate_ratio_numerator;
-			var rate_ratio_denominator = req.body.rate_ratio_denominator;
-			var rate_range_low = req.body.rate_range_low;
-			var rate_range_high = req.body.rate_range_high;
-			var rate_quantity = req.body.rate_quantity;
-			var medication_statement_id = req.body.medication_statement_id;
-			
-			
-			var column = "";
-      var values = "";
-			
-			if (typeof sequence !== 'undefined' && sequence !== "") {
-        column += '"sequence",';
-        values += ' '  + sequence + ',';
-      }
-			
-			if (typeof text !== 'undefined' && text !== "") {
-        column += 'text,';
-        values += '"'  + text + '",';
-      }
-			
-			if (typeof additional_instruction !== 'undefined' && additional_instruction !== "") {
-        column += 'additional_instruction,';
-        values += '"'  + additional_instruction + '",';
-      }
-			
-			if (typeof patient_instruction !== 'undefined' && patient_instruction !== "") {
-        column += 'patient_instruction,';
-        values += '"'  + patient_instruction + '",';
-      }
-			
-			if (typeof timing_id !== 'undefined' && timing_id !== "") {
-        column += 'timing_id,';
-        values += '"'  + timing_id + '",';
-      }
-			
-			if (typeof as_needed_boolean !== 'undefined' && as_needed_boolean !== "") {
-        column += 'as_needed_boolean,';
-        values += '"'  + as_needed_boolean + '",';
-      }
-			
-			if (typeof as_needed_codeable_concept !== 'undefined' && as_needed_codeable_concept !== "") {
-        column += 'as_needed_codeable_concept,';
-        values += '"'  + as_needed_codeable_concept + '",';
-      }
-			
-			if (typeof site !== 'undefined' && site !== "") {
-        column += 'site,';
-        values += '"'  + site + '",';
-      }
-			
-			if (typeof route !== 'undefined' && route !== "") {
-        column += 'route,';
-        values += '"'  + route + '",';
-      }
-			
-			if (typeof method !== 'undefined' && method !== "") {
-        column += 'method,';
-        values += '"'  + method + '",';
-      }
-			
-			if (typeof medication_statement_id !== 'undefined' && medication_statement_id !== "") {
-        column += 'medication_statement_id,';
-        values += '"'  + medication_statement_id + '",';
-      }
-			
-			if (typeof dose_range_low !== 'undefined' && dose_range_low !== "") {
-        column += 'dose_range_low,';
-        values += ' '  + dose_range_low + ',';
-      }
-			
-			if (typeof dose_range_higdose_range_highh !== 'undefined' && dose_range_higdose_range_highh !== "") {
-        column += 'dose_range_higdose_range_highh,';
-        values += ' '  + dose_range_higdose_range_highh + ',';
-      }
-			
-			if (typeof dose_quantity !== 'undefined' && dose_quantity !== "") {
-        column += 'dose_quantity,';
-        values += ' '  + dose_quantity + ',';
-      }
-			
-			if (typeof max_dose_per_period_numerator !== 'undefined' && max_dose_per_period_numerator !== "") {
-        column += 'max_dose_per_period_numerator,';
-        values += ' '  + max_dose_per_period_numerator + ',';
-      }
-			
-			if (typeof max_dose_per_period_denominator !== 'undefined' && max_dose_per_period_denominator !== "") {
-        column += 'max_dose_per_period_denominator,';
-        values += ' '  + max_dose_per_period_denominator + ',';
-      }
-			
-			if (typeof max_dose_per_administration !== 'undefined' && max_dose_per_administration !== "") {
-        column += 'max_dose_per_administration,';
-        values += ' '  + max_dose_per_administration + ',';
-      }
-			
-			if (typeof max_dose_per_lifetime !== 'undefined' && max_dose_per_lifetime !== "") {
-        column += 'max_dose_per_lifetime,';
-        values += ' '  + max_dose_per_lifetime + ',';
-      }
-			
-			if (typeof rate_ratio_numerator !== 'undefined' && rate_ratio_numerator !== "") {
-        column += 'rate_ratio_numerator,';
-        values += ' '  + rate_ratio_numerator + ',';
-      }
-			
-			if (typeof rate_ratio_denominator !== 'undefined' && rate_ratio_denominator !== "") {
-        column += 'rate_ratio_denominator,';
-        values += ' '  + rate_ratio_denominator + ',';
-      }
-			
-			if (typeof rate_range_low !== 'undefined' && rate_range_low !== "") {
-        column += 'rate_range_low,';
-        values += ' '  + rate_range_low + ',';
-      }
-			
-			if (typeof rate_range_high !== 'undefined' && rate_range_high !== "") {
-        column += 'rate_range_high,';
-        values += ' '  + rate_range_high + ',';
-      }
-			
-			if (typeof rate_quantity !== 'undefined' && rate_quantity !== "") {
-        column += 'rate_quantity,';
-        values += ' '  + rate_quantity + ',';
-      }
-
-      var domainResource = req.params.dr;
-			var arrResource = domainResource.split('|');
-			var fieldResource = arrResource[0];
-			var valueResource = arrResource[1];
-			var condition = 'dosage_id = "' + dosage_id + '" AND ' + fieldResource + ' = "' + valueResource + '"';
-			
-			var query = 'UPSERT INTO BACIRO_FHIR.DOSAGE(dosage_id,' + column.slice(0, -1) + ') SELECT dosage_id, ' + values.slice(0, -1) + ' FROM BACIRO_FHIR.DOSAGE WHERE ' + condition;
-			
-			console.log(query);
-      db.upsert(query,function(succes){
-        var query2 = 'select dosage_id, "sequence", text, additional_instruction, patient_instruction, timing_id, as_needed_boolean, as_needed_codeable_concept, site, route, method, dose_range_low, dose_range_high, dose_quantity, max_dose_per_period_numerator, max_dose_per_period_denominator, max_dose_per_administration, max_dose_per_lifetime, rate_ratio_numerator, rate_ratio_denominator, rate_range_low, rate_range_high, rate_quantity, medication_statement_id from BACIRO_FHIR.DOSAGE WHERE dosage_id = "' + dosage_id + '"';
-				console.log(query2);
-				db.query(query2,function(dataJson){
-          rez = lowercaseObject(dataJson);
-          res.json({"err_code":0,"data":rez});
-        },function(e){
-          res.json({"err_code": 1, "err_msg":e, "application": "Api Phoenix", "function": "updateMedicationStatementDosage"});
-        });
-      },function(e){
-          res.json({"err_code": 2, "err_msg":e, "application": "Api Phoenix", "function": "updateMedicationStatementDosage"});
-      });
-    },
+    }
 	}
 }
 function lowercaseObject(jsonData){

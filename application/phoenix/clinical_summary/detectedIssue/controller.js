@@ -63,6 +63,18 @@ var controller = {
         condition += "di.IMPLICATED = '" + implicated + "' AND,";  
       }
 			
+			var offset = req.query.offset;
+			var limit = req.query.limit;
+
+			if((typeof offset !== 'undefined' && offset !== '')){
+				condition = " di.detected_issue_id > '" + offset + "' AND ";       
+			}
+			
+			if((typeof limit !== 'undefined' && limit !== '')){
+				limit = " limit " + limit + " ";
+			} else {
+				limit = " ";
+			}
 			
 			if(condition == ""){
         fixCondition = "";
@@ -71,8 +83,8 @@ var controller = {
       }
 			      
       var arrDetectedIssue = [];
-      var query = "select detected_issue_id, status, category, severity, patient, date, author_practitioner, author_device, implicated, detail, reference from baciro_fhir.detected_issue di " + fixCondition;
-			//console.log(query);
+      var query = "select di.detected_issue_id as detected_issue_id, di.status as status, di.category as category, di.severity as severity, di.patient as patient, di.date as date, di.author_practitioner as author_practitioner, di.author_device as author_device, di.implicated as implicated, di.detail as detail, di.reference as reference from baciro_fhir.detected_issue di " + fixCondition + limit;
+			console.log(query);
       db.query(query,function(dataJson){
         rez = lowercaseObject(dataJson);
 				for(i = 0; i < rez.length; i++){
@@ -92,7 +104,6 @@ var controller = {
 					}else{
 						DetectedIssue.date = rez[i].date;
 					}
-					var arrAuthor = [];
 					var Author = {};
 					if(rez[i].author_practitioner != "null"){
 						Author.practitioner = hostFHIR + ':' + portFHIR + '/' + apikey + '/Practitioner?_id=' +  rez[i].author_practitioner;
@@ -104,8 +115,7 @@ var controller = {
 					} else {
 						Author.device = "";
 					}
-					arrAuthor[i] = Author;
-					DetectedIssue.author = arrAuthor;
+					DetectedIssue.author = Author;
 					DetectedIssue.implicated = rez[i].implicated;
 					DetectedIssue.detail = rez[i].detail;
 					DetectedIssue.reference = rez[i].reference;
@@ -328,7 +338,7 @@ var controller = {
 	put: {
 		detectedIssue: function updateDetectedIssue(req, res) {
 			console.log(req.body);
-			var detected_issue_id = req.body.detected_issue_id;
+			var detected_issue_id = req.params._id;
 			var status = req.body.status;
 			var category = req.body.category;
 			var severity = req.body.severity;
@@ -407,10 +417,14 @@ var controller = {
       }
 			
 			var domainResource = req.params.dr;
-			var arrResource = domainResource.split('|');
-			var fieldResource = arrResource[0];
-			var valueResource = arrResource[1];
-			var condition = "detected_issue_id = '" + detected_issue_id + "' AND " + fieldResource + " = '" + valueResource + "'";
+			if(domainResource !== "" && typeof domainResource !== 'undefined'){
+				var arrResource = domainResource.split('|');
+				var fieldResource = arrResource[0];
+				var valueResource = arrResource[1];
+				var condition = "detected_issue_id = '" + detected_issue_id + "' AND " + fieldResource + " = '" + valueResource + "'";
+			}else{
+        var condition = "detected_issue_id = '" + detected_issue_id+ "'";
+      }
 
       var query = "UPSERT INTO BACIRO_FHIR.detected_issue(detected_issue_id," + column.slice(0, -1) + ") SELECT detected_issue_id, " + values.slice(0, -1) + " FROM BACIRO_FHIR.detected_issue WHERE " + condition;
 			
@@ -430,7 +444,7 @@ var controller = {
     },
 		detectedIssueMitigation: function updateDetectedIssueMitigation(req, res) {
 			console.log(req.body);
-			var mitigation_id  = req.params.mitigation_id;
+			var mitigation_id  = req.params._id;
 			var action  = req.body.action;
 			var date  = req.body.date;
 			var author  = req.body.author;
@@ -462,10 +476,14 @@ var controller = {
 
      
 			var domainResource = req.params.dr;
-			var arrResource = domainResource.split('|');
-			var fieldResource = arrResource[0];
-			var valueResource = arrResource[1];
-			var condition = "mitigation_id = '" + mitigation_id + "' AND " + fieldResource + " = '" + valueResource + "'";
+			if(domainResource !== "" && typeof domainResource !== 'undefined'){
+				var arrResource = domainResource.split('|');
+				var fieldResource = arrResource[0];
+				var valueResource = arrResource[1];
+				var condition = "mitigation_id = '" + mitigation_id + "' AND " + fieldResource + " = '" + valueResource + "'";
+			}else{
+        var condition = "mitigation_id = '" + mitigation_id+ "'";
+      }
 			
 			var query = "UPSERT INTO BACIRO_FHIR.detected_issue_mitigation(mitigation_id," + column.slice(0, -1) + ") SELECT mitigation_id, " + values.slice(0, -1) + " FROM BACIRO_FHIR.detected_issue_mitigation WHERE " + condition;
 			

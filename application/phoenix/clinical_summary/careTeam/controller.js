@@ -32,8 +32,6 @@ var controller = {
 			var patient = req.query.patient;
 			var status = req.query.status;
 			var subject = req.query.subject;
-	
-			
 			
       //susun query
       var condition = "";
@@ -81,6 +79,18 @@ var controller = {
 				condition += "ct.SUBJECT_PATIENT = '" + subject + "' OR ct.SUBJECT_GROUP = '" + subject + "' AND,";  
 			}
 			
+			var offset = req.query.offset;
+			var limit = req.query.limit;
+
+			if((typeof offset !== 'undefined' && offset !== '')){
+				condition = " ct.care_team_id > '" + offset + "' AND ";       
+			}
+			
+			if((typeof limit !== 'undefined' && limit !== '')){
+				limit = " limit " + limit + " ";
+			} else {
+				limit = " ";
+			}
 			
       if(condition == ""){
         fixCondition = "";
@@ -89,14 +99,13 @@ var controller = {
       }
 			      
       var arrCareTeam = [];
-      var query = "select care_team_id, status, category, name, subject_patient, subject_group, context_encounter, context_episode_of_care, period_start, period_end, reason_code, episode_of_care_id from baciro_fhir.CARE_TEAM ct " + fixCondition;
+      var query = "select ct.care_team_id as care_team_id, ct.status as status, ct.category as category, ct.name as name, ct.subject_patient as subject_patient, ct.subject_group as subject_group, ct.context_encounter as context_encounter, ct.context_episode_of_care as context_episode_of_care, ct.period_start as period_start, ct.period_end as period_end, ct.reason_code as reason_code, ct.episode_of_care_id as episode_of_care_id from baciro_fhir.CARE_TEAM ct " + fixCondition + limit;
 			console.log(query);
       db.query(query,function(dataJson){
         rez = lowercaseObject(dataJson);
 				console.log(rez);
 				for(i = 0; i < rez.length; i++){
           var CareTeam = {};
-					var arrSubject = [];
 					var Subject = {};
 					if(rez[i].subject_group != "null"){
 						Subject.group = hostFHIR + ':' + portFHIR + '/' + apikey + '/Group?_id=' +  rez[i].subject_group;
@@ -108,9 +117,6 @@ var controller = {
 					} else {
 						Subject.patient = "";
 					}
-					arrSubject = Subject;
-					
-					var arrContext = [];
 					var Context = {};
 					if(rez[i].context_encounter != "null"){
 						Context.encounter = hostFHIR + ':' + portFHIR + '/' + apikey + '/Encounter?_id=' +  rez[i].context_encounter;
@@ -122,15 +128,14 @@ var controller = {
 					} else {
 						Context.episodeOfCare = "";
 					}
-					arrContext = Context;
 					
 					CareTeam.resourceType = "CareTeam";
           CareTeam.id = rez[i].care_team_id;
 					CareTeam.status = rez[i].status;
 					CareTeam.category = rez[i].category;
 					CareTeam.name = rez[i].name;
-					CareTeam.subject = arrSubject;
-					CareTeam.context = arrContext;
+					CareTeam.subject = Subject;
+					CareTeam.context = Context;
 					var period_start,period_end;
 					if(rez[i].period_start == null){
 						period_start = formatDate(rez[i].period_start);  
@@ -366,7 +371,6 @@ var controller = {
 			var period_end  = req.body.period_end;
 			var reason_code  = req.body.reason_code;
 			var episode_of_care_id  = req.body.episode_of_care_id;
-			
 			var care_plan_author_id  = req.body.care_plan_author_id;
 			var care_plan_team_id  = req.body.care_plan_team_id;
 			var care_plan_activity_detail_id  = req.body.care_plan_activity_detail_id;
@@ -562,7 +566,7 @@ var controller = {
 	put: {
 		careTeam: function updateCareTeam(req, res) {
 			console.log(req.body);
-			var care_team_id  = req.params.care_team_id;
+			var care_team_id  = req.params._id;
 			var status  = req.body.status;
 			var category  = req.body.category;
 			var name  = req.body.name;
@@ -574,7 +578,6 @@ var controller = {
 			var period_end  = req.body.period_end;
 			var reason_code  = req.body.reason_code;
 			var episode_of_care_id  = req.body.episode_of_care_id;
-			
 			var care_plan_author_id  = req.body.care_plan_author_id;
 			var care_plan_team_id  = req.body.care_plan_team_id;
 			var care_plan_activity_detail_id  = req.body.care_plan_activity_detail_id;
@@ -664,10 +667,14 @@ var controller = {
 
 			
 			var domainResource = req.params.dr;
-			var arrResource = domainResource.split('|');
-			var fieldResource = arrResource[0];
-			var valueResource = arrResource[1];
-			var condition = "care_team_id = '" + care_team_id + "' AND " + fieldResource + " = '" + valueResource + "'";
+			if(domainResource !== "" && typeof domainResource !== 'undefined'){
+				var arrResource = domainResource.split('|');
+				var fieldResource = arrResource[0];
+				var valueResource = arrResource[1];
+				var condition = "care_team_id = '" + care_team_id + "' AND " + fieldResource + " = '" + valueResource + "'";
+			}else{
+        var condition = "care_team_id = '" + care_team_id + "'";
+      }
 
       var query = "UPSERT INTO BACIRO_FHIR.CARE_TEAM(care_team_id," + column.slice(0, -1) + ") SELECT care_team_id, " + values.slice(0, -1) + " FROM BACIRO_FHIR.CARE_TEAM WHERE " + condition;
 			
@@ -687,7 +694,7 @@ var controller = {
     },
 		careTeamParticipant: function updateCareTeamParticipant(req, res) {
 			console.log(req.body);
-			var participant_id  = req.params.participant_id;
+			var participant_id  = req.params._id;
 			var role  = req.body.role;
 			var member_practitioner  = req.body.member_practitioner;
 			var member_related_person  = req.body.member_related_person;
@@ -756,10 +763,15 @@ var controller = {
 
      
 			var domainResource = req.params.dr;
-			var arrResource = domainResource.split('|');
-			var fieldResource = arrResource[0];
-			var valueResource = arrResource[1];
-			var condition = "participant_id = '" + participant_id + "' AND " + fieldResource + " = '" + valueResource + "'";
+			if(domainResource !== "" && typeof domainResource !== 'undefined'){
+				var arrResource = domainResource.split('|');
+				var fieldResource = arrResource[0];
+				var valueResource = arrResource[1];
+				var condition = "participant_id = '" + participant_id + "' AND " + fieldResource + " = '" + valueResource + "'";
+			}else{
+        var condition = "participant_id = '" + participant_id + "'";
+      }
+			
 			
 			var query = "UPSERT INTO BACIRO_FHIR.care_team_participant(participant_id," + column.slice(0, -1) + ") SELECT participant_id, " + values.slice(0, -1) + " FROM BACIRO_FHIR.care_team_participant WHERE " + condition;
 			

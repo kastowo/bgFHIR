@@ -1,5 +1,0 @@
-ENDPOINT_ID,ENDPOINT_STATUS,ENDPOINT_CONNECTION_TYPE,ENDPOINT_NAME,ENDPOINT_MANAGING_ORGANIZATION,ENDPOINT_PERIOD_START,ENDPOINT_PERIOD_END,ENDPOINT_PAYLOAD_TYPE,ENDPOINT_PAYLOAD_MIME_TYPE,ENDPOINT_ADDRESS,ENDPOINT_HEADER,ORGANIZATION_ID,LOCATION_ID,PRACTITIONER_ROLE_ID,HEALTHCARE_SERVICE_ID
-enpjfjj4s45,suspended,ihexcpd,name endpoint,orgjf7woha6,2018-01-11 00:00:00.000,2019-01-11 00:00:00.000,urn:ihe:pcc:handp:2008,text/html,192.168.1.228/pacs,pacs,orgjf7woha6,,,
-enpjfrx7sof,active,ihexcpd,name endpoint,,2018-01-11 00:00:00.000,2019-01-11 00:00:00.000,urn:ihe:pcc:handp:2008,text/html,192.168.1.228/pacs,pacs,,,,
-enpjfrxsdrn,active,ihexcpd,name endpoint,,2018-01-11 00:00:00.000,2019-01-11 00:00:00.000,urn:ihe:pcc:handp:2008,text/html,192.168.1.228/pacs,pacs,,,,
-enpjfrxtozy,active,ihexcpd,name endpoint,orgjf7wxdoe,2018-01-11 00:00:00.000,2019-01-11 00:00:00.000,urn:ihe:pcc:handp:2008,text/html,192.168.1.228/pacs,pacs,orgjf7wxdoe,,,

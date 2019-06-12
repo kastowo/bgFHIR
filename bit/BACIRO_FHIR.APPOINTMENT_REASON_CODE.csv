@@ -1,6 +1,0 @@
-ID,CODE,DESCRIPTION
-1,CHECKUP,A routine checkup, such as an annual physical
-2,EMERGENCY,Emergency appointment
-11,FOLLOW-UP,A follow up visit from a previous appointment
-21,ROUTINE,Routine appointment  default if not valued
-22,WALKIN,A previously unscheduled walkin visit

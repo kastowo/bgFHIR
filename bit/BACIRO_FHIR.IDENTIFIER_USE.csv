@@ -1,7 +1,0 @@
-ID,CODE,DISPLAY,DEFINITION
-1,usual,Usual,The identifier recommended for display and use in real-world interactions.
-2,official,Official,The identifier considered to be most trusted for the identification of this item.
-3,temp,Temp,A temporary identifier.
-4,secondary,Secondary,An identifier that was assigned in secondary use - it serves to identify the object in a relative context, but cannot be consistently assigned to the same object again in a different context.
-11,third, third,This item
-12,third123,third123,This item

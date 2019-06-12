@@ -1635,6 +1635,28 @@ var Goal = require("./clinical_summary/goal/controller");
 var Procedure = require("./clinical_summary/procedure/controller");
 var RiskAssessment = require("./clinical_summary/riskAssessment/controller");
 
+//module diagnostics
+var BodySite = require("./diagnostics/bodySite/controller");
+var DiagnosticReport = require("./diagnostics/diagnosticReport/controller");
+var Observation = require("./diagnostics/observation/controller");
+var ProcedureRequest = require("./diagnostics/procedureRequest/controller");
+var Sequence = require("./diagnostics/sequence/controller");
+var Specimen = require("./diagnostics/specimen/controller");
+var ImagingStudy = require("./diagnostics/imagingStudy/controller");
+var ImagingManifest = require("./diagnostics/imagingManifest/controller");
+
+//financial module
+var Claim = require("./financial/claim/controller");
+var ClaimResponse = require("./financial/claimResponse/controller");
+var Coverage = require("./financial/coverage/controller");
+var EligibilityRequest = require("./financial/eligibilityRequest/controller");
+var EligibilityResponse = require("./financial/eligibilityResponse/controller");
+var EnrollmentRequest = require("./financial/enrollmentRequest/controller");
+var EnrollmentResponse = require("./financial/enrollmentResponse/controller");
+var ExplanationOfBenefit = require("./financial/explanationOfBenefit/controller");
+var PaymentNotice = require("./financial/paymentNotice/controller");
+var PaymentReconciliation = require("./financial/paymentReconciliation/controller");
+
 //import routes
 var routesDefaultFHIR    = require('./default_fhir/routes');  
 var routesPerson    = require('./patient_registers/person/routes');  
@@ -1679,6 +1701,25 @@ var routesFamilyMemberHistory = require('./clinical_summary/familyMemberHistory/
 var routesGoal = require('./clinical_summary/goal/routes');
 var routesProcedure = require('./clinical_summary/procedure/routes');
 var routesRiskAssessment = require('./clinical_summary/riskAssessment/routes');
+var routesBodySite = require("./diagnostics/bodySite/routes");
+var routesDiagnosticReport = require("./diagnostics/diagnosticReport/routes");
+var routesObservation = require("./diagnostics/observation/routes");
+var routesProcedureRequest = require("./diagnostics/procedureRequest/routes");
+var routesSequence = require("./diagnostics/sequence/routes");
+var routesSpecimen = require("./diagnostics/specimen/routes");
+var routesImagingStudy = require("./diagnostics/imagingStudy/routes");
+var routesImagingManifest = require("./diagnostics/imagingManifest/routes");
+
+var routesClaim = require("./financial/claim/routes");
+var routesClaimResponse = require("./financial/claimResponse/routes");
+var routesCoverage = require("./financial/coverage/routes");
+var routesEligibilityRequest = require("./financial/eligibilityRequest/routes");
+var routesEligibilityResponse = require("./financial/eligibilityResponse/routes");
+var routesEnrollmentRequest = require("./financial/enrollmentRequest/routes");
+var routesEnrollmentResponse = require("./financial/enrollmentResponse/routes");
+var routesExplanationOfBenefit = require("./financial/explanationOfBenefit/routes");
+var routesPaymentNotice = require("./financial/paymentNotice/routes");
+var routesPaymentReconciliation = require("./financial/paymentReconciliation/routes");
 
 //setrouting
 routesDefaultFHIR(app, DefaultFHIR);
@@ -1724,6 +1765,26 @@ routesFamilyMemberHistory(app,FamilyMemberHistory);
 routesGoal(app,Goal);
 routesProcedure(app,Procedure);
 routesRiskAssessment(app,RiskAssessment);
+
+routesBodySite(app, BodySite);
+routesDiagnosticReport(app, DiagnosticReport);
+routesObservation(app, Observation);
+routesProcedureRequest(app, ProcedureRequest);
+routesSequence(app, Sequence);
+routesSpecimen(app, Specimen);
+routesImagingStudy(app, ImagingStudy);
+routesImagingManifest(app, ImagingManifest);
+
+routesClaim(app, Claim);
+routesClaimResponse(app, ClaimResponse);
+routesCoverage(app, Coverage);
+routesEligibilityRequest(app, EligibilityRequest);
+routesEligibilityResponse(app, EligibilityResponse);
+routesEnrollmentRequest(app, EnrollmentRequest);
+routesEnrollmentRequest(app, EnrollmentRequest);
+routesExplanationOfBenefit(app, ExplanationOfBenefit);
+routesPaymentNotice(app, PaymentNotice);
+routesPaymentReconciliation(app, PaymentReconciliation);
 
 var server = app.listen(port, host, function () {
   console.log("Server running at http://%s:%s", host, port);

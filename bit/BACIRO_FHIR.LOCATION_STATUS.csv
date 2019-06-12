@@ -1,7 +1,0 @@
-ID,CODE,DISPLAY,DEFINITION
-100,active,Active hcs,The location is operational.
-110,suspended,Suspended,The location is temporarily closed.
-120,suspended1,Activeedit,The location is no longer used.
-121,inactive12,Inactive,The location is no longer used.
-123,inac tive,Inactive,The location is no longer used.
-125,inactive2,Inactive,The location is no longer used12.

@@ -1,5 +1,0 @@
-ID,CODE,DISPLAY,DEFINITION
-100,fax,Fax,eferrals may be accepted by fax.
-110,phone,Phone,Referrals may be accepted over the phone from a practitioner.
-111,ph *9,Phone,Referrals may be accepted over the phone from a practitioner.
-116,semail,Secure Email,Referrals may be accepted via a secure email. To send please encrypt with the services public key.

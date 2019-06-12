@@ -45,6 +45,8 @@ var controller = {
 		var organizationId=req.query.organization;
 		var endpointPayloadType=req.query.payload_type;
 		var endpointStatus=req.query.status;			
+		var offset = req.query.offset;
+		var limit = req.query.limit;
 
 		var qString = {};
 		
@@ -107,6 +109,27 @@ var controller = {
 				res.json({"err_code": 1, "err_msg": "Endpoint Status of is empty."});
 			}
 		}	
+			
+		/*if(typeof offset !== 'undefined'){
+			if(!validator.isEmpty(offset)){
+				qString.offset = offset; 
+			}else{
+				res.json({"err_code": 1, "err_msg": "offset id is empty."});
+			}
+		}
+
+		if(typeof limit !== 'undefined'){
+			if(!validator.isEmpty(limit)){
+				if(!validator.isInt(limit)){
+					err_code = 2;
+					err_msg = "limit must be number";
+				} else{
+					qString.limit = limit; 	
+				}
+			}else{
+				res.json({"err_code": 1, "err_msg": "limit is empty."});
+			}
+		}	*/
 		
 		seedPhoenixFHIR.path.GET = {
 			"Endpoint" : {

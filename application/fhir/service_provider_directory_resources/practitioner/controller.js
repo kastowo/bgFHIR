@@ -56,6 +56,9 @@ var controller = {
 		var humanName = req.query.name;
 		//var contactPointWhere = req.query.phone;
 		var contactPointValue = req.query.telecom;
+		var offset = req.query.offset;
+		var limit = req.query.limit;
+
 
 		var qString = {};
 		
@@ -221,6 +224,28 @@ var controller = {
 				}
 			}else{
 				res.json({"err_code": 1, "err_msg": "contact point value is empty."});
+			}
+		}
+			
+			
+		if(typeof offset !== 'undefined'){
+			if(!validator.isEmpty(offset)){
+				qString.offset = offset; 
+			}else{
+				res.json({"err_code": 1, "err_msg": "offset id is empty."});
+			}
+		}
+
+		if(typeof limit !== 'undefined'){
+			if(!validator.isEmpty(limit)){
+				if(!validator.isInt(limit)){
+					err_code = 2;
+					err_msg = "limit must be number";
+				} else{
+					qString.limit = limit; 	
+				}
+			}else{
+				res.json({"err_code": 1, "err_msg": "limit is empty."});
 			}
 		}
 		
@@ -1540,7 +1565,7 @@ var controller = {
 
 			//practitioner_communication_language
 			if(typeof req.body.communication.language !== 'undefined'){
-				communicationLanguage =  req.body.communication.language.trim().toLowerCase();
+				communicationLanguage =  req.body.communication.language.trim();
 				if(validator.isEmpty(communicationLanguage)){
 					err_code = 2;
 					err_msg = "Communication Language is required";
@@ -2113,7 +2138,7 @@ var controller = {
 
 			//practitioner_communication_language
 			if(typeof req.body.language !== 'undefined'){
-				communicationLanguage =  req.body.language.trim().toLowerCase();
+				communicationLanguage =  req.body.language.trim();
 				if(validator.isEmpty(communicationLanguage)){
 					err_code = 2;
 					err_msg = "Communication Language is required";
@@ -3077,7 +3102,7 @@ var controller = {
 			var apikey = req.params.apikey;
 			var regex = new RegExp("([0-9]{4}[-](0[1-9]|1[0-2])[-]([0-2]{1}[0-9]{1}|3[0-1]{1})|([0-2]{1}[0-9]{1}|3[0-1]{1})[-](0[1-9]|1[0-2])[-][0-9]{4})");
 
-			
+			console.log("12345");
 			var practitionerId = req.params.practitioner_id;
 			var qualificationId = req.params.qualification_id;
 			var err_code = 0;
@@ -3132,27 +3157,31 @@ var controller = {
 
 
 			// qualification period
+			
 			if(typeof req.body.period !== 'undefined'){
 				period = req.body.period;
-				if(validator.isEmpty(issuer)){
-					if(period.indexOf("to") > 0){
-						arrPeriod = period.split("to");
-						qualificationPeriodStart = arrPeriod[0];
-						qualificationPeriodEnd = arrPeriod[1];
+				if(period.indexOf("to") > 0){
+					arrPeriod = period.split("to");
+					qualificationPeriodStart = arrPeriod[0];
+					qualificationPeriodEnd = arrPeriod[1];
 
-						if(!regex.test(qualificationPeriodStart) && !regex.test(qualificationPeriodEnd)){
-							err_code = 2;
-							err_msg = "qualification Period invalid date format.";
-						}	
-					}
+					if(!regex.test(qualificationPeriodStart) && !regex.test(qualificationPeriodEnd)){
+						err_code = 2;
+						err_msg = "qualification Period invalid date format.";
+					}else{
+						dataQualification.period_start = qualificationPeriodStart;
+						dataQualification.period_end = qualificationPeriodEnd;
+					}	
 				}else{
-					dataQualification.period = period;
+					err_code = 1;
+					err_msg = "Period request format is wrong, `ex: start to end` ";
 				}
 			}else{
-				period = "";
-			} 
+				qualificationPeriodStart = "";
+				qualificationPeriodEnd = "";
+			}
 			
-
+			console.log(dataQualification);
 			if(err_code == 0){
 				//check apikey
 				checkApikey(apikey, ipAddres, function(result){
@@ -3431,7 +3460,7 @@ var controller = {
 			
 			// qualification code
 			if(typeof req.body.language !== 'undefined'){
-				language =  req.body.language.trim().toLowerCase();
+				language =  req.body.language.trim();
 				if(validator.isEmpty(language)){
 					err_code = 2;
 					err_msg = "Language is required.";

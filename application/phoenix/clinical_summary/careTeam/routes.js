@@ -7,8 +7,8 @@ var routesCareTeam = function(app, CareTeam){
 	app.post('/:apikey/CareTeam', CareTeam.post.careTeam);
 	app.post('/:apikey/CareTeamParticipant', CareTeam.post.careTeamParticipant);
 	
-	app.put('/:apikey/CareTeam/:care_team_id', CareTeam.put.careTeam);
-	app.put('/:apikey/CareTeamParticipant/:participant_id', CareTeam.put.careTeamParticipant);
+	app.put('/:apikey/CareTeam/:_id?', CareTeam.put.careTeam);
+	app.put('/:apikey/CareTeamParticipant/:_id?/:dr?', CareTeam.put.careTeamParticipant);
 	
 }
 module.exports = routesCareTeam;

@@ -59,6 +59,10 @@ var controller = {
 			var encounterStatus = req.query.status;
 			var subjectId = req.query.subject;
 			var typeId = req.query.type;
+			var offset = req.query.offset;
+			var limit = req.query.limit;
+
+			
 
       var qString = {};
 
@@ -269,6 +273,29 @@ var controller = {
           });
         }
       }
+			
+			
+			if(typeof offset !== 'undefined'){
+				if(!validator.isEmpty(offset)){
+					qString.offset = offset; 
+				}else{
+					res.json({"err_code": 1, "err_msg": "offset id is empty."});
+				}
+			}
+
+			if(typeof limit !== 'undefined'){
+				if(!validator.isEmpty(limit)){
+					if(!validator.isInt(limit)){
+						err_code = 2;
+						err_msg = "limit must be number";
+					} else{
+						qString.limit = limit; 	
+					}
+				}else{
+					res.json({"err_code": 1, "err_msg": "limit is empty."});
+				}
+			}
+			
       seedPhoenixFHIR.path.GET = {
         "Encounter": {
           "location": "%(apikey)s/Encounter",

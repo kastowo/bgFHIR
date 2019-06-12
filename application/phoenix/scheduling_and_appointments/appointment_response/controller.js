@@ -32,7 +32,9 @@ var controller = {
       var appointmentResponseActorPatient = req.query.patient;
       var appointmentResponseActorPractitioner = req.query.practitioner;
       var appointmentResponseParticipantStatus = req.query.part_status;
-      
+      var offset = req.query.offset;
+			var limit = req.query.limit;
+
       //susun query
       var condition = "";
       var join = "";
@@ -64,6 +66,16 @@ var controller = {
       if(typeof appointmentResponseParticipantStatus !== 'undefined' && appointmentResponseParticipantStatus !== ""){
         condition += "appointment_response_participant_status = '" + appointmentResponseParticipantStatus + "' AND ";  
       }
+			
+			if((typeof offset !== 'undefined' && offset !== '')){
+				condition = " appointment_response_id > '" + offset + "' AND ";       
+			}
+			
+			if((typeof limit !== 'undefined' && limit !== '')){
+				limit = " limit " + limit + " ";       
+			} else {
+				limit = " ";
+			}
 
       if(condition == ""){
         fixCondition = "";
@@ -72,7 +84,7 @@ var controller = {
       }
       
       var arrAppointmentResponse = [];
-      var query = "SELECT appointment_response_id, appointment_response_start, appointment_response_end, appointment_response_participant_type, appointment_response_actor_patient_id, appointment_response_actor_practitioner_id, appointment_response_actor_related_person_id, appointment_response_actor_device_id, appointment_response_actor_healthcare_service_id, appointment_response_actor_location_id, appointment_response_participant_status, appointment_response_comment, appointment_id FROM BACIRO_FHIR.APPOINTMENT_RESPONSE " + fixCondition;
+      var query = "SELECT appointment_response_id, appointment_response_start, appointment_response_end, appointment_response_participant_type, appointment_response_actor_patient_id, appointment_response_actor_practitioner_id, appointment_response_actor_related_person_id, appointment_response_actor_device_id, appointment_response_actor_healthcare_service_id, appointment_response_actor_location_id, appointment_response_participant_status, appointment_response_comment, appointment_id FROM BACIRO_FHIR.APPOINTMENT_RESPONSE " + fixCondition + limit;
 
       db.query(query,function(dataJson){
         rez = lowercaseObject(dataJson);

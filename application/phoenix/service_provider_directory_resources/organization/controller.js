@@ -41,6 +41,9 @@ var controller = {
 			var organizationPart_of = req.query.part_of; 
 			//var organizationPhonetic = req.query.phonetic; 
 			var organizationType = req.query.type; 
+			var offset = req.query.offset;
+			var limit = req.query.limit;
+
 
       //susun query
       var condition = "";
@@ -152,6 +155,17 @@ var controller = {
 			if(typeof organizationType !== 'undefined' && organizationType !== ""){
         condition += "organization_type = '" + organizationType + "' AND ";  
       }
+			
+			if((typeof offset !== 'undefined' && offset !== '')){
+				condition = " o.organization_id > '" + offset + "' AND ";       
+			}
+			
+			if((typeof limit !== 'undefined' && limit !== '')){
+				limit = " limit " + limit + " ";       
+			} else {
+				limit = " ";
+			}
+
 
       if(condition == ""){
         fixCondition = "";
@@ -160,7 +174,7 @@ var controller = {
       }
       
       var arrOrganization = [];
-      var query = "select o.organization_id as organization_id, organization_active, organization_type, organization_name, organization_alias, parent_id from baciro_fhir.organization o " + fixCondition;
+      var query = "select o.organization_id as organization_id, organization_active, organization_type, organization_name, organization_alias, parent_id from baciro_fhir.organization o " + fixCondition + limit;
 			//console.log(query);
       db.query(query,function(dataJson){
         rez = lowercaseObject(dataJson);

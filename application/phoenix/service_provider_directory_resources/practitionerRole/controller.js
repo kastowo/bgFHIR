@@ -38,7 +38,10 @@ var controller = {
 			var contactPointPhone = req.query.contact_point_phone;
 			var contactPointEmail = req.query.contact_point_email;
       var contactPointValue = req.query.contact_point_value;
-			
+			var offset = req.query.offset;
+			var limit = req.query.limit;
+
+
       //susun query
       var condition = "";
 			var join = "";
@@ -105,6 +108,17 @@ var controller = {
 				condition += "cp.CONTACT_POINT_VALUE = '" + contactPointValue + "' AND ";
 				join += " LEFT JOIN BACIRO_FHIR.CONTACT_POINT cp ON cp.PRACTITIONER_ROLE_ID = pr.PRACTITIONER_ROLE_ID ";
 			}
+			
+			if((typeof offset !== 'undefined' && offset !== '')){
+				condition = " pr.practitioner_role_id > '" + offset + "' AND ";       
+			}
+			
+			if((typeof limit !== 'undefined' && limit !== '')){
+				limit = " limit " + limit + " ";       
+			} else {
+				limit = " ";
+			}
+
 
       if(condition == ""){
         fixCondition = "";
@@ -113,7 +127,7 @@ var controller = {
       }
 			      
       
-			var query = "select pr.practitioner_role_id as practitioner_role_id, practitioner_role_active, practitioner_role_period_start, practitioner_role_period_end, pr.practitioner_id as practitioner_id, pr.organization_id as organization_id, practitioner_role_code, practitioner_role_specialty, practitioner_role_availability_exceptions from BACIRO_FHIR.PRACTITIONER_ROLE pr  " + fixCondition;
+			var query = "select pr.practitioner_role_id as practitioner_role_id, practitioner_role_active, practitioner_role_period_start, practitioner_role_period_end, pr.practitioner_id as practitioner_id, pr.organization_id as organization_id, practitioner_role_code, practitioner_role_specialty, practitioner_role_availability_exceptions from BACIRO_FHIR.PRACTITIONER_ROLE pr  " + fixCondition + limit;
 			
       //console.log(query);
 			var arrPractitionerRole = [];

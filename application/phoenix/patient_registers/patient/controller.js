@@ -20,6 +20,7 @@ var db = new phoenix("jdbc:phoenix:" + hostHbase + ":/hbase-unsecure");
 var controller = {
 	get: {
     patient: function getPatient(req, res){
+			console.log(req.query);
       var apikey = req.params.apikey;
       var hostFHIR = configYaml.fhir.host;
       var portFHIR = configYaml.fhir.port;
@@ -49,10 +50,13 @@ var controller = {
       var patientPhoneContact = req.query.phone;
       var patientPhonetic = req.query.phonetic;
       var patientTelecom = req.query.telecom;
+			var offset = req.query.offset;
+			var limit = req.query.limit;
 
       //susun query
       var condition = "";
       var join = "";
+			var conOffset = "";
 
       if(typeof patientId !== 'undefined' && patientId !== ""){
         condition += "p.patient_id = '" + patientId + "' AND ";  
@@ -209,6 +213,16 @@ var controller = {
           condition += "contact_point_value = '" + patientPhoneContact + "' AND contact_point_system = 'phone' AND ";       
         }
       }
+			
+			if((typeof offset !== 'undefined' && offset !== '')){
+				condition = " p.patient_id > '" + offset + "' AND ";       
+			}
+			
+			if((typeof limit !== 'undefined' && limit !== '')){
+				limit = " limit " + limit + " ";       
+			} else {
+				limit = " ";
+			}
 
       if(condition == ""){
         fixCondition = "";
@@ -217,10 +231,11 @@ var controller = {
       }
       
       var arrPatient = [];
-      var query = "SELECT p.patient_id as patient_id, patient_active, patient_gender, patient_birthdate, patient_deceased, patient_deceased_date, patient_marital_status, patient_multiple_birth, patient_multiple_number, p.patient_animal_id as patient_animal_id, p.organization_id as organization_id FROM BACIRO_FHIR.PATIENT p" + fixCondition;
-      
+      var query = "SELECT p.patient_id as patient_id, patient_active, patient_gender, patient_birthdate, patient_deceased, patient_deceased_date, patient_marital_status, patient_multiple_birth, patient_multiple_number, p.patient_animal_id as patient_animal_id, p.organization_id as organization_id FROM BACIRO_FHIR.PATIENT p " + fixCondition + limit;
+      console.log(query);
       db.query(query,function(dataJson){
         rez = lowercaseObject(dataJson);
+				
         for(i = 0; i < rez.length; i++){
           var Patient = {};
           Patient.resourceType = "Patient";
@@ -909,7 +924,7 @@ var controller = {
 
         if(typeof patient_communication_preferred !== 'undefined'){
           columnCommunication += 'patient_communication_preferred,';
-          valuesCommunication += "'" +patient_communication_preferred +"',";  
+          valuesCommunication += " " +patient_communication_preferred +" ,";  
         }
 
         var conditionCommunication = "patient_communication_id = '" + patient_communication_id + "' AND patient_id = '" + patient_id + "' ";

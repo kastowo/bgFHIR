@@ -5,8 +5,8 @@ var routesDetectedIssue = function(app, DetectedIssue){
 	app.post('/:apikey/DetectedIssue', DetectedIssue.post.detectedIssue);
 	app.post('/:apikey/DetectedIssueMitigation', DetectedIssue.post.detectedIssueMitigation);
 	
-	app.put('/:apikey/DetectedIssue/:care_team_id', DetectedIssue.put.detectedIssue);
-	app.put('/:apikey/DetectedIssueMitigation/:participant_id', DetectedIssue.put.detectedIssueMitigation);
+	app.put('/:apikey/DetectedIssue/:_id?', DetectedIssue.put.detectedIssue);
+	app.put('/:apikey/DetectedIssueMitigation/:_id?/:dr?', DetectedIssue.put.detectedIssueMitigation);
 	
 }
 module.exports = routesDetectedIssue;

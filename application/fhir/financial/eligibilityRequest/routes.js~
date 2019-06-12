@@ -1,0 +1,16 @@
+var routesCoverage = function(app, Coverage){
+	
+	//get method
+	app.get('/:apikey/Coverage', Coverage.get.coverage);
+	app.get('/:apikey/Coverage/:coverage_id?/identifier/:identifier_id?', Coverage.get.identifier);
+	app.get('/:apikey/Coverage/:coverage_id?/Photo/:attachment_id?', Coverage.get.attachment);
+	//post method
+	app.post('/:apikey/Coverage', Coverage.post.coverage);
+	app.post('/:apikey/Coverage/:coverage_id?/identifier', Coverage.post.identifier);
+	app.post('/:apikey/Coverage/:coverage_id?/attachment', Coverage.post.attachment);
+	//put method
+	app.put('/:apikey/Coverage/:coverage_id?', Coverage.put.coverage);
+	app.put('/:apikey/Coverage/:coverage_id?/identifier/:identifier_id?', Coverage.put.identifier);
+	app.put('/:apikey/Coverage/:coverage_id?/attachment/:attachment_id?', Coverage.put.attachment);
+}
+module.exports = routesCoverage;

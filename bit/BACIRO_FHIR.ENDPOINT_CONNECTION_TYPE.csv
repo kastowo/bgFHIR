@@ -1,6 +1,0 @@
-ID,CODE,DISPLAY,DEFINITION
-100,ihexcpd,IHE XCPD,IHE Cross Community Patient Discovery Profile (XCPD)
-101,ihe-xcpd,IHE XCPD,IHE Cross Community Patient Discovery Profile (XCPD)
-110,ihe-xca,HCS,IHE Cross Community Access Profile (XCA)  http//wiki.ihe.net/index.php/CrossCommunity_Access
-120,ihe-xds,IHE XDS,IHE CrossEnterprise Document Sharing (XDS)  http//wiki.ihe.net/index.php/CrossEnterprise_Document_Sharing
-121,ihe- xds,IHE XDS,IHE CrossEnterprise Document Sharing (XDS)  http//wiki.ihe.net/index.php/CrossEnterprise_Document_Sharing

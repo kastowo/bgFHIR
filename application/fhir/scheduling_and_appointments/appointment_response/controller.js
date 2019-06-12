@@ -46,7 +46,9 @@ var controller = {
 					var appointmentResponseActorParticipantStatus = req.query.part_status;
 					var appointmentResponseActorPatient = req.query.patient;
 					var appointmentResponseActorPractitioner = req.query.practitioner;
-					
+					var offset = req.query.offset;
+					var limit = req.query.limit;
+
 					var qString = {};
 					if(typeof appointmentResponseId !== 'undefined'){
 						if(!validator.isEmpty(appointmentResponseId)){
@@ -101,6 +103,27 @@ var controller = {
 							qString.part_status = appointmentResponseActorParticipantStatus; 
 						}else{
 							res.json({"err_code": 1, "err_msg": "Participant Status is empty."});
+						}
+					}
+					
+					if(typeof offset !== 'undefined'){
+						if(!validator.isEmpty(offset)){
+							qString.offset = offset; 
+						}else{
+							res.json({"err_code": 1, "err_msg": "offset id is empty."});
+						}
+					}
+					
+					if(typeof limit !== 'undefined'){
+						if(!validator.isEmpty(limit)){
+							if(!validator.isInt(limit)){
+								err_code = 2;
+								err_msg = "limit must be number";
+							} else{
+								qString.limit = limit; 	
+							}
+						}else{
+							res.json({"err_code": 1, "err_msg": "limit is empty."});
 						}
 					}
 					

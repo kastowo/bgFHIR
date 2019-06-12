@@ -29,6 +29,9 @@ var controller = {
       var groupMember = req.query.member;
       var groupType = req.query.type;
       var groupValue = req.query.value;
+			var offset = req.query.offset;
+			var limit = req.query.limit;
+
 
       //susun query
       var condition = "";
@@ -91,6 +94,18 @@ var controller = {
       //     condition += "identifier_value = '" + personIdentifier + "' AND ";       
       //   }
       // }
+			
+			if((typeof offset !== 'undefined' && offset !== '')){
+				condition = " g.group_id > '" + offset + "' AND ";       
+			}
+			
+			if((typeof limit !== 'undefined' && limit !== '')){
+				limit = " limit " + limit + " ";       
+			} else {
+				limit = " ";
+			}
+
+
 
       if(condition == ""){
         fixCondition = "";
@@ -99,7 +114,7 @@ var controller = {
       }
       
       var arrGroup = [];
-      var query = "SELECT g.group_id as group_id, group_active, group_type, group_actual, group_code, group_name, group_quantity FROM BACIRO_FHIR.GROUP_ g" + fixCondition;
+      var query = "SELECT g.group_id as group_id, group_active, group_type, group_actual, group_code, group_name, group_quantity FROM BACIRO_FHIR.GROUP_ g" + fixCondition + limit;
       
       db.query(query,function(dataJson){
         rez = lowercaseObject(dataJson);

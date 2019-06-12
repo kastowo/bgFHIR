@@ -1,3 +1,0 @@
-ID,CODE,DISPLAY,DEFINITION,SYSTEM
-1,ddd,fff,This episode of care is current.,encounter-participant-type
-2,adm,admitter,The practitioner who is responsible for admitting a patient to a patient encounter.,encounter-participant-type
