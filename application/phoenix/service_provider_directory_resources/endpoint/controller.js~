@@ -84,7 +84,7 @@ var controller = {
       if(condition == ""){
         fixCondition = "";
       }else{
-        fixCondition = join +" WHERE  "+ condition.slice(0, -4);
+        fixCondition = join + " WHERE  "+ condition.slice(0, -4);
       }
 			      
       var arrEndpoint = [];
